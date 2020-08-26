@@ -1,0 +1,172 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Serbian Transliteration\n"
+"POT-Creation-Date: 2020-08-26 12:28+0200\n"
+"PO-Revision-Date: 2020-08-26 12:28+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: serbian-transliteration.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#. Plugin Name of the plugin/theme
+#: inc/Settings.php:34 inc/Settings.php:51
+msgid "Serbian Transliteration"
+msgstr "Transliteracija"
+
+#: inc/Settings.php:35
+msgid "Transliteration"
+msgstr "Transliteracija"
+
+#: inc/Settings.php:58
+msgid "Available shortcodes"
+msgstr "Dostupni kratki kodovi"
+
+#: inc/Settings.php:60 serbian-transliteration.php:224
+msgid "Cyrillic to Latin"
+msgstr "Ćirilica na latinicu"
+
+#: inc/Settings.php:63 serbian-transliteration.php:225
+msgid "Latin to Cyrillic"
+msgstr "Latinica na ćirilicu"
+
+#: inc/Settings.php:72
+msgid ""
+"Hire professional developers, designers, SEO masters and marketing ninjas in "
+"one place."
+msgstr ""
+"Unajmite profesionalne programere, dizajnere, SEO majstore i marketinške "
+"nindže na jednom mjestu."
+
+#: inc/Settings.php:73 inc/Settings.php:83
+msgid "Read more..."
+msgstr "Detaljnije..."
+
+#: inc/Settings.php:79
+msgid "Need CLOUD HOSTING ???"
+msgstr "Trebate CLOUD HOSTING ???"
+
+#: inc/Settings.php:82
+msgid ""
+"If you need hosting for your personal needs, for business, any web "
+"applications, cloud or dedicated servers, we have the ideal solution for you!"
+msgstr ""
+"Ako vam treba hosting za vaše osobne potrebe, za poslovanje, bilo koje web "
+"aplikacije, cloud ili namjenske servere, imamo idealno rješenje za vas!"
+
+#: inc/Settings.php:130
+msgid "Transliteration Mode"
+msgstr "Način transliteracije"
+
+#: inc/Settings.php:138
+msgid "Plugin Mode"
+msgstr "Mod plugina"
+
+#: inc/Settings.php:146
+msgid "Disabled inside wp-admin"
+msgstr "Onemogućeno unutar wp-admin-a"
+
+#: inc/Settings.php:154
+msgid "Transliterate filenames to latin"
+msgstr "Transliterirajte nazive na latinicu"
+
+#: inc/Settings.php:162
+msgid "Force transliteration permalinks to latin"
+msgstr "Prisiliti transliteraciju permalinki na latinicu"
+
+#: inc/Settings.php:191
+msgid ""
+"This setting determines the mode of operation for the Serbian "
+"Transliteration plugin."
+msgstr "Ova postavka određuje način rada dodatka za transliteraciju."
+
+#: inc/Settings.php:192
+msgid ""
+"Carefully choose the option that is best for your site and the plugin will "
+"automatically set everything you need for optimal performance."
+msgstr ""
+"Pažljivo odaberite opciju koja je najbolja za vašu stranicu i dodatak će "
+"automatski postaviti sve što je potrebno za optimalne performanse."
+
+#: inc/Settings.php:245 inc/Settings.php:269 inc/Settings.php:292
+msgid "Yes"
+msgstr "Da"
+
+#: inc/Settings.php:246 inc/Settings.php:270 inc/Settings.php:293
+msgid "No"
+msgstr "Ne"
+
+#: inc/Settings.php:281
+msgid "Enable if you want to convert cyrillic filenames to latin."
+msgstr "Omogući ako želite pretvoriti ćirilične datoteke u latinicu."
+
+#: inc/Settings.php:305
+msgid "Enable if you want to force cyrillic permalinks to latin."
+msgstr "Omogući ako želite prisiliti ćirilicu na latinicu za permalinkove."
+
+#: inc/Settings.php:307
+#, php-format
+msgid ""
+"You don't need to force transliteration permalinks to latin because your "
+"current locale is set to %s which will automatically change permalnks."
+msgstr ""
+"Ne morate forsirati permalinkove za transliteraciju na latinicu jer je vaš "
+"trenutni jezik postavljen na %s što će automatski promijeniti permalinkove."
+
+#: inc/Shortcodes.php:51
+msgid ""
+"Transliteration shortcode does not have adequate parameters and translation "
+"is not possible. Please check the documentation."
+msgstr ""
+"Kratki kôd transliteracije nema odgovarajuće parametre i prijevod nije "
+"moguć. Molimo provjerite dokumentaciju."
+
+#: serbian-transliteration.php:204
+msgid "Standard mode (content, themes, plugins, translations, menu)"
+msgstr "Standardni način rada (sadržaj, teme, dodaci, prijevodi, izbornik)"
+
+#: serbian-transliteration.php:205
+msgid ""
+"Advanced mode (content, widgets, themes, plugins, translations, "
+"menu‚ permalinks, media)"
+msgstr ""
+"Napredni način rada (sadržaj, widgeti, teme, dodaci, prijevodi, izbornik, "
+"stalne veze, mediji)"
+
+#: serbian-transliteration.php:206
+msgid "Forced transliteration (everything - it may cause the problems)"
+msgstr "Prisilna transliteracija (sve - može uzrokovati probleme)"
+
+#: serbian-transliteration.php:223
+msgid "Transliteration disabled"
+msgstr "Transliteracija je onemogućena"
+
+#. Plugin URI of the plugin/theme
+msgid "http://infinitumform.com/"
+msgstr "http://infinitumform.com/"
+
+#. Description of the plugin/theme
+msgid ""
+"The only Serbian transliteration plugin for WordPress that actually works."
+msgstr "Jedini dodatak za transliteraciju za WordPress koji zapravo radi."
+
+#. Author of the plugin/theme
+msgid "INFINITUM FORM"
+msgstr "INFINITUM FORM"
+
+#. Author URI of the plugin/theme
+msgid "https://infinitumform.com/"
+msgstr "https://infinitumform.com/"
