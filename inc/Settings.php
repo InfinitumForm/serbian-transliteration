@@ -6,6 +6,7 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
+if(!class_exists('Serbian_Transliteration_Settings')) :
 class Serbian_Transliteration_Settings extends Serbian_Transliteration
 {
     /**
@@ -308,3 +309,4 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 	}
 }
+endif;

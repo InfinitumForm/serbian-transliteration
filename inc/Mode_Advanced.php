@@ -6,6 +6,7 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
+if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 {
 	private $options;
@@ -105,3 +106,4 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 		return $permalink;
 	}
 }
+endif;

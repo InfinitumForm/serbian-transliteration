@@ -368,6 +368,14 @@ class Serbian_Transliteration{
 endif;
 
 /*
+ * Serbian transliteration requirements
+ * @since     1.0.0
+ * @verson    1.0.0
+ */
+require_once RSTR_INC . '/Requirements.php';
+$Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(array('file' => RSTR_FILE));
+
+/*
  * Initialize active plugin
  * @since     1.0.0
  * @verson    1.0.0
@@ -436,7 +444,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 }
 endif;
 
-if(class_exists('Serbian_Transliteration_Init')) :
+if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Activate->passes()) :
 	/* Do translations
 	====================================*/
 	add_action('plugins_loaded', function () {

@@ -25,6 +25,7 @@ Serbian transliteration plugin for WordPress that actually works.
 * Theme transliteration
 * Custom taxonomy transliteration
 * Permalinks transliteration
+* Support for the Bosnian and Montenegrin languages
 
 = BENEFITS =
 
@@ -54,11 +55,12 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 3. Activate the plugin through the "Plugins" menu in WordPress
 4. Go to `Settings->Transliteration` to update options
 
-== Frequently Asked Questions ==
-
-
 == Screenshots ==
 
+1. Serbian transliteration settings
+2. Cyrillic page before serbian transliteration
+3. Latin page after serbian transliteration
+4. Shortcodes
 
 == Changelog ==
 
@@ -72,6 +74,6 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Other Notes ==
 
-= DONATION =
+== DONATION ==
 
 Enjoy using *Serbian Transliteration*? Please consider [making a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com) to support the project's continued development.

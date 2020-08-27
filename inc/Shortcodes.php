@@ -6,6 +6,7 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
+if(!class_exists('Serbian_Transliteration_Shortcodes')) :
 class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 {
 	private $options;
@@ -52,3 +53,4 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 		
 	}
 }
+endif;
