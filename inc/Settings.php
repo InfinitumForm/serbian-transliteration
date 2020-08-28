@@ -299,12 +299,12 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
-				(isset( $this->options['permalink-transliteration'] ) && $this->options['permalink-transliteration'] == $key ? ' checked' : (($this->already_cyrillic() ? $key == 'no' : $key == 'yes') ? ' checked' : '')),
-				($this->already_cyrillic() ? ' disabled' : '')
+				(isset( $this->options['permalink-transliteration'] ) && $this->options['permalink-transliteration'] == $key ? ' checked' : (($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? $key == 'no' : $key == 'yes') ? ' checked' : '')),
+				($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? ' disabled' : '')
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to force cyrillic permalinks to latin.', RSTR_NAME));
-		if($this->already_cyrillic()) {
+		if($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
 			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', RSTR_NAME), '<code>'.$this->get_locale().'</code>'));
 		}
 	}

@@ -5,7 +5,7 @@ Tags: serbian, cyrillic, latin, transliteration, latinisation, letter, script, m
 Requires at least: 3.0
 Tested up to: 5.5
 Requires PHP: 5.6.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,10 +64,24 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Changelog ==
 
+= 1.0.1 =
+* FIXED: Permalink transliteration
+* FIXED: Sanitization of the special characters
+* Added support for the other languages
+* Improved page impact
+* Improved PHP orientation
+
 = 1.0.0 =
 * First stable version
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+* FIXED: Permalink transliteration
+* FIXED: Sanitization of the special characters
+* Added support for the other languages
+* Improved page impact
+* Improved PHP orientation
 
 = 1.0.0 =
 * First stable version
