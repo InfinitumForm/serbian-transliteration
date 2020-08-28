@@ -1,5 +1,5 @@
 ﻿=== Serbian Transliteration ===
-Contributors: ivijanstefan, creativform
+Contributors: ivijanstefan, creativform, slobodanmiric
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: serbian, cyrillic, latin, transliteration, latinisation, letter, script, multilanguage, wpml-compatible
 Requires at least: 3.0
