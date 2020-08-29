@@ -1,11 +1,11 @@
 ﻿=== Serbian Transliteration ===
-Contributors: ivijanstefan, creativform, slobodanmiric
+Contributors: ivijanstefan, creativform
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: serbian, cyrillic, latin, transliteration, latinisation, letter, script, multilanguage, wpml-compatible
 Requires at least: 3.0
 Tested up to: 5.5
 Requires PHP: 5.6.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,6 @@ Serbian transliteration plugin for WordPress that actually works.
 * Theme transliteration
 * Custom taxonomy transliteration
 * Permalinks transliteration
-* Support for the Bosnian and Montenegrin languages
 
 = BENEFITS =
 
@@ -34,6 +33,15 @@ Serbian transliteration plugin for WordPress that actually works.
 * Scalable and customizable
 * It does not affect on the HTML, CSS or JS codes
 * Multilingual support
+
+= LANGUAGE SUPPORT =
+
+* Serbian language (by locale:**sr_RS**)
+* Bosnian language (follows the rules of the Serbian language with additional special characters)
+* Montenegrin language (follows the rules of the Serbian language with additional special characters)
+* Russian language (by locale:**ru_RU**)
+* Belarusian language (by locale:**bel**)
+* more languages are coming soon...
 
 == Documentation ==
 
@@ -64,6 +72,11 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Changelog ==
 
+= 1.0.2 =
+* FIXED: Problems with special characters and variations
+* Added Russian transliteration
+* Added Belarusian transliteration
+
 = 1.0.1 =
 * FIXED: Permalink transliteration
 * FIXED: Sanitization of the special characters
@@ -75,6 +88,11 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 * First stable version
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+* FIXED: Problems with special characters and variations
+* Added Russian transliteration
+* Added Belarusian transliteration
 
 = 1.0.1 =
 * FIXED: Permalink transliteration

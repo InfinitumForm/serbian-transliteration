@@ -8,7 +8,7 @@
  * Plugin Name:       Serbian Transliteration
  * Plugin URI:        http://infinitumform.com/
  * Description:       The only Serbian transliteration plugin for WordPress that actually works.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            INFINITUM FORM
  * Author URI:        https://infinitumform.com/
  * License:           GPL-2.0+
@@ -108,12 +108,19 @@ if ( ! defined( 'RSTR_VERSION' ) )			define( 'RSTR_VERSION', $RSTR_version);
 if ( ! defined( 'RSTR_PREFIX' ) )		define( 'RSTR_PREFIX', RSTR_TABLE . '_' . preg_replace("/[^0-9]/Ui", '', RSTR_VERSION) . '_');
 
 /*
+ * Serbian transliteration requirements
+ * @since     1.0.0
+ * @verson    1.0.0
+ */
+require_once RSTR_INC . '/Transliteration.php';
+
+/*
  * Main global classes with active hooks
  * @since     1.0.0
  * @verson    1.0.0
  */
-if(!class_exists('Serbian_Transliteration')) :
-class Serbian_Transliteration{
+if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Transliteration_Transliterating')) :
+class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	// Define locale instance
 	private $get_locale;
 	
@@ -161,7 +168,16 @@ class Serbian_Transliteration{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat($content){
-		$content = str_replace($this->cyr(), $this->lat(), $content);
+		$content = htmlspecialchars_decode($content);
+		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
+		{
+			$locale = $this->get_locale();
+			$content = parent::$locale($content);
+		}
+		else
+		{
+			$content = str_replace($this->cyr(), $this->lat(), $content);
+		}
 		return $content;
 	}
 	
@@ -177,15 +193,15 @@ class Serbian_Transliteration{
 			'ć' => 'c',
 			'Č' => 'C',
 			'č' => 'c',
+			'Š' => 'S',
+			'š' => 's',
+			'Ž' => 'Z',
+			'ž' => 'z',
 			'Đ' => 'Dj',
 			'dj' => 'dj',
 			'DŽ' => 'DZ',
 			'Dž' => 'Dz',
-			'dž' => 'dz',
-			'Š' => 'S',
-			'š' => 's',
-			'Ž' => 'Z',
-			'ž' => 'z'
+			'dž' => 'dz'
 		)));
 		return $content;
 	}
@@ -196,7 +212,16 @@ class Serbian_Transliteration{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_to_cyr($content){
-		$content = str_replace($this->lat(), $this->cyr(), $content);
+		$content = htmlspecialchars_decode($content);
+		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
+		{
+			$locale = $this->get_locale();
+			$content = parent::$locale($content, 'lat_to_cyr');
+		}
+		else
+		{
+			$content = str_replace($this->lat(), $this->cyr(), $content);
+		}
 		$content = $this->fix_html($content);
 		return $content;
 	}

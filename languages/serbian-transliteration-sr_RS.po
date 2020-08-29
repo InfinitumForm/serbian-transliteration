@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-08-26 12:27+0200\n"
-"PO-Revision-Date: 2020-08-26 12:28+0200\n"
+"POT-Creation-Date: 2020-08-29 10:04+0200\n"
+"PO-Revision-Date: 2020-08-29 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -22,28 +22,59 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
+#: inc/Requirements.php:50
+#, php-format
+msgid "Important upgrade notice for the version %s:"
+msgstr ""
+
+#: inc/Requirements.php:64
+msgid ""
+"NOTE: Before doing the update, it would be a good idea to backup your "
+"WordPress installations and settings."
+msgstr ""
+"НАПОМЕНА: Пре него што извршите ажурирање, било би добро да направите "
+"резервне копије ваших WordPress инсталација и подешавања."
+
+#: inc/Requirements.php:99
+#, php-format
+msgid ""
+"The %1$s cannot run on PHP versions older than PHP %2$s. Please contact your "
+"host and ask them to upgrade."
+msgstr ""
+"%1$s не може да се покреће на PHP верзијама старијим од PHP%2$s. Молимо "
+"контактирајте свог сервер администратора и замолите га да изврши надоградњу."
+
+#: inc/Requirements.php:118
+#, php-format
+msgid ""
+"The %1$s cannot run on WordPress versions older than %2$s. Please update "
+"your WordPress installation."
+msgstr ""
+"%1$s не може да се покреће за верзије WordPress-а старије од %2$s. "
+"Ажурирајте своју WordPress инсталацију."
+
 #. Plugin Name of the plugin/theme
-#: inc/Settings.php:34 inc/Settings.php:51
+#: inc/Settings.php:35 inc/Settings.php:52
 msgid "Serbian Transliteration"
 msgstr "Српска транскрипција"
 
-#: inc/Settings.php:35
+#: inc/Settings.php:36
 msgid "Transliteration"
 msgstr "Транскрипција"
 
-#: inc/Settings.php:58
+#: inc/Settings.php:59
 msgid "Available shortcodes"
 msgstr "Доступни кратки кодови"
 
-#: inc/Settings.php:60 serbian-transliteration.php:224
+#: inc/Settings.php:61 serbian-transliteration.php:327
 msgid "Cyrillic to Latin"
 msgstr "Ћирилица у латиницу"
 
-#: inc/Settings.php:63 serbian-transliteration.php:225
+#: inc/Settings.php:64 serbian-transliteration.php:328
 msgid "Latin to Cyrillic"
 msgstr "Латиница у ћирилицу"
 
-#: inc/Settings.php:72
+#: inc/Settings.php:73
 msgid ""
 "Hire professional developers, designers, SEO masters and marketing ninjas in "
 "one place."
@@ -51,15 +82,15 @@ msgstr ""
 "Ангажирајте професионалне програмере, дизајнере, СЕО мајсторе и маркетиншке "
 "нинџе на једном месту."
 
-#: inc/Settings.php:73 inc/Settings.php:83
+#: inc/Settings.php:74 inc/Settings.php:84
 msgid "Read more..."
 msgstr "Прочитајте више овде ..."
 
-#: inc/Settings.php:79
+#: inc/Settings.php:80
 msgid "Need CLOUD HOSTING ???"
 msgstr "Требате ХОСТИНГ ???"
 
-#: inc/Settings.php:82
+#: inc/Settings.php:83
 msgid ""
 "If you need hosting for your personal needs, for business, any web "
 "applications, cloud or dedicated servers, we have the ideal solution for you!"
@@ -67,33 +98,33 @@ msgstr ""
 "Ако вам треба хостинг за ваше личне потребе, за пословање, било које веб "
 "апликације, \"cloud\" или наменске сервере, имамо идеално решење за вас!"
 
-#: inc/Settings.php:130
+#: inc/Settings.php:131
 msgid "Transliteration Mode"
 msgstr "Транскрипцијски режим"
 
-#: inc/Settings.php:138
+#: inc/Settings.php:139
 msgid "Plugin Mode"
 msgstr "Начин рада додатка"
 
-#: inc/Settings.php:146
+#: inc/Settings.php:147
 msgid "Disabled inside wp-admin"
 msgstr "Онемогући унутар wp-admin"
 
-#: inc/Settings.php:154
+#: inc/Settings.php:155
 msgid "Transliterate filenames to latin"
-msgstr "Транскрипција називе на латиницу"
+msgstr "Транскрипција медија фајлова на латиницу"
 
-#: inc/Settings.php:162
+#: inc/Settings.php:163
 msgid "Force transliteration permalinks to latin"
 msgstr "Присилите транскрипцију пермалинка на латиницу"
 
-#: inc/Settings.php:191
+#: inc/Settings.php:192
 msgid ""
 "This setting determines the mode of operation for the Serbian "
 "Transliteration plugin."
 msgstr "Ово подешавање одређује начин рада за српски додатак за транскрипцију."
 
-#: inc/Settings.php:192
+#: inc/Settings.php:193
 msgid ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
@@ -101,23 +132,23 @@ msgstr ""
 "Пажљиво изаберите опцију која је најбоља за вашу страницу и додатак ће "
 "аутоматски поставити све што је потребно за оптималне перформансе."
 
-#: inc/Settings.php:245 inc/Settings.php:269 inc/Settings.php:292
+#: inc/Settings.php:246 inc/Settings.php:270 inc/Settings.php:293
 msgid "Yes"
 msgstr "Да"
 
-#: inc/Settings.php:246 inc/Settings.php:270 inc/Settings.php:293
+#: inc/Settings.php:247 inc/Settings.php:271 inc/Settings.php:294
 msgid "No"
 msgstr "Не"
 
-#: inc/Settings.php:281
+#: inc/Settings.php:282
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr "Омогућите ако желите да претворите ћириличне датотеке у латиницу."
 
-#: inc/Settings.php:305
+#: inc/Settings.php:306
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr "Омогућите ако желите да форсирате ћирилицу на латиницу."
 
-#: inc/Settings.php:307
+#: inc/Settings.php:308
 #, php-format
 msgid ""
 "You don't need to force transliteration permalinks to latin because your "
@@ -126,7 +157,7 @@ msgstr ""
 "Не морате форсирати пермалинкове за транскрипцију на латиницу јер је ваш "
 "тренутни језик постављен на %s што ће аутоматски променити пермалнкове."
 
-#: inc/Shortcodes.php:51
+#: inc/Shortcodes.php:50
 msgid ""
 "Transliteration shortcode does not have adequate parameters and translation "
 "is not possible. Please check the documentation."
@@ -134,11 +165,11 @@ msgstr ""
 "Кратки код за транскрипцију нема адекватне параметре и превођење није "
 "могуће. Молимо погледајте документацију."
 
-#: serbian-transliteration.php:204
+#: serbian-transliteration.php:307
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr "Стандардни режим (садржај, теме, додаци, преводи, мени)"
 
-#: serbian-transliteration.php:205
+#: serbian-transliteration.php:308
 msgid ""
 "Advanced mode (content, widgets, themes, plugins, translations, "
 "menu‚ permalinks, media)"
@@ -146,11 +177,11 @@ msgstr ""
 "Напредни режим (садржај, виџети, теме, додаци, преводи, мени пермалинкови, "
 "медији)"
 
-#: serbian-transliteration.php:206
+#: serbian-transliteration.php:309
 msgid "Forced transliteration (everything - it may cause the problems)"
 msgstr "Присилна транскрипција (све - може да изазове проблеме)"
 
-#: serbian-transliteration.php:223
+#: serbian-transliteration.php:326
 msgid "Transliteration disabled"
 msgstr "Транскрипција угашена"
 
