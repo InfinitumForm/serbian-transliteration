@@ -21,9 +21,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     {
         $this->add_action( 'admin_menu', 'add_plugin_page' );
         $this->add_action( 'admin_init', 'page_init' );
-		
-		
+		$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
     }
+	
+	/**
+     * Enqueue scripts
+     */
+	public function enqueue_scripts () {
+		wp_register_style( 'serbian-transliteration', RSTR_ASSETS . '/css/serbian-transliteration.css', 1, (string)RSTR_VERSION );
+	}
 
     /**
      * Add options page
@@ -45,26 +51,18 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     public function create_admin_page()
     {
+		wp_enqueue_style( 'serbian-transliteration');
         // Set class property
         $this->options = get_option( RSTR_NAME );
         ?>
-        <div class="wrap">
+        <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
             <h1><?php _e('Serbian Transliteration', RSTR_NAME); ?></h1>
 
 			<div id="poststuff" class="metabox-holder has-right-sidebar">
-				<div class="inner-sidebar">
+				<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
 					<div id="side-sortables" class="meta-box-sortables ui-sortable">
 						<!-- BOXES -->
-						<div class="postbox">
-							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h3><hr>
-							<div class="inside">
-								<h4 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h4>
-								<code>[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]</code>
-								<br><br>
-								<h4 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h4>
-								<code>[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]</code>
-							</div>
-						</div>
+						
 						
 						<div class="postbox">
 							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span>INFINITUM FORM®</span></h3><hr>
@@ -85,20 +83,53 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 							?>
 							</div>
 						</div>
-						
+						<?php if($plugin_info = $this->plugin_info(array('contributors' => true, 'donate_link' => true))) : ?>
+						<div class="postbox" id="contributors">
+							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Contributors & Developers', RSTR_NAME); ?></span></h3><hr>
+							<div class="inside flex">
+								<?php foreach($plugin_info->contributors as $username => $info) : $info = (object)$info; ?>
+								<div class="contributor contributor-<?php echo $username; ?>" id="contributor-<?php echo $username; ?>">
+									<a href="<?php echo esc_url($info->profile); ?>" target="_blank">
+										<img src="<?php echo esc_url($info->avatar); ?>">
+										<h3><?php echo $info->display_name; ?></h3>
+									</a>
+								</div>
+								<?php endforeach; ?>
+							</div>
+							<div class="inside">
+								<?php printf('<p>%s</p>', sprintf(__('If you want to support our work and effort, if you have new ideas or want to improve the existing code, %s.', RSTR_NAME), '<a href="https://github.com/CreativForm/serbian-transliteration" target="_blank">' . __('join our team', RSTR_NAME) . '</a>')); ?>
+								<?php printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>')); ?>
+							</div>
+						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			 
 				<div id="post-body">
 					<div id="post-body-content">
-						<form method="post" action="<?php echo esc_url(admin_url('/options.php')); ?>">
+
+						<form method="post" action="<?php echo esc_url(admin_url('/options.php')); ?>" id="<?php echo RSTR_NAME; ?>-settings-form">
 						<?php
 							// This prints out all hidden setting fields
 							settings_fields( RSTR_NAME . '-group' );
+							settings_fields( RSTR_NAME . '-search' );
 							do_settings_sections( RSTR_NAME );
 							submit_button();
 						?>
 						</form>
+
+						<div>
+							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h3><hr>
+							<div class="inside">
+								<h4 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h4>
+								<code>[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]</code>
+								<br><br>
+								<h4 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h4>
+								<code>[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]</code>
+								<?php printf('<p>%s</p>', __('This shortcodes work independently of the plugin settings and can be used anywhere within WordPress pages, posts, taxonomies and widgets (if they support it).', RSTR_NAME)); ?>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 				<br class="clear">
@@ -119,10 +150,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             'sanitize' // Sanitize
         );
 
+
         $this->add_settings_section(
             RSTR_NAME . '-global', // ID
-            '', // Title
-            'print_section_info', // Callback
+            __('Global Settings', RSTR_NAME), // Title
+            'print_global_settings_callback', // Callback
             RSTR_NAME // Page
         );
 		
@@ -165,6 +197,35 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME, // Page
             RSTR_NAME . '-global' // Section           
         );
+		
+		$this->register_setting(
+            RSTR_NAME . '-search', // Option group
+            RSTR_NAME, // Option name
+            'sanitize' // Sanitize
+        );
+		
+		$this->add_settings_section(
+            RSTR_NAME . '-search', // ID
+            __('WordPress search', RSTR_NAME), // Title
+            'print_search_settings_callback', // Callback
+            RSTR_NAME // Page
+        );
+		
+		$this->add_settings_field(
+            'enable-search', // ID
+            __('Enable search transliteration', RSTR_NAME), // Title 
+            'enable_search_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-search' // Section           
+        );
+		
+		$this->add_settings_field(
+            'search-mode', // ID
+            __('Search mode', RSTR_NAME), // Title 
+            'search_mode_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-search' // Section           
+        );
     }
 
     /**
@@ -175,11 +236,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     public function sanitize( $input )
     {
         $new_input = array();
-        if( isset( $input['id_number'] ) )
-            $new_input['id_number'] = absint( $input['id_number'] );
 
-        if( isset( $input['title'] ) )
-            $new_input['title'] = sanitize_text_field( $input['title'] );
+		foreach($input as $key=>$value)
+		{
+			if(is_array($value)) {
+				$new_input[$key] = array_map('sanitize_text_field', $value);
+			} else {
+				$new_input[$key] = sanitize_text_field($value);
+			}
+		}
 
         return $new_input;
     }
@@ -187,11 +252,17 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     /** 
      * Print the Section text
      */
-    public function print_section_info()
+    public function print_global_settings_callback()
     {
         printf('<p>%s</p>', __('This setting determines the mode of operation for the Serbian Transliteration plugin.', RSTR_NAME));
 		printf('<p>%s</p>', __('Carefully choose the option that is best for your site and the plugin will automatically set everything you need for optimal performance.', RSTR_NAME));
     }
+	
+	public function print_search_settings_callback()
+	{
+		printf('<p>%s</p>', __('This setting determines the search mode within the WordPress core depending on the type of language located in the database.', RSTR_NAME));
+		printf('<p>%s</p>', __('The search type setting is mostly experimental and you need to test each variant so you can get the best result you need.', RSTR_NAME));
+	}
 
     /** 
      * Plugin mode
@@ -207,7 +278,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
-				(isset( $this->options['mode'] ) && $this->options['mode'] == $key ? ' checked' : ($key == 'standard' ? ' checked' : ''))
+				(isset( $this->options['mode'] ) ? ($this->options['mode'] == $key ? ' checked' : '') : ($key == 'standard' ? ' checked' : ''))
 			);
 		}
 		
@@ -228,7 +299,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
-				(isset( $this->options['transliteration-mode'] ) && $this->options['transliteration-mode'] == $key ? ' checked' : ($key == 'none' ? ' checked' : ''))
+				(isset( $this->options['transliteration-mode'] ) ? ($this->options['transliteration-mode'] == $key ? ' checked' : '') : ($key == 'none' ? ' checked' : ''))
 			);
 		}
 		
@@ -252,7 +323,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
-				(isset( $this->options['avoid-admin'] ) && $this->options['avoid-admin'] == $key ? ' checked' : ($key == 'yes' ? ' checked' : ''))
+				(isset( $this->options['avoid-admin'] ) ? ($this->options['avoid-admin'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
 			);
 		}
 		
@@ -276,7 +347,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
-				(isset( $this->options['media-transliteration'] ) && $this->options['media-transliteration'] == $key ? ' checked' : ($key == 'yes' ? ' checked' : ''))
+				(isset( $this->options['media-transliteration'] ) ? ($this->options['media-transliteration'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to convert cyrillic filenames to latin.', RSTR_NAME));
@@ -307,6 +378,46 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		if($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
 			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', RSTR_NAME), '<code>'.$this->get_locale().'</code>'));
 		}
+	}
+	
+	public function enable_search_callback()
+	{
+		$inputs = array();
+		
+		foreach(array(
+			'yes' => __('Yes', RSTR_NAME),
+			'no' => __('No', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="enable-search-%1$s"><input type="radio" id="enable-search-%1$s" name="%3$s[enable-search]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['enable-search'] ) ? ($this->options['enable-search'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Approve if you want transliteration for the search field.', RSTR_NAME));
+	}
+	
+	public function search_mode_callback()
+	{
+		$inputs = array();
+		
+		foreach(array(
+			'lat_to_cyr' => __('Enable Latin search on the Cyrillic site', RSTR_NAME),
+			'cyr_to_lat' => __('Enable Cyrillic search on the Latin site', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="search-mode-%1$s"><input type="radio" id="search-mode-%1$s" name="%3$s[search-mode]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['search-mode'] ) ? ($this->options['search-mode'] == $key ? ' checked' : '') : ($key == 'lat_to_cyr' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join('<br>', $inputs), __('Select the search mode according to your WordPress setup.', RSTR_NAME));
 	}
 }
 endif;

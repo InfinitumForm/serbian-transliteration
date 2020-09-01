@@ -1,11 +1,11 @@
 ﻿=== Serbian Transliteration ===
-Contributors: ivijanstefan, creativform
+Contributors: ivijanstefan, creativform, slobodanmiric, dizajn24
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: serbian, cyrillic, latin, transliteration, latinisation, letter, script, multilanguage, wpml-compatible
 Requires at least: 3.0
 Tested up to: 5.5
 Requires PHP: 5.6.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,7 @@ Serbian transliteration plugin for WordPress that actually works.
 * Theme transliteration
 * Custom taxonomy transliteration
 * Permalinks transliteration
+* Search posts, pages, custom post types written in cyrillic using both latin and cyrillic script
 
 = BENEFITS =
 
@@ -72,6 +73,10 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Changelog ==
 
+= 1.0.3 =
+* Added support for search in Latin and Cyrillic
+* Fixed bugs from the previous version
+
 = 1.0.2 =
 * FIXED: Problems with special characters and variations
 * Added Russian transliteration
@@ -89,20 +94,9 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-* FIXED: Problems with special characters and variations
-* Added Russian transliteration
-* Added Belarusian transliteration
-
-= 1.0.1 =
-* FIXED: Permalink transliteration
-* FIXED: Sanitization of the special characters
-* Added support for the other languages
-* Improved page impact
-* Improved PHP orientation
-
-= 1.0.0 =
-* First stable version
+= 1.0.3 =
+* Added support for search in Latin and Cyrillic
+* Fixed bugs from the previous version
 
 == Other Notes ==
 

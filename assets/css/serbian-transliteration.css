@@ -1,0 +1,45 @@
+#serbian-transliteration-settings #post-body-content{
+	border-right: 1px solid #ddd;
+	box-shadow: 1px 0 0 #fafafa
+}
+
+#serbian-transliteration-settings #post-body-content label + br{
+	margin:10px 0;
+}
+
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .contributor a,
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .contributor a *{
+	text-decoration:none !important;
+	text-align:center;
+	border:none;
+	display:block;
+}
+
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .inside.flex{
+	display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .inside.flex .contributor{
+	flex: 0 0 50%;
+    max-width: 50%;
+	margin:24px 0 0 0;
+}
+
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .contributor+.contributor{
+	
+}
+
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .contributor h3{
+	padding:0;
+	margin:0;
+	font-size: 0.9em;
+}
+
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .contributor img{
+	dsplay:block;
+	margin:0 auto;
+	max-width:100%;
+}
