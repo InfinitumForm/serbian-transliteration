@@ -19,6 +19,7 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			'the_title' 			=> 'content',
 			'wp_nav_menu_items' 	=> 'content',
 			'wp_title' 				=> 'content',
+			'pre_get_document_title'=> 'content',
 			'default_post_metadata'	=> 'content',
 			'get_comment_metadata' 	=> 'content',
 			'get_term_metadata' 	=> 'content',
@@ -26,6 +27,13 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			'gettext' 				=> 'content',
 			'document_title_parts' 	=> 'title_parts'
 		);
+		
+		if (!current_theme_supports( 'title-tag' )){
+			unset($filters['document_title_parts']);
+			unset($filters['pre_get_document_title']);
+		} else {
+			unset($filters['wp_title']);
+		}
 		
 		if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
 		{
@@ -70,7 +78,7 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			case 'lat_to_cyr' :
 				foreach($titles as $key => $val)
 				{
-					$titles[$key]= $this->lat_to_cyr($titles[$key]);
+					$titles[$key]= $this->lat_to_cyr($titles[$key], true);
 				}
 				break;
 		}

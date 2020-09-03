@@ -121,290 +121,7 @@ include_once RSTR_INC . '/Transliteration.php';
  */
 if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
-	// Define locale instance
-	private $get_locale;
-	
-	/*
-	 * Get latin letters in array
-	 * @return        array
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function lat()
-	{
-		return apply_filters('serbian_transliteration_lat_letters', array(
-			// Big letters
-			'A', 'B', 'V', 'G', 'D', 'Đ', 'E', 'Ž', 'Z', 'I', 'J', 'K', 'L', 'LJ', 'M',
-			'N', 'NJ', 'O', 'P', 'R', 'S', 'T', 'Ć', 'U', 'F', 'H', 'C', 'Č', 'DŽ', 'Š',
-			// Small letters
-			'a', 'b', 'v', 'g', 'd', 'đ', 'e', 'ž', 'z', 'i', 'j', 'k', 'l', 'lj', 'm',
-			'n', 'nj', 'o', 'p', 'r', 's', 't', 'ć', 'u', 'f', 'h', 'c', 'č', 'dž', 'š',
-			// Variations and special characters
-			'Nj', 'Lj', 'Dž', 'Dj', 'DJ', 'dj', 'dz', 'JU', 'ju', 'JA', 'ja' ,'ŠČ' ,'šč'
-		));
-	}
-	
-	/*
-	 * Get cyrillic letters in array
-	 * @return        array
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function cyr()
-	{
-		return apply_filters('serbian_transliteration_cyr_letters', array(
-			// Big letters
-			'А', 'Б', 'В', 'Г', 'Д', 'Ђ', 'Е', 'Ж', 'З', 'И', 'Ј', 'К', 'Л', 'Љ', 'М',
-			'Н', 'Њ', 'О', 'П', 'Р', 'С', 'Т', 'Ћ', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Џ', 'Ш',
-			// Small letters
-			'а', 'б', 'в', 'г', 'д', 'ђ', 'е', 'ж', 'з', 'и', 'ј', 'к', 'л', 'љ', 'м',
-			'н', 'њ', 'о', 'п', 'р', 'с', 'т', 'ћ', 'у', 'ф', 'х', 'ц', 'ч', 'џ', 'ш',
-			// Variations and special characters
-			'Њ', 'Љ', 'Џ', 'Ђ', 'Ђ', 'ђ', 'ѕ', 'Ю', 'ю', 'Я', 'я' ,'Щ' ,'щ'
-		));
-	}
-	
-	/*
-	 * Translate from cyr to lat
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function cyr_to_lat($content){
-		$content = htmlspecialchars_decode($content);
-		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
-		{
-			$locale = $this->get_locale();
-			$content = parent::$locale($content);
-		}
-		else
-		{
-			$content = str_replace($this->cyr(), $this->lat(), $content);
-		}
-		return $content;
-	}
-	
-	/*
-	 * Translate from cyr to lat
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function cyr_to_lat_sanitize($content){
-		$content = str_replace($this->cyr(), $this->lat(), $content);
-		$content = strtr($content, apply_filters('serbian_transliteration_cyr_to_lat_sanitize', array(
-			'Ć' => 'C',
-			'ć' => 'c',
-			'Č' => 'C',
-			'č' => 'c',
-			'Š' => 'S',
-			'š' => 's',
-			'Ž' => 'Z',
-			'ž' => 'z',
-			'Đ' => 'Dj',
-			'dj' => 'dj',
-			'DŽ' => 'DZ',
-			'Dž' => 'Dz',
-			'dž' => 'dz'
-		)));
-		return $content;
-	}
-	
-	/*
-	 * Translate from lat to cyr
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function lat_to_cyr($content){
-		$content = htmlspecialchars_decode($content);
-		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
-		{
-			$locale = $this->get_locale();
-			$content = parent::$locale($content, 'lat_to_cyr');
-		}
-		else
-		{
-			$content = str_replace($this->lat(), $this->cyr(), $content);
-		}
-		$content = $this->fix_html($content);
-		return $content;
-	}
-	
-	/*
-	 * Automatic transliteration
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function transliterate_text($content, $type){
-		$content = htmlspecialchars_decode($content);
-		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
-		{
-			$locale = $this->get_locale();
-			$content = parent::$locale($content, $type);
-		}
-		else
-		{
-			
-			switch($type)
-			{
-				case 'lat_to_cyr':
-					$content = str_replace($this->lat(), $this->cyr(), $content);
-					break;
-				case 'cyr_to_lat':
-					$content = str_replace($this->cyr(), $this->lat(), $content);
-					break;
-			}
-		}
-		
-		if($type == 'lat_to_cyr'){
-			$content = $this->fix_html($content);
-		}
-		
-		return $content;
-	}
-	
-	/*
-	 * Return plugin informations
-	 * @return        array/object
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	function plugin_info($fields = array()) {
-        if ( is_admin() ) {
-			if ( ! function_exists( 'plugins_api' ) ) {
-				include_once( WP_ADMIN_DIR . '/includes/plugin-install.php' );
-			}
-			/** Prepare our query */
-			//donate_link
-			//versions
-			$plugin_data = plugins_api( 'plugin_information', array(
-				'slug' => RSTR_NAME,
-				'fields' => array_merge(array(
-					'active_installs' => false,           // rounded int
-					'added' => false,                     // date
-					'author' => false,                    // a href html
-					'author_block_count' => false,        // int
-					'author_block_rating' => false,       // int
-					'author_profile' => false,            // url
-					'banners' => false,                   // array( [low], [high] )
-					'compatibility' => false,            // empty array?
-					'contributors' => false,              // array( array( [profile], [avatar], [display_name] )
-					'description' => false,              // string
-					'donate_link' => false,               // url
-					'download_link' => false,             // url
-					'downloaded' => false,               // int
-					// 'group' => false,                 // n/a 
-					'homepage' => false,                  // url
-					'icons' => false,                    // array( [1x] url, [2x] url )
-					'last_updated' => false,              // datetime
-					'name' => false,                      // string
-					'num_ratings' => false,               // int
-					'rating' => false,                    // int
-					'ratings' => false,                   // array( [5..0] )
-					'requires' => false,                  // version string
-					'requires_php' => false,              // version string
-					// 'reviews' => false,               // n/a, part of 'sections'
-					'screenshots' => false,               // array( array( [src],  ) )
-					'sections' => false,                  // array( [description], [installation], [changelog], [reviews], ...)
-					'short_description' => false,        // string
-					'slug' => false,                      // string
-					'support_threads' => false,           // int
-					'support_threads_resolved' => false,  // int
-					'tags' => false,                      // array( )
-					'tested' => false,                    // version string
-					'version' => false,                   // version string
-					'versions' => false,                  // array( [version] url )
-				), $fields)
-			));
-		 
-			return $plugin_data;
-		}
-    }
-	
-	/*
-	 * Check is already cyrillic
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function already_cyrillic(){
-        return in_array($this->get_locale(), apply_filters('serbian_transliteration_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk'))) !== false;
-	}
-	
-	/*
-	 * Check is latin letters
-	 * @return        boolean
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function is_lat($content){
-		return preg_match('/[\p{Latin}]+/i', $content) !== false;
-	}
-	
-	/*
-	 * Check is cyrillic letters
-	 * @return        boolean
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function is_cyr($content){
-		return !$this->is_lat($content);
-	}
-	
-	/*
-	 * Get locale
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function get_locale(){
-		if(!$this->get_locale){
-			$this->get_locale = get_locale();
-		}
-        return $this->get_locale;
-	}
-	
-	/*
-	 * Fix html codes
-	 * @return        string/html
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function fix_html($content){
-		
-		$tags = explode(',', '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
-		$tags = array_map('trim', $tags);
-		$tags = array_filter($tags);
-		$tags = apply_filters('serbian_transliteration_html_tags', $tags);
-		
-		$tags_cyr = $tags_lat = array();
-		foreach($tags as $tag){
-			$tags_cyr[]='<' . str_replace($this->lat(), $this->cyr(), $tag);
-			$tags_cyr[]='</' . str_replace($this->lat(), $this->cyr(), $tag) . '>';
-			
-			$tags_lat[]= '<' . $tag;
-			$tags_lat[]= '</' . $tag . '>';
-		}
-		
-		$tags_cyr = array_merge($tags_cyr, array('&нбсп;','&лт;','&гт;','&ндасх;','&мдасх;','хреф','срц','&лдqуо;','&бдqуо;','&лсqуо;','&рсqуо;','&сцарон;','&Сцарон;','&тилде;'));
-		$tags_lat = array_merge($tags_lat, array('&nbsp;','&lt;','&gt;','&ndash;','&mdash;','href','src','&ldquo;','&bdquo;','&lsquo;','&rsquo;','ш','Ш','&tilde;'));
-		
-		$content = str_replace($tags_cyr, $tags_lat, $content);
-		
-		$lastPos = 0;
-		$positions = [];
 
-		while (($lastPos = mb_strpos($content, '<', $lastPos, 'UTF-8')) !== false) {
-			$positions[] = $lastPos;
-			$lastPos = $lastPos + mb_strlen('<', 'UTF-8');
-		}
-
-		foreach ($positions as $position) {
-			if(mb_strpos($content, '>', 0, 'UTF-8') !== false) {
-				$end   = mb_strpos($content, ">", $position, 'UTF-8') - $position;
-				$tag  = mb_substr($content, $position, $end, 'UTF-8');
-				$tag_lat = $this->cyr_to_lat($tag);
-				$content = str_replace($tag, $tag_lat, $content);
-			}
-		}
-		
-		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}0-9]+)\;/iu', function($m){
-			return '&' . $this->cyr_to_lat($m[1]) . ';';
-		}, $content);
-		
-		return $content;
-	}
-	
 	/*
 	 * Plugin mode
 	 * @return        array/string
@@ -441,6 +158,270 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		
 		return $modes;
+	}
+	
+	/*
+	 * Translate from cyr to lat
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function cyr_to_lat($content){
+		$content = htmlspecialchars_decode($content);
+		$content = html_entity_decode($content);
+		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
+		{
+			$locale = $this->get_locale();
+			$content = parent::$locale($content);
+			// Filter special names from the list
+			foreach($this->lat_exclude_list() as $item){
+				$content = str_replace(parent::$locale($item), $item, $content);
+			}
+		}
+		else
+		{
+			$content = str_replace($this->cyr(), $this->lat(), $content);
+			// Filter special names from the list
+			foreach($this->lat_exclude_list() as $item){
+				$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
+			}
+		}
+		return $content;
+	}
+	
+	/*
+	 * Translate from cyr to lat
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function cyr_to_lat_sanitize($content){
+		$content = str_replace($this->cyr(), $this->lat(), $content);
+		$content = strtr($content, apply_filters('serbian_transliteration_cyr_to_lat_sanitize', array(
+			'Ć' => 'C',
+			'ć' => 'c',
+			'Č' => 'C',
+			'č' => 'c',
+			'Š' => 'S',
+			'š' => 's',
+			'Ž' => 'Z',
+			'ž' => 'z',
+			'Đ' => 'Dj',
+			'dj' => 'dj',
+			'DŽ' => 'DZ',
+			'Dž' => 'Dz',
+			'dž' => 'dz'
+		)));
+		
+		// Filter special names from the list
+		foreach($this->lat_exclude_list() as $item){
+			$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
+		}
+		
+		return $content;
+	}
+	
+	/*
+	 * Translate from lat to cyr
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function lat_to_cyr($content, $fix_html = true){
+		$content = htmlspecialchars_decode($content);
+		$content = html_entity_decode($content);
+		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
+		{
+			$locale = $this->get_locale();
+			$content = parent::$locale($content, 'lat_to_cyr');
+			// Filter special names from the list
+			foreach($this->cyr_exclude_list() as $item){
+				$content = str_replace(parent::$locale($item, 'lat_to_cyr'), $item, $content);
+			}
+		}
+		else
+		{
+			$content = str_replace($this->lat(), $this->cyr(), $content);
+			// Filter special names from the list
+			foreach($this->cyr_exclude_list() as $item){
+				$content = str_replace(str_replace($this->lat(), $this->cyr(), $item), $item, $content);
+			}
+		}
+		if($fix_html){
+			$content = $this->fix_cyr_html($content);
+		}
+
+		return $content;
+	}
+	
+	/*
+	 * Automatic transliteration
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function transliterate_text($content, $type, $fix_html = true){
+		$content = htmlspecialchars_decode($content);
+		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
+		{
+			$locale = $this->get_locale();
+			$content = parent::$locale($content, $type);
+			// Filter special names from the list
+			foreach($this->cyr_exclude_list() as $item){
+				$content = str_replace(parent::$locale($item, $type), $item, $content);
+			}
+		}
+		else
+		{
+			
+			switch($type)
+			{
+				case 'lat_to_cyr':
+					$content = str_replace($this->lat(), $this->cyr(), $content);
+					// Filter special names from the list
+					foreach($this->lat_exclude_list() as $item){
+						$content = str_replace(str_replace($this->lat(), $this->cyr(), $item), $item, $content);
+					}
+					break;
+				case 'cyr_to_lat':
+					$content = str_replace($this->cyr(), $this->lat(), $content);
+					// Filter special names from the list
+					foreach($this->cyr_exclude_list() as $item){
+						$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
+					}
+					break;
+			}
+		}
+		
+		if($type == 'lat_to_cyr' && $fix_html){
+			$content = $this->fix_cyr_html($content);
+		}
+		
+		return $content;
+	}
+	
+	/*
+	 * Check is already cyrillic
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function already_cyrillic(){
+        return in_array($this->get_locale(), apply_filters('serbian_transliteration_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk'))) !== false;
+	}
+	
+	/*
+	 * Check is latin letters
+	 * @return        boolean
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function is_lat($content){
+		return preg_match('/[\p{Latin}]+/i', $content) !== false;
+	}
+	
+	/*
+	 * Check is cyrillic letters
+	 * @return        boolean
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function is_cyr($content){
+		return !$this->is_lat($content);
+	}
+	
+	/*
+	 * All available HTML tags
+	 * @return        array
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function html_tags() {
+		$tags = explode(',', '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
+		$tags = array_map('trim', $tags);
+		$tags = array_filter($tags);
+		return apply_filters('serbian_transliteration_html_tags', $tags);
+	}
+	
+	/*
+	 * Fix html codes
+	 * @return        string/html
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function fix_cyr_html($content){
+		$content = htmlspecialchars_decode($content);
+
+		$tags = $this->html_tags();
+		
+		$tags_cyr = $tags_lat = array();
+		foreach($tags as $tag){
+			$tags_cyr[]='<' . str_replace($this->lat(), $this->cyr(), $tag);
+			$tags_cyr[]='</' . str_replace($this->lat(), $this->cyr(), $tag) . '>';
+			
+			$tags_lat[]= '<' . $tag;
+			$tags_lat[]= '</' . $tag . '>';
+		}
+		
+		$tags_cyr = array_merge($tags_cyr, array('&нбсп;','&лт;','&гт;','&ндасх;','&мдасх;','хреф','срц','&лдqуо;','&бдqуо;','&лсqуо;','&рсqуо;','&сцарон;','&Сцарон;','&тилде;'));
+		$tags_lat = array_merge($tags_lat, array('&nbsp;','&lt;','&gt;','&ndash;','&mdash;','href','src','&ldquo;','&bdquo;','&lsquo;','&rsquo;','ш','Ш','&tilde;'));
+		
+		$content = str_replace($tags_cyr, $tags_lat, $content);
+		
+		$lastPos = 0;
+		$positions = [];
+
+		while (($lastPos = mb_strpos($content, '<', $lastPos, 'UTF-8')) !== false) {
+			$positions[] = $lastPos;
+			$lastPos = $lastPos + mb_strlen('<', 'UTF-8');
+		}
+
+		foreach ($positions as $position) {
+			if(mb_strpos($content, '>', 0, 'UTF-8') !== false) {
+				$end   = mb_strpos($content, ">", $position, 'UTF-8') - $position;
+				$tag  = mb_substr($content, $position, $end, 'UTF-8');
+				$tag_lat = $this->cyr_to_lat($tag);
+				$content = str_replace($tag, $tag_lat, $content);
+			}
+		}
+		
+		// Fix open tags
+		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}0-9a-zA-Z\/\=\"\'_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
+			return $this->cyr_to_lat($m[1]);
+		}, $content);
+		
+		// FIx closed tags
+		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}0-9a-zA-Z]+>)/iu', function($m){
+			return $this->cyr_to_lat($m[1]);
+		}, $content);
+		
+		// Fix HTML entities
+		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}0-9]+)\;/iu', function($m){
+			return '&' . $this->cyr_to_lat($m[1]) . ';';
+		}, $content);
+		
+		// Fix JavaScript
+		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($matches) {
+				return $this->cyr_to_lat($m[2]);
+		}, $content);
+		
+		// Fix CSS
+		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($matches) {
+				return $this->cyr_to_lat($m[2]);
+		}, $content);
+		
+		// Fix email
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}0-9\_\-\.]+)@([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10}))/iu', function($m){
+			return $this->cyr_to_lat($m[1]);
+		}, $content);
+		
+		// Fix URL
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}]{4,5}):\/{2}([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
+			return $this->cyr_to_lat($m[1]);
+		}, $content);
+		
+		// Fix attributes with doublequote
+		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf('%1$s="%2$s"', $m[1], esc_attr($this->lat_to_cyr($m[3])));
+		}, $content);
+		
+		// Fix attributes with single quote
+		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?\'(.*?)\'/iu', function($m){
+			return sprintf('%1$s=\'%2$s\'', $m[1], esc_attr($this->lat_to_cyr($m[3])));
+		}, $content);
+
+		return $content;
 	}
 	
 	public function upload_filter ($file) {
@@ -603,6 +584,63 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return substr(str_replace(array('.',' ','_'),mt_rand(1000,9999),uniqid('t'.microtime())), 0, $length);
 		}
 	}
+	
+	/*
+	 * Return plugin informations
+	 * @return        array/object
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	function plugin_info($fields = array()) {
+        if ( is_admin() ) {
+			if ( ! function_exists( 'plugins_api' ) ) {
+				include_once( WP_ADMIN_DIR . '/includes/plugin-install.php' );
+			}
+			/** Prepare our query */
+			//donate_link
+			//versions
+			$plugin_data = plugins_api( 'plugin_information', array(
+				'slug' => RSTR_NAME,
+				'fields' => array_merge(array(
+					'active_installs' => false,           // rounded int
+					'added' => false,                     // date
+					'author' => false,                    // a href html
+					'author_block_count' => false,        // int
+					'author_block_rating' => false,       // int
+					'author_profile' => false,            // url
+					'banners' => false,                   // array( [low], [high] )
+					'compatibility' => false,            // empty array?
+					'contributors' => false,              // array( array( [profile], [avatar], [display_name] )
+					'description' => false,              // string
+					'donate_link' => false,               // url
+					'download_link' => false,             // url
+					'downloaded' => false,               // int
+					// 'group' => false,                 // n/a 
+					'homepage' => false,                  // url
+					'icons' => false,                    // array( [1x] url, [2x] url )
+					'last_updated' => false,              // datetime
+					'name' => false,                      // string
+					'num_ratings' => false,               // int
+					'rating' => false,                    // int
+					'ratings' => false,                   // array( [5..0] )
+					'requires' => false,                  // version string
+					'requires_php' => false,              // version string
+					// 'reviews' => false,               // n/a, part of 'sections'
+					'screenshots' => false,               // array( array( [src],  ) )
+					'sections' => false,                  // array( [description], [installation], [changelog], [reviews], ...)
+					'short_description' => false,        // string
+					'slug' => false,                      // string
+					'support_threads' => false,           // int
+					'support_threads_resolved' => false,  // int
+					'tags' => false,                      // array( )
+					'tested' => false,                    // version string
+					'version' => false,                   // version string
+					'versions' => false,                  // array( [version] url )
+				), $fields)
+			));
+		 
+			return $plugin_data;
+		}
+    }
 }
 endif;
 
@@ -619,94 +657,7 @@ $Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(arr
  * @since     1.0.0
  * @verson    1.0.0
  */
-if(!class_exists('Serbian_Transliteration_Init') && class_exists('Serbian_Transliteration')) :
-final class Serbian_Transliteration_Init extends Serbian_Transliteration {
-	
-	private static $instance = NULL;
-	
-	/**
-	 * Get singleton instance of global class
-	 * @since     7.4.0
-	 * @version   7.4.0
-	 */
-	private static function get_instance()
-	{
-		if( NULL === self::$instance )
-		{
-			self::$instance = new self();
-		}
-	
-		return self::$instance;
-	}
-	
-	public static function run () {
-		// Load instance
-		$inst = self::get_instance();
-		
-		if( is_admin() )
-		{
-			// Load settings page
-			include_once RSTR_INC . '/Settings.php';
-			new Serbian_Transliteration_Settings();
-		}
-		
-		// Load options
-		$options = get_option( RSTR_NAME );
-		
-		// Load shortcodes
-		include_once RSTR_INC . '/Shortcodes.php';
-		new Serbian_Transliteration_Shortcodes($options);
-		
-		// Initialize plugin mode
-		if(isset($options['mode']) && $options['mode'] && in_array( $options['mode'], array_keys($inst->plugin_mode()), true ) !== false)
-		{
-			if($options['transliteration-mode'] != 'none')
-			{
-				$mode = ucfirst($options['mode']);
-				$class_require = "Serbian_Transliteration_Mode_{$mode}";
-				$path_require = "Mode_{$mode}";
-				$path = apply_filters('serbian_transliteration_class_mode_path', RSTR_INC, $class_require, $options['mode']);
-				
-				if(file_exists($path . "/{$path_require}.php"))
-				{
-					include_once $path . "/{$path_require}.php";
-					if(class_exists($class_require)){
-						new $class_require($options);
-					}
-				}
-				
-				// Clear memory
-				$class_require = $path_require = $path = $mode = NULL;
-			}
-			
-			/* Media upload transliteration
-			=========================================*/
-			if(isset($options['media-transliteration']) && $options['media-transliteration'] == 'yes'){
-				$inst->add_filter('wp_handle_upload_prefilter', 'upload_filter', 9999999, 1);
-			}
-			
-			/* Permalink transliteration
-			=========================================*/
-			if(isset($options['permalink-transliteration']) && $options['permalink-transliteration'] == 'yes' && ($inst->get_locale() == 'sr_RS' && !get_option('ser_cyr_to_lat_slug'))){
-				$inst->add_filter('sanitize_title', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('the_permalink', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('wp_unique_post_slug', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('permalink_manager_filter_default_post_uri', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('permalink_manager_filter_default_term_uri', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('wp_insert_post_data', 'force_permalink_to_latin_on_save', 9999999, 2);
-			}
-			
-			/* WordPress search transliteration
-			=========================================*/
-			if(isset( $options['enable-search'] ) && $options['enable-search'] == 'yes')
-			{
-				include_once RSTR_INC . '/Search.php';
-				new Serbian_Transliteration_Search($options);
-			}
-		}
-	}
-}
-endif;
+include_once RSTR_INC . '/Init.php';
 
 if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Activate->passes()) :
 	/* Do translations

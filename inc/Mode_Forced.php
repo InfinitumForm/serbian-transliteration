@@ -19,6 +19,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			'the_title' 					=> 'content',
 			'wp_nav_menu_items' 			=> 'content',
 			'wp_title' 						=> 'content',
+			'pre_get_document_title'		=> 'content',
 			'default_post_metadata' 		=> 'content',
 			'get_comment_metadata' 			=> 'content',
 			'get_term_metadata' 			=> 'content',
@@ -41,15 +42,15 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			if(!is_admin())
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-				$this->add_action('wp_loaded', 'output_buffer_start');
-				$this->add_action('shutdown', 'output_buffer_end');
+				$this->add_action('wp_loaded', 'output_buffer_start', 999);
+				$this->add_action('shutdown', 'output_buffer_end', 999);
 			}
 		}
 		else
 		{
 			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-			$this->add_action('wp_loaded', 'output_buffer_start');
-			$this->add_action('shutdown', 'output_buffer_end');
+			$this->add_action('wp_loaded', 'output_buffer_start', 999);
+			$this->add_action('shutdown', 'output_buffer_end', 999);
 		}
 	}
 	
@@ -81,11 +82,11 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			}, $buffer);
 			
 			// Fixed memory leaking problem
-			/**
+		/**
 			if(isset($this->options['transliteration-mode']) && $this->options['transliteration-mode'] == 'lat_to_cyr'){
-				$buffer = $this->fix_html($buffer);
+				$buffer = $this->fix_cyr_html($buffer);
 			}
-			*/
+		**/
 		}
 		
 		return $buffer;
@@ -121,7 +122,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			case 'lat_to_cyr' :
 				foreach($titles as $key => $val)
 				{
-					$titles[$key]= $this->lat_to_cyr($titles[$key]);
+					$titles[$key]= $this->lat_to_cyr($titles[$key], true);
 				}
 				break;
 		}

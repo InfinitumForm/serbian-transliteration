@@ -198,6 +198,22 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME . '-global' // Section           
         );
 		
+		$this->add_settings_field(
+            'exclude-latin-words', // ID
+            __('Exclude Latin words that you do not want to be pronounced.', RSTR_NAME), // Title 
+            'exclude_latin_words_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
+        );
+		
+		$this->add_settings_field(
+            'exclude-cyrillic-words', // ID
+            __('Exclude Cyrillic words that you do not want to be pronounced.', RSTR_NAME), // Title 
+            'exclude_cyrillic_words_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
+        );
+		
 		$this->register_setting(
             RSTR_NAME . '-search', // Option group
             RSTR_NAME, // Option name
@@ -378,6 +394,26 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		if($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
 			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', RSTR_NAME), '<code>'.$this->get_locale().'</code>'));
 		}
+	}
+	
+	public function exclude_latin_words_callback()
+	{
+		printf(
+			'<textarea name="%1$s[exclude-latin-words]" id="%1$s-exclude-latin-words" rows="5" style="width:100%%">%2$s</textarea>',
+			RSTR_NAME,
+			(isset( $this->options['exclude-latin-words'] ) ? esc_html($this->options['exclude-latin-words']) : '')
+		);
+		printf('<p class="description">%1$s</p>', sprintf(__('Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed.', RSTR_NAME), '<code>|</code>'));
+	}
+	
+	public function exclude_cyrillic_words_callback()
+	{
+		printf(
+			'<textarea name="%1$s[exclude-cyrillic-words]" id="%1$s-exclude-cyrillic-words" rows="5" style="width:100%%">%2$s</textarea>',
+			RSTR_NAME,
+			(isset( $this->options['exclude-cyrillic-words'] ) ? esc_html($this->options['exclude-cyrillic-words']) : '')
+		);
+		printf('<p class="description">%1$s</p>', sprintf(__('Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed.', RSTR_NAME), '<code>|</code>'));
 	}
 	
 	public function enable_search_callback()
