@@ -25,6 +25,9 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			'get_term_metadata' 			=> 'content',
 			'get_user_metadata' 			=> 'content',
 			'gettext' 						=> 'content',
+			'ngettext' 						=> 'content',
+			'gettext_with_context' 			=> 'content',
+			'ngettext_with_context' 		=> 'content',
 			'widget_text' 					=> 'content',
 			'widget_title' 					=> 'content',
 			'widget_text_content' 			=> 'content',
@@ -42,24 +45,71 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			if(!is_admin())
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
+				
 				$this->add_action('wp_loaded', 'output_buffer_start', 999);
 				$this->add_action('shutdown', 'output_buffer_end', 999);
+				
+				$this->add_action('rss_head', 'rss_output_buffer_start', 999);
+				$this->add_action('rss_footer', 'rss_output_buffer_end', 999);
+				
+				$this->add_action('rss2_head', 'rss_output_buffer_start', 999);
+				$this->add_action('rss2_footer', 'rss_output_buffer_end', 999);
+				
+				$this->add_action('rdf_head', 'rss_output_buffer_start', 999);
+				$this->add_action('rdf_footer', 'rss_output_buffer_end', 999);
+				
+				$this->add_action('atom_head', 'rss_output_buffer_start', 999);
+				$this->add_action('atom_footer', 'rss_output_buffer_end', 999);
 			}
 		}
 		else
 		{
 			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
+			
 			$this->add_action('wp_loaded', 'output_buffer_start', 999);
 			$this->add_action('shutdown', 'output_buffer_end', 999);
+			
+			$this->add_action('rss_head', 'rss_output_buffer_start', 999);
+			$this->add_action('rss_footer', 'rss_output_buffer_end', 999);
+			
+			$this->add_action('rss2_head', 'rss_output_buffer_start', 999);
+			$this->add_action('rss2_footer', 'rss_output_buffer_end', 999);
+			
+			$this->add_action('rdf_head', 'rss_output_buffer_start', 999);
+			$this->add_action('rdf_footer', 'rss_output_buffer_end', 999);
+			
+			$this->add_action('atom_head', 'rss_output_buffer_start', 999);
+			$this->add_action('atom_footer', 'rss_output_buffer_end', 999);
 		}
 	}
 	
 	function output_buffer_start() { 
-		ob_start(array(&$this, "output_callback")); 
+		ob_start(array(&$this, "output_callback"));
 	}
 	
 	function output_buffer_end() { 
-		ob_get_clean(); 
+		ob_get_clean();
+	}
+	
+	function rss_output_buffer_start() {
+		ob_start();
+	}
+	
+	function rss_output_buffer_end() {
+		$output = ob_get_clean();
+
+        switch(isset($this->options['transliteration-mode']) ? $this->options['transliteration-mode'] : NULL)
+		{
+			case 'cyr_to_lat' :
+				$output = $this->cyr_to_lat($output);
+				break;
+				
+			case 'lat_to_cyr' :
+				$output = $this->lat_to_cyr($output);
+				break;
+		}
+
+        echo $output;
 	}
 	
 	public function output_callback ($buffer='') {
@@ -80,13 +130,6 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 				}
 				return $matches[2];
 			}, $buffer);
-			
-			// Fixed memory leaking problem
-		/**
-			if(isset($this->options['transliteration-mode']) && $this->options['transliteration-mode'] == 'lat_to_cyr'){
-				$buffer = $this->fix_cyr_html($buffer);
-			}
-		**/
 		}
 		
 		return $buffer;

@@ -183,6 +183,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         );
 		
 		$this->add_settings_field(
+            'allow-cyrillic-usernames', // ID
+            __('Allow Cyrillic Usernames', RSTR_NAME), // Title 
+            'allow_cyrillic_usernames_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
+        );
+		
+		$this->add_settings_field(
             'media-transliteration', // ID
             __('Transliterate filenames to latin', RSTR_NAME), // Title 
             'media_transliteration_callback', // Callback
@@ -200,7 +208,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		
 		$this->add_settings_field(
             'exclude-latin-words', // ID
-            __('Exclude Latin words that you do not want to be pronounced.', RSTR_NAME), // Title 
+            __('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', RSTR_NAME), // Title 
             'exclude_latin_words_callback', // Callback
             RSTR_NAME, // Page
             RSTR_NAME . '-global' // Section           
@@ -208,7 +216,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		
 		$this->add_settings_field(
             'exclude-cyrillic-words', // ID
-            __('Exclude Cyrillic words that you do not want to be pronounced.', RSTR_NAME), // Title 
+            __('Exclude Cyrillic words that you do not want to be transliterated to the Latin.', RSTR_NAME), // Title 
             'exclude_cyrillic_words_callback', // Callback
             RSTR_NAME, // Page
             RSTR_NAME . '-global' // Section           
@@ -414,6 +422,26 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			(isset( $this->options['exclude-cyrillic-words'] ) ? esc_html($this->options['exclude-cyrillic-words']) : '')
 		);
 		printf('<p class="description">%1$s</p>', sprintf(__('Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed.', RSTR_NAME), '<code>|</code>'));
+	}
+	
+	public function allow_cyrillic_usernames_callback()
+	{
+		$inputs = array();
+		
+		foreach(array(
+			'yes' => __('Yes', RSTR_NAME),
+			'no' => __('No', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="enable-search-%1$s"><input type="radio" id="enable-search-%1$s" name="%3$s[allow-cyrillic-usernames]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['allow-cyrillic-usernames'] ) ? ($this->options['allow-cyrillic-usernames'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Allows to create users with usernames containing Cyrillic characters.', RSTR_NAME));
 	}
 	
 	public function enable_search_callback()

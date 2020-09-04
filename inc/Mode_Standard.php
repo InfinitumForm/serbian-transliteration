@@ -25,6 +25,9 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			'get_term_metadata' 	=> 'content',
 			'get_user_metadata' 	=> 'content',
 			'gettext' 				=> 'content',
+			'ngettext' 				=> 'content',
+			'gettext_with_context' 	=> 'content',
+			'ngettext_with_context' => 'content',
 			'document_title_parts' 	=> 'title_parts'
 		);
 		

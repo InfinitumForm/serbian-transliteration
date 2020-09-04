@@ -65,11 +65,12 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				// Clear memory
 				$class_require = $path_require = $path = $mode = NULL;
 			}
-			
+
 			/* Media upload transliteration
 			=========================================*/
 			if(isset($options['media-transliteration']) && $options['media-transliteration'] == 'yes'){
-				$inst->add_filter('wp_handle_upload_prefilter', 'upload_filter', 9999999, 1);
+				$inst->add_filter('wp_handle_upload_prefilter', 'upload_prefilter', 9999999, 1);
+				$inst->add_filter( 'sanitize_file_name', 'sanitize_file_name', 99 );
 			}
 			
 			/* Permalink transliteration
@@ -125,6 +126,29 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 					}
 					return array_merge($list, $array);
 				});
+			}
+			
+			/* Allows to create users with usernames containing Cyrillic characters
+			=========================================*/
+			if(isset($options['allow-cyrillic-usernames']) && $options['allow-cyrillic-usernames'] == 'yes')
+			{
+				add_filter('sanitize_user', function ($username, $raw_username, $strict) {
+					$username = wp_strip_all_tags( $raw_username );
+					$username = remove_accents( $username );
+					// Kill octets
+					$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
+					$username = preg_replace( '/&.+?;/', '', $username ); // Kill entities
+
+					// If strict, reduce to ASCII and Cyrillic characters for max portability.
+					if ( $strict )
+						$username = preg_replace( '|[^a-zа-я0-9 _.\-@]|iu', '', $username );
+
+					$username = trim( $username );
+					// Consolidate contiguous whitespace
+					$username = preg_replace( '|\s+|', ' ', $username );
+
+					return $username;
+				}, 10, 3);
 			}
 		}
 	}

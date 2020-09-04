@@ -5,10 +5,10 @@
  * @package           Serbian_Transliteration
  *
  * @wordpress-plugin
- * Plugin Name:       Serbian Transliteration
+ * Plugin Name:       Transliteration - WordPress Transliteration
  * Plugin URI:        http://infinitumform.com/
- * Description:       The only Serbian transliteration plugin for WordPress that actually works.
- * Version:           1.0.3
+ * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
+ * Version:           1.0.5
  * Author:            INFINITUM FORM
  * Author URI:        https://infinitumform.com/
  * License:           GPL-2.0+
@@ -329,10 +329,22 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function html_tags() {
-		$tags = explode(',', '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
-		$tags = array_map('trim', $tags);
-		$tags = array_filter($tags);
-		return apply_filters('serbian_transliteration_html_tags', $tags);
+		$tags = apply_filters('serbian_transliteration_html_tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
+		$tags_latin = explode(',', $tags);
+		$tags_latin = array_map('trim', $tags_latin);
+		$tags_latin = array_filter($tags_latin);
+		$tags_latin = apply_filters('serbian_transliteration_html_tags_lat', $tags_latin);
+		
+		$tags_cyr = $this->lat_to_cyr($tags, false);
+		$tags_cyr = explode(',', $tags_cyr);
+		$tags_cyr = array_map('trim', $tags_cyr);
+		$tags_cyr = array_filter($tags_cyr);
+		$tags_cyr = apply_filters('serbian_transliteration_html_tags_cyr', $tags_cyr);
+		
+		return (object)array(
+			'cyr' => $tags_cyr,
+			'lat' => $tags_latin
+		);
 	}
 	
 	/*
@@ -346,13 +358,16 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$tags = $this->html_tags();
 		
 		$tags_cyr = $tags_lat = array();
-		foreach($tags as $tag){
-			$tags_cyr[]='<' . str_replace($this->lat(), $this->cyr(), $tag);
-			$tags_cyr[]='</' . str_replace($this->lat(), $this->cyr(), $tag) . '>';
+		foreach($tags->lat as $i=>$tag){
+			$tag_cyr = $tags->cyr[$i];
+			
+			$tags_cyr[]='<' . $tag_cyr;
+			$tags_cyr[]='</' . $tag_cyr . '>';
 			
 			$tags_lat[]= '<' . $tag;
 			$tags_lat[]= '</' . $tag . '>';
 		}
+		$tags = $tag_cyr = NULL;
 		
 		$tags_cyr = array_merge($tags_cyr, array('&нбсп;','&лт;','&гт;','&ндасх;','&мдасх;','хреф','срц','&лдqуо;','&бдqуо;','&лсqуо;','&рсqуо;','&сцарон;','&Сцарон;','&тилде;'));
 		$tags_lat = array_merge($tags_lat, array('&nbsp;','&lt;','&gt;','&ndash;','&mdash;','href','src','&ldquo;','&bdquo;','&lsquo;','&rsquo;','ш','Ш','&tilde;'));
@@ -369,7 +384,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		foreach ($positions as $position) {
 			if(mb_strpos($content, '>', 0, 'UTF-8') !== false) {
-				$end   = mb_strpos($content, ">", $position, 'UTF-8') - $position;
+				$end   = mb_strpos($content, '>', $position, 'UTF-8') - $position;
 				$tag  = mb_substr($content, $position, $end, 'UTF-8');
 				$tag_lat = $this->cyr_to_lat($tag);
 				$content = str_replace($tag, $tag_lat, $content);
@@ -405,7 +420,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}0-9\_\-\.]+)@([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10}))/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
-		
+
 		// Fix URL
 		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}]{4,5}):\/{2}([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
@@ -413,20 +428,24 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		// Fix attributes with doublequote
 		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf('%1$s="%2$s"', $m[1], esc_attr($this->lat_to_cyr($m[3])));
+			return sprintf('%1$s="%2$s"', $m[1], esc_attr($this->lat_to_cyr($m[3], false)));
 		}, $content);
 		
 		// Fix attributes with single quote
 		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?\'(.*?)\'/iu', function($m){
-			return sprintf('%1$s=\'%2$s\'', $m[1], esc_attr($this->lat_to_cyr($m[3])));
+			return sprintf('%1$s=\'%2$s\'', $m[1], esc_attr($this->lat_to_cyr($m[3], false)));
 		}, $content);
 
 		return $content;
 	}
 	
-	public function upload_filter ($file) {
-		$file['name']= $this->cyr_to_lat($file['name']);
+	public function upload_prefilter ($file) {
+		$file['name']= $this->cyr_to_lat_sanitize($file['name']);
 		return $file;
+	}
+
+	public function sanitize_file_name($filename){
+		return $this->cyr_to_lat_sanitize($filename);
 	}
 	
 	public function force_permalink_to_latin ($permalink) {

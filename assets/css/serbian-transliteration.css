@@ -1,3 +1,10 @@
+#serbian-transliteration-settings  h2{
+	color: #23282d;
+    font-size: 1.3em;
+    margin: 1em 0;
+	padding: 0;
+}
+
 #serbian-transliteration-settings #post-body-content{
 	border-right: 1px solid #ddd;
 	box-shadow: 1px 0 0 #fafafa

@@ -1,30 +1,26 @@
-﻿=== Serbian Transliteration ===
-Contributors: ivijanstefan, creativform, slobodanmiric, dizajn24
+﻿=== Transliteration - WordPress Transliteration ===
+Contributors: ivijanstefan, creativform, dizajn24
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
-Tags: serbian, cyrillic, latin, transliteration, latinisation, letter, script, multilanguage, wpml-compatible
+Tags: cyrillic, latin, transliteration, latinisation, serbian, letter, script, multilanguage, wpml-compatible, gutenberg, elementor
 Requires at least: 3.0
 Tested up to: 5.5
 Requires PHP: 5.6.0
-Stable tag: 1.0.3
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Serbian transliteration plugin for WordPress that actually works.
+All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
 
 == Description ==
-**Serbian transliteration** is a simple and easy plugin with which you can translate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. Serbian transliteration also supports special shortcodes that you can use to partially translate parts of the content.
+This is a simple and easy plugin with which you can translate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. Serbian transliteration also supports special shortcodes that you can use to partially translate parts of the content.
 
 = FEATURES =
 
-* Transcription mode selection
-* Ability to transcribe the entire wordpress installation
-* Media transliteration
-* Widget transliteration
-* Menu transliteration
-* Plugin transliteration
-* Theme transliteration
-* Custom taxonomy transliteration
-* Permalinks transliteration
+* WordPress Cyrillic to Latin
+* Converts Cyrillic, European and Georgian characters in post, page and term slugs to Latin characters.
+* Transliterate Cyrillic filenames to Latin
+* Transliterate Cyrillic permalinks to Latin
+* Allow Cyrillic Usernames
 * Search posts, pages, custom post types written in cyrillic using both latin and cyrillic script
 
 = BENEFITS =
@@ -34,15 +30,21 @@ Serbian transliteration plugin for WordPress that actually works.
 * Scalable and customizable
 * It does not affect on the HTML, CSS or JS codes
 * Multilingual support
+* Transcription mode selection
 
 = LANGUAGE SUPPORT =
 
-* Serbian language (by locale:**sr_RS**)
-* Bosnian language (follows the rules of the Serbian language with additional special characters)
-* Montenegrin language (follows the rules of the Serbian language with additional special characters)
-* Russian language (by locale:**ru_RU**)
-* Belarusian language (by locale:**bel**)
+* **Serbian latinisation** - Serbian language (by locale:**sr_RS**)
+* **Bosnian latinisation** - Bosnian language (follows the rules of the Serbian language with additional special characters)
+* **Montenegrin latinisation** - Montenegrin language (follows the rules of the Serbian language with additional special characters)
+* **Russian latinisation** - Russian language (by locale:**ru_RU**)
+* **Belarusian latinisation** - Belarusian language (by locale:**bel**)
 * more languages are coming soon...
+
+= PLUGINS SUPPORT =
+This plugin is made to support all known plugins and visual editors.
+
+**YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
 
 == Documentation ==
 
@@ -73,6 +75,19 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Changelog ==
 
+= 1.0.5 =
+* Added option to allow Cyrillic usernames
+* Added RSS feed transliteration
+* Added SEO transliteration
+* Added support for the visual editors
+* Improved page speed
+
+= 1.0.4 =
+* Fixed Latin to Cyrillic translation in pages
+* Improved search functionality
+* Added Latin and words, phrases, names and expressions exclude
+* Improved PHP code
+
 = 1.0.3 =
 * Added support for search in Latin and Cyrillic
 * Fixed bugs from the previous version
@@ -94,9 +109,26 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Upgrade Notice ==
 
-= 1.0.3 =
-* Added support for search in Latin and Cyrillic
-* Fixed bugs from the previous version
+= 1.0.5 =
+* Added option to allow Cyrillic usernames
+* Added RSS feed transliteration
+* Added SEO transliteration
+* Added support for the visual editors
+* Improved page speed
+
+== Frequently Asked Questions ==
+
+= What is Romanization or Latinisation? =
+**Romanisation or Latinisation**, in linguistics, is the conversion of writing from a different writing system to the Roman (Latin) script, or a system for doing so. Methods of romanization include transliteration, for representing written text, and transcription, for representing the spoken word, and combinations of both.
+
+= Is Latin better for SEO than Cyrillic? =
+According to Google documentation and discussions on forums and blogs, it is concluded that Latin is much better for SEO and it is necessary to practice Latin at least when permalinks and file names are in Latin, while the text can be in both letters but Latin is always preferred.
+
+= Can I translate Cyrillic letters into Latin with this plugin? =
+YES! Without any problems or conflicts.
+
+= Can I translate Latin into Cyrillic with this plugin? =
+YES! This plugin can translate a Latin site into Cyrillic, but this is recommended and often causes problems. It is suggested that this approach be approached experimentally.
 
 == Other Notes ==
 

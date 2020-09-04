@@ -21,12 +21,6 @@ class Serbian_Transliteration_Transliterating {
 	{
 		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/sr_RS', array(
 			// Variations and special characters
-			'Ња' => 'Nja', 'Ње' => 'Nje', 'Њи' => 'Nji',
-			'Њо' => 'Njo', 'Њу' => 'Nju', 'Ља' => 'Lja',
-			'Ље' => 'Lje', 'Љи' => 'Lji', 'Љо' => 'Ljo',
-			'Љу' => 'Lju', 'Џа' => 'Dža', 'Џе' => 'Dže',
-			'Џи' => 'Dži', 'Џо' => 'Džo', 'Џу' => 'Džu', 
-			
 			'џ'=>'dž',	'Џ'=>'Dž',	'љ'=>'lj',	'Љ'=>'Lj',
 			'њ'=>'nj', 'Њ'=>'Nj',
 			
@@ -53,9 +47,9 @@ class Serbian_Transliteration_Transliterating {
 			case 'lat_to_cyr' :
 				$lat_to_cyr = array();
 				$lat_to_cyr = array_merge($lat_to_cyr, array_flip($transliteration));
-				$lat_to_cyr = array_merge(array(
-					'NJ'=>'Њ',	'LJ'=>'Љ',	'DŽ'=>'Џ',	'DJ'=>'Ђ',	'DZ'=>'Ѕ'
-				), $lat_to_cyr);
+				$lat_to_cyr = array_merge($lat_to_cyr, array(
+					'NJ'=>'Њ',	'LJ'=>'Љ',	'DŽ'=>'Џ',	'DJ'=>'Ђ',	'DZ'=>'Ѕ',	'dz'=>'ѕ'
+				));
 				$lat_to_cyr = apply_filters('serbian-transliteration/inc/transliteration/sr_RS/lat_to_cyr', $lat_to_cyr);
 				
 				return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
@@ -72,20 +66,23 @@ class Serbian_Transliteration_Transliterating {
 	public static function ru_RU ($content, $translation = 'cyr_to_lat')
 	{
 		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/ru_RU', array(
+			// Variations and special characters
+			'Ё'=>'Yo',	'Ж'=>'Zh',	'Х'=>'Kh',	'Ц'=>'Ts',	'Ч'=>'Ch',
+			'Ш'=>'Sh',	'Щ'=>'Sch',	'Ю'=>'Yu',	'Я'=>'Ya',	'ё'=>'yo',
+			'ж'=>'zh',	'х'=>'kh',	'ц'=>'ts',	'ч'=>'ch',	'ш'=>'sh',
+			'щ'=>'sch',	'ю'=>'yu',	'я'=>'ya',
+			
+			// All other letters
 			'А'=>'A',	'Б'=>'B',	'В'=>'V',	'Г'=>'G',	'Д'=>'D', 
-			'Е'=>'E',	'Ё'=>'Yo',	'Ж'=>'Zh',	'З'=>'Z',	'И'=>'I', 
-			'Й'=>'J',	'К'=>'K',	'Л'=>'L',	'М'=>'M',	'Н'=>'N', 
-			'О'=>'O',	'П'=>'P',	'Р'=>'R',	'С'=>'S',	'Т'=>'T', 
-			'У'=>'U',	'Ф'=>'F',	'Х'=>'Kh',	'Ц'=>'Ts',	'Ч'=>'Ch', 
-			'Ш'=>'Sh',	'Щ'=>'Sch',	'Ъ'=>'',	'Ы'=>'Y',	'Ь'=>'', 
-			'Э'=>'E',	'Ю'=>'Yu',	'Я'=>'Ya',	'а'=>'a',	'б'=>'b', 
-			'в'=>'v',	'г'=>'g',	'д'=>'d',	'е'=>'e',	'ё'=>'yo', 
-			'ж'=>'zh',	'з'=>'z',	'и'=>'i',	'й'=>'j',	'к'=>'k', 
+			'Е'=>'E',	'З'=>'Z',	'И'=>'I',	'Й'=>'J',	'К'=>'K',
+			'Л'=>'L',	'М'=>'M',	'Н'=>'N',	'О'=>'O',	'П'=>'P',
+			'Р'=>'R',	'С'=>'S',	'Т'=>'T',	'У'=>'U',	'Ф'=>'F',
+			'Ъ'=>'',	'Ы'=>'Y',	'Ь'=>'',	'Э'=>'E',	'а'=>'a',
+			'б'=>'b',	'в'=>'v',	'г'=>'g',	'д'=>'d',	'е'=>'e',	 
+			'з'=>'z',	'и'=>'i',	'й'=>'j',	'к'=>'k',	'э'=>'e',
 			'л'=>'l',	'м'=>'m',	'н'=>'n',	'о'=>'o',	'п'=>'p', 
 			'р'=>'r',	'с'=>'s',	'т'=>'t',	'у'=>'u',	'ф'=>'f', 
-			'х'=>'kh',	'ц'=>'ts',	'ч'=>'ch',	'ш'=>'sh',	'щ'=>'sch', 
-			'ъ'=>'',	'ы'=>'y',	'ь'=>'',	'э'=>'e',	'ю'=>'yu', 
-			'я'=>'ya'
+			'ъ'=>'',	'ы'=>'y',	'ь'=>''
 		));
 		
 		switch($translation)
@@ -95,10 +92,13 @@ class Serbian_Transliteration_Transliterating {
 				break;
 				
 			case 'lat_to_cyr' :
+				$transliteration = array_filter($transliteration, function($t){
+					return $t != '';
+				});
 				$transliteration = array_flip($transliteration);
-				$transliteration = array_merge(array(
+				$transliteration = array_merge($transliteration, array(
 					'CH'=>'Ч',	'YO'=>'Ё',	'ZH'=>'Ж',	'KH'=>'Х',	'TS'=>'Ц',	'Sh'=>'Ш',	'SCH'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
-				), $transliteration);
+				));
 				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/ru_RU/lat_to_cyr', $transliteration);
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
@@ -114,26 +114,27 @@ class Serbian_Transliteration_Transliterating {
 	public static function bel ($content, $translation = 'cyr_to_lat')
 	{
 		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bel', array (
-			// upper case
+			// Variations and special characters
+			'ДЖ'=>'Dž',	'ДЗ'=>'Dz',	'Ё'=>'Io',	'Е'=>'Ie',
+			'Х'=>'Ch',	'Ю'=>'Iu',	'Я'=>'Ia',	'дж'=>'dž',
+			'дз'=>'dz',	'е'=>'ie',	'ё'=>'io',	'х'=>'ch',
+			'ю'=>'iu',	'я'=>'ia',	
+			
+			// All other letters
 			'А'=>'A',	'Б'=>'B',	'В'=>'V',	'Г'=>'H',
-			'Д'=>'D',	'ДЖ'=>'Dž',	'ДЗ'=>'Dz',	'Е'=>'Ie',
-			'Ё'=>'Io',	'Ж'=>'Ž',	'З'=>'Z',	'І'=>'I',
+			'Д'=>'D',	'Ж'=>'Ž',	'З'=>'Z',	'І'=>'I',
 			'Й'=>'J',	'К'=>'K',	'Л'=>'L',	'М'=>'M',
 			'Н'=>'N',	'О'=>'O',	'П'=>'P',	'Р'=>'R',
 			'СЬ'=>'Ś',	'С'=>'S',	'Т'=>'T',	'У'=>'U',
-			'Ў'=>'Ǔ',	'Ф'=>'F',	'Х'=>'Ch',	'Ц'=>'C',
+			'Ў'=>'Ǔ',	'Ф'=>'F',	'Ц'=>'C',	'э'=>'e',
 			'Ч'=>'Č',	'Ш'=>'Š',	'Ы'=>'Y',	'Ь'=>'\'',
-			'Э'=>'E',	'Ю'=>'Iu',	'Я'=>'Ia',	'’'=>'',
-			// lower case
 			'а'=>'a',	'б'=>'b',	'в'=>'v',	'г'=>'h',
-			'д'=>'d',	'дж'=>'dž',	'дз'=>'dz',	'е'=>'ie',
-			'ё'=>'io',	'ж'=>'ž',	'з'=>'z',	'і'=>'i',
+			'ж'=>'ž',	'з'=>'z',	'і'=>'i',	'Э'=>'E',
 			'й'=>'j',	'к'=>'k',	'л'=>'l',	'м'=>'m',
 			'н'=>'n',	'о'=>'o',	'п'=>'p',	'р'=>'r',
 			'сь'=>'ś',	'с'=>'s',	'т'=>'t',	'у'=>'u',
-			'ў'=>'ǔ',	'ф'=>'f',	'х'=>'ch',	'ц'=>'c',
-			'ч'=>'č',	'ш'=>'š',	'ы'=>'y',	'ь'=>'\'',
-			'э'=>'e',	'ю'=>'iu',	'я'=>'ia',	'\''=>'',
+			'ў'=>'ǔ',	'ф'=>'f',	'ц'=>'c',	'д'=>'d',
+			'ч'=>'č',	'ш'=>'š',	'ы'=>'y',	'ь'=>'\''
 		));
 		
 		switch($translation)
@@ -157,10 +158,13 @@ class Serbian_Transliteration_Transliterating {
 				break;
 				
 			case 'lat_to_cyr' :
+				$transliteration = array_filter($transliteration, function($t){
+					return $t != '';
+				});
 				$transliteration = array_flip($transliteration);
-				$transliteration = array_merge(array(
+				$transliteration = array_merge($transliteration, array(
 					'CH'=>'Х',	'DŽ'=>'ДЖ',	'DZ'=>'ДЗ',	'IE'=>'Е',	'IO'=>'Ё',	'IU'=>'Ю',	'IA'=>'Я'
-				), $transliteration);
+				));
 				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bel/lat_to_cyr', $transliteration);
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
