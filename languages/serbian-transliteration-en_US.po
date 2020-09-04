@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-09-03 11:09+0200\n"
-"PO-Revision-Date: 2020-09-03 11:11+0200\n"
+"POT-Creation-Date: 2020-09-04 09:36+0200\n"
+"PO-Revision-Date: 2020-09-04 09:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language: en_US\n"
@@ -52,7 +52,6 @@ msgstr ""
 "The %1$s cannot run on WordPress versions older than %2$s. Please update "
 "your WordPress installation."
 
-#. Plugin Name of the plugin/theme
 #: inc/Settings.php:41 inc/Settings.php:59
 msgid "Serbian Transliteration"
 msgstr "Serbian Transliteration"
@@ -115,11 +114,11 @@ msgstr "donate something for effort"
 msgid "Available shortcodes"
 msgstr "Available shortcodes"
 
-#: inc/Settings.php:124 serbian-transliteration.php:431
+#: inc/Settings.php:124 serbian-transliteration.php:152
 msgid "Cyrillic to Latin"
 msgstr "Cyrillic to Latin"
 
-#: inc/Settings.php:127 serbian-transliteration.php:432
+#: inc/Settings.php:127 serbian-transliteration.php:153
 msgid "Latin to Cyrillic"
 msgstr "Latin to Cyrillic"
 
@@ -150,26 +149,46 @@ msgid "Disabled inside wp-admin"
 msgstr "Disabled inside wp-admin"
 
 #: inc/Settings.php:187
+msgid "Allow Cyrillic Usernames"
+msgstr "Allow Cyrillic Usernames"
+
+#: inc/Settings.php:195
 msgid "Transliterate filenames to latin"
 msgstr "Transliterate filenames to latin"
 
-#: inc/Settings.php:195
+#: inc/Settings.php:203
 msgid "Force transliteration permalinks to latin"
 msgstr "Force transliteration permalinks to latin"
 
-#: inc/Settings.php:209
+#: inc/Settings.php:211
+msgid ""
+"Exclude Latin words that you do not want to be transliterated to the "
+"Cyrillic."
+msgstr ""
+"Exclude Latin words that you do not want to be transliterated to the "
+"Cyrillic."
+
+#: inc/Settings.php:219
+msgid ""
+"Exclude Cyrillic words that you do not want to be transliterated to the "
+"Latin."
+msgstr ""
+"Exclude Cyrillic words that you do not want to be transliterated to the "
+"Latin."
+
+#: inc/Settings.php:233
 msgid "WordPress search"
 msgstr "WordPress search"
 
-#: inc/Settings.php:216
+#: inc/Settings.php:240
 msgid "Enable search transliteration"
 msgstr "Enable search transliteration"
 
-#: inc/Settings.php:224
+#: inc/Settings.php:248
 msgid "Search mode"
 msgstr "Search mode"
 
-#: inc/Settings.php:257
+#: inc/Settings.php:281
 msgid ""
 "This setting determines the mode of operation for the Serbian "
 "Transliteration plugin."
@@ -177,7 +196,7 @@ msgstr ""
 "This setting determines the mode of operation for the Serbian "
 "Transliteration plugin."
 
-#: inc/Settings.php:258
+#: inc/Settings.php:282
 msgid ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
@@ -185,7 +204,7 @@ msgstr ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
 
-#: inc/Settings.php:263
+#: inc/Settings.php:287
 msgid ""
 "This setting determines the search mode within the WordPress core depending "
 "on the type of language located in the database."
@@ -193,7 +212,7 @@ msgstr ""
 "This setting determines the search mode within the WordPress core depending "
 "on the type of language located in the database."
 
-#: inc/Settings.php:264
+#: inc/Settings.php:288
 msgid ""
 "The search type setting is mostly experimental and you need to test each "
 "variant so you can get the best result you need."
@@ -201,25 +220,35 @@ msgstr ""
 "The search type setting is mostly experimental and you need to test each "
 "variant so you can get the best result you need."
 
-#: inc/Settings.php:317 inc/Settings.php:341 inc/Settings.php:364
-#: inc/Settings.php:388
+#: inc/Settings.php:308
+msgid ""
+"Forced transliteration can sometimes cause problems if Latin is translated "
+"into Cyrillic in pages and posts. To this combination must be approached "
+"experimentally."
+msgstr ""
+"Forced transliteration can sometimes cause problems if Latin is translated "
+"into Cyrillic in pages and posts. To this combination must be approached "
+"experimentally."
+
+#: inc/Settings.php:340 inc/Settings.php:364 inc/Settings.php:387
+#: inc/Settings.php:431 inc/Settings.php:451
 msgid "Yes"
 msgstr "Yes"
 
-#: inc/Settings.php:318 inc/Settings.php:342 inc/Settings.php:365
-#: inc/Settings.php:389
+#: inc/Settings.php:341 inc/Settings.php:365 inc/Settings.php:388
+#: inc/Settings.php:432 inc/Settings.php:452
 msgid "No"
 msgstr "No"
 
-#: inc/Settings.php:353
+#: inc/Settings.php:376
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr "Enable if you want to convert cyrillic filenames to latin."
 
-#: inc/Settings.php:377
+#: inc/Settings.php:400
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr "Enable if you want to force cyrillic permalinks to latin."
 
-#: inc/Settings.php:379
+#: inc/Settings.php:402
 #, php-format
 msgid ""
 "You don't need to force transliteration permalinks to latin because your "
@@ -228,19 +257,32 @@ msgstr ""
 "You don't need to force transliteration permalinks to latin because your "
 "current locale is set to %s which will automatically change permalnks."
 
-#: inc/Settings.php:400
+#: inc/Settings.php:413 inc/Settings.php:423
+#, php-format
+msgid ""
+"Separate words, phrases, names and expressions with the sign %s or put it in "
+"a new row. HTML is not allowed."
+msgstr ""
+"Separate words, phrases, names and expressions with the sign %s or put it in "
+"a new row. HTML is not allowed."
+
+#: inc/Settings.php:443
+msgid "Allows to create users with usernames containing Cyrillic characters."
+msgstr "Allows to create users with usernames containing Cyrillic characters."
+
+#: inc/Settings.php:463
 msgid "Approve if you want transliteration for the search field."
 msgstr "Approve if you want transliteration for the search field."
 
-#: inc/Settings.php:408
+#: inc/Settings.php:471
 msgid "Enable Latin search on the Cyrillic site"
 msgstr "Enable Latin search on the Cyrillic site"
 
-#: inc/Settings.php:409
+#: inc/Settings.php:472
 msgid "Enable Cyrillic search on the Latin site"
 msgstr "Enable Cyrillic search on the Latin site"
 
-#: inc/Settings.php:420
+#: inc/Settings.php:483
 msgid "Select the search mode according to your WordPress setup."
 msgstr "Select the search mode according to your WordPress setup."
 
@@ -252,11 +294,11 @@ msgstr ""
 "Transliteration shortcode does not have adequate parameters and translation "
 "is not possible. Please check the documentation."
 
-#: serbian-transliteration.php:411
+#: serbian-transliteration.php:132
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr "Standard mode (content, themes, plugins, translations, menu)"
 
-#: serbian-transliteration.php:412
+#: serbian-transliteration.php:133
 msgid ""
 "Advanced mode (content, widgets, themes, plugins, translations, "
 "menu‚ permalinks, media)"
@@ -264,13 +306,17 @@ msgstr ""
 "Advanced mode (content, widgets, themes, plugins, translations, "
 "menu‚ permalinks, media)"
 
-#: serbian-transliteration.php:413
-msgid "Forced transliteration (everything - it may cause the problems)"
-msgstr "Forced transliteration (everything - it may cause the problems)"
+#: serbian-transliteration.php:134
+msgid "Forced transliteration (everything)"
+msgstr "Forced transliteration (everything)"
 
-#: serbian-transliteration.php:430
+#: serbian-transliteration.php:151
 msgid "Transliteration disabled"
 msgstr "Transliteration disabled"
+
+#. Plugin Name of the plugin/theme
+msgid "Transliteration - WordPress Transliteration"
+msgstr "Transliteration - WordPress Transliteration"
 
 #. Plugin URI of the plugin/theme
 msgid "http://infinitumform.com/"
@@ -278,9 +324,11 @@ msgstr "http://infinitumform.com/"
 
 #. Description of the plugin/theme
 msgid ""
-"The only Serbian transliteration plugin for WordPress that actually works."
+"All in one Cyrillic to Latin transliteration plugin for WordPress that "
+"actually works."
 msgstr ""
-"The only Serbian transliteration plugin for WordPress that actually works."
+"All in one Cyrillic to Latin transliteration plugin for WordPress that "
+"actually works."
 
 #. Author of the plugin/theme
 msgid "INFINITUM FORM"

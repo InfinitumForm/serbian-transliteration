@@ -131,7 +131,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$modes = apply_filters('serbian_transliteration_plugin_mode', array(
 			'standard' => __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
 			'advanced' => __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
-			'forced' => __('Forced transliteration (everything - it may cause the problems)', RSTR_NAME)
+			'forced' => __('Forced transliteration (everything)', RSTR_NAME)
 		));
 		
 		if($mode && isset($modes[$mode])){

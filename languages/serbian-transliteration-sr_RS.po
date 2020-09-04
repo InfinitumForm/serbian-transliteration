@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-09-03 10:54+0200\n"
-"PO-Revision-Date: 2020-09-03 11:01+0200\n"
+"POT-Creation-Date: 2020-09-04 09:31+0200\n"
+"PO-Revision-Date: 2020-09-04 09:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: inc/Requirements.php:50
 #, php-format
 msgid "Important upgrade notice for the version %s:"
-msgstr ""
+msgstr "Важно обавештење о надоградњи за верзију %s:"
 
 #: inc/Requirements.php:64
 msgid ""
@@ -53,7 +53,6 @@ msgstr ""
 "%1$s не може да се покреће за верзије WordPress-а старије од %2$s. "
 "Ажурирајте своју WordPress инсталацију."
 
-#. Plugin Name of the plugin/theme
 #: inc/Settings.php:41 inc/Settings.php:59
 msgid "Serbian Transliteration"
 msgstr "Српска транскрипција"
@@ -116,11 +115,11 @@ msgstr "донирати нешто за наш труд"
 msgid "Available shortcodes"
 msgstr "Доступни кратки кодови"
 
-#: inc/Settings.php:124 serbian-transliteration.php:431
+#: inc/Settings.php:124 serbian-transliteration.php:152
 msgid "Cyrillic to Latin"
 msgstr "Ћирилица у латиницу"
 
-#: inc/Settings.php:127 serbian-transliteration.php:432
+#: inc/Settings.php:127 serbian-transliteration.php:153
 msgid "Latin to Cyrillic"
 msgstr "Латиница у ћирилицу"
 
@@ -151,32 +150,50 @@ msgid "Disabled inside wp-admin"
 msgstr "Онемогући унутар wp-admin"
 
 #: inc/Settings.php:187
+msgid "Allow Cyrillic Usernames"
+msgstr "Дозволи ћирилична корисничка имена"
+
+#: inc/Settings.php:195
 msgid "Transliterate filenames to latin"
 msgstr "Транскрипција медија фајлова на латиницу"
 
-#: inc/Settings.php:195
+#: inc/Settings.php:203
 msgid "Force transliteration permalinks to latin"
 msgstr "Присилите транскрипцију пермалинка на латиницу"
 
-#: inc/Settings.php:209
+#: inc/Settings.php:211
+msgid ""
+"Exclude Latin words that you do not want to be transliterated to the "
+"Cyrillic."
+msgstr ""
+"Искључите латиничне речи за које не желите да се транскриптујете у ћирилицу."
+
+#: inc/Settings.php:219
+msgid ""
+"Exclude Cyrillic words that you do not want to be transliterated to the "
+"Latin."
+msgstr ""
+"Изузмите ћириличне речи за које не желите да се транскриптујете у латиницу."
+
+#: inc/Settings.php:233
 msgid "WordPress search"
 msgstr "WordPress претрага"
 
-#: inc/Settings.php:216
+#: inc/Settings.php:240
 msgid "Enable search transliteration"
 msgstr "Активирај транскрипцију претраге"
 
-#: inc/Settings.php:224
+#: inc/Settings.php:248
 msgid "Search mode"
 msgstr "Тип претраге"
 
-#: inc/Settings.php:257
+#: inc/Settings.php:281
 msgid ""
 "This setting determines the mode of operation for the Serbian "
 "Transliteration plugin."
 msgstr "Ово подешавање одређује начин рада за српски додатак за транскрипцију."
 
-#: inc/Settings.php:258
+#: inc/Settings.php:282
 msgid ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
@@ -184,7 +201,7 @@ msgstr ""
 "Пажљиво изаберите опцију која је најбоља за вашу страницу и додатак ће "
 "аутоматски поставити све што је потребно за оптималне перформансе."
 
-#: inc/Settings.php:263
+#: inc/Settings.php:287
 msgid ""
 "This setting determines the search mode within the WordPress core depending "
 "on the type of language located in the database."
@@ -192,7 +209,7 @@ msgstr ""
 "Ово подешавање одређује режим претраживања у језгру WordPress-а у зависности "
 "од врсте језика који се налази у бази података."
 
-#: inc/Settings.php:264
+#: inc/Settings.php:288
 msgid ""
 "The search type setting is mostly experimental and you need to test each "
 "variant so you can get the best result you need."
@@ -200,25 +217,35 @@ msgstr ""
 "Подешавање типа претраге је углавном експериментално и треба да тестирате "
 "сваку варијанту како бисте постигли најбољи резултат који вам је потребан."
 
-#: inc/Settings.php:317 inc/Settings.php:341 inc/Settings.php:364
-#: inc/Settings.php:388
+#: inc/Settings.php:308
+msgid ""
+"Forced transliteration can sometimes cause problems if Latin is translated "
+"into Cyrillic in pages and posts. To this combination must be approached "
+"experimentally."
+msgstr ""
+"Принудна транскрипција понекад може да створи проблеме ако се латиница на "
+"страницама и у порукама преведе на ћирилицу. Овој комбинацији се мора "
+"приступити експериментално."
+
+#: inc/Settings.php:340 inc/Settings.php:364 inc/Settings.php:387
+#: inc/Settings.php:431 inc/Settings.php:451
 msgid "Yes"
 msgstr "Да"
 
-#: inc/Settings.php:318 inc/Settings.php:342 inc/Settings.php:365
-#: inc/Settings.php:389
+#: inc/Settings.php:341 inc/Settings.php:365 inc/Settings.php:388
+#: inc/Settings.php:432 inc/Settings.php:452
 msgid "No"
 msgstr "Не"
 
-#: inc/Settings.php:353
+#: inc/Settings.php:376
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr "Омогућите ако желите да претворите ћириличне датотеке у латиницу."
 
-#: inc/Settings.php:377
+#: inc/Settings.php:400
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr "Омогућите ако желите да форсирате ћирилицу на латиницу."
 
-#: inc/Settings.php:379
+#: inc/Settings.php:402
 #, php-format
 msgid ""
 "You don't need to force transliteration permalinks to latin because your "
@@ -227,19 +254,34 @@ msgstr ""
 "Не морате форсирати пермалинкове за транскрипцију на латиницу јер је ваш "
 "тренутни језик постављен на %s што ће аутоматски променити пермалнкове."
 
-#: inc/Settings.php:400
-msgid "Approve if you want transliteration for the search field."
-msgstr "Одобрите ако желите транслитерацију пољеа за претрагу."
+#: inc/Settings.php:413 inc/Settings.php:423
+#, php-format
+msgid ""
+"Separate words, phrases, names and expressions with the sign %s or put it in "
+"a new row. HTML is not allowed."
+msgstr ""
+"Одвојите речи, фразе, имена и изразе знаком %s или их ставите у нови ред. "
+"HTML није дозвољен."
 
-#: inc/Settings.php:408
+#: inc/Settings.php:443
+msgid "Allows to create users with usernames containing Cyrillic characters."
+msgstr ""
+"Омогућава стварање корисника са корисничким именима која садрже ћириличне "
+"знакове."
+
+#: inc/Settings.php:463
+msgid "Approve if you want transliteration for the search field."
+msgstr "Одобрите ако желите транскрипцију поља за претрагу."
+
+#: inc/Settings.php:471
 msgid "Enable Latin search on the Cyrillic site"
 msgstr "Омогућите претрагу латиничним писмом на ћириличном сајту"
 
-#: inc/Settings.php:409
+#: inc/Settings.php:472
 msgid "Enable Cyrillic search on the Latin site"
 msgstr "Омогућите претрагу ћириличним писмом на латиничном сајту"
 
-#: inc/Settings.php:420
+#: inc/Settings.php:483
 msgid "Select the search mode according to your WordPress setup."
 msgstr "Изаберите режим претраживања према вашем WordPress подешавању."
 
@@ -251,11 +293,11 @@ msgstr ""
 "Кратки код за транскрипцију нема адекватне параметре и превођење није "
 "могуће. Молимо погледајте документацију."
 
-#: serbian-transliteration.php:411
+#: serbian-transliteration.php:132
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr "Стандардни режим (садржај, теме, додаци, преводи, мени)"
 
-#: serbian-transliteration.php:412
+#: serbian-transliteration.php:133
 msgid ""
 "Advanced mode (content, widgets, themes, plugins, translations, "
 "menu‚ permalinks, media)"
@@ -263,13 +305,17 @@ msgstr ""
 "Напредни режим (садржај, виџети, теме, додаци, преводи, мени пермалинкови, "
 "медији)"
 
-#: serbian-transliteration.php:413
-msgid "Forced transliteration (everything - it may cause the problems)"
-msgstr "Присилна транскрипција (све - може да изазове проблеме)"
+#: serbian-transliteration.php:134
+msgid "Forced transliteration (everything)"
+msgstr "Присилна транскрипција (све)"
 
-#: serbian-transliteration.php:430
+#: serbian-transliteration.php:151
 msgid "Transliteration disabled"
-msgstr "Транскрипција угашена"
+msgstr "Угаси транскрипцију"
+
+#. Plugin Name of the plugin/theme
+msgid "Transliteration - WordPress Transliteration"
+msgstr "Транслитерација - WordPress транслитерација"
 
 #. Plugin URI of the plugin/theme
 msgid "http://infinitumform.com/"
@@ -277,8 +323,11 @@ msgstr "https://infinitumform.com/"
 
 #. Description of the plugin/theme
 msgid ""
-"The only Serbian transliteration plugin for WordPress that actually works."
-msgstr "Једини српски додатак за транскрипцију за WordPress који заправо ради."
+"All in one Cyrillic to Latin transliteration plugin for WordPress that "
+"actually works."
+msgstr ""
+"Све у једном додатак за транскрипцију са ћирилице на латиницу за WordPress "
+"који заиста функционише."
 
 #. Author of the plugin/theme
 msgid "INFINITUM FORM"

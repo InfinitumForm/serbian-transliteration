@@ -305,8 +305,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['mode'] ) ? ($this->options['mode'] == $key ? ' checked' : '') : ($key == 'standard' ? ' checked' : ''))
 			);
 		}
-		
-        echo join('<br>', $inputs);
+		printf('%1$s<br><p class="description">%2$s</p>', join('<br>', $inputs), __('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', RSTR_NAME));
 	}
 	
 	/** 

@@ -72,6 +72,7 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 2. Cyrillic page before serbian transliteration
 3. Latin page after serbian transliteration
 4. Shortcodes
+5. Automated test
 
 == Changelog ==
 
