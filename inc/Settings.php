@@ -38,7 +38,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     {
         // This page will be under "Settings"
         $this->add_options_page(
-            __('Serbian Transliteration', RSTR_NAME),
+            __('Transliteration Settings', RSTR_NAME),
             __('Transliteration', RSTR_NAME), 
             'manage_options', 
             RSTR_NAME, 

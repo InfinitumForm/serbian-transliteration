@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-09-04 09:36+0200\n"
-"PO-Revision-Date: 2020-09-04 09:37+0200\n"
+"POT-Creation-Date: 2020-09-04 14:46+0200\n"
+"PO-Revision-Date: 2020-09-04 14:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language: en_US\n"
@@ -52,13 +52,17 @@ msgstr ""
 "The %1$s cannot run on WordPress versions older than %2$s. Please update "
 "your WordPress installation."
 
-#: inc/Settings.php:41 inc/Settings.php:59
-msgid "Serbian Transliteration"
-msgstr "Serbian Transliteration"
+#: inc/Settings.php:41
+msgid "Transliteration Settings"
+msgstr "Transliteration Settings"
 
 #: inc/Settings.php:42
 msgid "Transliteration"
 msgstr "Transliteration"
+
+#: inc/Settings.php:59
+msgid "Serbian Transliteration"
+msgstr "Serbian Transliteration"
 
 #: inc/Settings.php:71
 msgid ""

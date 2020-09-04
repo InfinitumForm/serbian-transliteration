@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-09-04 09:37+0200\n"
-"PO-Revision-Date: 2020-09-04 09:39+0200\n"
+"POT-Creation-Date: 2020-09-04 14:48+0200\n"
+"PO-Revision-Date: 2020-09-04 14:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -53,12 +53,16 @@ msgstr ""
 "%1$s ne može se izvoditi na WordPress verzijama starijim od %2$s. Ažurirajte "
 "svoju WordPress instalaciju."
 
-#: inc/Settings.php:41 inc/Settings.php:59
-msgid "Serbian Transliteration"
-msgstr "Transliteracija"
+#: inc/Settings.php:41
+msgid "Transliteration Settings"
+msgstr "Transliteracije - Postavka"
 
 #: inc/Settings.php:42
 msgid "Transliteration"
+msgstr "Transliteracija"
+
+#: inc/Settings.php:59
+msgid "Serbian Transliteration"
 msgstr "Transliteracija"
 
 #: inc/Settings.php:71
