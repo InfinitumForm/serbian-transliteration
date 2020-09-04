@@ -129,7 +129,7 @@ According to Google documentation and discussions on forums and blogs, it is con
 YES! Without any problems or conflicts.
 
 = Can I translate Latin into Cyrillic with this plugin? =
-YES! This plugin can translate a Latin site into Cyrillic, but this is recommended and often causes problems. It is suggested that this approach be approached experimentally.
+YES! This plugin can translate a Latin site into Cyrillic, but this is not recommended and often causes problems. It is suggested that this approach be approached experimentally.
 
 == Other Notes ==
 
