@@ -223,6 +223,39 @@ class Serbian_Transliteration_Transliterating {
 	}
 	
 	/*
+	 * Get list of available locales
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function get_locales( $needle = NULL ){
+		$locales = array();
+		$locale_file=RSTR_ROOT.'/libraries/locale.lib';
+		
+		if(file_exists($locale_file))
+		{
+			if($fopen_locale=fopen($locale_file, 'r'))
+			{
+				$contents = fread($fopen_locale, filesize($locale_file));
+				fclose($fopen_locale);
+				
+				if(!empty($contents))
+				{
+					$locales = explode("\n", $contents);
+					$locales = array_unique($locales);
+					$locales = array_filter($locales);
+					$locales = array_map('trim', $locales);
+				} else return false;
+			} else return false;
+		} else return false;
+		
+		if($needle) {
+			return (in_array($needle, $locales) !== false ? $needle : false);
+		} else {
+			return $locales;
+		}
+	}
+	
+	/*
 	 * Exclude words or sentences for Cyrillic
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic

@@ -121,7 +121,7 @@ include_once RSTR_INC . '/Transliteration.php';
  */
 if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
-
+	
 	/*
 	 * Plugin mode
 	 * @return        array/string
@@ -168,6 +168,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function cyr_to_lat($content){
 		$content = htmlspecialchars_decode($content);
 		$content = html_entity_decode($content);
+		$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES)));
+		
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
 		{
 			$locale = $this->get_locale();
@@ -194,7 +196,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat_sanitize($content){
-		$content = str_replace($this->cyr(), $this->lat(), $content);
+		$content = $this->cyr_to_lat($content);
+		
 		$content = strtr($content, apply_filters('serbian_transliteration_cyr_to_lat_sanitize', array(
 			'Ć' => 'C',
 			'ć' => 'c',
@@ -210,6 +213,17 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			'Dž' => 'Dz',
 			'dž' => 'dz'
 		)));
+
+		if(function_exists('iconv'))
+		{
+			if($locale = $this->get_locales( $this->get_locale() )) {
+				setlocale(LC_CTYPE, $locale);
+			}
+			
+			if($converted = iconv("UTF-8","ASCII//TRANSLIT", $content)) {
+				$content = str_replace(array("\"","'","`","^","~"), '', $converted);
+			}
+		}
 		
 		// Filter special names from the list
 		foreach($this->lat_exclude_list() as $item){
@@ -227,6 +241,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function lat_to_cyr($content, $fix_html = true){
 		$content = htmlspecialchars_decode($content);
 		$content = html_entity_decode($content);
+		$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES)));
+		
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
 		{
 			$locale = $this->get_locale();
@@ -677,7 +693,6 @@ $Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(arr
  * @verson    1.0.0
  */
 include_once RSTR_INC . '/Init.php';
-
 if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Activate->passes()) :
 	/* Do translations
 	====================================*/

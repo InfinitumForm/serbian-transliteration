@@ -1,0 +1,14 @@
+# Disable directory browsing
+Options All -Indexes
+# Deny access to all .htaccess files
+<files ~ "^.*\.([Hh][Tt][Aa])">
+	order allow,deny
+	deny from all
+	satisfy all
+</files>
+# Deny access to all .log files
+<files ~ "^.*\.([Ll][Ii][Bb])">
+	order allow,deny
+	deny from all
+	satisfy all
+</files>

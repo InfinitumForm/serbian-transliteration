@@ -56,7 +56,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         $this->options = get_option( RSTR_NAME );
         ?>
         <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
-            <h1><?php _e('Serbian Transliteration', RSTR_NAME); ?></h1>
+            <h1><?php _e('Transliteration Settings', RSTR_NAME); ?></h1>
 
 			<div id="poststuff" class="metabox-holder has-right-sidebar">
 				<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
