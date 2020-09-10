@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creat
 Tags: cyrillic, latin, transliteration, latinisation, serbian, letter, script, multilanguage, wpml-compatible, gutenberg, elementor
 Requires at least: 3.0
 Tested up to: 5.5
-Requires PHP: 5.6.0
-Stable tag: 1.0.5
+Requires PHP: 7.0
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,8 +73,15 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 3. Latin page after serbian transliteration
 4. Shortcodes
 5. Automated test
+6. Permalink tools
 
 == Changelog ==
+
+= 1.0.6 =
+* NEW: A tool for automatic transliteration of permalink in a database
+* Improved detection of Cyrillic
+* Added locale libraries
+* Moved to the PHP 7.x
 
 = 1.0.5 =
 * Added option to allow Cyrillic usernames

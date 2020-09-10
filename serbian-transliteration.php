@@ -8,7 +8,7 @@
  * Plugin Name:       Transliteration - WordPress Transliteration
  * Plugin URI:        http://infinitumform.com/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Author:            INFINITUM FORM
  * Author URI:        https://infinitumform.com/
  * License:           GPL-2.0+
@@ -160,15 +160,21 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return $modes;
 	}
 	
+	public function decode($content){
+		$content = rawurldecode($content);
+		$content = htmlspecialchars_decode($content);
+		$content = html_entity_decode($content);
+		$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES)));
+		return $content;
+	}
+	
 	/*
 	 * Translate from cyr to lat
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat($content){
-		$content = htmlspecialchars_decode($content);
-		$content = html_entity_decode($content);
-		$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES)));
+		$content = $this->decode($content);
 		
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
 		{
@@ -239,9 +245,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_to_cyr($content, $fix_html = true){
-		$content = htmlspecialchars_decode($content);
-		$content = html_entity_decode($content);
-		$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES)));
+		$content = $this->decode($content);
 		
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
 		{
@@ -273,7 +277,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function transliterate_text($content, $type, $fix_html = true){
-		$content = htmlspecialchars_decode($content);
+		$content = $this->decode($content);
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
 		{
 			$locale = $this->get_locale();
@@ -327,7 +331,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function is_lat($content){
-		return preg_match('/[\p{Latin}]+/i', $content) !== false;
+		return !$this->is_cyr($content);
 	}
 	
 	/*
@@ -336,7 +340,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function is_cyr($content){
-		return !$this->is_lat($content);
+		return preg_match('/[А-Яа-я]+/u', $content) !== false;
 	}
 	
 	/*

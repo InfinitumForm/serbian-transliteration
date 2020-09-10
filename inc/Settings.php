@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
 /**
  * WP Admin Settings Page
  *
@@ -6,6 +6,11 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
+
+// Include codes
+include_once RSTR_INC . '/settings/sidebar.php';
+include_once RSTR_INC . '/settings/content.php';
+
 if(!class_exists('Serbian_Transliteration_Settings')) :
 class Serbian_Transliteration_Settings extends Serbian_Transliteration
 {
@@ -22,6 +27,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         $this->add_action( 'admin_menu', 'add_plugin_page' );
         $this->add_action( 'admin_init', 'page_init' );
 		$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
+		
+		Serbian_Transliteration_Settings_Sidebar::instance( $this );
+		Serbian_Transliteration_Settings_Content::instance( $this );
     }
 	
 	/**
@@ -29,6 +37,21 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
 	public function enqueue_scripts () {
 		wp_register_style( 'serbian-transliteration', RSTR_ASSETS . '/css/serbian-transliteration.css', 1, (string)RSTR_VERSION );
+		wp_register_script( 'serbian-transliteration', RSTR_ASSETS . '/js/serbian-transliteration.js', array('jquery'), (string)RSTR_VERSION, true );
+		wp_localize_script(
+			'serbian-transliteration',
+			'RSTR',
+			array(
+				'version' => RSTR_VERSION,
+				'home' => get_bloginfo('wpurl'),
+				'ajax' => admin_url( '/admin-ajax.php' ),
+				'prefix' => RSTR_PREFIX,
+				'label' => array(
+					'progress_loading' => __('Please wait! Do not close the window or leave the page until this operation is completed!', RSTR_NAME),
+					'done' => __('DONE!!!', RSTR_NAME)
+				)
+			)
+		);
 	}
 
     /**
@@ -52,84 +75,23 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     public function create_admin_page()
     {
 		wp_enqueue_style( 'serbian-transliteration');
+		wp_enqueue_script('serbian-transliteration');
         // Set class property
         $this->options = get_option( RSTR_NAME );
         ?>
         <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
-            <h1><?php _e('Transliteration Settings', RSTR_NAME); ?></h1>
+            <h1><?php _e('Transliteration', RSTR_NAME); ?></h1>
 
 			<div id="poststuff" class="metabox-holder has-right-sidebar">
 				<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
 					<div id="side-sortables" class="meta-box-sortables ui-sortable">
-						<!-- BOXES -->
-						
-						
-						<div class="postbox">
-							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span>INFINITUM FORM®</span></h3><hr>
-							<div class="inside">
-							<?php
-								printf('<p>%s</p>', __('Hire professional developers, designers, SEO masters and marketing ninjas in one place.', RSTR_NAME));
-								printf('<p><a href="%1$s" target="_blank">%2$s</a></p>', 'https://infinitumform.com/', __('Read more...', RSTR_NAME));
-							?>
-							</div>
-						</div>
-						
-						<div class="postbox">
-							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Need CLOUD HOSTING ???', RSTR_NAME); ?></span></h3><hr>
-							<div class="inside">
-							<?php
-								printf('<p>%s</p>', __('If you need hosting for your personal needs, for business, any web applications, cloud or dedicated servers, we have the ideal solution for you!', RSTR_NAME));
-								printf('<p><a href="%1$s" target="_blank">%2$s</a></p>', 'https://www.draxhost.com/checkout/aff.php?aff=1', __('Read more...', RSTR_NAME));
-							?>
-							</div>
-						</div>
-						<?php if($plugin_info = $this->plugin_info(array('contributors' => true, 'donate_link' => true))) : ?>
-						<div class="postbox" id="contributors">
-							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Contributors & Developers', RSTR_NAME); ?></span></h3><hr>
-							<div class="inside flex">
-								<?php foreach($plugin_info->contributors as $username => $info) : $info = (object)$info; ?>
-								<div class="contributor contributor-<?php echo $username; ?>" id="contributor-<?php echo $username; ?>">
-									<a href="<?php echo esc_url($info->profile); ?>" target="_blank">
-										<img src="<?php echo esc_url($info->avatar); ?>">
-										<h3><?php echo $info->display_name; ?></h3>
-									</a>
-								</div>
-								<?php endforeach; ?>
-							</div>
-							<div class="inside">
-								<?php printf('<p>%s</p>', sprintf(__('If you want to support our work and effort, if you have new ideas or want to improve the existing code, %s.', RSTR_NAME), '<a href="https://github.com/CreativForm/serbian-transliteration" target="_blank">' . __('join our team', RSTR_NAME) . '</a>')); ?>
-								<?php printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>')); ?>
-							</div>
-						</div>
-						<?php endif; ?>
+						<?php do_action('serbian_transliteration_settings_sidebar', $this); ?>
 					</div>
 				</div>
 			 
 				<div id="post-body">
 					<div id="post-body-content">
-
-						<form method="post" action="<?php echo esc_url(admin_url('/options.php')); ?>" id="<?php echo RSTR_NAME; ?>-settings-form">
-						<?php
-							// This prints out all hidden setting fields
-							settings_fields( RSTR_NAME . '-group' );
-							settings_fields( RSTR_NAME . '-search' );
-							do_settings_sections( RSTR_NAME );
-							submit_button();
-						?>
-						</form>
-
-						<div>
-							<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h3><hr>
-							<div class="inside">
-								<h4 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h4>
-								<code>[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]</code>
-								<br><br>
-								<h4 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h4>
-								<code>[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]</code>
-								<?php printf('<p>%s</p>', __('This shortcodes work independently of the plugin settings and can be used anywhere within WordPress pages, posts, taxonomies and widgets (if they support it).', RSTR_NAME)); ?>
-							</div>
-						</div>
-						
+						<?php do_action('serbian_transliteration_settings_content', $this); ?>
 					</div>
 				</div>
 				<br class="clear">
