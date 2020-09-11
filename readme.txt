@@ -1,18 +1,18 @@
 ﻿=== Transliteration - WordPress Transliteration ===
 Contributors: ivijanstefan, creativform, dizajn24
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
-Tags: cyrillic, latin, transliteration, latinisation, serbian, letter, script, multilanguage, wpml-compatible, gutenberg, elementor
-Requires at least: 3.0
+Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, wpml-compatible, gutenberg, elementor
+Requires at least: 5.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
 
 == Description ==
-This is a simple and easy plugin with which you can translate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. Serbian transliteration also supports special shortcodes that you can use to partially translate parts of the content.
+This is a simple and easy plugin with which you can translate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration also supports special shortcodes that you can use to partially translate parts of the content.
 
 = FEATURES =
 
@@ -39,6 +39,8 @@ This is a simple and easy plugin with which you can translate your WordPress ins
 * **Montenegrin latinisation** - Montenegrin language (follows the rules of the Serbian language with additional special characters)
 * **Russian latinisation** - Russian language (by locale:**ru_RU**)
 * **Belarusian latinisation** - Belarusian language (by locale:**bel**)
+* **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
+* **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
 * more languages are coming soon...
 
 = PLUGINS SUPPORT =
@@ -61,14 +63,14 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Installation ==
 
-1. Go to `WP-Admin->Plugins->Add new`, search term "Serbian Transliteration" and click on the "install" button
+1. Go to `WP-Admin->Plugins->Add new`, search term "WordPress Transliteration" and click on the "install" button
 2. OR, upload **serbian-transliteration.zip** to `/wp-content/plugins` directory via WordPress admin panel or upload unzipped folder to your plugins folder via FTP
 3. Activate the plugin through the "Plugins" menu in WordPress
 4. Go to `Settings->Transliteration` to update options
 
 == Screenshots ==
 
-1. Serbian transliteration settings
+1. Transliteration settings
 2. Cyrillic page before serbian transliteration
 3. Latin page after serbian transliteration
 4. Shortcodes
@@ -76,6 +78,13 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 6. Permalink tools
 
 == Changelog ==
+
+= 1.0.7 =
+* New UX
+* Added Bulgarian language
+* Added Macedonian language
+* Added new locales
+* Added new schema of the letters
 
 = 1.0.6 =
 * NEW: A tool for automatic transliteration of permalink in a database
@@ -117,12 +126,12 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Upgrade Notice ==
 
-= 1.0.5 =
-* Added option to allow Cyrillic usernames
-* Added RSS feed transliteration
-* Added SEO transliteration
-* Added support for the visual editors
-* Improved page speed
+= 1.0.7 =
+* New UX
+* Added Bulgarian language
+* Added Macedonian language
+* Added new locales
+* Added new schema of the letters
 
 == Frequently Asked Questions ==
 
@@ -142,4 +151,4 @@ YES! This plugin can translate a Latin site into Cyrillic, but this is not recom
 
 == DONATION ==
 
-Enjoy using *Serbian Transliteration*? Please consider [making a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com) to support the project's continued development.
+Enjoy using *WordPress Transliteration*? Please consider [making a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com) to support the project's continued development.

@@ -52,7 +52,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				$mode = ucfirst($options['mode']);
 				$class_require = "Serbian_Transliteration_Mode_{$mode}";
 				$path_require = "Mode_{$mode}";
-				$path = apply_filters('serbian_transliteration_class_mode_path', RSTR_INC, $class_require, $options['mode']);
+				$path = apply_filters('serbian-transliteration/mode/path', RSTR_INC, $class_require, $options['mode']);
 				
 				if(file_exists($path . "/{$path_require}.php"))
 				{
@@ -96,7 +96,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			=========================================*/
 			if(isset($options['exclude-latin-words']) && !empty($options['exclude-latin-words']))
 			{
-				add_filter('serbian_transliteration_cyr_exclude_list', function($list) use ($options){
+				add_filter('serbian-transliteration/init/exclude/cyr', function($list) use ($options){
 					$array = array();
 					if($split = preg_split('/[\n|]/', $options['exclude-latin-words']))
 					{
@@ -113,7 +113,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			
 			if(isset($options['exclude-cyrillic-words']) && !empty($options['exclude-cyrillic-words']))
 			{
-				add_filter('serbian_transliteration_lat_exclude_list', function($list) use ($options){
+				add_filter('serbian-transliteration/init/exclude/lat', function($list) use ($options){
 					$array = array();
 					if($split = preg_split('/[\n|]/', $options['exclude-cyrillic-words']))
 					{

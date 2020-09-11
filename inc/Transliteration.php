@@ -68,9 +68,9 @@ class Serbian_Transliteration_Transliterating {
 		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/ru_RU', array(
 			// Variations and special characters
 			'Ё'=>'Yo',	'Ж'=>'Zh',	'Х'=>'Kh',	'Ц'=>'Ts',	'Ч'=>'Ch',
-			'Ш'=>'Sh',	'Щ'=>'Sch',	'Ю'=>'Yu',	'Я'=>'Ya',	'ё'=>'yo',
+			'Ш'=>'Sh',	'Щ'=>'Shch','Ю'=>'Ju',	'Я'=>'Ja',	'ё'=>'yo',
 			'ж'=>'zh',	'х'=>'kh',	'ц'=>'ts',	'ч'=>'ch',	'ш'=>'sh',
-			'щ'=>'sch',	'ю'=>'yu',	'я'=>'ya',
+			'щ'=>'shch','ю'=>'ju',	'я'=>'ja',
 			
 			// All other letters
 			'А'=>'A',	'Б'=>'B',	'В'=>'V',	'Г'=>'G',	'Д'=>'D', 
@@ -172,6 +172,101 @@ class Serbian_Transliteration_Transliterating {
 	}
 	
 	/*
+	 * Bulgarian transliteration
+	 * @since     1.0.7
+	 * @verson    1.0.0
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function bg_BG ($content, $translation = 'cyr_to_lat')
+	{
+		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bg_BG', array (
+			// Variations and special characters
+			'Ж' => 'Zh',	'ж' => 'zh',	'Ц' => 'Ts',	'ц' => 'ts',	'Ч' => 'Ch',
+			'ч' => 'ch',	'Ш' => 'Sh',	'ш' => 'sh',	'Щ' => 'Sht',	'щ' => 'sht',
+			'Ю' => 'Yu',	'ю' => 'yu',	'Я' => 'Ya',	'я' => 'ya',
+			
+			// All other letters
+			'А' => 'A',		'а' => 'a',		'Б' => 'B',		'б' => 'b',		'В' => 'V',
+			'в' => 'v',		'Г' => 'G',		'г' => 'g',		'Д' => 'D',		'д' => 'd',
+			'Е' => 'E',		'е' => 'e',		'З' => 'Z',		'з' => 'z',		'И' => 'I',
+			'и' => 'i',		'Й' => 'J',		'й' => 'j',		'К' => 'K',		'к' => 'k',
+			'Л' => 'L',		'л' => 'l',		'М' => 'M',		'м' => 'm',		'Н' => 'N',
+			'н' => 'n',		'О' => 'O',		'о' => 'o',		'П' => 'P',		'п' => 'p',
+			'Р' => 'R',		'р' => 'r',		'С' => 'S',		'с' => 's',		'Т' => 'T',
+			'т' => 't',		'У' => 'U',		'у' => 'u',		'Ф' => 'F',		'ф' => 'f',
+			'Х' => 'H',		'х' => 'h',		'Ъ' => 'Ǎ',		'ъ' => 'ǎ',		'Ь' => '',
+			'ь' => ''
+		));
+		
+		switch($translation)
+		{
+			case 'cyr_to_lat' :
+				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				break;
+				
+			case 'lat_to_cyr' :
+				$transliteration = array_filter($transliteration, function($t){
+					return $t != '';
+				});
+				$transliteration = array_flip($transliteration);
+				$transliteration = array_merge($transliteration, array(
+					'ZH'=>'Ж',	'TS'=>'Ц',	'CH'=>'Ч',	'SH'=>'Ш',	'SHT'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
+				));
+				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bg_BG/lat_to_cyr', $transliteration);
+				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				break;
+		}
+	}
+	
+	/*
+	 * Macedonian transliteration
+	 * @since     1.0.7
+	 * @verson    1.0.0
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function mk_MK ($content, $translation = 'cyr_to_lat')
+	{
+		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/mk_MK', array (
+			// Variations and special characters
+			'Ѓ' => 'Gj',	'ѓ' => 'gj',	'Ѕ' => 'Dz',	'ѕ' => 'dz',	'Њ' => 'Nj',
+			'њ' => 'nj',	'Љ' => 'Lj',	'љ' => 'lj',	'Ќ' => 'Kj',	'ќ' => 'kj',
+			'Ч' => 'Ch',	'ч' => 'ch',	'Џ' => 'Dj',	'џ' => 'dj',	'Ж' => 'Zh',
+			'ж' => 'Zh',	'Ш' => 'Sh',	'ш' => 'sh',
+			
+			// All other letters
+			'А' => 'A',		'а' => 'a',		'Б' => 'B',		'б' => 'b',		'В' => 'V',
+			'в' => 'v',		'Г' => 'G',		'г' => 'g',		'Д' => 'D',		'д' => 'd',
+			'Е' => 'E',		'е' => 'e',		'З' => 'Z',		'з' => 'z',		'И' => 'I',
+			'и' => 'i',		'J' => 'J',		'j' => 'j',		'К' => 'K',		'к' => 'k',
+			'Л' => 'L',		'л' => 'l',		'М' => 'M',		'м' => 'm',		'Н' => 'N',
+			'н' => 'n',		'О' => 'O',		'о' => 'o',		'П' => 'P',		'п' => 'p',
+			'Р' => 'R',		'р' => 'r',		'С' => 'S',		'с' => 's',		'Т' => 'T',
+			'т' => 't',		'У' => 'U',		'у' => 'u',		'Ф' => 'F',		'ф' => 'f',
+			'Х' => 'H',		'х' => 'h',		'Ъ' => 'Ǎ',		'ъ' => 'ǎ'
+		));
+		
+		switch($translation)
+		{
+			case 'cyr_to_lat' :
+				$sRe = '/(?<=^|\s|\'|’|[IЭЫAУО])';
+				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				break;
+				
+			case 'lat_to_cyr' :
+				$transliteration = array_filter($transliteration, function($t){
+					return $t != '';
+				});
+				$transliteration = array_flip($transliteration);
+				$transliteration = array_merge($transliteration, array(
+					'ZH'=>'Ж', 'GJ' => 'Ѓ', 'CH'=>'Ч', 'SH'=>'Ш', 'Dz' => 'Ѕ', 'Nj' => 'Њ', 'Lj' => 'Љ', 'KJ' => 'Ќ', 'DJ' => 'Џ' 
+				));
+				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/mk_MK/lat_to_cyr', $transliteration);
+				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				break;
+		}
+	}
+	
+	/*
 	 * Get latin letters in array
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
@@ -249,7 +344,7 @@ class Serbian_Transliteration_Transliterating {
 		} else return false;
 		
 		if($needle) {
-			return (in_array($needle, $locales) !== false ? $needle : false);
+			return (in_array($needle, $locales, true) !== false ? $needle : false);
 		} else {
 			return $locales;
 		}
@@ -261,7 +356,7 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_exclude_list(){
-		return apply_filters('serbian_transliteration_cyr_exclude_list', array());
+		return apply_filters('serbian-transliteration/init/exclude/cyr', array());
 	}
 	
 	/*
@@ -270,7 +365,7 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_exclude_list(){
-		return apply_filters('serbian_transliteration_lat_exclude_list', array());
+		return apply_filters('serbian-transliteration/init/exclude/lat', array());
 	}
 }
 endif;

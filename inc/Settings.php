@@ -81,22 +81,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         ?>
         <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
             <h1><?php _e('Transliteration', RSTR_NAME); ?></h1>
-
-			<div id="poststuff" class="metabox-holder has-right-sidebar">
-				<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
-					<div id="side-sortables" class="meta-box-sortables ui-sortable">
-						<?php do_action('serbian_transliteration_settings_sidebar', $this); ?>
-					</div>
-				</div>
-			 
-				<div id="post-body">
-					<div id="post-body-content">
-						<?php do_action('serbian_transliteration_settings_content', $this); ?>
-					</div>
-				</div>
-				<br class="clear">
-			</div>
-
+			<?php do_action('serbian-transliteration/settings/content', $this); ?>
         </div>
         <?php
     }

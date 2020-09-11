@@ -10,8 +10,8 @@ if(!class_exists('Serbian_Transliteration_Requirements')) :
 class Serbian_Transliteration_Requirements extends Serbian_Transliteration
 {
     private $title = 'Serbian Transliteration';
-	private $php = '5.6.0';
-	private $wp = '3.0';
+	private $php = '7.0';
+	private $wp = '5.0';
 	private $file;
 
 	public function __construct( $args ) {

@@ -8,7 +8,7 @@
  * Plugin Name:       Transliteration - WordPress Transliteration
  * Plugin URI:        http://infinitumform.com/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.0.6
+ * Version:           1.0.7
  * Author:            INFINITUM FORM
  * Author URI:        https://infinitumform.com/
  * License:           GPL-2.0+
@@ -129,9 +129,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function plugin_mode($mode=NULL){
 		$modes = apply_filters('serbian_transliteration_plugin_mode', array(
-			'standard' => __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
-			'advanced' => __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
-			'forced' => __('Forced transliteration (everything)', RSTR_NAME)
+			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
+			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
+			'forced'	=> __('Forced transliteration (everything)', RSTR_NAME)
 		));
 		
 		if($mode && isset($modes[$mode])){
@@ -148,9 +148,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function transliteration_mode($mode=NULL){
 		$modes = apply_filters('serbian_transliteration_transliteration_mode', array(
-			'none' => __('Transliteration disabled', RSTR_NAME),
-			'cyr_to_lat' => __('Cyrillic to Latin', RSTR_NAME),
-			'lat_to_cyr' => __('Latin to Cyrillic', RSTR_NAME)
+			'none'			=> __('Transliteration disabled', RSTR_NAME),
+			'cyr_to_lat'	=> __('Cyrillic to Latin', RSTR_NAME),
+			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
 		));
 		
 		if($mode && isset($modes[$mode])){

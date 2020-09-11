@@ -15,9 +15,21 @@
 	padding-right:15px;
 }
 
+#serbian-transliteration-settings .rstr-tab-wrapper > #post-body-content{
+	margin-top:10px;
+	margin-bottom: 20px;
+	padding-bottom:15px;
+	max-width: 98%;
+}
+
 #serbian-transliteration-settings #post-body-content{
-	border-right: 1px solid #ddd;
-	box-shadow: 1px 0 0 #fafafa
+	min-width: 255px;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    background: #fff;
+    padding: 5px 15px;
+	margin-bottom: 20px;
+	padding-bottom:15px;
 }
 
 #serbian-transliteration-settings #post-body-content label + br{
