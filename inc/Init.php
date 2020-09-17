@@ -48,6 +48,17 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		}
 	}
 	
+	public function set_cookie($options){
+		if( !(isset($_COOKIE['rstr_script'])) )
+		{
+			if($options['transliteration-mode'] == 'cyr_to_lat') {
+				$this->setcookie('lat');
+			} else if($options['transliteration-mode'] == 'lat_to_cyr') {
+				$this->setcookie('cyr');
+			}
+		}
+	}
+	
 	public function admin_head(){ ?>
 <style>#rstr-script-adder{display:none !important;}</style>
 	<?php }
@@ -88,6 +99,9 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		{
 			if($options['transliteration-mode'] != 'none')
 			{
+				// Set cookie
+				$inst->set_cookie($options);
+		
 				$mode = ucfirst($options['mode']);
 				$class_require = "Serbian_Transliteration_Mode_{$mode}";
 				$path_require = "Mode_{$mode}";

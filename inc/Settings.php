@@ -27,7 +27,31 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         $this->add_action( 'admin_menu', 'add_plugin_page' );
         $this->add_action( 'admin_init', 'page_init' );
 		$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
+		$this->add_action( 'plugin_action_links_' . RSTR_BASENAME, 'action_links' );
+		$this->add_action( 'plugin_row_meta', 'row_meta_links', 10, 2);
     }
+	
+	function action_links( $links ) {
+
+		$links = array_merge( array(
+			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration' ) ) . '">' . __( 'Settings', RSTR_NAME ) . '</a>',
+			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=permalink_tool' ) ) . '">' . __( 'Permalink Tool', RSTR_NAME ) . '</a>'
+		), $links );
+
+		return $links;
+
+	}
+	
+	function row_meta_links( $links, $file ) {
+		if ( RSTR_BASENAME == $file ) {
+			return array_merge( $links, array(
+				'rstr-shortcodes' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=shortcodes' ) ) . '">' . __( 'Shortcodes', RSTR_NAME ) . '</a>',
+				'rstr-functions' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=functions' ) ) . '">' . __( 'PHP Functions', RSTR_NAME ) . '</a>',
+				'rstr-review' => '<a href="https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post" target="_blank">' . __( '5 stars?', RSTR_NAME ) . '</a>'
+			));
+		}
+		return $links;
+	}
 	
 	/**
      * Enqueue scripts
@@ -198,13 +222,13 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME . '-search' // Section           
         );
 		
-		$this->add_settings_field(
+		/*$this->add_settings_field(
             'search-mode', // ID
             __('Search mode', RSTR_NAME), // Title 
             'search_mode_callback', // Callback
             RSTR_NAME, // Page
             RSTR_NAME . '-search' // Section           
-        );
+        );*/
     }
 
     /**
@@ -438,7 +462,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Approve if you want transliteration for the search field.', RSTR_NAME));
 	}
 	
-	public function search_mode_callback()
+	/*public function search_mode_callback()
 	{
 		$inputs = array();
 		
@@ -456,6 +480,6 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join('<br>', $inputs), __('Select the search mode according to your WordPress setup.', RSTR_NAME));
-	}
+	}*/
 }
 endif;

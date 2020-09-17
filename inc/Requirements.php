@@ -21,7 +21,7 @@ class Serbian_Transliteration_Requirements extends Serbian_Transliteration
 			}
 		}
 		
-		$this->add_action( 'in_plugin_update_message-serbian-transliteration/serbian-transliteration.php', 'in_plugin_update_message', 10, 2 );
+		$this->add_action( 'in_plugin_update_message-' . RSTR_BASENAME, 'in_plugin_update_message', 10, 2 );
 	}
 	
 	function in_plugin_update_message($args, $response) {

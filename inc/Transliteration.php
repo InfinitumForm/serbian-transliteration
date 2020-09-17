@@ -10,7 +10,7 @@ if(!class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration_Transliterating {
 	// Define locale instance
 	protected $get_locale;
-	
+
 	/*
 	 * Serbian transliteration
 	 * @since     1.0.2

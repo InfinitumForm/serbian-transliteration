@@ -12,10 +12,12 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 	private $options;
 	
 	function __construct($options){
+		
 		$this->options = $options;
 		$transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
-		
+
 		$filters = array(
+			'comments_template' 			=> 'content',
 			'the_content' 					=> 'content',
 			'the_title' 					=> 'content',
 			'wp_nav_menu_items' 			=> 'content',
@@ -50,27 +52,15 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			if(!is_admin())
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-				
-				$this->add_action('wp_loaded', 'output_buffer_start', 999);
-				$this->add_action('shutdown', 'output_buffer_end', 999);
-				
-				$this->add_action('rss_head', 'rss_output_buffer_start', 999);
-				$this->add_action('rss_footer', 'rss_output_buffer_end', 999);
-				
-				$this->add_action('rss2_head', 'rss_output_buffer_start', 999);
-				$this->add_action('rss2_footer', 'rss_output_buffer_end', 999);
-				
-				$this->add_action('rdf_head', 'rss_output_buffer_start', 999);
-				$this->add_action('rdf_footer', 'rss_output_buffer_end', 999);
-				
-				$this->add_action('atom_head', 'rss_output_buffer_start', 999);
-				$this->add_action('atom_footer', 'rss_output_buffer_end', 999);
 			}
 		}
 		else
 		{
 			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-			
+		}
+		
+		if(!is_admin())
+		{
 			$this->add_action('wp_loaded', 'output_buffer_start', 999);
 			$this->add_action('shutdown', 'output_buffer_end', 999);
 			

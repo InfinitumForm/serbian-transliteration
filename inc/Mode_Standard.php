@@ -10,11 +10,12 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 {
 	private $options;
-	
+
 	function __construct($options){
 		$this->options = $options;
 		
 		$filters = array(
+			'comments_template' 	=> 'content',
 			'the_content' 			=> 'content',
 			'the_title' 			=> 'content',
 			'the_date' 				=> 'content',

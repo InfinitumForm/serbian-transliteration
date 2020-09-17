@@ -6,11 +6,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Transliteration - WordPress Transliteration
- * Plugin URI:        http://infinitumform.com/
+ * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Version:           1.0.8
- * Author:            INFINITUM FORM
- * Author URI:        https://infinitumform.com/
+ * Author:            Ivijan-Stefan Stipić
+ * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       serbian-transliteration
@@ -80,9 +80,11 @@ if ( strrpos(WP_CONTENT_DIR, '/wp-content/', 1) !== false) {
 } else {
     $WP_ADMIN_DIR = substr(WP_CONTENT_DIR, 0, -11) . '/wp-admin';
 }
-if (!defined('WP_ADMIN_DIR')) define('WP_ADMIN_DIR', $WP_ADMIN_DIR);
+if (!defined('WP_ADMIN_DIR')) 			define('WP_ADMIN_DIR', $WP_ADMIN_DIR);
 // Main plugin file
 if ( ! defined( 'RSTR_FILE' ) )			define( 'RSTR_FILE', __FILE__ );
+// Plugin basename
+if ( ! defined( 'RSTR_BASENAME' ) )		define( 'RSTR_BASENAME', plugin_basename( RSTR_FILE ));
 // Plugin root
 if ( ! defined( 'RSTR_ROOT' ) )			define( 'RSTR_ROOT', rtrim(plugin_dir_path(RSTR_FILE), '/') );
 // Plugin URL root
@@ -103,9 +105,9 @@ if(function_exists('get_file_data') && $plugin_data = get_file_data( RSTR_FILE, 
 	$RSTR_version = $plugin_data['Version'];
 if(!$RSTR_version && preg_match('/\*[\s\t]+?version:[\s\t]+?([0-9.]+)/i', file_get_contents( RSTR_FILE ), $v))
 	$RSTR_version = $v[1];
-if ( ! defined( 'RSTR_VERSION' ) )			define( 'RSTR_VERSION', $RSTR_version);
+if ( ! defined( 'RSTR_VERSION' ) )		define( 'RSTR_VERSION', $RSTR_version);
 // Plugin session prefix (controlled by version)
-if ( ! defined( 'RSTR_PREFIX' ) )		define( 'RSTR_PREFIX', RSTR_TABLE . '_' . preg_replace("/[^0-9]/Ui", '', RSTR_VERSION) . '_');
+if ( ! defined( 'RSTR_PREFIX' ) )		define( 'RSTR_PREFIX', RSTR_TABLE . '_' . preg_replace("~[^0-9]~Ui", '', RSTR_VERSION) . '_');
 
 /*
  * Serbian transliteration requirements
@@ -899,12 +901,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function set_current_script(){
 		if(isset($_REQUEST['rstr']))
 		{
-			if(in_array($_REQUEST['rstr'], array('lat', 'cyr'), true) !== false)
+			if(in_array($_REQUEST['rstr'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
 			{
 				$this->setcookie($_REQUEST['rstr']);
-				
-				global $wp;
-				if(wp_safe_redirect(home_url( preg_replace('([?&]rstr\=(lat|cyr))/i', '', $wp->request) ))){
+
+				if(wp_safe_redirect( preg_replace('~([?&]rstr\=(lat|cyr))~i', '', $this->get_current_url()) )){
 					if(function_exists('nocache_headers')) nocache_headers();
 					exit;
 				}
@@ -915,6 +916,18 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
 	public function setcookie ($val){
 		setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
+	}
+	
+	
+	/*
+	 * Get current URL
+	 * @since     1.0.9
+	 * @verson    1.0.0
+	*/
+	function get_current_url()
+	{
+		global $wp;
+		return add_query_arg( array(), home_url( $wp->request ) );
 	}
 	
 	/* 
@@ -973,16 +986,38 @@ if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Acti
 		Serbian_Transliteration::attachment_taxonomies();
 		
 		// Add activation date
-		if($activation = get_site_option(RSTR_NAME . '-activation')) {
+		if($activation = get_option(RSTR_NAME . '-activation')) {
 			$activation[] = date('Y-m-d H:i:s');
-			update_site_option(RSTR_NAME . '-activation', $activation);
+			update_option(RSTR_NAME . '-activation', $activation);
 		} else {
-			add_site_option(RSTR_NAME . '-activation', array(date('Y-m-d H:i:s')));
+			add_option(RSTR_NAME . '-activation', array(date('Y-m-d H:i:s')));
 		}
 		
 		// Generate unique ID
 		if(!get_option(RSTR_NAME . '-ID')) {
-			add_site_option(RSTR_NAME . '-ID', Serbian_Transliteration::generate_token(64));
+			add_option(RSTR_NAME . '-ID', Serbian_Transliteration::generate_token(64));
+		}
+		
+		// Set default pharams
+		if(!get_option(RSTR_NAME)) {
+			add_option(RSTR_NAME, array(
+				'site-script'				=>	'cyr',
+				'transliteration-mode'		=>	'cyr_to_lat',
+				'mode'						=>	'advanced',
+				'avoid-admin'				=>	'yes',
+				'allow-cyrillic-usernames'	=>	'no',
+				'media-transliteration'		=>	'yes',
+				'permalink-transliteration'	=>	'yes',
+				'exclude-latin-words'		=>	'',
+				'exclude-cyrillic-words'	=>	'',
+				'enable-search'				=>	'no'
+			));
+		}
+		
+		// Set important cookie
+		if( !(isset($_COOKIE['rstr_script'])) )
+		{
+			Serbian_Transliteration::__instance()->setcookie('lat');
 		}
 		
 		// Add custom script languages
@@ -1002,11 +1037,11 @@ if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Acti
 	====================================*/
 	Serbian_Transliteration::register_deactivation_hook(function(){
 		// Add deactivation date
-		if($deactivation = get_site_option(RSTR_NAME . '-deactivation')) {
+		if($deactivation = get_option(RSTR_NAME . '-deactivation')) {
 			$deactivation[] = date('Y-m-d H:i:s');
-			update_site_option(RSTR_NAME . '-deactivation', $deactivation);
+			update_option(RSTR_NAME . '-deactivation', $deactivation);
 		} else {
-			add_site_option(RSTR_NAME . '-deactivation', array(date('Y-m-d H:i:s')));
+			add_option(RSTR_NAME . '-deactivation', array(date('Y-m-d H:i:s')));
 		}
 	});
 	
