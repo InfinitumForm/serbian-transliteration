@@ -3,7 +3,7 @@
 Transliteration – WordPress Transliteration
 ========
 
-This is a simple and easy plugin with which you can translate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. Serbian transliteration also supports special shortcodes that you can use to partially translate parts of the content.
+This is a simple and easy plugin with which you can translate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration also supports special shortcodes that you can use to partially translate parts of the content.
 
 ## FEATURES
 
@@ -30,6 +30,8 @@ This is a simple and easy plugin with which you can translate your WordPress ins
 * **Montenegrin latinisation** - Montenegrin language (follows the rules of the Serbian language with additional special characters)
 * **Russian latinisation** - Russian language (by locale:**ru_RU**)
 * **Belarusian latinisation** - Belarusian language (by locale:**bel**)
+* **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
+* **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
 * more languages are coming soon...
 
 ## PLUGINS SUPPORT

@@ -19,7 +19,7 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function sr_RS ($content, $translation = 'cyr_to_lat')
 	{
-		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/sr_RS', array(
+		$transliteration = apply_filters('rstr/inc/transliteration/sr_RS', array(
 			// Variations and special characters
 			'џ'=>'dž',	'Џ'=>'Dž',	'љ'=>'lj',	'Љ'=>'Lj',
 			'њ'=>'nj', 'Њ'=>'Nj',
@@ -40,7 +40,7 @@ class Serbian_Transliteration_Transliterating {
 		
 		switch($translation)
 		{
-			case 'cyr_to_lat' :
+			case 'cyr_to_lat' :			
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 				
@@ -50,7 +50,7 @@ class Serbian_Transliteration_Transliterating {
 				$lat_to_cyr = array_merge($lat_to_cyr, array(
 					'NJ'=>'Њ',	'LJ'=>'Љ',	'DŽ'=>'Џ',	'DJ'=>'Ђ',	'DZ'=>'Ѕ',	'dz'=>'ѕ'
 				));
-				$lat_to_cyr = apply_filters('serbian-transliteration/inc/transliteration/sr_RS/lat_to_cyr', $lat_to_cyr);
+				$lat_to_cyr = apply_filters('rstr/inc/transliteration/sr_RS/lat_to_cyr', $lat_to_cyr);
 				
 				return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
 				break;
@@ -65,7 +65,7 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function ru_RU ($content, $translation = 'cyr_to_lat')
 	{
-		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/ru_RU', array(
+		$transliteration = apply_filters('rstr/inc/transliteration/ru_RU', array(
 			// Variations and special characters
 			'Ё'=>'Yo',	'Ж'=>'Zh',	'Х'=>'Kh',	'Ц'=>'Ts',	'Ч'=>'Ch',
 			'Ш'=>'Sh',	'Щ'=>'Shch','Ю'=>'Ju',	'Я'=>'Ja',	'ё'=>'yo',
@@ -99,7 +99,7 @@ class Serbian_Transliteration_Transliterating {
 				$transliteration = array_merge($transliteration, array(
 					'CH'=>'Ч',	'YO'=>'Ё',	'ZH'=>'Ж',	'KH'=>'Х',	'TS'=>'Ц',	'Sh'=>'Ш',	'SCH'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
 				));
-				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/ru_RU/lat_to_cyr', $transliteration);
+				$transliteration = apply_filters('rstr/inc/transliteration/ru_RU/lat_to_cyr', $transliteration);
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
@@ -113,7 +113,7 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function bel ($content, $translation = 'cyr_to_lat')
 	{
-		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bel', array (
+		$transliteration = apply_filters('rstr/inc/transliteration/bel', array (
 			// Variations and special characters
 			'ДЖ'=>'Dž',	'ДЗ'=>'Dz',	'Ё'=>'Io',	'Е'=>'Ie',
 			'Х'=>'Ch',	'Ю'=>'Iu',	'Я'=>'Ia',	'дж'=>'dž',
@@ -165,7 +165,7 @@ class Serbian_Transliteration_Transliterating {
 				$transliteration = array_merge($transliteration, array(
 					'CH'=>'Х',	'DŽ'=>'ДЖ',	'DZ'=>'ДЗ',	'IE'=>'Е',	'IO'=>'Ё',	'IU'=>'Ю',	'IA'=>'Я'
 				));
-				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bel/lat_to_cyr', $transliteration);
+				$transliteration = apply_filters('rstr/inc/transliteration/bel/lat_to_cyr', $transliteration);
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
@@ -179,7 +179,7 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function bg_BG ($content, $translation = 'cyr_to_lat')
 	{
-		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bg_BG', array (
+		$transliteration = apply_filters('rstr/inc/transliteration/bg_BG', array (
 			// Variations and special characters
 			'Ж' => 'Zh',	'ж' => 'zh',	'Ц' => 'Ts',	'ц' => 'ts',	'Ч' => 'Ch',
 			'ч' => 'ch',	'Ш' => 'Sh',	'ш' => 'sh',	'Щ' => 'Sht',	'щ' => 'sht',
@@ -212,7 +212,7 @@ class Serbian_Transliteration_Transliterating {
 				$transliteration = array_merge($transliteration, array(
 					'ZH'=>'Ж',	'TS'=>'Ц',	'CH'=>'Ч',	'SH'=>'Ш',	'SHT'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
 				));
-				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/bg_BG/lat_to_cyr', $transliteration);
+				$transliteration = apply_filters('rstr/inc/transliteration/bg_BG/lat_to_cyr', $transliteration);
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
@@ -226,7 +226,7 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function mk_MK ($content, $translation = 'cyr_to_lat')
 	{
-		$transliteration = apply_filters('serbian-transliteration/inc/transliteration/mk_MK', array (
+		$transliteration = apply_filters('rstr/inc/transliteration/mk_MK', array (
 			// Variations and special characters
 			'Ѓ' => 'Gj',	'ѓ' => 'gj',	'Ѕ' => 'Dz',	'ѕ' => 'dz',	'Њ' => 'Nj',
 			'њ' => 'nj',	'Љ' => 'Lj',	'љ' => 'lj',	'Ќ' => 'Kj',	'ќ' => 'kj',
@@ -260,7 +260,7 @@ class Serbian_Transliteration_Transliterating {
 				$transliteration = array_merge($transliteration, array(
 					'ZH'=>'Ж', 'GJ' => 'Ѓ', 'CH'=>'Ч', 'SH'=>'Ш', 'Dz' => 'Ѕ', 'Nj' => 'Њ', 'Lj' => 'Љ', 'KJ' => 'Ќ', 'DJ' => 'Џ' 
 				));
-				$transliteration = apply_filters('serbian-transliteration/inc/transliteration/mk_MK/lat_to_cyr', $transliteration);
+				$transliteration = apply_filters('rstr/inc/transliteration/mk_MK/lat_to_cyr', $transliteration);
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
@@ -273,7 +273,7 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function lat()
 	{
-		return apply_filters('serbian_transliteration_lat_letters', array(
+		return apply_filters('rstr_lat_letters', array(
 			// Variations and special characters
 			'nj', 'NJ', 'Nj', 'Lj', 'Dž', 'Dj', 'DJ', 'dj', 'dz', 'JU', 'ju', 'JA', 'ja' ,'ŠČ' ,'šč',
 			// Big letters
@@ -356,7 +356,7 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_exclude_list(){
-		return apply_filters('serbian-transliteration/init/exclude/cyr', array());
+		return apply_filters('rstr/init/exclude/cyr', array());
 	}
 	
 	/*
@@ -365,7 +365,7 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_exclude_list(){
-		return apply_filters('serbian-transliteration/init/exclude/lat', array());
+		return apply_filters('rstr/init/exclude/lat', array());
 	}
 }
 endif;

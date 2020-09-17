@@ -10,7 +10,6 @@
 if(!class_exists('Serbian_Transliteration_Settings_Content')) :
 class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 {
-	private static $_instance = null;
 	private $obj;
 	private $tab;
 	
@@ -19,26 +18,34 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		$this->obj = $object;
 		$this->tab = ((isset($_GET['tab']) && !empty($_GET['tab'])) ? sanitize_text_field($_GET['tab']) : NULL);
 		
-		$this->add_action('serbian-transliteration/settings/content', 'nav_tab_wrapper');
-		$this->add_action('serbian-transliteration/settings/content', 'tab_content');
+		$this->add_action('rstr/settings/content', 'nav_tab_wrapper');
+		$this->add_action('rstr/settings/content', 'tab_content');
 		
-		$this->add_action('serbian-transliteration/settings/tab', 'nav_tab_settings');
-		$this->add_action('serbian-transliteration/settings/tab', 'nav_tab_permalink_tool');
-		$this->add_action('serbian-transliteration/settings/tab', 'nav_tab_shortcodes');
+		$this->add_action('rstr/settings/tab', 'nav_tab_settings');
+		$this->add_action('rstr/settings/tab', 'nav_tab_permalink_tool');
+		$this->add_action('rstr/settings/tab', 'nav_tab_shortcodes');
+		$this->add_action('rstr/settings/tab', 'nav_tab_functions');
 		
-		if(is_null($this->tab))
+		switch($this->tab)
 		{
-			$this->add_action('serbian-transliteration/settings/tab/content', 'settings_form');
-		}
-		else
-		{
-			$this->add_action('serbian-transliteration/settings/tab/content/settings', 'settings_form');
-			$this->add_action('serbian-transliteration/settings/tab/content/shortcodes', 'available_shortcodes');
-			
-			$this->add_action('serbian-transliteration/settings/tab/content/permalink_tool', 'tab_content_permalink_tool');
+			default:
+				$this->add_action('rstr/settings/tab/content', 'tab_content_settings_form');
+				break;
+			case 'settings':
+				$this->add_action('rstr/settings/tab/content/settings', 'tab_content_settings_form');
+				break;
+			case 'shortcodes':
+				$this->add_action('rstr/settings/tab/content/shortcodes', 'tab_content_available_shortcodes');
+				break;
+			case 'functions':
+				$this->add_action('rstr/settings/tab/content/functions', 'tab_content_available_functions');
+				break;
+			case 'permalink_tool':
+				$this->add_action('rstr/settings/tab/content/permalink_tool', 'tab_content_permalink_tool');
+				break;
 		}
 		
-		$this->add_action( 'wp_ajax_rstr_run_permalink_transliteration', 'ajax__run_permalink_transliteration' );
+		$this->add_action( 'wp_ajax_rstr_run_permalink_transliteration', 'ajax__run_permalink_transliteration');
 	}
 	
 	/*
@@ -46,21 +53,28 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	**/
 	public function nav_tab_settings(){ ?>
 		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=settings'); ?>" class="nav-tab<?php echo is_null($this->tab) || $this->tab == 'settings' ? ' nav-tab-active' : '' ;?>"><?php _e('General Settings', RSTR_NAME); ?></a>
-	<? }
+	<?php }
 	
 	/*
 	 * Nav tab permalink tools
 	**/
 	public function nav_tab_permalink_tool(){ ?>
 		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=permalink_tool'); ?>" class="nav-tab<?php echo $this->tab == 'permalink_tool' ? ' nav-tab-active' : '' ;?>"><?php _e('Permalink Tool', RSTR_NAME); ?></a>
-	<? }
+	<?php }
 	
 	/*
 	 * Nav tab Shortcodes
 	**/
 	public function nav_tab_shortcodes(){ ?>
 		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=shortcodes'); ?>" class="nav-tab<?php echo $this->tab == 'shortcodes' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-shortcodes"><?php _e('Available shortcodes', RSTR_NAME); ?></a>
-	<? }
+	<?php }
+	
+	/*
+	 * Nav tab Functions
+	**/
+	public function nav_tab_functions(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=functions'); ?>" class="nav-tab<?php echo $this->tab == 'functions' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><?php _e('Available PHP functions', RSTR_NAME); ?></a>
+	<?php }
 	
 	/*
 	 * Tab permalink tools content
@@ -71,14 +85,14 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('serbian-transliteration/settings/sidebar/tab/shortcodes', $this); ?>
+				<?php do_action('rstr/settings/sidebar/tab/shortcodes'); ?>
 			</div>
 		</div>
 	 
 		<div id="post-body">
 			<div id="post-body-content">
 				<h1><span><?php _e('Permalink Transliteration Tool', RSTR_NAME); ?></span></h1>
-				<?
+				<?php
 					printf('<p>%s</p>', __('This tool can rename all existing Cyrillic permalinks to Latin inside database.', RSTR_NAME));
 					printf('<p>%s</p>', __('This option is dangerous and can create unexpected problems. Once you run this script, all permalinks in your database will be modified and this can affect on the SEO causing a 404 error.',
 					RSTR_NAME));
@@ -129,13 +143,13 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	/*
 	 * Tab settings form
 	**/
-	public function settings_form(){ ?>
+	public function tab_content_settings_form(){ ?>
 <div class="rstr-tab-wrapper">
 
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('serbian-transliteration/settings/sidebar', $this); ?>
+				<?php do_action('rstr/settings/sidebar'); ?>
 			</div>
 		</div>
 	 
@@ -160,26 +174,123 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	/*
 	 * Available shortcode section
 	**/
-	public function available_shortcodes(){ ?>
+	public function tab_content_available_shortcodes(){ ?>
 <div class="rstr-tab-wrapper">
 
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('serbian-transliteration/settings/sidebar/tab/shortcodes', $this); ?>
+				<?php do_action('rstr/settings/sidebar/tab/shortcodes'); ?>
 			</div>
 		</div>
 	 
 		<div id="post-body">
 			<div id="post-body-content">
-				<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h3><hr>
+				<h1><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h1>
 				<div class="inside">
-					<h4 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h4>
-					<code>[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]</code>
+					<br>
+					<h3 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h3>
+					<p><code>[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]</code></p>
+					<br>
+					<h3 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h3>
+					<p><code>[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]</code></p>
+					<br>
+					<h3 style="margin:0;"><?php _e('Add an image depending on the language script', RSTR_NAME); ?>:</h3>
+					<?php printf('<p>%s</p>', __('With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.', RSTR_NAME)); ?>
+					<p><code>[rstr_img]</code></p>
+					<h4><?php _e('Example', RSTR_NAME); ?>:</h4>
+					<p><code>[rstr_img lat="<?php echo home_url('/logo_latin.jpg') ?>" cyr="<?php echo home_url('/logo_cyrillic.jpg') ?>"]</code></p>
+					<h3><?php _e('Main shortcode parameters', RSTR_NAME); ?>:</h3>
+					<ul>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat', __('URL (src) as shown in the Latin language', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr', __('URL (src) as shown in the Latin Cyrillic', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default', __('(optional) URL (src) to the default image if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
+					</ul>
+					<h3><?php _e('Optional shortcode parameters', RSTR_NAME); ?>:</h3>
+					<ul>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_title', __('(optional) title (alt) description of the image for Cyrillic', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(optional) caption (alt) description of the image for Cyrillic', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_title', __('(optional) title (alt) description of the image for Latin', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(optional) caption (alt) description of the image for Latin', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default_title', __('(optional) title (alt) description of the image if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default_caption', __('(optional) caption (alt) description of the imag if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
+					</ul>
+					<h3><?php _e('Shortcode return', RSTR_NAME); ?>:</h3>
+					<?php printf('<p>%s</p>', __('HTML image corresponding to the parameters set in this shortcode.', RSTR_NAME)); ?>
 					<br><br>
-					<h4 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h4>
-					<code>[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]</code>
-					<?php printf('<p>%s</p>', __('This shortcodes work independently of the plugin settings and can be used anywhere within WordPress pages, posts, taxonomies and widgets (if they support it).', RSTR_NAME)); ?>
+					<?php printf('<p><b>%s</b></p>', __('This shortcodes work independently of the plugin settings and can be used anywhere within WordPress pages, posts, taxonomies and widgets (if they support it).', RSTR_NAME)); ?>
+				</div>
+			</div>
+		</div>
+		<br class="clear">
+	</div>
+
+</div>
+	<?php }
+	
+	/*
+	 * Available functions section
+	**/
+	public function tab_content_available_functions(){
+		wp_enqueue_style( 'highlight');
+		wp_enqueue_script('highlight');
+		?>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+	document.querySelectorAll('code.lang-php').forEach((block) => {
+		hljs.highlightBlock(block);
+	});
+});
+</script>
+<div class="rstr-tab-wrapper">
+
+	<div id="poststuff" class="metabox-holder has-right-sidebar">
+		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
+			<div id="side-sortables" class="meta-box-sortables ui-sortable">
+				<?php do_action('rstr/settings/sidebar/tab/functions'); ?>
+			</div>
+		</div>
+	 
+		<div id="post-body">
+			<div id="post-body-content">
+				<h1><span><?php _e('Available PHP Functions', RSTR_NAME); ?></span></h1>
+				<div class="inside">
+					<br>
+					<h3 style="margin:0;">is_cyrillic_text</h3>
+					<p><code class="lang-php">function is_cyrillic_text(string $content) : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_latin_text</h3>
+					<p><code class="lang-php">function is_latin_text(string $content) : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_already_cyrillic</h3>
+					<?php printf('<p>%s</p>', __('Determines whether the site is already in Cyrillic.', RSTR_NAME)); ?>
+					<p><code class="lang-php">function is_already_cyrillic() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_cyrillic</h3>
+					<p><code class="lang-php">function is_cyrillic() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_latin</h3>
+					<p><code class="lang-php">function is_latin() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_serbian</h3>
+					<p><code class="lang-php">function is_serbian() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_russian</h3>
+					<p><code class="lang-php">function is_russian() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_belarusian</h3>
+					<p><code class="lang-php">function is_belarusian() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_bulgarian</h3>
+					<p><code class="lang-php">function is_bulgarian() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">is_macedonian</h3>
+					<p><code class="lang-php">function is_macedonian() : bool</code></p>
+					<br>
+					<h3 style="margin:0;">transliterate</h3>
+					<?php printf('<p>%s</p>', __('Transliteration of some text or content into the desired script.', RSTR_NAME)); ?>
+					<p><code class="lang-php">function transliterate(string $content, string $type='cyr_to_lat', bool $fix_html = true) : string</code></p>
+					<?php printf('<p>%s</p>', __('The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> (Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)', RSTR_NAME)); ?>
 				</div>
 			</div>
 		</div>
@@ -195,13 +306,13 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	public function tab_content(){ ?>
 <div class="tab-content" id="tab-<?php $this->tab ? printf('%s-%s', RSTR_NAME, $this->tab) : RSTR_NAME; ?>">
 	<?php 
-		do_action('serbian-transliteration/settings/tab/content/before', $this);
+		do_action('rstr/settings/tab/content/before');
 		if(is_null($this->tab)) {
-			do_action('serbian-transliteration/settings/tab/content', $this);
+			do_action('rstr/settings/tab/content');
 		} else {
-			do_action('serbian-transliteration/settings/tab/content/' . $this->tab, $this->tab);
+			do_action('rstr/settings/tab/content/' . $this->tab, $this->tab);
 		}
-		do_action('serbian-transliteration/settings/tab/content/after', $this);
+		do_action('rstr/settings/tab/content/after');
 	?>
 </div>
 	<?php }
@@ -211,7 +322,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	**/
 	public function nav_tab_wrapper(){ ?>
 <nav class="nav-tab-wrapper">
-	<?php do_action('serbian-transliteration/settings/tab', $this);?>
+	<?php do_action('rstr/settings/tab');?>
 </nav>
 	<?php }
 	
@@ -231,7 +342,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		if(isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-run-permalink-transliteration') !== false)
 		{
 			// Posts per page
-			$posts_pre_page = apply_filters('serbian-transliteration/permalink-tool/transliteration/offset', 20);
+			$posts_pre_page = apply_filters('rstr/permalink-tool/transliteration/offset', 20);
 			
 			// Get maximum number of the posts
 			if(isset($_POST['total'])){
@@ -327,17 +438,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		
 		header('Content-Type: application/json');
 		exit(json_encode($data));
-	}
-	
-	/*
-	 * INSTANCE
-	**/
-	public static function instance($object)
-	{
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self($object);
-		}
-		return self::$_instance;
 	}
 }
 endif;

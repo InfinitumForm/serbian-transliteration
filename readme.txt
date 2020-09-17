@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,11 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Changelog ==
 
+= 1.0.8 =
+* PHP 7.4 support
+* Improved PHP code
+* Added caching to the forced transliteration
+
 = 1.0.7 =
 * New UX
 * Added Bulgarian language
@@ -126,12 +131,10 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Upgrade Notice ==
 
-= 1.0.7 =
-* New UX
-* Added Bulgarian language
-* Added Macedonian language
-* Added new locales
-* Added new schema of the letters
+= 1.0.8 =
+* PHP 7.4 support
+* Improved PHP code
+* Added caching to the forced transliteration
 
 == Frequently Asked Questions ==
 

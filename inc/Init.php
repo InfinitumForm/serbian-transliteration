@@ -13,8 +13,8 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	
 	/**
 	 * Get singleton instance of global class
-	 * @since     7.4.0
-	 * @version   7.4.0
+	 * @since     1.0.0
+	 * @version   1.0.0
 	 */
 	private static function get_instance()
 	{
@@ -26,15 +26,54 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		return self::$instance;
 	}
 	
+	/**
+	 * Get singleton instance of global class
+	 * @since     1.0.9
+	 * @version   1.0.0
+	 */
+	public function remove_menu_page() {
+		global $submenu;
+		
+		if(isset($submenu['upload.php']) && is_array($submenu['upload.php']))
+		{
+			foreach($submenu['upload.php'] as $parent=>$locations){
+				if(is_array($locations))
+				{
+					foreach($locations as $i=>$value)
+					{
+						if(strpos($value, 'rstr-script') !== false) unset($submenu['upload.php'][$parent]);
+					}
+				}
+			}
+		}
+	}
+	
+	public function admin_head(){ ?>
+<style>#rstr-script-adder{display:none !important;}</style>
+	<?php }
+	
 	public static function run () {
 		// Load instance
 		$inst = self::get_instance();
 		
+		// Register taxonomy
+		parent::attachment_taxonomies();		
+		
 		if( is_admin() )
 		{
+			// Remove admin menu pages
+			add_action('admin_menu', array($inst, 'remove_menu_page'));
+			// Add soem scripts
+			add_action('admin_head', array($inst, 'admin_head'));
 			// Load settings page
 			include_once RSTR_INC . '/Settings.php';
-			new Serbian_Transliteration_Settings();
+			$Serbian_Transliteration_Settings = new Serbian_Transliteration_Settings();
+			new Serbian_Transliteration_Settings_Sidebar( $Serbian_Transliteration_Settings );
+			new Serbian_Transliteration_Settings_Content( $Serbian_Transliteration_Settings );
+		}
+		else
+		{
+			$inst->set_current_script();
 		}
 		
 		// Load options
@@ -52,7 +91,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				$mode = ucfirst($options['mode']);
 				$class_require = "Serbian_Transliteration_Mode_{$mode}";
 				$path_require = "Mode_{$mode}";
-				$path = apply_filters('serbian-transliteration/mode/path', RSTR_INC, $class_require, $options['mode']);
+				$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
 				
 				if(file_exists($path . "/{$path_require}.php"))
 				{
@@ -96,7 +135,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			=========================================*/
 			if(isset($options['exclude-latin-words']) && !empty($options['exclude-latin-words']))
 			{
-				add_filter('serbian-transliteration/init/exclude/cyr', function($list) use ($options){
+				add_filter('rstr/init/exclude/cyr', function($list) use ($options){
 					$array = array();
 					if($split = preg_split('/[\n|]/', $options['exclude-latin-words']))
 					{
@@ -113,7 +152,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			
 			if(isset($options['exclude-cyrillic-words']) && !empty($options['exclude-cyrillic-words']))
 			{
-				add_filter('serbian-transliteration/init/exclude/lat', function($list) use ($options){
+				add_filter('rstr/init/exclude/lat', function($list) use ($options){
 					$array = array();
 					if($split = preg_split('/[\n|]/', $options['exclude-cyrillic-words']))
 					{

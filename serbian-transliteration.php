@@ -8,7 +8,7 @@
  * Plugin Name:       Transliteration - WordPress Transliteration
  * Plugin URI:        http://infinitumform.com/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Author:            INFINITUM FORM
  * Author URI:        https://infinitumform.com/
  * License:           GPL-2.0+
@@ -122,13 +122,15 @@ include_once RSTR_INC . '/Transliteration.php';
 if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
+	private static $__instance = NULL;
+	
 	/*
 	 * Plugin mode
 	 * @return        array/string
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function plugin_mode($mode=NULL){
-		$modes = apply_filters('serbian_transliteration_plugin_mode', array(
+		$modes = apply_filters('rstr_plugin_mode', array(
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
 			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
 			'forced'	=> __('Forced transliteration (everything)', RSTR_NAME)
@@ -147,7 +149,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function transliteration_mode($mode=NULL){
-		$modes = apply_filters('serbian_transliteration_transliteration_mode', array(
+		$modes = apply_filters('rstr_transliteration_mode', array(
 			'none'			=> __('Transliteration disabled', RSTR_NAME),
 			'cyr_to_lat'	=> __('Cyrillic to Latin', RSTR_NAME),
 			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
@@ -160,6 +162,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return $modes;
 	}
 	
+	/*
+	 * Decode content
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
 	public function decode($content){
 		$content = rawurldecode($content);
 		$content = htmlspecialchars_decode($content);
@@ -193,6 +200,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
 			}
 		}
+
 		return $content;
 	}
 	
@@ -204,7 +212,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function cyr_to_lat_sanitize($content){
 		$content = $this->cyr_to_lat($content);
 		
-		$content = strtr($content, apply_filters('serbian_transliteration_cyr_to_lat_sanitize', array(
+		$content = strtr($content, apply_filters('rstr_cyr_to_lat_sanitize', array(
 			'Ć' => 'C',
 			'ć' => 'c',
 			'Č' => 'C',
@@ -267,7 +275,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if($fix_html){
 			$content = $this->fix_cyr_html($content);
 		}
-
+		
 		return $content;
 	}
 	
@@ -322,7 +330,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function already_cyrillic(){
-        return in_array($this->get_locale(), apply_filters('serbian_transliteration_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk'))) !== false;
+        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk'))) !== false;
 	}
 	
 	/*
@@ -330,8 +338,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        boolean
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function is_lat($content){
-		return !$this->is_cyr($content);
+	public function is_lat($c){
+		return preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, ''));
 	}
 	
 	/*
@@ -339,8 +347,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        boolean
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function is_cyr($content){
-		return preg_match('/[А-Яа-я]+/u', $content) !== false;
+	public function is_cyr($c){
+		return preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, ''));
 	}
 	
 	/*
@@ -349,17 +357,17 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function html_tags() {
-		$tags = apply_filters('serbian_transliteration_html_tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
+		$tags = apply_filters('rstr_html_tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
 		$tags_latin = explode(',', $tags);
 		$tags_latin = array_map('trim', $tags_latin);
 		$tags_latin = array_filter($tags_latin);
-		$tags_latin = apply_filters('serbian_transliteration_html_tags_lat', $tags_latin);
+		$tags_latin = apply_filters('rstr_html_tags_lat', $tags_latin);
 		
 		$tags_cyr = $this->lat_to_cyr($tags, false);
 		$tags_cyr = explode(',', $tags_cyr);
 		$tags_cyr = array_map('trim', $tags_cyr);
 		$tags_cyr = array_filter($tags_cyr);
-		$tags_cyr = apply_filters('serbian_transliteration_html_tags_cyr', $tags_cyr);
+		$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
 		
 		return (object)array(
 			'cyr' => $tags_cyr,
@@ -481,7 +489,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	}
 	
 	/*
-	 * Hook for register_activation_hook()
+	 * Hook for register_uninstall_hook()
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function register_uninstall_hook($function){
@@ -680,8 +688,256 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return $plugin_data;
 		}
     }
+	
+	/**
+	* Get current page ID
+	* @autor    Ivijan-Stefan Stipic
+	* @since    1.0.7
+	* @version  1.0.0
+	**/
+	public function get_current_page_ID(){
+		global $post, $wp_query, $wpdb;
+		
+		if(!is_null($wp_query) && isset($wp_query->post) && isset($wp_query->post->ID) && !empty($wp_query->post->ID))
+			return $wp_query->post->ID;
+		else if(function_exists('get_the_id') && !empty(get_the_id()))
+			return get_the_id();
+		else if(!is_null($post) && isset($post->ID) && !empty($post->ID))
+			return $post->ID;
+		else if($this->get('action') == 'edit' && $post = $this->get('post', 'int', false))
+			return $post;
+		else if($p = $this->get('p', 'int', false))
+			return $p;
+		else if($page_id = $this->get('page_id', 'int', false))
+			return $page_id;
+		else if(!is_admin() && $wpdb)
+		{
+			$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
+			$parts = explode('/', $actual_link);
+			if(!empty($parts))
+			{
+				$slug = end($parts);
+				if(!empty($slug))
+				{
+					if($post_id = $wpdb->get_var(
+						$wpdb->prepare(
+							"SELECT ID FROM {$wpdb->posts} 
+							WHERE 
+								`post_status` = %s
+							AND
+								`post_name` = %s
+							AND
+								TRIM(`post_name`) <> ''
+							LIMIT 1",
+							'publish',
+							sanitize_title($slug)
+						)
+					))
+					{
+						return absint($post_id);
+					}
+				}
+			}
+		}
+		else if(!is_admin() && 'page' == get_option( 'show_on_front' ) && !empty(get_option( 'page_for_posts' )))
+			return get_option( 'page_for_posts' );
+
+		return false;
+	}
+	
+	/* 
+	* Generate and clean GET
+	* @name          GET name
+	* @option        string, int, float, bool, html, encoded, url, email
+	* @default       default value
+	*/
+	public function get($name, $option='string', $default=''){
+        $option = trim((string)$option);
+        if(isset($_GET[$name]) && !empty($_GET[$name]))
+        {           
+            if(is_array($_GET[$name]))
+                $is_array=true;
+            else
+                $is_array=false;
+            
+            if( is_numeric( $option ) || empty( $option ) ) return $default;
+            else $input = $_GET[$name];
+            
+            switch($option)
+            {
+                default:
+                    if($is_array) return array_map( 'sanitize_text_field', $input );
+                    
+                    return sanitize_text_field( $input );
+                break;
+                case 'encoded':
+                    return (!empty($input)?$input:$default);
+                break;
+				case 'url':
+					if($is_array) return array_map( 'esc_url', $input );
+			
+					return esc_url( $input );
+				break;
+				case 'url_raw':
+					if($is_array) return array_map( 'esc_url_raw', $input );
+		
+					return esc_url_raw( $input );
+				break;
+                case 'email':
+                    if($is_array) return array_map( 'sanitize_email', $input );
+                    
+                    return sanitize_email( $input );
+                break;
+                case 'int':
+                    if($is_array) return array_map( 'absint', $input );
+                    
+                    return absint( $input );
+                break;
+                case 'float':
+					if($is_array) return array_map( 'floatval', $input );
+                    
+                    return floatval( $input );
+                break;
+                case 'bool':
+                    if($is_array) return array_map( 'boolval', $input );
+                    
+                    return boolval( $input );
+				break;
+				case 'html_class':
+					if( $is_array ) return array_map( 'sanitize_html_class', $input );
+
+					return sanitize_html_class( $input );
+				break;
+				case 'title':
+					if( $is_array ) return array_map( 'sanitize_title', $input );
+
+					return sanitize_title( $input );
+				break;
+				case 'user':
+					if( $is_array ) return array_map( 'sanitize_user', $input );
+
+					return sanitize_user( $input );
+				break;
+				case 'no_html':
+					if( $is_array ) return array_map( 'wp_filter_nohtml_kses', $input );
+
+					return wp_filter_nohtml_kses( $input );
+				break;
+				case 'post':
+					if( $is_array ) return array_map( 'wp_filter_post_kses', $input );
+
+					return wp_filter_post_kses( $input );
+				break;
+            }
+        }
+        else
+        {
+            return $default;
+        }
+    }
+	
+	/* 
+	* Register language script
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public static function attachment_taxonomies() {
+		register_taxonomy( 'rstr-script', array( 'attachment' ), array(
+			'hierarchical'      => true,
+			'labels'            => array(
+				'name'              => _x( 'Script', 'Language script', RSTR_NAME ),
+				'singular_name'     => _x( 'Script', 'Language script', RSTR_NAME ),
+				'search_items'      => __( 'Search by Script', RSTR_NAME ),
+				'all_items'         => __( 'All Scripts', RSTR_NAME ),
+				'parent_item'       => __( 'Parent Script', RSTR_NAME ),
+				'parent_item_colon' => __( 'Parent Script:', RSTR_NAME ),
+				'edit_item'         => __( 'Edit Script', RSTR_NAME ),
+				'update_item'       => __( 'Update Script', RSTR_NAME ),
+				'add_new_item'      => __( 'Add New Script', RSTR_NAME ),
+				'new_item_name'     => __( 'New Script Name', RSTR_NAME ),
+				'menu_name'         => __( 'Script', RSTR_NAME ),
+			),
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'publicly_queryable'=> false,
+			'show_in_menu'		=> false,
+			'show_in_nav_menus'	=> false,
+			'show_in_rest'		=> false,
+			'show_tagcloud'		=> false,
+			'show_in_quick_edit'=> false
+		) );
+	}
+	
+	/* 
+	* Get current transliteration script
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public function get_current_script($options=array()){		
+		if(isset($_COOKIE['rstr_script']) && !empty($_COOKIE['rstr_script']))
+		{
+			if($_COOKIE['rstr_script'] == 'lat') {
+				if(isset($options['transliteration-mode']) && $options['site-script'] == 'lat') return 'lat';
+		
+				return 'cyr_to_lat';
+			} else if($_COOKIE['rstr_script'] == 'cyr') {
+				if(isset($options['transliteration-mode']) && $options['site-script'] == 'cyr') return 'cyr';
+				
+				return 'lat_to_cyr';
+			}
+		}
+		
+		return (isset($options['transliteration-mode']) && !empty($options['transliteration-mode']) ? $options['transliteration-mode'] : 'none');
+	}
+	
+	/* 
+	* Set current transliteration script
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public function set_current_script(){
+		if(isset($_REQUEST['rstr']))
+		{
+			if(in_array($_REQUEST['rstr'], array('lat', 'cyr'), true) !== false)
+			{
+				$this->setcookie($_REQUEST['rstr']);
+				
+				global $wp;
+				if(wp_safe_redirect(home_url( preg_replace('([?&]rstr\=(lat|cyr))/i', '', $wp->request) ))){
+					if(function_exists('nocache_headers')) nocache_headers();
+					exit;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public function setcookie ($val){
+		setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
+	}
+	
+	/* 
+	* Instance
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public static function __instance()
+	{
+		if ( is_null( self::$__instance ) ) {
+			self::$__instance = new self();
+		}
+		return self::$__instance;
+	}
 }
 endif;
+
+/*
+ * Include functions
+ * @since     1.0.9
+ * @verson    1.0.0
+ */
+include_once RSTR_INC . '/Functions.php';
 
 /*
  * Serbian transliteration requirements
@@ -701,7 +957,7 @@ if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Acti
 	/* Do translations
 	====================================*/
 	add_action('plugins_loaded', function () {
-		$locale = apply_filters( 'plugin_locale', get_locale(), RSTR_NAME );
+		$locale = apply_filters( 'rstr_plugin_locale', get_locale(), RSTR_NAME );
 		if ( $loaded = load_textdomain( RSTR_NAME, RSTR_ROOT . '/languages' . '/' . RSTR_NAME . '-' . $locale . '.mo' ) ) {
 			return $loaded;
 		} else {
@@ -714,6 +970,8 @@ if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Acti
 	Serbian_Transliteration::register_activation_hook(function(){
 		$success = true;
 		
+		Serbian_Transliteration::attachment_taxonomies();
+		
 		// Add activation date
 		if($activation = get_site_option(RSTR_NAME . '-activation')) {
 			$activation[] = date('Y-m-d H:i:s');
@@ -725,6 +983,16 @@ if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Acti
 		// Generate unique ID
 		if(!get_option(RSTR_NAME . '-ID')) {
 			add_site_option(RSTR_NAME . '-ID', Serbian_Transliteration::generate_token(64));
+		}
+		
+		// Add custom script languages
+		if(!term_exists('lat', 'rstr-script'))
+		{
+			wp_insert_term('Latin', 'rstr-script', array('slug'=>'lat'));
+		}
+		if(!term_exists('cyr', 'rstr-script'))
+		{
+			wp_insert_term('Cyrillic', 'rstr-script', array('slug'=>'cyr'));
 		}
 
 	    return $success;	

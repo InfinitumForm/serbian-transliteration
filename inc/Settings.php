@@ -27,19 +27,16 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         $this->add_action( 'admin_menu', 'add_plugin_page' );
         $this->add_action( 'admin_init', 'page_init' );
 		$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
-		
-		Serbian_Transliteration_Settings_Sidebar::instance( $this );
-		Serbian_Transliteration_Settings_Content::instance( $this );
     }
 	
 	/**
      * Enqueue scripts
      */
 	public function enqueue_scripts () {
-		wp_register_style( 'serbian-transliteration', RSTR_ASSETS . '/css/serbian-transliteration.css', 1, (string)RSTR_VERSION );
-		wp_register_script( 'serbian-transliteration', RSTR_ASSETS . '/js/serbian-transliteration.js', array('jquery'), (string)RSTR_VERSION, true );
+		wp_register_style( RSTR_NAME, RSTR_ASSETS . '/css/serbian-transliteration.css', 1, (string)RSTR_VERSION );
+		wp_register_script( RSTR_NAME, RSTR_ASSETS . '/js/serbian-transliteration.js', 1, (string)RSTR_VERSION, true );
 		wp_localize_script(
-			'serbian-transliteration',
+			RSTR_NAME,
 			'RSTR',
 			array(
 				'version' => RSTR_VERSION,
@@ -52,6 +49,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				)
 			)
 		);
+		// https://highlightjs.org/
+		wp_register_style( 'highlight', '//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css', 1, (string)RSTR_VERSION );
+		wp_register_script( 'highlight', '//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js', 1, (string)RSTR_VERSION, true );
 	}
 
     /**
@@ -81,7 +81,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         ?>
         <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
             <h1><?php _e('Transliteration', RSTR_NAME); ?></h1>
-			<?php do_action('serbian-transliteration/settings/content', $this); ?>
+			<?php do_action('rstr/settings/content', $this); ?>
         </div>
         <?php
     }
@@ -103,6 +103,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             __('Global Settings', RSTR_NAME), // Title
             'print_global_settings_callback', // Callback
             RSTR_NAME // Page
+        );
+		
+		$this->add_settings_field(
+            'site-script', // ID
+            __('My site is', RSTR_NAME), // Title 
+            'site_script_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
         );
 		
 		$this->add_settings_field(
@@ -253,6 +261,26 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join('<br>', $inputs), __('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', RSTR_NAME));
+	}
+	
+	public function site_script_callback(){
+		$inputs = array();
+		
+		foreach(array(
+			'cyr' => __('Cyrillic', RSTR_NAME),
+			'lat' => __('Latin', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="site-script-%1$s"><input type="radio" id="site-script-%1$s" name="%3$s[site-script]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['site-script'] ) ? ($this->options['site-script'] == $key ? ' checked' : '') : ($key == 'cyr' ? ' checked' : ''))
+			);
+		}
+		
+        echo join('<br>', $inputs);
 	}
 	
 	/** 

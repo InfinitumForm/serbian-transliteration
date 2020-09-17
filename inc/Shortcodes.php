@@ -16,6 +16,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 		
 		$this->add_shortcode('rstr_cyr_to_lat', 'cyr_to_lat_shortcode');
 		$this->add_shortcode('rstr_lat_to_cyr', 'lat_to_cyr_shortcode');
+		$this->add_shortcode('rstr_img', 'img_shortcode');
 		$this->add_shortcode('transliteration', 'transliteration_shortcode');
 	}
 	
@@ -27,6 +28,50 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	public function lat_to_cyr_shortcode ($attr=array(), $content='')
 	{
 		return $this->lat_to_cyr(do_shortcode($content));
+	}
+	
+	public function img_shortcode ($attr=array())
+	{
+		$attr = (object)shortcode_atts( array(
+			'cyr' => NULL,
+			'cyr_title'=>NULL,
+			'cyr_caption'=>NULL,
+			'lat' => NULL,
+			'lat_title'=>NULL,
+			'lat_caption'=>NULL,
+			'default' => NULL,
+			'default_title'=>NULL,
+			'default_caption'=>NULL
+		), $attr, 'rstr_img' );
+		
+		switch($this->get_current_script($this->options))
+		{
+			case 'lat':
+			case 'cyr_to_lat':
+				if($attr->lat_caption) {
+					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->lat, $attr->lat_title, $attr->lat_caption);
+				} else {
+					return sprintf('<img src="%1$s" alt="%2$s">', $attr->lat, $attr->lat_title);
+				}
+				break;
+				
+			case 'cyr':
+			case 'lat_to_cyr':
+				if($attr->cyr_caption) {
+					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->cyr, $attr->cyr_title, $attr->cyr_caption);
+				} else {
+					return sprintf('<img src="%1$s" alt="%2$s">', $attr->cyr, $attr->cyr_title);
+				}
+				break;
+				
+			default:
+				if($attr->default_caption) {
+					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->default, $attr->default_title, $attr->default_caption);
+				} else {
+					return sprintf('<img src="%1$s" alt="%2$s">', $attr->default, $attr->default_title);
+				}
+				break;
+		}
 	}
 	
 	public function transliteration_shortcode ($attr=array(), $content='')

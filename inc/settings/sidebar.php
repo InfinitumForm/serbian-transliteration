@@ -9,11 +9,12 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	function __construct($object)
 	{
 		$this->obj = $object;
-		$this->add_action('serbian-transliteration/settings/sidebar', 'postbox_infinitum');
-		$this->add_action('serbian-transliteration/settings/sidebar', 'postbox_cloud_hosting');
-		$this->add_action('serbian-transliteration/settings/sidebar', 'postbox_contributors');
-		$this->add_action('serbian-transliteration/settings/sidebar/tab/shortcodes', 'postbox_contributors');
-		$this->add_action('serbian-transliteration/settings/sidebar/tab/permalink_tool', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar', 'postbox_infinitum');
+		$this->add_action('rstr/settings/sidebar', 'postbox_cloud_hosting');
+		$this->add_action('rstr/settings/sidebar', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/shortcodes', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/functions', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/permalink_tool', 'postbox_contributors');
 	}
 	
 	public static function instance($object)

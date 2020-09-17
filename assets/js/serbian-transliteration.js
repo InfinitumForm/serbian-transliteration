@@ -80,95 +80,95 @@
 		progress = document.getElementById(progress);
 		disclaimer = document.getElementById(disclaimer);
 		
-		var progress_bar = (number)=>{
-			number = Math.round(number);
-			
-			var progress_value = progress.children,
-				pr = progress_value[0],
-				bar = progress_value[1],
-				span = bar.children[0];
+		if(checkbox && button)
+		{
+			var progress_bar = (number)=>{
+				number = Math.round(number);
 				
-			pr.style.width = number + '%';
-			pr.dataset.value = number;
-			
-			bar.value=number;
-			
-			span.style.width = number + '%';
-			span.innerHTML = number + '%';
-			
-			if(number>=100)
-			{
-				progress_value[2].innerHTML = RSTR.label.done;
-			}
-			else
-			{
-				progress_value[2].innerHTML = RSTR.label.progress_loading;
-			}
-		};
-		
-		// Confirm checkbox
-		checkbox.onchange = () => {
-			button.disabled = !checkbox.checked;
-			disclaimer.style.display = 'block';
-		};
-		// Click on the button
-		button.addEventListener("click", e => {
-			e.preventDefault();
-			
-			var do_ajax = (dataset) => {
+				var progress_value = progress.children,
+					pr = progress_value[0],
+					bar = progress_value[1],
+					span = bar.children[0];
+					
+				pr.style.width = number + '%';
+				pr.dataset.value = number;
 				
-				if(dataset)
+				bar.value=number;
+				
+				span.style.width = number + '%';
+				span.innerHTML = number + '%';
+				
+				if(number>=100)
 				{
-					ajax('POST', RSTR.ajax, dataset, {
-						'Accept' : 'application/json'
-					});
+					progress_value[2].innerHTML = RSTR.label.done;
 				}
 				else
 				{
-					ajax('POST', RSTR.ajax, {
-						'action' : 'rstr_run_permalink_transliteration',
-						'nonce'  : e.target.dataset.nonce
-					}, {
-						'Accept' : 'application/json'
-					});
+					progress_value[2].innerHTML = RSTR.label.progress_loading;
 				}
+			};
+			
+			// Confirm checkbox
+			checkbox.onchange = () => {
+				button.disabled = !checkbox.checked;
+				disclaimer.style.display = 'block';
+			};
+			// Click on the button
+			button.addEventListener("click", e => {
+				e.preventDefault();
 				
-				ajax_done(function(data){
-					console.log(data);
+				var do_ajax = (dataset) => {
 					
-					if(!data.error)
+					if(dataset)
 					{
-						progress_bar(data.percentage);
-						
-						if(data.done)
-						{
-							button.disabled = false;
-							checkbox.disabled = false;
-						}
-						else
-						{
-							do_ajax(data);
-						}
+						ajax('POST', RSTR.ajax, dataset, {
+							'Accept' : 'application/json'
+						});
 					}
 					else
 					{
-						progress_bar(0);
+						ajax('POST', RSTR.ajax, {
+							'action' : 'rstr_run_permalink_transliteration',
+							'nonce'  : e.target.dataset.nonce
+						}, {
+							'Accept' : 'application/json'
+						});
 					}
 					
-				}, true);
-			};
-			
-			
-			button.disabled = true;
-			checkbox.disabled = true;
-			
-			progress.style.display = "block";
-			
-			progress_bar(1);
-			
-			do_ajax();
-			
-		});
-		
+					ajax_done(function(data){					
+						if(!data.error)
+						{
+							progress_bar(data.percentage);
+							
+							if(data.done)
+							{
+								button.disabled = false;
+								checkbox.disabled = false;
+							}
+							else
+							{
+								do_ajax(data);
+							}
+						}
+						else
+						{
+							progress_bar(0);
+						}
+						
+					}, true);
+				};
+				
+				
+				button.disabled = true;
+				checkbox.disabled = true;
+				
+				progress.style.display = "block";
+				
+				progress_bar(1);
+				
+				do_ajax();
+				
+			});
+		}
 	}('serbian-transliteration-tools-check', 'serbian-transliteration-tools-transliterate-permalinks', 'rstr-progress-bar', 'rstr-disclaimer'));
 }());

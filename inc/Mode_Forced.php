@@ -13,12 +13,17 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 	
 	function __construct($options){
 		$this->options = $options;
+		$transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
 		
 		$filters = array(
 			'the_content' 					=> 'content',
 			'the_title' 					=> 'content',
 			'wp_nav_menu_items' 			=> 'content',
+			'get_post_time' 				=> 'content',
 			'wp_title' 						=> 'content',
+			'the_date' 						=> 'content',
+			'get_the_date' 					=> 'content',
+			'the_content_more_link' 		=> 'content',
 			'pre_get_document_title'		=> 'content',
 			'default_post_metadata' 		=> 'content',
 			'get_comment_metadata' 			=> 'content',
@@ -98,7 +103,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 	function rss_output_buffer_end() {
 		$output = ob_get_clean();
 
-        switch(isset($this->options['transliteration-mode']) ? $this->options['transliteration-mode'] : NULL)
+        switch($this->get_current_script($this->options))
 		{
 			case 'cyr_to_lat' :
 				$output = $this->cyr_to_lat($output);
@@ -117,19 +122,30 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 		
 		if(!(defined('DOING_AJAX') && DOING_AJAX))
 		{
-			$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
-				switch(isset($this->options['transliteration-mode']) ? $this->options['transliteration-mode'] : NULL)
-				{
-					case 'cyr_to_lat' :
-						$matches[2] = $this->cyr_to_lat($matches[2]);
-						break;
-						
-					case 'lat_to_cyr' :
-						$matches[2] = $this->lat_to_cyr($matches[2]);
-						break;
-				}
-				return $matches[2];
-			}, $buffer);
+			$sufix = '_' . strlen($buffer);
+			
+			if (!is_admin() && false === ( $forced_cache = get_transient( $this->transient.$sufix ) ) )
+			{
+				$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
+					switch($this->get_current_script($this->options))
+					{
+						case 'cyr_to_lat' :
+							$matches[2] = $this->cyr_to_lat($matches[2]);
+							break;
+							
+						case 'lat_to_cyr' :
+							$matches[2] = $this->lat_to_cyr($matches[2]);
+							break;
+					}
+					return $matches[2];
+				}, $buffer);
+				
+				if(!is_admin()) set_transient( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+			}
+			else
+			{
+				$buffer = $forced_cache;
+			}
 		}
 		
 		return $buffer;
@@ -138,7 +154,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 	public function content ($content='') {
 		if(empty($content)) return $content;
 		
-		switch(isset($this->options['transliteration-mode']) ? $this->options['transliteration-mode'] : NULL)
+		switch($this->get_current_script($this->options))
 		{
 			case 'cyr_to_lat' :
 				$content = $this->cyr_to_lat($content);
@@ -153,7 +169,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 	}
 	
 	public function title_parts($titles=array()){
-		switch(isset($this->options['transliteration-mode']) ? $this->options['transliteration-mode'] : NULL)
+		switch($this->get_current_script($this->options))
 		{
 			case 'cyr_to_lat' :
 				foreach($titles as $key => $val)

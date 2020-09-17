@@ -17,6 +17,10 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 		$filters = array(
 			'the_content' 			=> 'content',
 			'the_title' 			=> 'content',
+			'the_date' 				=> 'content',
+			'get_post_time' 		=> 'content',
+			'get_the_date' 			=> 'content',
+			'the_content_more_link' => 'content',
 			'wp_nav_menu_items' 	=> 'content',
 			'wp_title' 				=> 'content',
 			'pre_get_document_title'=> 'content',
@@ -54,7 +58,7 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 	public function content ($content='') {
 		if(empty($content)) return $content;
 		
-		switch(isset($this->options['transliteration-mode']) ? $this->options['transliteration-mode'] : NULL)
+		switch($this->get_current_script($this->options))
 		{
 			case 'cyr_to_lat' :
 				$content = $this->cyr_to_lat($content);
@@ -69,7 +73,7 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 	}
 	
 	public function title_parts($titles=array()){
-		switch(isset($this->options['transliteration-mode']) ? $this->options['transliteration-mode'] : NULL)
+		switch($this->get_current_script($this->options))
 		{
 			case 'cyr_to_lat' :
 				foreach($titles as $key => $val)
