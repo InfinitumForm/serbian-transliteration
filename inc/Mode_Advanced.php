@@ -105,6 +105,7 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 		}
 		
 		$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
+		$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
 	}
 	
 	public function bloginfo($output, $show=''){

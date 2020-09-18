@@ -15,6 +15,8 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 		$this->add_action('rstr/settings/sidebar/tab/shortcodes', 'postbox_contributors');
 		$this->add_action('rstr/settings/sidebar/tab/functions', 'postbox_contributors');
 		$this->add_action('rstr/settings/sidebar/tab/permalink_tool', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/debug', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/debug', 'postbox_cloud_hosting');
 	}
 	
 	public static function instance($object)

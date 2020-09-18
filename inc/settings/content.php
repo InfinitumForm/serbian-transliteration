@@ -214,17 +214,17 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 					<h3><?php _e('Main shortcode parameters', RSTR_NAME); ?>:</h3>
 					<ul>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat', __('URL (src) as shown in the Latin language', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr', __('URL (src) as shown in the Latin Cyrillic', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr', __('URL (src) as shown in the Cyrillic language', RSTR_NAME)); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default', __('(optional) URL (src) to the default image if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
 					</ul>
 					<h3><?php _e('Optional shortcode parameters', RSTR_NAME); ?>:</h3>
 					<ul>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_title', __('(optional) title (alt) description of the image for Cyrillic', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(optional) caption (alt) description of the image for Cyrillic', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(optional) caption description of the image for Cyrillic', RSTR_NAME)); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_title', __('(optional) title (alt) description of the image for Latin', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(optional) caption (alt) description of the image for Latin', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(optional) caption description of the image for Latin', RSTR_NAME)); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default_title', __('(optional) title (alt) description of the image if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default_caption', __('(optional) caption (alt) description of the imag if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default_caption', __('(optional) caption description of the imag if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
 					</ul>
 					<h3><?php _e('Shortcode return', RSTR_NAME); ?>:</h3>
 					<?php printf('<p>%s</p>', __('HTML image corresponding to the parameters set in this shortcode.', RSTR_NAME)); ?>
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('rstr/settings/debug'); ?>
+				<?php do_action('rstr/settings/sidebar/tab/debug'); ?>
 			</div>
 		</div>
 	 
@@ -273,12 +273,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<tbody>
 						<?php do_action('rstr/settings/debug/table/tbody/start'); ?>
 						<tr>
+							<td width="30%" style="width:30%;"><strong><?php _e( 'Plugin ID', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_option(RSTR_NAME . '-ID'); ?></td>
+						</tr>
+						<tr>
 							<td width="30%" style="width:30%;"><strong><?php _e( 'Plugin version', RSTR_NAME ); ?></strong></td>
 							<td><?php echo RSTR_VERSION; ?></td>
 						</tr>
 						<tr>
-							<td><strong><?php _e( 'Last update', RSTR_NAME ); ?></strong></td>
+							<td><strong><?php _e( 'WordPress version', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'version' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Last plugin update', RSTR_NAME ); ?></strong></td>
 							<td><?php echo (!empty($activations) ? end($activations) : '-'); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'PHP version', RSTR_NAME ); ?></strong></td>
+							<td>PHP <?php echo PHP_VERSION; ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'PHP version ID', RSTR_NAME ); ?></strong></td>
+							<td><?php echo PHP_VERSION_ID; ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'PHP architecture', RSTR_NAME ); ?></strong></td>
+							<td><?php printf(__('%d bit', RSTR_NAME), (Serbian_Transliteration_OS::is_php64() ? 64 : 32)); ?></td>
 						</tr>
 						<tr>
 							<td><strong><?php _e( 'WordPress debug', RSTR_NAME ); ?></strong></td>
@@ -287,10 +307,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<tr>
 							<td><strong><?php _e( 'WordPress multisite', RSTR_NAME ); ?></strong></td>
 							<td><?php echo ( RSTR_MULTISITE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
-						</tr>
-						<tr>
-							<td width="30%" style="width:30%;"><strong><?php _e( 'Plugin ID', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_option(RSTR_NAME . '-ID'); ?></td>
 						</tr>
 						<tr>
 							<td><strong><?php _e( 'Site title', RSTR_NAME ); ?></strong></td>
@@ -313,10 +329,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 							<td><?php echo get_bloginfo( 'charset' ); ?></td>
 						</tr>
 						<tr>
-							<td><strong><?php _e( 'WordPress version', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'version' ); ?></td>
-						</tr>
-						<tr>
 							<td><strong><?php _e( 'Content-Type', RSTR_NAME ); ?></strong></td>
 							<td><?php echo get_bloginfo( 'html_type' ); ?></td>
 						</tr>
@@ -331,18 +343,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 						<tr>
 							<td><strong><?php _e( 'WordPress directory path', RSTR_NAME ); ?></strong></td>
 							<td><?php echo ABSPATH; ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'PHP version', RSTR_NAME ); ?></strong></td>
-							<td>PHP <?php echo PHP_VERSION; ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'PHP version ID', RSTR_NAME ); ?></strong></td>
-							<td><?php echo PHP_VERSION_ID; ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'PHP architecture', RSTR_NAME ); ?></strong></td>
-							<td><?php printf(__('%d bit', RSTR_NAME), (Serbian_Transliteration_OS::is_php64() ? 64 : 32)); ?></td>
 						</tr>
 						<tr>
 							<td><strong><?php _e( 'Operting system', RSTR_NAME ); ?></strong></td>
@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<h4><?php _e('Parameters', RSTR_NAME); ?></h4>
 					<?php printf('<p><b><code>$args</code></b> (array) - %1$s</p>', __('This attribute contains an associative set of parameters for this function:', RSTR_NAME)); ?>
 					<ul>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'display_type', sprintf(__('string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s" or "%3$s". Default: "%1$s"', RSTR_NAME), 'inline', 'select', 'list')); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'display_type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s" or "%3$s". Default: "%1$s"', RSTR_NAME), 'inline', 'select', 'list')); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'echo', __('(bool) determines whether it will be displayed through an echo or as a string. Default: false', RSTR_NAME)); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'separator', sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), 'inline', ' | ')); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(string) Text for Cyrillic link. Default: Cyrillic', RSTR_NAME)); ?>

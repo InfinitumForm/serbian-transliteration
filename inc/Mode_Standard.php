@@ -101,6 +101,26 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 		{
 			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 		}
+		
+		$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
+		$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
+	}
+	
+	public function bloginfo($output, $show=''){
+		if(!empty($show) && in_array($show, array('name','description')))
+		{
+			switch($this->get_current_script($this->options))
+			{
+				case 'cyr_to_lat' :
+					$output = $this->cyr_to_lat($output);
+					break;
+					
+				case 'lat_to_cyr' :
+					$output = $this->lat_to_cyr($output);			
+					break;
+			}
+		}
+		return $output;
 	}
 	
 	public function content ($content='') {
