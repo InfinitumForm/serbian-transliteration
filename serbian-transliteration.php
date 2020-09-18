@@ -108,6 +108,19 @@ if(!$RSTR_version && preg_match('/\*[\s\t]+?version:[\s\t]+?([0-9.]+)/i', file_g
 if ( ! defined( 'RSTR_VERSION' ) )		define( 'RSTR_VERSION', $RSTR_version);
 // Plugin session prefix (controlled by version)
 if ( ! defined( 'RSTR_PREFIX' ) )		define( 'RSTR_PREFIX', RSTR_TABLE . '_' . preg_replace("~[^0-9]~Ui", '', RSTR_VERSION) . '_');
+// Is multisite
+if( ! defined( 'RSTR_MULTISITE' ) )
+{
+    // New safer approach
+    if( !function_exists( 'is_plugin_active_for_network' ) )
+		include WP_ADMIN_DIR . '/includes/plugin.php';
+
+	if(file_exists(WP_ADMIN_DIR . '/includes/plugin.php'))
+		define( 'RSTR_MULTISITE', is_plugin_active_for_network( RSTR_BASENAME ) );
+}
+
+if( ! defined( 'RSTR_MULTISITE' ) ) define( 'RSTR_MULTISITE', false );
+
 
 /*
  * Serbian transliteration requirements

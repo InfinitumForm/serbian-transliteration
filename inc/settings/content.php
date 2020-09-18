@@ -25,6 +25,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		$this->add_action('rstr/settings/tab', 'nav_tab_permalink_tool');
 		$this->add_action('rstr/settings/tab', 'nav_tab_shortcodes');
 		$this->add_action('rstr/settings/tab', 'nav_tab_functions');
+		$this->add_action('rstr/settings/tab', 'nav_tab_debug');
 		
 		switch($this->tab)
 		{
@@ -42,6 +43,9 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 				break;
 			case 'permalink_tool':
 				$this->add_action('rstr/settings/tab/content/permalink_tool', 'tab_content_permalink_tool');
+				break;
+			case 'debug':
+				$this->add_action('rstr/settings/tab/content/debug', 'tab_content_debug');
 				break;
 		}
 		
@@ -74,6 +78,13 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	**/
 	public function nav_tab_functions(){ ?>
 		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=functions'); ?>" class="nav-tab<?php echo $this->tab == 'functions' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><?php _e('Available PHP functions', RSTR_NAME); ?></a>
+	<?php }
+	
+	/*
+	 * Debug
+	**/
+	public function nav_tab_debug(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=debug'); ?>" class="nav-tab<?php echo $this->tab == 'debug' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><?php _e('Debug', RSTR_NAME); ?></a>
 	<?php }
 	
 	/*
@@ -220,6 +231,140 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 					<br><br>
 					<?php printf('<p><b>%s</b></p>', __('This shortcodes work independently of the plugin settings and can be used anywhere within WordPress pages, posts, taxonomies and widgets (if they support it).', RSTR_NAME)); ?>
 				</div>
+			</div>
+		</div>
+		<br class="clear">
+	</div>
+
+</div>
+	<?php }
+	
+	/*
+	 * Tab Debug
+	**/
+	public function tab_content_debug(){
+		wp_enqueue_style( 'highlight');
+		wp_enqueue_script('highlight');
+		include_once RSTR_INC . '/OS.php';
+		$activations = get_option( RSTR_NAME . '-activation' );
+		$options = get_option( RSTR_NAME );
+	?>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+	document.querySelectorAll('.lang-php').forEach((block) => {
+		hljs.highlightBlock(block);
+	});
+});
+</script>
+<div class="rstr-tab-wrapper">
+
+	<div id="poststuff" class="metabox-holder has-right-sidebar">
+		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
+			<div id="side-sortables" class="meta-box-sortables ui-sortable">
+				<?php do_action('rstr/settings/debug'); ?>
+			</div>
+		</div>
+	 
+		<div id="post-body">
+			<div id="post-body-content">
+				<h2><span><?php _e('Debug information', RSTR_NAME); ?></span></h2>
+				<table class="table table-sm table-striped w-100">
+					<thead><?php do_action('rstr/settings/debug/table/thead'); ?></thead>
+					<tbody>
+						<?php do_action('rstr/settings/debug/table/tbody/start'); ?>
+						<tr>
+							<td width="30%" style="width:30%;"><strong><?php _e( 'Plugin version', RSTR_NAME ); ?></strong></td>
+							<td><?php echo RSTR_VERSION; ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Last update', RSTR_NAME ); ?></strong></td>
+							<td><?php echo (!empty($activations) ? end($activations) : '-'); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'WordPress debug', RSTR_NAME ); ?></strong></td>
+							<td><?php echo ( WP_DEBUG ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'WordPress multisite', RSTR_NAME ); ?></strong></td>
+							<td><?php echo ( RSTR_MULTISITE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
+						</tr>
+						<tr>
+							<td width="30%" style="width:30%;"><strong><?php _e( 'Plugin ID', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_option(RSTR_NAME . '-ID'); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Site title', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'name' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Tagline', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'description' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'WordPress address (URL)', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'wpurl' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Admin email', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'admin_email' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Encoding for pages and feeds', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'charset' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'WordPress version', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'version' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Content-Type', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_bloginfo( 'html_type' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Site Language', RSTR_NAME ); ?></strong></td>
+							<td><?php echo get_locale(); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Server time', RSTR_NAME ); ?></strong></td>
+							<td><?php echo date( 'r' ); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'WordPress directory path', RSTR_NAME ); ?></strong></td>
+							<td><?php echo ABSPATH; ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'PHP version', RSTR_NAME ); ?></strong></td>
+							<td>PHP <?php echo PHP_VERSION; ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'PHP version ID', RSTR_NAME ); ?></strong></td>
+							<td><?php echo PHP_VERSION_ID; ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'PHP architecture', RSTR_NAME ); ?></strong></td>
+							<td><?php printf(__('%d bit', RSTR_NAME), (Serbian_Transliteration_OS::is_php64() ? 64 : 32)); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Operting system', RSTR_NAME ); ?></strong></td>
+							<td><?php echo Serbian_Transliteration_OS::getOS(); ?> <?php printf(__('%d bit', RSTR_NAME), Serbian_Transliteration_OS::architecture()); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'User agent', RSTR_NAME ); ?></strong></td>
+							<td><?php echo Serbian_Transliteration_OS::user_agent(); ?></td>
+						</tr>
+						<tr>
+							<td><strong><?php _e( 'Plugin directory path', RSTR_NAME ); ?></strong></td>
+							<td><?php echo RSTR_ROOT; ?></td>
+						</tr>
+						<?php do_action('rstr/settings/debug/table/tbody/end'); ?>
+					</tbody>
+					<tfoot><?php do_action('rstr/settings/debug/table/tfoot'); ?></tfoot>
+				</table>
+			
+				<h2><span><?php _e('Plugin settings', RSTR_NAME); ?></span></h2>
+				<pre class="lang-php">
+["<?php echo RSTR_NAME; ?>"] => <?php var_dump($options); ?>
+				</pre>
 			</div>
 		</div>
 		<br class="clear">
