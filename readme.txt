@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.0.8
+Stable tag: 1.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,32 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Changelog ==
 
+= 1.0.11 =
+* Fixed problems with title and description tags
+* Added array and object mode into script_selector() function
+* Fixed special characters transliteration
+
+= 1.0.10 =
+* Added Woocommerce transliteration
+* Added debug mode
+* Prepared for the multisite
+* Improved comments transliteration
+* Improved RS and HR translations
+* Fixed problems with array values
+
+= 1.0.9 =
+* Added new shortcode for the image controls
+* Added new PHP functions
+* Added new settings
+* Added documentation
+* Improved transliteration
+* Improved JavaScript functions
+* Improved transliteration quality
+* Improved Search algorithm
+* Fixed date transliteration
+* Fixed problems with PHP7.4
+* Fixed Comments transliteration
+
 = 1.0.8 =
 * PHP 7.4 support
 * Improved PHP code
@@ -131,10 +157,10 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Upgrade Notice ==
 
-= 1.0.8 =
-* PHP 7.4 support
-* Improved PHP code
-* Added caching to the forced transliteration
+= 1.0.11 =
+* Fixed problems with title and description tags
+* Added array and object mode into script_selector() function
+* Fixed special characters transliteration
 
 == Frequently Asked Questions ==
 

@@ -159,7 +159,7 @@ endif;
 
 /*
  * Script selector
- * @return        HTML string/echo
+ * @return        HTML string/echo/object/array
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('script_selector')) :
@@ -179,12 +179,16 @@ if(!function_exists('script_selector')) :
 			'lat'		=> add_query_arg('rstr', 'lat', $url)
 		);
 		
-		$return = '';
+		if(in_array($args->display_type, array('object', 'array'))) {
+			$return = array();
+		} else {
+			$return = '';
+		}
 		
 		switch($args->display_type)
 		{
 			default:
-				$return = sprintf(__('Choose one of the display types: "%1$s", "%2$s" or "%3$s"', RSTR_NAME), 'inline', 'select', 'list');
+				$return = sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s" or "%5$s"', RSTR_NAME), 'inline', 'select', 'list', 'array', 'object');
 				break;
 			case 'inline':
 				$return = sprintf(
@@ -219,6 +223,30 @@ if(!function_exists('script_selector')) :
 					$args->cyr_caption,
 					($options->active == 'lat' ? ' active' : ''),
 					($options->active == 'cyr' ? ' active' : '')
+				);
+				break;
+			case 'array':
+				$return = array(
+					'cyr' => array(
+						'caption' => $args->cyr_caption,
+						'url' => $options->cyr,
+					),
+					'lat' => array(
+						'caption' => $args->lat_caption,
+						'url' => $options->lat,
+					)
+				);
+				break;
+			case 'object':
+				$return = (object)array(
+					'cyr' => (object)array(
+						'caption' => $args->cyr_caption,
+						'url' => $options->cyr,
+					),
+					'lat' => (object)array(
+						'caption' => $args->lat_caption,
+						'url' => $options->lat,
+					)
 				);
 				break;
 		}

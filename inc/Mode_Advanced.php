@@ -40,6 +40,8 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 			'widget_custom_html_content' 	=> 'content',
 			'sanitize_title' 				=> 'content',
 			'wp_unique_post_slug' 			=> 'content',
+			'option_blogdescription'		=> 'content',
+			'option_blogname' 				=> 'content',
 			'document_title_parts' 			=> 'title_parts',
 			'sanitize_title'				=> 'force_permalink_to_latin',
 			'the_permalink'					=> 'force_permalink_to_latin',

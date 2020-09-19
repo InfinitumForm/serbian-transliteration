@@ -443,11 +443,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<br>
 					<h3 style="margin:0;">script_selector</h3>
 					<?php printf('<p>%s</p>', __('This function displays a selector for the transliteration script.', RSTR_NAME)); ?>
-					<p><code class="lang-php">function script_selector(array $args) : string|echo</code></p>
+					<p><code class="lang-php">function script_selector(array $args) : string|echo|array|object</code></p>
 					<h4><?php _e('Parameters', RSTR_NAME); ?></h4>
 					<?php printf('<p><b><code>$args</code></b> (array) - %1$s</p>', __('This attribute contains an associative set of parameters for this function:', RSTR_NAME)); ?>
 					<ul>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'display_type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s" or "%3$s". Default: "%1$s"', RSTR_NAME), 'inline', 'select', 'list')); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'display_type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s", "%3$s", "%4$s" or "%5$s". Default: "%1$s"', RSTR_NAME), 'inline', 'select', 'list', 'array', 'object')); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'echo', __('(bool) determines whether it will be displayed through an echo or as a string. Default: false', RSTR_NAME)); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'separator', sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), 'inline', ' | ')); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(string) Text for Cyrillic link. Default: Cyrillic', RSTR_NAME)); ?>

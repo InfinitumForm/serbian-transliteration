@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-09-18 11:28+0200\n"
-"PO-Revision-Date: 2020-09-18 11:30+0200\n"
+"POT-Creation-Date: 2020-09-18 18:08+0200\n"
+"PO-Revision-Date: 2020-09-18 18:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language: en_US\n"
@@ -29,10 +29,14 @@ msgstr "Cyrillic"
 msgid "Latin"
 msgstr "Latin"
 
-#: inc/Functions.php:187
+#: inc/Functions.php:191
 #, php-format
-msgid "Choose one of the display types: \"%1$s\", \"%2$s\" or \"%3$s\""
-msgstr "Choose one of the display types: \"%1$s\", \"%2$s\" or \"%3$s\""
+msgid ""
+"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or "
+"\"%5$s\""
+msgstr ""
+"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or "
+"\"%5$s\""
 
 #: inc/Requirements.php:50
 #, php-format
@@ -594,10 +598,10 @@ msgstr ""
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"\"%1$s\", \"%2$s\" or \"%3$s\". Default: \"%1$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or \"%5$s\". Default: \"%1$s\""
 msgstr ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"\"%1$s\", \"%2$s\" or \"%3$s\". Default: \"%1$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or \"%5$s\". Default: \"%1$s\""
 
 #: inc/settings/content.php:451
 msgid ""

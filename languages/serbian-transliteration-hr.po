@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-09-18 11:31+0200\n"
-"PO-Revision-Date: 2020-09-18 11:38+0200\n"
+"POT-Creation-Date: 2020-09-18 18:07+0200\n"
+"PO-Revision-Date: 2020-09-18 18:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -30,10 +30,14 @@ msgstr "Ćirilica"
 msgid "Latin"
 msgstr "Latinski"
 
-#: inc/Functions.php:187
+#: inc/Functions.php:191
 #, php-format
-msgid "Choose one of the display types: \"%1$s\", \"%2$s\" or \"%3$s\""
-msgstr "Odaberite jednu od vrsta prikaza: \"%1$s\", \"%2$s\" ili \"%3$s\""
+msgid ""
+"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or "
+"\"%5$s\""
+msgstr ""
+"Odaberite jednu od vrsta prikaza: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" ili "
+"\"%5$s\""
 
 #: inc/Requirements.php:50
 #, php-format
@@ -588,10 +592,10 @@ msgstr "Ovaj atribut sadrži asocijativni skup parametara za ovu funkciju:"
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"\"%1$s\", \"%2$s\" or \"%3$s\". Default: \"%1$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or \"%5$s\". Default: \"%1$s\""
 msgstr ""
 "(string) Vrsta odabirača koja će se prikazati na web-mjestu. Može biti: "
-"\"%1$s\", \"%2$s\" ili \"%3$s\". Zadano: \"%1$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" ili \"%5$s\". Zadano: \"%1$s\""
 
 #: inc/settings/content.php:451
 msgid ""

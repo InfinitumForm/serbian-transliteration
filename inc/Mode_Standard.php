@@ -34,6 +34,8 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			'ngettext' 				=> 'content',
 			'gettext_with_context' 	=> 'content',
 			'ngettext_with_context' => 'content',
+			'option_blogdescription'=> 'content',
+			'option_blogname' 		=> 'content',
 			'document_title_parts' 	=> 'title_parts'
 		);
 		

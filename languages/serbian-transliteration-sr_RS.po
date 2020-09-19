@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-09-18 11:21+0200\n"
-"PO-Revision-Date: 2020-09-18 11:27+0200\n"
+"POT-Creation-Date: 2020-09-18 18:06+0200\n"
+"PO-Revision-Date: 2020-09-18 18:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -30,10 +30,14 @@ msgstr "Ћирилица"
 msgid "Latin"
 msgstr "Латиница"
 
-#: inc/Functions.php:187
+#: inc/Functions.php:191
 #, php-format
-msgid "Choose one of the display types: \"%1$s\", \"%2$s\" or \"%3$s\""
-msgstr "Одаберите једно од приказа: \"%1$s\", \"%2$s\" или \"%3$s\""
+msgid ""
+"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or "
+"\"%5$s\""
+msgstr ""
+"Одаберите једно од приказа: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" или \"%5$s"
+"\""
 
 #: inc/Requirements.php:50
 #, php-format
@@ -266,7 +270,7 @@ msgstr "Доступне PHP функције"
 
 #: inc/settings/content.php:87
 msgid "Debug"
-msgstr ""
+msgstr "Дебаговање"
 
 #: inc/settings/content.php:105
 msgid "Permalink Transliteration Tool"
@@ -586,10 +590,10 @@ msgstr "Овај атрибут садржи асоцијативни скуп �
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"\"%1$s\", \"%2$s\" or \"%3$s\". Default: \"%1$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or \"%5$s\". Default: \"%1$s\""
 msgstr ""
 "(стринг) Тип селектора који ће бити приказан на интерет локацији. Може бити: "
-"\"%1$s\", \"%2$s\" or \"%3$s\". Подразумевано: \"%1$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or \"%5$s\". Подразумевано: \"%1$s\""
 
 #: inc/settings/content.php:451
 msgid ""
@@ -711,7 +715,7 @@ msgstr "Родитељска скрипта"
 
 #: serbian-transliteration.php:868
 msgid "Parent Script:"
-msgstr "Родитељска скрипта"
+msgstr "Родитељска скрипта:"
 
 #: serbian-transliteration.php:869
 msgid "Edit Script"
