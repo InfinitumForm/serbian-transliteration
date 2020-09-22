@@ -73,9 +73,12 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				)
 			)
 		);
-		// https://highlightjs.org/
-		wp_register_style( 'highlight', '//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css', 1, (string)RSTR_VERSION );
-		wp_register_script( 'highlight', '//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js', 1, (string)RSTR_VERSION, true );
+		/* 
+		 * https://highlightjs.org/
+		 * https://github.com/highlightjs/highlight.js
+		 */
+		wp_register_style( 'highlight', RSTR_ASSETS . '/css/highlight.min.css', 1, (string)RSTR_VERSION );
+		wp_register_script( 'highlight', RSTR_ASSETS . '/js/highlight.min.js', 1, (string)RSTR_VERSION, true );
 	}
 
     /**

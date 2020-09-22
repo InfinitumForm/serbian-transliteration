@@ -185,7 +185,17 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	/*
 	 * Available shortcode section
 	**/
-	public function tab_content_available_shortcodes(){ ?>
+	public function tab_content_available_shortcodes(){
+		wp_enqueue_style( 'highlight');
+		wp_enqueue_script('highlight');
+		?>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+	document.querySelectorAll('.lang-txt').forEach((block) => {
+		hljs.highlightBlock(block);
+	});
+});
+</script>
 <div class="rstr-tab-wrapper">
 
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
@@ -200,17 +210,17 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 				<h1><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h1>
 				<div class="inside">
 					<br>
-					<h3 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h3>
-					<p><code>[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]</code></p>
+					<h2 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h2>
+					<p><code class="lang-txt">[<span class="hljs-title">rstr_cyr_to_lat</span>]Ћирилица у латиницу[/<span class="hljs-title">rstr_cyr_to_lat</span>]</code></p>
 					<br>
-					<h3 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h3>
-					<p><code>[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]</code></p>
+					<h2 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h2>
+					<p><code class="lang-txt">[<span class="hljs-title">rstr_lat_to_cyr</span>]Latinica u ćirilicu[/<span class="hljs-title">rstr_lat_to_cyr</span>]</code></p>
 					<br>
-					<h3 style="margin:0;"><?php _e('Add an image depending on the language script', RSTR_NAME); ?>:</h3>
+					<h2 style="margin:0;"><?php _e('Add an image depending on the language script', RSTR_NAME); ?>:</h2>
 					<?php printf('<p>%s</p>', __('With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.', RSTR_NAME)); ?>
-					<p><code>[rstr_img]</code></p>
+					<p><code class="lang-txt">[<span class="hljs-title">rstr_img</span>]</code></p>
 					<h4><?php _e('Example', RSTR_NAME); ?>:</h4>
-					<p><code>[rstr_img lat="<?php echo home_url('/logo_latin.jpg') ?>" cyr="<?php echo home_url('/logo_cyrillic.jpg') ?>"]</code></p>
+					<p><code class="lang-txt">[<span class="hljs-title">rstr_img</span> <span class="hljs-params"><span class="hljs-keyword">lat</span>="<?php echo home_url('/logo_latin.jpg') ?>"</span> <span class="hljs-params"><span class="hljs-keyword">cyr</span>="<?php echo home_url('/logo_cyrillic.jpg') ?>"</span>]</code></p>
 					<h3><?php _e('Main shortcode parameters', RSTR_NAME); ?>:</h3>
 					<ul>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat', __('URL (src) as shown in the Latin language', RSTR_NAME)); ?>
@@ -228,6 +238,18 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 					</ul>
 					<h3><?php _e('Shortcode return', RSTR_NAME); ?>:</h3>
 					<?php printf('<p>%s</p>', __('HTML image corresponding to the parameters set in this shortcode.', RSTR_NAME)); ?>
+					
+					<br>
+					<h2 style="margin:0;"><?php _e('Language script menu', RSTR_NAME); ?>:</h2>
+					<?php printf('<p>%s</p>', __('This shortcode displays a selector for the transliteration script.', RSTR_NAME)); ?>
+					<p><code class="lang-txt">[<span class="hljs-title">rstr_selector</span>]</code></p>
+					<h3><?php _e('Optional shortcode parameters', RSTR_NAME); ?>:</h3>
+					<ul>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s" or "%3$s"', RSTR_NAME), 'inline', 'select', 'list')); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'separator', sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), 'inline', ' | ')); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(string) Text for Cyrillic link. Default: Cyrillic', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(string) Text for Latin link. Default: Latin', RSTR_NAME)); ?>
+					</ul>
 					<br><br>
 					<?php printf('<p><b>%s</b></p>', __('This shortcodes work independently of the plugin settings and can be used anywhere within WordPress pages, posts, taxonomies and widgets (if they support it).', RSTR_NAME)); ?>
 				</div>

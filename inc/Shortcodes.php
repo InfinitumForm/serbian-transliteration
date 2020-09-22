@@ -14,20 +14,80 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	function __construct($options){
 		$this->options = $options;
 
+		$this->add_shortcode('rstr_selector', 'rstr_selector_shortcode');
 		$this->add_shortcode('rstr_cyr_to_lat', 'cyr_to_lat_shortcode');
 		$this->add_shortcode('rstr_lat_to_cyr', 'lat_to_cyr_shortcode');
 		$this->add_shortcode('rstr_img', 'img_shortcode');
 		$this->add_shortcode('transliteration', 'transliteration_shortcode');
+		
+		$this->add_action('wp_loaded', 'output_buffer_start', 99999);
+		$this->add_action('shutdown', 'output_buffer_end', 99999);
+	}
+	
+	public function output_callback ($buffer='') {
+		if(preg_match('/%{5}\-(\#{2}|\|{2})/', $buffer) !== false)
+		{
+			$buffer = preg_replace_callback('/(?<=%{5}\-\#{2})(.*?)(?=\#{2}\-%{5})/s', function($matches) {
+				return $this->cyr_to_lat($matches[1]);
+			}, $buffer);
+			
+			$buffer = preg_replace_callback('/(?<=%{5}\-\|{2})(.*?)(?=\|{2}\-%{5})/s', function($matches) {
+				return $this->lat_to_cyr($matches[1]);
+			}, $buffer);
+			$buffer = str_replace(array('%%%%%-##','##-%%%%%','%%%%%-||','||-%%%%%'), '', $buffer);
+		}
+		return $buffer;
+	}
+	
+	function output_buffer_start() { 
+		ob_start(array(&$this, "output_callback"));
+	}
+	
+	function output_buffer_end() { 
+		ob_get_clean();
+	}
+	
+	function rss_output_buffer_start() {
+		ob_start();
+	}
+	
+	public function rstr_selector_shortcode ($attr=array())
+	{
+		$args = (object)shortcode_atts(array(
+			'type' 	=> 'inline',
+			'separator'     => ' | ',
+			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
+			'lat_caption'   => __('Latin', RSTR_NAME)
+		), $attr, 'rstr_selector');
+		
+		return script_selector(array(
+			'display_type' 	=> $args->type,
+			'separator'     => $args->separator,
+			'cyr_caption'   => $args->cyr_caption,
+			'lat_caption'   => $args->lat_caption
+		));
 	}
 	
 	public function cyr_to_lat_shortcode ($attr=array(), $content='')
 	{
-		return $this->cyr_to_lat(do_shortcode($content));
+		$attr = (object)shortcode_atts( array('output' => 'shortcode'), $attr, 'rstr_cyr_to_lat' );
+		
+		if($attr->output == 'php'){
+			return $this->cyr_to_lat(do_shortcode($content));
+		} else {
+			return '%%%%%-##' . $content . '##-%%%%%';
+		}
 	}
 	
 	public function lat_to_cyr_shortcode ($attr=array(), $content='')
 	{
-		return $this->lat_to_cyr(do_shortcode($content));
+		$attr = (object)shortcode_atts( array('output' => 'shortcode'), $attr, 'rstr_lat_to_cyr' );
+		
+		if($attr->output == 'php'){
+			return $this->lat_to_cyr(do_shortcode($content));
+		} else {
+			return '%%%%%-||' . $content . '||-%%%%%';
+		}
 	}
 	
 	public function img_shortcode ($attr=array())
