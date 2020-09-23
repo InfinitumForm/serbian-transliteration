@@ -15,6 +15,21 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 		$this->options = $options;
 		
 		$filters = array(
+			'single_cat_title'				=>'content',
+			'the_category'					=>'content',
+			'wp_list_categories'			=>'content',//Widget categories
+			'wp_dropdown_cats'				=>'content',//Widget categories dropdown
+			'get_archives_link'				=>'content', //Widget achives
+			'get_the_terms'					=>'transliteration_wp_terms',//Sydney, Blocksy, Colormag
+			'get_the_excerpt' 				=> 'content',
+			'the_excerpt'					=>'content',
+			'oceanwp_excerpt'				=>'content',//Oceanwp
+			'get_calendar' 					=> 'content',
+		//	'pre_kses' 						=> 'content',
+			'date_i18n'						=> 'content',
+			'get_comment_date' 				=> 'content',
+			'wp_get_object_terms' 			=> 'transliteration_wp_terms', //Phlox
+			
 			'comment_text'					=> 'content',
 			'comments_template' 			=> 'content',
 			'the_content' 					=> 'content',
@@ -109,6 +124,35 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 		$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
 		$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
 	}
+	
+	/*
+	 * Transliterate WP terms
+	 * @author    Slobodan Pantović
+	 * @version   1.0.0
+	**/
+	public function transliteration_wp_terms($wp_terms)
+    {
+        if (! empty($wp_terms))
+        {
+            for($i=0,$n=count($wp_terms); $i<$n; $i++)
+            {
+                if (is_object($wp_terms[$i]))
+                {
+                   switch($this->get_current_script($this->options))
+			        {
+				        case 'cyr_to_lat' :
+                            $wp_terms[$i]->name = $this->cyr_to_lat($wp_terms[$i]->name);
+                            break;
+                        case 'lat_to_cyr' :
+					        $wp_terms[$i]->name = $this->lat_to_cyr($wp_terms[$i]->name);
+                            break;
+                    }                
+                }
+            }        
+            
+        }
+        return $wp_terms;
+    }
 	
 	public function bloginfo($output, $show=''){
 		if(!empty($show) && in_array($show, array('name','description')))

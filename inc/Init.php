@@ -96,9 +96,14 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		
 		// Initialize plugin mode
 		if(isset($options['mode']) && $options['mode'] && in_array( $options['mode'], array_keys($inst->plugin_mode()), true ) !== false)
-		{
+		{			
 			if($options['transliteration-mode'] != 'none')
 			{
+				// Display alternate links
+				if(defined('RSTR_ALTERNATE_LINKS') && RSTR_ALTERNATE_LINKS) {
+					$inst->add_action('wp_head', 'alternate_links', 1);
+				}
+				
 				// Set cookie
 				$inst->set_cookie($options);
 		
@@ -188,15 +193,17 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				add_filter('sanitize_user', function ($username, $raw_username, $strict) {
 					$username = wp_strip_all_tags( $raw_username );
 					$username = remove_accents( $username );
+
 					// Kill octets
 					$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
 					$username = preg_replace( '/&.+?;/', '', $username ); // Kill entities
 
 					// If strict, reduce to ASCII and Cyrillic characters for max portability.
-					if ( $strict )
+					if ( $strict ){
 						$username = preg_replace( '|[^a-zа-я0-9 _.\-@]|iu', '', $username );
-
+					}
 					$username = trim( $username );
+
 					// Consolidate contiguous whitespace
 					$username = preg_replace( '|\s+|', ' ', $username );
 

@@ -1,4 +1,11 @@
 <?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+/**
+ * Set of important functions
+ *
+ * @link              http://infinitumform.com/
+ * @since             1.0.7
+ * @package           Serbian_Transliteration
+ ***********************************************/
 
 /*
  * Get current URL
@@ -170,7 +177,7 @@ if(!function_exists('script_selector')) :
 			'echo' 			=> false,
 			'separator'     => ' | ',
 			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
-			'lat_caption'   => __('Latin', RSTR_NAME)
+			'lat_caption'   => Serbian_Transliteration::__instance()->cyr_to_lat(__('Latin', RSTR_NAME))
 		));
 		
 		$options = (object)array(

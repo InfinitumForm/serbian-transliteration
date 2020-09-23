@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.0.12
+Stable tag: 1.0.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,11 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 6. Permalink tools
 
 == Changelog ==
+
+= 1.0.13 =
+* Added new transliterations for widgets and archives
+* Added support for the oceanwp, sydney, blocksy, colormag, phlox
+* Added alternate links to transliteration versions for the better SEO
 
 = 1.0.12 =
 * Added `[rstr_selector]` shortcode for the script menu
@@ -160,6 +165,11 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 * First stable version
 
 == Upgrade Notice ==
+
+= 1.0.13 =
+* Added new transliterations for widgets and archives
+* Added support for the oceanwp, sydney, blocksy, colormag, phlox
+* Added alternate links to transliteration versions for the better SEO
 
 = 1.0.12 =
 * Added `[rstr_selector]` shortcode for the script menu

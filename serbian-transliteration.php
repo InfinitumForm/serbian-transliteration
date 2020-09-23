@@ -8,7 +8,7 @@
  * Plugin Name:       Transliteration - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.0.12
+ * Version:           1.0.13
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -99,6 +99,8 @@ if ( ! defined( 'RSTR_NAME' ) )			define( 'RSTR_NAME', 'serbian-transliteration'
 if ( ! defined( 'RSTR_TABLE' ) )		define( 'RSTR_TABLE', 'serbian_transliteration');
 // Plugin metabox prefix
 if ( ! defined( 'RSTR_METABOX' ) )		define( 'RSTR_METABOX', RSTR_TABLE . '_metabox_');
+// Alternate links
+if ( ! defined( 'RSTR_ALTERNATE_LINKS' ) )	 define( 'RSTR_ALTERNATE_LINKS', true);
 // Current plugin version ( if change, clear also session cache )
 $RSTR_version = NULL;
 if(function_exists('get_file_data') && $plugin_data = get_file_data( RSTR_FILE, array('Version' => 'Version'), false ))
@@ -927,6 +929,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return false;
 	}
 	
+	/*
+	 * Set cookie
+	 * @since     1.0.10
+	 * @verson    1.0.0
+	*/
 	public function setcookie ($val){
 		setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
 	}
@@ -937,10 +944,25 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @since     1.0.9
 	 * @verson    1.0.0
 	*/
-	function get_current_url()
+	public function get_current_url()
 	{
 		global $wp;
 		return add_query_arg( array(), home_url( $wp->request ) );
+	}
+	
+	/*
+	 * Alternate Links
+	 * @since     1.0.13
+	 * @verson    1.0.0
+	*/
+	public function alternate_links() {
+		$url = $this->get_current_url();
+		$locale = get_locale();
+		$title = get_bloginfo('name');
+?>
+<link rel="alternate" title="<?php echo esc_attr($this->lat_to_cyr($title, false)); ?>" href="<?php echo add_query_arg('rstr', 'cyr', $url); ?>" hreflang="<?php echo strtr($locale, array('_'=>'_Cyrl_')); ?>" />
+<link rel="alternate" title="<?php echo esc_attr($this->cyr_to_lat($title)); ?>" href="<?php echo add_query_arg('rstr', 'lat', $url); ?>" hreflang="<?php echo strtr($locale, array('_'=>'_Latn_')); ?>" />
+<?php
 	}
 	
 	/* 
