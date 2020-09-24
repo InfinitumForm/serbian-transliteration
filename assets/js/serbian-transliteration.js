@@ -129,13 +129,14 @@
 					{
 						ajax('POST', RSTR.ajax, {
 							'action' : 'rstr_run_permalink_transliteration',
-							'nonce'  : e.target.dataset.nonce
+							'nonce'  : e.target.dataset.nonce,
+							'post_type' : Array.from(document.querySelectorAll("input.tools-transliterate-permalinks-post-types:checked")).map(e => e.value)
 						}, {
 							'Accept' : 'application/json'
 						});
 					}
 					
-					ajax_done(function(data){					
+					ajax_done(function(data){
 						if(!data.error)
 						{
 							progress_bar(data.percentage);
@@ -144,6 +145,7 @@
 							{
 								button.disabled = false;
 								checkbox.disabled = false;
+								Array.from(document.querySelectorAll("input.tools-transliterate-permalinks-post-types:checked")).map(e => {e.disabled = false});
 							}
 							else
 							{
@@ -167,6 +169,7 @@
 				progress_bar(1);
 				
 				do_ajax();
+				Array.from(document.querySelectorAll("input.tools-transliterate-permalinks-post-types:checked")).map(e => {e.disabled = true});
 				
 			});
 		}

@@ -2,17 +2,17 @@
 Contributors: ivijanstefan, creativform, dizajn24
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, wpml-compatible, gutenberg, elementor
-Requires at least: 5.0
+Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
 
 == Description ==
-This is a simple and easy plugin with which you can translate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration also supports special shortcodes that you can use to partially translate parts of the content.
+This is a simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration also supports special shortcodes that you can use to partially transliterate parts of the content.
 
 = FEATURES =
 
@@ -26,11 +26,13 @@ This is a simple and easy plugin with which you can translate your WordPress ins
 = BENEFITS =
 
 * Compatible with Multilanguage Plugins
+* Compatible with any WordPress template
 * Possibility of partial transliteration
 * Scalable and customizable
 * It does not affect on the HTML, CSS or JS codes
 * Multilingual support
 * Transcription mode selection
+* The plugin didn't make the site noticeably slower (light weight)
 
 = LANGUAGE SUPPORT =
 
@@ -41,6 +43,7 @@ This is a simple and easy plugin with which you can translate your WordPress ins
 * **Belarusian latinisation** - Belarusian language (by locale:**bel**)
 * **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
 * **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
+* **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
 * more languages are coming soon...
 
 = PLUGINS SUPPORT =
@@ -61,6 +64,22 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 **Latin to Cyrillic:**
 `[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]`
 
+**Add an image depending on the language script:**
+With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.
+`[rstr_img lat="YOUR_SITE_URL/logo_latin.jpg" cyr="YOUR_SITE_URL/logo_cyrillic.jpg"]`
+(The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
+
+**Language script menu**
+This shortcode displays a selector for the transliteration script.
+`[rstr_selector]`
+(The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
+
+= Permalink Tool =
+This tool can rename all existing Cyrillic permalinks to Latin inside database. This tool is in the configuration of this plugin.
+
+= PHP Functions =
+We also thought of PHP developers where we have enabled several useful functions that they can use within WordPress themes and plugins. The documentation for these functions is inside the plugin settings.
+
 == Installation ==
 
 1. Go to `WP-Admin->Plugins->Add new`, search term "WordPress Transliteration" and click on the "install" button
@@ -76,8 +95,15 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 4. Shortcodes
 5. Automated test
 6. Permalink tools
+7. Available PHP Functions
 
 == Changelog ==
+
+= 1.0.14 =
+* Added transliteration for Kazakh language
+* Added update for Gutenberg block editor
+* Added post type filters for permalink tool
+* Added support for older WordPress version 4.0 and above (by request)
 
 = 1.0.13 =
 * Added new transliterations for widgets and archives
@@ -166,24 +192,29 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 == Upgrade Notice ==
 
-= 1.0.13 =
-* Added new transliterations for widgets and archives
-* Added support for the oceanwp, sydney, blocksy, colormag, phlox
-* Added alternate links to transliteration versions for the better SEO
-
-= 1.0.12 =
-* Added `[rstr_selector]` shortcode for the script menu
-* Fixed transliteration problems with `[rstr_cyr_to_lat]` and `[rstr_lat_to_cyr]` shortcodes
-
-= 1.0.11 =
-* Fixed problems with title and description tags
-* Added array and object mode into script_selector() function
-* Fixed special characters transliteration
+= 1.0.14 =
+* Added transliteration for Kazakh language
+* Added update for Gutenberg block editor
+* Added post type filters for permalink tool
+* Added support for older WordPress version 4.0 and above (by request)
 
 == Frequently Asked Questions ==
 
 = What is Romanization or Latinisation? =
 **Romanisation or Latinisation**, in linguistics, is the conversion of writing from a different writing system to the Roman (Latin) script, or a system for doing so. Methods of romanization include transliteration, for representing written text, and transcription, for representing the spoken word, and combinations of both.
+
+= Which Romanization does this plugin support? =
+
+This plugin supports several world letters written in Cyrillic and enables their Romanization
+
+* Romanization of Serbian what include Bosnian and Montenegrin
+* Romanization of Russian
+* Romanization of Belarusian
+* Romanization of Bulgarian
+* Romanization of Macedonian
+* Romanization of Kazakh
+
+Each of these transliterations is created separately and follows the rules of the active language.
 
 = Is Latin better for SEO than Cyrillic? =
 According to Google documentation and discussions on forums and blogs, it is concluded that Latin is much better for SEO and it is necessary to practice Latin at least when permalinks and file names are in Latin, while the text can be in both letters but Latin is always preferred.

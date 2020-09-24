@@ -151,6 +151,18 @@ if(!function_exists('is_macedonian')) :
 	}
 endif;
 
+/*
+ * Check is Kazakh language
+ * @return        string
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_kazakh')) :
+	function is_kazakh()
+	{
+		return Serbian_Transliteration::__instance()->get_locale() == 'kk';
+	}
+endif;
+
 
 /*
  * Check is Macedonian language

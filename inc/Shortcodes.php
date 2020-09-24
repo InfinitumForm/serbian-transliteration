@@ -14,14 +14,19 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	function __construct($options){
 		$this->options = $options;
 
-		$this->add_shortcode('rstr_selector', 'rstr_selector_shortcode');
-		$this->add_shortcode('rstr_cyr_to_lat', 'cyr_to_lat_shortcode');
-		$this->add_shortcode('rstr_lat_to_cyr', 'lat_to_cyr_shortcode');
-		$this->add_shortcode('rstr_img', 'img_shortcode');
-		$this->add_shortcode('transliteration', 'transliteration_shortcode');
-		
-		$this->add_action('wp_loaded', 'output_buffer_start', 99999);
-		$this->add_action('shutdown', 'output_buffer_end', 99999);
+		if($this->is_editor())
+		{}
+		else
+		{
+			$this->add_shortcode('rstr_selector', 'rstr_selector_shortcode');
+			$this->add_shortcode('rstr_cyr_to_lat', 'cyr_to_lat_shortcode');
+			$this->add_shortcode('rstr_lat_to_cyr', 'lat_to_cyr_shortcode');
+			$this->add_shortcode('rstr_img', 'img_shortcode');
+			$this->add_shortcode('transliteration', 'transliteration_shortcode');
+			
+			$this->add_action('wp_loaded', 'output_buffer_start', 99999);
+			$this->add_action('shutdown', 'output_buffer_end', 99999);
+		}
 	}
 	
 	public function output_callback ($buffer='') {

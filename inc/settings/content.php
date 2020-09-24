@@ -110,15 +110,19 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 					printf('<p>%s</p>', __('Consult your SEO developer before you run this script as you will then need to resubmit the sitemap and make any other additional settings to change the permalinks on the search engines.', RSTR_NAME));
 					printf('<p><strong class="text-danger">%s</strong></p>', sprintf(__('You must %s before running this script.', RSTR_NAME), '<a href="https://wordpress.org/support/article/wordpress-backups/" target="_blank">' . __('back up the database', RSTR_NAME) . '</a>'));
 
-					$post_types = get_post_types(array(
+					$get_post_types = get_post_types(array(
 						'public'   => true
 					), 'names', 'and');
-					
+					/*
 					$post_types = array_map(function($match){
 						return '<code><b>' . $match . '</b></code>';
-					}, $post_types);
+					}, $get_post_types);
+					*/
+					$post_types_selector = array_map(function($match){
+						return sprintf('<label for="tools-transliterate-post-type-%1$s"><input type="checkbox" id="tools-transliterate-post-type-%1$s" value="%1$s" class="tools-transliterate-permalinks-post-types" name="tools-transliterate-permalinks-post-types[]" checked><span>%2$s</span></label>', $match, strtr($match, array('_'=>' ',  '-'=>' ')));
+					}, $get_post_types);
 					
-					printf('<p>%s</p>', sprintf(__('This tool will affect on the following post types: %s', RSTR_NAME), join(' ', $post_types)));
+					printf('<p>%s</p>', sprintf(__('This tool will affect on the following post types: %s', RSTR_NAME), '<br>' . join('&nbsp;&nbsp;&nbsp;&nbsp; ', $post_types_selector)));
 				?>
 				<br>
 				<div id="rstr-progress-bar" style="display:none;">
@@ -528,11 +532,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			// Posts per page
 			$posts_pre_page = apply_filters('rstr/permalink-tool/transliteration/offset', 20);
 			
+			// Set post type
+			if(isset($_REQUEST['post_type']) && !empty($_REQUEST['post_type'])) {
+				if(is_array($_REQUEST['post_type'])) {
+					$post_type = join(',', array_map(function($val){
+						return sanitize_text_field($val);
+					}, $_REQUEST['post_type']));
+				} else {
+					$post_type = sanitize_text_field($_REQUEST['post_type']);
+				}
+				$post_type_query = "FIND_IN_SET(`post_type`, '{$post_type}')";
+			} else {
+				$post_type = NULL;
+				$post_type_query = 0;
+			}
+			
 			// Get maximum number of the posts
 			if(isset($_POST['total'])){
 				$total = absint($_POST['total']);
 			} else {
-				$total = absint($wpdb->get_var("SELECT COUNT(1) FROM `{$wpdb->posts}` WHERE TRIM(IFNULL(`post_name`,'')) <> '' AND `post_type` NOT LIKE 'revision' AND `post_status` NOT LIKE 'trash'"));
+				$total = absint($wpdb->get_var("SELECT COUNT(1) FROM `{$wpdb->posts}` WHERE {$post_type_query} AND `post_type` NOT LIKE 'revision' AND TRIM(IFNULL(`post_name`,'')) <> '' AND `post_status` NOT LIKE 'trash'"));
 			}
 			
 			// Get updated
@@ -558,7 +577,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 				$offset = ($posts_pre_page*$offset);
 				
 				$limit = $wpdb->prepare('LIMIT %d, %d', $offset, $posts_pre_page);
-				$get_results = $wpdb->get_results("SELECT `ID`, `post_name` FROM `{$wpdb->posts}` WHERE TRIM(IFNULL(`post_name`,'')) <> '' AND `post_type` NOT LIKE 'revision' AND `post_status` NOT LIKE 'trash' ORDER BY `ID` DESC {$limit}");
+				$get_results = $wpdb->get_results("SELECT `ID`, `post_name` FROM `{$wpdb->posts}` WHERE {$post_type_query} AND TRIM(IFNULL(`post_name`,'')) <> '' AND `post_type` NOT LIKE 'revision' AND `post_status` NOT LIKE 'trash' ORDER BY `ID` DESC {$limit}");
 				
 				if($get_results)
 				{
@@ -601,7 +620,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					'percentage' => $percentage,
 					'updated' => $updated,
 					'nonce' => $_REQUEST['nonce'],
-					'action' => $_REQUEST['action']
+					'action' => $_REQUEST['action'],
+					'post_type' => $post_type
 				);
 			}
 			else
@@ -615,7 +635,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					'return' => $return,
 					'updated' => $updated,
 					'nonce' => $_REQUEST['nonce'],
-					'action' => $_REQUEST['action']
+					'action' => $_REQUEST['action'],
+					'post_type' => $post_type
 				);
 			}
 		}

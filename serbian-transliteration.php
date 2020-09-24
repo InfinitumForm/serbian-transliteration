@@ -8,7 +8,7 @@
  * Plugin Name:       Transliteration - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.0.13
+ * Version:           1.0.14
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -347,7 +347,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function already_cyrillic(){
-        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk'))) !== false;
+        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk'))) !== false;
 	}
 	
 	/*
@@ -963,6 +963,28 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 <link rel="alternate" title="<?php echo esc_attr($this->lat_to_cyr($title, false)); ?>" href="<?php echo add_query_arg('rstr', 'cyr', $url); ?>" hreflang="<?php echo strtr($locale, array('_'=>'_Cyrl_')); ?>" />
 <link rel="alternate" title="<?php echo esc_attr($this->cyr_to_lat($title)); ?>" href="<?php echo add_query_arg('rstr', 'lat', $url); ?>" hreflang="<?php echo strtr($locale, array('_'=>'_Latn_')); ?>" />
 <?php
+	}
+	
+	/* 
+	* Check is block editor screen
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public function is_editor()
+	{
+		if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
+			if(!function_exists('get_current_screen')){
+				include_once ABSPATH  . '/wp-admin/includes/screen.php';
+			}
+			$get_current_screen = get_current_screen();
+			if(is_callable(array($get_current_screen, 'is_block_editor')) && method_exists($get_current_screen, 'is_block_editor')) {
+				return $get_current_screen->is_block_editor();
+			}
+		} else {
+			return ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) );
+		}
+		
+		return false;
 	}
 	
 	/* 
