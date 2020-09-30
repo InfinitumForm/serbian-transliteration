@@ -5,7 +5,7 @@
  * @package           Serbian_Transliteration
  *
  * @wordpress-plugin
- * Plugin Name:       Transliteration - WordPress Transliteration
+ * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Version:           1.0.14
@@ -1105,4 +1105,10 @@ if(class_exists('Serbian_Transliteration_Init') && $Serbian_Transliteration_Acti
 	/* Run plugin
 	====================================*/
 	add_action('init', array('Serbian_Transliteration_Init', 'run'));
+	
+	/* Run WP_CLI
+	====================================*/
+	if(defined( 'WP_CLI' ) && WP_CLI) {
+		include_once RSTR_INC . '/WP_CLI.php';
+	}
 endif;

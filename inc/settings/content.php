@@ -126,11 +126,11 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 				?>
 				<br>
 				<div id="rstr-progress-bar" style="display:none;">
-					<p class="progress-value" style="width:33%" data-value="33"></p>
-					<progress max="100" value="33" class="php">
+					<p class="progress-value" style="width:0%" data-value="0"></p>
+					<progress max="100" value="0" class="php">
 						<!-- Browsers that support HTML5 progress element will ignore the html inside `progress` element. Whereas older browsers will ignore the `progress` element and instead render the html inside it. -->
 						<div class="progress-bar">
-							<span style="width: 33%">33%</span>
+							<span style="width: 0%">0%</span>
 						</div>
 					</progress>
 					<p class="progress-message"><?php _e('Please wait! Do not close the window or leave the page until this operation is completed!', RSTR_NAME); ?></p>
