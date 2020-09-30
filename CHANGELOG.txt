@@ -1,3 +1,6 @@
+= 1.1.1 =
+* Important update: fixed and improved WordPress search functionality
+
 = 1.1.0 =
 * Fixed issue with language session
 * Optimized PHP code

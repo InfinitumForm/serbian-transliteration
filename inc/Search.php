@@ -23,14 +23,13 @@ class Serbian_Transliteration_Search extends Serbian_Transliteration
     {
 		$this->options = $options;
         $this->add_filter( 'request', 'request' );
+		$this->add_filter( 'get_search_query', 'request' );
     }
 	
 	public function request ($search_vars) {
-		if ( isset($search_vars['s']) && !empty($search_vars['s']) ) {			
-		//	$search_vars['s'] = $this->transliterate_text($search_vars['s'], $this->options['search-mode']);
-			$search_vars['s'] = $this->transliterate_text($search_vars['s'], (isset($this->options['site-script']) && $this->options['site-script'] == 'cyr' ? 'cyr_to_lat' : 'lat_to_cyr'));
+		if ( isset($search_vars['s']) && !empty($search_vars['s']) ) {
+			$search_vars['s'] = $this->transliterate_text($search_vars['s'], (isset($this->options['site-script']) && $this->options['site-script'] == 'cyr' ? 'lat_to_cyr' : 'cyr_to_lat'));
 		}
-		
 		return $search_vars;
 	}
 }
