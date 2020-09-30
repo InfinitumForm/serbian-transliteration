@@ -121,7 +121,10 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         $this->register_setting(
             RSTR_NAME . '-group', // Option group
             RSTR_NAME, // Option name
-            'sanitize' // Sanitize
+            array(
+				'type' => 'array',
+				'sanitize_callback' => array($this,'sanitize')
+			) // Sanitize
         );
 
 
@@ -207,7 +210,10 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$this->register_setting(
             RSTR_NAME . '-search', // Option group
             RSTR_NAME, // Option name
-            'sanitize' // Sanitize
+            array(
+				'type' => 'array',
+				'sanitize_callback' => array($this,'sanitize')
+			) // Sanitize
         );
 		
 		$this->add_settings_section(
@@ -249,6 +255,20 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				$new_input[$key] = array_map('sanitize_text_field', $value);
 			} else {
 				$new_input[$key] = sanitize_text_field($value);
+			}
+		}
+
+		if(isset($new_input[RSTR_NAME]['transliteration-mode']))
+		{
+			switch($new_input[RSTR_NAME]['transliteration-mode'])
+			{
+				case 'cyr_to_lat':
+					$this->setcookie('lat');
+					break;
+					
+				case 'lat_to_cyr':
+					$this->setcookie('cyr');
+					break;
 			}
 		}
 

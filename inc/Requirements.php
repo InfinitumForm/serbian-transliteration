@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  */
 if(!class_exists('Serbian_Transliteration_Requirements')) :
-class Serbian_Transliteration_Requirements extends Serbian_Transliteration
+class Serbian_Transliteration_Requirements
 {
     private $title = 'Serbian Transliteration';
 	private $php = '7.0';
@@ -21,7 +21,7 @@ class Serbian_Transliteration_Requirements extends Serbian_Transliteration
 			}
 		}
 		
-		$this->add_action( 'in_plugin_update_message-' . RSTR_BASENAME, 'in_plugin_update_message', 10, 2 );
+		add_action( 'in_plugin_update_message-' . RSTR_BASENAME, array($this, 'in_plugin_update_message'), 10, 2 );
 	}
 	
 	function in_plugin_update_message($args, $response) {
@@ -70,7 +70,7 @@ font-weight:600;
 	public function passes() {
 		$passes = $this->php_passes() && $this->wp_passes();
 		if ( ! $passes ) {
-			$this->add_action( 'admin_notices', 'deactivate' );
+			add_action( 'admin_notices', array($this, 'deactivate') );
 		}
 		return $passes;
 	}
@@ -85,7 +85,7 @@ font-weight:600;
 		if ( $this->__php_at_least( $this->php ) ) {
 			return true;
 		} else {
-			$this->add_action( 'admin_notices', 'php_version_notice' );
+			add_action( 'admin_notices', array($this, 'php_version_notice') );
 			return false;
 		}
 	}
@@ -104,7 +104,7 @@ font-weight:600;
 		if ( $this->__wp_at_least( $this->wp ) ) {
 			return true;
 		} else {
-			$this->add_action( 'admin_notices', 'wp_version_notice' );
+			add_action( 'admin_notices', array($this, 'wp_version_notice') );
 			return false;
 		}
 	}

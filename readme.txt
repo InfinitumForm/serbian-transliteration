@@ -1,15 +1,15 @@
-﻿=== Transliteration - WordPress Transliteration ===
+﻿=== Transliterator - WordPress Transliteration ===
 Contributors: ivijanstefan, creativform, dizajn24
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
-Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, wpml-compatible, gutenberg, elementor
+Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.0.14
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
+Transliterate Cyrillic into Latin, enable Cyrillic usernames, search in multiple letter scripts, and more...
 
 == Description ==
 This is a simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration also supports special shortcodes that you can use to partially transliterate parts of the content.
@@ -59,19 +59,25 @@ Everything you need to do is to go to `Settings->Transliteration` and setup plug
 This plugin has two shortcodes that work independently of the plugin settings. These two shortcodes aim to transliterate some content. This is great if you have an article and want to display part of the text in Cyrillic, and if your entire portal is displayed in Latin.
 
 **Cyrillic to Latin:**
+
 `[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]`
 
 **Latin to Cyrillic:**
+
 `[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]`
 
 **Add an image depending on the language script:**
 With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.
+
 `[rstr_img lat="YOUR_SITE_URL/logo_latin.jpg" cyr="YOUR_SITE_URL/logo_cyrillic.jpg"]`
+
 (The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
 
 **Language script menu**
 This shortcode displays a selector for the transliteration script.
+
 `[rstr_selector]`
+
 (The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
 
 = Permalink Tool =
@@ -98,6 +104,11 @@ We also thought of PHP developers where we have enabled several useful functions
 7. Available PHP Functions
 
 == Changelog ==
+
+= 1.1.0 =
+* Fixed issue with language session
+* Optimized PHP code
+* Made preparations for future versions of the plugin
 
 = 1.0.14 =
 * Added transliteration for Kazakh language
@@ -192,11 +203,10 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.0.14 =
-* Added transliteration for Kazakh language
-* Added update for Gutenberg block editor
-* Added post type filters for permalink tool
-* Added support for older WordPress version 4.0 and above (by request)
+= 1.1.0 =
+* Fixed issue with language session
+* Optimized PHP code
+* Made preparations for future versions of the plugin
 
 == Frequently Asked Questions ==
 

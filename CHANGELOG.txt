@@ -1,0 +1,95 @@
+= 1.1.0 =
+* Fixed issue with language session
+* Optimized PHP code
+* Made preparations for future versions of the plugin
+
+= 1.0.14 =
+* Added transliteration for Kazakh language
+* Added update for Gutenberg block editor
+* Added post type filters for permalink tool
+* Added support for older WordPress version 4.0 and above (by request)
+
+= 1.0.13 =
+* Added new transliterations for widgets and archives
+* Added support for the oceanwp, sydney, blocksy, colormag, phlox
+* Added alternate links to transliteration versions for the better SEO
+
+= 1.0.12 =
+* Added `[rstr_selector]` shortcode for the script menu
+* Fixed transliteration problems with `[rstr_cyr_to_lat]` and `[rstr_lat_to_cyr]` shortcodes
+
+= 1.0.11 =
+* Fixed problems with title and description tags
+* Added array and object mode into script_selector() function
+* Fixed special characters transliteration
+
+= 1.0.10 =
+* Added Woocommerce transliteration
+* Added debug mode
+* Prepared for the multisite
+* Improved comments transliteration
+* Improved RS and HR translations
+* Fixed problems with array values
+
+= 1.0.9 =
+* Added new shortcode for the image controls
+* Added new PHP functions
+* Added new settings
+* Added documentation
+* Improved transliteration
+* Improved JavaScript functions
+* Improved transliteration quality
+* Improved Search algorithm
+* Fixed date transliteration
+* Fixed problems with PHP7.4
+* Fixed Comments transliteration
+
+= 1.0.8 =
+* PHP 7.4 support
+* Improved PHP code
+* Added caching to the forced transliteration
+
+= 1.0.7 =
+* New UX
+* Added Bulgarian language
+* Added Macedonian language
+* Added new locales
+* Added new schema of the letters
+
+= 1.0.6 =
+* NEW: A tool for automatic transliteration of permalink in a database
+* Improved detection of Cyrillic
+* Added locale libraries
+* Moved to the PHP 7.x
+
+= 1.0.5 =
+* Added option to allow Cyrillic usernames
+* Added RSS feed transliteration
+* Added SEO transliteration
+* Added support for the visual editors
+* Improved page speed
+
+= 1.0.4 =
+* Fixed Latin to Cyrillic translation in pages
+* Improved search functionality
+* Added Latin and words, phrases, names and expressions exclude
+* Improved PHP code
+
+= 1.0.3 =
+* Added support for search in Latin and Cyrillic
+* Fixed bugs from the previous version
+
+= 1.0.2 =
+* FIXED: Problems with special characters and variations
+* Added Russian transliteration
+* Added Belarusian transliteration
+
+= 1.0.1 =
+* FIXED: Permalink transliteration
+* FIXED: Sanitization of the special characters
+* Added support for the other languages
+* Improved page impact
+* Improved PHP orientation
+
+= 1.0.0 =
+* First stable version
