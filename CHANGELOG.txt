@@ -1,3 +1,6 @@
+= 1.1.2 =
+* Important update: Fixed inline Elementor JSON settings
+
 = 1.1.1 =
 * Important update: fixed and improved WordPress search functionality
 

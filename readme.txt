@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,9 @@ We also thought of PHP developers where we have enabled several useful functions
 7. Available PHP Functions
 
 == Changelog ==
+
+= 1.1.2 =
+* Important update: Fixed inline Elementor JSON settings
 
 = 1.1.1 =
 * Important update: fixed and improved WordPress search functionality
@@ -205,6 +208,9 @@ We also thought of PHP developers where we have enabled several useful functions
 * First stable version
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+* Important update: Fixed inline Elementor JSON settings
 
 = 1.1.1 =
 * Important update: fixed and improved WordPress search functionality

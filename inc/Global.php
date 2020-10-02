@@ -85,6 +85,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
 			}
 		}
+		
+		$content = $this->fix_attributes($content);
 
 		return $content;
 	}
@@ -159,6 +161,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		if($fix_html){
 			$content = $this->fix_cyr_html($content);
+			$content = $this->fix_attributes($content);
 		}
 		
 		return $content;
@@ -190,6 +193,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 					// Filter special names from the list
 					foreach($this->lat_exclude_list() as $item){
 						$content = str_replace(str_replace($this->lat(), $this->cyr(), $item), $item, $content);
+						$content = $this->fix_attributes($content);
 					}
 					break;
 				case 'cyr_to_lat':
@@ -204,6 +208,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		if($type == 'lat_to_cyr' && $fix_html){
 			$content = $this->fix_cyr_html($content);
+			$content = $this->fix_attributes($content);
 		}
 		
 		return $content;
@@ -320,12 +325,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		// Fix JavaScript
-		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($matches) {
+		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($m) {
 				return $this->cyr_to_lat($m[2]);
 		}, $content);
 		
 		// Fix CSS
-		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($matches) {
+		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($m) {
 				return $this->cyr_to_lat($m[2]);
 		}, $content);
 		
@@ -855,6 +860,32 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		
 		return false;
+	}
+	
+	/*
+	 * Fix attributes
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function fix_attributes($content){
+		
+		$content = preg_replace_callback('/(data-[a-z-_]+\s?=\s?")(.*?)("(\s|\>|\/))/s', function($m) {
+				return $m[1] . htmlentities($m[2], ENT_QUOTES | ENT_IGNORE, 'UTF-8') . $m[3];
+		}, $content);
+		
+		$content = preg_replace_callback('/(data-[a-z-_]+\s?=\s?\')(.*?)(\'(\s|\>|\/))/s', function($m) {
+				return $m[1] . htmlentities($m[2], ENT_QUOTES | ENT_IGNORE, 'UTF-8') . $m[3];
+		}, $content);
+		
+		$content = preg_replace_callback('/(href\s?=\s?"#)(.*?)("(\s|\>|\/))/s', function($m) {
+				return $m[1] . urlencode($m[2]) . $m[3];
+		}, $content);
+		
+		$content = preg_replace_callback('/(href\s?=\s?\'#)(.*?)(\'(\s|\>|\/))/s', function($m) {
+				return $m[1] . urlencode($m[2]) . $m[3];
+		}, $content);
+		
+		return $content;
 	}
 	
 	/* 
