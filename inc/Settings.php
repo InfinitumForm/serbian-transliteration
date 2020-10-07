@@ -57,7 +57,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      * Enqueue scripts
      */
 	public function enqueue_scripts () {
-		wp_register_style( RSTR_NAME, RSTR_ASSETS . '/css/serbian-transliteration.css', 1, (string)RSTR_VERSION );
+		wp_register_style( RSTR_NAME, RSTR_ASSETS . '/css/serbian-transliteration.css', array('common'), (string)RSTR_VERSION );
 		wp_register_script( RSTR_NAME, RSTR_ASSETS . '/js/serbian-transliteration.js', 1, (string)RSTR_VERSION, true );
 		wp_localize_script(
 			RSTR_NAME,
@@ -77,7 +77,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		 * https://highlightjs.org/
 		 * https://github.com/highlightjs/highlight.js
 		 */
-		wp_register_style( 'highlight', RSTR_ASSETS . '/css/highlight.min.css', 1, (string)RSTR_VERSION );
+		wp_register_style( 'highlight', RSTR_ASSETS . '/css/highlight.min.css', array('common'), (string)RSTR_VERSION );
 		wp_register_script( 'highlight', RSTR_ASSETS . '/js/highlight.min.js', 1, (string)RSTR_VERSION, true );
 	}
 
@@ -147,6 +147,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             'transliteration-mode', // ID
             __('Transliteration Mode', RSTR_NAME), // Title 
             'transliteration_mode_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
+        );
+		
+		$this->add_settings_field(
+            'transliteration-filter', // ID
+            __('Transliteration Filter', RSTR_NAME), // Title 
+            'transliteration_filter_callback', // Callback
             RSTR_NAME, // Page
             RSTR_NAME . '-global' // Section           
         );
@@ -349,6 +357,44 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 		
         echo join('<br>', $inputs);
+	}
+	
+	/** 
+     * Transliteration filter
+     */
+    public function transliteration_filter_callback()
+    {
+?>
+<div class="accordion-container">
+	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', RSTR_NAME); ?></button>
+	<div class="accordion-panel">
+		<?php
+
+		printf('<p>%s<br><b>%s</b></p><br>', __('Select the transliteration filters you want to exclude.', RSTR_NAME), __('The filters you select here will not be transliterated.', RSTR_NAME));
+
+		$inputs = array();
+		
+		foreach(array(
+			'the_content' => __('Post content', RSTR_NAME),
+			'the_excerpt' => __('Post excerpt', RSTR_NAME),
+			'get_the_excerpt' => __('Post excerpt (raw)', RSTR_NAME),
+			'wp_title' => __('Page title', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s"%4$s> <span>%2$s</span></label></p>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['transliteration-filter']) ? (is_array($this->options['transliteration-filter']) && in_array($key, $this->options['transliteration-filter']) ? ' checked' : '') : '')
+			);
+		}
+		
+        echo join(PHP_EOL, $inputs);
+		?>
+	</div>
+</div>
+<?php
 	}
 	
 	/** 

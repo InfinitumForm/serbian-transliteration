@@ -108,7 +108,9 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 				'woocommerce_variable_empty_price_html' => 'content'
 			));
 		}
-		
+
+		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+
 		if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
 		{
 			if(!is_admin())

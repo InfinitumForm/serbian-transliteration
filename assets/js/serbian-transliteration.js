@@ -174,5 +174,25 @@
 			});
 		}
 	}('serbian-transliteration-tools-check', 'serbian-transliteration-tools-transliterate-permalinks', 'rstr-progress-bar', 'rstr-disclaimer'));
+	
+	
+	(function(c){
+		var acc = document.getElementsByClassName(c), i;
+		if(acc) {
+			for (i = 0; i < acc.length; i++) {
+				acc[i].addEventListener("click", function () {
+					this.classList.toggle("active");
+					var panel = this.nextElementSibling;
+					if (panel.style.display === "block") {
+						panel.style.display = "none";
+					} else {
+						panel.style.display = "block";
+					}
+				});
+			}
+		}
+	}("accordion-link"))
+	
+	
 	console.log("%c\n\nHey, are you are developer? Cool!!!\n\nJoin our team:\n\n%chttps://github.com/CreativForm/serbian-transliteration\n\n", "color: #cc0000; font-size: x-large;", "color: #cc0000; font-size: 18px");
 }());

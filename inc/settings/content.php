@@ -156,7 +156,10 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	/*
 	 * Tab settings form
 	**/
-	public function tab_content_settings_form(){ ?>
+	public function tab_content_settings_form(){
+		wp_enqueue_style( RSTR_NAME );
+		wp_enqueue_script( RSTR_NAME );	
+?>
 <div class="rstr-tab-wrapper">
 
 	<div id="poststuff" class="metabox-holder has-right-sidebar">

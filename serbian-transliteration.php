@@ -171,5 +171,18 @@ if($Serbian_Transliteration_Activate->passes()) :
 		/* Run plugin
 		====================================*/
 		add_action('init', array('Serbian_Transliteration_Init', 'run'));
+		
+		/* Do special filtering
+		====================================*/
+		add_filter('rstr/transliteration/exclude/filters', function($filters, $options) {
+			if(isset($options['transliteration-filter']) && is_array($options['transliteration-filter'])) {
+				foreach($options['transliteration-filter'] as $filter){
+					if( isset($filters[$filter]) ) {
+						unset($filters[$filter]); 
+					}
+				}
+			}
+			return $filters;
+		}, 1, 2);
 	endif;
 endif;

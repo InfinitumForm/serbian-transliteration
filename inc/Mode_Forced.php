@@ -111,6 +111,8 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			));
 		}
 		
+		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+
 		if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
 		{
 			if(!is_admin())

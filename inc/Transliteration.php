@@ -408,7 +408,8 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_exclude_list(){
-		return apply_filters('rstr/init/exclude/cyr', array());
+		$exclude_unicode = apply_filters('rstr/init/exclude/unicode', array( '\u0106', '\u0107', 'u010c', '\u010d', '\u017d', 'u017e', '\u0110', '\u0111', '\u0160', '\u0161' ));
+		return array_merge(apply_filters('rstr/init/exclude/cyr', array()), $exclude_unicode);
 	}
 	
 	/*

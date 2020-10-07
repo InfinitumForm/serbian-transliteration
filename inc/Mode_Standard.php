@@ -92,6 +92,8 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			unset($filters['wp_title']);
 		}
 		
+		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+
 		if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
 		{
 			if(!is_admin())

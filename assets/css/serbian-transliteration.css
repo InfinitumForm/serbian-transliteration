@@ -1,3 +1,47 @@
+#serbian-transliteration-settings .accordion-container {
+	display:block;
+	width:100%;
+	border:1px solid #efefef;
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link {
+	background-color: #efefef;
+	color: #333333;
+	cursor: pointer;
+	padding: 10px 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	transition: 0.4s;
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link.active,
+#serbian-transliteration-settings .accordion-container .accordion-link:hover {
+	background-color: #dddddd; 
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link:after {
+	content: '+'; /* Unicode character for "plus" sign (+) */
+	font-size: 13px;
+	color: #777777;
+	float: right;
+	margin-left: 5px;
+	margin-left: 5px;
+	margin-top: 1px;
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link.active:after {
+	content: "-"; /* Unicode character for "minus" sign (-) */
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-panel {
+	padding: 5px 15px 10px 15px;
+	display: none;
+	background-color: #ffffff;
+	overflow: hidden;
+}
+
 #serbian-transliteration-settings h2{
 	color: #23282d;
     font-size: 1.3em;

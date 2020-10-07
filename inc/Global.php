@@ -8,6 +8,7 @@ if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Translitera
 class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
 	private static $__instance = NULL;
+	private $html_tags;
 	
 	/*
 	 * Plugin mode
@@ -247,22 +248,27 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function html_tags() {
-		$tags = apply_filters('rstr_html_tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
-		$tags_latin = explode(',', $tags);
-		$tags_latin = array_map('trim', $tags_latin);
-		$tags_latin = array_filter($tags_latin);
-		$tags_latin = apply_filters('rstr_html_tags_lat', $tags_latin);
+		if( empty($this->html_tags) )
+		{		
+			$tags = apply_filters('rstr_html_tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
+			$tags_latin = explode(',', $tags);
+			$tags_latin = array_map('trim', $tags_latin);
+			$tags_latin = array_filter($tags_latin);
+			$tags_latin = apply_filters('rstr_html_tags_lat', $tags_latin);
+			
+			$tags_cyr = $this->lat_to_cyr($tags, false);
+			$tags_cyr = explode(',', $tags_cyr);
+			$tags_cyr = array_map('trim', $tags_cyr);
+			$tags_cyr = array_filter($tags_cyr);
+			$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
+			
+			$this->html_tags = (object)array(
+				'cyr' => $tags_cyr,
+				'lat' => $tags_latin
+			);
+		}
 		
-		$tags_cyr = $this->lat_to_cyr($tags, false);
-		$tags_cyr = explode(',', $tags_cyr);
-		$tags_cyr = array_map('trim', $tags_cyr);
-		$tags_cyr = array_filter($tags_cyr);
-		$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
-		
-		return (object)array(
-			'cyr' => $tags_cyr,
-			'lat' => $tags_latin
-		);
+		return $this->html_tags;
 	}
 	
 	/*
@@ -353,7 +359,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?\'(.*?)\'/iu', function($m){
 			return sprintf('%1$s=\'%2$s\'', $m[1], esc_attr($this->lat_to_cyr($m[3], false)));
 		}, $content);
-
+		
 		return $content;
 	}
 	
@@ -869,6 +875,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function fix_attributes($content){
 		
+		// Fix bad attribute space
+		$content = preg_replace('/"([a-z-_]+\s?=)/i', ' $1', $content);
+		
+		// Fix entity
 		$content = preg_replace_callback('/(data-[a-z-_]+\s?=\s?")(.*?)("(\s|\>|\/))/s', function($m) {
 				return $m[1] . htmlentities($m[2], ENT_QUOTES | ENT_IGNORE, 'UTF-8') . $m[3];
 		}, $content);
@@ -883,6 +893,28 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		$content = preg_replace_callback('/(href\s?=\s?\'#)(.*?)(\'(\s|\>|\/))/s', function($m) {
 				return $m[1] . urlencode($m[2]) . $m[3];
+		}, $content);
+		
+		// Fix broken things
+		$tags = $this->html_tags();
+		foreach($tags->lat as $i=>$tag){	
+			$content = str_replace(array(
+				'&lt;' . $tag,
+				'&lt;/' . $tag . '&gt;'
+			), array(
+				'<' . $tag,
+				'</' . $tag . '>'
+			), $content);	
+		}
+		
+		// Fix CSS
+		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($m) {
+				return $this->decode($m[2]);
+		}, $content);
+		
+		// Fix scripts
+		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($m) {
+				return $this->decode($m[2]);
 		}, $content);
 		
 		return $content;
