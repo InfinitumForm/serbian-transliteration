@@ -1,3 +1,28 @@
+#serbian-transliteration-settings .row{
+	display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+#serbian-transliteration-settings .row .col {
+	position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 1400px){
+	#serbian-transliteration-settings .row .col {
+		-ms-flex-preferred-size: 0;
+		flex-basis: 0;
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		max-width: 100%;
+	}
+}
+
 #serbian-transliteration-settings .accordion-container {
 	display:block;
 	width:100%;

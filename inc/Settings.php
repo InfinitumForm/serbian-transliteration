@@ -150,19 +150,19 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME, // Page
             RSTR_NAME . '-global' // Section           
         );
-		
-		$this->add_settings_field(
-            'transliteration-filter', // ID
-            __('Transliteration Filter', RSTR_NAME), // Title 
-            'transliteration_filter_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section           
-        );
 
         $this->add_settings_field(
             'mode', // ID
             __('Plugin Mode', RSTR_NAME), // Title 
             'mode_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
+        );
+		
+		$this->add_settings_field(
+            'transliteration-filter', // ID
+            __('Transliteration Filters', RSTR_NAME), // Title 
+            'transliteration_filter_callback', // Callback
             RSTR_NAME, // Page
             RSTR_NAME . '-global' // Section           
         );
@@ -370,28 +370,40 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	<div class="accordion-panel">
 		<?php
 
-		printf('<p>%s<br><b>%s</b></p><br>', __('Select the transliteration filters you want to exclude.', RSTR_NAME), __('The filters you select here will not be transliterated.', RSTR_NAME));
+		printf('<p>%s<br><b>%s</b></p><br>', __('Select the transliteration filters you want to exclude.', RSTR_NAME), __('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', RSTR_NAME));
 
 		$inputs = array();
+		$i = 0;
 		
 		foreach(array(
-			'the_content' => __('Post content', RSTR_NAME),
-			'the_excerpt' => __('Post excerpt', RSTR_NAME),
-			'get_the_excerpt' => __('Post excerpt (raw)', RSTR_NAME),
-			'wp_title' => __('Page title', RSTR_NAME)
+			'wp_title'						=> __('Page title', RSTR_NAME),
+			'the_content'					=> __('Post content', RSTR_NAME),
+			'the_excerpt'					=> __('Post excerpt', RSTR_NAME),
+			'the_title'						=> __('Post title', RSTR_NAME),
+			'comment_text'					=> __('Comments text', RSTR_NAME),
+			'comments_template'				=> __('Comments template', RSTR_NAME),
+			'widget_title' 					=> __('Widgets title', RSTR_NAME),
+			'widget_text' 					=> __('Widget text', RSTR_NAME),
+			'widget_text_content' 			=> __('Widget text', RSTR_NAME),
+			'widget_custom_html_content' 	=> __('Widget HTML', RSTR_NAME),
 		) as $key=>$label)
 		{
-			$inputs[]=sprintf(
+			$inputs[$i][]=sprintf(
 				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s"%4$s> <span>%2$s</span></label></p>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
 				(isset( $this->options['transliteration-filter']) ? (is_array($this->options['transliteration-filter']) && in_array($key, $this->options['transliteration-filter']) ? ' checked' : '') : '')
 			);
+			
+			if($i == 2) $i=0; else ++$i;
 		}
-		
-        echo join(PHP_EOL, $inputs);
 		?>
+		<div class="row">
+			<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
+			<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
+			<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
+		</div>
 	</div>
 </div>
 <?php

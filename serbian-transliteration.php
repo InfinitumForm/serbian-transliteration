@@ -178,7 +178,11 @@ if($Serbian_Transliteration_Activate->passes()) :
 			if(isset($options['transliteration-filter']) && is_array($options['transliteration-filter'])) {
 				foreach($options['transliteration-filter'] as $filter){
 					if( isset($filters[$filter]) ) {
-						unset($filters[$filter]); 
+						unset($filters[$filter]);
+						
+						if($filter == 'the_excerpt' && isset($filters['get_the_excerpt'])) {
+							unset($filters['get_the_excerpt']);
+						}
 					}
 				}
 			}
