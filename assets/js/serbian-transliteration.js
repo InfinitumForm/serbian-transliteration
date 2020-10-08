@@ -89,7 +89,6 @@
 			
 			document.addEventListener('input',(e)=>{
 				if(e.target.getAttribute('name') === mode) {
-					console.log(e.target.value);
 					if(e.target.value == 'forced'){
 						info.style.display = null;
 					} else {
