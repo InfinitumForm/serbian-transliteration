@@ -319,9 +319,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 
 		printf(
-			'<div%3$s>%1$s<br><p class="description" id="forced-transliteration">%2$s</p>',
+			'<div%3$s>%1$s<br><p class="description" id="forced-transliteration">%2$s</p></div>',
 			join('<br>', $inputs),
-			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.</div>', RSTR_NAME),
+			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', RSTR_NAME),
 			(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false ? ' class="required-box"' : '')
 		);
 	}
