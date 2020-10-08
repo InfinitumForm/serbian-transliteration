@@ -68,7 +68,37 @@
 					callback(xhttp_transient.status, xhttp_transient);
 				}
 			}
+		};
+	
+	/* Display mode info */
+	(function(mode, info){
+		var info = document.getElementById(info),
+			options = document.getElementsByName(mode),
+			i;
+			
+		if (options, info) {
+			for (i = 0; i < options.length; i++) {
+				if (options[i].checked){
+					 if(options[i].value == 'forced'){
+						info.style.display = null;
+					} else {
+						info.style.display = 'none';
+					}
+				}
+			}
+			
+			document.addEventListener('input',(e)=>{
+				if(e.target.getAttribute('name') === mode) {
+					console.log(e.target.value);
+					if(e.target.value == 'forced'){
+						info.style.display = null;
+					} else {
+						info.style.display = 'none';
+					}
+				}
+			});
 		}
+	}('serbian-transliteration[mode]', 'forced-transliteration'));
 
 	/*
 	 * TOOLS: Transliterate permalinks
@@ -175,7 +205,7 @@
 		}
 	}('serbian-transliteration-tools-check', 'serbian-transliteration-tools-transliterate-permalinks', 'rstr-progress-bar', 'rstr-disclaimer'));
 	
-	
+	/* Accordion */
 	(function(c){
 		var acc = document.getElementsByClassName(c), i;
 		if(acc) {

@@ -335,12 +335,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 							<td><strong><?php _e( 'WordPress multisite', RSTR_NAME ); ?></strong></td>
 							<td><?php echo ( RSTR_MULTISITE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
 						</tr>
-						<?php if(RSTR_WOOCOMMERCE) : ?>
+					<?php if(RSTR_WOOCOMMERCE) : ?>
 						<tr>
 							<td><strong><?php _e( 'WooCommerce active', RSTR_NAME ); ?></strong></td>
 							<td><?php echo ( RSTR_WOOCOMMERCE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
 						</tr>
+						<?php if(defined('WC_VERSION')) : ?>
+						<tr>
+							<td><strong><?php _e( 'WooCommerce version', RSTR_NAME ); ?></strong></td>
+							<td><?php echo WC_VERSION; ?></td>
+						</tr>
 						<?php endif; ?>
+					<?php endif; ?>
 						<tr>
 							<td><strong><?php _e( 'Site title', RSTR_NAME ); ?></strong></td>
 							<td><?php echo get_bloginfo( 'name' ); ?></td>
@@ -465,6 +471,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<h3 style="margin:0;">is_macedonian</h3>
 					<p><code class="lang-php">function is_macedonian() : bool</code></p>
 					<br>
+					<h3 style="margin:0;">is_kazakh</h3>
+					<p><code class="lang-php">function is_kazakh() : bool</code></p>
+					<br>
 					<h3 style="margin:0;">transliterate</h3>
 					<?php printf('<p>%s</p>', __('Transliteration of some text or content into the desired script.', RSTR_NAME)); ?>
 					<p><code class="lang-php">function transliterate(string $content, string $type='cyr_to_lat', bool $fix_html = true) : string</code></p>
@@ -480,11 +489,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<h4><?php _e('Parameters', RSTR_NAME); ?></h4>
 					<?php printf('<p><b><code>$args</code></b> (array) - %1$s</p>', __('This attribute contains an associative set of parameters for this function:', RSTR_NAME)); ?>
 					<ul>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'display_type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s", "%3$s", "%4$s" or "%5$s". Default: "%1$s"', RSTR_NAME), 'inline', 'select', 'list', 'array', 'object')); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'echo', __('(bool) determines whether it will be displayed through an echo or as a string. Default: false', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'separator', sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), 'inline', ' | ')); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(string) Text for Cyrillic link. Default: Cyrillic', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(string) Text for Latin link. Default: Latin', RSTR_NAME)); ?>
+						<?php printf(
+							'<li><code>%1$s</code> - %2$s</li>',
+							'display_type',
+							sprintf(
+								__('(string) The type of selector that will be displayed on the site. It can be: %1$s, %2$s, %3$s, %4$s or %5$s. Default: %1$s', RSTR_NAME),
+								'<code>inline</code>',
+								'<code>select</code>',
+								'<code>list</code>',
+								'<code>array</code>',
+								'<code>object</code>'
+							)
+						); ?>
+						<?php printf(
+							'<li><code>%1$s</code> - %2$s</li>',
+							'echo',
+							sprintf(__('(bool) determines whether it will be displayed through an echo or as a string. Default: %s', RSTR_NAME), '<code>false</code>')
+						); ?>
+						<?php printf(
+							'<li><code>%1$s</code> - %2$s</li>',
+							'separator',
+							sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), '<code>inline</code>', '<code> | </code>')
+						); ?>
+						<?php printf(
+							'<li><code>%1$s</code> - %2$s</li>',
+							'cyr_caption',
+							sprintf(__('(string) Text for Cyrillic link. Default: %s', RSTR_NAME), '<code>' . __('Cyrillic', RSTR_NAME) . '</code>')
+						); ?>
+						<?php printf(
+							'<li><code>%1$s</code> - %2$s</li>',
+							'lat_caption',
+							sprintf(__('(string) Text for Latin link. Default: %s', RSTR_NAME), '<code>' . __('Latin', RSTR_NAME) . '</code>')
+						); ?>
 					</ul>
 				</div>
 			</div>

@@ -107,7 +107,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         $this->options = get_rstr_option();
         ?>
         <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
-            <h1><?php _e('Transliteration', RSTR_NAME); ?></h1>
+            <h1><img src="<?php echo RSTR_ASSETS . '/img/icon-animated-24x24.gif'; ?>" /> <?php _e('Transliteration', RSTR_NAME); ?></h1>
 			<?php do_action('rstr/settings/content', $this); ?>
         </div>
         <?php
@@ -319,7 +319,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 
 		printf(
-			'<div%3$s>%1$s<br><p class="description" id="forced-transliteration">%2$s</p></div>',
+			'<div%3$s id="rstr-mode-list">%1$s<br><p class="description info" id="forced-transliteration" style="display:none; ">%2$s</p></div>',
 			join('<br>', $inputs),
 			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', RSTR_NAME),
 			(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false ? ' class="required-box"' : '')
@@ -392,7 +392,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			'comments_template'				=> __('Comments template', RSTR_NAME),
 			'widget_title' 					=> __('Widgets title', RSTR_NAME),
 			'widget_text' 					=> __('Widget text', RSTR_NAME),
-			'widget_text_content' 			=> __('Widget text', RSTR_NAME),
+			'widget_text_content' 			=> __('Widget content', RSTR_NAME),
 			'widget_custom_html_content' 	=> __('Widget HTML', RSTR_NAME),
 		) as $key=>$label)
 		{
@@ -404,7 +404,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['transliteration-filter']) ? (is_array($this->options['transliteration-filter']) && in_array($key, $this->options['transliteration-filter']) ? ' checked' : '') : '')
 			);
 			
-			if($i == 2) $i=0; else ++$i;
+			if($i === 2) $i=0; else ++$i;
 		}
 		?>
 		<div class="row">

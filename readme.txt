@@ -1,11 +1,11 @@
 ﻿=== Transliterator - WordPress Transliteration ===
-Contributors: ivijanstefan, creativform, dizajn24
+Contributors: ivijanstefan, creativform, dizajn24, tihi
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,15 @@ We also thought of PHP developers where we have enabled several useful functions
 7. Available PHP Functions
 
 == Changelog ==
+
+= 1.1.3 =
+* Improved UTF-8 characters
+* Improved Elementor and Gutemberg editor support
+* Improved HTML parsing
+* Added transliteration filters
+* Added only WooCommerce transliteration (separated mode)
+* Improved WooCommerce algorithm
+* Improved PHP code and micro optimisation
 
 = 1.1.2 =
 * Important update: Fixed inline Elementor JSON settings
@@ -208,6 +217,15 @@ We also thought of PHP developers where we have enabled several useful functions
 * First stable version
 
 == Upgrade Notice ==
+
+= 1.1.3 =
+* Improved UTF-8 characters
+* Improved Elementor and Gutemberg editor support
+* Improved HTML parsing
+* Added transliteration filters
+* Added only WooCommerce transliteration (separated mode)
+* Improved WooCommerce algorithm
+* Improved PHP code and micro optimisation
 
 = 1.1.2 =
 * Important update: Fixed inline Elementor JSON settings

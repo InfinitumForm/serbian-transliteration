@@ -25,6 +25,38 @@
     padding-left: 15px;
 }
 
+#serbian-transliteration-settings .description {
+	background: #f1f1f1;
+    padding: 5px 15px 5px 20px;
+    position: relative;
+	color:#343434;
+}
+
+#serbian-transliteration-settings .description.inline{
+	display:inline-block;
+	margin-left:20px;
+}
+
+#serbian-transliteration-settings .description:before {
+	content: '';
+	position:absolute;
+	top:50%;
+	left:0;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+	-moz-transform:translateY(-50%);
+	width: 0;
+	height: 0; 
+	border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #ffffff;
+}
+
+#serbian-transliteration-settings .description.info {
+	background: aliceblue;
+    color: #000;
+}
+
 @media (min-width: 1400px){
 	#serbian-transliteration-settings .row .col {
 		-ms-flex-preferred-size: 0;
@@ -42,8 +74,8 @@
 }
 
 #serbian-transliteration-settings .accordion-container .accordion-link {
-	background-color: #efefef;
-	color: #333333;
+	background-color: #23282d;
+	color: #eee;
 	cursor: pointer;
 	padding: 10px 18px;
 	width: 100%;
@@ -53,9 +85,12 @@
 	transition: 0.4s;
 }
 
-#serbian-transliteration-settings .accordion-container .accordion-link.active,
 #serbian-transliteration-settings .accordion-container .accordion-link:hover {
-	background-color: #dddddd; 
+	background-color: #333; 
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link.active{
+	background-color: #555; 
 }
 
 #serbian-transliteration-settings .accordion-container .accordion-link:after {
