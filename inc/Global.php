@@ -16,11 +16,19 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function plugin_mode($mode=NULL){
-		$modes = apply_filters('rstr_plugin_mode', array(
+		$modes = array(
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
 			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
 			'forced'	=> __('Forced transliteration (everything)', RSTR_NAME)
-		));
+		);
+		
+		if(RSTR_WOOCOMMERCE) {
+			$modes = array_merge($modes, array(
+				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', RSTR_NAME)
+			));
+		}
+		
+		$modes = apply_filters('rstr_plugin_mode', $modes);
 		
 		if($mode && isset($modes[$mode])){
 			return $modes[$mode];
@@ -35,11 +43,13 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function transliteration_mode($mode=NULL){
-		$modes = apply_filters('rstr_transliteration_mode', array(
+		$modes = array(
 			'none'			=> __('Transliteration disabled', RSTR_NAME),
 			'cyr_to_lat'	=> __('Cyrillic to Latin', RSTR_NAME),
 			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
-		));
+		);
+		
+		$modes = apply_filters('rstr_transliteration_mode', $modes);
 		
 		if($mode && isset($modes[$mode])){
 			return $modes[$mode];

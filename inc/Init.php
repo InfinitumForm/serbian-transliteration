@@ -88,7 +88,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		}
 		
 		// Load options
-		$options = get_option( RSTR_NAME );
+		$options = get_rstr_option();
 		
 		// Load shortcodes
 		include_once RSTR_INC . '/Shortcodes.php';
@@ -109,7 +109,8 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		
 				$mode = ucfirst($options['mode']);
 				$class_require = "Serbian_Transliteration_Mode_{$mode}";
-				$path_require = "Mode_{$mode}";
+				$path_require = "mode/{$mode}";
+				
 				$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
 				
 				if(file_exists($path . "/{$path_require}.php"))

@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/OS.php';
 		$activations = get_option( RSTR_NAME . '-activation' );
-		$options = get_option( RSTR_NAME );
+		$options = get_rstr_option();
 	?>
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -335,6 +335,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 							<td><strong><?php _e( 'WordPress multisite', RSTR_NAME ); ?></strong></td>
 							<td><?php echo ( RSTR_MULTISITE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
 						</tr>
+						<?php if(RSTR_WOOCOMMERCE) : ?>
+						<tr>
+							<td><strong><?php _e( 'WooCommerce active', RSTR_NAME ); ?></strong></td>
+							<td><?php echo ( RSTR_WOOCOMMERCE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
+						</tr>
+						<?php endif; ?>
 						<tr>
 							<td><strong><?php _e( 'Site title', RSTR_NAME ); ?></strong></td>
 							<td><?php echo get_bloginfo( 'name' ); ?></td>

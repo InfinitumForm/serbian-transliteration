@@ -406,10 +406,17 @@ class Serbian_Transliteration_Transliterating {
 	 * Exclude words or sentences for Cyrillic
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
+	 * @contributor   Slobodan Pantovic
 	*/
 	public function cyr_exclude_list(){
-		$exclude_unicode = apply_filters('rstr/init/exclude/unicode', array( '\u0106', '\u0107', 'u010c', '\u010d', '\u017d', 'u017e', '\u0110', '\u0111', '\u0160', '\u0161' ));
-		return array_merge(apply_filters('rstr/init/exclude/cyr', array()), $exclude_unicode);
+		$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', array());
+		$content = ob_get_status() ? ob_get_contents() : false;
+		if ( false !== $content ){
+			if ( preg_match_all('/\\\u[0-9a-fA_F]{4}/', $content, $exclude_unicode)){
+				return array_merge($cyr_exclude_list, $exclude_unicode);
+			}
+		}
+		return $cyr_exclude_list;
 	}
 	
 	/*

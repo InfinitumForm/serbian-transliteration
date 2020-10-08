@@ -7,6 +7,18 @@
     margin-left: -15px;
 }
 
+#serbian-transliteration-settings .required-box {
+	border:1px solid #cc0000;
+	padding:10px 15px;
+	box-shadow:0 0 3px #cc0000;
+	background:rgba(100,0,0, 0.02);
+	color:#cc0000;
+}
+
+#serbian-transliteration-settings label+label{
+	margin-left:10px;
+}
+
 #serbian-transliteration-settings .row .col {
 	position: relative;
     padding-right: 15px;

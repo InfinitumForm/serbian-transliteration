@@ -64,8 +64,7 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 		);
 		
 		// WooCommerce
-		if(!function_exists('is_plugin_active')) include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		if (RSTR_WOOCOMMERCE) {
 			$filters = array_merge($filters, array(
 				'woocommerce_product_single_add_to_cart_text' => 'content',
 				'woocommerce_email_footer_text' => 'content',

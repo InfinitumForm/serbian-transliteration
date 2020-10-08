@@ -104,7 +104,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		wp_enqueue_style( 'serbian-transliteration');
 		wp_enqueue_script('serbian-transliteration');
         // Set class property
-        $this->options = get_option( RSTR_NAME );
+        $this->options = get_rstr_option();
         ?>
         <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
             <h1><?php _e('Transliteration', RSTR_NAME); ?></h1>
@@ -159,13 +159,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME . '-global' // Section           
         );
 		
-		$this->add_settings_field(
-            'transliteration-filter', // ID
-            __('Transliteration Filters', RSTR_NAME), // Title 
-            'transliteration_filter_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section           
-        );
+		if(get_rstr_option('mode') !== 'woocommerce') {
+			$this->add_settings_field(
+				'transliteration-filter', // ID
+				__('Transliteration Filters', RSTR_NAME), // Title 
+				'transliteration_filter_callback', // Callback
+				RSTR_NAME, // Page
+				RSTR_NAME . '-global' // Section           
+			);
+		}
 		
 		$this->add_settings_field(
             'avoid-admin', // ID
@@ -315,7 +317,13 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['mode'] ) ? ($this->options['mode'] == $key ? ' checked' : '') : ($key == 'standard' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join('<br>', $inputs), __('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', RSTR_NAME));
+
+		printf(
+			'<div%3$s>%1$s<br><p class="description" id="forced-transliteration">%2$s</p>',
+			join('<br>', $inputs),
+			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.</div>', RSTR_NAME),
+			(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false ? ' class="required-box"' : '')
+		);
 	}
 	
 	public function site_script_callback(){

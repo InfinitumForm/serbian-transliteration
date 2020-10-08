@@ -7,42 +7,16 @@
  * @package           Serbian_Transliteration
  */
 if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
-class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
+class Serbian_Transliteration_Mode_Woocommerce extends Serbian_Transliteration
 {
 	private $options;
 
 	function __construct($options){
 		$this->options = $options;
-		
-		$filters = array(
-			'comment_text'			=> 'content',
-			'comments_template' 	=> 'content',
-			'the_content' 			=> 'content',
-			'the_title' 			=> 'content',
-			'the_date' 				=> 'content',
-			'get_post_time' 		=> 'content',
-			'get_the_date' 			=> 'content',
-			'the_content_more_link' => 'content',
-			'wp_nav_menu_items' 	=> 'content',
-			'wp_title' 				=> 'content',
-			'pre_get_document_title'=> 'content',
-			'default_post_metadata'	=> 'content',
-			'get_comment_metadata' 	=> 'content',
-			'get_term_metadata' 	=> 'content',
-			'get_user_metadata' 	=> 'content',
-			'gettext' 				=> 'content',
-			'ngettext' 				=> 'content',
-			'gettext_with_context' 	=> 'content',
-			'ngettext_with_context' => 'content',
-			'option_blogdescription'=> 'content',
-			'option_blogname' 		=> 'content',
-			'document_title_parts' 	=> 'title_parts'
-		);
-		
+
 		// WooCommerce
-		if(!function_exists('is_plugin_active')) include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-			$filters = array_merge($filters, array(
+		if (RSTR_WOOCOMMERCE) {
+			$filters = array(
 				'woocommerce_product_single_add_to_cart_text' => 'content',
 				'woocommerce_email_footer_text' => 'content',
 				'woocommerce_get_availability_text' => 'content',
@@ -82,14 +56,7 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 				'woocommerce_single_product_image_thumbnail_html' => 'content',
 				'woocommerce_variable_price_html' => 'content',
 				'woocommerce_variable_empty_price_html' => 'content'
-			));
-		}
-		
-		if (!current_theme_supports( 'title-tag' )){
-			unset($filters['document_title_parts']);
-			unset($filters['pre_get_document_title']);
-		} else {
-			unset($filters['wp_title']);
+			);
 		}
 		
 		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
@@ -105,26 +72,6 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 		{
 			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 		}
-		
-		$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
-		$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
-	}
-	
-	public function bloginfo($output, $show=''){
-		if(!empty($show) && in_array($show, array('name','description')))
-		{
-			switch($this->get_current_script($this->options))
-			{
-				case 'cyr_to_lat' :
-					$output = $this->cyr_to_lat($output);
-					break;
-					
-				case 'lat_to_cyr' :
-					$output = $this->lat_to_cyr($output);			
-					break;
-			}
-		}
-		return $output;
 	}
 	
 	public function content ($content='') {
@@ -150,27 +97,6 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			}
 		}
 		return $content;
-	}
-	
-	public function title_parts($titles=array()){
-		switch($this->get_current_script($this->options))
-		{
-			case 'cyr_to_lat' :
-				foreach($titles as $key => $val)
-				{
-					if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->cyr_to_lat($titles[$key]);
-				}
-				break;
-				
-			case 'lat_to_cyr' :
-				foreach($titles as $key => $val)
-				{
-					if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->lat_to_cyr($titles[$key], true);
-				}
-				break;
-		}
-		
-		return $titles;
 	}
 }
 endif;

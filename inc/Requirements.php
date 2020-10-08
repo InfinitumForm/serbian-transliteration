@@ -13,6 +13,7 @@ class Serbian_Transliteration_Requirements
 	private $php = '7.0';
 	private $wp = '4.0';
 	private $file;
+	private $options;
 
 	public function __construct( $args ) {
 		foreach ( array( 'title', 'php', 'wp', 'file' ) as $setting ) {
@@ -22,6 +23,10 @@ class Serbian_Transliteration_Requirements
 		}
 		
 		add_action( 'in_plugin_update_message-' . RSTR_BASENAME, array($this, 'in_plugin_update_message'), 10, 2 );
+		
+		if(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false) {
+			add_action( 'admin_notices', array($this, 'woocommerce_disabled_notice'), 10, 2 );
+		}
 	}
 	
 	function in_plugin_update_message($args, $response) {
@@ -82,7 +87,7 @@ font-weight:600;
 	}
 
 	private function php_passes() {
-		if ( $this->__php_at_least( $this->php ) ) {
+		if ( self::__php_at_least( $this->php ) ) {
 			return true;
 		} else {
 			add_action( 'admin_notices', array($this, 'php_version_notice') );
@@ -99,9 +104,22 @@ font-weight:600;
 		echo '<p>'.sprintf(__('The %1$s cannot run on PHP versions older than PHP %2$s. Please contact your host and ask them to upgrade.', RSTR_NAME), esc_html( $this->title ), $this->php).'</p>';
 		echo '</div>';
 	}
+	
+	public function woocommerce_disabled_notice() {
+		echo '<div class="notice notice-error">';
+		echo '<p>' . sprintf(
+			'<strong>%1$s</strong> %2$s',
+			__('Transliteration plugin requires attention:', RSTR_NAME),
+			sprintf(
+				__('Your plugin works under Only WooCoomerce mode and you need to %s because WooCommerce is no longer active.', RSTR_NAME),
+				'<a href="'.admin_url('/options-general.php?page=serbian-transliteration&tab=settings').'">' . __('update your settings', RSTR_NAME) . '</a>'
+			)
+		) . '</p>';
+		echo '</div>';
+	}
 
 	private function wp_passes() {
-		if ( $this->__wp_at_least( $this->wp ) ) {
+		if ( self::__wp_at_least( $this->wp ) ) {
 			return true;
 		} else {
 			add_action( 'admin_notices', array($this, 'wp_version_notice') );
