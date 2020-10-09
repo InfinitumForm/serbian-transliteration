@@ -5,14 +5,16 @@
  * @link              http://infinitumform.com/
  * @since             1.0.0
  * @package           Serbian_Transliteration
+ * @author            Ivijan-Stefan Stipic
+ * @contributor       Slobodan Pantovic
  */
 if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 {
 	private $options;
 
-	function __construct($options){
-		$this->options = $options;
+	public static function filters ($options=array()) {
+		if(empty($options)) $options = get_rstr_option();
 		
 		$filters = array(
 			'single_cat_title'				=>'content',
@@ -29,7 +31,6 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 			'date_i18n'						=> 'content',
 			'get_comment_date' 				=> 'content',
 			'wp_get_object_terms' 			=> 'transliteration_wp_terms', //Phlox
-			
 			'comment_text'					=> 'content',
 			'comments_template' 			=> 'content',
 			'the_content' 					=> 'content',
@@ -62,7 +63,7 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 			'the_permalink'					=> 'force_permalink_to_latin',
 			'wp_unique_post_slug'			=> 'force_permalink_to_latin'
 		);
-		
+		asort($filters);
 		// WooCommerce
 		if (RSTR_WOOCOMMERCE) {
 			$filters = array_merge($filters, array(
@@ -107,23 +108,33 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 				'woocommerce_variable_empty_price_html' => 'content'
 			));
 		}
+		
+		return $filters;
+	}
 
-		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
-
-		if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
+	function __construct($options=false){
+		if($options !== false)
 		{
-			if(!is_admin())
+			$this->options = $options;
+			
+			$filters = self::filters($this->options);
+			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+			
+			if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
+			{
+				if(!is_admin())
+				{
+					foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
+				}
+			}
+			else
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 			}
+			
+			$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
+			$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
 		}
-		else
-		{
-			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-		}
-		
-		$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
-		$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
 	}
 	
 	/*

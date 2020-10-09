@@ -410,12 +410,16 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function cyr_exclude_list(){
 		$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', array());
+		
 		$content = ob_get_status() ? ob_get_contents() : false;
 		if ( false !== $content ){
-			if ( preg_match_all('/\\\u[0-9a-fA_F]{4}/', $content, $exclude_unicode)){
-				return array_merge($cyr_exclude_list, $exclude_unicode);
+			if ( preg_match_all('/\\\u[0-9a-f]{4}/i', $content, $exclude_unicode)){
+				$cyr_exclude_list = array_merge($cyr_exclude_list, $exclude_unicode);
 			}
 		}
+		
+		$cyr_exclude_list = array_filter($cyr_exclude_list);
+		
 		return $cyr_exclude_list;
 	}
 	

@@ -5,18 +5,21 @@
  * @link              http://infinitumform.com/
  * @since             1.0.0
  * @package           Serbian_Transliteration
+ * @author            Ivijan-Stefan Stipic
+ * @contributor       Slobodan Pantovic
  */
 if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 class Serbian_Transliteration_Mode_Woocommerce extends Serbian_Transliteration
 {
 	private $options;
-
-	function __construct($options){
-		$this->options = $options;
-
+	
+	public static function filters ($options=array()) {
+		if(empty($options)) $options = get_rstr_option();
+		
+		$filters = array();
 		// WooCommerce
 		if (RSTR_WOOCOMMERCE) {
-			$filters = array(
+			$filters = array_merge($filters, array(
 				'woocommerce_product_single_add_to_cart_text' => 'content',
 				'woocommerce_email_footer_text' => 'content',
 				'woocommerce_get_availability_text' => 'content',
@@ -56,21 +59,32 @@ class Serbian_Transliteration_Mode_Woocommerce extends Serbian_Transliteration
 				'woocommerce_single_product_image_thumbnail_html' => 'content',
 				'woocommerce_variable_price_html' => 'content',
 				'woocommerce_variable_empty_price_html' => 'content'
-			);
+			));
 		}
+		asort($filters);
 		
-		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+		return $filters;
+	}
 
-		if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
+	function __construct($options){
+		if($options !== false)
 		{
-			if(!is_admin())
+			$this->options = $options;
+			
+			$filters = self::filters($this->options);
+			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+
+			if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
+			{
+				if(!is_admin())
+				{
+					foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
+				}
+			}
+			else
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 			}
-		}
-		else
-		{
-			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 		}
 	}
 	

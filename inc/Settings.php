@@ -18,6 +18,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      * Holds the values to be used in the fields callbacks
      */
     private $options;
+	private $nonce;
+	private $active_filters;
 
     /**
      * Start up
@@ -29,7 +31,51 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
 		$this->add_action( 'plugin_action_links_' . RSTR_BASENAME, 'action_links' );
 		$this->add_action( 'plugin_row_meta', 'row_meta_links', 10, 2);
+
+		$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
+		
+		if($mode_class = $this->mode()) {
+			$this->active_filters = array_keys($mode_class::filters());
+		}
+		
+		$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
     }
+	
+	function ajax__rstr_filter_mode_options( ) {
+		
+		$mode_class = $this->mode(array('mode'=>sanitize_text_field($_POST['mode'])));
+		
+		if($mode_class !== false && isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-options') !== false)
+		{
+		
+			$options = get_rstr_option();
+			
+			$inputs = array();
+			$i = 0;
+			
+			$list = array_keys($mode_class::filters());
+
+			foreach($list as $k=>$hook)
+			{
+				$inputs[$i][]=sprintf(
+					'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
+					esc_attr($hook),
+					esc_html($hook),
+					RSTR_NAME,
+					$this->nonce,
+					(isset( $options['transliteration-filter']) ? (is_array($options['transliteration-filter']) && in_array($hook, $options['transliteration-filter']) ? ' checked' : '') : '')
+				);
+				
+				if($i === 2) $i=0; else ++$i;
+			}
+?>
+<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
+<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
+<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
+<?php
+		}
+		exit;
+	}
 	
 	function action_links( $links ) {
 
@@ -69,7 +115,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				'prefix' => RSTR_PREFIX,
 				'label' => array(
 					'progress_loading' => __('Please wait! Do not close the window or leave the page until this operation is completed!', RSTR_NAME),
-					'done' => __('DONE!!!', RSTR_NAME)
+					'done' => __('DONE!!!', RSTR_NAME),
+					'loading' => __('Loading...', RSTR_NAME)
 				)
 			)
 		);
@@ -159,7 +206,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME . '-global' // Section           
         );
 		
-		if(get_rstr_option('mode') !== 'woocommerce') {
+		if($this->active_filters) {
 			$this->add_settings_field(
 				'transliteration-filter', // ID
 				__('Transliteration Filters', RSTR_NAME), // Title 
@@ -310,10 +357,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		foreach($this->plugin_mode() as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="mode-%1$s"><input type="radio" id="mode-%1$s" name="%3$s[mode]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				'<label for="mode-%1$s"><input type="radio" id="mode-%1$s" name="%3$s[mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
+				$this->nonce,
 				(isset( $this->options['mode'] ) ? ($this->options['mode'] == $key ? ' checked' : '') : ($key == 'standard' ? ' checked' : ''))
 			);
 		}
@@ -356,10 +404,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		foreach($this->transliteration_mode() as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="transliteration-mode-%1$s"><input type="radio" id="transliteration-mode-%1$s" name="%3$s[transliteration-mode]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				'<label for="transliteration-mode-%1$s"><input type="radio" id="transliteration-mode-%1$s" name="%3$s[transliteration-mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
+				$this->nonce,
 				(isset( $this->options['transliteration-mode'] ) ? ($this->options['transliteration-mode'] == $key ? ' checked' : '') : ($key == 'none' ? ' checked' : ''))
 			);
 		}
@@ -371,47 +420,50 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      * Transliteration filter
      */
     public function transliteration_filter_callback()
-    {
+    { 
+		if(!$this->active_filters) return;
 ?>
 <div class="accordion-container">
 	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', RSTR_NAME); ?></button>
 	<div class="accordion-panel">
 		<?php
 
-		printf('<p>%s<br><b>%s</b></p><br>', __('Select the transliteration filters you want to exclude.', RSTR_NAME), __('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', RSTR_NAME));
+		printf(
+			'<p>%s<br><b>%s</b></p><br>',
+			__('Select the transliteration filters you want to exclude.', RSTR_NAME),
+			__('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', RSTR_NAME)
+		);
 
 		$inputs = array();
 		$i = 0;
 		
-		foreach(array(
-			'wp_title'						=> __('Page title', RSTR_NAME),
-			'the_content'					=> __('Post content', RSTR_NAME),
-			'the_excerpt'					=> __('Post excerpt', RSTR_NAME),
-			'the_title'						=> __('Post title', RSTR_NAME),
-			'comment_text'					=> __('Comments text', RSTR_NAME),
-			'comments_template'				=> __('Comments template', RSTR_NAME),
-			'widget_title' 					=> __('Widgets title', RSTR_NAME),
-			'widget_text' 					=> __('Widget text', RSTR_NAME),
-			'widget_text_content' 			=> __('Widget content', RSTR_NAME),
-			'widget_custom_html_content' 	=> __('Widget HTML', RSTR_NAME),
-		) as $key=>$label)
+		$list = $this->active_filters;
+
+		foreach($list as $k=>$hook)
 		{
 			$inputs[$i][]=sprintf(
-				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s"%4$s> <span>%2$s</span></label></p>',
-				esc_attr($key),
-				esc_html($label),
+				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
+				esc_attr($hook),
+				esc_html($hook),
 				RSTR_NAME,
-				(isset( $this->options['transliteration-filter']) ? (is_array($this->options['transliteration-filter']) && in_array($key, $this->options['transliteration-filter']) ? ' checked' : '') : '')
+				$this->nonce,
+				(isset( $this->options['transliteration-filter']) ? (is_array($this->options['transliteration-filter']) && in_array($hook, $this->options['transliteration-filter']) ? ' checked' : '') : '')
 			);
 			
 			if($i === 2) $i=0; else ++$i;
 		}
 		?>
-		<div class="row">
+		<div class="row" id="rstr-filter-mode-options">
 			<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
 			<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
 			<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
 		</div>
+		<?php printf(
+			'<br><p><b>%s</b><br>%s %s</p>',
+			__('TIPS & TRICKS:', RSTR_NAME),
+			__('You can find details about some of the listed filters in this article:', RSTR_NAME),
+			'<a href="https://codex.wordpress.org/Plugin_API/Filter_Reference" target="_blank">Plugin_API/Filter_Reference</a>'
+		);?>
 	</div>
 </div>
 <?php

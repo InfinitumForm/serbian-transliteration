@@ -5,17 +5,17 @@
  * @link              http://infinitumform.com/
  * @since             1.0.0
  * @package           Serbian_Transliteration
+ * @author            Ivijan-Stefan Stipic
+ * @contributor       Slobodan Pantovic
  */
 if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 {
 	private $options;
 	
-	function __construct($options){
+	public static function filters ($options=array()) {
+		if(empty($options)) $options = get_rstr_option();
 		
-		$this->options = $options;
-		$transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
-
 		$filters = array(
 			'single_cat_title'				=>'content',
 			'the_category'					=>'content',
@@ -64,7 +64,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			'the_permalink'					=> 'force_permalink_to_latin',
 			'wp_unique_post_slug'			=> 'force_permalink_to_latin'
 		);
-		
+		asort($filters);
 		// WooCommerce
 		if (RSTR_WOOCOMMERCE) {
 			$filters = array_merge($filters, array(
@@ -110,40 +110,51 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			));
 		}
 		
-		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
-
-		if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
+		return $filters;
+	}
+	
+	function __construct($options=false){
+		if($options !== false)
 		{
-			if(!is_admin())
+			$this->options = $options;
+			$transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
+
+			$filters = self::filters($this->options);
+			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+
+			if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
+			{
+				if(!is_admin())
+				{
+					foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
+				}
+			}
+			else
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 			}
+			
+			if(!is_admin())
+			{
+				$this->add_action('wp_loaded', 'output_buffer_start', 999);
+				$this->add_action('shutdown', 'output_buffer_end', 999);
+				
+				$this->add_action('rss_head', 'rss_output_buffer_start', 999);
+				$this->add_action('rss_footer', 'rss_output_buffer_end', 999);
+				
+				$this->add_action('rss2_head', 'rss_output_buffer_start', 999);
+				$this->add_action('rss2_footer', 'rss_output_buffer_end', 999);
+				
+				$this->add_action('rdf_head', 'rss_output_buffer_start', 999);
+				$this->add_action('rdf_footer', 'rss_output_buffer_end', 999);
+				
+				$this->add_action('atom_head', 'rss_output_buffer_start', 999);
+				$this->add_action('atom_footer', 'rss_output_buffer_end', 999);
+			}
+			
+			$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
+			$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
 		}
-		else
-		{
-			foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-		}
-		
-		if(!is_admin())
-		{
-			$this->add_action('wp_loaded', 'output_buffer_start', 999);
-			$this->add_action('shutdown', 'output_buffer_end', 999);
-			
-			$this->add_action('rss_head', 'rss_output_buffer_start', 999);
-			$this->add_action('rss_footer', 'rss_output_buffer_end', 999);
-			
-			$this->add_action('rss2_head', 'rss_output_buffer_start', 999);
-			$this->add_action('rss2_footer', 'rss_output_buffer_end', 999);
-			
-			$this->add_action('rdf_head', 'rss_output_buffer_start', 999);
-			$this->add_action('rdf_footer', 'rss_output_buffer_end', 999);
-			
-			$this->add_action('atom_head', 'rss_output_buffer_start', 999);
-			$this->add_action('atom_footer', 'rss_output_buffer_end', 999);
-		}
-		
-		$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
-		$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
 	}
 	
 	/*

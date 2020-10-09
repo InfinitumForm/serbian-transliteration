@@ -930,6 +930,37 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return $content;
 	}
 	
+	public function mode($options=false){
+		
+		if(empty($options)) $options = get_rstr_option();
+		
+		$mode = ucfirst($options['mode']);
+		$class_require = "Serbian_Transliteration_Mode_{$mode}";
+		$path_require = "mode/{$mode}";
+		
+		$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
+		
+		if(!class_exists($class_require))
+		{
+			if(file_exists($path . "/{$path_require}.php"))
+			{
+				include_once $path . "/{$path_require}.php";
+				if(class_exists($class_require)){
+					return $class_require;
+				}
+			}
+		}
+		else
+		{
+			return $class_require;
+		}
+		
+		// Clear memory
+		$class_require = $path_require = $path = $mode = NULL;
+		
+		return false;
+	}
+	
 	/* 
 	* Instance
 	* @since     1.0.9

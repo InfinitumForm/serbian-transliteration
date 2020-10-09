@@ -107,22 +107,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				// Set cookie
 				$inst->set_cookie($options);
 		
-				$mode = ucfirst($options['mode']);
-				$class_require = "Serbian_Transliteration_Mode_{$mode}";
-				$path_require = "mode/{$mode}";
-				
-				$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
-				
-				if(file_exists($path . "/{$path_require}.php"))
-				{
-					include_once $path . "/{$path_require}.php";
-					if(class_exists($class_require)){
-						new $class_require($options);
-					}
+				// Include mode class				
+				if($mode_class = $inst->mode($options)) {
+					new $mode_class($options);
 				}
-				
-				// Clear memory
-				$class_require = $path_require = $path = $mode = NULL;
 			}
 
 			/* Media upload transliteration

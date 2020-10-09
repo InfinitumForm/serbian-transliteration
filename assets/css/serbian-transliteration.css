@@ -19,6 +19,14 @@
 	margin-left:10px;
 }
 
+#serbian-transliteration-settings label > input[type^="checkbox"] + span {
+	word-break: break-all;
+}
+
+#serbian-transliteration-settings #rstr-filter-mode-options p+p{
+	margin-top:15px;
+}
+
 #serbian-transliteration-settings .row .col {
 	position: relative;
     padding-right: 15px;

@@ -74,6 +74,7 @@
 	(function(mode, info){
 		var info = document.getElementById(info),
 			options = document.getElementsByName(mode),
+			filters = document.getElementById('rstr-filter-mode-options'),
 			i;
 			
 		if (options, info) {
@@ -94,6 +95,20 @@
 					} else {
 						info.style.display = 'none';
 					}
+					
+					ajax('POST', RSTR.ajax, {
+						'action' : 'rstr_filter_mode_options',
+						'nonce'  : e.target.dataset.nonce,
+						'mode' : e.target.value
+					}, {
+						'Accept' : 'text/html'
+					});
+					
+					filters.innerHTML = '<div class="col"><b style="color:#cc0000;">' + RSTR.label.loading + '</b></div>';
+					
+					ajax_done(function(data){
+						filters.innerHTML = data;
+					});
 				}
 			});
 		}

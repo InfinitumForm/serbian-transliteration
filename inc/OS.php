@@ -5,6 +5,7 @@
  * @since      7.0.0
  * @package    CF_Geoplugin
  * @author     Ivijan-Stefan Stipic
+ * @url        https://github.com/CreativForm/PHP-Solutions/blob/master/class.os.php
  */
 if(!class_exists('Serbian_Transliteration_OS')) :
 class Serbian_Transliteration_OS
