@@ -399,11 +399,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					</tbody>
 					<tfoot><?php do_action('rstr/settings/debug/table/tfoot'); ?></tfoot>
 				</table>
-			
-				<h2><span><?php _e('Plugin settings', RSTR_NAME); ?></span></h2>
-				<pre class="lang-php">
+				<br>			
+				<div class="accordion-container">
+					<button class="accordion-link" type="button"><?php _e('Plugin settings', RSTR_NAME); ?></button>
+					<div class="accordion-panel" style="padding:0;">
+						<pre class="lang-php" style="margin: 0;">
 ["<?php echo RSTR_NAME; ?>"] => <?php var_dump($options); ?>
-				</pre>
+						</pre>
+					</div>
+				</div>
 			</div>
 		</div>
 		<br class="clear">
