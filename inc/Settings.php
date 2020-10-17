@@ -26,19 +26,22 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     public function __construct()
     {
-        $this->add_action( 'admin_menu', 'add_plugin_page' );
-        $this->add_action( 'admin_init', 'page_init' );
-		$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
-		$this->add_action( 'plugin_action_links_' . RSTR_BASENAME, 'action_links' );
-		$this->add_action( 'plugin_row_meta', 'row_meta_links', 10, 2);
+		if(current_user_can('administrator'))
+		{
+			$this->add_action( 'admin_menu', 'add_plugin_page' );
+			$this->add_action( 'admin_init', 'page_init' );
+			$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
+			$this->add_action( 'plugin_action_links_' . RSTR_BASENAME, 'action_links' );
+			$this->add_action( 'plugin_row_meta', 'row_meta_links', 10, 2);
 
-		$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
-		
-		if($mode_class = $this->mode()) {
-			$this->active_filters = array_keys($mode_class::filters());
+			$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
+			
+			if($mode_class = $this->mode()) {
+				$this->active_filters = array_keys($mode_class::filters());
+			}
+			
+			$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
 		}
-		
-		$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
     }
 	
 	function ajax__rstr_filter_mode_options( ) {

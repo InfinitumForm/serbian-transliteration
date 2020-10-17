@@ -933,6 +933,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function mode($options=false){
 		
 		if(empty($options)) $options = get_rstr_option();
+		if(is_null($options)) return false;
 		
 		$mode = ucfirst($options['mode']);
 		$class_require = "Serbian_Transliteration_Mode_{$mode}";
@@ -959,6 +960,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$class_require = $path_require = $path = $mode = NULL;
 		
 		return false;
+	}
+	
+	
+	public function get_options() {
+		return get_rstr_option();
 	}
 	
 	/* 

@@ -1,0 +1,117 @@
+<?php
+if ( ! defined( 'WPINC' ) ) {
+	die( "Don't mess with us." );
+}
+/**
+ * Admin Menu Transliteration
+ *
+ */
+if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
+	class Serbian_Transliteration_Mode_Admin extends Serbian_Transliteration {
+		private $options;
+
+		public static function filters( $options = array() ) {
+			if ( empty( $options ) ) {
+				$options = get_rstr_option();
+			}
+
+			$filters = array(
+				'ngettext'              => 'content',
+				'ngettext_with_context' => 'content',
+				'gettext_with_context'  => 'content',
+				'gettext'               => 'content',
+				'date_i18n'             => 'content',
+				'the_title'             => 'content',
+				'wp_title'              => 'content',
+				'document_title_parts'  => 'title_parts',
+				'wp_get_object_terms'   => 'transliteration_wp_terms'
+			);
+
+			return $filters;
+		}
+
+		public function __construct( $options = array() ) {
+			if ( is_admin() ) {
+				if ( empty( $options ) ) {
+					$this->options = $this->get_options();
+				} else {
+					$this->options = $options;
+				}
+
+				if ( isset( $this->options['avoid-admin'] ) && $this->options['avoid-admin'] === 'no' ) {
+					$filters = self::filters( $this->options );
+					$filters = apply_filters( 'rstr/transliteration/exclude/filters/admin', $filters, $this->options );
+
+					foreach ( $filters as $filter => $function ) {
+						$this->add_filter( $filter, $function, 9999999, 1 );
+					}
+				}
+				add_filter( 'load_script_translations', array( &$this, 'transliteration_json_content' ), 9 );
+				add_filter( 'pre_load_script_translations', array( &$this, 'transliteration_json_content' ), 9 );
+			}
+		}
+
+		public function transliteration_json_content( $json_content ) {
+			$content = json_decode( $json_content, true );
+			if ( json_last_error() !== JSON_ERROR_NONE ) {
+				return $json_content;
+			}
+
+			if ( is_array( $content ) && isset( $content['locale_data']['messages'] ) && is_array( $content['locale_data']['messages'] ) ) {
+				foreach ( $content['locale_data']['messages'] as $key => $messages ) {
+					if ( ! $key || ! is_array( $messages ) ) {
+						continue;
+					}
+
+					foreach ( $messages as $key2 => $message ) {
+						$message                                             = $this->cyr_to_lat( $message );
+						$content['locale_data']['messages'][ $key ][ $key2 ] = $message;
+					}
+				}
+			}
+
+			return wp_json_encode( $content );
+		}
+
+		public function content( $content = '' ) {
+			if ( empty( $content ) ) {
+				return $content;
+			}
+
+			if ( is_array( $content ) ) {
+				$content = $this->title_parts( $content );
+			} else if ( is_string( $content ) && ! is_numeric( $content ) ) {
+				$content = $this->cyr_to_lat( $content );
+			}
+
+			return $content;
+		}
+
+		public function title_parts( $titles = array() ) {
+			foreach ( $titles as $key => $val ) {
+				if ( is_string( $val ) && ! is_numeric( $val ) ) {
+					$titles[ $key ] = $this->cyr_to_lat( $titles[ $key ] );
+				}
+			}
+			return $titles;
+		}
+
+		/*
+		 * Transliterate WP terms
+		 * @author    Slobodan Pantović
+		 * @version   1.0.0
+		**/
+		public function transliteration_wp_terms( $wp_terms ) {
+			if ( ! empty( $wp_terms ) ) {
+				for ( $i = 0, $n = count( $wp_terms ); $i < $n; $i ++ ) {
+					if ( is_object( $wp_terms[ $i ] ) ) {
+						$wp_terms[ $i ]->name = $this->cyr_to_lat( $wp_terms[ $i ]->name );
+					}
+				}
+
+			}
+
+			return $wp_terms;
+		}
+	}
+endif;

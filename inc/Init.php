@@ -63,14 +63,95 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 <style>#rstr-script-adder{display:none !important;}</style>
 	<?php }
 	
+	public function wp_head(){ }
+	
+	/*
+	 * Run all dependency in the background
+	 */
+	public static function run_dependency(){
+		$inst = self::get_instance();
+		
+		/* Transliterate wp-admin
+		====================================*/
+		if(is_admin())
+		{
+			// Load options
+			$options = get_rstr_option();
+			/* Admin transliterations
+			=========================================*/
+			if($admin_mode_class = $inst->mode(['mode' => 'admin'])) {
+				new $admin_mode_class($options);
+			}
+		}
+		
+		/* Do special filtering
+		====================================*/
+		add_filter('rstr/transliteration/exclude/filters', function($filters, $options) {
+			if(isset($options['transliteration-filter']) && is_array($options['transliteration-filter'])) {
+				foreach($options['transliteration-filter'] as $filter){
+					if( isset($filters[$filter]) ) {
+						unset($filters[$filter]);
+						
+						if($filter == 'the_excerpt' && isset($filters['get_the_excerpt'])) {
+							unset($filters['get_the_excerpt']);
+						}
+					}
+				}
+			}
+			return $filters;
+		}, 1, 2);
+		
+		
+		/* Add generator
+		====================================*/
+		add_filter('the_generator',function($gen, $type){
+			if(apply_filters('rstr/transliteration/generator', true))
+			{
+				switch ( $type ) {
+						case 'html':
+								$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . RSTR_VERSION . '">';
+								break;
+						case 'xhtml':
+								$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . RSTR_VERSION . '" />';
+								break;
+						case 'atom':
+								$gen.= PHP_EOL . '<generator uri="https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip" version="' . RSTR_VERSION . '">WordPress Transliterator</generator>';
+								break;
+						case 'rss2':
+								$gen.= PHP_EOL . '<generator>' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip' ) . '</generator>';
+								break;
+						case 'rdf':
+								$gen.= PHP_EOL . '<admin:generatorAgent rdf:resource="' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip' ) . '" />';
+								break;
+						case 'comment':
+								$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . RSTR_VERSION . '" -->';
+								break;
+						case 'export':
+								$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . RSTR_VERSION . '" created="' . gmdate( 'Y-m-d H:i' ) . '" -->';
+								break;
+				}
+			}
+			return $gen;
+		}, 10, 2);
+	}
+	
+	/*
+	 * Run plugin on the frontend
+	 */
 	public static function run () {
 		// Load instance
 		$inst = self::get_instance();
 		
+		add_action('wp_head', array($inst, 'wp_head'));
+		
 		// Register taxonomy
 		parent::attachment_taxonomies();		
 		
-		if( is_admin() )
+		if( !is_admin() )
+		{
+			$inst->set_current_script();
+		}
+		else
 		{
 			// Remove admin menu pages
 			add_action('admin_menu', array($inst, 'remove_menu_page'));
@@ -82,10 +163,6 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			new Serbian_Transliteration_Settings_Sidebar( $Serbian_Transliteration_Settings );
 			new Serbian_Transliteration_Settings_Content( $Serbian_Transliteration_Settings );
 		}
-		else
-		{
-			$inst->set_current_script();
-		}
 		
 		// Load options
 		$options = get_rstr_option();
@@ -93,10 +170,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		// Load shortcodes
 		include_once RSTR_INC . '/Shortcodes.php';
 		new Serbian_Transliteration_Shortcodes($options);
-		
+
 		// Initialize plugin mode
 		if(isset($options['mode']) && $options['mode'] && in_array( $options['mode'], array_keys($inst->plugin_mode()), true ) !== false)
-		{			
+		{
 			if($options['transliteration-mode'] != 'none')
 			{
 				// Display alternate links

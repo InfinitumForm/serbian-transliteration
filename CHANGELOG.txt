@@ -1,3 +1,15 @@
+= 1.1.7 =
+* Urgent fix for private constants
+* Urgent fix for bad activation
+
+= 1.1.6 =
+* Urgent fix for wp_get_current_user ERROR
+
+= 1.1.5 =
+* Improved WP Admin and Gutenberg translation
+* Imporoved global transliteration
+* Improved PHP code
+
 = 1.1.4 =
 * Improved transliteration filters
 * Improved transliteration mode

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-10-09 14:24+0200\n"
-"PO-Revision-Date: 2020-10-09 14:28+0200\n"
+"POT-Creation-Date: 2020-10-12 07:39+0200\n"
+"PO-Revision-Date: 2020-10-12 07:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -23,12 +23,12 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
 #: inc/Functions.php:191 inc/Settings.php:381 inc/Shortcodes.php:64
-#: inc/settings/content.php:517
+#: inc/settings/content.php:521
 msgid "Cyrillic"
 msgstr "Ћирилица"
 
 #: inc/Functions.php:192 inc/Settings.php:382 inc/Shortcodes.php:65
-#: inc/settings/content.php:522
+#: inc/settings/content.php:526
 msgid "Latin"
 msgstr "Латиница"
 
@@ -228,7 +228,7 @@ msgstr "Начин рада додатка"
 
 #: inc/Settings.php:212
 msgid "Transliteration Filters"
-msgstr "Transliteration Filters"
+msgstr "Филтери за пресловљавање"
 
 #: inc/Settings.php:221
 msgid "Disabled inside wp-admin"
@@ -579,7 +579,7 @@ msgstr ""
 "(стринг) Тип селектора који ће бити приказан на сајту. Може бити: \"%1$s\", "
 "\"%2$s\" или \"%3$s\""
 
-#: inc/settings/content.php:254 inc/settings/content.php:512
+#: inc/settings/content.php:254 inc/settings/content.php:516
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
 msgstr ""
@@ -715,23 +715,23 @@ msgstr "Кориснички агент"
 msgid "Plugin directory path"
 msgstr "Путања директоријума додатака"
 
-#: inc/settings/content.php:403
+#: inc/settings/content.php:404
 msgid "Plugin settings"
 msgstr "Начин рада додатка"
 
-#: inc/settings/content.php:440
+#: inc/settings/content.php:444
 msgid "Available PHP Functions"
 msgstr "Доступне PHP функције"
 
-#: inc/settings/content.php:450
+#: inc/settings/content.php:454
 msgid "Determines whether the site is already in Cyrillic."
 msgstr "Утврђује да ли је веб локација већ на ћирилици."
 
-#: inc/settings/content.php:478
+#: inc/settings/content.php:482
 msgid "Transliteration of some text or content into the desired script."
 msgstr "Транслитерација одређеног текста или садржаја у жељену скрипту."
 
-#: inc/settings/content.php:480
+#: inc/settings/content.php:484
 msgid ""
 "The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> "
 "(Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)"
@@ -739,24 +739,24 @@ msgstr ""
 "Параметар <b><i>$type</i></b> има две вредности: <code>cyr_to_lat</code> "
 "(ћирилица у латиницу) and <code>lat_to_cyr</code> (латиница у ћирилицу)"
 
-#: inc/settings/content.php:483
+#: inc/settings/content.php:487
 msgid "Get active script."
 msgstr "Враћа активну скрипту."
 
-#: inc/settings/content.php:487
+#: inc/settings/content.php:491
 msgid "This function displays a selector for the transliteration script."
 msgstr "Ова функција приказује навигацију скрипте за транслитерацију."
 
-#: inc/settings/content.php:489
+#: inc/settings/content.php:493
 msgid "Parameters"
 msgstr "Параметри"
 
-#: inc/settings/content.php:490
+#: inc/settings/content.php:494
 msgid ""
 "This attribute contains an associative set of parameters for this function:"
 msgstr "Овај атрибут садржи асоцијативни скуп параметара за ову функцију:"
 
-#: inc/settings/content.php:496
+#: inc/settings/content.php:500
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
@@ -765,7 +765,7 @@ msgstr ""
 "(стринг) Тип селектора који ће бити приказан на сајту. Може бити: %1$s, "
 "%2$s, %3$s, %4$s or %5$s. Подразумевано: \"%1$s\""
 
-#: inc/settings/content.php:507
+#: inc/settings/content.php:511
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
@@ -774,12 +774,12 @@ msgstr ""
 "(bool) одређује да ли ће се приказивати кроз ехо или као низ. Подразумевано: "
 "%s"
 
-#: inc/settings/content.php:517
+#: inc/settings/content.php:521
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr "(стринг) Текст за ћирилични линк. Подразумевано: %s"
 
-#: inc/settings/content.php:522
+#: inc/settings/content.php:526
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr "(стринг) Текст за латинични линк. Подразумевано: %s"

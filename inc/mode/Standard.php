@@ -104,14 +104,7 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			$filters = self::filters($this->options);
 			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
 
-			if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
-			{
-				if(!is_admin())
-				{
-					foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-				}
-			}
-			else
+			if(!is_admin())
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 			}

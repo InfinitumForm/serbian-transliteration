@@ -31,7 +31,6 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			'date_i18n'						=> 'content',
 			'get_comment_date' 				=> 'content',
 			'wp_get_object_terms' 			=> 'transliteration_wp_terms', //Phlox
-			
 			'comment_text'					=> 'content',
 			'comments_template' 			=> 'content',
 			'the_content' 					=> 'content',
@@ -122,14 +121,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			$filters = self::filters($this->options);
 			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
 
-			if(isset($this->options['avoid-admin']) && $this->options['avoid-admin'] == 'yes')
-			{
-				if(!is_admin())
-				{
-					foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
-				}
-			}
-			else
+			if(!is_admin())
 			{
 				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
 			}
