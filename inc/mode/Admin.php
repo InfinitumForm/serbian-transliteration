@@ -4,13 +4,14 @@ if ( ! defined( 'WPINC' ) ) {
 }
 /**
  * Admin Menu Transliteration
- *
  */
 if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 	class Serbian_Transliteration_Mode_Admin extends Serbian_Transliteration {
 		private $options;
 
 		public static function filters( $options = array() ) {
+			global $pagenow;
+			
 			if ( empty( $options ) ) {
 				$options = get_rstr_option();
 			}
@@ -23,9 +24,17 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 				'date_i18n'             => 'content',
 				'the_title'             => 'content',
 				'wp_title'              => 'content',
+				'option_blogname' 		=> 'content',
+				'option_blogdescription'=> 'content',
 				'document_title_parts'  => 'title_parts',
 				'wp_get_object_terms'   => 'transliteration_wp_terms'
 			);
+			
+			// Bug fix on the settings page
+			if( in_array($pagenow, array('options-general.php', 'options.php'), true) !== false && !(isset($_GET['page'])) ){
+				unset($filters['option_blogname']);
+				unset($filters['option_blogdescription']);
+			}
 
 			return $filters;
 		}

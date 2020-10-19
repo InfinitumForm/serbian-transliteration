@@ -71,11 +71,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				
 				if($i === 2) $i=0; else ++$i;
 			}
-?>
-<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
-<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
-<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
-<?php
+			?>
+			<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
+			<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
+			<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
+			<?php
 		}
 		exit;
 	}
@@ -461,12 +461,27 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
 			<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
 		</div>
-		<?php printf(
+		<?php
+		
+		printf(
 			'<br><p><b>%s</b><br>%s %s</p>',
 			__('TIPS & TRICKS:', RSTR_NAME),
 			__('You can find details about some of the listed filters in this article:', RSTR_NAME),
 			'<a href="https://codex.wordpress.org/Plugin_API/Filter_Reference" target="_blank">Plugin_API/Filter_Reference</a>'
-		);?>
+		);
+		
+		if(RSTR_WOOCOMMERCE)
+		{
+			printf(
+				'<p>%s</p>',
+				sprintf(
+					__('Since you are already a WooCommerce user, you also can see the following documentation: %s', RSTR_NAME),
+					'<a href="https://docs.woocommerce.com/documentation/plugins/woocommerce/woocommerce-codex/snippets/" target="_blank">WooCommerce/Codex Snippets</a>'
+				)
+			);
+		}
+		
+		?>
 	</div>
 </div>
 <?php
@@ -605,25 +620,5 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Approve if you want transliteration for the search field.', RSTR_NAME));
 	}
-	
-	/*public function search_mode_callback()
-	{
-		$inputs = array();
-		
-		foreach(array(
-			'lat_to_cyr' => __('Enable Latin search on the Cyrillic site', RSTR_NAME),
-			'cyr_to_lat' => __('Enable Cyrillic search on the Latin site', RSTR_NAME)
-		) as $key=>$label)
-		{
-			$inputs[]=sprintf(
-				'<label for="search-mode-%1$s"><input type="radio" id="search-mode-%1$s" name="%3$s[search-mode]" value="%1$s"%4$s> <span>%2$s</span></label>',
-				esc_attr($key),
-				esc_html($label),
-				RSTR_NAME,
-				(isset( $this->options['search-mode'] ) ? ($this->options['search-mode'] == $key ? ' checked' : '') : ($key == 'lat_to_cyr' ? ' checked' : ''))
-			);
-		}
-		printf('%1$s<br><p class="description">%2$s</p>', join('<br>', $inputs), __('Select the search mode according to your WordPress setup.', RSTR_NAME));
-	}*/
 }
 endif;

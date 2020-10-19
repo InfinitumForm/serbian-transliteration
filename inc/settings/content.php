@@ -54,104 +54,8 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Nav tab settings
 	**/
 	public function nav_tab_settings(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=settings'); ?>" class="nav-tab<?php echo is_null($this->tab) || $this->tab == 'settings' ? ' nav-tab-active' : '' ;?>"><?php _e('General Settings', RSTR_NAME); ?></a>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=settings'); ?>" class="dashicons-before dashicons-admin-settings nav-tab<?php echo is_null($this->tab) || $this->tab == 'settings' ? ' nav-tab-active' : '' ;?>"><span><?php _e('General Settings', RSTR_NAME); ?></span></a>
 	<?php }
-	
-	/*
-	 * Nav tab permalink tools
-	**/
-	public function nav_tab_permalink_tool(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=permalink_tool'); ?>" class="nav-tab<?php echo $this->tab == 'permalink_tool' ? ' nav-tab-active' : '' ;?>"><?php _e('Permalink Tool', RSTR_NAME); ?></a>
-	<?php }
-	
-	/*
-	 * Nav tab Shortcodes
-	**/
-	public function nav_tab_shortcodes(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=shortcodes'); ?>" class="nav-tab<?php echo $this->tab == 'shortcodes' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-shortcodes"><?php _e('Available shortcodes', RSTR_NAME); ?></a>
-	<?php }
-	
-	/*
-	 * Nav tab Functions
-	**/
-	public function nav_tab_functions(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=functions'); ?>" class="nav-tab<?php echo $this->tab == 'functions' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><?php _e('Available PHP functions', RSTR_NAME); ?></a>
-	<?php }
-	
-	/*
-	 * Debug
-	**/
-	public function nav_tab_debug(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=debug'); ?>" class="nav-tab<?php echo $this->tab == 'debug' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><?php _e('Debug', RSTR_NAME); ?></a>
-	<?php }
-	
-	/*
-	 * Tab permalink tools content
-	**/
-	public function tab_content_permalink_tool(){ ?>
-<div class="rstr-tab-wrapper">
-
-	<div id="poststuff" class="metabox-holder has-right-sidebar">
-		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
-			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('rstr/settings/sidebar/tab/shortcodes'); ?>
-			</div>
-		</div>
-	 
-		<div id="post-body">
-			<div id="post-body-content">
-				<h1><span><?php _e('Permalink Transliteration Tool', RSTR_NAME); ?></span></h1>
-				<?php
-					printf('<p>%s</p>', __('This tool can rename all existing Cyrillic permalinks to Latin inside database.', RSTR_NAME));
-					printf('<p>%s</p>', __('This option is dangerous and can create unexpected problems. Once you run this script, all permalinks in your database will be modified and this can affect on the SEO causing a 404 error.',
-					RSTR_NAME));
-					printf('<p>%s</p>', __('Consult your SEO developer before you run this script as you will then need to resubmit the sitemap and make any other additional settings to change the permalinks on the search engines.', RSTR_NAME));
-					printf('<p><strong class="text-danger">%s</strong></p>', sprintf(__('You must %s before running this script.', RSTR_NAME), '<a href="https://wordpress.org/support/article/wordpress-backups/" target="_blank">' . __('back up the database', RSTR_NAME) . '</a>'));
-
-					$get_post_types = get_post_types(array(
-						'public'   => true
-					), 'names', 'and');
-					/*
-					$post_types = array_map(function($match){
-						return '<code><b>' . $match . '</b></code>';
-					}, $get_post_types);
-					*/
-					$post_types_selector = array_map(function($match){
-						return sprintf('<label for="tools-transliterate-post-type-%1$s"><input type="checkbox" id="tools-transliterate-post-type-%1$s" value="%1$s" class="tools-transliterate-permalinks-post-types" name="tools-transliterate-permalinks-post-types[]" checked><span>%2$s</span></label>', $match, strtr($match, array('_'=>' ',  '-'=>' ')));
-					}, $get_post_types);
-					
-					printf('<p>%s</p>', sprintf(__('This tool will affect on the following post types: %s', RSTR_NAME), '<br>' . join('&nbsp;&nbsp;&nbsp;&nbsp; ', $post_types_selector)));
-				?>
-				<br>
-				<div id="rstr-progress-bar" style="display:none;">
-					<p class="progress-value" style="width:33%" data-value="33"></p>
-					<progress max="100" value="33" class="php">
-						<!-- Browsers that support HTML5 progress element will ignore the html inside `progress` element. Whereas older browsers will ignore the `progress` element and instead render the html inside it. -->
-						<div class="progress-bar">
-							<span style="width: 33%">33%</span>
-						</div>
-					</progress>
-					<p class="progress-message"><?php _e('Please wait! Do not close the window or leave the page until this operation is completed!', RSTR_NAME); ?></p>
-				</div>
-				<p>
-					<input type="button" id="<?php echo RSTR_NAME ?>-tools-transliterate-permalinks" class="button button-primary" data-nonce="<?php echo esc_attr(wp_create_nonce('rstr-run-permalink-transliteration')); ?>" value="<?php esc_attr_e('Let\'s do magic', RSTR_NAME); ?>" disabled>
-					&nbsp;&nbsp;&nbsp;
-					<label for="<?php echo RSTR_NAME ?>-tools-check">
-						<input type="checkbox" id="<?php echo RSTR_NAME ?>-tools-check" value="1"> <?php _e('Are you sure you want this?', RSTR_NAME); ?>
-					</label>
-				</p>
-				<blockquote id="rstr-disclaimer" style="display:none;">
-					<h3><?php _e('Disclaimer', RSTR_NAME); ?></h3>
-					<?php printf('<p>%s</p>', __('This tool is made to work safely but there is always a small chance of some unpredictable problem.', RSTR_NAME)); ?>
-					<?php printf('<p><b>%s</b></p>', __('WE DO NOT GUARANTEE THAT THIS TOOL WILL FUNCTION PROPERLY ON YOUR SERVER AND BY USING THIS TOOL YOU ARE RESPONSIBLE FOR RISK AND POSSIBLE PROBLEMS.', RSTR_NAME)); ?>
-					<?php printf('<p><b>%s</b></p>', __('BACKUP YOUR DATABASE BEFORE USE IT.', RSTR_NAME)); ?>
-				</blockquote>
-			</div>
-		</div>
-		<br class="clear">
-	</div>
-
-</div><?php }
 	
 	/*
 	 * Tab settings form
@@ -159,32 +63,28 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	public function tab_content_settings_form(){
 		wp_enqueue_style( RSTR_NAME );
 		wp_enqueue_script( RSTR_NAME );	
-?>
-<div class="rstr-tab-wrapper">
-
-	<div id="poststuff" class="metabox-holder has-right-sidebar">
-		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
-			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('rstr/settings/sidebar'); ?>
-			</div>
-		</div>
-	 
-		<div id="post-body">
-			<div id="post-body-content">
-				<form method="post" action="<?php echo esc_url(admin_url('/options.php')); ?>" id="<?php echo RSTR_NAME; ?>-settings-form">
-				<?php
-					settings_fields( RSTR_NAME . '-group' );
-					settings_fields( RSTR_NAME . '-search' );
-					do_settings_sections( RSTR_NAME );
-					submit_button();
-				?>
-				</form>
-			</div>
-		</div>
-		<br class="clear">
-	</div>
-
-</div>
+		include_once RSTR_INC . '/settings/content/global-settings.php';
+	}
+	
+	/*
+	 * Nav tab permalink tools
+	**/
+	public function nav_tab_permalink_tool(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=permalink_tool'); ?>" class="dashicons-before dashicons-admin-links nav-tab<?php echo $this->tab == 'permalink_tool' ? ' nav-tab-active' : '' ;?>"><span><?php _e('Permalink Tool', RSTR_NAME); ?></span></a>
+	<?php }
+	
+	/*
+	 * Tab permalink tools content
+	**/
+	public function tab_content_permalink_tool(){
+		include_once RSTR_INC . '/settings/content/permalink-tool.php';
+	}
+	
+	/*
+	 * Nav tab Shortcodes
+	**/
+	public function nav_tab_shortcodes(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=shortcodes'); ?>" class="dashicons-before dashicons-shortcode nav-tab<?php echo $this->tab == 'shortcodes' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-shortcodes"><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -193,227 +93,14 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	public function tab_content_available_shortcodes(){
 		wp_enqueue_style( 'highlight');
 		wp_enqueue_script('highlight');
-		?>
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-	document.querySelectorAll('.lang-txt').forEach((block) => {
-		hljs.highlightBlock(block);
-	});
-});
-</script>
-<div class="rstr-tab-wrapper">
-
-	<div id="poststuff" class="metabox-holder has-right-sidebar">
-		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
-			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('rstr/settings/sidebar/tab/shortcodes'); ?>
-			</div>
-		</div>
-	 
-		<div id="post-body">
-			<div id="post-body-content">
-				<h1><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h1>
-				<div class="inside">
-					<br>
-					<h2 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h2>
-					<p><code class="lang-txt">[<span class="hljs-title">rstr_cyr_to_lat</span>]Ћирилица у латиницу[/<span class="hljs-title">rstr_cyr_to_lat</span>]</code></p>
-					<br>
-					<h2 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h2>
-					<p><code class="lang-txt">[<span class="hljs-title">rstr_lat_to_cyr</span>]Latinica u ćirilicu[/<span class="hljs-title">rstr_lat_to_cyr</span>]</code></p>
-					<br>
-					<h2 style="margin:0;"><?php _e('Add an image depending on the language script', RSTR_NAME); ?>:</h2>
-					<?php printf('<p>%s</p>', __('With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.', RSTR_NAME)); ?>
-					<p><code class="lang-txt">[<span class="hljs-title">rstr_img</span>]</code></p>
-					<h4><?php _e('Example', RSTR_NAME); ?>:</h4>
-					<p><code class="lang-txt">[<span class="hljs-title">rstr_img</span> <span class="hljs-params"><span class="hljs-keyword">lat</span>="<?php echo home_url('/logo_latin.jpg') ?>"</span> <span class="hljs-params"><span class="hljs-keyword">cyr</span>="<?php echo home_url('/logo_cyrillic.jpg') ?>"</span>]</code></p>
-					<h3><?php _e('Main shortcode parameters', RSTR_NAME); ?>:</h3>
-					<ul>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat', __('URL (src) as shown in the Latin language', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr', __('URL (src) as shown in the Cyrillic language', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default', __('(optional) URL (src) to the default image if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
-					</ul>
-					<h3><?php _e('Optional shortcode parameters', RSTR_NAME); ?>:</h3>
-					<ul>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_title', __('(optional) title (alt) description of the image for Cyrillic', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(optional) caption description of the image for Cyrillic', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_title', __('(optional) title (alt) description of the image for Latin', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(optional) caption description of the image for Latin', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default_title', __('(optional) title (alt) description of the image if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'default_caption', __('(optional) caption description of the imag if Latin and Cyrillic are unavailable', RSTR_NAME)); ?>
-					</ul>
-					<h3><?php _e('Shortcode return', RSTR_NAME); ?>:</h3>
-					<?php printf('<p>%s</p>', __('HTML image corresponding to the parameters set in this shortcode.', RSTR_NAME)); ?>
-					
-					<br>
-					<h2 style="margin:0;"><?php _e('Language script menu', RSTR_NAME); ?>:</h2>
-					<?php printf('<p>%s</p>', __('This shortcode displays a selector for the transliteration script.', RSTR_NAME)); ?>
-					<p><code class="lang-txt">[<span class="hljs-title">rstr_selector</span>]</code></p>
-					<h3><?php _e('Optional shortcode parameters', RSTR_NAME); ?>:</h3>
-					<ul>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s" or "%3$s"', RSTR_NAME), 'inline', 'select', 'list')); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'separator', sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), 'inline', ' | ')); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(string) Text for Cyrillic link. Default: Cyrillic', RSTR_NAME)); ?>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(string) Text for Latin link. Default: Latin', RSTR_NAME)); ?>
-					</ul>
-					<br><br>
-					<?php printf('<p><b>%s</b></p>', __('This shortcodes work independently of the plugin settings and can be used anywhere within WordPress pages, posts, taxonomies and widgets (if they support it).', RSTR_NAME)); ?>
-				</div>
-			</div>
-		</div>
-		<br class="clear">
-	</div>
-
-</div>
-	<?php }
+		include_once RSTR_INC . '/settings/content/shortcodes.php';
+	}
 	
 	/*
-	 * Tab Debug
+	 * Nav tab Functions
 	**/
-	public function tab_content_debug(){
-		wp_enqueue_style( 'highlight');
-		wp_enqueue_script('highlight');
-		include_once RSTR_INC . '/OS.php';
-		$activations = get_option( RSTR_NAME . '-activation' );
-		$options = get_rstr_option();
-	?>
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-	document.querySelectorAll('.lang-php').forEach((block) => {
-		hljs.highlightBlock(block);
-	});
-});
-</script>
-<div class="rstr-tab-wrapper">
-
-	<div id="poststuff" class="metabox-holder has-right-sidebar">
-		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
-			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('rstr/settings/sidebar/tab/debug'); ?>
-			</div>
-		</div>
-	 
-		<div id="post-body">
-			<div id="post-body-content">
-				<h2><span><?php _e('Debug information', RSTR_NAME); ?></span></h2>
-				<table class="table table-sm table-striped w-100">
-					<thead><?php do_action('rstr/settings/debug/table/thead'); ?></thead>
-					<tbody>
-						<?php do_action('rstr/settings/debug/table/tbody/start'); ?>
-						<tr>
-							<td width="30%" style="width:30%;"><strong><?php _e( 'Plugin ID', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_option(RSTR_NAME . '-ID'); ?></td>
-						</tr>
-						<tr>
-							<td width="30%" style="width:30%;"><strong><?php _e( 'Plugin version', RSTR_NAME ); ?></strong></td>
-							<td><?php echo RSTR_VERSION; ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'WordPress version', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'version' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Last plugin update', RSTR_NAME ); ?></strong></td>
-							<td><?php echo (!empty($activations) ? end($activations) : '-'); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'PHP version', RSTR_NAME ); ?></strong></td>
-							<td>PHP <?php echo PHP_VERSION; ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'PHP version ID', RSTR_NAME ); ?></strong></td>
-							<td><?php echo PHP_VERSION_ID; ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'PHP architecture', RSTR_NAME ); ?></strong></td>
-							<td><?php printf(__('%d bit', RSTR_NAME), (Serbian_Transliteration_OS::is_php64() ? 64 : 32)); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'WordPress debug', RSTR_NAME ); ?></strong></td>
-							<td><?php echo ( WP_DEBUG ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'WordPress multisite', RSTR_NAME ); ?></strong></td>
-							<td><?php echo ( RSTR_MULTISITE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
-						</tr>
-					<?php if(RSTR_WOOCOMMERCE) : ?>
-						<tr>
-							<td><strong><?php _e( 'WooCommerce active', RSTR_NAME ); ?></strong></td>
-							<td><?php echo ( RSTR_WOOCOMMERCE ? '<strong><span style="color:#007d1b">' . __( 'On', RSTR_NAME ) . '</span></strong>' : __( 'Off', RSTR_NAME ) ); ?></td>
-						</tr>
-						<?php if(defined('WC_VERSION')) : ?>
-						<tr>
-							<td><strong><?php _e( 'WooCommerce version', RSTR_NAME ); ?></strong></td>
-							<td><?php echo WC_VERSION; ?></td>
-						</tr>
-						<?php endif; ?>
-					<?php endif; ?>
-						<tr>
-							<td><strong><?php _e( 'Site title', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'name' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Tagline', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'description' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'WordPress address (URL)', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'wpurl' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Admin email', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'admin_email' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Encoding for pages and feeds', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'charset' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Content-Type', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_bloginfo( 'html_type' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Site Language', RSTR_NAME ); ?></strong></td>
-							<td><?php echo get_locale(); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Server time', RSTR_NAME ); ?></strong></td>
-							<td><?php echo date( 'r' ); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'WordPress directory path', RSTR_NAME ); ?></strong></td>
-							<td><?php echo ABSPATH; ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Operting system', RSTR_NAME ); ?></strong></td>
-							<td><?php echo Serbian_Transliteration_OS::getOS(); ?> <?php printf(__('%d bit', RSTR_NAME), Serbian_Transliteration_OS::architecture()); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'User agent', RSTR_NAME ); ?></strong></td>
-							<td><?php echo Serbian_Transliteration_OS::user_agent(); ?></td>
-						</tr>
-						<tr>
-							<td><strong><?php _e( 'Plugin directory path', RSTR_NAME ); ?></strong></td>
-							<td><?php echo RSTR_ROOT; ?></td>
-						</tr>
-						<?php do_action('rstr/settings/debug/table/tbody/end'); ?>
-					</tbody>
-					<tfoot><?php do_action('rstr/settings/debug/table/tfoot'); ?></tfoot>
-				</table>
-				<br>			
-				<div class="accordion-container">
-					<button class="accordion-link" type="button"><?php _e('Plugin settings', RSTR_NAME); ?></button>
-					<div class="accordion-panel" style="padding:0;">
-						<pre class="lang-php" style="margin: 0;">
-["<?php echo RSTR_NAME; ?>"] => <?php var_dump($options); ?>
-						</pre>
-					</div>
-				</div>
-			</div>
-		</div>
-		<br class="clear">
-	</div>
-
-</div>
+	public function nav_tab_functions(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=functions'); ?>" class="dashicons-before dashicons-code-standards nav-tab<?php echo $this->tab == 'functions' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><span><?php _e('Available PHP functions', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -422,118 +109,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	public function tab_content_available_functions(){
 		wp_enqueue_style( 'highlight');
 		wp_enqueue_script('highlight');
-		?>
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-	document.querySelectorAll('code.lang-php').forEach((block) => {
-		hljs.highlightBlock(block);
-	});
-});
-</script>
-<div class="rstr-tab-wrapper">
-
-	<div id="poststuff" class="metabox-holder has-right-sidebar">
-		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
-			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php do_action('rstr/settings/sidebar/tab/functions'); ?>
-			</div>
-		</div>
-	 
-		<div id="post-body">
-			<div id="post-body-content">
-				<h1><span><?php _e('Available PHP Functions', RSTR_NAME); ?></span></h1>
-				<div class="inside">
-					<br>
-					<h3 style="margin:0;">is_cyrillic_text</h3>
-					<p><code class="lang-php">function is_cyrillic_text(string $content) : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_latin_text</h3>
-					<p><code class="lang-php">function is_latin_text(string $content) : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_already_cyrillic</h3>
-					<?php printf('<p>%s</p>', __('Determines whether the site is already in Cyrillic.', RSTR_NAME)); ?>
-					<p><code class="lang-php">function is_already_cyrillic() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_cyrillic</h3>
-					<p><code class="lang-php">function is_cyrillic() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_latin</h3>
-					<p><code class="lang-php">function is_latin() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_serbian</h3>
-					<p><code class="lang-php">function is_serbian() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_russian</h3>
-					<p><code class="lang-php">function is_russian() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_belarusian</h3>
-					<p><code class="lang-php">function is_belarusian() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_bulgarian</h3>
-					<p><code class="lang-php">function is_bulgarian() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_macedonian</h3>
-					<p><code class="lang-php">function is_macedonian() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">is_kazakh</h3>
-					<p><code class="lang-php">function is_kazakh() : bool</code></p>
-					<br>
-					<h3 style="margin:0;">transliterate</h3>
-					<?php printf('<p>%s</p>', __('Transliteration of some text or content into the desired script.', RSTR_NAME)); ?>
-					<p><code class="lang-php">function transliterate(string $content, string $type='cyr_to_lat', bool $fix_html = true) : string</code></p>
-					<?php printf('<p>%s</p>', __('The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> (Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)', RSTR_NAME)); ?>
-					<br>
-					<h3 style="margin:0;">get_script</h3>
-					<?php printf('<p>%s</p>', __('Get active script.', RSTR_NAME)); ?>
-					<p><code class="lang-php">function get_script() : string</code></p>
-					<br>
-					<h3 style="margin:0;">script_selector</h3>
-					<?php printf('<p>%s</p>', __('This function displays a selector for the transliteration script.', RSTR_NAME)); ?>
-					<p><code class="lang-php">function script_selector(array $args) : string|echo|array|object</code></p>
-					<h4><?php _e('Parameters', RSTR_NAME); ?></h4>
-					<?php printf('<p><b><code>$args</code></b> (array) - %1$s</p>', __('This attribute contains an associative set of parameters for this function:', RSTR_NAME)); ?>
-					<ul>
-						<?php printf(
-							'<li><code>%1$s</code> - %2$s</li>',
-							'display_type',
-							sprintf(
-								__('(string) The type of selector that will be displayed on the site. It can be: %1$s, %2$s, %3$s, %4$s or %5$s. Default: %1$s', RSTR_NAME),
-								'<code>inline</code>',
-								'<code>select</code>',
-								'<code>list</code>',
-								'<code>array</code>',
-								'<code>object</code>'
-							)
-						); ?>
-						<?php printf(
-							'<li><code>%1$s</code> - %2$s</li>',
-							'echo',
-							sprintf(__('(bool) determines whether it will be displayed through an echo or as a string. Default: %s', RSTR_NAME), '<code>false</code>')
-						); ?>
-						<?php printf(
-							'<li><code>%1$s</code> - %2$s</li>',
-							'separator',
-							sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), '<code>inline</code>', '<code> | </code>')
-						); ?>
-						<?php printf(
-							'<li><code>%1$s</code> - %2$s</li>',
-							'cyr_caption',
-							sprintf(__('(string) Text for Cyrillic link. Default: %s', RSTR_NAME), '<code>' . __('Cyrillic', RSTR_NAME) . '</code>')
-						); ?>
-						<?php printf(
-							'<li><code>%1$s</code> - %2$s</li>',
-							'lat_caption',
-							sprintf(__('(string) Text for Latin link. Default: %s', RSTR_NAME), '<code>' . __('Latin', RSTR_NAME) . '</code>')
-						); ?>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<br class="clear">
-	</div>
-
-</div>
+		include_once RSTR_INC . '/settings/content/php-functions.php';
+	}
+	
+	/*
+	 * Debug
+	**/
+	public function nav_tab_debug(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=debug'); ?>" class="dashicons-before dashicons-sos nav-tab<?php echo $this->tab == 'debug' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><span><?php _e('Debug', RSTR_NAME); ?></span></a>
 	<?php }
+	
+	/*
+	 * Tab Debug
+	**/
+	public function tab_content_debug(){
+		wp_enqueue_style( 'highlight');
+		wp_enqueue_script('highlight');
+		include_once RSTR_INC . '/settings/content/debug.php';
+	}
 	
 	/*
 	 * Tab content container

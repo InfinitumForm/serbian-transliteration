@@ -1,3 +1,43 @@
+#serbian-transliteration-settings .nav-tab > span{
+	display: inline-block;
+	margin-left:5px;
+}
+
+@media all and (max-width:1140px){
+	#serbian-transliteration-settings .nav-tab:not(.nav-tab-active) > span{
+		display: none;
+	}
+	
+	#serbian-transliteration-settings .nav-tab{
+		position:relative;
+	}
+	
+	#serbian-transliteration-settings .nav-tab:not(.nav-tab-active):hover > span{
+		display: inline-block;
+		position:absolute;
+		top:40px;
+		left:50%;
+		transform:translateX(-50%);
+		background: #333333;
+		color: #fff;
+		padding: 5px 10px;
+		z-index:1;
+	}
+	
+	#serbian-transliteration-settings .nav-tab:not(.nav-tab-active):hover > span:before {
+		content:'';
+		position:absolute;
+		top:-5px;
+		left:50%;
+		transform:translateX(-50%);
+		width: 0; 
+		height: 0; 
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		border-bottom: 5px solid #333333;
+	}
+}
+
 #serbian-transliteration-settings .row{
 	display: -ms-flexbox;
     display: flex;
@@ -154,6 +194,18 @@
     padding: 5px 15px;
 	margin-bottom: 20px;
 	padding-bottom:15px;
+}
+
+@media all and (max-width:992px){
+	#serbian-transliteration-settings #serbian-transliteration-settings-sidebar{
+		display:none;
+	}
+	
+	#serbian-transliteration-settings #post-body-content,
+	#serbian-transliteration-settings .has-right-sidebar #post-body-content{
+		margin-right: none !important;
+		width: 97%;
+	}
 }
 
 #serbian-transliteration-settings #post-body-content label + br{

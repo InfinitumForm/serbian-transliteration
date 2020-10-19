@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,12 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.1.8 =
+* Improved admin transliteration
+* Improved settings and user experience
+* Improved filters
+* Improved PHP code (micro optimization)
+
 = 1.1.7 =
 * Urgent fix for private constants
 * Urgent fix for bad activation
@@ -147,25 +153,15 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.1.8 =
+* Improved admin transliteration
+* Improved settings and user experience
+* Improved filters
+* Improved PHP code (micro optimization)
+
 = 1.1.7 =
 * Urgent fix for private constants
 * Urgent fix for bad activation
-
-= 1.1.6 =
-* Urgent fix for wp_get_current_user ERROR
-
-= 1.1.5 =
-* Improved WP Admin and Gutenberg translation
-* Imporoved global transliteration
-* Improved PHP code
-
-= 1.1.4 =
-* Improved transliteration filters
-* Improved transliteration mode
-* Improved user experiance
-* Improved Documentation
-* Improved JavaScript code
-* Improved unicode filter
 
 == Frequently Asked Questions ==
 
