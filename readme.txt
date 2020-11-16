@@ -5,14 +5,14 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.1.8
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Transliterate Cyrillic into Latin, enable Cyrillic usernames, search in multiple letter scripts, and more...
 
 == Description ==
-This is a simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration also supports special shortcodes that you can use to partially transliterate parts of the content.
+This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.
 
 = FEATURES =
 
@@ -32,7 +32,8 @@ This is a simple and easy plugin with which you can transliterate your WordPress
 * It does not affect on the HTML, CSS or JS codes
 * Multilingual support
 * Transcription mode selection
-* The plugin didn't make the site noticeably slower (light weight)
+* Support [PHP version 7.4.8](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+* Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 
 = LANGUAGE SUPPORT =
 
@@ -47,9 +48,21 @@ This is a simple and easy plugin with which you can transliterate your WordPress
 * more languages are coming soon...
 
 = PLUGINS SUPPORT =
+
 This plugin is made to support all known plugins and visual editors.
 
+We also do special compatible functions with:
+
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/)
+* [Polylang](https://wordpress.org/plugins/polylang/)
+* [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
+* [WordPress Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
+
 **YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
+
+This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
+
+It is important for you to know that any functionality in our plugin can be turned off if you do not need it, as well as the ability to filter certain hooks and filters. We have tried to provide maximum flexibility and compatibility to everyone.
 
 == Documentation ==
 
@@ -81,7 +94,7 @@ This shortcode displays a selector for the transliteration script.
 (The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
 
 = Permalink Tool =
-This tool can rename all existing Cyrillic permalinks to Latin inside database. This tool is in the configuration of this plugin.
+This tool can rename all existing Cyrillic permalinks to Latin inside the database. This tool is in the configuration of this plugin.
 
 = PHP Functions =
 We also thought of PHP developers where we have enabled several useful functions that they can use within WordPress themes and plugins. The documentation for these functions is inside the plugin settings.
@@ -102,8 +115,19 @@ We also thought of PHP developers where we have enabled several useful functions
 5. Automated test
 6. Permalink tools
 7. Available PHP Functions
+8. Language script inside Menus
 
 == Changelog ==
+
+= 1.2.1 =
+* Fixed issue with translating permalink in other (non-Cyrillic) languages
+* Improved PHP code and fixed bugs
+* Added cache control when changing the language script
+* Added an example of a privacy policy due to the use of cookies
+
+= 1.2.0 =
+* Added language script menu switcher
+* Improved transliteration
 
 = 1.1.8 =
 * Improved admin transliteration
@@ -120,13 +144,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 = 1.1.5 =
 * Improved WP Admin and Gutenberg translation
-* Imporoved global transliteration
+* Improved global transliteration
 * Improved PHP code
 
 = 1.1.4 =
 * Improved transliteration filters
 * Improved transliteration mode
-* Improved user experiance
+* Improved user experience
 * Improved Documentation
 * Improved JavaScript code
 * Improved unicode filter
@@ -153,15 +177,15 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.1.8 =
-* Improved admin transliteration
-* Improved settings and user experience
-* Improved filters
-* Improved PHP code (micro optimization)
+= 1.2.1 =
+* Fixed issue with translating permalink in other (non-Cyrillic) languages
+* Improved PHP code and fixed bugs
+* Added cache control when changing the language script
+* Added an example of a privacy policy due to the use of cookies
 
-= 1.1.7 =
-* Urgent fix for private constants
-* Urgent fix for bad activation
+= 1.2.0 =
+* Added language script menu switcher
+* Improved transliteration
 
 == Frequently Asked Questions ==
 

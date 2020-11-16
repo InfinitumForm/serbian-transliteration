@@ -1,13 +1,24 @@
 <?php
-if ( ! defined( 'WPINC' ) ) {
-	die( "Don't mess with us." );
-}
+if ( ! defined( 'WPINC' ) )	die( "Don't mess with us." );
 /**
  * Admin Menu Transliteration
+ *
+ * @link              http://infinitumform.com/
+ * @since             1.0.0
+ * @package           Serbian_Transliteration
+ * @author            Ivijan-Stefan Stipic
+ * @contributor       Slobodan Pantovic
  */
 if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 	class Serbian_Transliteration_Mode_Admin extends Serbian_Transliteration {
 		private $options;
+		
+		/* Run this script */
+		private static $__run = NULL;
+		public static function run($options = array()) {
+			if( !self::$__run ) self::$__run = new self($options);
+			return self::$__run;
+		} 
 
 		public static function filters( $options = array() ) {
 			global $pagenow;
@@ -55,8 +66,9 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 						$this->add_filter( $filter, $function, 9999999, 1 );
 					}
 				}
-				add_filter( 'load_script_translations', array( &$this, 'transliteration_json_content' ), 9 );
-				add_filter( 'pre_load_script_translations', array( &$this, 'transliteration_json_content' ), 9 );
+				$this->add_filter( 'load_script_translations', 'transliteration_json_content', 9 );
+				$this->add_filter( 'pre_load_script_translations', 'transliteration_json_content', 9 );
+				$this->add_filter( 'locale', 'current_user_locale', 9 );
 			}
 		}
 
@@ -121,6 +133,29 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 			}
 
 			return $wp_terms;
+		}
+		
+		/**
+		 * @param $locale
+		 *
+		 * @return string
+		 * @author Slobodan Pantovic
+		 */
+		public function current_user_locale( $locale ) {
+			$available_languages = get_available_languages( RSTR_ROOT . '/languages' );
+			foreach ( $available_languages as $key => &$language ) {
+				$language = str_replace( RSTR_NAME . '-', '', $language );
+			}
+			$current_user_ID = get_current_user_id();
+			$user_meta       = get_user_meta( $current_user_ID );
+			if ( is_array( $user_meta ) && isset( $user_meta['locale'][0] ) && ! empty( $user_meta['locale'][0] ) ) {
+				$locale = get_user_locale( $current_user_ID );
+				if ( in_array( $locale, $available_languages ) ) {
+					return $locale;
+				}
+			}
+
+			return $locale;
 		}
 	}
 endif;

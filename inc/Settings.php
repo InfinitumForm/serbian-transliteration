@@ -8,8 +8,12 @@
  */
 
 // Include codes
-include_once RSTR_INC . '/settings/sidebar.php';
-include_once RSTR_INC . '/settings/content.php';
+if(file_exists(RSTR_INC . '/settings/sidebar.php')) {
+	include_once RSTR_INC . '/settings/sidebar.php';
+}
+if(file_exists(RSTR_INC . '/settings/content.php')) {
+	include_once RSTR_INC . '/settings/content.php';
+}
 
 if(!class_exists('Serbian_Transliteration_Settings')) :
 class Serbian_Transliteration_Settings extends Serbian_Transliteration

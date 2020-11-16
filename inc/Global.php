@@ -826,6 +826,45 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function setcookie ($val){
 		if( !headers_sent() ) {
 			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
+			$this->cache_flush();
+		}
+	}
+	
+	/*
+	 * Flush Cache
+	 * @verson    1.0.0
+	*/
+	public function cache_flush () {
+		global $post, $user;
+		
+		// Standard cache
+		header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+		
+		// Flush WP cache
+		if (function_exists('w3tc_flush_all')){
+			wp_cache_flush();
+		}
+		
+		// W3 Total Cache
+		if (function_exists('w3tc_flush_all')){
+			w3tc_flush_all();
+		}
+		
+		// WP Fastest Cache
+		if (function_exists('wpfc_clear_all_cache')){
+			wpfc_clear_all_cache(true);
+		}
+		
+		if($post && function_exists('clean_post_cache')) {
+			clean_post_cache( $post );
+		}
+		
+		if($user && function_exists('clean_post_cache')) {
+			clean_user_cache( $user );
 		}
 	}
 	
@@ -948,7 +987,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				include_once $path . "/{$path_require}.php";
 				if(class_exists($class_require)){
 					return $class_require;
+				} else {
+					throw new Exception(sprintf('The class "$1%s" does not exist or is not correctly defined on the line %2%d', $mode_class, (__LINE__-2)));
 				}
+			} else {
+				throw new Exception(sprintf('The file at location "$1%s" does not exist or has a permissions problem.', $path . "/{$path_require}.php"));
 			}
 		}
 		else

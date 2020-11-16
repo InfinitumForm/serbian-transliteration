@@ -9,178 +9,214 @@
  * @contributor       Slobodan Pantovic
  */
 if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
-class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
-{
-	private $options;
-	
-	public static function filters ($options=array()) {
-		if(empty($options)) $options = get_rstr_option();
+	class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
+	{
+		private $options;
 		
-		$filters = array(
-			'single_cat_title'				=>'content',
-			'the_category'					=>'content',
-			'wp_list_categories'			=>'content',//Widget categories
-			'wp_dropdown_cats'				=>'content',//Widget categories dropdown
-			'get_archives_link'				=>'content', //Widget achives
-			'get_the_terms'					=>'transliteration_wp_terms',//Sydney, Blocksy, Colormag
-			'get_the_excerpt' 				=> 'content',
-			'the_excerpt'					=>'content',
-			'oceanwp_excerpt'				=>'content',//Oceanwp
-			'get_calendar' 					=> 'content',
-		//	'pre_kses' 						=> 'content',
-			'date_i18n'						=> 'content',
-			'get_comment_date' 				=> 'content',
-			'wp_get_object_terms' 			=> 'transliteration_wp_terms', //Phlox
-			'comment_text'					=> 'content',
-			'comments_template' 			=> 'content',
-			'the_content' 					=> 'content',
-			'the_title' 					=> 'content',
-			'wp_nav_menu_items' 			=> 'content',
-			'get_post_time' 				=> 'content',
-			'wp_title' 						=> 'content',
-			'the_date' 						=> 'content',
-			'get_the_date' 					=> 'content',
-			'the_content_more_link' 		=> 'content',
-			'pre_get_document_title'		=> 'content',
-			'default_post_metadata' 		=> 'content',
-			'get_comment_metadata' 			=> 'content',
-			'get_term_metadata' 			=> 'content',
-			'get_user_metadata' 			=> 'content',
-			'gettext' 						=> 'content',
-			'ngettext' 						=> 'content',
-			'gettext_with_context' 			=> 'content',
-			'ngettext_with_context' 		=> 'content',
-			'widget_text' 					=> 'content',
-			'widget_title' 					=> 'content',
-			'widget_text_content' 			=> 'content',
-			'widget_custom_html_content' 	=> 'content',
-			'sanitize_title' 				=> 'content',
-			'wp_unique_post_slug' 			=> 'content',
-			'option_blogdescription'		=> 'content',
-			'option_blogname' 				=> 'content',
-			'document_title_parts' 			=> 'title_parts',
-			'sanitize_title'				=> 'force_permalink_to_latin',
-			'the_permalink'					=> 'force_permalink_to_latin',
-			'wp_unique_post_slug'			=> 'force_permalink_to_latin'
-		);
-		asort($filters);
-		// WooCommerce
-		if (RSTR_WOOCOMMERCE) {
-			$filters = array_merge($filters, array(
-				'woocommerce_product_single_add_to_cart_text' => 'content',
-				'woocommerce_email_footer_text' => 'content',
-				'woocommerce_get_availability_text' => 'content',
-				'woocommerce_get_price_html_from_text' => 'content',
-				'woocommerce_order_button_text' => 'content',
-				'woocommerce_pay_order_button_text' => 'content',
-				'filter_woocommerce_product_add_to_cart_text' => 'content',
-				'woocommerce_product_single_add_to_cart_text' => 'content',
-				'woocommerce_thankyou_order_received_text' => 'content',
-				'wc_add_to_cart_message_html' => 'content',
-				'woocommerce_admin_stock_html' => 'content',
-				'woocommerce_cart_no_shipping_available_html' => 'content',
-				'sale_price_dates_from' => 'content',
-				'sale_price_dates_to' => 'content',
-				'woocommerce_dropdown_variation_attribute_options_html' => 'content',
-				'woocommerce_date_input_html_pattern' => 'content',
-				'woocommerce_cart_totals_taxes_total_html' => 'content',
-				'woocommerce_cart_totals_fee_html' => 'content',
-				'woocommerce_cart_totals_coupon_html' => 'content',
-				'woocommerce_cart_totals_order_total_html' => 'content',
-				'woocommerce_coupon_discount_amount_html' => 'content',
-				'woocommerce_empty_price_html' => 'content',
-				'woocommerce_grouped_price_html' => 'content',
-				'woocommerce_grouped_empty_price_html' => 'content',
-				'woocommerce_get_stock_html' => 'content',
-				'woocommerce_get_price_html_from_to' => 'content',
-				'woocommerce_get_price_html' => 'content',
-				'woocommerce_layered_nav_term_html' => 'content',
-				'woocommerce_no_shipping_available_html' => 'content',
-				'woocommerce_order_item_quantity_html' => 'content',
-				'woocommerce_order_button_html' => 'content',
-				'woocommerce_product_get_rating_html' => 'content',
-				'woocommerce_pay_order_button_html' => 'content',
-				'wc_payment_gateway_form_saved_payment_methods_html' => 'content',
-				'woocommerce_subcategory_count_html' => 'content',
-				'woocommerce_stock_html' => 'content',
-				'woocommerce_single_product_image_thumbnail_html' => 'content',
-				'woocommerce_variable_price_html' => 'content',
-				'woocommerce_variable_empty_price_html' => 'content'
-			));
-		}
+		/* Run this script */
+		private static $__run = NULL;
+		public static function run($options = array()) {
+			if( !self::$__run ) self::$__run = new self($options);
+			return self::$__run;
+		} 
 		
-		return $filters;
-	}
-	
-	function __construct($options=false){
-		if($options !== false)
-		{
-			$this->options = $options;
-			$transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
-
-			$filters = self::filters($this->options);
-			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
-
-			if(!is_admin())
-			{
-				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
+		public static function filters ($options=array()) {
+			if(empty($options)) $options = get_rstr_option();
+			
+			$filters = array(
+				'single_cat_title'				=>'content',
+				'the_category'					=>'content',
+				'wp_list_categories'			=>'content',//Widget categories
+				'wp_dropdown_cats'				=>'content',//Widget categories dropdown
+				'get_archives_link'				=>'content', //Widget achives
+				'get_the_terms'					=>'transliteration_wp_terms',//Sydney, Blocksy, Colormag
+				'get_the_excerpt' 				=> 'content',
+				'the_excerpt'					=>'content',
+				'oceanwp_excerpt'				=>'content',//Oceanwp
+				'get_calendar' 					=> 'content',
+			//	'pre_kses' 						=> 'content',
+				'date_i18n'						=> 'content',
+				'get_comment_date' 				=> 'content',
+				'wp_get_object_terms' 			=> 'transliteration_wp_terms', //Phlox
+				'comment_text'					=> 'content',
+				'comments_template' 			=> 'content',
+				'the_content' 					=> 'content',
+				'the_title' 					=> 'content',
+				'wp_nav_menu_items' 			=> 'content',
+				'get_post_time' 				=> 'content',
+				'wp_title' 						=> 'content',
+				'the_date' 						=> 'content',
+				'get_the_date' 					=> 'content',
+				'the_content_more_link' 		=> 'content',
+				'pre_get_document_title'		=> 'content',
+				'default_post_metadata' 		=> 'content',
+				'get_comment_metadata' 			=> 'content',
+				'get_term_metadata' 			=> 'content',
+				'get_user_metadata' 			=> 'content',
+				'gettext' 						=> 'content',
+				'ngettext' 						=> 'content',
+				'gettext_with_context' 			=> 'content',
+				'ngettext_with_context' 		=> 'content',
+				'widget_text' 					=> 'content',
+				'widget_title' 					=> 'content',
+				'widget_text_content' 			=> 'content',
+				'widget_custom_html_content' 	=> 'content',
+				'sanitize_title' 				=> 'content',
+				'wp_unique_post_slug' 			=> 'content',
+				'option_blogdescription'		=> 'content',
+				'option_blogname' 				=> 'content',
+				'document_title_parts' 			=> 'title_parts',
+				'sanitize_title'				=> 'force_permalink_to_latin',
+				'the_permalink'					=> 'force_permalink_to_latin',
+				'wp_unique_post_slug'			=> 'force_permalink_to_latin'
+			);
+			asort($filters);
+			// WooCommerce
+			if (RSTR_WOOCOMMERCE) {
+				$filters = array_merge($filters, array(
+					'woocommerce_product_single_add_to_cart_text' => 'content',
+					'woocommerce_email_footer_text' => 'content',
+					'woocommerce_get_availability_text' => 'content',
+					'woocommerce_get_price_html_from_text' => 'content',
+					'woocommerce_order_button_text' => 'content',
+					'woocommerce_pay_order_button_text' => 'content',
+					'filter_woocommerce_product_add_to_cart_text' => 'content',
+					'woocommerce_product_single_add_to_cart_text' => 'content',
+					'woocommerce_thankyou_order_received_text' => 'content',
+					'wc_add_to_cart_message_html' => 'content',
+					'woocommerce_admin_stock_html' => 'content',
+					'woocommerce_cart_no_shipping_available_html' => 'content',
+					'sale_price_dates_from' => 'content',
+					'sale_price_dates_to' => 'content',
+					'woocommerce_dropdown_variation_attribute_options_html' => 'content',
+					'woocommerce_date_input_html_pattern' => 'content',
+					'woocommerce_cart_totals_taxes_total_html' => 'content',
+					'woocommerce_cart_totals_fee_html' => 'content',
+					'woocommerce_cart_totals_coupon_html' => 'content',
+					'woocommerce_cart_totals_order_total_html' => 'content',
+					'woocommerce_coupon_discount_amount_html' => 'content',
+					'woocommerce_empty_price_html' => 'content',
+					'woocommerce_grouped_price_html' => 'content',
+					'woocommerce_grouped_empty_price_html' => 'content',
+					'woocommerce_get_stock_html' => 'content',
+					'woocommerce_get_price_html_from_to' => 'content',
+					'woocommerce_get_price_html' => 'content',
+					'woocommerce_layered_nav_term_html' => 'content',
+					'woocommerce_no_shipping_available_html' => 'content',
+					'woocommerce_order_item_quantity_html' => 'content',
+					'woocommerce_order_button_html' => 'content',
+					'woocommerce_product_get_rating_html' => 'content',
+					'woocommerce_pay_order_button_html' => 'content',
+					'wc_payment_gateway_form_saved_payment_methods_html' => 'content',
+					'woocommerce_subcategory_count_html' => 'content',
+					'woocommerce_stock_html' => 'content',
+					'woocommerce_single_product_image_thumbnail_html' => 'content',
+					'woocommerce_variable_price_html' => 'content',
+					'woocommerce_variable_empty_price_html' => 'content'
+				));
 			}
 			
-			if(!is_admin())
-			{
-				$this->add_action('wp_loaded', 'output_buffer_start', 999);
-				$this->add_action('shutdown', 'output_buffer_end', 999);
-				
-				$this->add_action('rss_head', 'rss_output_buffer_start', 999);
-				$this->add_action('rss_footer', 'rss_output_buffer_end', 999);
-				
-				$this->add_action('rss2_head', 'rss_output_buffer_start', 999);
-				$this->add_action('rss2_footer', 'rss_output_buffer_end', 999);
-				
-				$this->add_action('rdf_head', 'rss_output_buffer_start', 999);
-				$this->add_action('rdf_footer', 'rss_output_buffer_end', 999);
-				
-				$this->add_action('atom_head', 'rss_output_buffer_start', 999);
-				$this->add_action('atom_footer', 'rss_output_buffer_end', 999);
-			}
-			
-			$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
-			$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
+			return $filters;
 		}
-	}
-	
-	/*
-	 * Transliterate WP terms
-	 * @author    Slobodan Pantović
-	 * @version   1.0.0
-	**/
-	public function transliteration_wp_terms($wp_terms)
-    {
-        if (! empty($wp_terms))
-        {
-            for($i=0,$n=count($wp_terms); $i<$n; $i++)
-            {
-                if (is_object($wp_terms[$i]))
-                {
-                   switch($this->get_current_script($this->options))
-			        {
-				        case 'cyr_to_lat' :
-                            $wp_terms[$i]->name = $this->cyr_to_lat($wp_terms[$i]->name);
-                            break;
-                        case 'lat_to_cyr' :
-					        $wp_terms[$i]->name = $this->lat_to_cyr($wp_terms[$i]->name);
-                            break;
-                    }                
-                }
-            }        
-            
-        }
-        return $wp_terms;
-    }
-	
-	public function bloginfo($output, $show=''){
-		if(!empty($show) && in_array($show, array('name','description')))
+		
+		function __construct($options=false){
+			if($options !== false)
+			{
+				$this->options = $options;
+				$transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
+
+				$filters = self::filters($this->options);
+				$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);
+
+				if(!is_admin())
+				{
+					foreach($filters as $filter=>$function) $this->add_filter($filter, $function, 9999999, 1);
+				}
+				
+				if(!is_admin())
+				{
+					$this->add_action('wp_loaded', 'output_buffer_start', 999);
+					$this->add_action('shutdown', 'output_buffer_end', 999);
+					
+					$this->add_action('rss_head', 'rss_output_buffer_start', 999);
+					$this->add_action('rss_footer', 'rss_output_buffer_end', 999);
+					
+					$this->add_action('rss2_head', 'rss_output_buffer_start', 999);
+					$this->add_action('rss2_footer', 'rss_output_buffer_end', 999);
+					
+					$this->add_action('rdf_head', 'rss_output_buffer_start', 999);
+					$this->add_action('rdf_footer', 'rss_output_buffer_end', 999);
+					
+					$this->add_action('atom_head', 'rss_output_buffer_start', 999);
+					$this->add_action('atom_footer', 'rss_output_buffer_end', 999);
+				}
+				
+				$this->add_filter('bloginfo', 'bloginfo', 99999, 2);
+				$this->add_filter('bloginfo_url', 'bloginfo', 99999, 2);
+			}
+		}
+		
+		/*
+		 * Transliterate WP terms
+		 * @author    Slobodan Pantović
+		 * @version   1.0.0
+		**/
+		public function transliteration_wp_terms($wp_terms)
 		{
+			if (! empty($wp_terms))
+			{
+				for($i=0,$n=count($wp_terms); $i<$n; $i++)
+				{
+					if (is_object($wp_terms[$i]))
+					{
+					   switch($this->get_current_script($this->options))
+						{
+							case 'cyr_to_lat' :
+								$wp_terms[$i]->name = $this->cyr_to_lat($wp_terms[$i]->name);
+								break;
+							case 'lat_to_cyr' :
+								$wp_terms[$i]->name = $this->lat_to_cyr($wp_terms[$i]->name);
+								break;
+						}                
+					}
+				}        
+				
+			}
+			return $wp_terms;
+		}
+		
+		public function bloginfo($output, $show=''){
+			if(!empty($show) && in_array($show, array('name','description')))
+			{
+				switch($this->get_current_script($this->options))
+				{
+					case 'cyr_to_lat' :
+						$output = $this->cyr_to_lat($output);
+						break;
+						
+					case 'lat_to_cyr' :
+						$output = $this->lat_to_cyr($output);			
+						break;
+				}
+			}
+			return $output;
+		}
+		
+		function output_buffer_start() { 
+			ob_start(array(&$this, "output_callback"));
+		}
+		
+		function output_buffer_end() { 
+			ob_get_clean();
+		}
+		
+		function rss_output_buffer_start() {
+			ob_start();
+		}
+		
+		function rss_output_buffer_end() {
+			$output = ob_get_clean();
+
 			switch($this->get_current_script($this->options))
 			{
 				case 'cyr_to_lat' :
@@ -188,120 +224,91 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 					break;
 					
 				case 'lat_to_cyr' :
-					$output = $this->lat_to_cyr($output);			
+					$output = $this->lat_to_cyr($output);
 					break;
 			}
-		}
-		return $output;
-	}
-	
-	function output_buffer_start() { 
-		ob_start(array(&$this, "output_callback"));
-	}
-	
-	function output_buffer_end() { 
-		ob_get_clean();
-	}
-	
-	function rss_output_buffer_start() {
-		ob_start();
-	}
-	
-	function rss_output_buffer_end() {
-		$output = ob_get_clean();
 
-        switch($this->get_current_script($this->options))
-		{
-			case 'cyr_to_lat' :
-				$output = $this->cyr_to_lat($output);
-				break;
-				
-			case 'lat_to_cyr' :
-				$output = $this->lat_to_cyr($output);
-				break;
+			echo $output;
 		}
-
-        echo $output;
-	}
-	
-	public function output_callback ($buffer='') {
-		if(empty($buffer)) return $buffer;
 		
-		if(!(defined('DOING_AJAX') && DOING_AJAX))
-		{
-			$sufix = '_' . strlen($buffer);
+		public function output_callback ($buffer='') {
+			if(empty($buffer)) return $buffer;
 			
-			if (!is_admin() && false === ( $forced_cache = get_transient( $this->transient.$sufix ) ) )
+			if(!(defined('DOING_AJAX') && DOING_AJAX))
 			{
-				$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
-					switch($this->get_current_script($this->options))
-					{
-						case 'cyr_to_lat' :
-							$matches[2] = $this->cyr_to_lat($matches[2]);
-							break;
-							
-						case 'lat_to_cyr' :
-							$matches[2] = $this->lat_to_cyr($matches[2]);
-							break;
-					}
-					return $matches[2];
-				}, $buffer);
+				$sufix = '_' . strlen($buffer);
 				
-				if(!is_admin()) set_transient( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+				if (!is_admin() && false === ( $forced_cache = get_transient( $this->transient.$sufix ) ) )
+				{
+					$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
+						switch($this->get_current_script($this->options))
+						{
+							case 'cyr_to_lat' :
+								$matches[2] = $this->cyr_to_lat($matches[2]);
+								break;
+								
+							case 'lat_to_cyr' :
+								$matches[2] = $this->lat_to_cyr($matches[2]);
+								break;
+						}
+						return $matches[2];
+					}, $buffer);
+					
+					if(!is_admin()) set_transient( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+				}
+				else
+				{
+					$buffer = $forced_cache;
+				}
 			}
-			else
-			{
-				$buffer = $forced_cache;
-			}
+			
+			return $buffer;
 		}
 		
-		return $buffer;
-	}
-	
-	public function content ($content='') {
-		if(empty($content)) return $content;
-		
-		
-		if(is_array($content))
-		{
-			$content = $this->title_parts($content);
+		public function content ($content='') {
+			if(empty($content)) return $content;
+			
+			
+			if(is_array($content))
+			{
+				$content = $this->title_parts($content);
+			}
+			else if(is_string($content) && !is_numeric($content))
+			{
+					
+				switch($this->get_current_script($this->options))
+				{
+					case 'cyr_to_lat' :
+						$content = $this->cyr_to_lat($content);
+						break;
+						
+					case 'lat_to_cyr' :
+						$content = $this->lat_to_cyr($content);			
+						break;
+				}
+			}
+			return $content;
 		}
-		else if(is_string($content) && !is_numeric($content))
-		{
-				
+		
+		public function title_parts($titles=array()){
 			switch($this->get_current_script($this->options))
 			{
 				case 'cyr_to_lat' :
-					$content = $this->cyr_to_lat($content);
+					foreach($titles as $key => $val)
+					{
+						if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->cyr_to_lat($titles[$key]);
+					}
 					break;
 					
 				case 'lat_to_cyr' :
-					$content = $this->lat_to_cyr($content);			
+					foreach($titles as $key => $val)
+					{
+						if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->lat_to_cyr($titles[$key], true);
+					}
 					break;
 			}
+			
+			return $titles;
 		}
-		return $content;
 	}
-	
-	public function title_parts($titles=array()){
-		switch($this->get_current_script($this->options))
-		{
-			case 'cyr_to_lat' :
-				foreach($titles as $key => $val)
-				{
-					if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->cyr_to_lat($titles[$key]);
-				}
-				break;
-				
-			case 'lat_to_cyr' :
-				foreach($titles as $key => $val)
-				{
-					if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->lat_to_cyr($titles[$key], true);
-				}
-				break;
-		}
-		
-		return $titles;
-	}
-}
 endif;

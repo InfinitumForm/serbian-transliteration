@@ -1,3 +1,13 @@
+= 1.2.1 =
+* Fixed issue with translating permalink in other (non-Cyrillic) languages
+* Improved PHP code and fixed bugs
+* Added cache control when changing the language script
+* Added an example of a privacy policy due to the use of cookies
+
+= 1.2.0 =
+* Added language script menu switcher
+* Improved transliteration
+
 = 1.1.8 =
 * Improved admin transliteration
 * Improved settings and user experience
