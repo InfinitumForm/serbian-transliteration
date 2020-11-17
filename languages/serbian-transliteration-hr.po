@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-11-16 10:56+0100\n"
-"PO-Revision-Date: 2020-11-16 10:57+0100\n"
+"POT-Creation-Date: 2020-11-17 09:34+0100\n"
+"PO-Revision-Date: 2020-11-17 09:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: inc/Functions.php:191 inc/Menu.php:31 inc/Menu.php:32 inc/Settings.php:388
+#: inc/Functions.php:191 inc/Menu.php:31 inc/Menu.php:32 inc/Settings.php:396
 #: inc/Shortcodes.php:64 inc/settings/content/php-functions.php:97
 msgid "Cyrillic"
 msgstr "Ćirilica"
 
-#: inc/Functions.php:192 inc/Menu.php:30 inc/Menu.php:32 inc/Settings.php:389
+#: inc/Functions.php:192 inc/Menu.php:30 inc/Menu.php:32 inc/Settings.php:397
 #: inc/Shortcodes.php:65 inc/settings/content/php-functions.php:102
 msgid "Latin"
 msgstr "Latinski"
@@ -315,6 +315,10 @@ msgid "Force transliteration permalinks to latin"
 msgstr "Prisiliti transliteraciju permalinki na latinicu"
 
 #: inc/Settings.php:260
+msgid "Enable cache support"
+msgstr "Omogućite podršku za predmemoriju"
+
+#: inc/Settings.php:268
 msgid ""
 "Exclude Latin words that you do not want to be transliterated to the "
 "Cyrillic."
@@ -322,28 +326,28 @@ msgstr ""
 "Isključite latinične riječi za koje ne želite da se transliteriraju u "
 "ćirilicu."
 
-#: inc/Settings.php:268
+#: inc/Settings.php:276
 msgid ""
 "Exclude Cyrillic words that you do not want to be transliterated to the "
 "Latin."
 msgstr ""
 "Izuzmite ćirilične riječi za koje ne želite da se transliteriraju u latinicu."
 
-#: inc/Settings.php:285
+#: inc/Settings.php:293
 msgid "WordPress search"
 msgstr "WordPress pretraživanje"
 
-#: inc/Settings.php:292
+#: inc/Settings.php:300
 msgid "Enable search transliteration"
 msgstr "Omogućite transliteraciju pretraživanja"
 
-#: inc/Settings.php:347
+#: inc/Settings.php:355
 msgid ""
 "This setting determines the mode of operation for the Serbian "
 "Transliteration plugin."
 msgstr "Ova postavka određuje način rada dodatka za transliteraciju."
 
-#: inc/Settings.php:348
+#: inc/Settings.php:356
 msgid ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
@@ -351,7 +355,7 @@ msgstr ""
 "Pažljivo odaberite opciju koja je najbolja za vašu stranicu i dodatak će "
 "automatski postaviti sve što je potrebno za optimalne performanse."
 
-#: inc/Settings.php:353
+#: inc/Settings.php:361
 msgid ""
 "This setting determines the search mode within the WordPress core depending "
 "on the type of language located in the database."
@@ -359,7 +363,7 @@ msgstr ""
 "Ova postavka određuje način pretraživanja unutar jezgre WordPress-a, ovisno "
 "o vrsti jezika koji se nalazi u bazi podataka."
 
-#: inc/Settings.php:354
+#: inc/Settings.php:362
 msgid ""
 "The search type setting is mostly experimental and you need to test each "
 "variant so you can get the best result you need."
@@ -367,7 +371,7 @@ msgstr ""
 "Postavka vrste pretraživanja uglavnom je eksperimentalna i trebate testirati "
 "svaku varijantu kako biste postigli najbolji rezultat koji vam je potreban."
 
-#: inc/Settings.php:379
+#: inc/Settings.php:387
 msgid ""
 "Forced transliteration can sometimes cause problems if Latin is translated "
 "into Cyrillic in pages and posts. To this combination must be approached "
@@ -377,15 +381,15 @@ msgstr ""
 "stranicama i u postovima prevede na ćirilicu. Ovoj se kombinaciji mora "
 "pristupiti eksperimentalno."
 
-#: inc/Settings.php:434
+#: inc/Settings.php:442
 msgid "Exclude filters you don't need (optional)"
 msgstr "Izuzmite filtre koji vam nisu potrebni (opcionalno)"
 
-#: inc/Settings.php:440
+#: inc/Settings.php:448
 msgid "Select the transliteration filters you want to exclude."
 msgstr "Odaberite filtre za transliteraciju koje želite izuzeti (isključiti)."
 
-#: inc/Settings.php:441
+#: inc/Settings.php:449
 msgid ""
 "The filters you select here will not be transliterated (these filters do not "
 "work on forced transliteration)."
@@ -393,15 +397,15 @@ msgstr ""
 "Ovdje odabrani filtri neće biti transliterirani (ti filtri ne rade na "
 "prisilnoj transliteraciji)."
 
-#: inc/Settings.php:472
+#: inc/Settings.php:480
 msgid "TIPS & TRICKS:"
 msgstr "SAVJETI I TRIKOVI:"
 
-#: inc/Settings.php:473
+#: inc/Settings.php:481
 msgid "You can find details about some of the listed filters in this article:"
 msgstr "Pojedinosti o nekim od navedenih filtara možete pronaći u ovom članku:"
 
-#: inc/Settings.php:482
+#: inc/Settings.php:490
 #, php-format
 msgid ""
 "Since you are already a WooCommerce user, you also can see the following "
@@ -410,25 +414,25 @@ msgstr ""
 "Budući da ste već korisnik WooCommerce-a, možete vidjeti i sljedeću "
 "dokumentaciju: %s"
 
-#: inc/Settings.php:502 inc/Settings.php:526 inc/Settings.php:549
-#: inc/Settings.php:593 inc/Settings.php:613
+#: inc/Settings.php:510 inc/Settings.php:534 inc/Settings.php:557
+#: inc/Settings.php:580 inc/Settings.php:621 inc/Settings.php:641
 msgid "Yes"
 msgstr "Da"
 
-#: inc/Settings.php:503 inc/Settings.php:527 inc/Settings.php:550
-#: inc/Settings.php:594 inc/Settings.php:614
+#: inc/Settings.php:511 inc/Settings.php:535 inc/Settings.php:558
+#: inc/Settings.php:581 inc/Settings.php:622 inc/Settings.php:642
 msgid "No"
 msgstr "Ne"
 
-#: inc/Settings.php:538
+#: inc/Settings.php:546
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr "Omogući ako želite pretvoriti ćirilične datoteke u latinicu."
 
-#: inc/Settings.php:562
+#: inc/Settings.php:570
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr "Omogući ako želite prisiliti ćirilicu na latinicu za permalinkove."
 
-#: inc/Settings.php:564
+#: inc/Settings.php:572
 #, php-format
 msgid ""
 "You don't need to force transliteration permalinks to latin because your "
@@ -437,7 +441,15 @@ msgstr ""
 "Ne morate forsirati permalinkove za transliteraciju na latinicu jer je vaš "
 "trenutni jezik postavljen na %s što će automatski promijeniti permalinkove."
 
-#: inc/Settings.php:575 inc/Settings.php:585
+#: inc/Settings.php:593
+msgid ""
+"If you have a problem caching your pages, our plugin solves this problem by "
+"clearing the cache when changing the language script."
+msgstr ""
+"Ako imate problem s predmemoriranjem stranica, naš dodatak rješava taj "
+"problem brisanjem predmemorije prilikom promjene jezične skripte."
+
+#: inc/Settings.php:603 inc/Settings.php:613
 #, php-format
 msgid ""
 "Separate words, phrases, names and expressions with the sign %s or put it in "
@@ -446,13 +458,13 @@ msgstr ""
 "Odvojite riječi, fraze, imena i izraze znakom %s ili ih stavite u novi red. "
 "HTML nije dopušten."
 
-#: inc/Settings.php:605
+#: inc/Settings.php:633
 msgid "Allows to create users with usernames containing Cyrillic characters."
 msgstr ""
 "Omogućuje stvaranje korisnika s korisničkim imenima koja sadrže ćirilične "
 "znakove."
 
-#: inc/Settings.php:625
+#: inc/Settings.php:653
 msgid "Approve if you want transliteration for the search field."
 msgstr "Odobrite ako želite transliteraciju za polje za pretraživanje."
 

@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.2.2 =
+* Fixed problem with redirection
+* Added cache control for the transliteration (enabled by default)
+* Added support for the WP cache
+* Added support for the W3 Total Cache
+* Added support for the WP Fastest Cache
+
 = 1.2.1 =
 * Fixed issue with translating permalink in other (non-Cyrillic) languages
 * Improved PHP code and fixed bugs
@@ -176,6 +183,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Made preparations for future versions of the plugin
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+* Fixed problem with redirection
+* Added cache control for the transliteration (enabled by default)
+* Added support for the WP cache
+* Added support for the W3 Total Cache
+* Added support for the WP Fastest Cache
 
 = 1.2.1 =
 * Fixed issue with translating permalink in other (non-Cyrillic) languages

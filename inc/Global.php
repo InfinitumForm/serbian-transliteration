@@ -802,17 +802,26 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	* @since     1.0.9
 	* @verson    1.0.0
 	*/
-	public function set_current_script(){
+	public function set_current_script(){		
 		if(isset($_REQUEST['rstr']))
 		{
 			if(in_array($_REQUEST['rstr'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
 			{
 				$this->setcookie($_REQUEST['rstr']);
-
-				if(wp_safe_redirect( preg_replace('~([?&]rstr\=(lat|cyr))~i', '', $this->get_current_url()) )){
-					if(function_exists('nocache_headers')) nocache_headers();
-					exit;
+				$parse_url = $this->parse_url();
+				
+				if(get_rstr_option('cache-support', 'yes') == 'yes') {
+					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])rstr\=(lat|cyr))~i', '$2_rstr_nocache=' . uniqid('rstr' . mt_rand(100,999)), $parse_url['url']) ))) {
+						if(function_exists('nocache_headers')) nocache_headers();
+						exit;
+					}
+				} else {
+					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])rstr\=(lat|cyr))~i', '', $parse_url['url']) ))) {
+						if(function_exists('nocache_headers')) nocache_headers();
+						exit;
+					}
 				}
+
 			}
 		}
 		return false;
@@ -826,7 +835,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function setcookie ($val){
 		if( !headers_sent() ) {
 			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
-			$this->cache_flush();
+			
+			if(get_rstr_option('cache-support', 'yes') == 'yes') {
+				$this->cache_flush();
+			}
 		}
 	}
 	
@@ -843,6 +855,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
+		
+		if(function_exists('nocache_headers')) {
+			nocache_headers();
+		}
 		
 		// Flush WP cache
 		if (function_exists('w3tc_flush_all')){
@@ -878,6 +894,56 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	{
 		global $wp;
 		return add_query_arg( array(), home_url( $wp->request ) );
+	}
+	
+	/**
+	 * Parse URL
+	 * @since     1.2.2
+	 * @verson    1.0.0
+	 */
+	public function parse_url(){
+		if(null === $this->_url_parsed) {
+			$http = 'http'.( $this->is_ssl() ?'s':'');
+			$domain = preg_replace('%:/{3,}%i','://',rtrim($http,'/').'://'.$_SERVER['HTTP_HOST']);
+			$domain = rtrim($domain,'/');
+			$url = preg_replace('%:/{3,}%i','://',$domain.'/'.(isset($_SERVER['REQUEST_URI']) && !empty( $_SERVER['REQUEST_URI'] ) ? ltrim($_SERVER['REQUEST_URI'], '/'): ''));
+				
+			$this->_url_parsed = array(
+				'method'	=>	$http,
+				'home_fold'	=>	str_replace($domain,'',home_url()),
+				'url'		=>	$url,
+				'domain'	=>	$domain,
+			);
+		}
+		
+		return $this->_url_parsed;
+	}
+	
+	/*
+	 * CHECK IS SSL
+	 * @return	true/false
+	 */
+	public function is_ssl($url = false)
+	{
+		if($url !== false && is_string($url)) {
+			return (preg_match('/(https|ftps)/Ui', $url) !== false);
+		} else if( is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN ===true ) {
+			return true;
+		} else {
+			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+				return true;
+			else if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+				return true;
+			else if(!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
+				return true;
+			else if(isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+				return true;
+			else if(isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
+				return true;
+			else if(isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
+				return true;
+		}
+		return false;
 	}
 	
 	/*

@@ -256,6 +256,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         );
 		
 		$this->add_settings_field(
+            'cache-support', // ID
+            __('Enable cache support', RSTR_NAME), // Title 
+            'cache_support_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
+        );
+		
+		$this->add_settings_field(
             'exclude-latin-words', // ID
             __('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', RSTR_NAME), // Title 
             'exclude_latin_words_callback', // Callback
@@ -563,6 +571,26 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		if($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
 			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', RSTR_NAME), '<code>'.$this->get_locale().'</code>'));
 		}
+	}
+	
+	public function cache_support_callback(){
+		$inputs = array();
+		
+		foreach(array(
+			'yes' => __('Yes', RSTR_NAME),
+			'no' => __('No', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="cache-support-%1$s"><input type="radio" id="cache-support-%1$s" name="%3$s[cache-support]" value="%1$s"%4$s%5$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['cache-support'] ) && $this->options['cache-support'] == $key ? ' checked' : (!isset( $this->options['cache-support'] ) && $key == 'yes' ? ' checked' : '')),
+				''
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('If you have a problem caching your pages, our plugin solves this problem by clearing the cache when changing the language script.', RSTR_NAME));
 	}
 	
 	public function exclude_latin_words_callback()
