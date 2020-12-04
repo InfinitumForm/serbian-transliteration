@@ -30,8 +30,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		$modes = apply_filters('rstr_plugin_mode', $modes);
 		
-		if($mode && isset($modes[$mode])){
-			return $modes[$mode];
+		if($mode){
+			if(isset($modes[$mode])) {
+				return $modes[$mode];
+			}
+			
+			return false;
 		}
 		
 		return $modes;

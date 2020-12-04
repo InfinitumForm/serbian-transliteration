@@ -44,6 +44,18 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				$this->active_filters = array_keys($mode_class::filters());
 			}
 			
+			if($active_plugins = Serbian_Transliteration_Plugins::includes(array(), true)->active_filters())
+			{
+				$active_plugins = array_keys($active_plugins);
+				$this->active_filters = array_merge($this->active_filters, $active_plugins);
+			}
+			
+			if($active_themes = Serbian_Transliteration_Themes::includes(array(), true)->active_filters())
+			{
+				$active_themes = array_keys($active_themes);
+				$this->active_filters = array_merge($this->active_filters, $active_themes);
+			}
+			
 			$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
 		}
     }
@@ -56,14 +68,30 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		{
 		
 			$options = get_rstr_option();
+			$options['mode'] = sanitize_text_field($_POST['mode']);
 			
 			$inputs = array();
 			$i = 0;
 			
 			$list = array_keys($mode_class::filters());
+			if($active_plugins = Serbian_Transliteration_Plugins::includes($options, true)->active_filters())
+			{
+				$active_plugins = array_keys($active_plugins);
+				$list = array_merge($list, $active_plugins);
+			}
+			
+			if($active_themes = Serbian_Transliteration_Themes::includes($options, true)->active_filters())
+			{
+				$active_themes = array_keys($active_themes);
+				$this->active_filters = array_merge($this->active_filters, $active_themes);
+			}
+			
+			$only_woo = false;
+			if(RSTR_WOOCOMMERCE && isset($options['mode']) && $options['mode'] == 'woocommerce') $only_woo = true;
 
 			foreach($list as $k=>$hook)
 			{
+				if($only_woo && strpos($hook, 'woo') === false) continue;
 				$inputs[$i][]=sprintf(
 					'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
 					esc_attr($hook),
@@ -454,8 +482,12 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		
 		$list = $this->active_filters;
 
+		$only_woo = false;
+		if(RSTR_WOOCOMMERCE && get_rstr_option('mode') == 'woocommerce') $only_woo = true;
+
 		foreach($list as $k=>$hook)
 		{
+			if($only_woo && strpos($hook, 'woo') === false) continue;
 			$inputs[$i][]=sprintf(
 				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
 				esc_attr($hook),

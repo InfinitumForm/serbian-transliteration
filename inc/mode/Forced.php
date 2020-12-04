@@ -71,50 +71,6 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 				'wp_unique_post_slug'			=> 'force_permalink_to_latin'
 			);
 			asort($filters);
-			// WooCommerce
-			if (RSTR_WOOCOMMERCE) {
-				$filters = array_merge($filters, array(
-					'woocommerce_product_single_add_to_cart_text' => 'content',
-					'woocommerce_email_footer_text' => 'content',
-					'woocommerce_get_availability_text' => 'content',
-					'woocommerce_get_price_html_from_text' => 'content',
-					'woocommerce_order_button_text' => 'content',
-					'woocommerce_pay_order_button_text' => 'content',
-					'filter_woocommerce_product_add_to_cart_text' => 'content',
-					'woocommerce_product_single_add_to_cart_text' => 'content',
-					'woocommerce_thankyou_order_received_text' => 'content',
-					'wc_add_to_cart_message_html' => 'content',
-					'woocommerce_admin_stock_html' => 'content',
-					'woocommerce_cart_no_shipping_available_html' => 'content',
-					'sale_price_dates_from' => 'content',
-					'sale_price_dates_to' => 'content',
-					'woocommerce_dropdown_variation_attribute_options_html' => 'content',
-					'woocommerce_date_input_html_pattern' => 'content',
-					'woocommerce_cart_totals_taxes_total_html' => 'content',
-					'woocommerce_cart_totals_fee_html' => 'content',
-					'woocommerce_cart_totals_coupon_html' => 'content',
-					'woocommerce_cart_totals_order_total_html' => 'content',
-					'woocommerce_coupon_discount_amount_html' => 'content',
-					'woocommerce_empty_price_html' => 'content',
-					'woocommerce_grouped_price_html' => 'content',
-					'woocommerce_grouped_empty_price_html' => 'content',
-					'woocommerce_get_stock_html' => 'content',
-					'woocommerce_get_price_html_from_to' => 'content',
-					'woocommerce_get_price_html' => 'content',
-					'woocommerce_layered_nav_term_html' => 'content',
-					'woocommerce_no_shipping_available_html' => 'content',
-					'woocommerce_order_item_quantity_html' => 'content',
-					'woocommerce_order_button_html' => 'content',
-					'woocommerce_product_get_rating_html' => 'content',
-					'woocommerce_pay_order_button_html' => 'content',
-					'wc_payment_gateway_form_saved_payment_methods_html' => 'content',
-					'woocommerce_subcategory_count_html' => 'content',
-					'woocommerce_stock_html' => 'content',
-					'woocommerce_single_product_image_thumbnail_html' => 'content',
-					'woocommerce_variable_price_html' => 'content',
-					'woocommerce_variable_empty_price_html' => 'content'
-				));
-			}
 			
 			return $filters;
 		}
@@ -158,29 +114,33 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		
 		/*
 		 * Transliterate WP terms
-		 * @author    Slobodan Pantović
-		 * @version   1.0.0
+		 * @author         Slobodan Pantović
+		 * @contributor    Ivijan-Stefan Stipić
+		 * @version        1.0.1
 		**/
 		public function transliteration_wp_terms($wp_terms)
 		{
 			if (! empty($wp_terms))
 			{
-				for($i=0,$n=count($wp_terms); $i<$n; $i++)
+				if(is_object($wp_terms) || is_array($wp_terms))
 				{
-					if (is_object($wp_terms[$i]))
+					$count_wp_terms = count($wp_terms);
+					for($i=0,$n=$count_wp_terms; $i<$n; $i++)
 					{
-					   switch($this->get_current_script($this->options))
+						if (is_object($wp_terms[$i]))
 						{
-							case 'cyr_to_lat' :
-								$wp_terms[$i]->name = $this->cyr_to_lat($wp_terms[$i]->name);
-								break;
-							case 'lat_to_cyr' :
-								$wp_terms[$i]->name = $this->lat_to_cyr($wp_terms[$i]->name);
-								break;
-						}                
-					}
-				}        
-				
+						   switch($this->get_current_script($this->options))
+							{
+								case 'cyr_to_lat' :
+									$wp_terms[$i]->name = $this->cyr_to_lat($wp_terms[$i]->name);
+									break;
+								case 'lat_to_cyr' :
+									$wp_terms[$i]->name = $this->lat_to_cyr($wp_terms[$i]->name);
+									break;
+							}                
+						}
+					}        
+				}
 			}
 			return $wp_terms;
 		}

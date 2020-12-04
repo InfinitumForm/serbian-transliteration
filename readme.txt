@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 4.0
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 1.2.2
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,17 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.2.4 =
+* MAJOR UPDATE: Added special support for themes and plugins
+* Added support for the "Themify" theme
+* Added support for the Revolution Slider
+* Only WooCommerce mode is deprecated because of filter options and may be removed in a future version
+* Woocommerce support is moved inside new plugins support
+* Optimization: Plugin and theme support is only activated if there is an active plugin or a theme defined in advance
+
+= 1.2.3 =
+* Fixed WooCommerce transliteration
+
 = 1.2.2 =
 * Fixed problem with redirection
 * Added cache control for the transliteration (enabled by default)
@@ -183,6 +194,17 @@ We also thought of PHP developers where we have enabled several useful functions
 * Made preparations for future versions of the plugin
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+* MAJOR UPDATE: Added special support for themes and plugins
+* Added support for the "Themify" theme
+* Added support for the Revolution Slider
+* Only WooCommerce mode is deprecated because of filter options and may be removed in a future version
+* Woocommerce support is moved inside new plugins support
+* Optimization: Plugin and theme support is only activated if there is an active plugin or a theme defined in advance
+
+= 1.2.3 =
+* Fixed WooCommerce transliteration
 
 = 1.2.2 =
 * Fixed problem with redirection

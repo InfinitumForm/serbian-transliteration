@@ -22,7 +22,6 @@ if( !function_exists( 'is_plugin_active_for_network' ) || !function_exists('is_p
 	}
 }
 
-
 /*
  * Main plugin constants
  * @since     1.0.0
@@ -105,15 +104,10 @@ if ( ! defined( 'RSTR_PREFIX' ) )			define( 'RSTR_PREFIX', RSTR_TABLE . '_' . pr
 // Is multisite
 if( ! defined( 'RSTR_MULTISITE' ) )
 {
-
-	if( $include_dependency ) {
-		define( 'RSTR_MULTISITE', is_plugin_active_for_network( RSTR_BASENAME ) );
-	}
+	define( 'RSTR_MULTISITE', is_plugin_active_for_network( RSTR_BASENAME ) );
 }
 if( ! defined( 'RSTR_MULTISITE' ) ) 		define( 'RSTR_MULTISITE', false );
 
 // Is Woocommerce exists
-if ( $include_dependency ) {
-	if ( ! defined( 'RSTR_WOOCOMMERCE' ) )	define( 'RSTR_WOOCOMMERCE', is_plugin_active( 'woocommerce/woocommerce.php' ));
-}
+if ( ! defined( 'RSTR_WOOCOMMERCE' ) )	define( 'RSTR_WOOCOMMERCE', is_plugin_active( 'woocommerce/woocommerce.php' ));
 if ( ! defined( 'RSTR_WOOCOMMERCE' ) )		define( 'RSTR_WOOCOMMERCE', false);
