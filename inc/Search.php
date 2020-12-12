@@ -28,8 +28,12 @@ class Serbian_Transliteration_Search extends Serbian_Transliteration
 	
 	public function request ($search_vars) {
 		if ( isset($search_vars['s']) && !empty($search_vars['s']) ) {
-			$search_vars['s'] = $this->transliterate_text($search_vars['s'], (isset($this->options['site-script']) && $this->options['site-script'] == 'cyr' ? 'lat_to_cyr' : 'cyr_to_lat'));
+			$search_vars['s'] = $this->transliterate_text(
+				(get_rstr_option('fix-diacritics', 'no') == 'yes' ? $this->fix_diacritics($search_vars['s']) : $search_vars['s']),
+				(get_rstr_option('site-script', 'lat') == 'cyr' ? 'lat_to_cyr' : 'cyr_to_lat')
+			);
 		}
+		
 		return $search_vars;
 	}
 }

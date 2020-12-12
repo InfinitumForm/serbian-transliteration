@@ -28,6 +28,10 @@ class Serbian_Transliteration_Requirements
 			add_action( 'admin_notices', array($this, 'woocommerce_disabled_notice'), 10, 2 );
 		}
 		
+		if(function_exists('mb_substr') === false) {
+			add_action( 'admin_notices', array($this, 'mb_extension_notice'), 10, 2 );
+		}
+		
 		add_action( 'admin_init', array($this, 'privacy_policy') );
 	}
 	
@@ -140,6 +144,19 @@ font-weight:600;
 			sprintf(
 				__('Your plugin works under Only WooCoomerce mode and you need to %s because WooCommerce is no longer active.', RSTR_NAME),
 				'<a href="'.admin_url('/options-general.php?page=serbian-transliteration&tab=settings').'">' . __('update your settings', RSTR_NAME) . '</a>'
+			)
+		) . '</p>';
+		echo '</div>';
+	}
+	
+	public function mb_extension_notice() {
+		echo '<div class="notice notice-error">';
+		echo '<p>' . sprintf(
+			'<strong>%1$s</strong> %2$s',
+			__('Transliteration plugin requires a Multibyte String PHP extension (mbstring).', RSTR_NAME),
+			sprintf(
+				__('Without %s you will not be able to use this plugin.', RSTR_NAME),
+				'<a href="https://www.php.net/manual/en/mbstring.installation.php" target="_blank" title="' . __('Multibyte String Installation', RSTR_NAME) . '">' . __('this PHP extension', RSTR_NAME) . '</a>'
 			)
 		) . '</p>';
 		echo '</div>';

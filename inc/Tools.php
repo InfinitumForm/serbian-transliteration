@@ -12,6 +12,21 @@ class Serbian_Transliteration_Tools extends Serbian_Transliteration
 {
 	function __construct() {
 		$this->add_action( 'wp_ajax_rstr_run_permalink_transliteration', 'ajax__run_permalink_transliteration');
+		$this->add_action( 'wp_ajax_rstr_transliteration_letters', 'ajax__rstr_transliteration_letters');
+	}
+	
+	/*
+	 * AJAX Transliterator
+	**/
+	public function ajax__rstr_transliteration_letters () {
+		if(isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-transliteration-letters') !== false){
+			$value = $this->fix_diacritics(sanitize_textarea_field($_REQUEST['value']));
+			echo esc_html( $this->transliterate_text($value, sanitize_text_field($_REQUEST['mode']), true) );
+			exit;
+		}
+		
+		echo __('An error occurred while converting. Please refresh the page and try again.', RSTR_NAME);
+		exit;
 	}
 	
 	/*

@@ -1,3 +1,35 @@
+= 1.3.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* **IMPORTANT!** This plugin requires a Multibyte String PHP extension (mbstring)
+* Added improved diacritical checks
+* Added transliteration converter to admin
+* Added new shortcode for skipping transliteration `[rstr_skip]`
+* Improved JavaScript code
+* Improved search functionality
+
+= 1.2.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added simple diacritical check for the search fnctionality
+* Added RSS feed transliteration
+* Added advanced widgets transliteration
+* Fixed problems with special custom widgets
+* Prepared basis for further developments and improvements
+
+= 1.2.7 =
+* Expanded metadata transliteration
+* Fixed PHP error Undefined property
+* Improved plugin for the WordPress version 5.6
+
+= 1.2.6 =
+* MAJOR UPDATE: You need to review and edit your settings
+* Added SEO settings
+* Added First visit mode
+* Added alternet links control for the search engines
+* Fixed cookie control
+
+= 1.2.5 =
+* Added Ukrainian language by request
+
 = 1.2.4 =
 * MAJOR UPDATE: Added special support for themes and plugins
 * Added support for the "Themify" theme

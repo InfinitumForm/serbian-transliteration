@@ -63,12 +63,12 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 					$filters = apply_filters( 'rstr/transliteration/exclude/filters/admin', $filters, $this->options );
 
 					foreach ( $filters as $filter => $function ) {
-						$this->add_filter( $filter, $function, 9999999, 1 );
+						$this->add_filter( $filter, $function, (PHP_INT_MAX-1), 1 );
 					}
 				}
-				$this->add_filter( 'load_script_translations', 'transliteration_json_content', 9 );
-				$this->add_filter( 'pre_load_script_translations', 'transliteration_json_content', 9 );
-				$this->add_filter( 'locale', 'current_user_locale', 9 );
+				$this->add_filter( 'load_script_translations', 'transliteration_json_content', (PHP_INT_MAX-1) );
+				$this->add_filter( 'pre_load_script_translations', 'transliteration_json_content', (PHP_INT_MAX-1) );
+				$this->add_filter( 'locale', 'current_user_locale', (PHP_INT_MAX-1) );
 			}
 		}
 

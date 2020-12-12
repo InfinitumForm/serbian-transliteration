@@ -22,6 +22,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		$this->add_action('rstr/settings/content', 'tab_content');
 		
 		$this->add_action('rstr/settings/tab', 'nav_tab_settings');
+		$this->add_action('rstr/settings/tab', 'nav_tab_transliteration');
 		$this->add_action('rstr/settings/tab', 'nav_tab_permalink_tool');
 		$this->add_action('rstr/settings/tab', 'nav_tab_shortcodes');
 		$this->add_action('rstr/settings/tab', 'nav_tab_functions');
@@ -44,6 +45,9 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 			case 'permalink_tool':
 				$this->add_action('rstr/settings/tab/content/permalink_tool', 'tab_content_permalink_tool');
 				break;
+			case 'transliteration':
+				$this->add_action('rstr/settings/tab/content/transliteration', 'tab_content_transliteration');
+				break;
 			case 'debug':
 				$this->add_action('rstr/settings/tab/content/debug', 'tab_content_debug');
 				break;
@@ -64,6 +68,22 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		wp_enqueue_style( RSTR_NAME );
 		wp_enqueue_script( RSTR_NAME );	
 		include_once RSTR_INC . '/settings/content/global-settings.php';
+	}
+	
+	/*
+	 * Nav tab transliteration tool
+	**/
+	public function nav_tab_transliteration(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=transliteration'); ?>" class="dashicons-before dashicons-translation nav-tab<?php echo $this->tab == 'transliteration' ? ' nav-tab-active' : '' ;?>"><span><?php _e('Transliteration Tool', RSTR_NAME); ?></span></a>
+	<?php }
+	
+	/*
+	 * Tab transliteration tool form
+	**/
+	public function tab_content_transliteration(){
+		wp_enqueue_style( RSTR_NAME );
+		wp_enqueue_script( RSTR_NAME );	
+		include_once RSTR_INC . '/settings/content/transliteration-tool.php';
 	}
 	
 	/*

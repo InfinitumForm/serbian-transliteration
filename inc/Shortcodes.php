@@ -22,6 +22,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			$this->add_shortcode('rstr_cyr_to_lat', 'cyr_to_lat_shortcode');
 			$this->add_shortcode('rstr_lat_to_cyr', 'lat_to_cyr_shortcode');
 			$this->add_shortcode('rstr_img', 'img_shortcode');
+			$this->add_shortcode('rstr_skip', 'skip_shortcode');
 			$this->add_shortcode('transliteration', 'transliteration_shortcode');
 			
 			$this->add_action('wp_loaded', 'output_buffer_start', 99999);
@@ -77,10 +78,20 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	{
 		$attr = (object)shortcode_atts( array('output' => 'shortcode'), $attr, 'rstr_cyr_to_lat' );
 		
-		if($attr->output == 'php'){
-			return $this->cyr_to_lat(do_shortcode($content));
-		} else {
-			return '%%%%%-##' . $content . '##-%%%%%';
+		switch($this->options['transliteration-mode'] ? $this->options['transliteration-mode'] : '')
+		{
+			default :
+				return $content;
+			break;
+			
+			case 'cyr_to_lat' :
+			case 'lat_to_cyr' :
+				if($attr->output == 'php'){
+					return $this->cyr_to_lat(do_shortcode($content));
+				} else {
+					return '%%%%%-##' . $content . '##-%%%%%';
+				}
+			break;
 		}
 	}
 	
@@ -88,10 +99,20 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	{
 		$attr = (object)shortcode_atts( array('output' => 'shortcode'), $attr, 'rstr_lat_to_cyr' );
 		
-		if($attr->output == 'php'){
-			return $this->lat_to_cyr(do_shortcode($content));
-		} else {
-			return '%%%%%-||' . $content . '||-%%%%%';
+		switch($this->options['transliteration-mode'] ? $this->options['transliteration-mode'] : '')
+		{
+			default :
+				return $content;
+			break;
+			
+			case 'cyr_to_lat' :
+			case 'lat_to_cyr' :
+				if($attr->output == 'php'){
+					return $this->lat_to_cyr(do_shortcode($content));
+				} else {
+					return '%%%%%-||' . $content . '||-%%%%%';
+				}
+			break;
 		}
 	}
 	
@@ -118,7 +139,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 				} else {
 					return sprintf('<img src="%1$s" alt="%2$s">', $attr->lat, $attr->lat_title);
 				}
-				break;
+			break;
 				
 			case 'cyr':
 			case 'lat_to_cyr':
@@ -127,7 +148,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 				} else {
 					return sprintf('<img src="%1$s" alt="%2$s">', $attr->cyr, $attr->cyr_title);
 				}
-				break;
+			break;
 				
 			default:
 				if($attr->default_caption) {
@@ -135,7 +156,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 				} else {
 					return sprintf('<img src="%1$s" alt="%2$s">', $attr->default, $attr->default_title);
 				}
-				break;
+			break;
 		}
 	}
 	
@@ -146,19 +167,40 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			'to' => 'lat'
 		), $attr, 'transliteration' );
 		
+		if(in_array($attr->from, array('lat', 'cyr')) === false || in_array($attr->to, array('lat', 'cyr')) === false){
+			return sprintf('<pre>%s</pre>', __('Transliteration shortcode does not have adequate parameters and translation is not possible. Please check the documentation.', RSTR_NAME));
+		}
+		
 		switch(strtolower("{$attr->from}_to_{$attr->to}"))
 		{
 			case 'cyr_to_lat' :
 				return $this->cyr_to_lat(do_shortcode($content));
-				break;
+			break;
 				
 			case 'lat_to_cyr' :
 				return $this->lat_to_cyr(do_shortcode($content));
-				break;
+			break;
 		}
 		
-		return sprintf('<pre>%s</pre>', __('Transliteration shortcode does not have adequate parameters and translation is not possible. Please check the documentation.', RSTR_NAME));
+		return $content;
+	}
+	
+	public function skip_shortcode ($attr=array(), $content='')
+	{
+		$attr = (object)shortcode_atts( array(), $attr, 'rstr_skip' );
 		
+		switch($this->options['transliteration-mode'] ? $this->options['transliteration-mode'] : '')
+		{
+			case 'cyr_to_lat' :
+				return $this->lat_to_cyr_shortcode(array(), do_shortcode($content));
+			break;
+				
+			case 'lat_to_cyr' :
+				return $this->cyr_to_lat_shortcode(array(), do_shortcode($content));
+			break;
+		}
+		
+		return $content;
 	}
 }
 endif;

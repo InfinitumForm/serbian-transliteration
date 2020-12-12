@@ -48,13 +48,29 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		}
 	}
 	
+	/**
+	 * Set cookie on the first initialization
+	 * @since     1.0.9
+	 * @version   1.0.0
+	 */
 	public function set_cookie($options){
 		if( !(isset($_COOKIE['rstr_script'])) )
 		{
-			if($options['transliteration-mode'] == 'cyr_to_lat') {
+			if(isset($options['first-visit-mode']) && $options['first-visit-mode'] == 'lat')
+			{
 				$this->setcookie('lat');
-			} else if($options['transliteration-mode'] == 'lat_to_cyr') {
+			}
+			else if(isset($options['first-visit-mode']) && $options['first-visit-mode'] == 'cyr')
+			{
 				$this->setcookie('cyr');
+			}
+			else
+			{
+				if($options['transliteration-mode'] == 'cyr_to_lat') {
+					$this->setcookie('lat');
+				} else if($options['transliteration-mode'] == 'lat_to_cyr') {
+					$this->setcookie('cyr');
+				}
 			}
 		}
 	}
@@ -163,6 +179,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	 * Run plugin on the frontend
 	 */
 	public static function run () {
+		
 		// Load instance
 		$inst = self::get_instance();
 		

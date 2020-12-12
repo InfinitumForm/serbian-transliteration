@@ -2,10 +2,10 @@
 Contributors: ivijanstefan, creativform, dizajn24, tihi
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
-Requires at least: 4.0
-Tested up to: 5.5
+Requires at least: 5.3
+Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.2.4
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,7 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 * **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
 * **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
 * **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
+* **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
 * more languages are coming soon...
 
 = PLUGINS SUPPORT =
@@ -118,6 +119,38 @@ We also thought of PHP developers where we have enabled several useful functions
 8. Language script inside Menus
 
 == Changelog ==
+
+= 1.3.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* **IMPORTANT!** This plugin requires a Multibyte String PHP extension (mbstring)
+* Added improved diacritical checks
+* Added transliteration converter to admin
+* Added new shortcode for skipping transliteration `[rstr_skip]`
+* Improved JavaScript code
+* Improved search functionality
+
+= 1.2.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added simple diacritical check for the search fnctionality
+* Added RSS feed transliteration
+* Added advanced widgets transliteration
+* Fixed problems with special custom widgets
+* Prepared basis for further developments and improvements
+
+= 1.2.7 =
+* Expanded metadata transliteration
+* Fixed PHP error Undefined property
+* Improved plugin for the WordPress version 5.6
+
+= 1.2.6 =
+* MAJOR UPDATE: You need to review and edit your settings
+* Added SEO settings
+* Added First visit mode
+* Added alternet links control for the search engines
+* Fixed cookie control
+
+= 1.2.5 =
+* Added Ukrainian language by request
 
 = 1.2.4 =
 * MAJOR UPDATE: Added special support for themes and plugins
@@ -195,6 +228,38 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.3.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* **IMPORTANT!** This plugin requires a Multibyte String PHP extension (mbstring)
+* Added improved diacritical checks
+* Added transliteration converter to admin
+* Added new shortcode for skipping transliteration `[rstr_skip]`
+* Improved JavaScript code
+* Improved search functionality
+
+= 1.2.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added simple diacritical check for the search fnctionality
+* Added RSS feed transliteration
+* Added advanced widgets transliteration
+* Fixed problems with special custom widgets
+* Prepared basis for further developments and improvements
+
+= 1.2.7 =
+* Expanded metadata transliteration
+* Fixed PHP error Undefined property
+* Improved plugin for the WordPress version 5.6
+
+= 1.2.6 =
+* MAJOR UPDATE: You need to review and edit your settings
+* Added SEO settings
+* Added First visit mode
+* Added alternet links control for the search engines
+* Fixed cookie control
+
+= 1.2.5 =
+* Added Ukrainian language by request
+
 = 1.2.4 =
 * MAJOR UPDATE: Added special support for themes and plugins
 * Added support for the "Themify" theme
@@ -202,26 +267,6 @@ We also thought of PHP developers where we have enabled several useful functions
 * Only WooCommerce mode is deprecated because of filter options and may be removed in a future version
 * Woocommerce support is moved inside new plugins support
 * Optimization: Plugin and theme support is only activated if there is an active plugin or a theme defined in advance
-
-= 1.2.3 =
-* Fixed WooCommerce transliteration
-
-= 1.2.2 =
-* Fixed problem with redirection
-* Added cache control for the transliteration (enabled by default)
-* Added support for the WP cache
-* Added support for the W3 Total Cache
-* Added support for the WP Fastest Cache
-
-= 1.2.1 =
-* Fixed issue with translating permalink in other (non-Cyrillic) languages
-* Improved PHP code and fixed bugs
-* Added cache control when changing the language script
-* Added an example of a privacy policy due to the use of cookies
-
-= 1.2.0 =
-* Added language script menu switcher
-* Improved transliteration
 
 == Frequently Asked Questions ==
 
@@ -238,6 +283,7 @@ This plugin supports several world letters written in Cyrillic and enables their
 * Romanization of Bulgarian
 * Romanization of Macedonian
 * Romanization of Kazakh
+* Romanization of Ukrainian
 
 Each of these transliterations is created separately and follows the rules of the active language.
 
@@ -250,8 +296,6 @@ YES! Without any problems or conflicts.
 = Can I translate Latin into Cyrillic with this plugin? =
 YES! This plugin can translate a Latin site into Cyrillic, but this is not recommended and often causes problems. It is suggested that this approach be approached experimentally.
 
+The best practice is to create a Cyrillic site including all other content and in the end just add transliteration to navigation so that the visitor can choose the desired script.
+
 == Other Notes ==
-
-== DONATION ==
-
-Enjoy using *WordPress Transliteration*? Please consider [making a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com) to support the project's continued development.

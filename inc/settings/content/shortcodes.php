@@ -20,7 +20,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 				<h1><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h1>
 				<div class="inside">
 					<br>
-					<h2 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h2>
+					<h2 style="margin:0;"><?php _e('Skip transliteration', RSTR_NAME); ?>:</h2>
+					<p><code class="lang-txt">[<span class="hljs-title">rstr_skip</span>]<?php _e('Keep this original', RSTR_NAME); ?>[/<span class="hljs-title">rstr_skip</span>]</code></p>
+					<br>
+                    <h2 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h2>
 					<p><code class="lang-txt">[<span class="hljs-title">rstr_cyr_to_lat</span>]Ћирилица у латиницу[/<span class="hljs-title">rstr_cyr_to_lat</span>]</code></p>
 					<br>
 					<h2 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h2>

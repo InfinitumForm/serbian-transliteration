@@ -9,6 +9,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
 	private static $__instance = NULL;
 	private $html_tags;
+	private $_url_parsed = NULL;
 	
 	/*
 	 * Plugin mode
@@ -177,6 +178,52 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if($fix_html){
 			$content = $this->fix_cyr_html($content);
 			$content = $this->fix_attributes($content);
+		}
+		
+		return $content;
+	}
+	
+	public function fix_diacritics($content){
+		
+		if($this->get_locale() != 'sr_RS') return $content;
+		
+		$transl = new Serbian_Transliteration_Transliterating();
+		
+		if($search = $transl->get_diacritical())
+		{
+			$new_string = str_replace(
+				array('dj', 'Dj', 'DJ', 'sh', 'Sh', 'SH', 'ch', 'Ch', 'CH', 'cs', 'Cs', 'CS', 'dz', 'Dz', 'DZ'),
+				array('đ', 'Đ', 'Đ', 'š', 'Š', 'Š', 'č', 'Č', 'Č', 'ć', 'Ć', 'Ć', 'dž', 'Dž', 'DŽ'),
+				$content
+			);
+			
+			$search = array_map('mb_strtolower', $search);
+			$arr = explode(' ', $new_string);
+			$arr = array_filter($arr);
+			
+			if(!empty($arr))
+			{
+				$words = array();
+				foreach($arr as $word)
+				{
+					$word_search = mb_strtolower($word, 'UTF-8');
+					if(in_array($word_search, $search)) {
+						if(ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)){
+							$words[]=mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8');
+						} else if( preg_match('~^\p{Lu}~u', $word) ) {
+							$ucfirst = $search[array_search($word_search, $search)];
+							$firstChar = mb_substr($ucfirst, 0, 1, 'UTF-8');
+							$then = mb_substr($ucfirst, 1, NULL, 'UTF-8');
+							$words[]=mb_strtoupper($firstChar, 'UTF-8') . $then;
+						} else {
+							$words[]=$word;
+						}
+					} else {
+						$words[]=$word;
+					}
+				}
+				if(!empty($words)) return join(' ', $words);
+			}
 		}
 		
 		return $content;
@@ -706,7 +753,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
                 case 'float':
 					if($is_array) return array_map( 'floatval', $input );
                     
-                    return floatval( $input );
+                    return ((float) $input );
                 break;
                 case 'bool':
                     if($is_array) return array_map( 'boolval', $input );
@@ -865,20 +912,21 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		
 		// Flush WP cache
-		if (function_exists('w3tc_flush_all')){
+		if (function_exists('w3tc_flush_all')) {
 			wp_cache_flush();
 		}
 		
 		// W3 Total Cache
-		if (function_exists('w3tc_flush_all')){
+		if (function_exists('w3tc_flush_all')) {
 			w3tc_flush_all();
 		}
 		
 		// WP Fastest Cache
-		if (function_exists('wpfc_clear_all_cache')){
+		if (function_exists('wpfc_clear_all_cache')) {
 			wpfc_clear_all_cache(true);
 		}
 		
+		// Clean stanrad WP cache
 		if($post && function_exists('clean_post_cache')) {
 			clean_post_cache( $post );
 		}
@@ -956,12 +1004,23 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @verson    1.0.0
 	*/
 	public function alternate_links() {
+		
+		if(get_rstr_option('enable-alternate-links', 'yes') == 'no') return;
+		
 		$url = $this->get_current_url();
 		$locale = get_locale();
 		$title = get_bloginfo('name');
+		
+		if(strpos($locale, '_') !== false){
+			$hreflang_lat = strtr($locale, array('_'=>'_Latn_'));
+			$hreflang_cyr = strtr($locale, array('_'=>'_Cyrl_'));
+		} else {
+			$hreflang_lat = $locale . '_Latn';
+			$hreflang_cyr = $locale . '_Cyrl';
+		}
 ?>
-<link rel="alternate" title="<?php echo esc_attr($this->lat_to_cyr($title, false)); ?>" href="<?php echo add_query_arg('rstr', 'cyr', $url); ?>" hreflang="<?php echo strtr($locale, array('_'=>'_Cyrl_')); ?>" />
-<link rel="alternate" title="<?php echo esc_attr($this->cyr_to_lat($title)); ?>" href="<?php echo add_query_arg('rstr', 'lat', $url); ?>" hreflang="<?php echo strtr($locale, array('_'=>'_Latn_')); ?>" />
+<link rel="alternate" title="<?php echo esc_attr($this->lat_to_cyr($title, false)); ?>" href="<?php echo add_query_arg('rstr', 'cyr', $url); ?>" hreflang="<?php echo $hreflang_cyr; ?>" />
+<link rel="alternate" title="<?php echo esc_attr($this->cyr_to_lat($title)); ?>" href="<?php echo add_query_arg('rstr', 'lat', $url); ?>" hreflang="<?php echo $hreflang_lat; ?>" />
 <?php
 	}
 	

@@ -114,6 +114,55 @@
 		}
 	}('serbian-transliteration[mode]', 'forced-transliteration'));
 
+
+
+	/*
+	 * TOOLS: Transliterator
+	 */
+	(function(button, textarea, result){
+		button = document.getElementsByClassName(button);
+		
+		if( button )
+		{
+			var transliterator_timeout;
+			
+			textarea = document.getElementById(textarea);
+			result = document.getElementById(result);
+			
+			for(var i = 0; i < button.length; i++) {
+				(function(index) {
+					button[index].addEventListener("click", () => {
+						
+						if(transliterator_timeout) clearTimeout(transliterator_timeout);
+						
+						result.value = RSTR.label.loading;
+													
+						ajax('POST', RSTR.ajax, {
+							'action' : 'rstr_transliteration_letters',
+							'mode'   : button[index].dataset.mode,
+							'nonce'  : button[index].dataset.nonce,
+							'value'  : textarea.value
+						}, {
+							'Accept' : 'text/html'
+						});
+						
+						ajax_done(function(data){
+							result.value = data;
+							if(transliterator_timeout) clearTimeout(transliterator_timeout);
+						});
+						
+						transliterator_timeout = setTimeout(function(){
+							result.value = ' ';
+						},1e4);
+					})
+				})(i);
+			}
+		}
+	}('button-transliteration-letters', 'rstr-transliteration-letters', 'rstr-transliteration-letters-result'));
+
+
+
+
 	/*
 	 * TOOLS: Transliterate permalinks
 	 */

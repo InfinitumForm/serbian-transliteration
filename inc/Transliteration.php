@@ -317,6 +317,55 @@ class Serbian_Transliteration_Transliterating {
 				break;
 		}
 	}
+	
+	/*
+	 * Ukrainian transliteration
+	 * @since     1.2.5
+	 * @verson    1.0.0
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function uk ($content, $translation = 'cyr_to_lat')
+	{
+		$transliteration = apply_filters('rstr/inc/transliteration/uk', array (
+			// Variations and special characters
+			'Є' => 'Je',	'є' => 'je',	'Ї' => 'Ji',	'ї' => 'ji',	'Щ' => 'Šč',
+			'щ' => 'šč',	'Ю' => 'Ju',	'ю' => 'ju',	'Я' => 'Ja',	'я' => 'ja',
+
+			// All other letters
+			'А' => 'A',		'а' => 'a',		'Б' => 'B',		'б' => 'b',		'В' => 'V',
+			'в' => 'v',		'Г' => 'H',		'г' => 'h',		'Д' => 'D',		'д' => 'd',
+			'Е' => 'E',		'е' => 'e',		'Ж' => 'Ž',		'ж' => 'ž',		'З' => 'Z',
+			'з' => 'z',		'И' => 'Y',		'и' => 'y',		'I' => 'I',		'i' => 'i',
+			'Й' => 'J',		'й' => 'j',		'К' => 'K',		'к' => 'k',		'Л' => 'L',
+			'л' => 'l',		'М' => 'M',		'м' => 'm',		'Н' => 'N',		'н' => 'n',
+			'О' => 'O',		'о' => 'o',		'П' => 'P',		'п' => 'p',		'Р' => 'R',
+			'р' => 'r',		'С' => 'S',		'с' => 's',		'Т' => 'T',		'т' => 't',
+			'У' => 'U',		'у' => 'u',		'Ф' => 'F',		'ф' => 'f',		'Х' => 'h',
+			'х' => 'h',		'Ц' => 'C',		'ц' => 'c',		'Ч' => 'Č',		'ч' => 'č',
+			'Ш' => 'Š',		'ш' => 'š',		'Ґ' => 'G',		'ґ' => 'g',		'Ь' => '\'',
+			'ь' => '\''
+		));
+		
+		switch($translation)
+		{
+			case 'cyr_to_lat' :
+				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				break;
+				
+			case 'lat_to_cyr' :
+				$transliteration = array_filter($transliteration, function($t){
+					return $t != '';
+				});
+				$transliteration = array_merge($transliteration, array(
+					'ŠČ' => 'Щ',	'JE' => 'Є',	'JU' => 'Ю',	'JA' => 'Я',	'JI' => 'Ї',
+					'KH' => 'Х',	'Kh' => 'Х',	'kh' => 'х'
+				));
+				$transliteration = array_flip($transliteration);
+				$transliteration = apply_filters('rstr/inc/transliteration/uk/lat_to_cyr', $transliteration);
+				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				break;
+		}
+	}
 
 	/*
 	 * Get latin letters in array
@@ -430,6 +479,98 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function lat_exclude_list(){
 		return apply_filters('rstr/init/exclude/lat', array());
+	}
+	
+	/*
+	 * Create only diacritical library
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	private function create_only_diacritical($file, $new_file){
+		
+		if(file_exists($file) || empty($new_file)) return;
+		if(preg_match('/(\.lib)/i', $new_file) === false) return;
+		
+		$filesize = filesize(RSTR_ROOT.'/libraries/' . $file);
+		$fp = @fopen($file, "r");
+		$chunk_size = (1<<24); // 16MB arbitrary
+		$position = 0;
+		
+		$new_file = fopen(RSTR_ROOT.'/libraries/' . $new_file, "w");
+		
+		// if handle $fp to file was created, go ahead
+		if ($fp)
+		{
+			while(!feof($fp))
+			{
+				// move pointer to $position in file
+				fseek($fp, $position);
+				
+				// take a slice of $chunk_size bytes
+				$chunk = fread($fp,$chunk_size);
+				
+				// searching the end of last full text line
+				$last_lf_pos = strrpos($chunk, "\n");
+				
+				// $buffer will contain full lines of text
+				// starting from $position to $last_lf_pos
+				$buffer = mb_substr($chunk,0,$last_lf_pos);
+				
+				$words = explode("\n", $buffer);
+				$words = array_unique($words);
+				$words = array_filter($words);
+				$words = array_map('trim', $words);
+				
+				$save = array();
+				foreach($words as $word) {
+					if(preg_match('/[čćžšđ]/i', $word)){
+						$save[]= $word;
+					}
+				}
+				fwrite($new_file, join("\n", $save)) . "\n";
+				
+				// Move $position
+				$position += $last_lf_pos;
+				
+				// if remaining is less than $chunk_size, make $chunk_size equal remaining
+				if(($position+$chunk_size) > $filesize) $chunk_size = ($filesize-$position);
+				$buffer = NULL;
+			}
+			fclose($fp);
+			fclose($new_file);
+		}
+	}
+	
+	/*
+	 * Get list of diacriticals
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function get_diacritical( $needle = NULL ){
+		$words = array();
+		$words_file=RSTR_ROOT.'/libraries/' . $this->get_locale() . '.diacritical.words.lib';
+		
+		if(file_exists($words_file))
+		{
+			if($fopen_locale=fopen($words_file, 'r'))
+			{
+				$contents = fread($fopen_locale, filesize($words_file));
+				fclose($fopen_locale);
+				
+				if(!empty($contents))
+				{
+					$words = explode("\n", $contents);
+					$words = array_unique($words);
+					$words = array_filter($words);
+					$words = array_map('trim', $words);
+				} else return false;
+			} else return false;
+		} else return false;
+		
+		if($needle) {
+			return (in_array($needle, $words, true) !== false ? $needle : false);
+		} else {
+			return $words;
+		}
 	}
 }
 endif;
