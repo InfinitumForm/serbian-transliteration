@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-12-11 14:14+0100\n"
-"PO-Revision-Date: 2020-12-11 14:14+0100\n"
+"POT-Creation-Date: 2020-12-22 15:38+0100\n"
+"PO-Revision-Date: 2020-12-22 15:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -22,26 +22,26 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: inc/Functions.php:191 inc/Menu.php:31 inc/Menu.php:32 inc/Settings.php:496
+#: inc/Functions.php:195 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:496
 #: inc/Settings.php:849 inc/Shortcodes.php:65
-#: inc/settings/content/php-functions.php:97
+#: inc/settings/content/php-functions.php:98
 msgid "Cyrillic"
 msgstr "Ћирилица"
 
-#: inc/Functions.php:192 inc/Menu.php:30 inc/Menu.php:32 inc/Settings.php:497
+#: inc/Functions.php:196 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:497
 #: inc/Settings.php:848 inc/Shortcodes.php:66
-#: inc/settings/content/php-functions.php:102
+#: inc/settings/content/php-functions.php:103
 msgid "Latin"
 msgstr "Латиница"
 
-#: inc/Functions.php:210
+#: inc/Functions.php:214
 #, php-format
 msgid ""
-"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or "
-"\"%5$s\""
+"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
+"\"%5$s\" or \"%6$s\""
 msgstr ""
-"Одаберите једно од приказа: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" или \"%5$s"
-"\""
+"Одаберите једно од приказа: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", \"%5$s\" "
+"или \"%6$s\""
 
 #: inc/Global.php:21
 msgid "Standard mode (content, themes, plugins, translations, menu)"
@@ -120,15 +120,15 @@ msgstr "Нови назив скрипте"
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Menu.php:21 inc/Settings.php:174 inc/Settings.php:192
+#: inc/Menu.php:22 inc/Settings.php:174 inc/Settings.php:192
 msgid "Transliteration"
 msgstr "Пресловљавање"
 
-#: inc/Menu.php:68
+#: inc/Menu.php:69
 msgid "Help"
 msgstr "Помоћ"
 
-#: inc/Menu.php:71
+#: inc/Menu.php:72
 msgid ""
 "To insert language script selector just add a relative link after the link's "
 "keyword, example :"
@@ -136,21 +136,38 @@ msgstr ""
 "Да бисте уметнули бирач скрипте језика, додајте релативну везу после кључне "
 "речи везе, на пример:"
 
-#: inc/Menu.php:72
+#: inc/Menu.php:73
 msgid "You can also use"
 msgstr "Такође можете користити"
 
-#: inc/Menu.php:72
+#: inc/Menu.php:73
 msgid "for change to Latin or use"
 msgstr "за промену у латиницу или"
 
-#: inc/Menu.php:72
+#: inc/Menu.php:73
 msgid "for change to Cyrillic"
-msgstr "за променуна ћирилицу"
+msgstr "за промену на ћирилицу"
 
-#: inc/Menu.php:78
+#: inc/Menu.php:79
 msgid "Add to Menu"
 msgstr "Додај у изборник"
+
+#: inc/Menu.php:97
+#, php-format
+msgid ""
+"The name of this navigation is written by always putting the Latin name "
+"first, then the Cyrillic one second, separated by the sign %s"
+msgstr ""
+"Назив ове навигације пише се тако што се на прво место увек ставља латинични "
+"назив, а затим ћирилични на друго место, одвојено знаком %s"
+
+#: inc/Menu.php:98
+msgid "Example: Latinica | Ћирилица"
+msgstr "Пример: Latinica | Ћирилица"
+
+#: inc/Menu.php:99
+msgid "Note that the white space around them will be cleared."
+msgstr "Имајте на уму да ће се размак око њих очистити."
 
 #: inc/Requirements.php:43
 msgid ""
@@ -843,12 +860,12 @@ msgstr "Овај атрибут садржи асоцијативни скуп �
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"%1$s, %2$s, %3$s, %4$s or %5$s. Default: %1$s"
+"%1$s, %2$s, %3$s, %4$s, %5$s or %6$s. Default: %1$s"
 msgstr ""
 "(стринг) Тип селектора који ће бити приказан на сајту. Може бити: %1$s, "
-"%2$s, %3$s, %4$s or %5$s. Подразумевано: \"%1$s\""
+"%2$s, %3$s, %4$s, %5$s or %6$s. Подразумевано: \"%1$s\""
 
-#: inc/settings/content/php-functions.php:87
+#: inc/settings/content/php-functions.php:88
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
@@ -857,7 +874,7 @@ msgstr ""
 "(bool) одређује да ли ће се приказивати кроз ехо или као низ. Подразумевано: "
 "%s"
 
-#: inc/settings/content/php-functions.php:92
+#: inc/settings/content/php-functions.php:93
 #: inc/settings/content/shortcodes.php:62
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
@@ -865,12 +882,12 @@ msgstr ""
 "(стринг) Сепаратор који се користи када је тип селектора %s. Подразумевано: "
 "%s"
 
-#: inc/settings/content/php-functions.php:97
+#: inc/settings/content/php-functions.php:98
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr "(стринг) Текст за ћирилични линк. Подразумевано: %s"
 
-#: inc/settings/content/php-functions.php:102
+#: inc/settings/content/php-functions.php:103
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr "(стринг) Текст за латинични линк. Подразумевано: %s"
@@ -972,10 +989,10 @@ msgstr "Овај кратки код приказује навигацију с�
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"\"%1$s\", \"%2$s\" or \"%3$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\" or \"%4$s\""
 msgstr ""
 "(стринг) Тип селектора који ће бити приказан на сајту. Може бити: \"%1$s\", "
-"\"%2$s\" или \"%3$s\""
+"\"%2$s\", \"%3$s\" или \"%4$s\""
 
 #: inc/settings/content/shortcodes.php:63
 msgid "(string) Text for Cyrillic link. Default: Cyrillic"
@@ -1019,7 +1036,7 @@ msgstr "Конвертуј у ћирилицу"
 msgid "Reset"
 msgstr "Очисти све"
 
-#: inc/settings/sidebar.php:39
+#: inc/settings/sidebar.php:42
 msgid ""
 "Hire professional developers, designers, SEO masters and marketing ninjas in "
 "one place."
@@ -1027,15 +1044,15 @@ msgstr ""
 "Ангажирајте професионалне програмере, дизајнере, СЕО мајсторе и маркетиншке "
 "нинџе на једном месту."
 
-#: inc/settings/sidebar.php:40 inc/settings/sidebar.php:52
+#: inc/settings/sidebar.php:43 inc/settings/sidebar.php:55
 msgid "Read more..."
 msgstr "Прочитајте више овде ..."
 
-#: inc/settings/sidebar.php:48
+#: inc/settings/sidebar.php:51
 msgid "Need CLOUD HOSTING ???"
 msgstr "Требате ХОСТИНГ ???"
 
-#: inc/settings/sidebar.php:51
+#: inc/settings/sidebar.php:54
 msgid ""
 "If you need hosting for your personal needs, for business, any web "
 "applications, cloud or dedicated servers, we have the ideal solution for you!"
@@ -1043,11 +1060,11 @@ msgstr ""
 "Ако вам треба хостинг за ваше личне потребе, за пословање, било које веб "
 "апликације, \"cloud\" или наменске сервере, имамо идеално решење за вас!"
 
-#: inc/settings/sidebar.php:61
+#: inc/settings/sidebar.php:64
 msgid "Contributors & Developers"
 msgstr "Сарадници и програмери"
 
-#: inc/settings/sidebar.php:73
+#: inc/settings/sidebar.php:76
 #, php-format
 msgid ""
 "If you want to support our work and effort, if you have new ideas or want to "
@@ -1056,16 +1073,16 @@ msgstr ""
 "Ако желите да подржите наш рад и труд, ако имате нове идеје или желите да "
 "побољшате постојећи код, %s."
 
-#: inc/settings/sidebar.php:73
+#: inc/settings/sidebar.php:76
 msgid "join our team"
 msgstr "придружите се нашем тиму"
 
-#: inc/settings/sidebar.php:74
+#: inc/settings/sidebar.php:77
 #, php-format
 msgid "If you want to help further plugin development, you can also %s."
 msgstr "Ако желите да помогнете даљем развоју додатака, такође можете %s."
 
-#: inc/settings/sidebar.php:74
+#: inc/settings/sidebar.php:77
 msgid "donate something for effort"
 msgstr "донирати нешто за наш труд"
 

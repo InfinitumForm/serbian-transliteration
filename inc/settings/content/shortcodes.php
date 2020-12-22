@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<p><code class="lang-txt">[<span class="hljs-title">rstr_selector</span>]</code></p>
 					<h3><?php _e('Optional shortcode parameters', RSTR_NAME); ?>:</h3>
 					<ul>
-						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s" or "%3$s"', RSTR_NAME), 'inline', 'select', 'list')); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'type', sprintf(__('(string) The type of selector that will be displayed on the site. It can be: "%1$s", "%2$s", "%3$s" or "%4$s"', RSTR_NAME), 'inline', 'select', 'list', 'list_items')); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'separator', sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', RSTR_NAME), 'inline', ' | ')); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'cyr_caption', __('(string) Text for Cyrillic link. Default: Cyrillic', RSTR_NAME)); ?>
 						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'lat_caption', __('(string) Text for Latin link. Default: Latin', RSTR_NAME)); ?>

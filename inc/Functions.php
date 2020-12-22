@@ -184,7 +184,11 @@ endif;
 if(!function_exists('script_selector')) :
 	function script_selector ($args) {
 		$url = get_current_url();
+		
+		$ID = uniqid('script_selector_');
+		
 		$args = (object)wp_parse_args($args, array(
+			'id'			=> $ID,
 			'display_type' 	=> 'inline',
 			'echo' 			=> false,
 			'separator'     => ' | ',
@@ -207,24 +211,34 @@ if(!function_exists('script_selector')) :
 		switch($args->display_type)
 		{
 			default:
-				$return = sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s" or "%5$s"', RSTR_NAME), 'inline', 'select', 'list', 'array', 'object');
+				$return = sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s", "%5$s" or "%6$s"', RSTR_NAME), 'inline', 'select', 'list', 'list_items', 'array', 'object');
 				break;
 			case 'inline':
 				$return = sprintf(
-					'<a href="%1$s" class="%6$s">%2$s</a>%3$s<a href="%4$s" class="%7$s">%5$s</a>',
+					apply_filters(
+						'rstr/inc/functions/script_selector/inline',
+						'<a href="%1$s" class="rstr-script-selector%6$s">%2$s</a>%3$s<a href="%4$s" class="rstr-script-selector%7$s">%5$s</a>',
+						$args,
+						$options
+					),
 					$options->lat,
 					$args->lat_caption,
 					$args->separator,
 					$options->cyr,
 					$args->cyr_caption,
-					($options->active == 'lat' ? 'rstr-script-selector active' : 'rstr-script-selector'),
-					($options->active == 'cyr' ? 'rstr-script-selector active' : 'rstr-script-selector')
+					($options->active == 'lat' ? ' active' : ' inactive'),
+					($options->active == 'cyr' ? ' active' : ' inactive')
 				);
 				break;
 			case 'select':
-				$return = '<script type="text/javascript">/*<![CDATA[*/function rstr_script_selector(redirect) {document.location.href = redirect.value;}/*]]>*/</script>';
+				$return = '<script type="text/javascript">/*<![CDATA[*/function rstr_' . $ID . '(redirect) {document.location.href = redirect.value;}/*]]>*/</script>';
 				$return.= sprintf(
-					'<select class="rstr-script-selector" onchange="rstr_script_selector(this);"><option value="%1$s"%5$s>%2$s</option><option value="%3$s"%6$s>%4$s</option></select>',
+					apply_filters(
+						'rstr/inc/functions/script_selector/select',
+						'<select class="rstr-script-selector" onchange="rstr_' . $ID . '(this);" id="rstr_' . $ID . '"><option value="%1$s"%5$s>%2$s</option><option value="%3$s"%6$s>%4$s</option></select>',
+						$args,
+						$options
+					),
 					$options->lat,
 					$args->lat_caption,
 					$options->cyr,
@@ -235,17 +249,37 @@ if(!function_exists('script_selector')) :
 				break;
 			case 'list':
 				$return = sprintf(
-					'<ul class="rstr-script-selector"><li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%5$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li></ul>',
+					apply_filters(
+						'rstr/inc/functions/script_selector/list', '<ul class="rstr-script-selector" id="rstr_' . $ID . '"><li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li></ul>',
+						$args,
+						$options
+					),
 					$options->lat,
 					$args->lat_caption,
 					$options->cyr,
 					$args->cyr_caption,
-					($options->active == 'lat' ? ' active' : ''),
-					($options->active == 'cyr' ? ' active' : '')
+					($options->active == 'lat' ? ' active' : ' inactive'),
+					($options->active == 'cyr' ? ' active' : ' inactive')
+				);
+				break;
+			case 'list_items':
+				$return = sprintf(
+					apply_filters(
+						'rstr/inc/functions/script_selector/list_items',
+						'<li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li>',
+						$args,
+						$options
+					),
+					$options->lat,
+					$args->lat_caption,
+					$options->cyr,
+					$args->cyr_caption,
+					($options->active == 'lat' ? ' active' : ' inactive'),
+					($options->active == 'cyr' ? ' active' : ' inactive')
 				);
 				break;
 			case 'array':
-				$return = array(
+				$return = apply_filters('rstr/inc/functions/script_selector/array', array(
 					'cyr' => array(
 						'caption' => $args->cyr_caption,
 						'url' => $options->cyr,
@@ -254,10 +288,10 @@ if(!function_exists('script_selector')) :
 						'caption' => $args->lat_caption,
 						'url' => $options->lat,
 					)
-				);
+				), $args, $options);
 				break;
 			case 'object':
-				$return = (object)array(
+				$return = $return = apply_filters('rstr/inc/functions/script_selector/object', (object)array(
 					'cyr' => (object)array(
 						'caption' => $args->cyr_caption,
 						'url' => $options->cyr,
@@ -266,7 +300,7 @@ if(!function_exists('script_selector')) :
 						'caption' => $args->lat_caption,
 						'url' => $options->lat,
 					)
-				);
+				), $args, $options);
 				break;
 		}
 

@@ -425,7 +425,7 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function get_locales( $needle = NULL ){
 		$locales = array();
-		$locale_file=RSTR_ROOT.'/libraries/locale.lib';
+		$locale_file=apply_filters('rstr/init/libraries/file/locale', RSTR_ROOT.'/libraries/locale.lib');
 		
 		if(file_exists($locale_file))
 		{
@@ -547,7 +547,7 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function get_diacritical( $needle = NULL ){
 		$words = array();
-		$words_file=RSTR_ROOT.'/libraries/' . $this->get_locale() . '.diacritical.words.lib';
+		$words_file=apply_filters('rstr/init/libraries/file/diacritical-words', RSTR_ROOT.'/libraries/' . $this->get_locale() . '.diacritical.words.lib');
 		
 		if(file_exists($words_file))
 		{

@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.3.1 =
+* Fixed bug inside `script_selector()` function and `[rstr_selector]` shortcode
+* Added new display type `list_items` inside `script_selector()` function and `[rstr_selector]` shortcode
+* Added help description inside selector menu
+* Added new filters inside `script_selector()` function for each display type
+* Improved serbian translation
+
 = 1.3.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * **IMPORTANT!** This plugin requires a Multibyte String PHP extension (mbstring)
@@ -227,6 +234,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Made preparations for future versions of the plugin
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+* Fixed bug inside `script_selector()` function and `[rstr_selector]` shortcode
+* Added new display type `list_items` inside `script_selector()` function and `[rstr_selector]` shortcode
+* Added help description inside selector menu
+* Added new filters inside `script_selector()` function for each display type
+* Improved serbian translation
 
 = 1.3.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings

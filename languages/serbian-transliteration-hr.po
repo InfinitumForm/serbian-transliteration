@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-12-11 16:27+0100\n"
-"PO-Revision-Date: 2020-12-11 16:33+0100\n"
+"POT-Creation-Date: 2020-12-22 15:40+0100\n"
+"PO-Revision-Date: 2020-12-22 15:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -22,26 +22,26 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: inc/Functions.php:191 inc/Menu.php:31 inc/Menu.php:32 inc/Settings.php:496
+#: inc/Functions.php:195 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:496
 #: inc/Settings.php:849 inc/Shortcodes.php:65
-#: inc/settings/content/php-functions.php:97
+#: inc/settings/content/php-functions.php:98
 msgid "Cyrillic"
 msgstr "Ćirilica"
 
-#: inc/Functions.php:192 inc/Menu.php:30 inc/Menu.php:32 inc/Settings.php:497
+#: inc/Functions.php:196 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:497
 #: inc/Settings.php:848 inc/Shortcodes.php:66
-#: inc/settings/content/php-functions.php:102
+#: inc/settings/content/php-functions.php:103
 msgid "Latin"
 msgstr "Latinski"
 
-#: inc/Functions.php:210
+#: inc/Functions.php:214
 #, php-format
 msgid ""
-"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" or "
-"\"%5$s\""
+"Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
+"\"%5$s\" or \"%6$s\""
 msgstr ""
-"Odaberite jednu od vrsta prikaza: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\" ili "
-"\"%5$s\""
+"Odaberite jednu od vrsta prikaza: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
+"\"%5$s\" ili \"%6$s\""
 
 #: inc/Global.php:21
 msgid "Standard mode (content, themes, plugins, translations, menu)"
@@ -120,15 +120,15 @@ msgstr "Novi naziv skripte"
 msgid "Script"
 msgstr "Skripta"
 
-#: inc/Menu.php:21 inc/Settings.php:174 inc/Settings.php:192
+#: inc/Menu.php:22 inc/Settings.php:174 inc/Settings.php:192
 msgid "Transliteration"
 msgstr "Transliteracija"
 
-#: inc/Menu.php:68
+#: inc/Menu.php:69
 msgid "Help"
 msgstr "Pomoć"
 
-#: inc/Menu.php:71
+#: inc/Menu.php:72
 msgid ""
 "To insert language script selector just add a relative link after the link's "
 "keyword, example :"
@@ -136,21 +136,38 @@ msgstr ""
 "Da biste umetnuli birač jezične skripte, dodajte relativnu vezu nakon "
 "ključne riječi veze, primjer:"
 
-#: inc/Menu.php:72
+#: inc/Menu.php:73
 msgid "You can also use"
 msgstr "Također možete koristiti"
 
-#: inc/Menu.php:72
+#: inc/Menu.php:73
 msgid "for change to Latin or use"
 msgstr "za promjenu u latinski jezik ili"
 
-#: inc/Menu.php:72
+#: inc/Menu.php:73
 msgid "for change to Cyrillic"
 msgstr "za promjenu u ćirilicu"
 
-#: inc/Menu.php:78
+#: inc/Menu.php:79
 msgid "Add to Menu"
 msgstr "Dodaj u izbornik"
+
+#: inc/Menu.php:97
+#, php-format
+msgid ""
+"The name of this navigation is written by always putting the Latin name "
+"first, then the Cyrillic one second, separated by the sign %s"
+msgstr ""
+"Naziv ove navigacije zapisuje se tako da se na prvo mjesto uvijek stavlja "
+"latinsko ime, a zatim ćirilica na drugo, odvojeno znakom %s"
+
+#: inc/Menu.php:98
+msgid "Example: Latinica | Ћирилица"
+msgstr "Primjer: Latinica | Ћирилица"
+
+#: inc/Menu.php:99
+msgid "Note that the white space around them will be cleared."
+msgstr "Imajte na umu da će se razmak oko njih očistiti."
 
 #: inc/Requirements.php:43
 msgid ""
@@ -846,19 +863,19 @@ msgstr "Ovaj atribut sadrži asocijativni skup parametara za ovu funkciju:"
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"%1$s, %2$s, %3$s, %4$s or %5$s. Default: %1$s"
+"%1$s, %2$s, %3$s, %4$s, %5$s or %6$s. Default: %1$s"
 msgstr ""
 "(string) Vrsta odabirača koja će se prikazati na web-mjestu. Može biti: "
-"%1$s, %2$s, %3$s, %4$s ili %5$s. Zadano: %1$s"
+"%1$s, %2$s, %3$s, %4$s, %5$s ili %6$s. Zadano: %1$s"
 
-#: inc/settings/content/php-functions.php:87
+#: inc/settings/content/php-functions.php:88
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
 "string. Default: %s"
 msgstr "(bool) određuje hoće li se prikazati kroz echo ili kao niz. Zadano: %s"
 
-#: inc/settings/content/php-functions.php:92
+#: inc/settings/content/php-functions.php:93
 #: inc/settings/content/shortcodes.php:62
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
@@ -866,12 +883,12 @@ msgstr ""
 "(string) Razdjelnik koji će se koristiti kada je vrsta odabirača %s. Zadano: "
 "%s"
 
-#: inc/settings/content/php-functions.php:97
+#: inc/settings/content/php-functions.php:98
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr "(string) Tekst za ćirilični link. Zadano: %s"
 
-#: inc/settings/content/php-functions.php:102
+#: inc/settings/content/php-functions.php:103
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr "(string) Tekst za latiničnog linka. Zadano: %s"
@@ -972,10 +989,10 @@ msgstr "Ovaj kratki kod prikazuje izbornik za skriptu transliteracije."
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
-"\"%1$s\", \"%2$s\" or \"%3$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\" or \"%4$s\""
 msgstr ""
 "(string) Vrsta izbornika koja će se prikazati na web-mjestu. Može biti: "
-"\"%1$s\", \"%2$s\" ili \"%3$s\""
+"\"%1$s\", \"%2$s\", \"%3$s\" ili \"%4$s\""
 
 #: inc/settings/content/shortcodes.php:63
 msgid "(string) Text for Cyrillic link. Default: Cyrillic"

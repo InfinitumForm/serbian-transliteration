@@ -14,15 +14,16 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		$this->add_action( 'admin_head-nav-menus.php', 'admin_nav_menu' );
 		$this->add_filter( 'wp_setup_nav_menu_item', 'menu_setup' );
 		$this->add_filter( 'wp_nav_menu_objects', 'menu_objects' );
+		$this->add_action( 'wp_nav_menu_item_custom_fields', 'menu_item_custom_fields', 10, 5 );
 	}
 
 	/* Registers Login/Logout/Register Links Metabox */
-	function admin_nav_menu() {
+	public function admin_nav_menu() {
 		add_meta_box( 'transliteration_menu', __( 'Transliteration', RSTR_NAME ), array( $this, 'admin_nav_menu_callback' ), 'nav-menus', 'side', 'default' );
 	}
 	
 	/* Displays Login/Logout/Register Links Metabox */
-    function admin_nav_menu_callback(){
+    public function admin_nav_menu_callback(){
 
 		global $nav_menu_selected_id;
 		
@@ -83,7 +84,23 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		</div>
 		<?php
 
-      }
+    }
+	
+	/* Add custom fields to the menu item */
+	public function menu_item_custom_fields($item_id, $item, $depth, $args, $id) {
+		
+		//	DEBUG: echo '<pre>', var_dump( $item, $depth, $args, $id ), '</pre>';
+			
+		if($item->url == '#transliteration-latcyr#'){
+			printf(
+				'<p style="padding:10px; background:cornsilk; float:left; margin-right: 10px; font-size:1.1em;"><strong>%s<br><br>%s<br><br>%s</strong></p>',
+				sprintf(__('The name of this navigation is written by always putting the Latin name first, then the Cyrillic one second, separated by the sign %s', RSTR_NAME), '<code>|</code>'),
+				__('Example: Latinica | Ћирилица', RSTR_NAME),
+				__('Note that the white space around them will be cleared.', RSTR_NAME)
+			);
+		}
+		
+	}
 	
 	/**
 	* Show Login || Logout Menu item for front end.
@@ -91,7 +108,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	* @since 1.0.0
 	* @param object $menu_item The menu item object.
 	*/
-	function transliteration_setup_title( $title, $options ) {
+	public function transliteration_setup_title( $title, $options ) {
 	
 		$titles = explode( '|', $title );
 		
@@ -112,7 +129,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	* @since 1.2.0
 	* @param object $menu_item The menu item object.
 	*/
-	function menu_setup( $item ) {
+	public function menu_setup( $item ) {
 	
 		global $pagenow;
 		
@@ -179,7 +196,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		return $item;
 	}
 	
-	function menu_objects( $sorted_menu_items ) {
+	public function menu_objects( $sorted_menu_items ) {
 		foreach ( $sorted_menu_items as $menu => $item ) {
 			if ( strstr( $item->url, '#transliteration' ) != '' ) {
 				unset( $sorted_menu_items[ $menu ] );

@@ -73,10 +73,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 							'<li><code>%1$s</code> - %2$s</li>',
 							'display_type',
 							sprintf(
-								__('(string) The type of selector that will be displayed on the site. It can be: %1$s, %2$s, %3$s, %4$s or %5$s. Default: %1$s', RSTR_NAME),
+								__('(string) The type of selector that will be displayed on the site. It can be: %1$s, %2$s, %3$s, %4$s, %5$s or %6$s. Default: %1$s', RSTR_NAME),
 								'<code>inline</code>',
 								'<code>select</code>',
 								'<code>list</code>',
+								'<code>list_items</code>',
 								'<code>array</code>',
 								'<code>object</code>'
 							)
