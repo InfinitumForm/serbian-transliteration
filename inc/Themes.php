@@ -11,7 +11,8 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 	class Serbian_Transliteration_Themes extends Serbian_Transliteration
 	{
 		private $themes = array(
-			'themify' => 'themify'
+			'themify'	=> 'themify',
+			'avada'		=> 'avada'
 		);
 		private $theme;
 		

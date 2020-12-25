@@ -10,6 +10,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	private static $__instance = NULL;
 	private $html_tags;
 	private $_url_parsed = NULL;
+	private $__options = array();
 	
 	/*
 	 * Plugin mode
@@ -274,6 +275,52 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		
 		return $content;
+	}
+	
+	/*
+	 * Transliterate associative array or strings
+	 * @return        array
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function transliterate_objects($array, $type = false, $fix_html = true)
+	{
+		// First setup all properly
+		if(empty($array)) return $array;
+		if(empty($this->__options)) $this->__options = get_rstr_option();
+		if(empty($type)) $type = $this->get_current_script( $this->__options );
+		
+		$return = '';
+		// Infinity loop... Until end.
+		if( is_array($array) )
+		{
+			$data = array();
+			
+			foreach($array as $key => $val)
+			{
+				$data[$key] = $this->transliterate_objects($val, $fix_html);
+			}
+			
+			$return = $data;
+		}
+		// transliterate string
+		else
+		{
+			if(
+				is_int($array) 
+				|| is_float($array) 
+				|| is_numeric($array)
+				|| is_file($array) 
+				|| is_bool($array) 
+				|| is_object($array) 
+				|| is_link($array)
+			) {
+				$return = $array;
+			} else {
+				$return = $this->transliterate_text($array, $type, $fix_html);
+			}
+		}
+
+		return $return;
 	}
 	
 	/*
@@ -1133,7 +1180,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		return false;
 	}
-	
 	
 	public function get_options() {
 		return get_rstr_option();

@@ -109,16 +109,22 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Screenshots ==
 
-1. Transliteration settings
-2. Cyrillic page before serbian transliteration
-3. Latin page after serbian transliteration
-4. Shortcodes
-5. Automated test
-6. Permalink tools
+1. Cyrillic page before serbian transliteration
+2. Latin page after serbian transliteration
+3. Transliteration settings
+4. Converter for transliterating Cyrillic into Latin and vice versa
+5. Permalink tools
+6. Shortcodes
 7. Available PHP Functions
 8. Language script inside Menus
+9. Automated test
 
 == Changelog ==
+
+= 1.3.2 =
+* Improved global functions and code optimization
+* Added Avada theme support
+* Fixed bugs from previous version
 
 = 1.3.1 =
 * Fixed bug inside `script_selector()` function and `[rstr_selector]` shortcode
@@ -234,6 +240,11 @@ We also thought of PHP developers where we have enabled several useful functions
 * Made preparations for future versions of the plugin
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+* Improved global functions and code optimization
+* Added Avada theme support
+* Fixed bugs from previous version
 
 = 1.3.1 =
 * Fixed bug inside `script_selector()` function and `[rstr_selector]` shortcode

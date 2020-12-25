@@ -6,7 +6,7 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
- if(!class_exists('Serbian_Transliteration_Init') && class_exists('Serbian_Transliteration')) :
+if(!class_exists('Serbian_Transliteration_Init') && class_exists('Serbian_Transliteration')) :
 final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	
 	private static $instance = NULL;

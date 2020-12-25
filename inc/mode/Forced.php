@@ -67,7 +67,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 				'wp_unique_post_slug' 			=> 'content',
 				'option_blogdescription'		=> 'content',
 				'option_blogname' 				=> 'content',
-				'document_title_parts' 			=> 'title_parts',
+				'document_title_parts' 			=> 'transliterate_objects',
 				'sanitize_title'				=> 'force_permalink_to_latin',
 				'the_permalink'					=> 'force_permalink_to_latin',
 				'wp_unique_post_slug'			=> 'force_permalink_to_latin'
@@ -242,7 +242,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			
 			if(is_array($content))
 			{
-				$content = $this->title_parts($content);
+				$content = $this->transliterate_objects($content);
 			}
 			else if(is_string($content) && !is_numeric($content))
 			{
@@ -259,27 +259,6 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 				}
 			}
 			return $content;
-		}
-		
-		public function title_parts($titles=array()){
-			switch($this->get_current_script($this->options))
-			{
-				case 'cyr_to_lat' :
-					foreach($titles as $key => $val)
-					{
-						if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->cyr_to_lat($titles[$key]);
-					}
-					break;
-					
-				case 'lat_to_cyr' :
-					foreach($titles as $key => $val)
-					{
-						if(is_string($val) && !is_numeric($val)) $titles[$key]= $this->lat_to_cyr($titles[$key], true);
-					}
-					break;
-			}
-			
-			return $titles;
 		}
 	}
 endif;
