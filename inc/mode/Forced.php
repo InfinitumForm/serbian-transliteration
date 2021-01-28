@@ -81,7 +81,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			if($options !== false)
 			{
 				$this->options = $options;
-				$transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
+				$this->transient = 'transliteration_cache_' . $this->get_current_script($this->options) . '_' . $this->get_current_page_ID();
 
 				$filters = self::filters($this->options);
 				$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->options);

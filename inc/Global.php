@@ -188,9 +188,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		if($this->get_locale() != 'sr_RS') return $content;
 		
-		$transl = new Serbian_Transliteration_Transliterating();
-		
-		if($search = $transl->get_diacritical())
+		if($search = $this->get_diacritical())
 		{
 			$new_string = str_replace(
 				array('dj', 'Dj', 'DJ', 'sh', 'Sh', 'SH', 'ch', 'Ch', 'CH', 'cs', 'Cs', 'CS', 'dz', 'Dz', 'DZ'),
@@ -198,16 +196,33 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$content
 			);
 			
+			$skip_words = $this->get_skip_words();
+			$skip_words = array_map('mb_strtolower', $skip_words);
+			
 			$search = array_map('mb_strtolower', $search);
+			
 			$arr = explode(' ', $new_string);
 			$arr = array_filter($arr);
+			
+			$arr_origin = explode(' ', $content);
+			$arr_origin = array_filter($arr_origin);
 			
 			if(!empty($arr))
 			{
 				$words = array();
-				foreach($arr as $word)
-				{
+				foreach($arr as $i=>$word)
+				{					
 					$word_search = mb_strtolower($word, 'UTF-8');
+					$word_search = preg_replace('/[.,?!-*_#$]+/i','',$word_search);
+					
+					$word_search_origin = mb_strtolower($arr_origin[$i]);
+					$word_search_origin = preg_replace('/[.,?!-*_#$]+/i','',$word_search_origin);
+					
+					if(in_array($word_search_origin, $skip_words)){
+						$words[]=$arr_origin[$i];
+						continue;
+					}
+					
 					if(in_array($word_search, $search)) {
 						if(ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)){
 							$words[]=mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8');
@@ -223,6 +238,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 						$words[]=$word;
 					}
 				}
+				
+				$new_string = $skip_words = $search = $arr = $arr_origin = NULL;
+				
 				if(!empty($words)) return join(' ', $words);
 			}
 		}
@@ -287,7 +305,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		// First setup all properly
 		if(empty($array)) return $array;
 		if(empty($this->__options)) $this->__options = get_rstr_option();
-		if(empty($type)) $type = $this->get_current_script( $this->__options );
+		if(empty($type) || is_bool($type)) $type = $this->get_current_script( $this->__options );
 		
 		$return = '';
 		// Infinity loop... Until end.
@@ -313,6 +331,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				|| is_bool($array) 
 				|| is_object($array) 
 				|| is_link($array)
+				|| filter_var($array, FILTER_VALIDATE_URL)
+				|| filter_var($array, FILTER_VALIDATE_EMAIL)
 			) {
 				$return = $array;
 			} else {
@@ -520,9 +540,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1){
-		if(!is_array($function_to_add))
+		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
-			
+		}
 		return add_action( (string)$tag, $function_to_add, (int)$priority, (int)$accepted_args );
 	}
 	
@@ -531,9 +551,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function remove_action($tag, $function_to_remove, $priority = 10){
-		if(!is_array($function_to_remove))
+		if(!is_array($function_to_remove)){
 			$function_to_remove = array(&$this, $function_to_remove);
-			
+		}
 		return remove_action( $tag, $function_to_remove, $priority );
 	}
 	
@@ -542,9 +562,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1){
-		if(!is_array($function_to_add))
+		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
-			
+		}
 		return add_filter( (string)$tag, $function_to_add, (int)$priority, (int)$accepted_args );
 	}
 	
@@ -553,9 +573,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function remove_filter($tag, $function_to_remove, $priority = 10){
-		if(!is_array($function_to_remove))
+		if(!is_array($function_to_remove)){
 			$function_to_remove = array(&$this, $function_to_remove);
-			
+		}
 		return remove_filter( (string)$tag, $function_to_remove, (int)$priority );
 	}
 	
@@ -564,9 +584,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function add_shortcode($tag, $function_to_add){
-		if(!is_array($function_to_add))
+		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
-		
+		}
 		if(!shortcode_exists($tag)) {
 			return add_shortcode( $tag, $function_to_add );
 		}
@@ -579,9 +599,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function add_options_page($page_title, $menu_title, $capability, $menu_slug, $function = '', $position = null){
-		if(!is_array($function))
+		if(!is_array($function)){
 			$function = array(&$this, $function);
-		
+		}
 		return add_options_page($page_title, $menu_title, $capability, $menu_slug, $function, $position);
 	}
 	
@@ -590,9 +610,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function add_settings_section($id, $title, $callback, $page){
-		if(!is_array($callback))
+		if(!is_array($callback)){
 			$callback = array(&$this, $callback);
-		
+		}
 		return add_settings_section($id, $title, $callback, $page);
 	}
 	
@@ -601,9 +621,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function register_setting($option_group, $option_name, $args = array()){
-		if(!is_array($args) && is_callable($args))
+		if(!is_array($args) && is_callable($args)){
 			$args = array(&$this, $args);
-		
+		}
 		return register_setting($option_group, $option_name, $args);
 	}
 	
@@ -612,9 +632,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function add_settings_field($id, $title, $callback, $page, $section = 'default', $args = array()){
-		if(!is_array($callback))
+		if(!is_array($callback)){
 			$callback = array(&$this, $callback);
-		
+		}
 		return add_settings_field($id, $title, $callback, $page, $section, $args);
 	}
 	

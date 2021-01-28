@@ -10,6 +10,8 @@ if(!class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration_Transliterating {
 	// Define locale instance
 	protected $get_locale;
+	protected $___get_skip_words = NULL;
+	protected $___get_diacritical = NULL;
 
 	/*
 	 * Serbian transliteration
@@ -55,6 +57,8 @@ class Serbian_Transliteration_Transliterating {
 				return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
 				break;
 		}
+		
+		return $content;
 	}
 
 	/*
@@ -103,6 +107,8 @@ class Serbian_Transliteration_Transliterating {
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
+		
+		return $content;
 	}
 	
 	/*
@@ -169,6 +175,8 @@ class Serbian_Transliteration_Transliterating {
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
+		
+		return $content;
 	}
 	
 	/*
@@ -216,6 +224,8 @@ class Serbian_Transliteration_Transliterating {
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
+		
+		return $content;
 	}
 	
 	/*
@@ -264,6 +274,8 @@ class Serbian_Transliteration_Transliterating {
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
+		
+		return $content;
 	}
 	
 	/*
@@ -316,6 +328,8 @@ class Serbian_Transliteration_Transliterating {
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
+		
+		return $content;
 	}
 	
 	/*
@@ -365,6 +379,8 @@ class Serbian_Transliteration_Transliterating {
 				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				break;
 		}
+		
+		return $content;
 	}
 
 	/*
@@ -546,31 +562,75 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_diacritical( $needle = NULL ){
-		$words = array();
-		$words_file=apply_filters('rstr/init/libraries/file/diacritical-words', RSTR_ROOT.'/libraries/' . $this->get_locale() . '.diacritical.words.lib');
-		
-		if(file_exists($words_file))
+		if(NULL === $this->___get_diacritical)
 		{
-			if($fopen_locale=fopen($words_file, 'r'))
+			$words = array();
+			$words_file=apply_filters('rstr/init/libraries/file/diacritical-words', RSTR_ROOT.'/libraries/' . $this->get_locale() . '.diacritical.words.lib');
+			
+			if(file_exists($words_file))
 			{
-				$contents = fread($fopen_locale, filesize($words_file));
-				fclose($fopen_locale);
-				
-				if(!empty($contents))
+				if($fopen_locale=fopen($words_file, 'r'))
 				{
-					$words = explode("\n", $contents);
-					$words = array_unique($words);
-					$words = array_filter($words);
-					$words = array_map('trim', $words);
-				} else return false;
-			} else return false;
-		} else return false;
-		
-		if($needle) {
-			return (in_array($needle, $words, true) !== false ? $needle : false);
-		} else {
-			return $words;
+					$contents = fread($fopen_locale, filesize($words_file));
+					fclose($fopen_locale);
+					
+					if(!empty($contents))
+					{
+						$words = explode("\n", $contents);
+						$words = array_unique($words);
+						$words = array_filter($words);
+						$words = array_map('trim', $words);
+					} else $this->___get_diacritical = false;
+				} else $this->___get_diacritical = false;
+			} else $this->___get_diacritical = false;
+			
+			if($needle) {
+				$this->___get_diacritical = (in_array($needle, $words, true) !== false ? $needle : false);
+			} else {
+				$this->___get_diacritical = $words;
+			}
 		}
+		
+		return $this->___get_diacritical;
+	}
+	
+	/*
+	 * Get skip words
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function get_skip_words( $needle = NULL ){
+		
+		if(NULL === $this->___get_skip_words)
+		{
+			$words = array();
+			$words_file=apply_filters('rstr/init/libraries/file/skip-words', RSTR_ROOT.'/libraries/' . $this->get_locale() . '.skip.words.lib');
+			
+			if(file_exists($words_file))
+			{
+				if($fopen_locale=fopen($words_file, 'r'))
+				{
+					$contents = fread($fopen_locale, filesize($words_file));
+					fclose($fopen_locale);
+					
+					if(!empty($contents))
+					{
+						$words = explode("\n", $contents);
+						$words = array_unique($words);
+						$words = array_filter($words);
+						$words = array_map('trim', $words);
+					} else $this->___get_skip_words = false;
+				} else $this->___get_skip_words = false;
+			} else $this->___get_skip_words = false;
+			
+			if($needle) {
+				$this->___get_skip_words = (in_array($needle, $words, true) !== false ? $needle : false);
+			} else {
+				$this->___get_skip_words = $words;
+			}
+		}
+		
+		return $this->___get_skip_words;
 	}
 }
 endif;

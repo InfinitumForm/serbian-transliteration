@@ -143,7 +143,7 @@
 							'nonce'  : button[index].dataset.nonce,
 							'value'  : textarea.value
 						}, {
-							'Accept' : 'text/html'
+							'Accept' : 'text/plain'
 						});
 						
 						ajax_done(function(data){

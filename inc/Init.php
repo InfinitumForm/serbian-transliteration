@@ -124,7 +124,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				}
 			}
 			return $filters;
-		}, 1, 2);
+		}, PHP_INT_MAX, 2);
 		
 		
 		/* Add generator

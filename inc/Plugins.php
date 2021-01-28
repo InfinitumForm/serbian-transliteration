@@ -12,7 +12,8 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 	{
 		private $plugins = array(
 			'revslider' => 'revslider',
-			'woocommerce' => 'woocommerce'
+			'woocommerce' => 'woocommerce',
+			'wordpress-seo' => 'wp-seo'
 		);
 		
 		/* Run this script */
@@ -38,7 +39,9 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 				{
 					if( is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists(RSTR_INC . "/plugins/{$file_name}.php") )
 					{
-						$plugin_class = "Serbian_Transliteration__Plugin__{$file_name}";
+						$class_name = str_replace(['-','.'], '_', $file_name);
+						$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
+
 						if(class_exists($plugin_class)) {
 							$plugin_class::run($this->options);
 						} else {
@@ -66,7 +69,8 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 			{
 				if( is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists(RSTR_INC . "/plugins/{$file_name}.php") )
 				{
-					$plugin_class = "Serbian_Transliteration__Plugin__{$file_name}";
+					$class_name = str_replace(['-','.'], '_', $file_name);
+					$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
 					if(class_exists($plugin_class)) {
 						$return = array_merge($return, $plugin_class::filters());
 					} else {

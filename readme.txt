@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.3.1
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,11 +27,13 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 
 * Compatible with Multilanguage Plugins
 * Compatible with any WordPress template
+* Compatible with SEO plugins
 * Possibility of partial transliteration
 * Scalable and customizable
 * It does not affect on the HTML, CSS or JS codes
 * Multilingual support
 * Transcription mode selection
+* Diacritical support (currently for the Serbian language)
 * Support [PHP version 7.4.8](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 * Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 
@@ -58,6 +60,7 @@ We also do special compatible functions with:
 * [Polylang](https://wordpress.org/plugins/polylang/)
 * [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
 * [WordPress Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
+* [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
 
 **YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
 
@@ -120,6 +123,12 @@ We also thought of PHP developers where we have enabled several useful functions
 9. Automated test
 
 == Changelog ==
+
+= 1.3.3 =
+* Included Yoast SEO (WordPress SEO) support
+* Added skip words library for the sr_RS locale
+* Improved site speed performances
+* Fixed diacritical transliterations
 
 = 1.3.2 =
 * Improved global functions and code optimization
@@ -241,6 +250,12 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.3.3 =
+* Included Yoast SEO (WordPress SEO) support
+* Added skip words library for the sr_RS locale
+* Improved site speed performances
+* Fixed diacritical transliterations
+
 = 1.3.2 =
 * Improved global functions and code optimization
 * Added Avada theme support
@@ -262,44 +277,12 @@ We also thought of PHP developers where we have enabled several useful functions
 * Improved JavaScript code
 * Improved search functionality
 
-= 1.2.8 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added simple diacritical check for the search fnctionality
-* Added RSS feed transliteration
-* Added advanced widgets transliteration
-* Fixed problems with special custom widgets
-* Prepared basis for further developments and improvements
-
-= 1.2.7 =
-* Expanded metadata transliteration
-* Fixed PHP error Undefined property
-* Improved plugin for the WordPress version 5.6
-
-= 1.2.6 =
-* MAJOR UPDATE: You need to review and edit your settings
-* Added SEO settings
-* Added First visit mode
-* Added alternet links control for the search engines
-* Fixed cookie control
-
-= 1.2.5 =
-* Added Ukrainian language by request
-
-= 1.2.4 =
-* MAJOR UPDATE: Added special support for themes and plugins
-* Added support for the "Themify" theme
-* Added support for the Revolution Slider
-* Only WooCommerce mode is deprecated because of filter options and may be removed in a future version
-* Woocommerce support is moved inside new plugins support
-* Optimization: Plugin and theme support is only activated if there is an active plugin or a theme defined in advance
-
 == Frequently Asked Questions ==
 
 = What is Romanization or Latinisation? =
 **Romanisation or Latinisation**, in linguistics, is the conversion of writing from a different writing system to the Roman (Latin) script, or a system for doing so. Methods of romanization include transliteration, for representing written text, and transcription, for representing the spoken word, and combinations of both.
 
 = Which Romanization does this plugin support? =
-
 This plugin supports several world letters written in Cyrillic and enables their Romanization
 
 * Romanization of Serbian what include Bosnian and Montenegrin
@@ -311,6 +294,11 @@ This plugin supports several world letters written in Cyrillic and enables their
 * Romanization of Ukrainian
 
 Each of these transliterations is created separately and follows the rules of the active language.
+
+= What is the best practice for transliteration? =
+Through various experiences, we came to the conclusion that it is best to create the entire site in Cyrillic and enable transliteration for Latin.
+
+The reason for this solution lies in the problem of transliteration of Latin into Cyrillic due to encoding and, depending on the server, can create certain problems, especially in communication with the database. Creating a site in Cyrillic bypasses all problems and is very easily translated into Latin.
 
 = Is Latin better for SEO than Cyrillic? =
 According to Google documentation and discussions on forums and blogs, it is concluded that Latin is much better for SEO and it is necessary to practice Latin at least when permalinks and file names are in Latin, while the text can be in both letters but Latin is always preferred.
