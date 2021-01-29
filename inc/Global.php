@@ -728,11 +728,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return get_the_id();
 		else if(!is_null($post) && isset($post->ID) && !empty($post->ID))
 			return $post->ID;
-		else if($this->get('action') == 'edit' && $post = $this->get('post', 'int', false))
+		else if( (isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'edit') && $post = ((isset($_GET['post']) && is_numeric($_GET['post']))  ? absint($_GET['post']) : false))
 			return $post;
-		else if($p = $this->get('p', 'int', false))
+		else if($p = ((isset($_GET['p']) && is_numeric($_GET['p']))  ? absint($_GET['p']) : false))
 			return $p;
-		else if($page_id = $this->get('page_id', 'int', false))
+		else if($page_id = ((isset($_GET['page_id']) && is_numeric($_GET['page_id']))  ? absint($_GET['page_id']) : false))
 			return $page_id;
 		else if(!is_admin() && $wpdb)
 		{
@@ -768,97 +768,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		return false;
 	}
-	
-	/* 
-	* Generate and clean GET
-	* @name          GET name
-	* @option        string, int, float, bool, html, encoded, url, email
-	* @default       default value
-	*/
-	public function get($name, $option='string', $default=''){
-        $option = trim((string)$option);
-        if(isset($_GET[$name]) && !empty($_GET[$name]))
-        {           
-            if(is_array($_GET[$name]))
-                $is_array=true;
-            else
-                $is_array=false;
-            
-            if( is_numeric( $option ) || empty( $option ) ) return $default;
-            else $input = $_GET[$name];
-            
-            switch($option)
-            {
-                default:
-                    if($is_array) return array_map( 'sanitize_text_field', $input );
-                    
-                    return sanitize_text_field( $input );
-                break;
-                case 'encoded':
-                    return (!empty($input)?$input:$default);
-                break;
-				case 'url':
-					if($is_array) return array_map( 'esc_url', $input );
-			
-					return esc_url( $input );
-				break;
-				case 'url_raw':
-					if($is_array) return array_map( 'esc_url_raw', $input );
-		
-					return esc_url_raw( $input );
-				break;
-                case 'email':
-                    if($is_array) return array_map( 'sanitize_email', $input );
-                    
-                    return sanitize_email( $input );
-                break;
-                case 'int':
-                    if($is_array) return array_map( 'absint', $input );
-                    
-                    return absint( $input );
-                break;
-                case 'float':
-					if($is_array) return array_map( 'floatval', $input );
-                    
-                    return ((float) $input );
-                break;
-                case 'bool':
-                    if($is_array) return array_map( 'boolval', $input );
-                    
-                    return boolval( $input );
-				break;
-				case 'html_class':
-					if( $is_array ) return array_map( 'sanitize_html_class', $input );
-
-					return sanitize_html_class( $input );
-				break;
-				case 'title':
-					if( $is_array ) return array_map( 'sanitize_title', $input );
-
-					return sanitize_title( $input );
-				break;
-				case 'user':
-					if( $is_array ) return array_map( 'sanitize_user', $input );
-
-					return sanitize_user( $input );
-				break;
-				case 'no_html':
-					if( $is_array ) return array_map( 'wp_filter_nohtml_kses', $input );
-
-					return wp_filter_nohtml_kses( $input );
-				break;
-				case 'post':
-					if( $is_array ) return array_map( 'wp_filter_post_kses', $input );
-
-					return wp_filter_post_kses( $input );
-				break;
-            }
-        }
-        else
-        {
-            return $default;
-        }
-    }
 	
 	/* 
 	* Register language script
@@ -1046,21 +955,18 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	{
 		if($url !== false && is_string($url)) {
 			return (preg_match('/(https|ftps)/Ui', $url) !== false);
-		} else if( is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN ===true ) {
-			return true;
 		} else {
-			if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+			if(
+				( is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN ===true )
+				|| (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+				|| (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+				|| (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
+				|| (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+				|| (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
+				|| (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
+			) {
 				return true;
-			else if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-				return true;
-			else if(!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
-				return true;
-			else if(isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
-				return true;
-			else if(isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
-				return true;
-			else if(isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
-				return true;
+			}
 		}
 		return false;
 	}
@@ -1203,6 +1109,27 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
 	public function get_options() {
 		return get_rstr_option();
+	}
+	
+	/* 
+	* Admin action links
+	* @verson    1.0.0
+	*/
+	public function admin_action_links($actions = array()) {
+		$active = (isset($_GET['action']) ? $_GET['action'] : '');
+		$tab = (isset($_GET['tab']) ? $_GET['tab'] : '');
+	?>
+<ul class="action-links">
+<?php foreach($actions as $action=>$name): ?>
+	<li class="action-tab<?php echo ($action==$active ? ' active' : ''); ?>"><a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action); ?>" class="action-link<?php echo ($action==$active ? ' active' : ''); ?>"><?php echo $name; ?></a></li>
+<?php endforeach; ?>
+</ul>
+<select class="action-links-select" onchange="location = this.value;">
+<?php foreach($actions as $action=>$name): ?>
+	<option value="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action); ?>"<?php echo ($action==$active ? ' selected' : ''); ?>><?php echo $name; ?></option>
+<?php endforeach; ?>
+</select>
+	<?php
 	}
 	
 	/* 

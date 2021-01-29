@@ -499,8 +499,10 @@ class Serbian_Transliteration_Transliterating {
 	
 	/*
 	 * Create only diacritical library
+	 * THIS IS TEST FUNCTION, NOT FOR THE PRODUCTION
 	 * @author        Ivijan-Stefan Stipic
 	*/
+/*
 	private function create_only_diacritical($file, $new_file){
 		
 		if(file_exists($file) || empty($new_file)) return;
@@ -555,7 +557,7 @@ class Serbian_Transliteration_Transliterating {
 			fclose($new_file);
 		}
 	}
-	
+*/
 	/*
 	 * Get list of diacriticals
 	 * @return        bool false, array or string on needle

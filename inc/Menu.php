@@ -140,14 +140,8 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 			
 			$options = (object)array(
 				'active'	=> $get_script,
-				'cyr'		=> add_query_arg(array(
-								'rstr' => 'cyr',
-							//	'cache' => uniqid()
-							), $url),
-				'lat'		=> add_query_arg(array(
-								'rstr' => 'lat',
-							//	'cache' => uniqid()
-							), $url)
+				'cyr'		=> add_query_arg(array('rstr' => 'cyr'), $url),
+				'lat'		=> add_query_arg(array('rstr' => 'lat'), $url)
 			);
 			
 			$item_url = substr( $item->url, 0, strpos( $item->url, '#', 1 ) ) . '#';
@@ -157,38 +151,31 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 				$item_redirect = $_SERVER['REQUEST_URI'];
 			}
 			
-			switch ( $item_url ) {
-				case '#transliteration-latcyr#' :
-					$item_redirect = explode( '|', $item_redirect );
-					
-					if ( count( $item_redirect ) != 2 ) {
-						$item_redirect = array_map('trim', $item_redirect);
-						$item_redirect[1] = $item_redirect[0];
-					}
-					
-					if ( $options->active == 'cyr' ) {
-						$item->url = $options->lat;
-					} else {
-						$item->url = $options->cyr;
-					}
-					
-					$item->title = $this->transliteration_setup_title( $item->title, $options ) ;
-				break;
+			if($item_url == '#transliteration-latcyr#'){
+				$item_redirect = explode( '|', $item_redirect );
 				
-				case '#transliteration-lat#' :
-					if ( $options->active == 'cyr' ) {
-						$item->url = $options->lat;
-						return $item;
-					}
-				break;
+				if ( count( $item_redirect ) != 2 ) {
+					$item_redirect = array_map('trim', $item_redirect);
+					$item_redirect[1] = $item_redirect[0];
+				}
 				
-				case '#transliteration-cyr#' :
-					if ( $options->active == 'lat' ) {
-						$item->url = $options->cyr;
-						return $item;
-					}
-				break;
-			
+				if ( $options->active == 'cyr' ) {
+					$item->url = $options->lat;
+				} else {
+					$item->url = $options->cyr;
+				}
+				
+				$item->title = $this->transliteration_setup_title( $item->title, $options ) ;
+			} else if($item_url == '#transliteration-lat#'){
+				if ( $options->active == 'cyr' ) {
+					$item->url = $options->lat;
+					return $item;
+				}
+			} else if($item_url == '#transliteration-cyr#'){
+				if ( $options->active == 'lat' ) {
+					$item->url = $options->cyr;
+					return $item;
+				}
 			}
 			
 			$item->url = esc_url( $item->url );

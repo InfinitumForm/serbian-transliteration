@@ -26,6 +26,59 @@
 	resize:vertical;
 }
 
+#serbian-transliteration-settings .action-links-select{
+	width:100%;
+	max-width:100%;
+	margin:10px 0 5px 0;
+	display:none;
+}
+
+@media all and (max-width:768px){
+	#serbian-transliteration-settings .action-links-select{
+		display:block;
+	}
+}
+
+#serbian-transliteration-settings .action-links{
+	display:block;
+	list-style:none;
+	padding: 5px 5px 1px 5px;
+	margin:10px 0 5px 0;
+	background-color: oldlace;
+}
+
+@media all and (max-width:768px){
+	#serbian-transliteration-settings .action-links{
+		display:none;
+	}
+}
+
+#serbian-transliteration-settings .action-links > .action-tab{
+	display:inline-block;
+	padding-right:5px;
+	padding-left:5px;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab + .action-tab{
+	border-left:1px solid #555;
+	padding-left:9px;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab > a{
+	text-decoration:none;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab:hover > a{
+	text-decoration:underline;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab.active > a,
+#serbian-transliteration-settings .action-links > .action-tab.active:hover > a{
+	color:#333;
+	text-decoration:none;
+	font-weight:600;
+}
+
 #serbian-transliteration-settings textarea#rstr-transliteration-letters{
 	
 }

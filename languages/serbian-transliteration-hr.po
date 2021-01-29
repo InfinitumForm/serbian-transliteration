@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2020-12-22 15:40+0100\n"
-"PO-Revision-Date: 2020-12-22 15:42+0100\n"
+"POT-Creation-Date: 2021-01-29 09:52+0100\n"
+"PO-Revision-Date: 2021-01-29 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -24,13 +24,13 @@ msgstr ""
 
 #: inc/Functions.php:195 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:496
 #: inc/Settings.php:849 inc/Shortcodes.php:65
-#: inc/settings/content/php-functions.php:98
+#: inc/settings/content/php-functions.php:99
 msgid "Cyrillic"
 msgstr "Ćirilica"
 
 #: inc/Functions.php:196 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:497
 #: inc/Settings.php:848 inc/Shortcodes.php:66
-#: inc/settings/content/php-functions.php:103
+#: inc/settings/content/php-functions.php:104
 msgid "Latin"
 msgstr "Latinski"
 
@@ -43,11 +43,11 @@ msgstr ""
 "Odaberite jednu od vrsta prikaza: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
 "\"%5$s\" ili \"%6$s\""
 
-#: inc/Global.php:21
+#: inc/Global.php:22
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr "Standardni način rada (sadržaj, teme, dodaci, prijevodi, izbornik)"
 
-#: inc/Global.php:22
+#: inc/Global.php:23
 msgid ""
 "Advanced mode (content, widgets, themes, plugins, translations, "
 "menu‚ permalinks, media)"
@@ -55,11 +55,11 @@ msgstr ""
 "Napredni način rada (sadržaj, widgeti, teme, dodaci, prijevodi, izbornik, "
 "stalne veze, mediji)"
 
-#: inc/Global.php:23
+#: inc/Global.php:24
 msgid "Forced transliteration (everything)"
 msgstr "Prisilna transliteracija (sve)"
 
-#: inc/Global.php:28
+#: inc/Global.php:29
 msgid ""
 "Only WooCommerce (It bypasses all other transliterations and focuses only on "
 "WooCommerce)"
@@ -67,56 +67,56 @@ msgstr ""
 "Samo WooCommerce (zaobilazi sve ostale transliteracije i fokusira se samo na "
 "WooCommerce)"
 
-#: inc/Global.php:52
+#: inc/Global.php:53
 msgid "Transliteration disabled"
 msgstr "Transliteracija je onemogućena"
 
-#: inc/Global.php:53 inc/settings/content/shortcodes.php:26
+#: inc/Global.php:54 inc/settings/content/shortcodes.php:27
 msgid "Cyrillic to Latin"
 msgstr "Ćirilica na latinicu"
 
-#: inc/Global.php:54 inc/settings/content/shortcodes.php:29
+#: inc/Global.php:55 inc/settings/content/shortcodes.php:30
 msgid "Latin to Cyrillic"
 msgstr "Latinica na ćirilicu"
 
-#: inc/Global.php:805 inc/Global.php:806
+#: inc/Global.php:781 inc/Global.php:782
 msgctxt "Language script"
 msgid "Script"
 msgstr "Skripta"
 
-#: inc/Global.php:807
+#: inc/Global.php:783
 msgid "Search by Script"
 msgstr "Pretraživanje po skripti"
 
-#: inc/Global.php:808
+#: inc/Global.php:784
 msgid "All Scripts"
 msgstr "Sve skripte"
 
-#: inc/Global.php:809
+#: inc/Global.php:785
 msgid "Parent Script"
 msgstr "Nadređena skripta"
 
-#: inc/Global.php:810
+#: inc/Global.php:786
 msgid "Parent Script:"
 msgstr "Nadređena skripta:"
 
-#: inc/Global.php:811
+#: inc/Global.php:787
 msgid "Edit Script"
 msgstr "Uređivanje skripte"
 
-#: inc/Global.php:812
+#: inc/Global.php:788
 msgid "Update Script"
 msgstr "Ažuriraj skriptu"
 
-#: inc/Global.php:813
+#: inc/Global.php:789
 msgid "Add New Script"
 msgstr "Dodaj novu skriptu"
 
-#: inc/Global.php:814
+#: inc/Global.php:790
 msgid "New Script Name"
 msgstr "Novi naziv skripte"
 
-#: inc/Global.php:815
+#: inc/Global.php:791
 msgid "Script"
 msgstr "Skripta"
 
@@ -281,7 +281,7 @@ msgstr ""
 msgid "Settings"
 msgstr "Postavke"
 
-#: inc/Settings.php:119 inc/settings/content.php:93
+#: inc/Settings.php:119 inc/settings/content.php:91
 msgid "Permalink Tool"
 msgstr "Alat za trajnu vezu (permalink)"
 
@@ -297,7 +297,7 @@ msgstr "PHP Funkcije"
 msgid "5 stars?"
 msgstr "5 zvjezdica?"
 
-#: inc/Settings.php:152 inc/settings/content/permalink-tool.php:44
+#: inc/Settings.php:152 inc/settings/content/permalink-tool.php:45
 msgid ""
 "Please wait! Do not close the window or leave the page until this operation "
 "is completed!"
@@ -594,14 +594,14 @@ msgstr ""
 "Kratki kôd transliteracije nema odgovarajuće parametre i prijevod nije "
 "moguć. Molimo provjerite dokumentaciju."
 
-#: inc/Tools.php:28
+#: inc/Tools.php:29
 msgid ""
 "An error occurred while converting. Please refresh the page and try again."
 msgstr ""
 "Došlo je do pogreške tijekom pretvorbe. Osvježite stranicu i pokušajte "
 "ponovo."
 
-#: inc/Tools.php:41
+#: inc/Tools.php:42
 msgid ""
 "There was a communication problem. Please refresh the page and try again. If "
 "this does not solve the problem, contact the author of the plugin."
@@ -609,23 +609,31 @@ msgstr ""
 "Došlo je do problema u komunikaciji. Osvježite stranicu i pokušajte ponovo. "
 "Ako ovo ne riješi problem, obratite se autoru dodatka."
 
-#: inc/settings/content.php:61
+#: inc/settings/content.php:59
 msgid "General Settings"
 msgstr "Opće postavke"
 
-#: inc/settings/content.php:77
+#: inc/settings/content.php:75
+msgid "Tools"
+msgstr "Alati"
+
+#: inc/settings/content.php:90
 msgid "Transliteration Tool"
 msgstr "Alat za transliteraciju"
 
-#: inc/settings/content.php:107 inc/settings/content/shortcodes.php:20
+#: inc/settings/content.php:124
+msgid "Documentation"
+msgstr "Dokumentacija"
+
+#: inc/settings/content.php:132 inc/settings/content/shortcodes.php:21
 msgid "Available shortcodes"
 msgstr "Dostupni kratki kodovi"
 
-#: inc/settings/content.php:123
+#: inc/settings/content.php:133
 msgid "Available PHP functions"
 msgstr "Dostupne PHP funkcije"
 
-#: inc/settings/content.php:139
+#: inc/settings/content.php:159
 msgid "Debug"
 msgstr "Otkloniti neispravnost"
 
@@ -744,11 +752,11 @@ msgstr "Put direktorija dodatka"
 msgid "Plugin settings"
 msgstr "Postavke dodatka"
 
-#: inc/settings/content/permalink-tool.php:13
+#: inc/settings/content/permalink-tool.php:14
 msgid "Permalink Transliteration Tool"
 msgstr "Alat za transliteraciju trajne veze"
 
-#: inc/settings/content/permalink-tool.php:15
+#: inc/settings/content/permalink-tool.php:16
 msgid ""
 "This tool can rename all existing Cyrillic permalinks to Latin inside "
 "database."
@@ -756,7 +764,7 @@ msgstr ""
 "Ovaj alat može preimenovati sve postojeće ćirilske trajne veze u latinicu "
 "unutar baze podataka."
 
-#: inc/settings/content/permalink-tool.php:16
+#: inc/settings/content/permalink-tool.php:17
 msgid ""
 "This option is dangerous and can create unexpected problems. Once you run "
 "this script, all permalinks in your database will be modified and this can "
@@ -766,7 +774,7 @@ msgstr ""
 "pokrenete ovu skriptu, sve trajne veze u vašoj bazi podataka bit će "
 "izmijenjene, a to može utjecati na SEO što uzrokuje pogrešku 404."
 
-#: inc/settings/content/permalink-tool.php:18
+#: inc/settings/content/permalink-tool.php:19
 msgid ""
 "Consult your SEO developer before you run this script as you will then need "
 "to resubmit the sitemap and make any other additional settings to change the "
@@ -776,33 +784,33 @@ msgstr ""
 "trebati ponovo poslati sitemap i izvršiti bilo koje druge dodatne postavke "
 "za promjenu trajnih veza na tražilicama."
 
-#: inc/settings/content/permalink-tool.php:19
+#: inc/settings/content/permalink-tool.php:20
 #, php-format
 msgid "You must %s before running this script."
 msgstr "Morate napraviti %s prije pokretanja ove skripte."
 
-#: inc/settings/content/permalink-tool.php:19
+#: inc/settings/content/permalink-tool.php:20
 msgid "back up the database"
 msgstr "sigurnosnu kopiju baze podataka"
 
-#: inc/settings/content/permalink-tool.php:33
+#: inc/settings/content/permalink-tool.php:34
 #, php-format
 msgid "This tool will affect on the following post types: %s"
 msgstr "Ovaj će alat utjecati na sljedeće vrste postova: %s"
 
-#: inc/settings/content/permalink-tool.php:47
+#: inc/settings/content/permalink-tool.php:48
 msgid "Let's do magic"
 msgstr "Napravimo magiju"
 
-#: inc/settings/content/permalink-tool.php:50
+#: inc/settings/content/permalink-tool.php:51
 msgid "Are you sure you want this?"
 msgstr "Jeste li sigurni da ovo želite?"
 
-#: inc/settings/content/permalink-tool.php:54
+#: inc/settings/content/permalink-tool.php:55
 msgid "Disclaimer"
 msgstr "Odricanje od odgovornosti"
 
-#: inc/settings/content/permalink-tool.php:55
+#: inc/settings/content/permalink-tool.php:56
 msgid ""
 "This tool is made to work safely but there is always a small chance of some "
 "unpredictable problem."
@@ -810,7 +818,7 @@ msgstr ""
 "Ovaj je alat napravljen za siguran rad, ali uvijek postoje male šanse za "
 "neki nepredvidivi problem."
 
-#: inc/settings/content/permalink-tool.php:56
+#: inc/settings/content/permalink-tool.php:57
 msgid ""
 "WE DO NOT GUARANTEE THAT THIS TOOL WILL FUNCTION PROPERLY ON YOUR SERVER AND "
 "BY USING THIS TOOL YOU ARE RESPONSIBLE FOR RISK AND POSSIBLE PROBLEMS."
@@ -818,23 +826,23 @@ msgstr ""
 "NE JAMČIMO DA ĆE OVAJ ALAT PRAVILNO FUNKCIRATI NA VAŠEM SERVERU I "
 "KORIŠTENJEM OVOG ALATA ODGOVORNI STE ZA RIZIK I MOGUĆE PROBLEME."
 
-#: inc/settings/content/permalink-tool.php:57
+#: inc/settings/content/permalink-tool.php:58
 msgid "BACKUP YOUR DATABASE BEFORE USE IT."
 msgstr "PRIJE KORIŠTENJA NAPRAVITE REZERVNU KOPIJU BAZE PODATAKA."
 
-#: inc/settings/content/php-functions.php:20
+#: inc/settings/content/php-functions.php:21
 msgid "Available PHP Functions"
 msgstr "Dostupne PHP funkcije"
 
-#: inc/settings/content/php-functions.php:30
+#: inc/settings/content/php-functions.php:31
 msgid "Determines whether the site is already in Cyrillic."
 msgstr "Određuje je li stranica već na ćirilicu."
 
-#: inc/settings/content/php-functions.php:58
+#: inc/settings/content/php-functions.php:59
 msgid "Transliteration of some text or content into the desired script."
 msgstr "Transliteracija nekog teksta ili sadržaja u željenu skriptu."
 
-#: inc/settings/content/php-functions.php:60
+#: inc/settings/content/php-functions.php:61
 msgid ""
 "The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> "
 "(Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)"
@@ -842,24 +850,24 @@ msgstr ""
 "Parametar <b><i>$type</i></b> ima dvije vrijednosti: <code>cyr_to_lat</code> "
 "(ćirilica na latinski) i <code>lat_to_cyr</code> (latinica na ćirilicu)"
 
-#: inc/settings/content/php-functions.php:63
+#: inc/settings/content/php-functions.php:64
 msgid "Get active script."
 msgstr "Uzmite aktivnu skriptu."
 
-#: inc/settings/content/php-functions.php:67
+#: inc/settings/content/php-functions.php:68
 msgid "This function displays a selector for the transliteration script."
 msgstr "Ova funkcija prikazuje odabirač za skriptu transliteracije."
 
-#: inc/settings/content/php-functions.php:69
+#: inc/settings/content/php-functions.php:70
 msgid "Parameters"
 msgstr "Parametri"
 
-#: inc/settings/content/php-functions.php:70
+#: inc/settings/content/php-functions.php:71
 msgid ""
 "This attribute contains an associative set of parameters for this function:"
 msgstr "Ovaj atribut sadrži asocijativni skup parametara za ovu funkciju:"
 
-#: inc/settings/content/php-functions.php:76
+#: inc/settings/content/php-functions.php:77
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
@@ -868,44 +876,44 @@ msgstr ""
 "(string) Vrsta odabirača koja će se prikazati na web-mjestu. Može biti: "
 "%1$s, %2$s, %3$s, %4$s, %5$s ili %6$s. Zadano: %1$s"
 
-#: inc/settings/content/php-functions.php:88
+#: inc/settings/content/php-functions.php:89
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
 "string. Default: %s"
 msgstr "(bool) određuje hoće li se prikazati kroz echo ili kao niz. Zadano: %s"
 
-#: inc/settings/content/php-functions.php:93
-#: inc/settings/content/shortcodes.php:62
+#: inc/settings/content/php-functions.php:94
+#: inc/settings/content/shortcodes.php:63
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
 msgstr ""
 "(string) Razdjelnik koji će se koristiti kada je vrsta odabirača %s. Zadano: "
 "%s"
 
-#: inc/settings/content/php-functions.php:98
+#: inc/settings/content/php-functions.php:99
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr "(string) Tekst za ćirilični link. Zadano: %s"
 
-#: inc/settings/content/php-functions.php:103
+#: inc/settings/content/php-functions.php:104
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr "(string) Tekst za latiničnog linka. Zadano: %s"
 
-#: inc/settings/content/shortcodes.php:23
+#: inc/settings/content/shortcodes.php:24
 msgid "Skip transliteration"
 msgstr "Izbegni transliteraciju"
 
-#: inc/settings/content/shortcodes.php:24
+#: inc/settings/content/shortcodes.php:25
 msgid "Keep this original"
 msgstr "Zadržite ovo kao original"
 
-#: inc/settings/content/shortcodes.php:32
+#: inc/settings/content/shortcodes.php:33
 msgid "Add an image depending on the language script"
 msgstr "Dodavanje slike ovisno o jezičnoj skripti"
 
-#: inc/settings/content/shortcodes.php:33
+#: inc/settings/content/shortcodes.php:34
 msgid ""
 "With this shortcode you can manipulate images and display images in Latin or "
 "Cyrillic depending on the setup."
@@ -913,79 +921,79 @@ msgstr ""
 "S ovim kratkim kodom možete manipulirati slikama i prikazati slike na "
 "latinskom ili ćirilici ovisno o postavljanju."
 
-#: inc/settings/content/shortcodes.php:35
+#: inc/settings/content/shortcodes.php:36
 msgid "Example"
 msgstr "Primjer"
 
-#: inc/settings/content/shortcodes.php:37
+#: inc/settings/content/shortcodes.php:38
 msgid "Main shortcode parameters"
 msgstr "Glavni parametri kratkog koda"
 
-#: inc/settings/content/shortcodes.php:39
+#: inc/settings/content/shortcodes.php:40
 msgid "URL (src) as shown in the Latin language"
 msgstr "URL (src) kako je prikazano na latinskom jeziku"
 
-#: inc/settings/content/shortcodes.php:40
+#: inc/settings/content/shortcodes.php:41
 msgid "URL (src) as shown in the Cyrillic language"
 msgstr "URL (src) kako je prikazano na ćiriličnom jeziku"
 
-#: inc/settings/content/shortcodes.php:41
+#: inc/settings/content/shortcodes.php:42
 msgid ""
 "(optional) URL (src) to the default image if Latin and Cyrillic are "
 "unavailable"
 msgstr ""
 "(neobavezno) URL (src) na zadanu sliku ako su latinica i ćirilica nedostupni"
 
-#: inc/settings/content/shortcodes.php:43
-#: inc/settings/content/shortcodes.php:59
+#: inc/settings/content/shortcodes.php:44
+#: inc/settings/content/shortcodes.php:60
 msgid "Optional shortcode parameters"
 msgstr "Neobavezni parametri kratkog koda"
 
-#: inc/settings/content/shortcodes.php:45
+#: inc/settings/content/shortcodes.php:46
 msgid "(optional) title (alt) description of the image for Cyrillic"
 msgstr "(neobavezno) naslov (alt) slike za ćirilicu"
 
-#: inc/settings/content/shortcodes.php:46
+#: inc/settings/content/shortcodes.php:47
 msgid "(optional) caption description of the image for Cyrillic"
 msgstr "(neobavezno) opis slike za ćirilicu"
 
-#: inc/settings/content/shortcodes.php:47
+#: inc/settings/content/shortcodes.php:48
 msgid "(optional) title (alt) description of the image for Latin"
 msgstr "(neobavezno) naslov (alt) slike za latinski"
 
-#: inc/settings/content/shortcodes.php:48
+#: inc/settings/content/shortcodes.php:49
 msgid "(optional) caption description of the image for Latin"
 msgstr "(neobavezno) opis slike za latinski"
 
-#: inc/settings/content/shortcodes.php:49
+#: inc/settings/content/shortcodes.php:50
 msgid ""
 "(optional) title (alt) description of the image if Latin and Cyrillic are "
 "unavailable"
 msgstr "(neobavezno) naslov (alt) slike ako su latinica i ćirilica nedostupni"
 
-#: inc/settings/content/shortcodes.php:50
+#: inc/settings/content/shortcodes.php:51
 msgid ""
 "(optional) caption description of the imag if Latin and Cyrillic are "
 "unavailable"
 msgstr "(neobavezno) opis slike ako su latinica i ćirilica nedostupni"
 
-#: inc/settings/content/shortcodes.php:52
+#: inc/settings/content/shortcodes.php:53
 msgid "Shortcode return"
 msgstr "Povrat kratkog koda"
 
-#: inc/settings/content/shortcodes.php:53
+#: inc/settings/content/shortcodes.php:54
 msgid "HTML image corresponding to the parameters set in this shortcode."
 msgstr "HTML slika koja odgovara parametrima postavljenim u ovom kratkom kodu."
 
-#: inc/settings/content/shortcodes.php:56
+#: inc/settings/content/shortcodes.php:57
 msgid "Language script menu"
 msgstr "Izbornik skripte jezika"
 
-#: inc/settings/content/shortcodes.php:57
+#: inc/settings/content/shortcodes.php:58
 msgid "This shortcode displays a selector for the transliteration script."
 msgstr "Ovaj kratki kod prikazuje izbornik za skriptu transliteracije."
 
-#: inc/settings/content/shortcodes.php:61
+#: inc/settings/content/shortcodes.php:62
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
@@ -994,15 +1002,15 @@ msgstr ""
 "(string) Vrsta izbornika koja će se prikazati na web-mjestu. Može biti: "
 "\"%1$s\", \"%2$s\", \"%3$s\" ili \"%4$s\""
 
-#: inc/settings/content/shortcodes.php:63
+#: inc/settings/content/shortcodes.php:64
 msgid "(string) Text for Cyrillic link. Default: Cyrillic"
 msgstr "(string) Tekst za ćirilični link. Zadano: ćirilica"
 
-#: inc/settings/content/shortcodes.php:64
+#: inc/settings/content/shortcodes.php:65
 msgid "(string) Text for Latin link. Default: Latin"
 msgstr "(string) Tekst za latiničnog linka. Zadano: latinski"
 
-#: inc/settings/content/shortcodes.php:67
+#: inc/settings/content/shortcodes.php:68
 msgid ""
 "This shortcodes work independently of the plugin settings and can be used "
 "anywhere within WordPress pages, posts, taxonomies and widgets (if they "
@@ -1012,11 +1020,11 @@ msgstr ""
 "bilo gdje unutar WordPress stranica, postova, taksonomija i widgeta (ako ih "
 "podržavaju)."
 
-#: inc/settings/content/transliteration-tool.php:13
+#: inc/settings/content/transliteration-tool.php:15
 msgid "Converter for transliterating Cyrillic into Latin and vice versa"
 msgstr "Pretvarač za transliteraciju ćirilice u latinicu i obrnuto"
 
-#: inc/settings/content/transliteration-tool.php:14
+#: inc/settings/content/transliteration-tool.php:16
 msgid ""
 "Copy the desired text into one field and press the desired key to convert "
 "the text."
@@ -1024,15 +1032,15 @@ msgstr ""
 "Kopirajte željeni tekst u jedno polje i pritisnite željenu tipku za "
 "pretvorbu teksta."
 
-#: inc/settings/content/transliteration-tool.php:19
+#: inc/settings/content/transliteration-tool.php:21
 msgid "Convert to Latin"
 msgstr "Pretvori u latinski"
 
-#: inc/settings/content/transliteration-tool.php:20
+#: inc/settings/content/transliteration-tool.php:22
 msgid "Convert to Cyrillic"
 msgstr "Pretvori u ćirilicu"
 
-#: inc/settings/content/transliteration-tool.php:24
+#: inc/settings/content/transliteration-tool.php:26
 msgid "Reset"
 msgstr "Očisti sve"
 

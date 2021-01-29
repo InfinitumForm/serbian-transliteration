@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	 
 		<div id="post-body">
 			<div id="post-body-content">
+            	<?php do_action('rstr/settings/tab/content/tools/documentation'); ?>
 				<h1><span><?php _e('Available shortcodes', RSTR_NAME); ?></span></h1>
 				<div class="inside">
 					<br>

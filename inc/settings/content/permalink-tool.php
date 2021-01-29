@@ -10,6 +10,7 @@
 	 
 		<div id="post-body">
 			<div id="post-body-content">
+	            <?php do_action('rstr/settings/tab/content/tools/action'); ?>
 				<h1><span><?php _e('Permalink Transliteration Tool', RSTR_NAME); ?></span></h1>
 				<?php
 					printf('<p>%s</p>', __('This tool can rename all existing Cyrillic permalinks to Latin inside database.', RSTR_NAME));

@@ -1,4 +1,5 @@
-<?php  $nonce = esc_attr(wp_create_nonce('rstr-transliteration-letters')); ?>
+<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+$nonce = esc_attr(wp_create_nonce('rstr-transliteration-letters')); ?>
 <div class="rstr-tab-wrapper" id="transliteration-letters">
 
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
@@ -10,6 +11,7 @@
 	 
 		<div id="post-body">
 			<div id="post-body-content">
+            	<?php do_action('rstr/settings/tab/content/tools/action'); ?>
 				<h1><span><?php _e('Converter for transliterating Cyrillic into Latin and vice versa', RSTR_NAME); ?></span></h1>
                 <?php printf('<p>%s</p>', __('Copy the desired text into one field and press the desired key to convert the text.', RSTR_NAME)); ?>
                 
