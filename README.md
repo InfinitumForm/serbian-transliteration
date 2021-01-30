@@ -1,6 +1,8 @@
 Transliteration – WordPress Transliteration
 ========
 
+[![PHP compatibility](https://plugintests.com/plugins/wporg/serbian-transliteration/php-badge.svg)](https://plugintests.com/plugins/wporg/serbian-transliteration/latest) [![WP compatibility](https://plugintests.com/plugins/wporg/serbian-transliteration/wp-badge.svg)](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+
 Hello developers and linguists!
 
 This is the part where you can participate in the development of this WordPress transliteration plugin.
