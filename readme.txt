@@ -50,6 +50,8 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 * **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
 * more languages are coming soon...
 
+> If you want to participate in the development of the plugin, we invite you to the [GitHub repository](https://github.com/CreativForm/serbian-transliteration)
+
 = PLUGINS SUPPORT =
 
 This plugin is made to support all known plugins and visual editors.
