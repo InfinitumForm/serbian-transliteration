@@ -198,8 +198,8 @@ if(!function_exists('script_selector')) :
 		
 		$options = (object)array(
 			'active'	=> get_script(),
-			'cyr'		=> add_query_arg('rstr', 'cyr', $url),
-			'lat'		=> add_query_arg('rstr', 'lat', $url)
+			'cyr'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'cyr', $url),
+			'lat'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'lat', $url)
 		);
 		
 		if(in_array($args->display_type, array('object', 'array'))) {

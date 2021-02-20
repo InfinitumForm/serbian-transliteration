@@ -116,7 +116,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 		$links = array_merge( array(
 			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration' ) ) . '">' . __( 'Settings', RSTR_NAME ) . '</a>',
-			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=permalink_tool' ) ) . '">' . __( 'Permalink Tool', RSTR_NAME ) . '</a>'
+			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=tools&action=permalink_tool' ) ) . '">' . __( 'Permalink Tool', RSTR_NAME ) . '</a>'
 		), $links );
 
 		return $links;
@@ -126,8 +126,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	function row_meta_links( $links, $file ) {
 		if ( RSTR_BASENAME == $file ) {
 			return array_merge( $links, array(
-				'rstr-shortcodes' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=shortcodes' ) ) . '">' . __( 'Shortcodes', RSTR_NAME ) . '</a>',
-				'rstr-functions' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=functions' ) ) . '">' . __( 'PHP Functions', RSTR_NAME ) . '</a>',
+				'rstr-shortcodes' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=documentation&action=shortcodes' ) ) . '">' . __( 'Shortcodes', RSTR_NAME ) . '</a>',
+				'rstr-functions' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=documentation&action=functions' ) ) . '">' . __( 'PHP Functions', RSTR_NAME ) . '</a>',
 				'rstr-review' => '<a href="https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post" target="_blank">' . __( '5 stars?', RSTR_NAME ) . '</a>'
 			));
 		}
@@ -396,6 +396,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             'enable-alternate-links', // ID
             __('Enable alternet links', RSTR_NAME), // Title 
             'enable_alternate_links_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-seo' // Section           
+        );
+		
+		$this->add_settings_field(
+            'parameter-url-selector', // ID
+            __('Parameter URL selector', RSTR_NAME), // Title 
+            'parameter_url_selector_callback', // Callback
             RSTR_NAME, // Page
             RSTR_NAME . '-seo' // Section           
         );
@@ -859,5 +867,30 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first come to your site.', RSTR_NAME));
 	}
+	
+	public function parameter_url_selector_callback()
+	{
+		$inputs = array();
+
+		foreach(array(
+			'rstr' => '?<b>rstr</b>=lat ' . __('(safe)', RSTR_NAME),
+			'script' => '?<b>script</b>=lat ' . __('(standard)', RSTR_NAME),
+			'lang_script' => '?<b>lang_script</b>=lat ' . __('(optional)', RSTR_NAME),
+			'letter' => '?<b>letter</b>=lat ' . __('(optional)', RSTR_NAME),
+			'skripta' => '?<b>skripta</b>=lat ' . __('(optional)', RSTR_NAME),
+			'pismo' => '?<b>pismo</b>=lat ' . __('(optional)', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="first-visit-mode-%1$s"><input type="radio" id="first-visit-mode-%1$s" name="%3$s[url-selector]" value="%1$s"%4$s> <span>%2$s</span></label><br>',
+				esc_attr($key),
+				$label,
+				RSTR_NAME,
+				(isset( $this->options['url-selector'] ) ? ($this->options['url-selector'] == $key ? ' checked' : '') : ($key == 'rstr' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option dictates which URL parameter will be used to change the language.', RSTR_NAME));
+	}
+	
 }
 endif;

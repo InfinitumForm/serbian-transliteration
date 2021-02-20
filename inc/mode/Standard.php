@@ -102,7 +102,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 		}
 		
 		function rss_output_buffer_start() {
-			ob_start();
+			ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
 		
 		function rss_output_buffer_end() {

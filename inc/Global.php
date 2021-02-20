@@ -409,7 +409,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		$tags = $this->html_tags();
 		
-		$tags_cyr = $tags_lat = array();
+		$tags_cyr = array('<имг ', '<бр>', '<бр ', '<хр>', '<хр ');
+		$tags_lat = array('<img ', '<br>', '<br ', '<hr>', '<hr ');
+		
 		foreach($tags->lat as $i=>$tag){
 			$tag_cyr = $tags->cyr[$i];
 			
@@ -428,7 +430,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		$lastPos = 0;
 		$positions = [];
-
+/*
 		while (($lastPos = mb_strpos($content, '<', $lastPos, 'UTF-8')) !== false) {
 			$positions[] = $lastPos;
 			$lastPos = $lastPos + mb_strlen('<', 'UTF-8');
@@ -442,13 +444,19 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$content = str_replace($tag, $tag_lat, $content);
 			}
 		}
+		*/
+		
+		// Fix attributes with doublequote
+		$content = preg_replace_callback ('/(титле|алт|срц|дата-(титле|алт))\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf('%1$s="%2$s"', $this->cyr_to_lat($m[1]), esc_attr($this->lat_to_cyr($m[3], false)));
+		}, $content);
 		
 		// Fix open tags
 		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}0-9a-zA-Z\/\=\"\'_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		
-		// FIx closed tags
+		// Fix closed tags
 		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}0-9a-zA-Z]+>)/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
@@ -475,6 +483,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		// Fix URL
 		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}]{4,5}):\/{2}([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
+			return $this->cyr_to_lat($m[1]);
+		}, $content);
+		$content = preg_replace_callback ('/"(хттпс:\/\/.*?)"/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		
@@ -830,20 +841,20 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	* @verson    1.0.0
 	*/
 	public function set_current_script(){		
-		if(isset($_REQUEST['rstr']))
+		if(isset($_REQUEST[$this->get_option('url-selector', 'rstr')]))
 		{
-			if(in_array($_REQUEST['rstr'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
+			if(in_array($_REQUEST[$this->get_option('url-selector', 'rstr')], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
 			{
-				$this->setcookie($_REQUEST['rstr']);
+				$this->setcookie($_REQUEST[$this->get_option('url-selector', 'rstr')]);
 				$parse_url = $this->parse_url();
 				
 				if(get_rstr_option('cache-support', 'yes') == 'yes') {
-					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])rstr\=(lat|cyr))~i', '$2_rstr_nocache=' . uniqid('rstr' . mt_rand(100,999)), $parse_url['url']) ))) {
+					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])' . $this->get_option('url-selector', 'rstr') . '\=(lat|cyr))~i', '$2_rstr_nocache=' . uniqid($this->get_option('url-selector', 'rstr') . mt_rand(100,999)), $parse_url['url']) ))) {
 						if(function_exists('nocache_headers')) nocache_headers();
 						exit;
 					}
 				} else {
-					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])rstr\=(lat|cyr))~i', '', $parse_url['url']) ))) {
+					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])' . $this->get_option('url-selector', 'rstr') . '\=(lat|cyr))~i', '', $parse_url['url']) ))) {
 						if(function_exists('nocache_headers')) nocache_headers();
 						exit;
 					}
@@ -971,32 +982,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return false;
 	}
 	
-	/*
-	 * Alternate Links
-	 * @since     1.0.13
-	 * @verson    1.0.0
-	*/
-	public function alternate_links() {
-		
-		if(get_rstr_option('enable-alternate-links', 'yes') == 'no') return;
-		
-		$url = $this->get_current_url();
-		$locale = get_locale();
-		$title = get_bloginfo('name');
-		
-		if(strpos($locale, '_') !== false){
-			$hreflang_lat = strtr($locale, array('_'=>'_Latn_'));
-			$hreflang_cyr = strtr($locale, array('_'=>'_Cyrl_'));
-		} else {
-			$hreflang_lat = $locale . '_Latn';
-			$hreflang_cyr = $locale . '_Cyrl';
-		}
-?>
-<link rel="alternate" title="<?php echo esc_attr($this->lat_to_cyr($title, false)); ?>" href="<?php echo add_query_arg('rstr', 'cyr', $url); ?>" hreflang="<?php echo $hreflang_cyr; ?>" />
-<link rel="alternate" title="<?php echo esc_attr($this->cyr_to_lat($title)); ?>" href="<?php echo add_query_arg('rstr', 'lat', $url); ?>" hreflang="<?php echo $hreflang_lat; ?>" />
-<?php
-	}
-	
 	/* 
 	* Check is block editor screen
 	* @since     1.0.9
@@ -1107,6 +1092,18 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return false;
 	}
 	
+	/* 
+	* Get plugin option
+	* @verson    1.0.0
+	*/
+	public function get_option($name = false, $default = NULL) {
+		return get_rstr_option($name, $default);
+	}
+	
+	/* 
+	* Get all plugin options
+	* @verson    1.0.0
+	*/
 	public function get_options() {
 		return get_rstr_option();
 	}

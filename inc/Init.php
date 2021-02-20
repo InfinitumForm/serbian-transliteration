@@ -126,40 +126,6 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			return $filters;
 		}, PHP_INT_MAX, 2);
 		
-		
-		/* Add generator
-		====================================*/
-		add_filter('the_generator',function($gen, $type){
-			if(apply_filters('rstr/transliteration/generator', true))
-			{
-				switch ( $type )
-				{
-						case 'html':
-								$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . RSTR_VERSION . '">';
-								break;
-						case 'xhtml':
-								$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . RSTR_VERSION . '" />';
-								break;
-						case 'atom':
-								$gen.= PHP_EOL . '<generator uri="https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip" version="' . RSTR_VERSION . '">WordPress Transliterator</generator>';
-								break;
-						case 'rss2':
-								$gen.= PHP_EOL . '<generator>' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip' ) . '</generator>';
-								break;
-						case 'rdf':
-								$gen.= PHP_EOL . '<admin:generatorAgent rdf:resource="' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip' ) . '" />';
-								break;
-						case 'comment':
-								$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . RSTR_VERSION . '" -->';
-								break;
-						case 'export':
-								$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . RSTR_VERSION . '" created="' . gmdate( 'Y-m-d H:i' ) . '" -->';
-								break;
-				}
-			}
-			return $gen;
-		}, 10, 2);
-		
 		/* Load menu
 		====================================*/
 		if(!class_exists('Serbian_Transliteration_Menu') && file_exists(RSTR_INC . '/Menu.php')) {
@@ -173,6 +139,9 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		/* Load themes support
 		====================================*/
 		Serbian_Transliteration_Themes::includes();
+		/* Load SEO support
+		====================================*/
+		Serbian_Transliteration_SEO::init();
 	}
 	
 	/*
@@ -220,12 +189,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		if(isset($options['mode']) && $options['mode'] && in_array( $options['mode'], array_keys($inst->plugin_mode()), true ) !== false)
 		{
 			if($options['transliteration-mode'] != 'none')
-			{
-				// Display alternate links
-				if(defined('RSTR_ALTERNATE_LINKS') && RSTR_ALTERNATE_LINKS) {
-					$inst->add_action('wp_head', 'alternate_links', 1);
-				}
-				
+			{	
 				// Set cookie
 				$inst->set_cookie($options);
 		
@@ -242,7 +206,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			/* Media upload transliteration
 			=========================================*/
 			if(isset($options['media-transliteration']) && $options['media-transliteration'] == 'yes'){
-				$inst->add_filter('wp_handle_upload_prefilter', 'upload_prefilter', 9999999, 1);
+				$inst->add_filter('wp_handle_upload_prefilter', 'upload_prefilter', (PHP_INT_MAX-1), 1);
 				$inst->add_filter( 'sanitize_file_name', 'sanitize_file_name', 99 );
 			}
 			
@@ -253,12 +217,12 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			if($ser_cyr_to_lat_slug) $permalink_transliteration = false;
 			
 			if($permalink_transliteration){
-				$inst->add_filter('sanitize_title', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('the_permalink', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('wp_unique_post_slug', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('permalink_manager_filter_default_post_uri', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('permalink_manager_filter_default_term_uri', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('wp_insert_post_data', 'force_permalink_to_latin_on_save', 9999999, 2);
+				$inst->add_filter('sanitize_title', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('the_permalink', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('wp_unique_post_slug', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('permalink_manager_filter_default_post_uri', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('permalink_manager_filter_default_term_uri', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('wp_insert_post_data', 'force_permalink_to_latin_on_save', (PHP_INT_MAX-1), 2);
 			}
 			
 			/* WordPress search transliteration

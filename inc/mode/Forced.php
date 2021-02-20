@@ -111,11 +111,6 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 						$this->add_action('atom_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
 					}
 					
-					if(get_rstr_option('force-widgets', 'no') == 'yes')
-					{
-						$this->add_action('dynamic_sidebar_before', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-						$this->add_action('dynamic_sidebar_after', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-					}
 				}
 				
 				$this->add_filter('bloginfo', 'bloginfo', (PHP_INT_MAX-1), 2);
@@ -124,10 +119,10 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		}
 		
 		function output_buffer_start() { 
-			ob_start(array(&$this, "output_callback"));
+			ob_start(array(&$this, 'output_callback'), 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
 		
-		function output_buffer_end() { 
+		function output_buffer_end() {
 			ob_get_clean();
 		}
 		
@@ -138,7 +133,9 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			{
 				$sufix = '_' . strlen($buffer);
 				
-				if (!is_admin() && false === ( $forced_cache = get_transient( $this->transient.$sufix ) ) )
+				$forced_cache = get_transient( $this->transient.$sufix );
+				
+				if (!is_admin() && empty($forced_cache) )
 				{
 					$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
 						switch($this->get_current_script($this->options))
@@ -154,7 +151,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 						return $matches[2];
 					}, $buffer);
 					
-					if(!is_admin()) set_transient( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+					if(!empty($buffer)) set_transient( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
 				}
 				else
 				{
@@ -216,7 +213,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		}
 		
 		function rss_output_buffer_start() {
-			ob_start();
+			ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
 		
 		function rss_output_buffer_end() {

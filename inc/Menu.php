@@ -140,8 +140,8 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 			
 			$options = (object)array(
 				'active'	=> $get_script,
-				'cyr'		=> add_query_arg(array('rstr' => 'cyr'), $url),
-				'lat'		=> add_query_arg(array('rstr' => 'lat'), $url)
+				'cyr'		=> add_query_arg(array(get_rstr_option('url-selector', 'rstr') => 'cyr'), $url),
+				'lat'		=> add_query_arg(array(get_rstr_option('url-selector', 'rstr') => 'lat'), $url)
 			);
 			
 			$item_url = substr( $item->url, 0, strpos( $item->url, '#', 1 ) ) . '#';

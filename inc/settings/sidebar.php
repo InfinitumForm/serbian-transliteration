@@ -74,7 +74,7 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	</div>
 	<div class="inside">
 		<?php printf('<p>%s</p>', sprintf(__('If you want to support our work and effort, if you have new ideas or want to improve the existing code, %s.', RSTR_NAME), '<a href="https://github.com/CreativForm/serbian-transliteration" target="_blank">' . __('join our team', RSTR_NAME) . '</a>')); ?>
-		<?php printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>')); ?>
+		<?php /*printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>'));*/ ?>
 	</div>
 </div>
 <?php endif;

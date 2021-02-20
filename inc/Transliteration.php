@@ -23,8 +23,18 @@ class Serbian_Transliteration_Transliterating {
 	{
 		$transliteration = apply_filters('rstr/inc/transliteration/sr_RS', array(
 			// Variations and special characters
-			'џ'=>'dž',	'Џ'=>'Dž',	'љ'=>'lj',	'Љ'=>'Lj',
-			'њ'=>'nj', 'Њ'=>'Nj',
+			"ња" => "nja", 	"ње" => "nje", 	"њи" => "nji",	"њо" => "njo",
+			"њу" => "nju",	"ља" => "lja",	"ље" => "lje",	"љи" => "lji",	"љо" => "ljo",
+			"љу" => "lju",	"џа" => "dža",	"џе" => "dže",	"џи" => "dži",	"џо" => "džo",
+			"џу" => "džu",
+			
+			"Ња" => "Nja", 	"Ње" => "Nje", 	"Њи" => "Nji",	"Њо" => "Njo",
+			"Њу" => "Nju",	"Ља" => "Lja",	"Ље" => "Lje",	"Љи" => "Lji",	"Љо" => "Ljo",
+			"Љу" => "Lju",	"Џа" => "Dža",	"Џе" => "Dže",	"Џи" => "Dži",	"Џо" => "Džo",
+			"Џу" => "Džu",
+			
+			'џ'=>'dž',		'Џ'=>'Dž',		'љ'=>'lj',		'Љ'=>'Lj', 		'њ'=>'nj',
+			'Њ'=>'Nj',
 			
 			// All other letters
 			'А'=>'A',	'Б'=>'B',	'В'=>'V',	'Г'=>'G',	'Д'=>'D', 

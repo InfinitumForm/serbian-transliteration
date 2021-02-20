@@ -13,7 +13,8 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 		private $plugins = array(
 			'revslider' => 'revslider',
 			'woocommerce' => 'woocommerce',
-			'wordpress-seo' => 'wp-seo'
+			'wordpress-seo' => 'wp-seo',
+			'data-tables-generator-by-supsystic' => 'index'
 		);
 		
 		/* Run this script */
@@ -30,22 +31,24 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 			{				
 				// Include important function
 				if(!function_exists('is_plugin_active')) {
-					include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+					include( ABSPATH . 'wp-admin/includes/plugin.php' );
 				}
 				
 				$this->plugins = apply_filters('rstr/plugins', $this->plugins);
 				
 				foreach($this->plugins as $dir_name=>$file_name)
 				{
-					if( is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists(RSTR_INC . "/plugins/{$file_name}.php") )
+					$addon = RSTR_INC . "/plugins/{$dir_name}.php";
+					if( is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists($addon) )
 					{
-						$class_name = str_replace(['-','.'], '_', $file_name);
+						$class_name = str_replace(['-','.'], '_', $dir_name);
 						$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
+						
 
 						if(class_exists($plugin_class)) {
 							$plugin_class::run($this->options);
 						} else {
-							include_once RSTR_INC . "/plugins/{$file_name}.php";
+							include $addon;
 							if(class_exists($plugin_class)) {
 								$plugin_class::run($this->options);
 							}
@@ -67,14 +70,15 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 			
 			foreach($this->plugins as $dir_name=>$file_name)
 			{
-				if( is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists(RSTR_INC . "/plugins/{$file_name}.php") )
+				$addon = RSTR_INC . "/plugins/{$dir_name}.php";
+				if( is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists($addon) )
 				{
-					$class_name = str_replace(['-','.'], '_', $file_name);
+					$class_name = str_replace(['-','.'], '_', $dir_name);
 					$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
 					if(class_exists($plugin_class)) {
 						$return = array_merge($return, $plugin_class::filters());
 					} else {
-						include_once RSTR_INC . "/plugins/{$file_name}.php";
+						include $addon;
 						if(class_exists($plugin_class)) {
 							$return = array_merge($return, $plugin_class::filters());
 						}

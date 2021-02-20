@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,8 +49,6 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 * **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
 * **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
 * more languages are coming soon...
-
-> If you want to participate in the development of the plugin, we invite you to the [GitHub repository](https://github.com/CreativForm/serbian-transliteration)
 
 = PLUGINS SUPPORT =
 
@@ -125,6 +123,14 @@ We also thought of PHP developers where we have enabled several useful functions
 9. Automated test
 
 == Changelog ==
+
+= 1.3.5 =
+* New parameter URL selector
+* New UX interface
+* Improved SEO functionality
+* Improved cache control
+* Improved Latin to Cyrillic transliteration
+* Improved and optimized PHP code
 
 = 1.3.4 =
 * Improved site impact for some thmes
