@@ -88,13 +88,15 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 
 				if(!is_admin())
 				{
-					foreach($filters as $filter=>$function) $this->add_filter($filter, $function, (PHP_INT_MAX-1), 1);
+					foreach($filters as $filter=>$function){
+						$this->add_filter($filter, $function, (PHP_INT_MAX-1), 1);
+					}
 				}
 				
 				if(!is_admin())
 				{
-					$this->add_action('wp_loaded', 'output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('shutdown', 'output_buffer_end', (PHP_INT_MAX-1));
+					$this->add_action('wp_loaded', 'output_buffer_start', (PHP_INT_MAX-2));
+					$this->add_action('shutdown', 'output_buffer_end', (PHP_INT_MAX-2));
 					
 					if(get_rstr_option('enable-rss', 'no') == 'yes')
 					{						

@@ -1,3 +1,13 @@
+= 1.4.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration of Latin into Cyrillic
+* Improved HTML parsing
+* Improved PHP functions for developers
+* Improved shortcodes
+* Improved menu navigation for language script
+* Improved cache cleanup when changing script
+* Optimized PHP code
+
 = 1.3.5 =
 * New parameter URL selector
 * New UX interface

@@ -15,7 +15,8 @@
 if(!function_exists('get_current_url')) :
 function get_current_url()
 {
-    return Serbian_Transliteration::__instance()->get_current_url();
+	$parse_url = Serbian_Transliteration::__instance()->parse_url();
+	return $parse_url['url'];
 }
 endif;
 
@@ -163,9 +164,8 @@ if(!function_exists('is_kazakh')) :
 	}
 endif;
 
-
 /*
- * Check is Macedonian language
+ * Transliterate content
  * @return        string
  * @author        Ivijan-Stefan Stipic
 */
@@ -177,13 +177,38 @@ if(!function_exists('transliterate')) :
 endif;
 
 /*
+ * Translate from Cyrillic to Latin
+ * @return        string
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('cyr_to_lat')) :
+	function cyr_to_lat($content)
+	{
+		return Serbian_Transliteration::__instance()->cyr_to_lat($content);
+	}
+endif;
+
+/*
+ * Translate from Latin to Cyrillic
+ * @return        string
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('lat_to_cyr')) :
+	function lat_to_cyr($content, $fix_html = true)
+	{
+		return Serbian_Transliteration::__instance()->lat_to_cyr($content, $fix_html);
+	}
+endif;
+
+/*
  * Script selector
  * @return        HTML string/echo/object/array
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('script_selector')) :
 	function script_selector ($args) {
-		$url = get_current_url();
+		$parse_url = Serbian_Transliteration::__instance()->parse_url();
+		$url = $parse_url['url'];
 		
 		$ID = uniqid('script_selector_');
 		

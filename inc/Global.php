@@ -70,10 +70,13 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function decode($content){
-		$content = rawurldecode($content);
-		$content = htmlspecialchars_decode($content);
-		$content = html_entity_decode($content);
-		$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES)));
+		if (filter_var($content, FILTER_VALIDATE_URL)) {
+			$content = rawurldecode($content);
+		} else {
+			$content = htmlspecialchars_decode($content, ENT_NOQUOTES);
+			$content = html_entity_decode($content, ENT_NOQUOTES);
+			$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES)));
+		}
 		return $content;
 	}
 	
@@ -83,6 +86,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat($content){
+		
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$content = $this->decode($content);
 		
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
@@ -114,6 +120,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat_sanitize($content){
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$content = $this->cyr_to_lat($content);
 		
 		$content = strtr($content, apply_filters('rstr_cyr_to_lat_sanitize', array(
@@ -156,8 +164,14 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function lat_to_cyr($content, $fix_html = true){
+	public function lat_to_cyr($content, $fix_html = true, $fix_diacritics = false){
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$content = $this->decode($content);
+		
+		if($fix_diacritics) {
+			$content = $this->fix_diacritics($content);
+		}
 		
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
 		{
@@ -185,6 +199,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	}
 	
 	public function fix_diacritics($content){
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 		
 		if($this->get_locale() != 'sr_RS') return $content;
 		
@@ -254,6 +269,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function transliterate_text($content, $type, $fix_html = true){
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$content = $this->decode($content);
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
 		{
@@ -378,7 +395,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function html_tags() {
 		if( empty($this->html_tags) )
 		{		
-			$tags = apply_filters('rstr_html_tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
+			$tags = apply_filters('rstr/html/tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
 			$tags_latin = explode(',', $tags);
 			$tags_latin = array_map('trim', $tags_latin);
 			$tags_latin = array_filter($tags_latin);
@@ -407,30 +424,46 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function fix_cyr_html($content){
 		$content = htmlspecialchars_decode($content);
 
+		// Fix HTML entities
+		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}qwy0-9]+)\;/iu', function($m){
+			return '&' . $this->cyr_to_lat($m[1]) . ';';
+		}, $content);
+
+
+		// Fix HTML tags
 		$tags = $this->html_tags();
 		
-		$tags_cyr = array('<имг ', '<бр>', '<бр ', '<хр>', '<хр ');
-		$tags_lat = array('<img ', '<br>', '<br ', '<hr>', '<hr ');
+		$tag_replace = array(
+			'<имг ' => '<img ',
+			'<бр>' => '<br>',
+			'<бр ' => '<br ',
+			'<хр>' => '<hr>',
+			'<хр ' => '<hr '
+		);
 		
 		foreach($tags->lat as $i=>$tag){
 			$tag_cyr = $tags->cyr[$i];
 			
-			$tags_cyr[]='<' . $tag_cyr;
-			$tags_cyr[]='</' . $tag_cyr . '>';
-			
-			$tags_lat[]= '<' . $tag;
-			$tags_lat[]= '</' . $tag . '>';
+			$tag_replace['<' . $tag_cyr] = '<' . $tag;
+			$tag_replace['</' . $tag_cyr . '>'] = '</' . $tag . '>';
 		}
-		$tags = $tag_cyr = NULL;
+		$tags = NULL;
+
+		// Fix some characters
+		$content = strtr($content, apply_filters('rstr/html/tags/replace', array_merge($tag_replace, array(
+			'хреф' => 'href',
+			'срц' => 'src',
+			'&сцарон;' => 'ш',
+			'&Сцарон;' => 'Ш'
+		)), $tag_replace));
 		
-		$tags_cyr = array_merge($tags_cyr, array('&нбсп;','&лт;','&гт;','&ндасх;','&мдасх;','хреф','срц','&лдqуо;','&бдqуо;','&лсqуо;','&рсqуо;','&сцарон;','&Сцарон;','&тилде;'));
-		$tags_lat = array_merge($tags_lat, array('&nbsp;','&lt;','&gt;','&ndash;','&mdash;','href','src','&ldquo;','&bdquo;','&lsquo;','&rsquo;','ш','Ш','&tilde;'));
-		
-		$content = str_replace($tags_cyr, $tags_lat, $content);
+		$tag_replace = NULL;
 		
 		$lastPos = 0;
 		$positions = [];
+		
 /*
+		// Fix tags on the old way
 		while (($lastPos = mb_strpos($content, '<', $lastPos, 'UTF-8')) !== false) {
 			$positions[] = $lastPos;
 			$lastPos = $lastPos + mb_strlen('<', 'UTF-8');
@@ -445,6 +478,16 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			}
 		}
 		*/
+		/* Fix HTML attributes */
+		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwy0-9\-]+)(=["\'])/iu', function($m){
+			return ' ' . $this->cyr_to_lat($m[1]) . $m[2];
+		}, $content);
+		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf(' %1$s="%2$s"', $m[1], $this->cyr_to_lat($m[2]));
+		}, $content);
+		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?\'(.*?)\'/iu', function($m){
+			return sprintf(' %1$s=\'%2$s\'', $m[1], $this->cyr_to_lat($m[2]));
+		}, $content);
 		
 		// Fix attributes with doublequote
 		$content = preg_replace_callback ('/(титле|алт|срц|дата-(титле|алт))\s?=\s?"(.*?)"/iu', function($m){
@@ -452,40 +495,40 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		// Fix open tags
-		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}0-9a-zA-Z\/\=\"\'_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
+		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		
 		// Fix closed tags
-		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}0-9a-zA-Z]+>)/iu', function($m){
+		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwy0-9a-zA-Z]+>)/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
-		}, $content);
-		
-		// Fix HTML entities
-		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}0-9]+)\;/iu', function($m){
-			return '&' . $this->cyr_to_lat($m[1]) . ';';
 		}, $content);
 		
 		// Fix JavaScript
 		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($m) {
-				return $this->cyr_to_lat($m[2]);
+			return $this->cyr_to_lat($m[2]);
 		}, $content);
 		
 		// Fix CSS
 		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($m) {
-				return $this->cyr_to_lat($m[2]);
+			return $this->cyr_to_lat($m[2]);
 		}, $content);
 		
 		// Fix email
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}0-9\_\-\.]+)@([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10}))/iu', function($m){
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwy0-9\_\-\.]+)@([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10}))/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix URL
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}]{4,5}):\/{2}([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}]{4,5}):\/{2}([\x{0400}-\x{04FF}qwy0-9\_\-\.]+)\.([\x{0400}-\x{04FF}qwy0-9]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		$content = preg_replace_callback ('/"(хттпс:\/\/.*?)"/iu', function($m){
+			return $this->cyr_to_lat($m[1]);
+		}, $content);
+	
+		// Fix mailto link
+		$content = preg_replace_callback ('/"(маилто:\/\/.*?)"/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		
@@ -847,19 +890,16 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			{
 				$this->setcookie($_REQUEST[$this->get_option('url-selector', 'rstr')]);
 				$parse_url = $this->parse_url();
+				$url = remove_query_arg($this->get_option('url-selector', 'rstr'), $parse_url['url']);
 				
 				if(get_rstr_option('cache-support', 'yes') == 'yes') {
-					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])' . $this->get_option('url-selector', 'rstr') . '\=(lat|cyr))~i', '$2_rstr_nocache=' . uniqid($this->get_option('url-selector', 'rstr') . mt_rand(100,999)), $parse_url['url']) ))) {
-						if(function_exists('nocache_headers')) nocache_headers();
-						exit;
-					}
-				} else {
-					if(wp_safe_redirect( esc_url(preg_replace('~(([?&])' . $this->get_option('url-selector', 'rstr') . '\=(lat|cyr))~i', '', $parse_url['url']) ))) {
-						if(function_exists('nocache_headers')) nocache_headers();
-						exit;
-					}
+					$url = add_query_arg('_rstr_nocache', uniqid($this->get_option('url-selector', 'rstr') . mt_rand(100,999)), $url);
 				}
 
+				if(wp_safe_redirect($url)) {
+					if(function_exists('nocache_headers')) nocache_headers();
+					exit;
+				}
 			}
 		}
 		return false;

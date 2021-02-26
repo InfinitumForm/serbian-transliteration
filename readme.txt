@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.3.5
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,16 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.4.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration of Latin into Cyrillic
+* Improved HTML parsing
+* Improved PHP functions for developers
+* Improved shortcodes
+* Improved menu navigation for language script
+* Improved cache cleanup when changing script
+* Optimized PHP code
+
 = 1.3.5 =
 * New parameter URL selector
 * New UX interface
@@ -168,18 +178,23 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.3.4 =
-* Improved site impact for some thmes
-* Improved PHP code
-* Removed test functions
-* Grouped admin options
-* Improved language switcher
+= 1.4.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration of Latin into Cyrillic
+* Improved HTML parsing
+* Improved PHP functions for developers
+* Improved shortcodes
+* Improved menu navigation for language script
+* Improved cache cleanup when changing script
+* Optimized PHP code
 
-= 1.3.3 =
-* Included Yoast SEO (WordPress SEO) support
-* Added skip words library for the sr_RS locale
-* Improved site speed performances
-* Fixed diacritical transliterations
+= 1.3.5 =
+* New parameter URL selector
+* New UX interface
+* Improved SEO functionality
+* Improved cache control
+* Improved Latin to Cyrillic transliteration
+* Improved and optimized PHP code
 
 == Frequently Asked Questions ==
 

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	});
 });
 </script>
-<div class="rstr-tab-wrapper">
+<div class="rstr-tab-wrapper" id="documentation-page">
 
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar" id="<?php echo RSTR_NAME; ?>-settings-sidebar">
@@ -29,6 +29,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<br>
 					<h2 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h2>
 					<p><code class="lang-txt">[<span class="hljs-title">rstr_lat_to_cyr</span>]Latinica u ćirilicu[/<span class="hljs-title">rstr_lat_to_cyr</span>]</code></p>
+                    <h3><?php _e('Optional shortcode parameters', RSTR_NAME); ?>:</h3>
+					<ul>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'fix_html', __('(optional) correct HTML code.', RSTR_NAME)); ?>
+						<?php printf('<li><code>%1$s</code> - %2$s</li>', 'fix_diacritics', __('(optional) correct diacritics.', RSTR_NAME)); ?>
+					</ul>
 					<br>
 					<h2 style="margin:0;"><?php _e('Add an image depending on the language script', RSTR_NAME); ?>:</h2>
 					<?php printf('<p>%s</p>', __('With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.', RSTR_NAME)); ?>

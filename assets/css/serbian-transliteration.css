@@ -47,6 +47,10 @@
 	background-color: oldlace;
 }
 
+#serbian-transliteration-settings #documentation-page h3{
+	font-size: 1.1em;
+}
+
 @media all and (max-width:768px){
 	#serbian-transliteration-settings .action-links{
 		display:none;

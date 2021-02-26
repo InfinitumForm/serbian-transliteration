@@ -28,6 +28,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		
 		$this->add_action('rstr/settings/tab', 'nav_tab_documentation');
 		$this->add_action('rstr/settings/tab', 'nav_tab_debug');
+		$this->add_action('rstr/settings/tab', 'nav_tab_credits');
 		
 		$this->add_action('rstr/settings/tab/content/tools/action', 'nav_tab_tools_action');
 		$this->add_action('rstr/settings/tab/content/tools/documentation', 'nav_tab_documentation_action');
@@ -48,6 +49,9 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 				break;
 			case 'debug':
 				$this->add_action('rstr/settings/tab/content/debug', 'tab_content_debug');
+				break;
+			case 'credits':
+				$this->add_action('rstr/settings/tab/content/credits', 'tab_content_credits');
 				break;
 		}
 	}
@@ -156,7 +160,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Debug
 	**/
 	public function nav_tab_debug(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=debug'); ?>" class="dashicons-before dashicons-sos nav-tab<?php echo $this->tab == 'debug' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-functions"><span><?php _e('Debug', RSTR_NAME); ?></span></a>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=debug'); ?>" class="dashicons-before dashicons-sos nav-tab<?php echo $this->tab == 'debug' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-debug"><span><?php _e('Debug', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -166,6 +170,20 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		wp_enqueue_style( 'highlight');
 		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/debug.php';
+	}
+	
+	/*
+	 * Credits
+	**/
+	public function nav_tab_credits(){ ?>
+		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=credits'); ?>" class="dashicons-before dashicons-info-outline nav-tab<?php echo $this->tab == 'credits' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-credits"><span><?php _e('Credits & Info', RSTR_NAME); ?></span></a>
+	<?php }
+	
+	/*
+	 * Tab Credits
+	**/
+	public function tab_content_credits(){
+		include_once RSTR_INC . '/settings/content/credits.php';
 	}
 	
 	/*

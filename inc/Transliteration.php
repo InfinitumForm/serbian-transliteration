@@ -5,6 +5,7 @@
  * @link              http://infinitumform.com/
  * @since             1.0.0
  * @package           Serbian_Transliteration
+ *
  */
 if(!class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration_Transliterating {
@@ -21,6 +22,8 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function sr_RS ($content, $translation = 'cyr_to_lat')
 	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$transliteration = apply_filters('rstr/inc/transliteration/sr_RS', array(
 			// Variations and special characters
 			"ња" => "nja", 	"ње" => "nje", 	"њи" => "nji",	"њо" => "njo",
@@ -53,7 +56,8 @@ class Serbian_Transliteration_Transliterating {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :			
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 				
 			case 'lat_to_cyr' :
@@ -64,7 +68,8 @@ class Serbian_Transliteration_Transliterating {
 				));
 				$lat_to_cyr = apply_filters('rstr/inc/transliteration/sr_RS/lat_to_cyr', $lat_to_cyr);
 				
-				return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
+			//	return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
+				return strtr($content, $lat_to_cyr);
 				break;
 		}
 		
@@ -79,6 +84,8 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function ru_RU ($content, $translation = 'cyr_to_lat')
 	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$transliteration = apply_filters('rstr/inc/transliteration/ru_RU', array(
 			// Variations and special characters
 			'Ё'=>'Yo',	'Ж'=>'Zh',	'Х'=>'Kh',	'Ц'=>'Ts',	'Ч'=>'Ch',
@@ -102,7 +109,8 @@ class Serbian_Transliteration_Transliterating {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 				
 			case 'lat_to_cyr' :
@@ -114,7 +122,8 @@ class Serbian_Transliteration_Transliterating {
 					'CH'=>'Ч',	'YO'=>'Ё',	'ZH'=>'Ж',	'KH'=>'Х',	'TS'=>'Ц',	'Sh'=>'Ш',	'SCH'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
 				));
 				$transliteration = apply_filters('rstr/inc/transliteration/ru_RU/lat_to_cyr', $transliteration);
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 		}
 		
@@ -129,6 +138,8 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function bel ($content, $translation = 'cyr_to_lat')
 	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$transliteration = apply_filters('rstr/inc/transliteration/bel', array (
 			// Variations and special characters
 			'ДЖ'=>'Dž',	'ДЗ'=>'Dz',	'Ё'=>'Io',	'Е'=>'Ie',
@@ -170,7 +181,8 @@ class Serbian_Transliteration_Transliterating {
 					),
 					$content
 				);
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 				
 			case 'lat_to_cyr' :
@@ -182,7 +194,8 @@ class Serbian_Transliteration_Transliterating {
 					'CH'=>'Х',	'DŽ'=>'ДЖ',	'DZ'=>'ДЗ',	'IE'=>'Е',	'IO'=>'Ё',	'IU'=>'Ю',	'IA'=>'Я'
 				));
 				$transliteration = apply_filters('rstr/inc/transliteration/bel/lat_to_cyr', $transliteration);
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 		}
 		
@@ -197,6 +210,8 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function bg_BG ($content, $translation = 'cyr_to_lat')
 	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$transliteration = apply_filters('rstr/inc/transliteration/bg_BG', array (
 			// Variations and special characters
 			'Ж' => 'Zh',	'ж' => 'zh',	'Ц' => 'Ts',	'ц' => 'ts',	'Ч' => 'Ch',
@@ -219,7 +234,8 @@ class Serbian_Transliteration_Transliterating {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 				
 			case 'lat_to_cyr' :
@@ -231,7 +247,8 @@ class Serbian_Transliteration_Transliterating {
 					'ZH'=>'Ж',	'TS'=>'Ц',	'CH'=>'Ч',	'SH'=>'Ш',	'SHT'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
 				));
 				$transliteration = apply_filters('rstr/inc/transliteration/bg_BG/lat_to_cyr', $transliteration);
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 		}
 		
@@ -246,6 +263,8 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function mk_MK ($content, $translation = 'cyr_to_lat')
 	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$transliteration = apply_filters('rstr/inc/transliteration/mk_MK', array (
 			// Variations and special characters
 			'Ѓ' => 'Gj',	'ѓ' => 'gj',	'Ѕ' => 'Dz',	'ѕ' => 'dz',	'Њ' => 'Nj',
@@ -269,7 +288,8 @@ class Serbian_Transliteration_Transliterating {
 		{
 			case 'cyr_to_lat' :
 				$sRe = '/(?<=^|\s|\'|’|[IЭЫAУО])';
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+//				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 				
 			case 'lat_to_cyr' :
@@ -281,7 +301,8 @@ class Serbian_Transliteration_Transliterating {
 					'ZH'=>'Ж', 'GJ' => 'Ѓ', 'CH'=>'Ч', 'SH'=>'Ш', 'Dz' => 'Ѕ', 'Nj' => 'Њ', 'Lj' => 'Љ', 'KJ' => 'Ќ', 'DJ' => 'Џ' 
 				));
 				$transliteration = apply_filters('rstr/inc/transliteration/mk_MK/lat_to_cyr', $transliteration);
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 		}
 		
@@ -296,6 +317,8 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function kk ($content, $translation = 'cyr_to_lat')
 	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$transliteration = apply_filters('rstr/inc/transliteration/kk', array (
 			// Variations and special characters
 			'Ғ' => 'Gh',	'ғ' => 'gh',		'Ё' => 'Yo',		'ё' => 'yo',		'Ж' => 'Zh',
@@ -322,7 +345,8 @@ class Serbian_Transliteration_Transliterating {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+//				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 				
 			case 'lat_to_cyr' :
@@ -335,7 +359,8 @@ class Serbian_Transliteration_Transliterating {
 				));
 				$transliteration = array_flip($transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/kk/lat_to_cyr', $transliteration);
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 		}
 		
@@ -350,6 +375,8 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function uk ($content, $translation = 'cyr_to_lat')
 	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
 		$transliteration = apply_filters('rstr/inc/transliteration/uk', array (
 			// Variations and special characters
 			'Є' => 'Je',	'є' => 'je',	'Ї' => 'Ji',	'ї' => 'ji',	'Щ' => 'Šč',
@@ -373,7 +400,8 @@ class Serbian_Transliteration_Transliterating {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 				
 			case 'lat_to_cyr' :
@@ -386,7 +414,8 @@ class Serbian_Transliteration_Transliterating {
 				));
 				$transliteration = array_flip($transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/uk/lat_to_cyr', $transliteration);
-				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
 				break;
 		}
 		
@@ -574,33 +603,15 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_diacritical( $needle = NULL ){
+		
 		if(NULL === $this->___get_diacritical)
 		{
-			$words = array();
-			$words_file=apply_filters('rstr/init/libraries/file/diacritical-words', RSTR_ROOT.'/libraries/' . $this->get_locale() . '.diacritical.words.lib');
-			
-			if(file_exists($words_file))
-			{
-				if($fopen_locale=fopen($words_file, 'r'))
-				{
-					$contents = fread($fopen_locale, filesize($words_file));
-					fclose($fopen_locale);
-					
-					if(!empty($contents))
-					{
-						$words = explode("\n", $contents);
-						$words = array_unique($words);
-						$words = array_filter($words);
-						$words = array_map('trim', $words);
-					} else $this->___get_diacritical = false;
-				} else $this->___get_diacritical = false;
-			} else $this->___get_diacritical = false;
-			
-			if($needle) {
-				$this->___get_diacritical = (in_array($needle, $words, true) !== false ? $needle : false);
-			} else {
-				$this->___get_diacritical = $words;
-			}
+			$file_name=apply_filters('rstr/init/libraries/file/get_diacritical', $this->get_locale().'.diacritical.words.lib');
+			$this->___get_diacritical = $this->parse_library($file_name);
+		}
+		
+		if($needle) {
+			return (in_array($needle, $this->___get_diacritical, true) !== false ? $needle : false);
 		}
 		
 		return $this->___get_diacritical;
@@ -615,34 +626,49 @@ class Serbian_Transliteration_Transliterating {
 		
 		if(NULL === $this->___get_skip_words)
 		{
-			$words = array();
-			$words_file=apply_filters('rstr/init/libraries/file/skip-words', RSTR_ROOT.'/libraries/' . $this->get_locale() . '.skip.words.lib');
-			
-			if(file_exists($words_file))
-			{
-				if($fopen_locale=fopen($words_file, 'r'))
-				{
-					$contents = fread($fopen_locale, filesize($words_file));
-					fclose($fopen_locale);
-					
-					if(!empty($contents))
-					{
-						$words = explode("\n", $contents);
-						$words = array_unique($words);
-						$words = array_filter($words);
-						$words = array_map('trim', $words);
-					} else $this->___get_skip_words = false;
-				} else $this->___get_skip_words = false;
-			} else $this->___get_skip_words = false;
-			
-			if($needle) {
-				$this->___get_skip_words = (in_array($needle, $words, true) !== false ? $needle : false);
-			} else {
-				$this->___get_skip_words = $words;
-			}
+			$file_name=apply_filters('rstr/init/libraries/file/skip-words', $this->get_locale().'.skip.words.lib');
+			$this->___get_skip_words = $this->parse_library($file_name);
+		}
+		
+		if($needle) {
+			return (in_array($needle, $this->___get_skip_words, true) !== false ? $needle : false);
 		}
 		
 		return $this->___get_skip_words;
+	}
+	
+	/*
+	 * Parse library
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public function parse_library($file_name, $needle = NULL) {
+		
+		$words = array();
+		$words_file=apply_filters('rstr/init/libraries/file', RSTR_ROOT . '/libraries/' . $file_name);
+		
+		if(file_exists($words_file))
+		{
+			if($fopen_locale=fopen($words_file, 'r'))
+			{
+				$contents = fread($fopen_locale, filesize($words_file));
+				fclose($fopen_locale);
+				
+				if(!empty($contents))
+				{
+					$words = explode("\n", $contents);
+					$words = array_unique($words);
+					$words = array_filter($words);
+					$words = array_map('trim', $words);
+				} else return false;
+			} else return false;
+		} else return false;
+		
+		if($needle) {
+			return (in_array($needle, $words, true) !== false ? $needle : false);
+		} else {
+			return $words;
+		}
 	}
 }
 endif;
