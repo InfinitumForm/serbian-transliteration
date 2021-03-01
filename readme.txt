@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.4.1 =
+* Improved internal caching functionality
+* Improved PHP code and optimized memory
+* Page acceleration
+
 = 1.4.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Improved transliteration of Latin into Cyrillic
@@ -177,6 +182,11 @@ We also thought of PHP developers where we have enabled several useful functions
 * Improved search functionality
 
 == Upgrade Notice ==
+
+= 1.4.1 =
+* Improved internal caching functionality
+* Improved PHP code and optimized memory
+* Page acceleration
 
 = 1.4.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings

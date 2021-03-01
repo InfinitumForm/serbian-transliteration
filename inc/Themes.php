@@ -17,10 +17,12 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 		private $theme;
 		
 		/* Run this script */
-		private static $__includes = NULL;
 		public static function includes($options = array(), $only_object = false ) {
-			if( !self::$__includes ) self::$__includes = new self($options, $only_object);
-			return self::$__includes;
+			global $rstr_cache;
+			if ( !$rstr_cache->get('Serbian_Transliteration_Themes') ) {
+				$rstr_cache->set('Serbian_Transliteration_Themes', new self($options, $only_object));
+			}
+			return $rstr_cache->get('Serbian_Transliteration_Themes');
 		}
 		
 		function __construct( $options=array(), $only_object = false ) {
@@ -31,7 +33,6 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 			
 			if(RSTR_WOOCOMMERCE && get_rstr_option('mode') == 'woocommerce') return $this;
 			
-			$this->options = (!empty($options) && is_array($options) ? $options : get_rstr_option());
 			$this->theme = strtolower($wp_get_theme->get('Name')); // gets the current theme
 			if($only_object === false)
 			{								
@@ -42,11 +43,11 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 					if ( strpos($this->theme, $theme_name) !== false || strpos($this->theme, $theme_name) !== false ) {
 						$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
 						if(class_exists($theme_class)) {
-							$theme_class::run($this->options);
+							$theme_class::run();
 						} else {
 							include_once RSTR_INC . "/themes/{$file_name}.php";
 							if(class_exists($theme_class)) {
-								$theme_class::run($this->options);
+								$theme_class::run();
 							}
 						}
 					}

@@ -9,10 +9,7 @@
  */
 if(!class_exists('Serbian_Transliteration_SEO')) :
 	class Serbian_Transliteration_SEO extends Serbian_Transliteration
-	{
-		
-		private static $instance = NULL;
-	
+	{	
 		public function __construct(){
 			// Display alternate links
 			if(defined('RSTR_ALTERNATE_LINKS') && RSTR_ALTERNATE_LINKS) {
@@ -28,12 +25,11 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 		 */
 		public static function init()
 		{
-			if( NULL === self::$instance )
-			{
-				self::$instance = new self();
+			global $rstr_cache;
+			if ( !$rstr_cache->get('Serbian_Transliteration_SEO') ) {
+				$rstr_cache->set('Serbian_Transliteration_SEO', new self());
 			}
-		
-			return self::$instance;
+			return $rstr_cache->get('Serbian_Transliteration_SEO');
 		}
 		
 		/*

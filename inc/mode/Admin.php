@@ -10,13 +10,14 @@
  */
 if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 	class Serbian_Transliteration_Mode_Admin extends Serbian_Transliteration {
-		private $options;
 		
 		/* Run this script */
-		private static $__run = NULL;
-		public static function run($options = array()) {
-			if( !self::$__run ) self::$__run = new self($options);
-			return self::$__run;
+		public static function run() {
+			global $rstr_cache;
+			if ( !$rstr_cache->get('Serbian_Transliteration_Mode_Admin') ) {
+				$rstr_cache->set('Serbian_Transliteration_Mode_Admin', new self());
+			}
+			return $rstr_cache->get('Serbian_Transliteration_Mode_Admin');
 		} 
 
 		public static function filters( $options = array() ) {
@@ -49,17 +50,12 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 			return $filters;
 		}
 
-		public function __construct( $options = array() ) {
+		public function __construct() {
 			if ( is_admin() ) {
-				if ( empty( $options ) ) {
-					$this->options = $this->get_options();
-				} else {
-					$this->options = $options;
-				}
 
-				if ( isset( $this->options['avoid-admin'] ) && $this->options['avoid-admin'] === 'no' ) {
-					$filters = self::filters( $this->options );
-					$filters = apply_filters( 'rstr/transliteration/exclude/filters/admin', $filters, $this->options );
+				if ( $this->get_option('avoid-admin') === 'no' ) {
+					$filters = self::filters( $this->get_options() );
+					$filters = apply_filters( 'rstr/transliteration/exclude/filters/admin', $filters, $this->get_options() );
 
 					foreach ( $filters as $filter => $function ) {
 						$this->add_filter( $filter, $function, (PHP_INT_MAX-1), 1 );

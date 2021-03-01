@@ -1,3 +1,8 @@
+= 1.4.1 =
+* Improved internal caching functionality
+* Improved PHP code and optimized memory
+* Page acceleration
+
 = 1.4.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Improved transliteration of Latin into Cyrillic

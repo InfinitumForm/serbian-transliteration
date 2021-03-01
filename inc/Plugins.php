@@ -18,15 +18,16 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 		);
 		
 		/* Run this script */
-		private static $__includes = NULL;
 		public static function includes($options = array(), $only_object = false ) {
-			if( !self::$__includes ) self::$__includes = new self($options, $only_object);
-			return self::$__includes;
+			global $rstr_cache;
+			if ( !$rstr_cache->get('Serbian_Transliteration_Plugins') ) {
+				$rstr_cache->set('Serbian_Transliteration_Plugins', new self($options, $only_object));
+			}
+			return $rstr_cache->get('Serbian_Transliteration_Plugins');
 		}
 		
 		function __construct( $options=array(), $only_object = false ) {
-			$this->options = (!empty($options) && is_array($options) ? $options : get_rstr_option());
-			
+						
 			if($only_object === false)
 			{				
 				// Include important function
@@ -46,11 +47,11 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 						
 
 						if(class_exists($plugin_class)) {
-							$plugin_class::run($this->options);
+							$plugin_class::run();
 						} else {
 							include $addon;
 							if(class_exists($plugin_class)) {
-								$plugin_class::run($this->options);
+								$plugin_class::run();
 							}
 						}
 					}

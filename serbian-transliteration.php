@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.4.0
+ * Version:           1.4.1
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -47,17 +47,28 @@ if ( ! defined( 'RSTR_FILE' ) ) define( 'RSTR_FILE', __FILE__ );
 include_once __DIR__ . '/constants.php';
 
 /*
+ * Serbian transliteration cache
+ * @since     1.0.0
+ * @verson    1.0.0
+ */
+global $rstr_cache;
+include_once RSTR_INC . '/Cache.php';
+$rstr_cache = new Serbian_Transliteration_Cache();
+
+/*
  * Get plugin options
  * @since     1.1.3
  * @verson    1.0.0
  */
-$get_rstr_options = NULL;
 if(!function_exists('get_rstr_option'))
 {
 	function get_rstr_option($name = false, $default = NULL) {
-		global $get_rstr_options;
+		global $rstr_cache;
+		$get_rstr_options = $rstr_cache->get('get_rstr_options');
 		
-		if( !$get_rstr_options ) $get_rstr_options = get_option( RSTR_NAME );
+		if( !$get_rstr_options ){
+			$get_rstr_options = $rstr_cache->set('get_rstr_options', get_option( RSTR_NAME ));
+		}
 		
 		if($get_rstr_options) {
 			if( $name === false ){
@@ -81,7 +92,7 @@ if(!function_exists('get_rstr_option'))
 include_once RSTR_INC . '/Requirements.php';
 $Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(array('file' => RSTR_FILE));
 
-if($Serbian_Transliteration_Activate->passes()) :
+if($Serbian_Transliteration_Activate->passes()) :	
 	/*
 	 * Serbian transliteration requirements
 	 * @since     1.0.0

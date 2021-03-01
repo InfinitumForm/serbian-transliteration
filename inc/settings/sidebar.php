@@ -29,10 +29,11 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	
 	public static function instance($object)
 	{
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self($object);
+		global $rstr_cache;
+		if ( !$rstr_cache->get('Serbian_Transliteration_Settings_Sidebar') ) {
+			$rstr_cache->set('Serbian_Transliteration_Settings_Sidebar', new self($object));
 		}
-		return self::$_instance;
+		return $rstr_cache->get('Serbian_Transliteration_Settings_Sidebar');
 	}
 	
 	public function postbox_infinitum(){ ?>

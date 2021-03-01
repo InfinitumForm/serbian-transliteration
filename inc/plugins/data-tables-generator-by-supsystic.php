@@ -10,21 +10,18 @@
 if(!class_exists('Serbian_Transliteration__Plugin__data_tables_generator_by_supsystic')) :
 	class Serbian_Transliteration__Plugin__data_tables_generator_by_supsystic extends Serbian_Transliteration
 	{
-		private $options;
 		
 		/* Run this script */
-		private static $__run = NULL;
-		public static function run($options = array()) {
-			if( !self::$__run ) self::$__run = new self($options);
-			return self::$__run;
+		public static function run() {
+			global $rstr_cache;
+			if ( !$rstr_cache->get('Serbian_Transliteration__Plugin__data_tables_generator_by_supsystic') ) {
+				$rstr_cache->set('Serbian_Transliteration__Plugin__data_tables_generator_by_supsystic', new self());
+			}
+			return $rstr_cache->get('Serbian_Transliteration__Plugin__data_tables_generator_by_supsystic');
 		}
 		
-		function __construct($options = array()){
-			if($options !== false)
-			{
-				$this->options = $options;
-				$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
-			}
+		function __construct(){
+			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
 		} 
 		
 		public static function filters ($filters=array()) {
@@ -64,7 +61,7 @@ if(!class_exists('Serbian_Transliteration__Plugin__data_tables_generator_by_sups
 			else if(is_string($content) && !is_numeric($content))
 			{
 					
-				switch($this->get_current_script($this->options))
+				switch($this->get_current_script($this->get_options()))
 				{
 					case 'cyr_to_lat' :
 						$content = $this->cyr_to_lat($content);

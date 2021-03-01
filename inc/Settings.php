@@ -23,13 +23,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     private $options;
 	private $nonce;
-	private $active_filters;
 
     /**
      * Start up
      */
     public function __construct()
     {
+		global $rstr_cache;
+		
 		if(current_user_can('administrator'))
 		{
 			$this->add_action( 'admin_menu', 'add_plugin_page' );
@@ -41,19 +42,19 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
 			
 			if($mode_class = $this->mode()) {
-				$this->active_filters = array_keys($mode_class::filters());
+				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_keys($mode_class::filters()));
 			}
 			
 			if($active_plugins = Serbian_Transliteration_Plugins::includes(array(), true)->active_filters())
 			{
 				$active_plugins = array_keys($active_plugins);
-				$this->active_filters = array_merge($this->active_filters, $active_plugins);
+				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_merge($rstr_cache->get('Serbian_Transliteration_Settings__active_filters'), $active_plugins));
 			}
 			
 			if($active_themes = Serbian_Transliteration_Themes::includes(array(), true)->active_filters())
 			{
 				$active_themes = array_keys($active_themes);
-				$this->active_filters = array_merge($this->active_filters, $active_themes);
+				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_merge($rstr_cache->get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
 			}
 			
 			$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
@@ -61,7 +62,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     }
 	
 	function ajax__rstr_filter_mode_options( ) {
-		
+		global $rstr_cache;
 		$mode_class = $this->mode(array('mode'=>sanitize_text_field($_POST['mode'])));
 		
 		if($mode_class !== false && isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-options') !== false)
@@ -83,7 +84,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			if($active_themes = Serbian_Transliteration_Themes::includes($options, true)->active_filters())
 			{
 				$active_themes = array_keys($active_themes);
-				$this->active_filters = array_merge($this->active_filters, $active_themes);
+				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_merge($rstr_cache->get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
 			}
 			
 			$only_woo = false;
@@ -199,7 +200,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      * Register and add settings
      */
     public function page_init()
-    {        
+    {
+		global $rstr_cache;
+		
         $this->register_setting(
             RSTR_NAME . '-group', // Option group
             RSTR_NAME, // Option name
@@ -241,7 +244,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME . '-global' // Section           
         );
 		
-		if($this->active_filters) {
+		if($rstr_cache->get('Serbian_Transliteration_Settings__active_filters')) {
 			$this->add_settings_field(
 				'transliteration-filter', // ID
 				__('Transliteration Filters', RSTR_NAME), // Title 
@@ -543,8 +546,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      * Transliteration filter
      */
     public function transliteration_filter_callback()
-    { 
-		if(!$this->active_filters) return;
+    {
+		global $rstr_cache;
+		if(!$rstr_cache->get('Serbian_Transliteration_Settings__active_filters')) return;
 ?>
 <div class="accordion-container">
 	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', RSTR_NAME); ?></button>
@@ -560,7 +564,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 		$i = 0;
 		
-		$list = $this->active_filters;
+		$list = $rstr_cache->get('Serbian_Transliteration_Settings__active_filters');
 
 		$only_woo = false;
 		if(RSTR_WOOCOMMERCE && get_rstr_option('mode') == 'woocommerce') $only_woo = true;

@@ -603,18 +603,18 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_diacritical( $needle = NULL ){
-		
-		if(NULL === $this->___get_diacritical)
+		global $rstr_cache;
+		if(!$rstr_cache->get('diacritical_words'))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/get_diacritical', $this->get_locale().'.diacritical.words.lib');
-			$this->___get_diacritical = $this->parse_library($file_name);
+			$rstr_cache->set('diacritical_words', $this->parse_library($file_name));
 		}
 		
 		if($needle) {
-			return (in_array($needle, $this->___get_diacritical, true) !== false ? $needle : false);
+			return (in_array($needle, $rstr_cache->get('diacritical_words'), true) !== false ? $needle : false);
 		}
 		
-		return $this->___get_diacritical;
+		return $rstr_cache->get('diacritical_words');
 	}
 	
 	/*
@@ -623,18 +623,19 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_skip_words( $needle = NULL ){
+		global $rstr_cache;
 		
-		if(NULL === $this->___get_skip_words)
+		if(!$rstr_cache->get('skip_words'))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/skip-words', $this->get_locale().'.skip.words.lib');
-			$this->___get_skip_words = $this->parse_library($file_name);
+			$rstr_cache->set('skip_words', $this->parse_library($file_name));
 		}
 		
 		if($needle) {
-			return (in_array($needle, $this->___get_skip_words, true) !== false ? $needle : false);
+			return (in_array($needle, $rstr_cache->get('skip_words'), true) !== false ? $needle : false);
 		}
 		
-		return $this->___get_skip_words;
+		return $rstr_cache->get('skip_words');
 	}
 	
 	/*

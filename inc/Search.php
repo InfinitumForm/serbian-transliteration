@@ -19,9 +19,8 @@ class Serbian_Transliteration_Search extends Serbian_Transliteration
     /**
      * Start up
      */
-    public function __construct($options)
+    public function __construct()
     {
-		$this->options = $options;
         $this->add_filter( 'request', 'request' );
 		$this->add_filter( 'get_search_query', 'request' );
     }

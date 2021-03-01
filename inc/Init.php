@@ -9,8 +9,6 @@
 if(!class_exists('Serbian_Transliteration_Init') && class_exists('Serbian_Transliteration')) :
 final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	
-	private static $instance = NULL;
-	
 	/**
 	 * Get singleton instance of global class
 	 * @since     1.0.0
@@ -18,12 +16,11 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	 */
 	private static function get_instance()
 	{
-		if( NULL === self::$instance )
-		{
-			self::$instance = new self();
+		global $rstr_cache;
+		if ( !$rstr_cache->get('Serbian_Transliteration_Init') ) {
+			$rstr_cache->set('Serbian_Transliteration_Init', new self());
 		}
-	
-		return self::$instance;
+		return $rstr_cache->get('Serbian_Transliteration_Init');
 	}
 	
 	/**

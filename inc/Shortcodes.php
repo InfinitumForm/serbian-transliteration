@@ -9,10 +9,7 @@
 if(!class_exists('Serbian_Transliteration_Shortcodes')) :
 class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 {
-	private $options;
-	
 	function __construct($options){
-		$this->options = $options;
 
 		if($this->is_editor()) {} else
 		{
@@ -57,7 +54,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	{
 		$attr = (object)shortcode_atts( array('output' => 'shortcode'), $attr, 'rstr_cyr_to_lat' );
 		
-		switch($this->options['transliteration-mode'] ? $this->options['transliteration-mode'] : '')
+		switch($this->get_option('transliteration-mode', ''))
 		{
 			default :
 				return $content;
@@ -88,7 +85,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 		$attr->fix_html = ($attr->fix_html == 1 || $attr->fix_html === true || $attr->fix_html == 'true') === true;
 		$attr->fix_diacritics = ($attr->fix_diacritics == 1 || $attr->fix_diacritics === true || $attr->fix_diacritics == 'true') === true;
 		
-		switch($this->options['transliteration-mode'] ? $this->options['transliteration-mode'] : '')
+		switch($this->get_option('transliteration-mode', ''))
 		{
 			default :
 				return $content;
@@ -122,7 +119,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			'default_caption'=>NULL
 		), $attr, 'rstr_img' );
 		
-		switch($this->get_current_script($this->options))
+		switch($this->get_current_script($this->get_options()))
 		{
 			case 'lat':
 			case 'cyr_to_lat':
@@ -187,7 +184,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	{
 		$attr = (object)shortcode_atts( array(), $attr, 'rstr_skip' );
 		
-		switch($this->options['transliteration-mode'] ? $this->options['transliteration-mode'] : '')
+		switch($this->get_option('transliteration-mode', ''))
 		{
 			case 'cyr_to_lat' :
 				return $this->lat_to_cyr_shortcode(array(), do_shortcode($content));

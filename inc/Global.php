@@ -6,12 +6,6 @@
  */
 if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
-	
-	private static $__instance = NULL;
-	private $html_tags;
-	private $_url_parsed = NULL;
-	private $__options = array();
-	
 	/*
 	 * Plugin mode
 	 * @return        array/string
@@ -321,8 +315,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	{
 		// First setup all properly
 		if(empty($array)) return $array;
-		if(empty($this->__options)) $this->__options = get_rstr_option();
-		if(empty($type) || is_bool($type)) $type = $this->get_current_script( $this->__options );
+		if(empty($type) || is_bool($type)) $type = $this->get_current_script( $this->get_options() );
 		
 		$return = '';
 		// Infinity loop... Until end.
@@ -393,7 +386,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function html_tags() {
-		if( empty($this->html_tags) )
+		global $rstr_cache;
+		
+		if( !$rstr_cache->get('html_tags') )
 		{		
 			$tags = apply_filters('rstr/html/tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
 			$tags_latin = explode(',', $tags);
@@ -407,13 +402,13 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			$tags_cyr = array_filter($tags_cyr);
 			$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
 			
-			$this->html_tags = (object)array(
+			$rstr_cache->set('html_tags', (object)array(
 				'cyr' => $tags_cyr,
 				'lat' => $tags_latin
-			);
+			));
 		}
 		
-		return $this->html_tags;
+		return $rstr_cache->get('html_tags');
 	}
 	
 	/*
@@ -892,7 +887,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$parse_url = $this->parse_url();
 				$url = remove_query_arg($this->get_option('url-selector', 'rstr'), $parse_url['url']);
 				
-				if(get_rstr_option('cache-support', 'yes') == 'yes') {
+				if($this->get_option('cache-support', 'yes') == 'yes') {
 					$url = add_query_arg('_rstr_nocache', uniqid($this->get_option('url-selector', 'rstr') . mt_rand(100,999)), $url);
 				}
 
@@ -914,7 +909,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if( !headers_sent() ) {
 			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
 			
-			if(get_rstr_option('cache-support', 'yes') == 'yes') {
+			if($this->get_option('cache-support', 'yes') == 'yes') {
 				$this->cache_flush();
 			}
 		}
@@ -981,21 +976,22 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @verson    1.0.0
 	 */
 	public function parse_url(){
-		if(null === $this->_url_parsed) {
+		global $rstr_cache;
+		if(!$rstr_cache->get('url_parsed')) {
 			$http = 'http'.( $this->is_ssl() ?'s':'');
 			$domain = preg_replace('%:/{3,}%i','://',rtrim($http,'/').'://'.$_SERVER['HTTP_HOST']);
 			$domain = rtrim($domain,'/');
 			$url = preg_replace('%:/{3,}%i','://',$domain.'/'.(isset($_SERVER['REQUEST_URI']) && !empty( $_SERVER['REQUEST_URI'] ) ? ltrim($_SERVER['REQUEST_URI'], '/'): ''));
 				
-			$this->_url_parsed = array(
+			$rstr_cache->set('url_parsed', array(
 				'method'	=>	$http,
 				'home_fold'	=>	str_replace($domain,'',home_url()),
 				'url'		=>	$url,
 				'domain'	=>	$domain,
-			);
+			));
 		}
 		
-		return $this->_url_parsed;
+		return $rstr_cache->get('url_parsed');
 	}
 	
 	/*
@@ -1098,7 +1094,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
 	public function mode($options=false){
 		
-		if(empty($options)) $options = get_rstr_option();
+		if(empty($options)) $options = $this->get_options();
 		if(is_null($options)) return false;
 		
 		$mode = ucfirst($options['mode']);
@@ -1176,10 +1172,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public static function __instance()
 	{
-		if ( is_null( self::$__instance ) ) {
-			self::$__instance = new self();
+		global $rstr_cache;
+		if ( !$rstr_cache->get('Serbian_Transliteration_Global') ) {
+			$rstr_cache->set('Serbian_Transliteration_Global', new self());
 		}
-		return self::$__instance;
+		return $rstr_cache->get('Serbian_Transliteration_Global');
 	}
 }
 endif;
