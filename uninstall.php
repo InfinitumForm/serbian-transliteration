@@ -29,6 +29,9 @@ if(get_option(RSTR_NAME . '-deactivation')) {
 if(get_option(RSTR_NAME . '-term-script')) {
 	delete_option(RSTR_NAME . '-term-script');
 }
+if(get_option(RSTR_NAME . '-html-tags')) {
+	delete_option(RSTR_NAME . '-html-tags');
+}
 // Delete terms
 if(term_exists('lat', 'rstr-script')) {
 	wp_delete_term(get_term_by('slug','lat','rstr-script')->term_id, 'rstr-script');
@@ -39,5 +42,15 @@ if(term_exists('cyr', 'rstr-script')) {
 // Delete cookie
 if( !headers_sent() ) {
 	setcookie( 'rstr_script', '', (time()-YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
+}
+// Delete transients
+if(get_transient(RSTR_NAME . '-skip-words')) {
+	delete_transient(RSTR_NAME . '-skip-words');
+}
+if(get_transient(RSTR_NAME . '-diacritical-words')) {
+	delete_transient(RSTR_NAME . '-diacritical-words');
+}
+if(get_transient(RSTR_NAME . '-locales')) {
+	delete_transient(RSTR_NAME . '-locales');
 }
 //-END

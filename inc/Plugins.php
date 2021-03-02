@@ -27,7 +27,6 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 		}
 		
 		function __construct( $options=array(), $only_object = false ) {
-						
 			if($only_object === false)
 			{				
 				// Include important function
@@ -44,13 +43,12 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 					{
 						$class_name = str_replace(['-','.'], '_', $dir_name);
 						$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
-						
 
-						if(class_exists($plugin_class)) {
+						if(class_exists($plugin_class) && method_exists($plugin_class, 'run')) {
 							$plugin_class::run();
 						} else {
-							include $addon;
-							if(class_exists($plugin_class)) {
+							include_once $addon;
+							if(class_exists($plugin_class) && method_exists($plugin_class, 'run')) {
 								$plugin_class::run();
 							}
 						}
@@ -76,11 +74,11 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 				{
 					$class_name = str_replace(['-','.'], '_', $dir_name);
 					$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
-					if(class_exists($plugin_class)) {
+					if(class_exists($plugin_class) && method_exists($plugin_class, 'filters')) {
 						$return = array_merge($return, $plugin_class::filters());
 					} else {
 						include $addon;
-						if(class_exists($plugin_class)) {
+						if(class_exists($plugin_class) && method_exists($plugin_class, 'filters')) {
 							$return = array_merge($return, $plugin_class::filters());
 						}
 					}

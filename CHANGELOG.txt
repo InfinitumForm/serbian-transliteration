@@ -1,3 +1,9 @@
+= 1.4.2 =
+* Fixed issue with `data-*` attributes
+* Fixed issue with JSON inside attributes
+* Fixed problem of Latin to Cyrillic transliteration (extended characters)
+* Advanced algorithm to support Elementor and Visual Composer plugins
+
 = 1.4.1 =
 * Improved internal caching functionality
 * Improved PHP code and optimized memory

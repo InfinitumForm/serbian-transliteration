@@ -11,8 +11,6 @@ if(!class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration_Transliterating {
 	// Define locale instance
 	protected $get_locale;
-	protected $___get_skip_words = NULL;
-	protected $___get_diacritical = NULL;
 
 	/*
 	 * Serbian transliteration
@@ -479,31 +477,22 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_locales( $needle = NULL ){
-		$locales = array();
-		$locale_file=apply_filters('rstr/init/libraries/file/locale', RSTR_ROOT.'/libraries/locale.lib');
+		$cache = get_transient(RSTR_NAME . '-locales');
 		
-		if(file_exists($locale_file))
+		if(empty($cache))
 		{
-			if($fopen_locale=fopen($locale_file, 'r'))
-			{
-				$contents = fread($fopen_locale, filesize($locale_file));
-				fclose($fopen_locale);
-				
-				if(!empty($contents))
-				{
-					$locales = explode("\n", $contents);
-					$locales = array_unique($locales);
-					$locales = array_filter($locales);
-					$locales = array_map('trim', $locales);
-				} else return false;
-			} else return false;
-		} else return false;
-		
-		if($needle) {
-			return (in_array($needle, $locales, true) !== false ? $needle : false);
-		} else {
-			return $locales;
+			$file_name=apply_filters('rstr/init/libraries/file/locale', 'locale.lib');
+			$cache = $this->parse_library($file_name);
+			if(!empty($cache)) {
+				set_transient(RSTR_NAME . '-locales', $cache, apply_filters('rstr/init/libraries/file/locale/transient', (DAY_IN_SECONDS*7)));
+			}
 		}
+
+		if($needle && is_array($cache)) {
+			return (in_array($needle, $cache, true) !== false ? $needle : false);
+		}
+		
+		return $cache;
 	}
 	
 	/*
@@ -603,18 +592,21 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_diacritical( $needle = NULL ){
-		global $rstr_cache;
-		if(!$rstr_cache->get('diacritical_words'))
+		$cache = get_transient(RSTR_NAME . '-diacritical-words');
+		if(empty($cache))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/get_diacritical', $this->get_locale().'.diacritical.words.lib');
-			$rstr_cache->set('diacritical_words', $this->parse_library($file_name));
+			$cache = $this->parse_library($file_name);
+			if(!empty($cache)) {
+				set_transient(RSTR_NAME . '-diacritical-words', $cache, apply_filters('rstr/init/libraries/file/get_diacritical/transient', (DAY_IN_SECONDS*7)));
+			}
 		}
 		
-		if($needle) {
-			return (in_array($needle, $rstr_cache->get('diacritical_words'), true) !== false ? $needle : false);
+		if($needle && is_array($cache)) {
+			return (in_array($needle, $cache, true) !== false ? $needle : false);
 		}
 		
-		return $rstr_cache->get('diacritical_words');
+		return $cache;
 	}
 	
 	/*
@@ -623,19 +615,22 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_skip_words( $needle = NULL ){
-		global $rstr_cache;
+		$cache = get_transient(RSTR_NAME . '-skip-words');
 		
-		if(!$rstr_cache->get('skip_words'))
+		if(empty($cache))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/skip-words', $this->get_locale().'.skip.words.lib');
-			$rstr_cache->set('skip_words', $this->parse_library($file_name));
+			$cache = $this->parse_library($file_name);
+			if(!empty($cache)) {
+				set_transient(RSTR_NAME . '-skip-words', $cache, apply_filters('rstr/init/libraries/file/skip-words/transient', (DAY_IN_SECONDS*7)));
+			}
 		}
 		
-		if($needle) {
-			return (in_array($needle, $rstr_cache->get('skip_words'), true) !== false ? $needle : false);
+		if($needle && is_array($cache)) {
+			return (in_array($needle, $cache, true) !== false ? $needle : false);
 		}
 		
-		return $rstr_cache->get('skip_words');
+		return $cache;
 	}
 	
 	/*

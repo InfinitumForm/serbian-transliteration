@@ -105,6 +105,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		$content = $this->fix_attributes($content);
 
+		// Fix data attributes
+		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode($m[2]));
+		}, $content);
+
 		return $content;
 	}
 	
@@ -386,9 +391,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function html_tags() {
-		global $rstr_cache;
 		
-		if( !$rstr_cache->get('html_tags') )
+		$html_tags = get_option(RSTR_NAME . '-html-tags');
+		
+		if( empty($html_tags) )
 		{		
 			$tags = apply_filters('rstr/html/tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
 			$tags_latin = explode(',', $tags);
@@ -402,13 +408,17 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			$tags_cyr = array_filter($tags_cyr);
 			$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
 			
-			$rstr_cache->set('html_tags', (object)array(
+			$html_tags = (object)array(
 				'cyr' => $tags_cyr,
 				'lat' => $tags_latin
-			));
+			);
+			
+			if(!empty($html_tags)) {
+				add_option(RSTR_NAME . '-html-tags', $html_tags, '', true);
+			}
 		}
 		
-		return $rstr_cache->get('html_tags');
+		return apply_filters('rstr_html_tags_collected', $html_tags);
 	}
 	
 	/*
@@ -485,12 +495,21 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		// Fix attributes with doublequote
-		$content = preg_replace_callback ('/(титле|алт|срц|дата-(титле|алт))\s?=\s?"(.*?)"/iu', function($m){
+		$content = preg_replace_callback ('/(титле|алт|срц|дата-([\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf('%1$s="%2$s"', $this->cyr_to_lat($m[1]), esc_attr($this->lat_to_cyr($m[3], false)));
+		}, $content);
+		// Fix attributes with singlequote
+		$content = preg_replace_callback ('/(титле|алт|срц|дата-([\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
 			return sprintf('%1$s="%2$s"', $this->cyr_to_lat($m[1]), esc_attr($this->lat_to_cyr($m[3], false)));
 		}, $content);
 		
+		// Fix data attributes
+		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode($this->cyr_to_lat($m[2])));
+		}, $content);
+		
 		// Fix open tags
-		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
+		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		

@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.4.1
+ * Version:           1.4.2
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -217,6 +217,20 @@ if($Serbian_Transliteration_Activate->passes()) :
 				}
 			}
 			
+			// Clean things
+			if(get_transient(RSTR_NAME . '-skip-words')) {
+				delete_transient(RSTR_NAME . '-skip-words');
+			}
+			if(get_transient(RSTR_NAME . '-diacritical-words')) {
+				delete_transient(RSTR_NAME . '-diacritical-words');
+			}
+			if(get_transient(RSTR_NAME . '-locales')) {
+				delete_transient(RSTR_NAME . '-locales');
+			}
+			if(get_option(RSTR_NAME . '-html-tags')) {
+				delete_option(RSTR_NAME . '-html-tags');
+			}
+			
 			// Add custom script languages
 			if(!term_exists('lat', 'rstr-script'))
 			{
@@ -248,6 +262,20 @@ if($Serbian_Transliteration_Activate->passes()) :
 				update_option(RSTR_NAME . '-deactivation', $deactivation);
 			} else {
 				add_option(RSTR_NAME . '-deactivation', array(date('Y-m-d H:i:s')));
+			}
+			
+			// Clean things
+			if(get_transient(RSTR_NAME . '-skip-words')) {
+				delete_transient(RSTR_NAME . '-skip-words');
+			}
+			if(get_transient(RSTR_NAME . '-diacritical-words')) {
+				delete_transient(RSTR_NAME . '-diacritical-words');
+			}
+			if(get_transient(RSTR_NAME . '-locales')) {
+				delete_transient(RSTR_NAME . '-locales');
+			}
+			if(get_option(RSTR_NAME . '-html-tags')) {
+				delete_option(RSTR_NAME . '-html-tags');
 			}
 		});
 		
