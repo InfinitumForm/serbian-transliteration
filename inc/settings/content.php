@@ -111,8 +111,8 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	public function tab_content_permalink_tool(){
 		include_once RSTR_INC . '/settings/content/permalink-tool.php';
 	}
-
-					/*
+	
+	/*
 	 * Documentation section
 	**/
 	public function tab_content_documentation(){
@@ -120,76 +120,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/documentation.php';
 	}
-					
-<<<<<<< .mine
-					printf('<p>%s</p>', sprintf(__('This tool will affect on the following post types: %s', RSTR_NAME), '<br>' . join('&nbsp;&nbsp;&nbsp;&nbsp; ', $post_types_selector)));
-				?>
-				<br>
-				<div id="rstr-progress-bar" style="display:none;">
-					<p class="progress-value" style="width:0%" data-value="0"></p>
-					<progress max="100" value="0" class="php">
-						<!-- Browsers that support HTML5 progress element will ignore the html inside `progress` element. Whereas older browsers will ignore the `progress` element and instead render the html inside it. -->
-						<div class="progress-bar">
-							<span style="width: 0%">0%</span>
-						</div>
-					</progress>
-					<p class="progress-message"><?php _e('Please wait! Do not close the window or leave the page until this operation is completed!', RSTR_NAME); ?></p>
-				</div>
-				<p>
-					<input type="button" id="<?php echo RSTR_NAME ?>-tools-transliterate-permalinks" class="button button-primary" data-nonce="<?php echo esc_attr(wp_create_nonce('rstr-run-permalink-transliteration')); ?>" value="<?php esc_attr_e('Let\'s do magic', RSTR_NAME); ?>" disabled>
-					&nbsp;&nbsp;&nbsp;
-					<label for="<?php echo RSTR_NAME ?>-tools-check">
-						<input type="checkbox" id="<?php echo RSTR_NAME ?>-tools-check" value="1"> <?php _e('Are you sure you want this?', RSTR_NAME); ?>
-					</label>
-				</p>
-				<blockquote id="rstr-disclaimer" style="display:none;">
-					<h3><?php _e('Disclaimer', RSTR_NAME); ?></h3>
-					<?php printf('<p>%s</p>', __('This tool is made to work safely but there is always a small chance of some unpredictable problem.', RSTR_NAME)); ?>
-					<?php printf('<p><b>%s</b></p>', __('WE DO NOT GUARANTEE THAT THIS TOOL WILL FUNCTION PROPERLY ON YOUR SERVER AND BY USING THIS TOOL YOU ARE RESPONSIBLE FOR RISK AND POSSIBLE PROBLEMS.', RSTR_NAME)); ?>
-					<?php printf('<p><b>%s</b></p>', __('BACKUP YOUR DATABASE BEFORE USE IT.', RSTR_NAME)); ?>
-				</blockquote>
-			</div>
-		</div>
-		<br class="clear">
-	</div>
-
-</div><?php }
 	
-=======
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
 	/*
 	 * Nav tab documentation
 	**/
@@ -215,7 +146,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/shortcodes.php';
 	}
-
+	
 	/*
 	 * Available functions section
 	**/
@@ -224,7 +155,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/php-functions.php';
 	}
-	 
+	
 	/*
 	 * Debug
 	**/
@@ -240,7 +171,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/debug.php';
 	}
-
+	
 	/*
 	 * Credits
 	**/
@@ -254,7 +185,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	public function tab_content_credits(){
 		include_once RSTR_INC . '/settings/content/credits.php';
 	}
-
+	
 	/*
 	 * Tab content container
 	**/
@@ -281,5 +212,5 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 </nav>
 	<?php }
 	
-				}
+}
 endif;
