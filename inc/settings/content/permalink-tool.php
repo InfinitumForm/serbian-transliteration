@@ -17,6 +17,9 @@
 					printf('<p>%s</p>', __('This option is dangerous and can create unexpected problems. Once you run this script, all permalinks in your database will be modified and this can affect on the SEO causing a 404 error.',
 					RSTR_NAME));
 					printf('<p>%s</p>', __('Consult your SEO developer before you run this script as you will then need to resubmit the sitemap and make any other additional settings to change the permalinks on the search engines.', RSTR_NAME));
+					
+					printf('<p>%s: <code>wp transliterate permalinks</code></p>', __('If you are using WP-CLI, this function can also be started with a simple shell command', RSTR_NAME));
+					
 					printf('<p><strong class="text-danger">%s</strong></p>', sprintf(__('You must %s before running this script.', RSTR_NAME), '<a href="https://wordpress.org/support/article/wordpress-backups/" target="_blank">' . __('back up the database', RSTR_NAME) . '</a>'));
 
 					$get_post_types = get_post_types(array(
