@@ -1,3 +1,277 @@
+#serbian-transliteration-settings .nav-tab > span{
+	display: inline-block;
+	margin-left:5px;
+}
+
+#serbian-transliteration-settings .rstr-row{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: flex-start;
+	align-content: space-between;
+}
+
+#serbian-transliteration-settings .rstr-row > .rstr-col{
+	flex: 1 1 40%;
+}
+
+#serbian-transliteration-settings .rstr-row > .rstr-col+.rstr-col{
+	margin-left:15px;
+}
+
+#serbian-transliteration-settings textarea.form-control{
+	width:100%;
+	overflow:auto;
+	overflow-x:hidden;
+	resize:vertical;
+}
+
+#serbian-transliteration-settings .action-links-select{
+	width:100%;
+	max-width:100%;
+	margin:10px 0 5px 0;
+	display:none;
+}
+
+@media all and (max-width:768px){
+	#serbian-transliteration-settings .action-links-select{
+		display:block;
+	}
+}
+
+#serbian-transliteration-settings .action-links{
+	display:block;
+	list-style:none;
+	padding: 5px 5px 1px 5px;
+	margin:10px 0 5px 0;
+	background-color: oldlace;
+}
+
+#serbian-transliteration-settings #documentation-page h3{
+	font-size: 1.1em;
+}
+
+@media all and (max-width:768px){
+	#serbian-transliteration-settings .action-links{
+		display:none;
+	}
+}
+
+#serbian-transliteration-settings .action-links > .action-tab{
+	display:inline-block;
+	padding-right:5px;
+	padding-left:5px;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab + .action-tab{
+	border-left:1px solid #555;
+	padding-left:9px;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab > a{
+	text-decoration:none;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab:hover > a{
+	text-decoration:underline;
+}
+
+#serbian-transliteration-settings .action-links > .action-tab.active > a,
+#serbian-transliteration-settings .action-links > .action-tab.active:hover > a{
+	color:#333;
+	text-decoration:none;
+	font-weight:600;
+}
+
+#serbian-transliteration-settings textarea#rstr-transliteration-letters{
+	
+}
+
+#serbian-transliteration-settings .button{
+	margin: 10px 10px 0 0;
+}
+
+#serbian-transliteration-settings #transliteration-letters .button:first-of-type,
+#serbian-transliteration-settings #transliteration-letters .button:first-child{
+	margin-left:0;
+}
+
+#serbian-transliteration-settings textarea#rstr-transliteration-letters-result,
+#serbian-transliteration-settings textarea#rstr-transliteration-letters-result:readonly,
+#serbian-transliteration-settings textarea#rstr-transliteration-letters-result.readonly,
+#serbian-transliteration-settings textarea#rstr-transliteration-letters-result[readonly]{
+	border:none !important;
+}
+
+@media all and (max-width:992px){
+	#serbian-transliteration-settings .rstr-row > .rstr-col{
+		flex: 1 1 90%;
+	}
+	#serbian-transliteration-settings .rstr-row > .rstr-col+.rstr-col{
+		margin-left:0;
+		margin-top:15px;
+	}
+}
+
+@media all and (max-width:1140px){
+	#serbian-transliteration-settings .nav-tab:not(.nav-tab-active) > span{
+		display: none;
+	}
+	
+	#serbian-transliteration-settings .nav-tab{
+		position:relative;
+	}
+	
+	#serbian-transliteration-settings .nav-tab:not(.nav-tab-active):hover > span{
+		display: inline-block;
+		position:absolute;
+		top:40px;
+		left:50%;
+		transform:translateX(-50%);
+		background: #333333;
+		color: #fff;
+		padding: 5px 10px;
+		z-index:1;
+	}
+	
+	#serbian-transliteration-settings .nav-tab:not(.nav-tab-active):hover > span:before {
+		content:'';
+		position:absolute;
+		top:-5px;
+		left:50%;
+		transform:translateX(-50%);
+		width: 0; 
+		height: 0; 
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		border-bottom: 5px solid #333333;
+	}
+}
+
+#serbian-transliteration-settings .row{
+	display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+#serbian-transliteration-settings .required-box {
+	border:1px solid #cc0000;
+	padding:10px 15px;
+	box-shadow:0 0 3px #cc0000;
+	background:rgba(100,0,0, 0.02);
+	color:#cc0000;
+}
+
+#serbian-transliteration-settings label+label{
+	margin-left:10px;
+}
+
+#serbian-transliteration-settings label > input[type^="checkbox"] + span {
+	word-break: break-all;
+}
+
+#serbian-transliteration-settings #rstr-filter-mode-options p+p{
+	margin-top:15px;
+}
+
+#serbian-transliteration-settings .row .col {
+	position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+#serbian-transliteration-settings .description {
+	background: #f1f1f1;
+    padding: 5px 15px 5px 20px;
+    position: relative;
+	color:#343434;
+}
+
+#serbian-transliteration-settings .description.inline{
+	display:inline-block;
+	margin-left:20px;
+}
+
+#serbian-transliteration-settings .description:before {
+	content: '';
+	position:absolute;
+	top:50%;
+	left:0;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+	-moz-transform:translateY(-50%);
+	width: 0;
+	height: 0; 
+	border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #ffffff;
+}
+
+#serbian-transliteration-settings .description.info {
+	background: aliceblue;
+    color: #000;
+}
+
+@media (min-width: 1400px){
+	#serbian-transliteration-settings .row .col {
+		-ms-flex-preferred-size: 0;
+		flex-basis: 0;
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		max-width: 100%;
+	}
+}
+
+#serbian-transliteration-settings .accordion-container {
+	display:block;
+	width:100%;
+	border:1px solid #efefef;
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link {
+	background-color: #23282d;
+	color: #eee;
+	cursor: pointer;
+	padding: 10px 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	transition: 0.4s;
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link:hover {
+	background-color: #333; 
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link.active{
+	background-color: #555; 
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link:after {
+	content: '+'; /* Unicode character for "plus" sign (+) */
+	font-size: 13px;
+	color: #777777;
+	float: right;
+	margin-left: 5px;
+	margin-left: 5px;
+	margin-top: 1px;
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-link.active:after {
+	content: "-"; /* Unicode character for "minus" sign (-) */
+}
+
+#serbian-transliteration-settings .accordion-container .accordion-panel {
+	padding: 5px 15px 10px 15px;
+	display: none;
+	background-color: #ffffff;
+	overflow: hidden;
+}
+
 #serbian-transliteration-settings h2{
 	color: #23282d;
     font-size: 1.3em;
@@ -30,6 +304,18 @@
     padding: 5px 15px;
 	margin-bottom: 20px;
 	padding-bottom:15px;
+}
+
+@media all and (max-width:992px){
+	#serbian-transliteration-settings #serbian-transliteration-settings-sidebar{
+		display:none;
+	}
+	
+	#serbian-transliteration-settings #post-body-content,
+	#serbian-transliteration-settings .has-right-sidebar #post-body-content{
+		margin-right: none !important;
+		width: 97%;
+	}
 }
 
 #serbian-transliteration-settings #post-body-content label + br{

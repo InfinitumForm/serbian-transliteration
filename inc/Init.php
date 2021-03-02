@@ -6,10 +6,8 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
- if(!class_exists('Serbian_Transliteration_Init') && class_exists('Serbian_Transliteration')) :
+if(!class_exists('Serbian_Transliteration_Init') && class_exists('Serbian_Transliteration')) :
 final class Serbian_Transliteration_Init extends Serbian_Transliteration {
-	
-	private static $instance = NULL;
 	
 	/**
 	 * Get singleton instance of global class
@@ -18,12 +16,11 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	 */
 	private static function get_instance()
 	{
-		if( NULL === self::$instance )
-		{
-			self::$instance = new self();
+		global $rstr_cache;
+		if ( !$rstr_cache->get('Serbian_Transliteration_Init') ) {
+			$rstr_cache->set('Serbian_Transliteration_Init', new self());
 		}
-	
-		return self::$instance;
+		return $rstr_cache->get('Serbian_Transliteration_Init');
 	}
 	
 	/**
@@ -48,13 +45,29 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		}
 	}
 	
+	/**
+	 * Set cookie on the first initialization
+	 * @since     1.0.9
+	 * @version   1.0.0
+	 */
 	public function set_cookie($options){
 		if( !(isset($_COOKIE['rstr_script'])) )
 		{
-			if($options['transliteration-mode'] == 'cyr_to_lat') {
+			if(isset($options['first-visit-mode']) && $options['first-visit-mode'] == 'lat')
+			{
 				$this->setcookie('lat');
-			} else if($options['transliteration-mode'] == 'lat_to_cyr') {
+			}
+			else if(isset($options['first-visit-mode']) && $options['first-visit-mode'] == 'cyr')
+			{
 				$this->setcookie('cyr');
+			}
+			else
+			{
+				if($options['transliteration-mode'] == 'cyr_to_lat') {
+					$this->setcookie('lat');
+				} else if($options['transliteration-mode'] == 'lat_to_cyr') {
+					$this->setcookie('cyr');
+				}
 			}
 		}
 	}
@@ -63,91 +76,160 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 <style>#rstr-script-adder{display:none !important;}</style>
 	<?php }
 	
+	public function wp_head(){ }
+	
+	/*
+	 * Run all dependency in the background
+	 */
+	public static function run_dependency(){
+		$inst = self::get_instance();
+		
+		/* Transliterate wp-admin
+		====================================*/
+		if(is_admin())
+		{
+			// Load options
+			$options = get_rstr_option();
+			/* Admin transliterations
+			=========================================*/
+			if($admin_mode_class = $inst->mode(['mode' => 'admin'])) {
+				new $admin_mode_class($options);
+			}
+		}
+		
+		/* Do special filtering
+		====================================*/
+		add_filter('rstr/transliteration/exclude/filters', function($filters, $options) {
+			if(isset($options['transliteration-filter']) && is_array($options['transliteration-filter'])) {
+				
+				$only_woo = false;
+				if(RSTR_WOOCOMMERCE && isset($options['mode']) && $options['mode'] == 'woocommerce') $only_woo = true;
+
+				foreach($options['transliteration-filter'] as $filter){
+					
+					if($only_woo && strpos($filter, 'woo') === false){
+						unset($filters[$filter]);
+					}
+					
+					if( isset($filters[$filter]) ) {
+						unset($filters[$filter]);
+						
+						if($filter == 'the_excerpt' && isset($filters['get_the_excerpt'])) {
+							unset($filters['get_the_excerpt']);
+						}
+					}
+				}
+			}
+			return $filters;
+		}, PHP_INT_MAX, 2);
+		
+		/* Load menu
+		====================================*/
+		if(!class_exists('Serbian_Transliteration_Menu') && file_exists(RSTR_INC . '/Menu.php')) {
+			include_once RSTR_INC . '/Menu.php';
+			new Serbian_Transliteration_Menu();
+		}
+		
+		/* Load plugins support
+		====================================*/
+		Serbian_Transliteration_Plugins::includes();
+		/* Load themes support
+		====================================*/
+		Serbian_Transliteration_Themes::includes();
+		/* Load SEO support
+		====================================*/
+		Serbian_Transliteration_SEO::init();
+	}
+	
+	/*
+	 * Run plugin on the frontend
+	 */
 	public static function run () {
+		
 		// Load instance
 		$inst = self::get_instance();
+		
+		add_action('wp_head', array($inst, 'wp_head'));
 		
 		// Register taxonomy
 		parent::attachment_taxonomies();		
 		
-		if( is_admin() )
+		if( !is_admin() )
+		{
+			$inst->set_current_script();
+		}
+		else
 		{
 			// Remove admin menu pages
 			add_action('admin_menu', array($inst, 'remove_menu_page'));
 			// Add soem scripts
 			add_action('admin_head', array($inst, 'admin_head'));
 			// Load settings page
-			include_once RSTR_INC . '/Settings.php';
-			$Serbian_Transliteration_Settings = new Serbian_Transliteration_Settings();
-			new Serbian_Transliteration_Settings_Sidebar( $Serbian_Transliteration_Settings );
-			new Serbian_Transliteration_Settings_Content( $Serbian_Transliteration_Settings );
-		}
-		else
-		{
-			$inst->set_current_script();
+			if(!class_exists('Serbian_Transliteration_Settings') && file_exists(RSTR_INC . '/Settings.php')) {
+				include_once RSTR_INC . '/Settings.php';
+				$Serbian_Transliteration_Settings = new Serbian_Transliteration_Settings();
+				new Serbian_Transliteration_Settings_Sidebar( $Serbian_Transliteration_Settings );
+				new Serbian_Transliteration_Settings_Content( $Serbian_Transliteration_Settings );
+			}
 		}
 		
 		// Load options
-		$options = get_option( RSTR_NAME );
+		$options = get_rstr_option();
 		
 		// Load shortcodes
-		include_once RSTR_INC . '/Shortcodes.php';
-		new Serbian_Transliteration_Shortcodes($options);
-		
+		if(!class_exists('Serbian_Transliteration_Shortcodes') && file_exists(RSTR_INC . '/Shortcodes.php')) {
+			include_once RSTR_INC . '/Shortcodes.php';
+			new Serbian_Transliteration_Shortcodes($options);
+		}
+
 		// Initialize plugin mode
 		if(isset($options['mode']) && $options['mode'] && in_array( $options['mode'], array_keys($inst->plugin_mode()), true ) !== false)
-		{			
+		{
 			if($options['transliteration-mode'] != 'none')
-			{
-				// Display alternate links
-				if(defined('RSTR_ALTERNATE_LINKS') && RSTR_ALTERNATE_LINKS) {
-					$inst->add_action('wp_head', 'alternate_links', 1);
-				}
-				
+			{	
 				// Set cookie
 				$inst->set_cookie($options);
 		
-				$mode = ucfirst($options['mode']);
-				$class_require = "Serbian_Transliteration_Mode_{$mode}";
-				$path_require = "Mode_{$mode}";
-				$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
-				
-				if(file_exists($path . "/{$path_require}.php"))
-				{
-					include_once $path . "/{$path_require}.php";
-					if(class_exists($class_require)){
-						new $class_require($options);
+				// Include mode class				
+				if($mode_class = $inst->mode($options)) {
+					if(method_exists($mode_class,'run')) {
+						$mode_class::run($options);
+					} else {
+						throw new Exception(sprintf('The static method "$1%s::$2%s" does not exist or is not correctly defined on the line %3%d', $mode_class, 'run', (__LINE__-2)));
 					}
 				}
-				
-				// Clear memory
-				$class_require = $path_require = $path = $mode = NULL;
 			}
 
 			/* Media upload transliteration
 			=========================================*/
 			if(isset($options['media-transliteration']) && $options['media-transliteration'] == 'yes'){
-				$inst->add_filter('wp_handle_upload_prefilter', 'upload_prefilter', 9999999, 1);
+				$inst->add_filter('wp_handle_upload_prefilter', 'upload_prefilter', (PHP_INT_MAX-1), 1);
 				$inst->add_filter( 'sanitize_file_name', 'sanitize_file_name', 99 );
 			}
 			
 			/* Permalink transliteration
 			=========================================*/
-			if(isset($options['permalink-transliteration']) && $options['permalink-transliteration'] == 'yes' && ($inst->get_locale() == 'sr_RS' && !get_option('ser_cyr_to_lat_slug'))){
-				$inst->add_filter('sanitize_title', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('the_permalink', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('wp_unique_post_slug', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('permalink_manager_filter_default_post_uri', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('permalink_manager_filter_default_term_uri', 'force_permalink_to_latin', 9999999, 1);
-				$inst->add_filter('wp_insert_post_data', 'force_permalink_to_latin_on_save', 9999999, 2);
+			$permalink_transliteration = (isset($options['permalink-transliteration']) && $options['permalink-transliteration'] == 'yes');
+			$ser_cyr_to_lat_slug = ($permalink_transliteration && $inst->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug'));
+			if($ser_cyr_to_lat_slug) $permalink_transliteration = false;
+			
+			if($permalink_transliteration){
+				$inst->add_filter('sanitize_title', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('the_permalink', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('wp_unique_post_slug', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('permalink_manager_filter_default_post_uri', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('permalink_manager_filter_default_term_uri', 'force_permalink_to_latin', (PHP_INT_MAX-1), 1);
+				$inst->add_filter('wp_insert_post_data', 'force_permalink_to_latin_on_save', (PHP_INT_MAX-1), 2);
 			}
 			
 			/* WordPress search transliteration
 			=========================================*/
 			if(isset( $options['enable-search'] ) && $options['enable-search'] == 'yes')
 			{
-				include_once RSTR_INC . '/Search.php';
-				new Serbian_Transliteration_Search($options);
+				if(!class_exists('Serbian_Transliteration_Search') && file_exists(RSTR_INC . '/Search.php')) {
+					include_once RSTR_INC . '/Search.php';
+					new Serbian_Transliteration_Search($options);
+				}
 			}
 			
 			/* WordPress exlude words

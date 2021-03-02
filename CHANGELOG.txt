@@ -1,0 +1,250 @@
+= 1.4.2 =
+* Fixed issue with `data-*` attributes
+* Fixed issue with JSON inside attributes
+* Fixed problem of Latin to Cyrillic transliteration (extended characters)
+* Advanced algorithm to support Elementor and Visual Composer plugins
+
+= 1.4.1 =
+* Improved internal caching functionality
+* Improved PHP code and optimized memory
+* Page acceleration
+
+= 1.4.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration of Latin into Cyrillic
+* Improved HTML parsing
+* Improved PHP functions for developers
+* Improved shortcodes
+* Improved menu navigation for language script
+* Improved cache cleanup when changing script
+* Optimized PHP code
+
+= 1.3.5 =
+* New parameter URL selector
+* New UX interface
+* Improved SEO functionality
+* Improved cache control
+* Improved Latin to Cyrillic transliteration
+* Improved and optimized PHP code
+
+= 1.3.4 =
+* Improved site impact for some thmes
+* Improved PHP code
+* Removed test functions
+* Grouped admin options
+* Improved language switcher
+
+= 1.3.3 =
+* Included Yoast SEO (WordPress SEO) support
+* Added skip words library for the sr_RS locale
+* Improved site speed performances
+* Fixed diacritical transliterations
+
+= 1.3.2 =
+* Improved global functions and code optimization
+* Added Avada theme support
+* Fixed bugs from previous version
+
+= 1.3.1 =
+* Fixed bug inside `script_selector()` function and `[rstr_selector]` shortcode
+* Added new display type `list_items` inside `script_selector()` function and `[rstr_selector]` shortcode
+* Added help description inside selector menu
+* Added new filters inside `script_selector()` function for each display type
+* Improved serbian translation
+
+= 1.3.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* **IMPORTANT!** This plugin requires a Multibyte String PHP extension (mbstring)
+* Added improved diacritical checks
+* Added transliteration converter to admin
+* Added new shortcode for skipping transliteration `[rstr_skip]`
+* Improved JavaScript code
+* Improved search functionality
+
+= 1.2.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added simple diacritical check for the search fnctionality
+* Added RSS feed transliteration
+* Added advanced widgets transliteration
+* Fixed problems with special custom widgets
+* Prepared basis for further developments and improvements
+
+= 1.2.7 =
+* Expanded metadata transliteration
+* Fixed PHP error Undefined property
+* Improved plugin for the WordPress version 5.6
+
+= 1.2.6 =
+* MAJOR UPDATE: You need to review and edit your settings
+* Added SEO settings
+* Added First visit mode
+* Added alternet links control for the search engines
+* Fixed cookie control
+
+= 1.2.5 =
+* Added Ukrainian language by request
+
+= 1.2.4 =
+* MAJOR UPDATE: Added special support for themes and plugins
+* Added support for the "Themify" theme
+* Added support for the Revolution Slider
+* Only WooCommerce mode is deprecated because of filter options and may be removed in a future version
+* Woocommerce support is moved inside new plugins support
+* Optimization: Plugin and theme support is only activated if there is an active plugin or a theme defined in advance
+
+= 1.2.3 =
+* Fixed WooCommerce transliteration
+
+= 1.2.2 =
+* Fixed problem with redirection
+* Added cache control for the transliteration (enabled by default)
+* Added support for the WP cache
+* Added support for the W3 Total Cache
+* Added support for the WP Fastest Cache
+
+= 1.2.1 =
+* Fixed issue with translating permalink in other (non-Cyrillic) languages
+* Improved PHP code and fixed bugs
+* Added cache control when changing the language script
+* Added an example of a privacy policy due to the use of cookies
+
+= 1.2.0 =
+* Added language script menu switcher
+* Improved transliteration
+
+= 1.1.8 =
+* Improved admin transliteration
+* Improved settings and user experience
+* Improved filters
+* Improved PHP code (micro optimization)
+
+= 1.1.7 =
+* Urgent fix for private constants
+* Urgent fix for bad activation
+
+= 1.1.6 =
+* Urgent fix for wp_get_current_user ERROR
+
+= 1.1.5 =
+* Improved WP Admin and Gutenberg translation
+* Imporoved global transliteration
+* Improved PHP code
+
+= 1.1.4 =
+* Improved transliteration filters
+* Improved transliteration mode
+* Improved user experiance
+* Improved Documentation
+* Improved JavaScript code
+* Improved unicode filter
+
+= 1.1.3 =
+* Improved UTF-8 characters
+* Improved Elementor and Gutemberg editor support
+* Improved HTML parsing
+* Added transliteration filters
+* Added only WooCommerce transliteration (separated mode)
+* Improved WooCommerce algorithm
+* Improved PHP code and micro optimisation
+
+= 1.1.2 =
+* Important update: Fixed inline Elementor JSON settings
+
+= 1.1.1 =
+* Important update: fixed and improved WordPress search functionality
+
+= 1.1.0 =
+* Fixed issue with language session
+* Optimized PHP code
+* Made preparations for future versions of the plugin
+
+= 1.0.14 =
+* Added transliteration for Kazakh language
+* Added update for Gutenberg block editor
+* Added post type filters for permalink tool
+* Added support for older WordPress version 4.0 and above (by request)
+
+= 1.0.13 =
+* Added new transliterations for widgets and archives
+* Added support for the oceanwp, sydney, blocksy, colormag, phlox
+* Added alternate links to transliteration versions for the better SEO
+
+= 1.0.12 =
+* Added `[rstr_selector]` shortcode for the script menu
+* Fixed transliteration problems with `[rstr_cyr_to_lat]` and `[rstr_lat_to_cyr]` shortcodes
+
+= 1.0.11 =
+* Fixed problems with title and description tags
+* Added array and object mode into script_selector() function
+* Fixed special characters transliteration
+
+= 1.0.10 =
+* Added Woocommerce transliteration
+* Added debug mode
+* Prepared for the multisite
+* Improved comments transliteration
+* Improved RS and HR translations
+* Fixed problems with array values
+
+= 1.0.9 =
+* Added new shortcode for the image controls
+* Added new PHP functions
+* Added new settings
+* Added documentation
+* Improved transliteration
+* Improved JavaScript functions
+* Improved transliteration quality
+* Improved Search algorithm
+* Fixed date transliteration
+* Fixed problems with PHP7.4
+* Fixed Comments transliteration
+
+= 1.0.8 =
+* PHP 7.4 support
+* Improved PHP code
+* Added caching to the forced transliteration
+
+= 1.0.7 =
+* New UX
+* Added Bulgarian language
+* Added Macedonian language
+* Added new locales
+* Added new schema of the letters
+
+= 1.0.6 =
+* NEW: A tool for automatic transliteration of permalink in a database
+* Improved detection of Cyrillic
+* Added locale libraries
+* Moved to the PHP 7.x
+
+= 1.0.5 =
+* Added option to allow Cyrillic usernames
+* Added RSS feed transliteration
+* Added SEO transliteration
+* Added support for the visual editors
+* Improved page speed
+
+= 1.0.4 =
+* Fixed Latin to Cyrillic translation in pages
+* Improved search functionality
+* Added Latin and words, phrases, names and expressions exclude
+* Improved PHP code
+
+= 1.0.3 =
+* Added support for search in Latin and Cyrillic
+* Fixed bugs from the previous version
+
+= 1.0.2 =
+* FIXED: Problems with special characters and variations
+* Added Russian transliteration
+* Added Belarusian transliteration
+
+= 1.0.1 =
+* FIXED: Permalink transliteration
+* FIXED: Sanitization of the special characters
+* Added support for the other languages
+* Improved page impact
+* Improved PHP orientation
+
+= 1.0.0 =
+* First stable version

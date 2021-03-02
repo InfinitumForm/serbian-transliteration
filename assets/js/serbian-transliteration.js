@@ -68,7 +68,100 @@
 					callback(xhttp_transient.status, xhttp_transient);
 				}
 			}
+		};
+	
+	/* Display mode info */
+	(function(mode, info){
+		var info = document.getElementById(info),
+			options = document.getElementsByName(mode),
+			filters = document.getElementById('rstr-filter-mode-options'),
+			i;
+			
+		if (options, info) {
+			for (i = 0; i < options.length; i++) {
+				if (options[i].checked){
+					 if(options[i].value == 'forced'){
+						info.style.display = null;
+					} else {
+						info.style.display = 'none';
+					}
+				}
+			}
+			
+			document.addEventListener('input',(e)=>{
+				if(e.target.getAttribute('name') === mode) {
+					if(e.target.value == 'forced'){
+						info.style.display = null;
+					} else {
+						info.style.display = 'none';
+					}
+					
+					ajax('POST', RSTR.ajax, {
+						'action' : 'rstr_filter_mode_options',
+						'nonce'  : e.target.dataset.nonce,
+						'mode' : e.target.value
+					}, {
+						'Accept' : 'text/html'
+					});
+					
+					filters.innerHTML = '<div class="col"><b style="color:#cc0000;">' + RSTR.label.loading + '</b></div>';
+					
+					ajax_done(function(data){
+						filters.innerHTML = data;
+					});
+				}
+			});
 		}
+	}('serbian-transliteration[mode]', 'forced-transliteration'));
+
+
+
+	/*
+	 * TOOLS: Transliterator
+	 */
+	(function(button, textarea, result){
+		button = document.getElementsByClassName(button);
+		
+		if( button )
+		{
+			var transliterator_timeout;
+			
+			textarea = document.getElementById(textarea);
+			result = document.getElementById(result);
+			
+			for(var i = 0; i < button.length; i++) {
+				(function(index) {
+					button[index].addEventListener("click", () => {
+						
+						if(transliterator_timeout) clearTimeout(transliterator_timeout);
+						
+						result.value = RSTR.label.loading;
+													
+						ajax('POST', RSTR.ajax, {
+							'action' : 'rstr_transliteration_letters',
+							'mode'   : button[index].dataset.mode,
+							'nonce'  : button[index].dataset.nonce,
+							'value'  : textarea.value
+						}, {
+							'Accept' : 'text/plain'
+						});
+						
+						ajax_done(function(data){
+							result.value = data;
+							if(transliterator_timeout) clearTimeout(transliterator_timeout);
+						});
+						
+						transliterator_timeout = setTimeout(function(){
+							result.value = ' ';
+						},1e4);
+					})
+				})(i);
+			}
+		}
+	}('button-transliteration-letters', 'rstr-transliteration-letters', 'rstr-transliteration-letters-result'));
+
+
+
 
 	/*
 	 * TOOLS: Transliterate permalinks
@@ -174,4 +267,25 @@
 			});
 		}
 	}('serbian-transliteration-tools-check', 'serbian-transliteration-tools-transliterate-permalinks', 'rstr-progress-bar', 'rstr-disclaimer'));
+	
+	/* Accordion */
+	(function(c){
+		var acc = document.getElementsByClassName(c), i;
+		if(acc) {
+			for (i = 0; i < acc.length; i++) {
+				acc[i].addEventListener("click", function () {
+					this.classList.toggle("active");
+					var panel = this.nextElementSibling;
+					if (panel.style.display === "block") {
+						panel.style.display = "none";
+					} else {
+						panel.style.display = "block";
+					}
+				});
+			}
+		}
+	}("accordion-link"))
+	
+	
+	console.log("%c\n\nHey, are you are developer? Cool!!!\n\nJoin our team:\n\n%chttps://github.com/CreativForm/serbian-transliteration\n\n", "color: #cc0000; font-size: x-large;", "color: #cc0000; font-size: 18px");
 }());

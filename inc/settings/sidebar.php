@@ -9,22 +9,31 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	function __construct($object)
 	{
 		$this->obj = $object;
-		$this->add_action('rstr/settings/sidebar', 'postbox_infinitum');
 		$this->add_action('rstr/settings/sidebar', 'postbox_cloud_hosting');
 		$this->add_action('rstr/settings/sidebar', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar', 'postbox_infinitum');
+		
 		$this->add_action('rstr/settings/sidebar/tab/shortcodes', 'postbox_contributors');
+		
 		$this->add_action('rstr/settings/sidebar/tab/functions', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/functions', 'postbox_infinitum');
+		
 		$this->add_action('rstr/settings/sidebar/tab/permalink_tool', 'postbox_contributors');
+		
 		$this->add_action('rstr/settings/sidebar/tab/debug', 'postbox_contributors');
-		$this->add_action('rstr/settings/sidebar/tab/debug', 'postbox_cloud_hosting');
+		$this->add_action('rstr/settings/sidebar/tab/credits', 'postbox_contributors');
+		
+		$this->add_action('rstr/settings/sidebar/tab/transliteration', 'postbox_cloud_hosting');
+		$this->add_action('rstr/settings/sidebar/tab/transliteration', 'postbox_infinitum');
 	}
 	
 	public static function instance($object)
 	{
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self($object);
+		global $rstr_cache;
+		if ( !$rstr_cache->get('Serbian_Transliteration_Settings_Sidebar') ) {
+			$rstr_cache->set('Serbian_Transliteration_Settings_Sidebar', new self($object));
 		}
-		return self::$_instance;
+		return $rstr_cache->get('Serbian_Transliteration_Settings_Sidebar');
 	}
 	
 	public function postbox_infinitum(){ ?>
@@ -67,7 +76,7 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	</div>
 	<div class="inside">
 		<?php printf('<p>%s</p>', sprintf(__('If you want to support our work and effort, if you have new ideas or want to improve the existing code, %s.', RSTR_NAME), '<a href="https://github.com/CreativForm/serbian-transliteration" target="_blank">' . __('join our team', RSTR_NAME) . '</a>')); ?>
-		<?php printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>')); ?>
+		<?php /*printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>'));*/ ?>
 	</div>
 </div>
 <?php endif;

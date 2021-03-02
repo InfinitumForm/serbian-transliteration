@@ -1,18 +1,18 @@
 ﻿=== Transliterator - WordPress Transliteration ===
-Contributors: ivijanstefan, creativform, dizajn24
+Contributors: ivijanstefan, creativform, dizajn24, tihi
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
-Requires at least: 4.0
-Tested up to: 5.5
+Requires at least: 5.3
+Tested up to: 5.6
 Requires PHP: 7.0
-Stable tag: 1.0.14
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Transliterate Cyrillic into Latin, enable Cyrillic usernames, search in multiple letter scripts, and more...
 
 == Description ==
-This is a simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration also supports special shortcodes that you can use to partially transliterate parts of the content.
+This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.
 
 = FEATURES =
 
@@ -27,12 +27,15 @@ This is a simple and easy plugin with which you can transliterate your WordPress
 
 * Compatible with Multilanguage Plugins
 * Compatible with any WordPress template
+* Compatible with SEO plugins
 * Possibility of partial transliteration
 * Scalable and customizable
 * It does not affect on the HTML, CSS or JS codes
 * Multilingual support
 * Transcription mode selection
-* The plugin didn't make the site noticeably slower (light weight)
+* Diacritical support (currently for the Serbian language)
+* Support [PHP version 7.4.8](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+* Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 
 = LANGUAGE SUPPORT =
 
@@ -44,12 +47,26 @@ This is a simple and easy plugin with which you can transliterate your WordPress
 * **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
 * **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
 * **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
+* **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
 * more languages are coming soon...
 
 = PLUGINS SUPPORT =
+
 This plugin is made to support all known plugins and visual editors.
 
+We also do special compatible functions with:
+
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/)
+* [Polylang](https://wordpress.org/plugins/polylang/)
+* [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
+* [WordPress Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
+* [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
+
 **YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
+
+This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
+
+It is important for you to know that any functionality in our plugin can be turned off if you do not need it, as well as the ability to filter certain hooks and filters. We have tried to provide maximum flexibility and compatibility to everyone.
 
 == Documentation ==
 
@@ -81,7 +98,7 @@ This shortcode displays a selector for the transliteration script.
 (The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
 
 = Permalink Tool =
-This tool can rename all existing Cyrillic permalinks to Latin inside database. This tool is in the configuration of this plugin.
+This tool can rename all existing Cyrillic permalinks to Latin inside the database. This tool is in the configuration of this plugin.
 
 = PHP Functions =
 We also thought of PHP developers where we have enabled several useful functions that they can use within WordPress themes and plugins. The documentation for these functions is inside the plugin settings.
@@ -95,114 +112,51 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Screenshots ==
 
-1. Transliteration settings
-2. Cyrillic page before serbian transliteration
-3. Latin page after serbian transliteration
-4. Shortcodes
-5. Automated test
-6. Permalink tools
+1. Cyrillic page before serbian transliteration
+2. Latin page after serbian transliteration
+3. Transliteration settings
+4. Converter for transliterating Cyrillic into Latin and vice versa
+5. Permalink tools
+6. Shortcodes
 7. Available PHP Functions
+8. Language script inside Menus
+9. Automated test
 
 == Changelog ==
 
-= 1.0.14 =
-* Added transliteration for Kazakh language
-* Added update for Gutenberg block editor
-* Added post type filters for permalink tool
-* Added support for older WordPress version 4.0 and above (by request)
+= 1.4.2 =
+* Fixed issue with `data-*` attributes
+* Fixed issue with JSON inside attributes
+* Fixed problem of Latin to Cyrillic transliteration (extended characters)
+* Advanced algorithm to support Elementor and Visual Composer plugins
 
-= 1.0.13 =
-* Added new transliterations for widgets and archives
-* Added support for the oceanwp, sydney, blocksy, colormag, phlox
-* Added alternate links to transliteration versions for the better SEO
+= 1.4.1 =
+* Improved internal caching functionality
+* Improved PHP code and optimized memory
+* Page acceleration
 
-= 1.0.12 =
-* Added `[rstr_selector]` shortcode for the script menu
-* Fixed transliteration problems with `[rstr_cyr_to_lat]` and `[rstr_lat_to_cyr]` shortcodes
-
-= 1.0.11 =
-* Fixed problems with title and description tags
-* Added array and object mode into script_selector() function
-* Fixed special characters transliteration
-
-= 1.0.10 =
-* Added Woocommerce transliteration
-* Added debug mode
-* Prepared for the multisite
-* Improved comments transliteration
-* Improved RS and HR translations
-* Fixed problems with array values
-
-= 1.0.9 =
-* Added new shortcode for the image controls
-* Added new PHP functions
-* Added new settings
-* Added documentation
-* Improved transliteration
-* Improved JavaScript functions
-* Improved transliteration quality
-* Improved Search algorithm
-* Fixed date transliteration
-* Fixed problems with PHP7.4
-* Fixed Comments transliteration
-
-= 1.0.8 =
-* PHP 7.4 support
-* Improved PHP code
-* Added caching to the forced transliteration
-
-= 1.0.7 =
-* New UX
-* Added Bulgarian language
-* Added Macedonian language
-* Added new locales
-* Added new schema of the letters
-
-= 1.0.6 =
-* NEW: A tool for automatic transliteration of permalink in a database
-* Improved detection of Cyrillic
-* Added locale libraries
-* Moved to the PHP 7.x
-
-= 1.0.5 =
-* Added option to allow Cyrillic usernames
-* Added RSS feed transliteration
-* Added SEO transliteration
-* Added support for the visual editors
-* Improved page speed
-
-= 1.0.4 =
-* Fixed Latin to Cyrillic translation in pages
-* Improved search functionality
-* Added Latin and words, phrases, names and expressions exclude
-* Improved PHP code
-
-= 1.0.3 =
-* Added support for search in Latin and Cyrillic
-* Fixed bugs from the previous version
-
-= 1.0.2 =
-* FIXED: Problems with special characters and variations
-* Added Russian transliteration
-* Added Belarusian transliteration
-
-= 1.0.1 =
-* FIXED: Permalink transliteration
-* FIXED: Sanitization of the special characters
-* Added support for the other languages
-* Improved page impact
-* Improved PHP orientation
-
-= 1.0.0 =
-* First stable version
+= 1.4.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration of Latin into Cyrillic
+* Improved HTML parsing
+* Improved PHP functions for developers
+* Improved shortcodes
+* Improved menu navigation for language script
+* Improved cache cleanup when changing script
+* Optimized PHP code
 
 == Upgrade Notice ==
 
-= 1.0.14 =
-* Added transliteration for Kazakh language
-* Added update for Gutenberg block editor
-* Added post type filters for permalink tool
-* Added support for older WordPress version 4.0 and above (by request)
+= 1.4.2 =
+* Fixed issue with `data-*` attributes
+* Fixed issue with JSON inside attributes
+* Fixed problem of Latin to Cyrillic transliteration (extended characters)
+* Advanced algorithm to support Elementor and Visual Composer plugins
+
+= 1.4.1 =
+* Improved internal caching functionality
+* Improved PHP code and optimized memory
+* Page acceleration
 
 == Frequently Asked Questions ==
 
@@ -210,7 +164,6 @@ We also thought of PHP developers where we have enabled several useful functions
 **Romanisation or Latinisation**, in linguistics, is the conversion of writing from a different writing system to the Roman (Latin) script, or a system for doing so. Methods of romanization include transliteration, for representing written text, and transcription, for representing the spoken word, and combinations of both.
 
 = Which Romanization does this plugin support? =
-
 This plugin supports several world letters written in Cyrillic and enables their Romanization
 
 * Romanization of Serbian what include Bosnian and Montenegrin
@@ -219,8 +172,14 @@ This plugin supports several world letters written in Cyrillic and enables their
 * Romanization of Bulgarian
 * Romanization of Macedonian
 * Romanization of Kazakh
+* Romanization of Ukrainian
 
 Each of these transliterations is created separately and follows the rules of the active language.
+
+= What is the best practice for transliteration? =
+Through various experiences, we came to the conclusion that it is best to create the entire site in Cyrillic and enable transliteration for Latin.
+
+The reason for this solution lies in the problem of transliteration of Latin into Cyrillic due to encoding and, depending on the server, can create certain problems, especially in communication with the database. Creating a site in Cyrillic bypasses all problems and is very easily translated into Latin.
 
 = Is Latin better for SEO than Cyrillic? =
 According to Google documentation and discussions on forums and blogs, it is concluded that Latin is much better for SEO and it is necessary to practice Latin at least when permalinks and file names are in Latin, while the text can be in both letters but Latin is always preferred.
@@ -231,8 +190,6 @@ YES! Without any problems or conflicts.
 = Can I translate Latin into Cyrillic with this plugin? =
 YES! This plugin can translate a Latin site into Cyrillic, but this is not recommended and often causes problems. It is suggested that this approach be approached experimentally.
 
+The best practice is to create a Cyrillic site including all other content and in the end just add transliteration to navigation so that the visitor can choose the desired script.
+
 == Other Notes ==
-
-== DONATION ==
-
-Enjoy using *WordPress Transliteration*? Please consider [making a small donation](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com) to support the project's continued development.
