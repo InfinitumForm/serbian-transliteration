@@ -9,9 +9,26 @@
  */
 if(!class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration_Transliterating {
-	// Define locale instance
-	protected $get_locale;
-
+	
+	/*
+	 * Registered languages
+	 * @since     1.4.3
+	 * @verson    1.0.0
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function registered_languages(){
+		return apply_filters('rstr_registered_languages', array(
+			'sr_RS' => __('Serbian', RSTR_NAME),
+			'bs_BA' => __('Bosnian', RSTR_NAME),
+			'cnr' => __('Montenegrin', RSTR_NAME),
+			'ru_RU' => __('Russian', RSTR_NAME),
+			'bel' => __('Belarusian', RSTR_NAME),
+			'bg_BG' => __('Bulgarian', RSTR_NAME),
+			'mk_MK' => __('Macedoanian', RSTR_NAME),
+			'kk' => __('Kazakh', RSTR_NAME),
+			'uk' => __('Ukrainian', RSTR_NAME)
+		));
+	}
 	/*
 	 * Serbian transliteration
 	 * @since     1.0.2
@@ -72,6 +89,48 @@ class Serbian_Transliteration_Transliterating {
 		}
 		
 		return $content;
+	}
+
+	/*
+	 * Montenegrin transliteration (alias of Serbian language)
+	 * @since     1.4.3
+	 * @verson    1.0.0
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function cnr ($content, $translation = 'cyr_to_lat'){
+		$content = self::sr_RS($content, $translation);
+		
+		$transliteration = apply_filters('rstr/inc/transliteration/cnr', array(
+			"З́"=>"Ź",	"С́́"=>"Ś"
+		));
+		
+		switch($translation)
+		{
+			case 'cyr_to_lat' :			
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
+				break;
+				
+			case 'lat_to_cyr' :
+				$lat_to_cyr = array();
+				$lat_to_cyr = array_merge($lat_to_cyr, array_flip($transliteration));
+				$lat_to_cyr = apply_filters('rstr/inc/transliteration/cnr/lat_to_cyr', $lat_to_cyr);
+			//	return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
+				return strtr($content, $lat_to_cyr);
+				break;
+		}
+		
+		return $content;
+	}
+	
+	/*
+	 * Bosnian transliteration (alias of Serbian language)
+	 * @since     1.4.3
+	 * @verson    1.0.0
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function bs_BA ($content, $translation = 'cyr_to_lat'){
+		return self::sr_RS($content, $translation);
 	}
 
 	/*
@@ -465,10 +524,16 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_locale(){
-		if(!$this->get_locale){
-			$this->get_locale = get_locale();
+		
+		if('auto' != ($language_scheme = get_rstr_option('language-scheme', 'auto'))) {
+			return $language_scheme;
 		}
-        return $this->get_locale;
+		
+		global $rstr_cache;
+		if(!$rstr_cache->get('get_locale')){
+			$rstr_cache->set('get_locale', get_locale());
+		}
+        return $rstr_cache->get('get_locale');
 	}
 	
 	/*

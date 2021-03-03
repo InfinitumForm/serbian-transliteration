@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.4.2
+ * Version:           1.4.3
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -203,7 +203,8 @@ if($Serbian_Transliteration_Activate->passes()) :
 					'force-widgets'				=>	'no',
 					'enable-rss'				=>	'no',
 					'fix-diacritics'			=>	'no',
-					'url-selector'				=>	'rstr'
+					'url-selector'				=>	'rstr',
+					'language-scheme'			=>	'auto'
 				));
 			}
 			

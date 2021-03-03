@@ -189,6 +189,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$content = str_replace(str_replace($this->lat(), $this->cyr(), $item), $item, $content);
 			}
 		}
+		
 		if($fix_html){
 			$content = $this->fix_cyr_html($content);
 			$content = $this->fix_attributes($content);
@@ -1019,9 +1020,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 */
 	public function is_ssl($url = false)
 	{
+		global $rstr_cache;
+		
 		if($url !== false && is_string($url)) {
 			return (preg_match('/(https|ftps)/Ui', $url) !== false);
-		} else {
+		} else if(!$rstr_cache->get('is_ssl')) {
 			if(
 				( is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN ===true )
 				|| (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
@@ -1031,10 +1034,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				|| (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
 				|| (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
 			) {
-				return true;
+				$rstr_cache->set('is_ssl', true);
 			}
 		}
-		return false;
+		return $rstr_cache->get('is_ssl');
 	}
 	
 	/* 
@@ -1044,19 +1047,23 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function is_editor()
 	{
-		if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
-			if(!function_exists('get_current_screen')){
-				include_once ABSPATH  . '/wp-admin/includes/screen.php';
+		global $rstr_cache;
+		
+		if(!$rstr_cache->get('is_editor')) {
+			if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
+				if(!function_exists('get_current_screen')){
+					include_once ABSPATH  . '/wp-admin/includes/screen.php';
+				}
+				$get_current_screen = get_current_screen();
+				if(is_callable(array($get_current_screen, 'is_block_editor')) && method_exists($get_current_screen, 'is_block_editor')) {
+					$rstr_cache->set('is_editor', $get_current_screen->is_block_editor());
+				}
+			} else {
+				$rstr_cache->set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
 			}
-			$get_current_screen = get_current_screen();
-			if(is_callable(array($get_current_screen, 'is_block_editor')) && method_exists($get_current_screen, 'is_block_editor')) {
-				return $get_current_screen->is_block_editor();
-			}
-		} else {
-			return ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) );
 		}
 		
-		return false;
+		return $rstr_cache->get('is_editor');
 	}
 	
 	/*

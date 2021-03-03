@@ -244,6 +244,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME . '-global' // Section           
         );
 		
+		$this->add_settings_field(
+            'language-scheme', // ID
+            __('Language scheme', RSTR_NAME), // Title 
+            'language_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-global' // Section           
+        );
+		
 		if($rstr_cache->get('Serbian_Transliteration_Settings__active_filters')) {
 			$this->add_settings_field(
 				'transliteration-filter', // ID
@@ -540,6 +548,26 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 		
         echo join('<br>', $inputs);
+	}
+	
+	/** 
+     * Transliteration language
+     */
+	public function language_callback(){
+		$inputs = array();
+		$languages = array_merge(array('auto' => __('Automatical (recommended)', RSTR_NAME)), Serbian_Transliteration_Transliterating::registered_languages());
+		foreach($languages as $locale=>$label)
+		{
+			$inputs[]=sprintf(
+				'<option value="%1$s"%3$s>%2$s</option>',
+				$locale,
+				esc_html($label) . ($locale != 'auto' ? " ({$locale})" : ''),
+				(isset( $this->options['language-scheme'] ) ? ($this->options['language-scheme'] == $locale ? ' selected' : '') : ($locale == 'auto' ? ' selected' : ''))
+			);
+		}
+        echo '<select name="'.RSTR_NAME.'[language-scheme]" id="'.RSTR_NAME.'-language-scheme" data-nonce="'.$this->nonce.'" style="margin-bottom:5px;">' . join('<br>', $inputs) . '</select>';
+		
+		printf('<br><p class="description">%1$s</p>', __('This option defines the language script. Automatic script detection is the best way but if you are using a WordPress installation in a language that does not match the scripts supported by this plugin, then choose on which script you want the transliteration to be performed.', RSTR_NAME));
 	}
 	
 	/** 

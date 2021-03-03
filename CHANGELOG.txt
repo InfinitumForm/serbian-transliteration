@@ -1,3 +1,12 @@
+= 1.4.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added manual language script scheme selection
+* Added script for Montenegrin characters
+* Added WP-CLI script for permalink transliteration: `wp transliterate permalinks`
+* Optimized scripts for libraries
+* Add new filters for Yoast SEO
+* Added support for WordPress version 5.7
+
 = 1.4.2 =
 * Fixed issue with `data-*` attributes
 * Fixed issue with JSON inside attributes

@@ -2,10 +2,10 @@
 Contributors: ivijanstefan, creativform, dizajn24, tihi
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
-Requires at least: 5.3
-Tested up to: 5.6
+Requires at least: 5.4
+Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,15 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.4.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added manual language script scheme selection
+* Added script for Montenegrin characters
+* Added WP-CLI script for permalink transliteration: `wp transliterate permalinks`
+* Optimized scripts for libraries
+* Add new filters for Yoast SEO
+* Added support for WordPress version 5.7
+
 = 1.4.2 =
 * Fixed issue with `data-*` attributes
 * Fixed issue with JSON inside attributes
@@ -146,6 +155,15 @@ We also thought of PHP developers where we have enabled several useful functions
 * Optimized PHP code
 
 == Upgrade Notice ==
+
+= 1.4.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added manual language script scheme selection
+* Added script for Montenegrin characters
+* Added WP-CLI script for permalink transliteration: `wp transliterate permalinks`
+* Optimized scripts for libraries
+* Add new filters for Yoast SEO
+* Added support for WordPress version 5.7
 
 = 1.4.2 =
 * Fixed issue with `data-*` attributes
