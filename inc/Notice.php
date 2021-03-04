@@ -21,15 +21,20 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		
 		public function __construct() {
 			$this->add_action( 'admin_init', 'check_installation_time' );
-			$this->add_action( 'admin_init', 'spare_me', 5 );
+			$this->add_action( 'admin_init', 'cfgp_dimiss_review', 5 );
 		}
 		
 		// remove the notice for the user if review already done or if the user does not want to
-		function spare_me(){    
-			if( isset( $_GET['spare_me'] ) && !empty( $_GET['spare_me'] ) ){
-				$spare_me = $_GET['spare_me'];
-				if( $spare_me == 1 ){
-					add_option( RSTR_NAME . '-no-reviews' , true );
+		function cfgp_dimiss_review(){    
+			if( isset( $_GET['cfgp_dimiss_review'] ) && !empty( $_GET['cfgp_dimiss_review'] ) ){
+				$cfgp_dimiss_review = $_GET['cfgp_dimiss_review'];
+				if( $cfgp_dimiss_review == 1 ){
+					add_option( RSTR_NAME . '-reviewed' , true );
+					
+					$parse_url = $this->parse_url();
+					if(wp_safe_redirect(remove_query_arg('cfgp_dimiss_review', $parse_url['url']))) {
+						exit;
+					}
 				}
 			}
 		}
@@ -37,7 +42,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		// check if review notice should be shown or not
 		public function check_installation_time() {
 			
-			if(get_option(RSTR_NAME . '-no-reviews')){
+			if(get_option(RSTR_NAME . '-reviewed')){
 				return;
 			}
 			
@@ -60,7 +65,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		**/
 		function display_admin_notice() {
 			$parse_url = $this->parse_url();
-			$dont_disturb = esc_url( add_query_arg('spare_me', '1', $parse_url['url']) );
+			$dont_disturb = esc_url( add_query_arg('cfgp_dimiss_review', '1', $parse_url['url']) );
 			$plugin_info = get_plugin_data( RSTR_FILE , true, true );       
 			$reviewurl = esc_url( 'https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post' );
 		 

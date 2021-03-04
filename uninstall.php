@@ -32,8 +32,8 @@ if(get_option(RSTR_NAME . '-term-script')) {
 if(get_option(RSTR_NAME . '-html-tags')) {
 	delete_option(RSTR_NAME . '-html-tags');
 }
-if(get_option(RSTR_NAME . '-no-reviews')) {
-	delete_option(RSTR_NAME . '-no-reviews');
+if(get_option(RSTR_NAME . '-reviewed')) {
+	delete_option(RSTR_NAME . '-reviewed');
 }
 // Delete terms
 if(term_exists('lat', 'rstr-script')) {
