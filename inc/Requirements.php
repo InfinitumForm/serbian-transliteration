@@ -129,7 +129,7 @@ font-weight:600;
 	private static function __php_at_least( $min_version ) {
 		return version_compare( phpversion(), $min_version, '>=' );
 	}
-
+	
 	public function php_version_notice() {
 		echo '<div class="notice notice-error">';
 		echo '<p>'.sprintf(__('The %1$s cannot run on PHP versions older than PHP %2$s. Please contact your host and ask them to upgrade.', RSTR_NAME), esc_html( $this->title ), $this->php).'</p>';

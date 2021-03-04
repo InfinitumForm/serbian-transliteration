@@ -139,6 +139,9 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		/* Load SEO support
 		====================================*/
 		Serbian_Transliteration_SEO::init();
+		/* Load Notice
+		====================================*/
+		Serbian_Transliteration_Notice::init();
 	}
 	
 	/*

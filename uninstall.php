@@ -32,6 +32,9 @@ if(get_option(RSTR_NAME . '-term-script')) {
 if(get_option(RSTR_NAME . '-html-tags')) {
 	delete_option(RSTR_NAME . '-html-tags');
 }
+if(get_option(RSTR_NAME . '-no-reviews')) {
+	delete_option(RSTR_NAME . '-no-reviews');
+}
 // Delete terms
 if(term_exists('lat', 'rstr-script')) {
 	wp_delete_term(get_term_by('slug','lat','rstr-script')->term_id, 'rstr-script');

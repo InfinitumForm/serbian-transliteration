@@ -147,6 +147,12 @@ if($Serbian_Transliteration_Activate->passes()) :
 	 */
 	include_once RSTR_INC . '/WP_CLI.php';
 	/*
+	 * WP-CLI
+	 * @since     1.4.3
+	 * @verson    1.0.0
+	 */
+	include_once RSTR_INC . '/Notice.php';
+	/*
 	 * Initialize active plugin
 	 * @since     1.0.0
 	 * @verson    1.0.0
