@@ -1,3 +1,8 @@
+= 1.4.4 =
+* Add special transliteration tags
+* Corrected navigation transliteration
+* Advanced memory storage algorithms
+
 = 1.4.3 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added manual language script scheme selection

@@ -9,7 +9,7 @@
 if(!class_exists('Serbian_Transliteration_Shortcodes')) :
 class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 {
-	function __construct($options){
+	function __construct(){
 
 		if($this->is_editor()) {} else
 		{
@@ -205,20 +205,32 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	public function output_callback ($buffer='') {
 		if(preg_match('/%{5}\-(\#{2}|\|{2})/', $buffer) !== false)
 		{
-			$buffer = preg_replace_callback('/(?<=\{cyr_to_lat\})(.*?)(?=\{\/cyr_to_lat\})/s', function($matches) {
-				return $this->cyr_to_lat($matches[1]);
-			}, $buffer);
-			
 			$buffer = preg_replace_callback('/(?<=%{5}\-\#{2})(.*?)(?=\#{2}\-%{5})/s', function($matches) {
 				return $this->cyr_to_lat($matches[1]);
 			}, $buffer);
+			$buffer = preg_replace_callback('/(?<=%{5}\-\|{2})(.*?)(?=\|{2}\-%{5})/s', function($matches) {
+				return $this->lat_to_cyr($matches[1]);
+			}, $buffer);
+			
 			
 			$buffer = preg_replace_callback('/(?<=\{lat_to_cyr\})(.*?)(?=\{\/lat_to_cyr\})/s', function($matches) {
 				return $this->lat_to_cyr($matches[1]);
 			}, $buffer);
-			
-			$buffer = preg_replace_callback('/(?<=%{5}\-\|{2})(.*?)(?=\|{2}\-%{5})/s', function($matches) {
-				return $this->lat_to_cyr($matches[1]);
+			$buffer = preg_replace_callback('/(?<=\{cyr_to_lat\})(.*?)(?=\{\/cyr_to_lat\})/s', function($matches) {
+				return $this->cyr_to_lat($matches[1]);
+			}, $buffer);
+			$buffer = preg_replace_callback('/(?<=\{rstr_skip\})(.*?)(?=\{\/rstr_skip\})/s', function($matches) {
+				switch($this->get_option('transliteration-mode', ''))
+				{
+					case 'cyr_to_lat' :
+						return $this->lat_to_cyr($matches[1]);
+					break;
+						
+					case 'lat_to_cyr' :
+						return $this->cyr_to_lat($matches[1]);
+					break;
+				}
+				return $matches[1];
 			}, $buffer);
 			
 			$buffer = str_replace(array(
@@ -229,7 +241,9 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 				'{cyr_to_lat}',
 				'{/cyr_to_lat}',
 				'{lat_to_cyr}',
-				'{/lat_to_cyr}'
+				'{/lat_to_cyr}',
+				'{rstr_skip}',
+				'{/rstr_skip}'
 			), '', $buffer);
 		}
 		return $buffer;

@@ -134,7 +134,8 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	public function nav_tab_documentation_action(){
 		$this->admin_action_links(array(
 			'shortcodes' => __('Available shortcodes', RSTR_NAME),
-			'functions' => __('Available PHP functions', RSTR_NAME)
+			'functions' => __('Available PHP functions', RSTR_NAME),
+			'tags' => __('Available Tags', RSTR_NAME)
 		));
 	}
 	
@@ -154,6 +155,15 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		wp_enqueue_style( 'highlight');
 		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/php-functions.php';
+	}
+	
+	/*
+	 * Available tags section
+	**/
+	public function tab_content_available_tags(){
+		wp_enqueue_style( 'highlight');
+		wp_enqueue_script('highlight');
+		include_once RSTR_INC . '/settings/content/tags.php';
 	}
 	
 	/*

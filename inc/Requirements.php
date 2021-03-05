@@ -13,7 +13,6 @@ class Serbian_Transliteration_Requirements
 	private $php = '7.0';
 	private $wp = '4.0';
 	private $file;
-	private $options;
 
 	public function __construct( $args ) {
 		foreach ( array( 'title', 'php', 'wp', 'file' ) as $setting ) {

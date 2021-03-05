@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2021-03-03 13:20+0100\n"
-"PO-Revision-Date: 2021-03-03 13:26+0100\n"
+"POT-Creation-Date: 2021-03-05 16:49+0100\n"
+"PO-Revision-Date: 2021-03-05 16:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -72,51 +72,53 @@ msgid "Transliteration disabled"
 msgstr "Угаси пресловљавање"
 
 #: inc/Global.php:48 inc/settings/content/shortcodes.php:27
+#: inc/settings/content/tags.php:25
 msgid "Cyrillic to Latin"
 msgstr "Ћирилица у латиницу"
 
 #: inc/Global.php:49 inc/settings/content/shortcodes.php:30
+#: inc/settings/content/tags.php:28
 msgid "Latin to Cyrillic"
 msgstr "Латиница у ћирилицу"
 
-#: inc/Global.php:850 inc/Global.php:851
+#: inc/Global.php:859 inc/Global.php:860
 msgctxt "Language script"
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Global.php:852
+#: inc/Global.php:861
 msgid "Search by Script"
 msgstr "Претражи по скрипти"
 
-#: inc/Global.php:853
+#: inc/Global.php:862
 msgid "All Scripts"
 msgstr "Све скрипте"
 
-#: inc/Global.php:854
+#: inc/Global.php:863
 msgid "Parent Script"
 msgstr "Родитељска скрипта"
 
-#: inc/Global.php:855
+#: inc/Global.php:864
 msgid "Parent Script:"
 msgstr "Родитељска скрипта:"
 
-#: inc/Global.php:856
+#: inc/Global.php:865
 msgid "Edit Script"
 msgstr "Уреди скрипту"
 
-#: inc/Global.php:857
+#: inc/Global.php:866
 msgid "Update Script"
 msgstr "Уреди скрипту"
 
-#: inc/Global.php:858
+#: inc/Global.php:867
 msgid "Add New Script"
 msgstr "Додај нову скрипту"
 
-#: inc/Global.php:859
+#: inc/Global.php:868
 msgid "New Script Name"
 msgstr "Нови назив скрипте"
 
-#: inc/Global.php:860
+#: inc/Global.php:869
 msgid "Script"
 msgstr "Скрипта"
 
@@ -169,7 +171,29 @@ msgstr "Пример: Latinica | Ћирилица"
 msgid "Note that the white space around them will be cleared."
 msgstr "Имајте на уму да ће се размак око њих очистити."
 
-#: inc/Requirements.php:43
+#: inc/Notice.php:78
+#, php-format
+msgid ""
+"You have been using <b> %1$s </b> plugin for a while. We hope you liked it!"
+msgstr "Већ неко време користите <b>%1$s</b>. Надамо се да вам се допада!"
+
+#: inc/Notice.php:78
+msgid ""
+"Please give us a quick rating, it works as a boost for us to keep working on "
+"the plugin!"
+msgstr ""
+"Молимо вас за једну брзу оцену, то нам делује као подстицај да наставимо да "
+"радимо на додатку!"
+
+#: inc/Notice.php:78
+msgid "Rate Now!"
+msgstr "Оцените нас!"
+
+#: inc/Notice.php:78
+msgid "I've already done that!"
+msgstr "То сам већ учинио!"
+
+#: inc/Requirements.php:42
 msgid ""
 "This plugin uses cookies and should be listed in your Privacy Policy page to "
 "prevent privacy issues."
@@ -177,16 +201,16 @@ msgstr ""
 "Овај додатак користи колачиће и требао би бити наведен на вашој страници "
 "политике приватности како би се спречили проблеми са приватношћу."
 
-#: inc/Requirements.php:45
+#: inc/Requirements.php:44
 msgid "Suggested text:"
 msgstr "Предложени текст:"
 
-#: inc/Requirements.php:48
+#: inc/Requirements.php:47
 #, php-format
 msgid "This website uses the %1$s plugin to transliterate content."
 msgstr "Ова веб локација користи додатак %1$s за пресловљавање садржаја."
 
-#: inc/Requirements.php:50
+#: inc/Requirements.php:49
 msgid ""
 "This is a simple and easy add-on with which this website translates content "
 "from Cyrillic to Latin and vice versa. This transliteration plugin also "
@@ -198,7 +222,7 @@ msgstr ""
 "(транслитерацију) такође подржава посебне кратке кодове и функције које "
 "користе колачиће за одређивање језичке скрипте."
 
-#: inc/Requirements.php:53
+#: inc/Requirements.php:52
 #, php-format
 msgid ""
 "These cookies do not affect your privacy because they are not intended for "
@@ -208,12 +232,12 @@ msgstr ""
 "Ови колачићи не утичу на вашу приватност јер нису намењени за праћење и "
 "аналитику. Ови колачићи могу имати само две вредности: \"%1$s\" или \"%2$s\"."
 
-#: inc/Requirements.php:86
+#: inc/Requirements.php:85
 #, php-format
 msgid "Important upgrade notice for the version %s:"
 msgstr "Важно обавештење о надоградњи за верзију %s:"
 
-#: inc/Requirements.php:100
+#: inc/Requirements.php:99
 msgid ""
 "NOTE: Before doing the update, it would be a good idea to backup your "
 "WordPress installations and settings."
@@ -221,7 +245,7 @@ msgstr ""
 "НАПОМЕНА: Пре него што извршите ажурирање, било би добро да направите "
 "резервне копије ваших WordPress инсталација и подешавања."
 
-#: inc/Requirements.php:135
+#: inc/Requirements.php:134
 #, php-format
 msgid ""
 "The %1$s cannot run on PHP versions older than PHP %2$s. Please contact your "
@@ -230,11 +254,11 @@ msgstr ""
 "%1$s не може да се покреће на PHP верзијама старијим од PHP%2$s. Молимо "
 "контактирајте свог сервер администратора и замолите га да изврши надоградњу."
 
-#: inc/Requirements.php:143
+#: inc/Requirements.php:142
 msgid "Transliteration plugin requires attention:"
 msgstr "Додатак за пресловљавање захтева пажњу:"
 
-#: inc/Requirements.php:145
+#: inc/Requirements.php:144
 #, php-format
 msgid ""
 "Your plugin works under Only WooCoomerce mode and you need to %s because "
@@ -243,31 +267,31 @@ msgstr ""
 "Ваш додатак ради у WooCoomerce режиму и требате %s јер WooCoomerce више није "
 "активан."
 
-#: inc/Requirements.php:146
+#: inc/Requirements.php:145
 msgid "update your settings"
 msgstr "ажурирати своја подешавања"
 
-#: inc/Requirements.php:156
+#: inc/Requirements.php:155
 msgid ""
 "Transliteration plugin requires a Multibyte String PHP extension (mbstring)."
 msgstr ""
 "Додатак за пресловљавање захтева \"Multibyte String PHP \" екстензију "
 "(mbstring)."
 
-#: inc/Requirements.php:158
+#: inc/Requirements.php:157
 #, php-format
 msgid "Without %s you will not be able to use this plugin."
 msgstr "Без %s нећете моћи да користите овај додатак."
 
-#: inc/Requirements.php:159
+#: inc/Requirements.php:158
 msgid "Multibyte String Installation"
 msgstr "Multibyte String инсталација"
 
-#: inc/Requirements.php:159
+#: inc/Requirements.php:158
 msgid "this PHP extension"
 msgstr "ове PHP екстензије"
 
-#: inc/Requirements.php:180
+#: inc/Requirements.php:179
 #, php-format
 msgid ""
 "The %1$s cannot run on WordPress versions older than %2$s. Please update "
@@ -724,11 +748,15 @@ msgstr "Доступни кратки кодови"
 msgid "Available PHP functions"
 msgstr "Доступне PHP функције"
 
-#: inc/settings/content.php:163
+#: inc/settings/content.php:138 inc/settings/content/tags.php:21
+msgid "Available Tags"
+msgstr "Доступни тагови"
+
+#: inc/settings/content.php:173
 msgid "Debug"
 msgstr "Дебаговање"
 
-#: inc/settings/content.php:179
+#: inc/settings/content.php:189
 msgid "Credits & Info"
 msgstr "Информације"
 
@@ -1088,11 +1116,11 @@ msgstr "(стринг) Текст за ћирилични линк. Подраз
 msgid "(string) Text for Latin link. Default: %s"
 msgstr "(стринг) Текст за латинични линк. Подразумевано: %s"
 
-#: inc/settings/content/shortcodes.php:24
+#: inc/settings/content/shortcodes.php:24 inc/settings/content/tags.php:31
 msgid "Skip transliteration"
 msgstr "Избегни пресловљавање"
 
-#: inc/settings/content/shortcodes.php:25
+#: inc/settings/content/shortcodes.php:25 inc/settings/content/tags.php:32
 msgid "Keep this original"
 msgstr "Сачувај ово оригинално"
 
@@ -1217,6 +1245,22 @@ msgstr ""
 "било где у оквиру WordPress страница, постова, таксономија и виџета (ако то "
 "подржавају)."
 
+#: inc/settings/content/tags.php:22
+msgid ""
+"These tags have a special purpose and work separately from short codes and "
+"can be used in fields where short codes cannot be used."
+msgstr ""
+"Ови тагови имају посебну намену и раде одвојено од кратких кодова и могу се "
+"користити у пољима у којима се кратки кодови не могу користити."
+
+#: inc/settings/content/tags.php:22
+msgid ""
+"These tags have no additional settings and can be applied in plugins, "
+"themes, widgets and within other short codes."
+msgstr ""
+"Ови тагови немају додатна подешавања и могу се применити у додацима, темама, "
+"виџетима и у оквиру других кратких кодова."
+
 #: inc/settings/content/transliteration-tool.php:15
 msgid "Converter for transliterating Cyrillic into Latin and vice versa"
 msgstr "Конвертор за пресловљавање ћирилице у латиницу и обрнуто"
@@ -1241,7 +1285,7 @@ msgstr "Конвертуј у ћирилицу"
 msgid "Reset"
 msgstr "Очисти све"
 
-#: inc/settings/sidebar.php:44
+#: inc/settings/sidebar.php:53
 msgid ""
 "Hire professional developers, designers, SEO masters and marketing ninjas in "
 "one place."
@@ -1249,15 +1293,15 @@ msgstr ""
 "Ангажирајте професионалне програмере, дизајнере, СЕО мајсторе и маркетиншке "
 "нинџе на једном месту."
 
-#: inc/settings/sidebar.php:45 inc/settings/sidebar.php:57
+#: inc/settings/sidebar.php:54 inc/settings/sidebar.php:66
 msgid "Read more..."
 msgstr "Прочитајте више овде ..."
 
-#: inc/settings/sidebar.php:53
+#: inc/settings/sidebar.php:62
 msgid "Need CLOUD HOSTING ???"
 msgstr "Требате ХОСТИНГ ???"
 
-#: inc/settings/sidebar.php:56
+#: inc/settings/sidebar.php:65
 msgid ""
 "If you need hosting for your personal needs, for business, any web "
 "applications, cloud or dedicated servers, we have the ideal solution for you!"
@@ -1265,11 +1309,11 @@ msgstr ""
 "Ако вам треба хостинг за ваше личне потребе, за пословање, било које веб "
 "апликације, \"cloud\" или наменске сервере, имамо идеално решење за вас!"
 
-#: inc/settings/sidebar.php:66
+#: inc/settings/sidebar.php:75
 msgid "Contributors & Developers"
 msgstr "Сарадници и програмери"
 
-#: inc/settings/sidebar.php:78
+#: inc/settings/sidebar.php:87
 #, php-format
 msgid ""
 "If you want to support our work and effort, if you have new ideas or want to "
@@ -1278,7 +1322,7 @@ msgstr ""
 "Ако желите да подржите наш рад и труд, ако имате нове идеје или желите да "
 "побољшате постојећи код, %s."
 
-#: inc/settings/sidebar.php:78
+#: inc/settings/sidebar.php:87
 msgid "join our team"
 msgstr "придружите се нашем тиму"
 

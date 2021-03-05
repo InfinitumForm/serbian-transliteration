@@ -117,9 +117,9 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		}
 		
 		if ( $options->active == 'cyr' ) {
-			return esc_html( isset( $titles[0] ) ? $titles[0] : $title );
+			return '{cyr_to_lat}'.esc_html( isset( $titles[0] ) ? $titles[0] : $title ).'{/cyr_to_lat}';
 		} else {
-			return esc_html( isset( $titles[1] ) ? $titles[1] : $title );
+			return '{lat_to_cyr}'.esc_html( isset( $titles[1] ) ? $titles[1] : $title ).'{/lat_to_cyr}';
 		}
 	}
 	

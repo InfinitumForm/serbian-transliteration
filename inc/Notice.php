@@ -13,10 +13,15 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		/* Run this script */
 		public static function init() {
 			global $rstr_cache;
-			if ( !$rstr_cache->get('Serbian_Transliteration_Notice') ) {
-				$rstr_cache->set('Serbian_Transliteration_Notice', new self());
+			$class = get_called_class();
+			if(!$class){
+				$class = static::self;
 			}
-			return $rstr_cache->get('Serbian_Transliteration_Notice');
+			$instance = $rstr_cache->get($class);
+			if ( !$instance ) {
+				$instance = $rstr_cache->set($class, new self());
+			}
+			return $instance;
 		}
 		
 		public function __construct() {
@@ -69,7 +74,12 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 			$plugin_info = get_plugin_data( RSTR_FILE , true, true );       
 			$reviewurl = esc_url( 'https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post' );
 		 
-			printf(__('<div class="notice notice-info"><h3>'.__('You have been using <b> %s </b> for a while. We hope you liked it!', RSTR_NAME).'</h3><p>'.__('Please give us a quick rating, it works as a boost for us to keep working on the plugin!', RSTR_NAME).'</p><p class="void-review-btn"><a href="%s" class="button button-primary" target="_blank">'.__('Rate Now!', RSTR_NAME).'</a><a href="%s" class="void-grid-review-done">'.__('I\'ve already done that!', RSTR_NAME).'</a></p></div>', $plugin_info['TextDomain']), $plugin_info['Name'], $reviewurl, $dont_disturb );
+			printf(
+				'<div class="notice notice-info"><h3>'.__('You have been using <b> %1$s </b> plugin for a while. We hope you liked it!', RSTR_NAME).'</h3><p>'.__('Please give us a quick rating, it works as a boost for us to keep working on the plugin!', RSTR_NAME).'</p><p class="void-review-btn"><a href="%2$s" class="button button-primary" target="_blank">'.__('Rate Now!', RSTR_NAME).'</a><a href="%3$s" class="void-grid-review-done">'.__('I\'ve already done that!', RSTR_NAME).'</a></p></div>',
+				$plugin_info['Name'],
+				$reviewurl,
+				$dont_disturb
+			);
 		}
 
 	}

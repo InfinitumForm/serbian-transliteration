@@ -17,10 +17,15 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	private static function get_instance()
 	{
 		global $rstr_cache;
-		if ( !$rstr_cache->get('Serbian_Transliteration_Init') ) {
-			$rstr_cache->set('Serbian_Transliteration_Init', new self());
+		$class = get_called_class();
+		if(!$class){
+			$class = static::self;
 		}
-		return $rstr_cache->get('Serbian_Transliteration_Init');
+		$instance = $rstr_cache->get($class);
+		if ( !$instance ) {
+			$instance = $rstr_cache->set($class, new self());
+		}
+		return $instance;
 	}
 	
 	/**
@@ -182,7 +187,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		// Load shortcodes
 		if(!class_exists('Serbian_Transliteration_Shortcodes') && file_exists(RSTR_INC . '/Shortcodes.php')) {
 			include_once RSTR_INC . '/Shortcodes.php';
-			new Serbian_Transliteration_Shortcodes($options);
+			new Serbian_Transliteration_Shortcodes();
 		}
 
 		// Initialize plugin mode
@@ -231,7 +236,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			{
 				if(!class_exists('Serbian_Transliteration_Search') && file_exists(RSTR_INC . '/Search.php')) {
 					include_once RSTR_INC . '/Search.php';
-					new Serbian_Transliteration_Search($options);
+					new Serbian_Transliteration_Search();
 				}
 			}
 			

@@ -26,10 +26,15 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 		public static function init()
 		{
 			global $rstr_cache;
-			if ( !$rstr_cache->get('Serbian_Transliteration_SEO') ) {
-				$rstr_cache->set('Serbian_Transliteration_SEO', new self());
+			$class = get_called_class();
+			if(!$class){
+				$class = static::self;
 			}
-			return $rstr_cache->get('Serbian_Transliteration_SEO');
+			$instance = $rstr_cache->get($class);
+			if ( !$instance ) {
+				$instance = $rstr_cache->set($class, new self());
+			}
+			return $instance;
 		}
 		
 		/*
@@ -112,6 +117,10 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 		 */
 		public function ip($blacklistIP=array())
 		{
+			global $rstr_cache;
+			
+			if($ip = $rstr_cache->get('IP')) return $ip;
+			
 			$findIP=apply_filters( 'rstr/seo/ip/constants', array_merge($findIP, array(
 				'HTTP_CF_CONNECTING_IP', // Cloudflare
 				'HTTP_X_FORWARDED_FOR', // X-Forwarded-For: <client>, <proxy1>, <proxy2> client = client ip address; https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
@@ -164,15 +173,15 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 						{
 							if('HTTP_X_FORWARDED_FOR' == $http)
 							{
-								return $ipf[0];
+								return $rstr_cache->set('IP', $ipf[0]);
 							}
 							else
 							{
-								return end($ipf);
+								return $rstr_cache->set('IP', end($ipf));
 							}
 						}
 						else
-							return $ipf[0];
+							return $rstr_cache->set('IP', $ipf[0]);
 					}
 					
 					$ips = $ipf = $ipx = $ipMAX = NULL;
@@ -180,7 +189,7 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 				// Check if IP is real and valid
 				if($this->filter_ip($ip, $blacklistIP)!==false)
 				{
-					return $ip;
+					return $rstr_cache->set('IP', $ip);
 				}
 			}
 			// let's try hacking into apache?
@@ -212,7 +221,7 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 						/*if($ipMAX > 1)
 							return end($ipf);
 						else*/
-						return $ipf[0];
+						return $rstr_cache->set('IP', $ipf[0]);
 					}
 					
 					$ips = $ipf = $ipx = $ipMAX = NULL;
@@ -236,7 +245,7 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 						$ip = $result->ip;
 						if($this->filter_ip($ip)!==false)
 						{
-							return $ip;
+							return $rstr_cache->set('IP', $ip);
 						}
 					}
 				}
@@ -249,19 +258,19 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 					$ip = shell_exec('powershell.exe -InputFormat none -ExecutionPolicy Unrestricted -NoProfile -Command "(Invoke-WebRequest https://api.ipify.org).Content.Trim()"');
 					if($this->filter_ip($ip)!==false)
 					{
-						return $ip;
+						return $rstr_cache->set('IP', $ip);
 					}
 					
 					$ip = shell_exec('powershell.exe -InputFormat none -ExecutionPolicy Unrestricted -NoProfile -Command "(Invoke-WebRequest https://smart-ip.net/myip).Content.Trim()"');
 					if($this->filter_ip($ip)!==false)
 					{
-						return $ip;
+						return $rstr_cache->set('IP', $ip);
 					}
 					
 					$ip = shell_exec('powershell.exe -InputFormat none -ExecutionPolicy Unrestricted -NoProfile -Command "(Invoke-WebRequest https://ident.me).Content.Trim()"');
 					if($this->filter_ip($ip)!==false)
 					{
-						return $ip;
+						return $rstr_cache->set('IP', $ip);
 					}
 				}
 			}
@@ -272,19 +281,19 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 					$ip = shell_exec('curl https://api.ipify.org##*( )');
 					if($this->filter_ip($ip)!==false)
 					{
-						return $ip;
+						return $rstr_cache->set('IP', $ip);
 					}
 					
 					$ip = shell_exec('curl https://smart-ip.net/myip##*( )');
 					if($this->filter_ip($ip)!==false)
 					{
-						return $ip;
+						return $rstr_cache->set('IP', $ip);
 					}
 					
 					$ip = shell_exec('curl https://ident.me##*( )');
 					if($this->filter_ip($ip)!==false)
 					{
-						return $ip;
+						return $rstr_cache->set('IP', $ip);
 					}
 				}
 			}

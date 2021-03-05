@@ -20,10 +20,15 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 		/* Run this script */
 		public static function includes($options = array(), $only_object = false ) {
 			global $rstr_cache;
-			if ( !$rstr_cache->get('Serbian_Transliteration_Plugins') ) {
-				$rstr_cache->set('Serbian_Transliteration_Plugins', new self($options, $only_object));
+			$class = get_called_class();
+			if(!$class){
+				$class = static::self;
 			}
-			return $rstr_cache->get('Serbian_Transliteration_Plugins');
+			$instance = $rstr_cache->get($class);
+			if ( !$instance ) {
+				$instance = $rstr_cache->set($class, new self($options, $only_object));
+			}
+			return $instance;
 		}
 		
 		function __construct( $options=array(), $only_object = false ) {

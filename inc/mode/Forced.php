@@ -15,11 +15,16 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		/* Run this script */
 		public static function run() {
 			global $rstr_cache;
-			if ( !$rstr_cache->get('Serbian_Transliteration_Mode_Forced') ) {
-				$rstr_cache->set('Serbian_Transliteration_Mode_Forced', new self());
+			$class = get_called_class();
+			if(!$class){
+				$class = static::self;
 			}
-			return $rstr_cache->get('Serbian_Transliteration_Mode_Forced');
-		}
+			$instance = $rstr_cache->get($class);
+			if ( !$instance ) {
+				$instance = $rstr_cache->set($class, new self());
+			}
+			return $instance;
+		} 
 		
 		public static function filters ($options=array()) {
 			if(empty($options)) $options = get_rstr_option();

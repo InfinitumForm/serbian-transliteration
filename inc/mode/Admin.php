@@ -14,10 +14,15 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 		/* Run this script */
 		public static function run() {
 			global $rstr_cache;
-			if ( !$rstr_cache->get('Serbian_Transliteration_Mode_Admin') ) {
-				$rstr_cache->set('Serbian_Transliteration_Mode_Admin', new self());
+			$class = get_called_class();
+			if(!$class){
+				$class = static::self;
 			}
-			return $rstr_cache->get('Serbian_Transliteration_Mode_Admin');
+			$instance = $rstr_cache->get($class);
+			if ( !$instance ) {
+				$instance = $rstr_cache->set($class, new self());
+			}
+			return $instance;
 		} 
 
 		public static function filters( $options = array() ) {

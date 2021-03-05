@@ -444,7 +444,14 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			'<бр>' => '<br>',
 			'<бр ' => '<br ',
 			'<хр>' => '<hr>',
-			'<хр ' => '<hr '
+			'<хр ' => '<hr ',
+			// Fix internal tags
+			'{цyр_то_лат}' => '{cyr_to_lat}',
+			'{/цyр_то_лат}' => '{/cyr_to_lat}',
+			'{лат_то_цyр}' => '{lat_to_cyr}',
+			'{/лат_то_цyр}' => '{/lat_to_cyr}',
+			'{рстр_скип}' => '{rstr_skip}',
+			'{/рстр_скип}' => '{/rstr_skip}'
 		);
 		
 		foreach($tags->lat as $i=>$tag){
@@ -789,20 +796,22 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	* @version  1.0.0
 	**/
 	public function get_current_page_ID(){
-		global $post, $wp_query, $wpdb;
+		global $post, $wp_query, $wpdb, $rstr_cache;
+		
+		if($current_page_id = $rstr_cache->get('current_page_id')) return $current_page_id;
 		
 		if(!is_null($wp_query) && isset($wp_query->post) && isset($wp_query->post->ID) && !empty($wp_query->post->ID))
-			return $wp_query->post->ID;
+			return $rstr_cache->set('current_page_id', $wp_query->post->ID);
 		else if(function_exists('get_the_id') && !empty(get_the_id()))
-			return get_the_id();
+			return $rstr_cache->set('current_page_id', get_the_id());
 		else if(!is_null($post) && isset($post->ID) && !empty($post->ID))
-			return $post->ID;
+			return $rstr_cache->set('current_page_id', $post->ID);
 		else if( (isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'edit') && $post = ((isset($_GET['post']) && is_numeric($_GET['post']))  ? absint($_GET['post']) : false))
-			return $post;
+			return $rstr_cache->set('current_page_id', $post);
 		else if($p = ((isset($_GET['p']) && is_numeric($_GET['p']))  ? absint($_GET['p']) : false))
-			return $p;
+			return $rstr_cache->set('current_page_id', $p);
 		else if($page_id = ((isset($_GET['page_id']) && is_numeric($_GET['page_id']))  ? absint($_GET['page_id']) : false))
-			return $page_id;
+			return $rstr_cache->set('current_page_id', $page_id);
 		else if(!is_admin() && $wpdb)
 		{
 			$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
@@ -827,13 +836,13 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 						)
 					))
 					{
-						return absint($post_id);
+						return $rstr_cache->set('current_page_id', absint($post_id));
 					}
 				}
 			}
 		}
 		else if(!is_admin() && 'page' == get_option( 'show_on_front' ) && !empty(get_option( 'page_for_posts' )))
-			return get_option( 'page_for_posts' );
+			return $rstr_cache->set('current_page_id', get_option( 'page_for_posts' ));
 
 		return false;
 	}
@@ -1199,10 +1208,15 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public static function __instance()
 	{
 		global $rstr_cache;
-		if ( !$rstr_cache->get('Serbian_Transliteration_Global') ) {
-			$rstr_cache->set('Serbian_Transliteration_Global', new self());
+		$class = get_called_class();
+		if(!$class){
+			$class = static::self;
 		}
-		return $rstr_cache->get('Serbian_Transliteration_Global');
+		$instance = $rstr_cache->get($class);
+		if ( !$instance ) {
+			$instance = $rstr_cache->set($class, new self());
+		}
+		return $instance;
 	}
 }
 endif;

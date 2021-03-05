@@ -14,6 +14,7 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 		$this->add_action('rstr/settings/sidebar', 'postbox_infinitum');
 		
 		$this->add_action('rstr/settings/sidebar/tab/shortcodes', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/shortcodes', 'postbox_infinitum');
 		
 		$this->add_action('rstr/settings/sidebar/tab/functions', 'postbox_contributors');
 		$this->add_action('rstr/settings/sidebar/tab/functions', 'postbox_infinitum');
@@ -23,6 +24,9 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 		$this->add_action('rstr/settings/sidebar/tab/debug', 'postbox_contributors');
 		$this->add_action('rstr/settings/sidebar/tab/credits', 'postbox_contributors');
 		
+		$this->add_action('rstr/settings/sidebar/tab/tags', 'postbox_contributors');
+		$this->add_action('rstr/settings/sidebar/tab/tags', 'postbox_infinitum');
+		
 		$this->add_action('rstr/settings/sidebar/tab/transliteration', 'postbox_cloud_hosting');
 		$this->add_action('rstr/settings/sidebar/tab/transliteration', 'postbox_infinitum');
 	}
@@ -30,10 +34,15 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	public static function instance($object)
 	{
 		global $rstr_cache;
-		if ( !$rstr_cache->get('Serbian_Transliteration_Settings_Sidebar') ) {
-			$rstr_cache->set('Serbian_Transliteration_Settings_Sidebar', new self($object));
+		$class = get_called_class();
+		if(!$class){
+			$class = static::self;
 		}
-		return $rstr_cache->get('Serbian_Transliteration_Settings_Sidebar');
+		$instance = $rstr_cache->get($class);
+		if ( !$instance ) {
+			$instance = $rstr_cache->set($class, new self($object));
+		}
+		return $instance;
 	}
 	
 	public function postbox_infinitum(){ ?>
