@@ -205,14 +205,32 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	public function output_callback ($buffer='') {
 		if(preg_match('/%{5}\-(\#{2}|\|{2})/', $buffer) !== false)
 		{
+			$buffer = preg_replace_callback('/(?<=\{cyr_to_lat\})(.*?)(?=\{\/cyr_to_lat\})/s', function($matches) {
+				return $this->cyr_to_lat($matches[1]);
+			}, $buffer);
+			
 			$buffer = preg_replace_callback('/(?<=%{5}\-\#{2})(.*?)(?=\#{2}\-%{5})/s', function($matches) {
 				return $this->cyr_to_lat($matches[1]);
+			}, $buffer);
+			
+			$buffer = preg_replace_callback('/(?<=\{lat_to_cyr\})(.*?)(?=\{\/lat_to_cyr\})/s', function($matches) {
+				return $this->lat_to_cyr($matches[1]);
 			}, $buffer);
 			
 			$buffer = preg_replace_callback('/(?<=%{5}\-\|{2})(.*?)(?=\|{2}\-%{5})/s', function($matches) {
 				return $this->lat_to_cyr($matches[1]);
 			}, $buffer);
-			$buffer = str_replace(array('%%%%%-##','##-%%%%%','%%%%%-||','||-%%%%%'), '', $buffer);
+			
+			$buffer = str_replace(array(
+				'%%%%%-##',
+				'##-%%%%%',
+				'%%%%%-||',
+				'||-%%%%%',
+				'{cyr_to_lat}',
+				'{/cyr_to_lat}',
+				'{lat_to_cyr}',
+				'{/lat_to_cyr}'
+			), '', $buffer);
 		}
 		return $buffer;
 	}
