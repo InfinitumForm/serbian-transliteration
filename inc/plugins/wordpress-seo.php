@@ -33,7 +33,16 @@ if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
 			
 			$classname = self::run(false);
 			$filters = array_merge($filters, array(
-				'wpseo_breadcrumb_links' => array($classname, 'content')
+				'wpseo_breadcrumb_links' => array($classname, 'content'),
+				'wpseo_title' => array($classname, 'content'),
+				'wpseo_robots' => array($classname, 'content'),
+				'wpseo_metakey' => array($classname, 'content'),
+				'wpseo_metadesc' => array($classname, 'content'),
+				'wpseo_metakeywords' => array($classname, 'content'),
+				'wpseo_twitter_description' => array($classname, 'content'),
+				'wpseo_twitter_title' => array($classname, 'content'),
+				'wpseo_opengraph_title' => array($classname, 'content'),
+				'wpseo_html_namespaces' => array($classname, 'content')
 			));
 			asort($filters);
 			return $filters;
