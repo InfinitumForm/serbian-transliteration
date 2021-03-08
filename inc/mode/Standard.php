@@ -53,7 +53,9 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				'ngettext_with_context' => 'content',
 				'option_blogdescription'=> 'content',
 				'option_blogname' 		=> 'content',
-				'document_title_parts' 	=> 'transliterate_objects'
+				'document_title_parts' 	=> 'transliterate_objects',
+				'get_the_terms'			=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
+				'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
 			);
 			asort($filters);
 			
@@ -123,6 +125,36 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			echo $output;
 		}
 		
+		/*
+		 * Transliterate WP terms
+		 * @contributor    Ivijan-Stefan Stipić
+		 * @version        2.0.0
+		**/
+		public function transliteration_wp_terms($wp_terms)
+		{			
+			if (!empty($wp_terms))
+			{
+				if(is_array($wp_terms))
+				{
+					foreach($wp_terms as $i => $term)
+					{
+						switch($this->get_current_script($this->get_options()))
+						{
+							case 'cyr_to_lat' :
+								$wp_terms[$i]->name = $this->cyr_to_lat($term->name);
+								$wp_terms[$i]->description = $this->cyr_to_lat($term->description);
+								break;
+							case 'lat_to_cyr' :
+								$wp_terms[$i]->name = $this->lat_to_cyr($term->name);
+								$wp_terms[$i]->description = $this->lat_to_cyr($term->description);
+								break;
+						}
+					}
+				}
+			}
+			return $wp_terms;
+		}
+		
 		public function bloginfo($output, $show=''){
 			if(!empty($show) && in_array($show, array('name','description')))
 			{
@@ -139,7 +171,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			}
 			return $output;
 		}
-		
+
 		public function content ($content='') {
 			if(empty($content)) return $content;
 			

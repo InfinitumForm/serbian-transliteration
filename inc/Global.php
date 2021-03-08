@@ -81,7 +81,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function cyr_to_lat($content){
 		
-		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 		
 		$content = $this->decode($content);
 		
@@ -119,7 +119,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat_sanitize($content){
-		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 		
 		$content = $this->cyr_to_lat($content);
 		
@@ -164,7 +164,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_to_cyr($content, $fix_html = true, $fix_diacritics = false){
-		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 		
 		$content = $this->decode($content);
 		
@@ -199,7 +199,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	}
 	
 	public function fix_diacritics($content){
-		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 		
 		if($this->get_locale() != 'sr_RS') return $content;
 		
@@ -269,7 +269,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function transliterate_text($content, $type, $fix_html = true){
-		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 		
 		$content = $this->decode($content);
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))

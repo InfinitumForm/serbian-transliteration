@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.4.5 =
+* **BUG FIXES**
+* Fixed PHP error in wp_terms
+* Fixed bug regarding empty strings
+
 = 1.4.4 =
 * Add special transliteration tags
 * Corrected navigation transliteration
@@ -160,6 +165,11 @@ We also thought of PHP developers where we have enabled several useful functions
 * Optimized PHP code
 
 == Upgrade Notice ==
+
+= 1.4.5 =
+* **BUG FIXES**
+* Fixed PHP error in wp_terms
+* Fixed bug regarding empty strings
 
 = 1.4.4 =
 * Add special transliteration tags

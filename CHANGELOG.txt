@@ -1,3 +1,8 @@
+= 1.4.5 =
+* **BUG FIXES**
+* Fixed PHP error in wp_terms
+* Fixed bug regarding empty strings
+
 = 1.4.4 =
 * Add special transliteration tags
 * Corrected navigation transliteration

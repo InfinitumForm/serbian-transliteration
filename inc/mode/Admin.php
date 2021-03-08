@@ -119,24 +119,31 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 
 		/*
 		 * Transliterate WP terms
-		 * @author         Slobodan Pantović
 		 * @contributor    Ivijan-Stefan Stipić
-		 * @version        1.0.1
+		 * @version        2.0.0
 		**/
-		public function transliteration_wp_terms( $wp_terms ) {
-			if ( ! empty( $wp_terms ) ) {
-				if(is_object($wp_terms) || is_array($wp_terms))
+		public function transliteration_wp_terms($wp_terms)
+		{			
+			if (!empty($wp_terms))
+			{
+				if(is_array($wp_terms))
 				{
-					$count_wp_terms = count($wp_terms);
-					for($i=0,$n=$count_wp_terms; $i<$n; $i++) {
-						if ( is_object( $wp_terms[ $i ] ) ) {
-							$wp_terms[ $i ]->name = $this->cyr_to_lat( $wp_terms[ $i ]->name );
+					foreach($wp_terms as $i => $term)
+					{
+						switch($this->get_current_script($this->get_options()))
+						{
+							case 'cyr_to_lat' :
+								$wp_terms[$i]->name = $this->cyr_to_lat($term->name);
+								$wp_terms[$i]->description = $this->cyr_to_lat($term->description);
+								break;
+							case 'lat_to_cyr' :
+								$wp_terms[$i]->name = $this->lat_to_cyr($term->name);
+								$wp_terms[$i]->description = $this->lat_to_cyr($term->description);
+								break;
 						}
 					}
 				}
-
 			}
-
 			return $wp_terms;
 		}
 		
