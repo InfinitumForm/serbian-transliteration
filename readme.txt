@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,12 +16,13 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 
 = FEATURES =
 
-* WordPress Cyrillic to Latin
+* WordPress Cyrillic to Latin and Latin to Cyrillic
 * Converts Cyrillic, European and Georgian characters in post, page and term slugs to Latin characters.
 * Transliterate Cyrillic filenames to Latin
 * Transliterate Cyrillic permalinks to Latin
 * Allow Cyrillic Usernames
 * Search posts, pages, custom post types written in cyrillic using both latin and cyrillic script
+* WP-CLI Support
 
 = BENEFITS =
 
@@ -124,6 +125,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.4.6 =
+* **BUG FIXES**
+* Improved `wp_terms`
+* Removed PHP errors regarding `wp_terms`
+
 = 1.4.5 =
 * **BUG FIXES**
 * Fixed PHP error in wp_terms
@@ -165,6 +171,11 @@ We also thought of PHP developers where we have enabled several useful functions
 * Optimized PHP code
 
 == Upgrade Notice ==
+
+= 1.4.6 =
+* **BUG FIXES**
+* Improved `wp_terms`
+* Removed PHP errors regarding `wp_terms`
 
 = 1.4.5 =
 * **BUG FIXES**
@@ -229,5 +240,14 @@ YES! Without any problems or conflicts.
 YES! This plugin can translate a Latin site into Cyrillic, but this is not recommended and often causes problems. It is suggested that this approach be approached experimentally.
 
 The best practice is to create a Cyrillic site including all other content and in the end just add transliteration to navigation so that the visitor can choose the desired script.
+
+= How to transliterate Cyrillic permalinks? =
+This plugin has a tool that transliterates already recorded permalinks in your database. This option is safe but requires extra effort to satisfy SEO.
+
+With this tool, you permanently change the permalinks in your WordPress installation and a 404 error can occur if you visit old Cyrillic paths.
+
+Therefore, you must re-asign your sitemap or make additional efforts to redirect old permalinks to new ones, which our plugin does not do.
+
+If you are using WP-CLI, this function can also be started with a simple shell command: `wp transliterate permalinks`
 
 == Other Notes ==
