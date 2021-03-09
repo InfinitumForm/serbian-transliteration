@@ -1,3 +1,9 @@
+= 1.4.7 =
+* **BUG FIXES - WooCommerce**
+* Fixed category repeating
+* Fixed WooCommerce terms transliteration
+* Improved debugging
+
 = 1.4.6 =
 * **BUG FIXES**
 * Improved `wp_terms`

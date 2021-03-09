@@ -131,13 +131,11 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 		 * @version        2.0.0
 		**/
 		public function transliteration_wp_terms($wp_terms)
-		{			
+		{	
 			if (!empty($wp_terms))
 			{
 				if(is_array($wp_terms))
 				{
-					$new_terms = array();
-					
 					foreach($wp_terms as $i => $term)
 					{
 						if(is_object($term) && ((isset($term->name) && !empty($term->name)) || (isset($term->description) && !empty($term->description))))
@@ -146,32 +144,26 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 							{
 								case 'cyr_to_lat' :
 									if(isset($term->name) && !empty($term->name)){
-										$term->name = $this->cyr_to_lat($term->name);
+										$wp_terms[$i]->name = $this->cyr_to_lat($term->name);
 									}
 									if(isset($term->description) && !empty($term->description)){
-										$term->description = $this->cyr_to_lat($term->description);
+										$wp_terms[$i]->description = $this->cyr_to_lat($term->description);
 									}
 									break;
 								case 'lat_to_cyr' :
 									if(isset($term->name) && !empty($term->name)){
-										$term->name = $this->lat_to_cyr($term->name);
+										$wp_terms[$i]->name = $this->lat_to_cyr($term->name);
 									}
 									if(isset($term->description) && !empty($term->description)){
-										$term->description = $this->lat_to_cyr($term->description);
+										$wp_terms[$i]->description = $this->lat_to_cyr($term->description);
 									}
 									break;
 							}
-							
-							$new_terms[$i]=$term;
 						}
 					}
-					
-					if($new_terms){
-						$wp_terms = array_merge($wp_terms, $new_terms);
-					}
-					
 				}
 			}
+			
 			return $wp_terms;
 		}
 		

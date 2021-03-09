@@ -51,17 +51,6 @@ if ( defined( 'WP_DEBUG' ) ){
 		if ( ! defined( 'RSTR_DEBUG' ) ) define( 'RSTR_DEBUG', true );
 	}
 }
-if ( defined( 'RSTR_DEBUG' ) ){
-	if(RSTR_DEBUG === true || RSTR_DEBUG === 1)
-	{
-		error_reporting( E_ALL );
-		if(function_exists('ini_set'))
-		{
-			ini_set('display_startup_errors',1);
-			ini_set('display_errors',1);
-		}
-	}
-}
 
 // Plugin basename
 if ( ! defined( 'RSTR_BASENAME' ) )			define( 'RSTR_BASENAME', plugin_basename( RSTR_FILE ));
