@@ -451,6 +451,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 					break;
 			}
 		}
+		
+		parent::clear_plugin_cache();
 
         return $new_input;
     }

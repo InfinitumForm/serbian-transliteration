@@ -386,6 +386,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, ''));
 	}
 	
+	
 	/*
 	 * All available HTML tags
 	 * @return        array
@@ -431,7 +432,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$content = htmlspecialchars_decode($content);
 
 		// Fix HTML entities
-		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}qwy0-9]+)\;/iu', function($m){
+		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω]+)\;/iu', function($m){
 			return '&' . $this->cyr_to_lat($m[1]) . ';';
 		}, $content);
 
@@ -440,18 +441,18 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$tags = $this->html_tags();
 		
 		$tag_replace = array(
-			'<имг ' => '<img ',
-			'<бр>' => '<br>',
-			'<бр ' => '<br ',
-			'<хр>' => '<hr>',
-			'<хр ' => '<hr ',
+			'<'.$this->lat_to_cyr('img', false).' ' => '<img ',
+			'<'.$this->lat_to_cyr('br', false).'>' => '<br>',
+			'<'.$this->lat_to_cyr('br', false).' ' => '<br ',
+			'<'.$this->lat_to_cyr('hr', false).'>' => '<hr>',
+			'<'.$this->lat_to_cyr('hr', false).' ' => '<hr ',
 			// Fix internal tags
-			'{цyр_то_лат}' => '{cyr_to_lat}',
-			'{/цyр_то_лат}' => '{/cyr_to_lat}',
-			'{лат_то_цyр}' => '{lat_to_cyr}',
-			'{/лат_то_цyр}' => '{/lat_to_cyr}',
-			'{рстр_скип}' => '{rstr_skip}',
-			'{/рстр_скип}' => '{/rstr_skip}'
+			'{'.$this->lat_to_cyr('cyr_to_lat', false).'}' => '{cyr_to_lat}',
+			'{/'.$this->lat_to_cyr('cyr_to_lat', false).'}' => '{/cyr_to_lat}',
+			'{'.$this->lat_to_cyr('lat_to_cyr', false).'}' => '{lat_to_cyr}',
+			'{/'.$this->lat_to_cyr('lat_to_cyr', false).'}' => '{/lat_to_cyr}',
+			'{'.$this->lat_to_cyr('rstr_skip', false).'}' => '{rstr_skip}',
+			'{/'.$this->lat_to_cyr('rstr_skip', false).'}' => '{/rstr_skip}'
 		);
 		
 		foreach($tags->lat as $i=>$tag){
@@ -464,16 +465,16 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		// Fix some characters
 		$content = strtr($content, apply_filters('rstr/html/tags/replace', array_merge($tag_replace, array(
-			'хреф' => 'href',
-			'срц' => 'src',
-			'&сцарон;' => 'ш',
-			'&Сцарон;' => 'Ш'
+			$this->lat_to_cyr('href', false) => 'href',
+			$this->lat_to_cyr('src', false) => 'src',
+			'&'.$this->lat_to_cyr('scaron', false).';' => 'ш',
+			'&'.$this->lat_to_cyr('Scaron', false).';' => 'Ш'
 		)), $tag_replace));
 		
 		$tag_replace = NULL;
 		
 		$lastPos = 0;
-		$positions = [];
+		$positions = array();
 		
 /*
 		// Fix tags on the old way
@@ -492,7 +493,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		*/
 		/* Fix HTML attributes */
-		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwy0-9\-]+)(=["\'])/iu', function($m){
+		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\-]+)(=["\'])/iu', function($m){
 			return ' ' . $this->cyr_to_lat($m[1]) . $m[2];
 		}, $content);
 		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?"(.*?)"/iu', function($m){
@@ -503,11 +504,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		// Fix attributes with doublequote
-		$content = preg_replace_callback ('/(титле|алт|срц|дата-([\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
+		$content = preg_replace_callback ('/('.$this->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
 			return sprintf('%1$s="%2$s"', $this->cyr_to_lat($m[1]), esc_attr($this->lat_to_cyr($m[3], false)));
 		}, $content);
 		// Fix attributes with singlequote
-		$content = preg_replace_callback ('/(титле|алт|срц|дата-([\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
+		$content = preg_replace_callback ('/('.$this->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
 			return sprintf('%1$s="%2$s"', $this->cyr_to_lat($m[1]), esc_attr($this->lat_to_cyr($m[3], false)));
 		}, $content);
 		
@@ -517,12 +518,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		// Fix open tags
-		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwy0-9a-zA-Z\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
+		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		
 		// Fix closed tags
-		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwy0-9a-zA-Z]+>)/iu', function($m){
+		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω]+>)/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		
@@ -537,20 +538,20 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		// Fix email
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwy0-9\_\-\.]+)@([\x{0400}-\x{04FF}0-9\_\-\.]+)\.([\x{0400}-\x{04FF}0-9]{3,10}))/iu', function($m){
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\_\-\.]+)@([\x{0400}-\x{04FF}0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}0-9α-ωΑ-Ω]{3,10}))/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix URL
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}]{4,5}):\/{2}([\x{0400}-\x{04FF}qwy0-9\_\-\.]+)\.([\x{0400}-\x{04FF}qwy0-9]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}α-ωΑ-Ω]{4,5}):\/{2}([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
-		$content = preg_replace_callback ('/"(хттпс:\/\/.*?)"/iu', function($m){
+		$content = preg_replace_callback ('/"('.$this->lat_to_cyr('https', false).'?:\/\/.*?)"/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 	
 		// Fix mailto link
-		$content = preg_replace_callback ('/"(маилто:\/\/.*?)"/iu', function($m){
+		$content = preg_replace_callback ('/"('.$this->lat_to_cyr('mailto', false).':\/\/.*?)"/iu', function($m){
 			return $this->cyr_to_lat($m[1]);
 		}, $content);
 		
@@ -1198,6 +1199,26 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 <?php endforeach; ?>
 </select>
 	<?php
+	}
+	
+	/*
+	 * Delete all plugin ransients and cached options
+	 * @return        array
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function clear_plugin_cache(){
+		if(get_transient(RSTR_NAME . '-skip-words')) {
+			delete_transient(RSTR_NAME . '-skip-words');
+		}
+		if(get_transient(RSTR_NAME . '-diacritical-words')) {
+			delete_transient(RSTR_NAME . '-diacritical-words');
+		}
+		if(get_transient(RSTR_NAME . '-locales')) {
+			delete_transient(RSTR_NAME . '-locales');
+		}
+		if(get_option(RSTR_NAME . '-html-tags')) {
+			delete_option(RSTR_NAME . '-html-tags');
+		}
 	}
 	
 	/* 

@@ -237,19 +237,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 				}
 			}
 			
-			// Clean things
-			if(get_transient(RSTR_NAME . '-skip-words')) {
-				delete_transient(RSTR_NAME . '-skip-words');
-			}
-			if(get_transient(RSTR_NAME . '-diacritical-words')) {
-				delete_transient(RSTR_NAME . '-diacritical-words');
-			}
-			if(get_transient(RSTR_NAME . '-locales')) {
-				delete_transient(RSTR_NAME . '-locales');
-			}
-			if(get_option(RSTR_NAME . '-html-tags')) {
-				delete_option(RSTR_NAME . '-html-tags');
-			}
+			Serbian_Transliteration::clear_plugin_cache();
 			
 			// Add custom script languages
 			if(!term_exists('lat', 'rstr-script'))
@@ -284,19 +272,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 				add_option(RSTR_NAME . '-deactivation', array(date('Y-m-d H:i:s')));
 			}
 			
-			// Clean things
-			if(get_transient(RSTR_NAME . '-skip-words')) {
-				delete_transient(RSTR_NAME . '-skip-words');
-			}
-			if(get_transient(RSTR_NAME . '-diacritical-words')) {
-				delete_transient(RSTR_NAME . '-diacritical-words');
-			}
-			if(get_transient(RSTR_NAME . '-locales')) {
-				delete_transient(RSTR_NAME . '-locales');
-			}
-			if(get_option(RSTR_NAME . '-html-tags')) {
-				delete_option(RSTR_NAME . '-html-tags');
-			}
+			Serbian_Transliteration::clear_plugin_cache();
 		});
 		
 		/* Run plugin

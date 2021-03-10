@@ -26,7 +26,8 @@ class Serbian_Transliteration_Transliterating {
 			'bg_BG' => __('Bulgarian', RSTR_NAME),
 			'mk_MK' => __('Macedoanian', RSTR_NAME),
 			'kk' => __('Kazakh', RSTR_NAME),
-			'uk' => __('Ukrainian', RSTR_NAME)
+			'uk' => __('Ukrainian', RSTR_NAME),
+			'el' => __('Greek', RSTR_NAME)
 		));
 	}
 	/*
@@ -78,9 +79,9 @@ class Serbian_Transliteration_Transliterating {
 			case 'lat_to_cyr' :
 				$lat_to_cyr = array();
 				$lat_to_cyr = array_merge($lat_to_cyr, array_flip($transliteration));
-				$lat_to_cyr = array_merge($lat_to_cyr, array(
+				$lat_to_cyr = array_merge(array(
 					'NJ'=>'Њ',	'LJ'=>'Љ',	'DŽ'=>'Џ',	'DJ'=>'Ђ',	'DZ'=>'Ѕ',	'dz'=>'ѕ'
-				));
+				), $lat_to_cyr);
 				$lat_to_cyr = apply_filters('rstr/inc/transliteration/sr_RS/lat_to_cyr', $lat_to_cyr);
 				
 			//	return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
@@ -175,9 +176,9 @@ class Serbian_Transliteration_Transliterating {
 					return $t != '';
 				});
 				$transliteration = array_flip($transliteration);
-				$transliteration = array_merge($transliteration, array(
+				$transliteration = array_merge(array(
 					'CH'=>'Ч',	'YO'=>'Ё',	'ZH'=>'Ж',	'KH'=>'Х',	'TS'=>'Ц',	'Sh'=>'Ш',	'SCH'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
-				));
+				), $transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/ru_RU/lat_to_cyr', $transliteration);
 			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
@@ -247,9 +248,9 @@ class Serbian_Transliteration_Transliterating {
 					return $t != '';
 				});
 				$transliteration = array_flip($transliteration);
-				$transliteration = array_merge($transliteration, array(
+				$transliteration = array_merge(array(
 					'CH'=>'Х',	'DŽ'=>'ДЖ',	'DZ'=>'ДЗ',	'IE'=>'Е',	'IO'=>'Ё',	'IU'=>'Ю',	'IA'=>'Я'
-				));
+				), $transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/bel/lat_to_cyr', $transliteration);
 			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
@@ -300,9 +301,9 @@ class Serbian_Transliteration_Transliterating {
 					return $t != '';
 				});
 				$transliteration = array_flip($transliteration);
-				$transliteration = array_merge($transliteration, array(
+				$transliteration = array_merge(array(
 					'ZH'=>'Ж',	'TS'=>'Ц',	'CH'=>'Ч',	'SH'=>'Ш',	'SHT'=>'Щ',	'YU'=>'Ю',	'YA'=>'Я'
-				));
+				), $transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/bg_BG/lat_to_cyr', $transliteration);
 			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
@@ -354,9 +355,9 @@ class Serbian_Transliteration_Transliterating {
 					return $t != '';
 				});
 				$transliteration = array_flip($transliteration);
-				$transliteration = array_merge($transliteration, array(
+				$transliteration = array_merge(array(
 					'ZH'=>'Ж', 'GJ' => 'Ѓ', 'CH'=>'Ч', 'SH'=>'Ш', 'Dz' => 'Ѕ', 'Nj' => 'Њ', 'Lj' => 'Љ', 'KJ' => 'Ќ', 'DJ' => 'Џ' 
-				));
+				), $transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/mk_MK/lat_to_cyr', $transliteration);
 			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
@@ -410,10 +411,10 @@ class Serbian_Transliteration_Transliterating {
 				$transliteration = array_filter($transliteration, function($t){
 					return $t != '';
 				});
-				$transliteration = array_merge($transliteration, array(
+				$transliteration = array_merge(array(
 					'SHCH'=>'Щ', 'GH' => 'Ғ', 'YO' => 'Ё', 'ZH'=>'Ж', 'NG'=>'Ң', 'KH'=>'Х', 'SH'=>'Ш', 'YA'=>'Я', 'YU'=>'Ю', 
 					'CH'=>'Ч', 'TS'=>'Ц', 'SHCH'=>'Щ', 'J'=>'Й', 'j' => 'й', 'I'=>'И', 'i' => 'и'
-				));
+				), $transliteration);
 				$transliteration = array_flip($transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/kk/lat_to_cyr', $transliteration);
 			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
@@ -465,12 +466,71 @@ class Serbian_Transliteration_Transliterating {
 				$transliteration = array_filter($transliteration, function($t){
 					return $t != '';
 				});
-				$transliteration = array_merge($transliteration, array(
+				$transliteration = array_merge(array(
 					'ŠČ' => 'Щ',	'JE' => 'Є',	'JU' => 'Ю',	'JA' => 'Я',	'JI' => 'Ї',
 					'KH' => 'Х',	'Kh' => 'Х',	'kh' => 'х'
-				));
+				), $transliteration);
 				$transliteration = array_flip($transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/uk/lat_to_cyr', $transliteration);
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
+				break;
+		}
+		
+		return $content;
+	}
+	
+	/*
+	 * Greece (Elini'ka) transliteration
+	 * @since     1.4.8
+	 * @verson    1.0.0
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function el ($content, $translation = 'cyr_to_lat')
+	{
+		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		
+		$transliteration = apply_filters('rstr/inc/transliteration/el', array (
+			'Χ' => 'Ch',	'χ' => 'ch',	'Ψ' => 'Ps',	'ψ' => 'ps',
+			'τζ' => 'dz',	'τσ' => 'ts',	'γκ' => 'ng',
+			
+			
+			'Α' => 'A',	'α' => 'a',	'Β' => 'V',	'β' => 'v',
+			'Γ' => 'G',	'γ' => 'g',	'Δ' => 'D',	'δ' => 'd',
+			'Ε' => 'E',	'ε' => 'e',	'Ζ' => 'Z',	'ζ' => 'z',
+			'Η' => 'I',	'η' => 'i',	'Θ' => 'T',	'θ' => 't',
+			'Ι' => 'I',	'ι' => 'i',	'Κ' => 'K',	'κ' => 'k',
+			'Λ' => 'L',	'λ' => 'l',	'Μ' => 'M',	'μ' => 'm',
+			'Ν' => 'N',	'ν' => 'n',	'Ξ' => 'X',	'ξ' => 'x',
+			'Ο' => 'O',	'ο' => 'o',	'Π' => 'P',	'π' => 'p',
+			'Ρ' => 'R',	'ρ' => 'r',	
+			
+			'Σ' => 'S',	'σ' => 's',	'ς' => 's', // All is sigma
+			
+			'Τ' => 'T',	'τ' => 't',	'Υ' => 'Y',	'υ' => 'y',
+			'Φ' => 'F',	'φ' => 'f',	'Ω' => 'O',	'ω' => 'o',
+			
+			'μπ' => 'b',	'ντ' => 'd',
+		));
+		
+		switch($translation)
+		{
+			case 'cyr_to_lat' :
+			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+				return strtr($content, $transliteration);
+				break;
+				
+			case 'lat_to_cyr' :
+				$transliteration = array_flip($transliteration);
+				
+				$transliteration = array_merge(array(
+					'CH' => 'Χ', 'PS' => 'Ψ', 'KH' => 'Χ', 'Kh' => 'Χ', 'kh' => 'χ', 'th' => 'θ',
+					'RH' => 'Ρ', 'Rh' => 'Ρ', 'rh' => 'ρ', 'TH' => 'Θ', 'Th' => 'Θ', 'Ē' => 'Η',
+					'ē' => 'η', 'PI' => 'Π', 'Pi' => 'Π', 'pi' => 'π', 'af' => 'αυ', 'ef' => 'ευ',
+					'if' => 'ηυ', 'AI' => 'ΑΙ', 'Ai' => 'ΑΙ', 'ai' => 'αι'
+				), $transliteration);
+				
+				$transliteration = apply_filters('rstr/inc/transliteration/el/lat_to_cyr', $transliteration);
 			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
 				break;

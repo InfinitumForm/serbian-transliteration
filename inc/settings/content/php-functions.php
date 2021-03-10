@@ -54,6 +54,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<br>
 					<h2 style="margin:0;">is_kazakh</h2>
 					<p><code class="lang-php">function is_kazakh() : bool</code></p>
+                    <br>
+					<h2 style="margin:0;">is_greece</h2>
+					<p><code class="lang-php">function is_greece() : bool</code></p>
+                    <br>
+					<h2 style="margin:0;">is_elinika - <?php printf(__('alias of function %s', RSTR_NAME), '<code>is_greece()</code>'); ?></h2>
+					<p><code class="lang-php">function is_elinika() : bool</code></p>
 					<br>
 					<h2 style="margin:0;">transliterate</h2>
 					<?php printf('<p>%s</p>', __('Transliteration of some text or content into the desired script.', RSTR_NAME)); ?>

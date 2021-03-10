@@ -82,7 +82,7 @@ endif;
 
 /*
  * Check is already cyrillic
- * @return        string
+ * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_already_cyrillic')) :
@@ -106,7 +106,7 @@ endif;
 
 /*
  * Check is Russian language
- * @return        string
+ * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_russian')) :
@@ -118,7 +118,7 @@ endif;
 
 /*
  * Check is Belarusian language
- * @return        string
+ * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_belarusian')) :
@@ -130,7 +130,7 @@ endif;
 
 /*
  * Check is Bulgarian language
- * @return        string
+ * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_bulgarian')) :
@@ -142,7 +142,7 @@ endif;
 
 /*
  * Check is Macedonian language
- * @return        string
+ * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_macedonian')) :
@@ -154,13 +154,37 @@ endif;
 
 /*
  * Check is Kazakh language
- * @return        string
+ * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_kazakh')) :
 	function is_kazakh()
 	{
 		return Serbian_Transliteration::__instance()->get_locale() == 'kk';
+	}
+endif;
+
+/*
+ * Greece (Elini'ka) transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_greece')) :
+	function is_greece()
+	{
+		return Serbian_Transliteration::__instance()->get_locale() == 'el';
+	}
+endif;
+
+/*
+ * Elini'ka is natural Greece language, alias of function is_greece()
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_elinika')) :
+	function is_elinika()
+	{
+		return is_greece();
 	}
 endif;
 
