@@ -36,7 +36,7 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 		global $rstr_cache;
 		$class = get_called_class();
 		if(!$class){
-			$class = static::self;
+			$class = self::class;
 		}
 		$instance = $rstr_cache->get($class);
 		if ( !$instance ) {

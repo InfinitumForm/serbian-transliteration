@@ -22,8 +22,9 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 			global $rstr_cache;
 			$class = get_called_class();
 			if(!$class){
-				$class = static::self;
+				$class = self::class;
 			}
+			
 			$instance = $rstr_cache->get($class);
 			if ( !$instance ) {
 				$instance = $rstr_cache->set($class, new self($options, $only_object));

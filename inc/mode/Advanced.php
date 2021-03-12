@@ -16,7 +16,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 			global $rstr_cache;
 			$class = get_called_class();
 			if(!$class){
-				$class = static::self;
+				$class = self::class;
 			}
 			$instance = $rstr_cache->get($class);
 			if ( !$instance ) {
@@ -203,7 +203,9 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 			
 			if(is_array($content))
 			{
-				$content = $this->transliterate_objects($content);
+				if(method_exists($this, 'transliterate_objects')) {
+					$content = $this->transliterate_objects($content);
+				}
 			}
 			else if(is_string($content) && !is_numeric($content))
 			{

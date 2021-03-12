@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,7 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 * Multilingual support
 * Transcription mode selection
 * Diacritical support (currently for the Serbian language)
+* Support for special characters
 * Support [PHP version 7.4.8](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 * Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 
@@ -49,6 +50,7 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 * **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
 * **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
 * **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
+* **Greek (Elini'ka) latinisation** - Greek Language (by locale:**el**)
 * more languages are coming soon...
 
 = PLUGINS SUPPORT =
@@ -62,6 +64,10 @@ We also do special compatible functions with:
 * [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
 * [WordPress Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
 * [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
+* [Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/)
+* [Slider Revolution](https://www.sliderrevolution.com/)
+* [Avada theme](https://avada.theme-fusion.com/)
+* [Themify](https://themify.me/)
 
 **YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
 
@@ -125,6 +131,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.4.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added transliteration for Greek (Elini'ka) language 
+* Improved Cyrillic transliteration
+* Improved plugin cache
+* Update support for the Avada theme
+
 = 1.4.7 =
 * **BUG FIXES - WooCommerce**
 * Fixed category repeating
@@ -177,6 +190,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Optimized PHP code
 
 == Upgrade Notice ==
+
+= 1.4.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added transliteration for Greek (Elini'ka) language 
+* Improved Cyrillic transliteration
+* Improved plugin cache
+* Update support for the Avada theme
 
 = 1.4.7 =
 * **BUG FIXES - WooCommerce**
@@ -234,6 +254,7 @@ This plugin supports several world letters written in Cyrillic and enables their
 * Romanization of Macedonian
 * Romanization of Kazakh
 * Romanization of Ukrainian
+* Romanization of Greek
 
 Each of these transliterations is created separately and follows the rules of the active language.
 

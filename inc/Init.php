@@ -19,7 +19,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		global $rstr_cache;
 		$class = get_called_class();
 		if(!$class){
-			$class = static::self;
+			$class = self::class;
 		}
 		$instance = $rstr_cache->get($class);
 		if ( !$instance ) {

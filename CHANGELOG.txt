@@ -1,3 +1,10 @@
+= 1.4.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added transliteration for Greek (Elini'ka) language 
+* Improved Cyrillic transliteration
+* Improved plugin cache
+* Update support for the Avada theme
+
 = 1.4.7 =
 * **BUG FIXES - WooCommerce**
 * Fixed category repeating

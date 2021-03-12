@@ -17,7 +17,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			global $rstr_cache;
 			$class = get_called_class();
 			if(!$class){
-				$class = static::self;
+				$class = self::class;
 			}
 			$instance = $rstr_cache->get($class);
 			if ( !$instance ) {
@@ -30,15 +30,15 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			if(empty($options)) $options = get_rstr_option();
 			
 			$filters = array(
-				'single_cat_title'				=>'content',
-				'the_category'					=>'content',
-				'wp_list_categories'			=>'content',//Widget categories
-				'wp_dropdown_cats'				=>'content',//Widget categories dropdown
-				'get_archives_link'				=>'content', //Widget achives
-				'get_the_terms'					=>'transliteration_wp_terms',//Sydney, Blocksy, Colormag
+				'single_cat_title'				=> 'content',
+				'the_category'					=> 'content',
+				'wp_list_categories'			=> 'content',//Widget categories
+				'wp_dropdown_cats'				=> 'content',//Widget categories dropdown
+				'get_archives_link'				=> 'content', //Widget achives
+				'get_the_terms'					=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 				'get_the_excerpt' 				=> 'content',
-				'the_excerpt'					=>'content',
-				'oceanwp_excerpt'				=>'content',//Oceanwp
+				'the_excerpt'					=> 'content',
+				'oceanwp_excerpt'				=> 'content',//Oceanwp
 				'get_calendar' 					=> 'content',
 			//	'pre_kses' 						=> 'content',
 				'date_i18n'						=> 'content',

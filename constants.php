@@ -80,12 +80,22 @@ if ( ! defined( 'RSTR_METABOX' ) )			define( 'RSTR_METABOX', RSTR_TABLE . '_meta
 if ( ! defined( 'RSTR_ALTERNATE_LINKS' ) )	define( 'RSTR_ALTERNATE_LINKS', true);
 
 // Current plugin version ( if change, clear also session cache )
-$RSTR_version = NULL;
-if(function_exists('get_file_data') && $plugin_data = get_file_data( RSTR_FILE, array('Version' => 'Version'), false ))
-	$RSTR_version = $plugin_data['Version'];
-if(!$RSTR_version && preg_match('/\*[\s\t]+?version:[\s\t]+?([0-9.]+)/i', file_get_contents( RSTR_FILE ), $v))
-	$RSTR_version = $v[1];
-if ( ! defined( 'RSTR_VERSION' ) )			define( 'RSTR_VERSION', $RSTR_version);
+global $rstr_version;
+if($get_rstr_version=get_option(RSTR_NAME . '-version'))
+{
+	$rstr_version = $get_rstr_version;
+}
+else
+{
+	if(function_exists('get_file_data') && $plugin_data = get_file_data( RSTR_FILE, array('Version' => 'Version'), false ))
+		$rstr_version = $plugin_data['Version'];
+	if(!$rstr_version && preg_match('/\*[\s\t]+?version:[\s\t]+?([0-9.]+)/i', file_get_contents( RSTR_FILE ), $v))
+		$rstr_version = $v[1];
+	
+	update_option(RSTR_NAME . '-version', $rstr_version);
+}
+	
+if ( ! defined( 'RSTR_VERSION' ) )			define( 'RSTR_VERSION', $rstr_version);
 
 // Plugin session prefix (controlled by version)
 if ( ! defined( 'RSTR_PREFIX' ) )			define( 'RSTR_PREFIX', RSTR_TABLE . '_' . preg_replace("~[^0-9]~Ui", '', RSTR_VERSION) . '_');

@@ -12,26 +12,27 @@ if(!class_exists('Serbian_Transliteration__Theme__themify')) :
 	{
 		
 		/* Run this script */
-		public static function run() {
+		public static function run($dry = false) {
 			global $rstr_cache;
 			$class = get_called_class();
 			if(!$class){
-				$class = static::self;
+				$class = self::class;
 			}
 			$instance = $rstr_cache->get($class);
 			if ( !$instance ) {
-				$instance = $rstr_cache->set($class, new self());
+				$instance = $rstr_cache->set($class, new self($dry));
 			}
 			return $instance;
 		}
 		
-		function __construct($options = array()){
+		function __construct($dry = array()){
+			if($dry) return;
 			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
 		} 
 		
 		public static function filters ($filters=array()) {
 
-			$classname = get_class();
+			$classname = self::run(true);
 			$filters = array_merge($filters, array(
 				'tf_hook_body_start' => array($classname, 'content'),
 				'tf_hook_header_before' => array($classname, 'content'),
@@ -76,7 +77,9 @@ if(!class_exists('Serbian_Transliteration__Theme__themify')) :
 			
 			if(is_array($content))
 			{
-				$content = $this->transliterate_objects($content);
+				if(method_exists($this, 'transliterate_objects')) {
+					$content = $this->transliterate_objects($content);
+				}
 			}
 			else if(is_string($content) && !is_numeric($content))
 			{

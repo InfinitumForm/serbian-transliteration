@@ -1219,6 +1219,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if(get_option(RSTR_NAME . '-html-tags')) {
 			delete_option(RSTR_NAME . '-html-tags');
 		}
+		if(get_option(RSTR_NAME . '-version')) {
+			delete_option(RSTR_NAME . '-version');
+		}
 	}
 	
 	/* 
@@ -1231,7 +1234,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		global $rstr_cache;
 		$class = get_called_class();
 		if(!$class){
-			$class = static::self;
+			$class = self::class;
 		}
 		$instance = $rstr_cache->get($class);
 		if ( !$instance ) {
