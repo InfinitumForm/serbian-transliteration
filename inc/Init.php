@@ -17,10 +17,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	private static function get_instance()
 	{
 		global $rstr_cache;
-		$class = get_called_class();
-		if(!$class){
-			$class = self::class;
-		}
+		$class = self::class;
 		$instance = $rstr_cache->get($class);
 		if ( !$instance ) {
 			$instance = $rstr_cache->set($class, new self());

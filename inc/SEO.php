@@ -521,5 +521,34 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 			
 			return false;
 		}
+		
+		/*
+		 * CHECK INTERNET CONNECTION
+		 * @since	7.0.0
+		 * @return	true/false
+		 */
+		public static function is_connected()
+		{
+			// List connections
+			$urls = array(
+				'www.google.com',
+				'www.facebook.com'
+			);
+			foreach($urls as $url)
+			{
+				// list ports
+				foreach(array(443,80) as $port)
+				{
+					$connected = fsockopen($url, $port);
+					if ($connected !== false){
+						fclose($connected);
+						return true;
+					}
+				}
+			}
+	
+			// OK you not have connection - boohooo
+			return false;
+		}
 	}
 endif;

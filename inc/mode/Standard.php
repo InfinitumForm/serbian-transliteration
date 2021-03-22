@@ -15,10 +15,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 		/* Run this script */
 		public static function run() {
 			global $rstr_cache;
-			$class = get_called_class();
-			if(!$class){
-				$class = self::class;
-			}
+			$class = self::class;
 			$instance = $rstr_cache->get($class);
 			if ( !$instance ) {
 				$instance = $rstr_cache->set($class, new self());
@@ -56,6 +53,9 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				'document_title_parts' 	=> 'transliterate_objects',
 				'get_the_terms'			=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 				'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
+				'sanitize_title'		=> 'force_permalink_to_latin',
+				'the_permalink'			=> 'force_permalink_to_latin',
+				'wp_unique_post_slug'	=> 'force_permalink_to_latin'
 			);
 			asort($filters);
 			

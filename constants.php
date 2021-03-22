@@ -80,20 +80,10 @@ if ( ! defined( 'RSTR_METABOX' ) )			define( 'RSTR_METABOX', RSTR_TABLE . '_meta
 if ( ! defined( 'RSTR_ALTERNATE_LINKS' ) )	define( 'RSTR_ALTERNATE_LINKS', true);
 
 // Current plugin version ( if change, clear also session cache )
-global $rstr_version;
-if($get_rstr_version=get_option(RSTR_NAME . '-version'))
-{
-	$rstr_version = $get_rstr_version;
-}
-else
-{
-	if(function_exists('get_file_data') && $plugin_data = get_file_data( RSTR_FILE, array('Version' => 'Version'), false ))
-		$rstr_version = $plugin_data['Version'];
-	if(!$rstr_version && preg_match('/\*[\s\t]+?version:[\s\t]+?([0-9.]+)/i', file_get_contents( RSTR_FILE ), $v))
-		$rstr_version = $v[1];
-	
-	update_option(RSTR_NAME . '-version', $rstr_version);
-}
+if(function_exists('get_file_data') && $plugin_data = get_file_data( RSTR_FILE, array('Version' => 'Version'), false ))
+	$rstr_version = $plugin_data['Version'];
+if(!$rstr_version && preg_match('/\*[\s\t]+?version:[\s\t]+?([0-9.]+)/i', file_get_contents( RSTR_FILE ), $v))
+	$rstr_version = $v[1];
 	
 if ( ! defined( 'RSTR_VERSION' ) )			define( 'RSTR_VERSION', $rstr_version);
 
@@ -110,3 +100,13 @@ if( ! defined( 'RSTR_MULTISITE' ) ) 		define( 'RSTR_MULTISITE', false );
 // Is Woocommerce exists
 if ( ! defined( 'RSTR_WOOCOMMERCE' ) )	define( 'RSTR_WOOCOMMERCE', is_plugin_active( 'woocommerce/woocommerce.php' ));
 if ( ! defined( 'RSTR_WOOCOMMERCE' ) )		define( 'RSTR_WOOCOMMERCE', false);
+
+/* Cache setup
+ * ( Contact developers for more explanations )
+=================================================*/
+// Set maximum cache garbage collection divisor (default: 100)
+if ( ! defined( 'RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR' ) )		define( 'RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR', 100);
+// Set cache garbage collection probability (default: 1)
+if ( ! defined( 'RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY' ) )		define( 'RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY', 1);
+// Set maximum cache capability (default: 100)
+if ( ! defined( 'RSTR_CACHE_CAPABILITY' ) )		define( 'RSTR_CACHE_CAPABILITY', RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR);

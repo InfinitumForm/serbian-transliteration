@@ -63,13 +63,13 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function decode($content){
+	public function decode($content, $flag=ENT_NOQUOTES){
 		if (filter_var($content, FILTER_VALIDATE_URL)) {
 			$content = rawurldecode($content);
 		} else {
-			$content = htmlspecialchars_decode($content, ENT_NOQUOTES);
-			$content = html_entity_decode($content, ENT_NOQUOTES);
-			$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, ENT_NOQUOTES)));
+			$content = htmlspecialchars_decode($content, $flag);
+			$content = html_entity_decode($content, $flag);
+			$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
 		}
 		return $content;
 	}
@@ -81,7 +81,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function cyr_to_lat($content){
 		
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
 		
 		$content = $this->decode($content);
 		
@@ -104,11 +104,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		
 		$content = $this->fix_attributes($content);
-
-		// Fix data attributes
-		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode($m[2]));
-		}, $content);
 
 		return $content;
 	}
@@ -164,7 +159,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_to_cyr($content, $fix_html = true, $fix_diacritics = false){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
 		
 		$content = $this->decode($content);
 		
@@ -199,7 +194,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	}
 	
 	public function fix_diacritics($content){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
 		
 		if($this->get_locale() != 'sr_RS') return $content;
 		
@@ -269,7 +264,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function transliterate_text($content, $type, $fix_html = true){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
 		
 		$content = $this->decode($content);
 		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
@@ -320,7 +315,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function transliterate_objects($array, $type = false, $fix_html = true)
 	{
 		// First setup all properly
-		if(empty($array)) return $array;
+		if(empty($array) || $this->is_editor()) return $array;
 		if(empty($type) || is_bool($type)) $type = $this->get_current_script( $this->get_options() );
 		
 		$return = '';
@@ -365,7 +360,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function already_cyrillic(){
-        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk'))) !== false;
+        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el'))) !== false;
 	}
 	
 	/*
@@ -393,6 +388,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function html_tags() {
+		global $rstr_cache;
+		
+		if($html_tags = $rstr_cache->get('html-tags')){
+			return apply_filters('rstr_html_tags_collected', $html_tags);
+		}
 		
 		$html_tags = get_option(RSTR_NAME . '-html-tags');
 		
@@ -420,7 +420,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			}
 		}
 		
-		return apply_filters('rstr_html_tags_collected', $html_tags);
+		return apply_filters('rstr_html_tags_collected', $rstr_cache->set('html-tags', $html_tags));
 	}
 	
 	/*
@@ -799,7 +799,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public function get_current_page_ID(){
 		global $post, $wp_query, $wpdb, $rstr_cache;
 		
-		if($current_page_id = $rstr_cache->get('current_page_id')) return $current_page_id;
+		if($current_page_id = $rstr_cache->get('current_page_id')){
+			return $current_page_id;
+		}
 		
 		if(!is_null($wp_query) && isset($wp_query->post) && isset($wp_query->post->ID) && !empty($wp_query->post->ID))
 			return $rstr_cache->set('current_page_id', $wp_query->post->ID);
@@ -854,31 +856,34 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	* @verson    1.0.0
 	*/
 	public static function attachment_taxonomies() {
-		register_taxonomy( 'rstr-script', array( 'attachment' ), array(
-			'hierarchical'      => true,
-			'labels'            => array(
-				'name'              => _x( 'Script', 'Language script', RSTR_NAME ),
-				'singular_name'     => _x( 'Script', 'Language script', RSTR_NAME ),
-				'search_items'      => __( 'Search by Script', RSTR_NAME ),
-				'all_items'         => __( 'All Scripts', RSTR_NAME ),
-				'parent_item'       => __( 'Parent Script', RSTR_NAME ),
-				'parent_item_colon' => __( 'Parent Script:', RSTR_NAME ),
-				'edit_item'         => __( 'Edit Script', RSTR_NAME ),
-				'update_item'       => __( 'Update Script', RSTR_NAME ),
-				'add_new_item'      => __( 'Add New Script', RSTR_NAME ),
-				'new_item_name'     => __( 'New Script Name', RSTR_NAME ),
-				'menu_name'         => __( 'Script', RSTR_NAME ),
-			),
-			'show_ui'           => true,
-			'show_admin_column' => true,
-			'query_var'         => true,
-			'publicly_queryable'=> false,
-			'show_in_menu'		=> false,
-			'show_in_nav_menus'	=> false,
-			'show_in_rest'		=> false,
-			'show_tagcloud'		=> false,
-			'show_in_quick_edit'=> false
-		) );
+		if(!taxonomy_exists('rstr-script'))
+		{
+			register_taxonomy( 'rstr-script', array( 'attachment' ), array(
+				'hierarchical'      => true,
+				'labels'            => array(
+					'name'              => _x( 'Script', 'Language script', RSTR_NAME ),
+					'singular_name'     => _x( 'Script', 'Language script', RSTR_NAME ),
+					'search_items'      => __( 'Search by Script', RSTR_NAME ),
+					'all_items'         => __( 'All Scripts', RSTR_NAME ),
+					'parent_item'       => __( 'Parent Script', RSTR_NAME ),
+					'parent_item_colon' => __( 'Parent Script:', RSTR_NAME ),
+					'edit_item'         => __( 'Edit Script', RSTR_NAME ),
+					'update_item'       => __( 'Update Script', RSTR_NAME ),
+					'add_new_item'      => __( 'Add New Script', RSTR_NAME ),
+					'new_item_name'     => __( 'New Script Name', RSTR_NAME ),
+					'menu_name'         => __( 'Script', RSTR_NAME ),
+				),
+				'show_ui'           => true,
+				'show_admin_column' => true,
+				'query_var'         => true,
+				'publicly_queryable'=> false,
+				'show_in_menu'		=> false,
+				'show_in_nav_menus'	=> false,
+				'show_in_rest'		=> false,
+				'show_tagcloud'		=> false,
+				'show_in_quick_edit'=> false
+			) );
+		}
 	}
 	
 	/* 
@@ -1032,9 +1037,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	{
 		global $rstr_cache;
 		
+		$ssl = $rstr_cache->get('is_ssl');
+		
 		if($url !== false && is_string($url)) {
 			return (preg_match('/(https|ftps)/Ui', $url) !== false);
-		} else if(!$rstr_cache->get('is_ssl')) {
+		} else if(empty($ssl)) {
 			if(
 				( is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN ===true )
 				|| (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
@@ -1044,10 +1051,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				|| (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
 				|| (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
 			) {
-				$rstr_cache->set('is_ssl', true);
+				$ssl = $rstr_cache->set('is_ssl', true);
 			}
 		}
-		return $rstr_cache->get('is_ssl');
+		return $ssl;
 	}
 	
 	/* 
@@ -1059,21 +1066,23 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	{
 		global $rstr_cache;
 		
-		if(!$rstr_cache->get('is_editor')) {
+		$is_editor = $rstr_cache->get('is_editor');
+		
+		if(empty($is_editor)) {
 			if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
 				if(!function_exists('get_current_screen')){
 					include_once ABSPATH  . '/wp-admin/includes/screen.php';
 				}
 				$get_current_screen = get_current_screen();
 				if(is_callable(array($get_current_screen, 'is_block_editor')) && method_exists($get_current_screen, 'is_block_editor')) {
-					$rstr_cache->set('is_editor', $get_current_screen->is_block_editor());
+					$is_editor = $rstr_cache->set('is_editor', $get_current_screen->is_block_editor());
 				}
 			} else {
-				$rstr_cache->set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
+				$is_editor = $rstr_cache->set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
 			}
 		}
 		
-		return $rstr_cache->get('is_editor');
+		return $is_editor;
 	}
 	
 	/*
@@ -1104,6 +1113,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		// Fix broken things
+		/*
 		$tags = $this->html_tags();
 		foreach($tags->lat as $i=>$tag){	
 			$content = str_replace(array(
@@ -1114,7 +1124,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				'</' . $tag . '>'
 			), $content);	
 		}
-		
+		*/
 		// Fix CSS
 		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($m) {
 				return $this->decode($m[2]);
@@ -1123,6 +1133,17 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		// Fix scripts
 		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($m) {
 				return $this->decode($m[2]);
+		}, $content);
+		
+		$content = preg_replace_callback('/\\{1,5}&([a-zA-Z]+);/s', function($m) {
+				return html_entity_decode('&' . $m[1] . ';');
+		}, $content);
+		
+		$content = stripslashes($content);
+		
+		// Fix data attributes
+		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode($m[2]));
 		}, $content);
 		
 		return $content;
@@ -1232,10 +1253,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	public static function __instance()
 	{
 		global $rstr_cache;
-		$class = get_called_class();
-		if(!$class){
-			$class = self::class;
-		}
+		$class = self::class;
 		$instance = $rstr_cache->get($class);
 		if ( !$instance ) {
 			$instance = $rstr_cache->set($class, new self());

@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.4.8
+ * Version:           1.5.0
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -37,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 // Globals
-global $rstr_cache, $rstr_version;
+global $rstr_cache;
 
 /*
  * Main plugin constants
@@ -58,9 +58,12 @@ include_once RSTR_INC . '/Cache.php';
 $rstr_cache = new Serbian_Transliteration_Cache();
 
 if ( defined( 'RSTR_DEBUG_CACHE' ) && RSTR_DEBUG_CACHE === true ) {
+	
 	add_action('wp_footer', function(){
-		global $rstr_cache;
-		$rstr_cache->debug();
+		if(is_user_logged_in() && current_user_can('administrator')) {
+			global $rstr_cache;
+			$rstr_cache->debug();
+		}
 	});
 }
 
@@ -73,10 +76,10 @@ if(!function_exists('get_rstr_option'))
 {
 	function get_rstr_option($name = false, $default = NULL) {
 		global $rstr_cache;
-		$get_rstr_options = $rstr_cache->get('get_rstr_options');
+		$get_rstr_options = $rstr_cache->get('options');
 		
 		if( !$get_rstr_options ){
-			$get_rstr_options = $rstr_cache->set('get_rstr_options', get_option( RSTR_NAME ));
+			$get_rstr_options = $rstr_cache->set('options', get_option( RSTR_NAME ));
 		}
 		
 		if($get_rstr_options) {

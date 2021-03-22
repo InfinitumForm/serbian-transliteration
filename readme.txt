@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.4.8
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,17 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.5.0 =
+* Improved caching of PHP functions
+* Improved transliteration algorithm
+* Advanced standard transliteration mode
+* Removed transliteration from editor mode
+* Updated GNU License
+
+= 1.4.9 =
+* Optimized transliteration
+* Fixed issues with special characters
+
 = 1.4.8 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added transliteration for Greek (Elini'ka) language 
@@ -190,6 +201,17 @@ We also thought of PHP developers where we have enabled several useful functions
 * Optimized PHP code
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+* Improved caching of PHP functions
+* Improved transliteration algorithm
+* Advanced standard transliteration mode
+* Removed transliteration from editor mode
+* Updated GNU License
+
+= 1.4.9 =
+* Optimized transliteration
+* Fixed issues with special characters
 
 = 1.4.8 =
 * **MAJOR UPDATE:** You need to review and edit your settings

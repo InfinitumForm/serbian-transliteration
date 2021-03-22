@@ -14,10 +14,7 @@ if(!class_exists('Serbian_Transliteration__Theme__avada')) :
 		/* Run this script */
 		public static function run($dry = false) {
 			global $rstr_cache;
-			$class = get_called_class();
-			if(!$class){
-				$class = self::class;
-			}
+			$class = self::class;
 			$instance = $rstr_cache->get($class);
 			if ( !$instance ) {
 				$instance = $rstr_cache->set($class, new self($dry));

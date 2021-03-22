@@ -1,3 +1,14 @@
+= 1.5.0 =
+* Improved caching of PHP functions
+* Improved transliteration algorithm
+* Advanced standard transliteration mode
+* Removed transliteration from editor mode
+* Updated GNU License
+
+= 1.4.9 =
+* Optimized transliteration
+* Fixed issues with special characters
+
 = 1.4.8 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added transliteration for Greek (Elini'ka) language 
