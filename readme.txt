@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,135 +131,33 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.5.1 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added `body` classes
+* Fixed `get_script()` function
+* Added alternate function `rstr_get_script()` if `get_script()` is already used by other plugin.
+
 = 1.5.0 =
 * Improved caching of PHP functions
 * Improved transliteration algorithm
 * Advanced standard transliteration mode
 * Removed transliteration from editor mode
 * Updated GNU License
-
-= 1.4.9 =
-* Optimized transliteration
-* Fixed issues with special characters
-
-= 1.4.8 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added transliteration for Greek (Elini'ka) language 
-* Improved Cyrillic transliteration
-* Improved plugin cache
-* Update support for the Avada theme
-
-= 1.4.7 =
-* **BUG FIXES - WooCommerce**
-* Fixed category repeating
-* Fixed WooCommerce terms transliteration
-* Improved debugging
-
-= 1.4.6 =
-* **BUG FIXES**
-* Improved `wp_terms`
-* Removed PHP errors regarding `wp_terms`
-
-= 1.4.5 =
-* **BUG FIXES**
-* Fixed PHP error in wp_terms
-* Fixed bug regarding empty strings
-
-= 1.4.4 =
-* Add special transliteration tags
-* Corrected navigation transliteration
-* Advanced memory storage algorithms
-
-= 1.4.3 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added manual language script scheme selection
-* Added script for Montenegrin characters
-* Added WP-CLI script for permalink transliteration: `wp transliterate permalinks`
-* Optimized scripts for libraries
-* Add new filters for Yoast SEO
-* Added support for WordPress version 5.7
-
-= 1.4.2 =
-* Fixed issue with `data-*` attributes
-* Fixed issue with JSON inside attributes
-* Fixed problem of Latin to Cyrillic transliteration (extended characters)
-* Advanced algorithm to support Elementor and Visual Composer plugins
-
-= 1.4.1 =
-* Improved internal caching functionality
-* Improved PHP code and optimized memory
-* Page acceleration
-
-= 1.4.0 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Improved transliteration of Latin into Cyrillic
-* Improved HTML parsing
-* Improved PHP functions for developers
-* Improved shortcodes
-* Improved menu navigation for language script
-* Improved cache cleanup when changing script
-* Optimized PHP code
 
 == Upgrade Notice ==
 
+= 1.5.1 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added `body` classes
+* Fixed `get_script()` function
+* Added alternate function `rstr_get_script()` if `get_script()` is already used by other plugin.
+
 = 1.5.0 =
 * Improved caching of PHP functions
 * Improved transliteration algorithm
 * Advanced standard transliteration mode
 * Removed transliteration from editor mode
 * Updated GNU License
-
-= 1.4.9 =
-* Optimized transliteration
-* Fixed issues with special characters
-
-= 1.4.8 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added transliteration for Greek (Elini'ka) language 
-* Improved Cyrillic transliteration
-* Improved plugin cache
-* Update support for the Avada theme
-
-= 1.4.7 =
-* **BUG FIXES - WooCommerce**
-* Fixed category repeating
-* Fixed WooCommerce terms transliteration
-* Improved debugging
-
-= 1.4.6 =
-* **BUG FIXES**
-* Improved `wp_terms`
-* Removed PHP errors regarding `wp_terms`
-
-= 1.4.5 =
-* **BUG FIXES**
-* Fixed PHP error in wp_terms
-* Fixed bug regarding empty strings
-
-= 1.4.4 =
-* Add special transliteration tags
-* Corrected navigation transliteration
-* Advanced memory storage algorithms
-
-= 1.4.3 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added manual language script scheme selection
-* Added script for Montenegrin characters
-* Added WP-CLI script for permalink transliteration: `wp transliterate permalinks`
-* Optimized scripts for libraries
-* Add new filters for Yoast SEO
-* Added support for WordPress version 5.7
-
-= 1.4.2 =
-* Fixed issue with `data-*` attributes
-* Fixed issue with JSON inside attributes
-* Fixed problem of Latin to Cyrillic transliteration (extended characters)
-* Advanced algorithm to support Elementor and Visual Composer plugins
-
-= 1.4.1 =
-* Improved internal caching functionality
-* Improved PHP code and optimized memory
-* Page acceleration
 
 == Frequently Asked Questions ==
 

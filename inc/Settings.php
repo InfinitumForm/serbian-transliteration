@@ -418,6 +418,23 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME, // Page
             RSTR_NAME . '-seo' // Section           
         );
+		
+		
+		
+		$this->add_settings_section(
+            RSTR_NAME . '-misc', // ID
+            __('Misc.', RSTR_NAME), // Title
+            'print_misc_settings_callback', // Callback
+            RSTR_NAME // Page
+        );
+		
+		$this->add_settings_field(
+            'enable-body-class', // ID
+            __('Enable body class', RSTR_NAME), // Title 
+            'enable_body_class_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-misc' // Section           
+        );
     }
 
     /**
@@ -480,6 +497,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	public function print_wp_admin_callback()
 	{
 		printf('<p>%s</p>', __('These settings apply to the administrative part.', RSTR_NAME));
+	}
+	
+	public function print_misc_settings_callback()
+	{
+		printf('<p>%s</p>', __('Various interesting settings that can be used in the development of your project.', RSTR_NAME));
 	}
 
 
@@ -924,6 +946,25 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option dictates which URL parameter will be used to change the language.', RSTR_NAME));
+	}
+	
+	public function enable_body_class_callback(){
+		$inputs = array();
+		
+		foreach(array(
+			'yes' => __('Yes', RSTR_NAME),
+			'no' => __('No', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="enable-body-class-%1$s"><input type="radio" id="enable-body-class-%1$s" name="%3$s[enable-body-class]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['enable-body-class'] ) ? ($this->options['enable-body-class'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', RSTR_NAME));
 	}
 	
 }

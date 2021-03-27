@@ -74,9 +74,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <?php printf('<p>%s</p>', __('Transliteration only from Latin to Cyrillic.', RSTR_NAME)); ?>
 					<p><code class="lang-php">function lat_to_cyr(string $content, bool $fix_html = true, bool $fix_diacritics = false) : string</code></p>
 					<br>
-					<h2 style="margin:0;">get_script</h2>
+					<h2 style="margin:0;"><?php echo (function_exists('get_script') ? 'get_script' : 'rstr_get_script'); ?></h2>
 					<?php printf('<p>%s</p>', __('Get active script.', RSTR_NAME)); ?>
-					<p><code class="lang-php">function get_script() : string</code></p>
+					<p><code class="lang-php">function <?php echo (function_exists('get_script') ? 'get_script' : 'rstr_get_script'); ?>() : string</code></p>
 					<br>
 					<h2 style="margin:0;">script_selector</h2>
 					<?php printf('<p>%s</p>', __('This function displays a selector for the transliteration script.', RSTR_NAME)); ?>

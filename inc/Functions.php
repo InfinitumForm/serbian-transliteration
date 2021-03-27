@@ -28,7 +28,64 @@ endif;
 if(!function_exists('get_script')) :
 	function get_script()
 	{
-		return (isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false ? $_COOKIE['rstr_script'] : 'none');
+		global $rstr_cache;
+		
+		if($get_script = $rstr_cache->get('function_get_script')){
+			return $get_script;
+		}
+		
+		if(isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
+		{
+			return $rstr_cache->set('function_get_script', $_COOKIE['rstr_script']);
+		}
+		else
+		{
+			switch(get_rstr_option('transliteration-mode', 'cyr_to_lat'))
+			{
+				default:
+					return $rstr_cache->set('function_get_script', 'none');
+					break;
+					
+				case 'cyr_to_lat':
+					return $rstr_cache->set('function_get_script', 'lat');
+					break;
+					
+				case 'lat_to_cyr':
+					return $rstr_cache->set('function_get_script', 'cyr');
+					break;
+			}
+		}
+	}
+elseif(!function_exists('rstr_get_script')):
+	function rstr_get_script()
+	{
+		global $rstr_cache;
+		
+		if($get_script = $rstr_cache->get('function_get_script')){
+			return $get_script;
+		}
+		
+		if(isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
+		{
+			return $rstr_cache->set('function_get_script', $_COOKIE['rstr_script']);
+		}
+		else
+		{
+			switch(get_rstr_option('transliteration-mode', 'cyr_to_lat'))
+			{
+				default:
+					return $rstr_cache->set('function_get_script', 'none');
+					break;
+					
+				case 'cyr_to_lat':
+					return $rstr_cache->set('function_get_script', 'lat');
+					break;
+					
+				case 'lat_to_cyr':
+					return $rstr_cache->set('function_get_script', 'cyr');
+					break;
+			}
+		}
 	}
 endif;
 
@@ -64,7 +121,12 @@ endif;
 if(!function_exists('is_latin')) :
 	function is_latin($content)
 	{
-		return (isset($_COOKIE['rstr_script']) && $_COOKIE['rstr_script'] == 'lat');
+		if(function_exists('get_script')){
+			$script = get_script();
+		} else {
+			$script = rstr_get_script();
+		}
+		return ($script == 'lat');
 	}
 endif;
 
@@ -76,7 +138,12 @@ endif;
 if(!function_exists('is_cyrillic')) :
 	function is_cyrillic($content)
 	{
-		return (isset($_COOKIE['rstr_script']) && $_COOKIE['rstr_script'] == 'cyr');
+		if(function_exists('get_script')){
+			$script = get_script();
+		} else {
+			$script = rstr_get_script();
+		}
+		return ($script == 'cyr');
 	}
 endif;
 

@@ -297,6 +297,24 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 					return $username;
 				}, 10, 3);
 			}
+			
+			/* Add Body CSS class
+			=========================================*/
+			if(isset($options['enable-body-class']) && $options['enable-body-class'] == 'yes')
+			{
+				add_filter('body_class', function ($classes){
+					if(function_exists('get_script')){
+						$script = get_script();
+					} else {
+						$script = rstr_get_script();
+					}
+					//body class based on the current script - cyr, lat
+					$classes[] = 'rstr-' . $script;
+					$classes[] = 'transliteration-' . $script;
+					$classes[] = $script;
+					return $classes;
+				});
+			}
 		}
 	}
 }

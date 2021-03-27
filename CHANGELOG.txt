@@ -1,3 +1,9 @@
+= 1.5.1 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added `body` classes
+* Fixed `get_script()` function
+* Added alternate function `rstr_get_script()` if `get_script()` is already used by other plugin.
+
 = 1.5.0 =
 * Improved caching of PHP functions
 * Improved transliteration algorithm
