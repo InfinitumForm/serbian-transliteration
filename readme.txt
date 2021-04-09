@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.5.1
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,16 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.5.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration
+* Improved plugin optimization for large amounts of data
+* Improved object detection
+* Removed transliteration of unnecessary strings
+
+= 1.5.2 =
+* **BUGFIX:** Changed WooCommerce deprecated filters
+
 = 1.5.1 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added `body` classes
@@ -145,6 +155,16 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.5.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration
+* Improved plugin optimization for large amounts of data
+* Improved object detection
+* Removed transliteration of unnecessary strings
+
+= 1.5.2 =
+* **BUGFIX:** Changed WooCommerce deprecated filters
 
 = 1.5.1 =
 * **MAJOR UPDATE:** You need to review and edit your settings

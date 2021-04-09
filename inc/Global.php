@@ -81,28 +81,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function cyr_to_lat($content){
 		
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()){
+			return $content;
+		}
 		
 		$content = $this->decode($content);
-		
-		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
-		{
-			$locale = $this->get_locale();
-			$content = parent::$locale($content);
-			// Filter special names from the list
-			foreach($this->lat_exclude_list() as $item){
-				$content = str_replace(parent::$locale($item), $item, $content);
-			}
-		}
-		else
-		{
-			$content = str_replace($this->cyr(), $this->lat(), $content);
-			// Filter special names from the list
-			foreach($this->lat_exclude_list() as $item){
-				$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
-			}
-		}
-		
+		$content = $this->transliteration($content, 'cyr_to_lat');
 		$content = $this->fix_attributes($content);
 
 		return $content;
@@ -114,7 +98,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat_sanitize($content){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)){
+			return $content;
+		}
 		
 		$content = $this->cyr_to_lat($content);
 		
@@ -145,11 +131,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			}
 		}
 		
-		// Filter special names from the list
-		foreach($this->lat_exclude_list() as $item){
-			$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
-		}
-		
 		return $content;
 	}
 	
@@ -159,7 +140,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_to_cyr($content, $fix_html = true, $fix_diacritics = false){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()){
+			return $content;
+		}
 		
 		$content = $this->decode($content);
 		
@@ -167,23 +150,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			$content = $this->fix_diacritics($content);
 		}
 		
-		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
-		{
-			$locale = $this->get_locale();
-			$content = parent::$locale($content, 'lat_to_cyr');
-			// Filter special names from the list
-			foreach($this->cyr_exclude_list() as $item){
-				$content = str_replace(parent::$locale($item, 'lat_to_cyr'), $item, $content);
-			}
-		}
-		else
-		{
-			$content = str_replace($this->lat(), $this->cyr(), $content);
-			// Filter special names from the list
-			foreach($this->cyr_exclude_list() as $item){
-				$content = str_replace(str_replace($this->lat(), $this->cyr(), $item), $item, $content);
-			}
-		}
+		$content = $this->transliteration($content, 'lat_to_cyr');
 		
 		if($fix_html){
 			$content = $this->fix_cyr_html($content);
@@ -194,7 +161,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	}
 	
 	public function fix_diacritics($content){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()){
+			return $content;
+		}
 		
 		if($this->get_locale() != 'sr_RS') return $content;
 		
@@ -263,43 +232,15 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function transliterate_text($content, $type, $fix_html = true){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()) return $content;
+	public function transliterate_text($content, $type = 'lat_to_cyr', $fix_html = true){
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()){
+			return $content;
+		}
 		
 		$content = $this->decode($content);
-		if(method_exists('Serbian_Transliteration_Transliterating', $this->get_locale()))
-		{
-			$locale = $this->get_locale();
-			$content = parent::$locale($content, $type);
-			// Filter special names from the list
-			foreach($this->cyr_exclude_list() as $item){
-				$content = str_replace(parent::$locale($item, $type), $item, $content);
-			}
-		}
-		else
-		{
-			
-			switch($type)
-			{
-				case 'lat_to_cyr':
-					$content = str_replace($this->lat(), $this->cyr(), $content);
-					// Filter special names from the list
-					foreach($this->lat_exclude_list() as $item){
-						$content = str_replace(str_replace($this->lat(), $this->cyr(), $item), $item, $content);
-						$content = $this->fix_attributes($content);
-					}
-					break;
-				case 'cyr_to_lat':
-					$content = str_replace($this->cyr(), $this->lat(), $content);
-					// Filter special names from the list
-					foreach($this->cyr_exclude_list() as $item){
-						$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
-					}
-					break;
-			}
-		}
+		$content = $this->transliteration($content, $type);
 		
-		if($type == 'lat_to_cyr' && $fix_html){
+		if(($type === 'lat_to_cyr') && $fix_html){
 			$content = $this->fix_cyr_html($content);
 			$content = $this->fix_attributes($content);
 		}
@@ -312,7 +253,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function transliterate_objects($array, $type = false, $fix_html = true)
+	public function transliterate_objects($array, $type = 'lat_to_cyr', $fix_html = true)
 	{
 		// First setup all properly
 		if(empty($array) || $this->is_editor()) return $array;

@@ -1,3 +1,13 @@
+= 1.5.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration
+* Improved plugin optimization for large amounts of data
+* Improved object detection
+* Removed transliteration of unnecessary strings
+
+= 1.5.2 =
+* **BUGFIX:** Changed WooCommerce deprecated filters
+
 = 1.5.1 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added `body` classes

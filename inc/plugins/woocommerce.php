@@ -28,7 +28,7 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 		} 
 		
 		public static function filters ($filters=array()) {
-			
+
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
 				'woocommerce_product_single_add_to_cart_text' => array($classname, 'content'),
@@ -66,7 +66,7 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 					'woocommerce_pay_order_button_html' => array($classname, 'content'),
 					'wc_payment_gateway_form_saved_payment_methods_html' => array($classname, 'content'),
 					'woocommerce_subcategory_count_html' => array($classname, 'content'),
-					'woocommerce_stock_html' => array($classname, 'content'),
+					'woocommerce_get_stock_html' => array($classname, 'content'),
 					'woocommerce_single_product_image_thumbnail_html' => array($classname, 'content'),
 					'woocommerce_variable_price_html' => array($classname, 'content'),
 					'woocommerce_variable_empty_price_html' => array($classname, 'content')
