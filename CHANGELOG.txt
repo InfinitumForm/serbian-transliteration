@@ -1,3 +1,8 @@
+= 1.5.4 =
+* Fixed php error "too few arguments to function" in menu
+* Improved plugin initialization
+* Added new words to the library
+
 = 1.5.3 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Improved transliteration

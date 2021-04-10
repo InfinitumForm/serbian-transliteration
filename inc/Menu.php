@@ -28,9 +28,9 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		global $nav_menu_selected_id;
 		
 		$elems = array(
-			'#transliteration-lat#'	      => __( 'Latin', RSTR_NAME ),
-			'#transliteration-cyr#'	    => __( 'Cyrillic', RSTR_NAME ),
-			'#transliteration-latcyr#' => __( 'Latin', RSTR_NAME ) . ' | ' . __( 'Cyrillic', RSTR_NAME )
+			'#transliteration-lat#'		=> __( 'Latin', RSTR_NAME ),
+			'#transliteration-cyr#'		=> __( 'Cyrillic', RSTR_NAME ),
+			'#transliteration-latcyr#'	=> __( 'Latin', RSTR_NAME ) . ' | ' . __( 'Cyrillic', RSTR_NAME )
 		);
 		$logitems = array(
 			'db_id' => 0,
@@ -48,7 +48,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		
 		$elems_obj = array();
 		foreach ( $elems as $value => $title ) {
-			$elems_obj[ $title ] 		= (object) $logitems;
+			$elems_obj[ $title ] = (object) $logitems;
 			$elems_obj[ $title ]->object_id	= esc_attr( $value );
 			$elems_obj[ $title ]->title	= esc_attr( $title );
 			$elems_obj[ $title ]->url	= esc_attr( $value );
@@ -87,10 +87,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
     }
 	
 	/* Add custom fields to the menu item */
-	public function menu_item_custom_fields($item_id, $item, $depth, $args, $id) {
-		
-		//	DEBUG: echo '<pre>', var_dump( $item, $depth, $args, $id ), '</pre>';
-			
+	public function menu_item_custom_fields($item_id, $item, $depth = 0, $args = NULL, $id = 0) {			
 		if($item->url == '#transliteration-latcyr#'){
 			printf(
 				'<p style="padding:10px; background:cornsilk; float:left; margin-right: 10px; font-size:1.1em;"><strong>%s<br><br>%s<br><br>%s</strong></p>',

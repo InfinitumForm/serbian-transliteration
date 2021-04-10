@@ -17,7 +17,7 @@ if (!defined('WP_ADMIN_DIR')) {
 $include_dependency = false;
 if( !function_exists( 'is_plugin_active_for_network' ) || !function_exists('is_plugin_active') ) {
 	if(file_exists(WP_ADMIN_DIR . '/includes/plugin.php')){
-		include WP_ADMIN_DIR . '/includes/plugin.php';
+		include_once WP_ADMIN_DIR . '/includes/plugin.php';
 		$include_dependency = true;
 	}
 }
@@ -28,27 +28,11 @@ if( !function_exists( 'is_plugin_active_for_network' ) || !function_exists('is_p
  * @verson    1.0.0
  */
  
-// Find is localhost or not
-if ( ! defined( 'RSTR_LOCAL' ) ) {
-	if(isset($_SERVER['REMOTE_ADDR'])) {
-		define('RSTR_LOCAL', in_array($_SERVER['REMOTE_ADDR'], array(
-			'127.0.0.1',
-			'::1'
-		)));
-	} else {
-		define('RSTR_LOCAL', false);
-	}
-}
-
-/**
- * DEBUG MODE
- *
- * This is need for plugin debugging.
- */
+// This is need for plugin debugging.
 if ( defined( 'WP_DEBUG' ) ){
 	if(WP_DEBUG === true || WP_DEBUG === 1)
 	{
-		if ( ! defined( 'RSTR_DEBUG' ) ) define( 'RSTR_DEBUG', true );
+		if ( ! defined( 'RSTR_DEBUG' ) )	define( 'RSTR_DEBUG', true );
 	}
 }
 
@@ -98,8 +82,7 @@ if( ! defined( 'RSTR_MULTISITE' ) )
 if( ! defined( 'RSTR_MULTISITE' ) ) 		define( 'RSTR_MULTISITE', false );
 
 // Is Woocommerce exists
-if ( ! defined( 'RSTR_WOOCOMMERCE' ) )	define( 'RSTR_WOOCOMMERCE', is_plugin_active( 'woocommerce/woocommerce.php' ));
-if ( ! defined( 'RSTR_WOOCOMMERCE' ) )		define( 'RSTR_WOOCOMMERCE', false);
+if ( ! defined( 'RSTR_WOOCOMMERCE' ) )		define( 'RSTR_WOOCOMMERCE', is_plugin_active( 'woocommerce/woocommerce.php' ));
 
 /* Cache setup
  * ( Contact developers for more explanations )
@@ -107,6 +90,6 @@ if ( ! defined( 'RSTR_WOOCOMMERCE' ) )		define( 'RSTR_WOOCOMMERCE', false);
 // Set maximum cache garbage collection divisor (default: 100)
 if ( ! defined( 'RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR' ) )		define( 'RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR', 100);
 // Set cache garbage collection probability (default: 1)
-if ( ! defined( 'RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY' ) )		define( 'RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY', 1);
+if ( ! defined( 'RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY' ) )	define( 'RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY', 1);
 // Set maximum cache capability (default: 100)
-if ( ! defined( 'RSTR_CACHE_CAPABILITY' ) )		define( 'RSTR_CACHE_CAPABILITY', RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR);
+if ( ! defined( 'RSTR_CACHE_CAPABILITY' ) )						define( 'RSTR_CACHE_CAPABILITY', RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR);
