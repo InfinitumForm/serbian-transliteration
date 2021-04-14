@@ -73,9 +73,12 @@ class Serbian_Transliteration_Transliterating {
 		}
 		else
 		{
-			// Let's do basic transliterationW
+			// Let's do basic transliteration
 			if($translation === 'cyr_to_lat' || $translation === 'lat') {
 				$content = str_replace($this->cyr(), $this->lat(), $content);
+				$content = str_replace(array(
+					'ь', 'ъ', 'Ъ', 'Ь'
+				), '', $content);
 			} if($translation === 'lat_to_cyr' || $translation === 'cyr') {
 				$content = str_replace($this->lat(), $this->cyr(), $content);
 			}
@@ -104,7 +107,8 @@ class Serbian_Transliteration_Transliterating {
 	{
 		return apply_filters('rstr_lat_letters', array(
 			// Variations and special characters
-			'nj', 'NJ', 'Nj', 'Lj', 'Dž', 'Dj', 'DJ', 'dj', 'dz', 'JU', 'ju', 'JA', 'ja' ,'ŠČ' ,'šč',
+			'nj', 'NJ', 'Nj', 'Lj', 'Dž', 'Dj', 'DJ', 'dj', 'dz', 'JU', 'ju', 'JA', 'ja',
+			'ŠČ', 'šč', 'Y', 'y','YO', 'Yo', 'yo', 'YE', 'ye', 'Ǎ', 'ǎ',
 			// Big letters
 			'A', 'B', 'V', 'G', 'D', 'Đ', 'E', 'Ž', 'Z', 'I', 'J', 'K', 'L', 'LJ', 'M',
 			'N', 'O', 'P', 'R', 'S', 'T', 'Ć', 'U', 'F', 'H', 'C', 'Č', 'DŽ', 'Š',
@@ -123,7 +127,8 @@ class Serbian_Transliteration_Transliterating {
 	{
 		return apply_filters('serbian_transliteration_cyr_letters', array(
 			// Variations and special characters
-			'њ', 'Њ', 'Њ', 'Љ', 'Џ', 'Ђ', 'Ђ', 'ђ', 'ѕ', 'Ю', 'ю', 'Я', 'я' ,'Щ' ,'щ',
+			'њ', 'Њ', 'Њ', 'Љ', 'Џ', 'Ђ', 'Ђ', 'ђ', 'ѕ', 'Ю', 'ю', 'Я', 'я', 
+			'Щ', 'щ', 'Й', 'й', 'Ё', 'Ё', 'ё', 'Э', 'э', 'Ъ', 'ъ',
 			// Big letters
 			'А', 'Б', 'В', 'Г', 'Д', 'Ђ', 'Е', 'Ж', 'З', 'И', 'Ј', 'К', 'Л', 'Љ', 'М',
 			'Н', 'О', 'П', 'Р', 'С', 'Т', 'Ћ', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Џ', 'Ш',

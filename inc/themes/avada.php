@@ -90,18 +90,11 @@ if(!class_exists('Serbian_Transliteration__Theme__avada')) :
 					$content = $this->transliterate_objects($content);
 				}
 			}
-			else if(is_string($content) && !is_numeric($content))
+			else if(is_string($content))
 			{
 					
-				switch($this->get_current_script($this->get_options()))
-				{
-					case 'cyr_to_lat' :
-						$content = $this->cyr_to_lat($content);
-						break;
-						
-					case 'lat_to_cyr' :
-						$content = $this->lat_to_cyr($content);			
-						break;
+				if(method_exists($this, 'transliterate_text')) {
+					$content = $this->transliterate_text($content);
 				}
 			}
 			return $content;

@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.5.5 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added support to the Divi theme
+* Add security measures
+* Added support for cache plugins
+* Improved transliteration
+
 = 1.5.4 =
 * Fixed php error "too few arguments to function" in menu
 * Improved plugin initialization
@@ -160,6 +167,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.5.5 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added support to the Divi theme
+* Add security measures
+* Added support for cache plugins
+* Improved transliteration
 
 = 1.5.4 =
 * Fixed php error "too few arguments to function" in menu

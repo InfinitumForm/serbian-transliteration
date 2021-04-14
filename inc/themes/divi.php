@@ -1,14 +1,14 @@
 <?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
 /**
- * Active Plugin: WooCommerce
+ * Active Theme: Divi
  *
  * @link              http://infinitumform.com/
  * @since             1.2.4
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
-	class Serbian_Transliteration__Plugin__wordpress_seo extends Serbian_Transliteration
+if(!class_exists('Serbian_Transliteration__Theme__divi')) :
+	class Serbian_Transliteration__Theme__divi extends Serbian_Transliteration
 	{
 		
 		/* Run this script */
@@ -22,27 +22,24 @@ if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
 			return $instance;
 		}
 		
-		function __construct($dry = false){
+		function __construct($dry = array()){
 			if($dry) return;
 			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
 		} 
 		
 		public static function filters ($filters=array()) {
-			
+
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
-				'wpseo_breadcrumb_links' => array($classname, 'content'),
-				'wpseo_title' => array($classname, 'content'),
-				'wpseo_robots' => array($classname, 'content'),
-				'wpseo_metakey' => array($classname, 'content'),
-				'wpseo_metadesc' => array($classname, 'content'),
-				'wpseo_metakeywords' => array($classname, 'content'),
-				'wpseo_twitter_description' => array($classname, 'content'),
-				'wpseo_twitter_title' => array($classname, 'content'),
-				'wpseo_opengraph_title' => array($classname, 'content'),
-				'wpseo_html_namespaces' => array($classname, 'content')
+				'et_before_main_content' => array($classname, 'content'),
+				'et_after_main_content' => array($classname, 'content'),
+				'et_before_content' => array($classname, 'content'),
+				'et_html_top_header' => array($classname, 'content'),
+				'et_html_slide_header' => array($classname, 'content'),
+				'et_header_top' => array($classname, 'content'),
+				'et_html_main_header' => array($classname, 'content')
 			));
-			asort($filters);
+			
 			return $filters;
 		}
 		
@@ -65,6 +62,5 @@ if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
 			}
 			return $content;
 		}
-		
 	}
 endif;

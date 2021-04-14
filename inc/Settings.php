@@ -139,8 +139,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      * Enqueue scripts
      */
 	public function enqueue_scripts () {
-		wp_register_style( RSTR_NAME, RSTR_ASSETS . '/css/serbian-transliteration.css', array('common'), (string)RSTR_VERSION );
-		wp_register_script( RSTR_NAME, RSTR_ASSETS . '/js/serbian-transliteration.js', 1, (string)RSTR_VERSION, true );
+		
+		if(defined( 'RSTR_DEBUG' ) && RSTR_DEBUG) {
+			wp_register_style( RSTR_NAME, RSTR_ASSETS . '/css/serbian-transliteration.css', array('common'), (string)RSTR_VERSION );
+			wp_register_script( RSTR_NAME, RSTR_ASSETS . '/js/serbian-transliteration.js', 1, (string)RSTR_VERSION, true );
+		} else {
+			wp_register_style( RSTR_NAME, RSTR_ASSETS . '/css/serbian-transliteration.min.css', array('common'), (string)RSTR_VERSION );
+			wp_register_script( RSTR_NAME, RSTR_ASSETS . '/js/serbian-transliteration.min.js', 1, (string)RSTR_VERSION, true );
+		}
 		wp_localize_script(
 			RSTR_NAME,
 			'RSTR',

@@ -111,16 +111,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 		function rss_output_buffer_end() {
 			$output = ob_get_clean();
 
-			switch($this->get_current_script($this->get_options()))
-			{
-				case 'cyr_to_lat' :
-					$output = $this->cyr_to_lat($output);
-					break;
-					
-				case 'lat_to_cyr' :
-					$output = $this->lat_to_cyr($output);
-					break;
-			}
+			$output = $this->transliterate_text($output);
 
 			echo $output;
 		}

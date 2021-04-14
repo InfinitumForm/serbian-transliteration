@@ -12,7 +12,8 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 	{
 		private $themes = array(
 			'themify'	=> 'themify',
-			'avada'		=> 'avada'
+			'avada'		=> 'avada',
+			'divi'		=> 'divi'
 		);
 		private $theme;
 		
@@ -29,7 +30,7 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 		
 		function __construct( $options=array(), $only_object = false ) {
 			
-			$wp_get_theme = wp_get_theme();
+			$wp_get_theme = wp_get_theme(get_template());
 			
 			if(empty($wp_get_theme) || !$wp_get_theme->exists()) return $this;
 			

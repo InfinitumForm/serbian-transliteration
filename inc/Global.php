@@ -232,9 +232,13 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function transliterate_text($content, $type = 'lat_to_cyr', $fix_html = true){
+	public function transliterate_text($content, $type = NULL, $fix_html = true){
 		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || $this->is_editor()){
 			return $content;
+		}
+		
+		if(empty($type) || is_bool($type)){
+			$type = $this->get_current_script( get_rstr_option() );
 		}
 		
 		$content = $this->decode($content);
@@ -253,11 +257,16 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function transliterate_objects($array, $type = 'lat_to_cyr', $fix_html = true)
+	public function transliterate_objects($array, $type = NULL, $fix_html = true)
 	{
 		// First setup all properly
-		if(empty($array) || $this->is_editor()) return $array;
-		if(empty($type) || is_bool($type)) $type = $this->get_current_script( $this->get_options() );
+		if(empty($array) || $this->is_editor()) {
+			return $array;
+		}
+		
+		if(empty($type) || is_bool($type)) {
+			$type = $this->get_current_script( get_rstr_option() );
+		}
 		
 		$return = '';
 		// Infinity loop... Until end.
@@ -893,10 +902,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
 	/*
 	 * Flush Cache
-	 * @verson    1.0.0
+	 * @verson    1.0.1
 	*/
 	public function cache_flush () {
-		global $post, $user;
+		global $post, $user, $w3_plugin_totalcache;
 		
 		// Standard cache
 		header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
@@ -910,13 +919,15 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		
 		// Flush WP cache
-		if (function_exists('w3tc_flush_all')) {
+		if (function_exists('wp_cache_flush')) {
 			wp_cache_flush();
 		}
 		
 		// W3 Total Cache
 		if (function_exists('w3tc_flush_all')) {
 			w3tc_flush_all();
+		} else if( $w3_plugin_totalcache ) {
+			$w3_plugin_totalcache->flush_all();
 		}
 		
 		// WP Fastest Cache
@@ -924,12 +935,33 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			wpfc_clear_all_cache(true);
 		}
 		
+		// WP Rocket
+		if ( function_exists( 'rocket_clean_domain' ) ) {
+			rocket_clean_domain();
+		}
+		
+		// WP Super Cache
+		if(function_exists( 'prune_super_cache' ) && function_exists( 'get_supercache_dir' )) {
+			prune_super_cache( get_supercache_dir(), true );
+		}
+		
+		// Cache Enabler.
+		if (function_exists( 'clear_site_cache' )) {
+			clear_site_cache();
+		}
+		
 		// Clean stanrad WP cache
 		if($post && function_exists('clean_post_cache')) {
 			clean_post_cache( $post );
 		}
 		
-		if($user && function_exists('clean_post_cache')) {
+		// Comet Cache
+		if(class_exists('comet_cache') && method_exists('comet_cache', 'clear')) {
+			comet_cache::clear();
+		}
+		
+		// Clean user cache
+		if($user && function_exists('clean_user_cache')) {
 			clean_user_cache( $user );
 		}
 	}
@@ -1092,7 +1124,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	
 	public function mode($options=false){
 		
-		if(empty($options)) $options = $this->get_options();
+		if(empty($options)) $options = get_rstr_option();
 		if(is_null($options)) return false;
 		
 		$mode = ucfirst($options['mode']);

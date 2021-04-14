@@ -139,16 +139,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 				if (!is_admin() && empty($forced_cache) )
 				{
 					$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
-						switch($this->get_current_script($this->get_options()))
-						{
-							case 'cyr_to_lat' :
-								$matches[2] = $this->cyr_to_lat($matches[2]);
-								break;
-								
-							case 'lat_to_cyr' :
-								$matches[2] = $this->lat_to_cyr($matches[2]);
-								break;
-						}
+						$matches[2] = $this->transliterate_text($matches[2]);
 						return $matches[2];
 					}, $buffer);
 					
@@ -208,16 +199,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		public function bloginfo($output, $show=''){
 			if(!empty($show) && in_array($show, array('name','description')))
 			{
-				switch($this->get_current_script($this->get_options()))
-				{
-					case 'cyr_to_lat' :
-						$output = $this->cyr_to_lat($output);
-						break;
-						
-					case 'lat_to_cyr' :
-						$output = $this->lat_to_cyr($output);			
-						break;
-				}
+				$output = $this->transliterate_text($output);
 			}
 			return $output;
 		}
@@ -229,16 +211,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		function rss_output_buffer_end() {
 			$output = ob_get_clean();
 
-			switch($this->get_current_script($this->get_options()))
-			{
-				case 'cyr_to_lat' :
-					$output = $this->cyr_to_lat($output);
-					break;
-					
-				case 'lat_to_cyr' :
-					$output = $this->lat_to_cyr($output);
-					break;
-			}
+			$output = $this->transliterate_text($output);
 
 			echo $output;
 		}
@@ -249,20 +222,15 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			
 			if(is_array($content))
 			{
-				$content = $this->transliterate_objects($content);
+				if(method_exists($this, 'transliterate_objects')) {
+					$content = $this->transliterate_objects($content);
+				}
 			}
-			else if(is_string($content) && !is_numeric($content))
+			else if(is_string($content))
 			{
 					
-				switch($this->get_current_script($this->get_options()))
-				{
-					case 'cyr_to_lat' :
-						$content = $this->cyr_to_lat($content);
-						break;
-						
-					case 'lat_to_cyr' :
-						$content = $this->lat_to_cyr($content);			
-						break;
+				if(method_exists($this, 'transliterate_text')) {
+					$content = $this->transliterate_text($content);
 				}
 			}
 			return $content;

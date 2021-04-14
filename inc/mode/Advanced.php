@@ -120,16 +120,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 		function rss_output_buffer_end() {
 			$output = ob_get_clean();
 
-			switch($this->get_current_script($this->get_options()))
-			{
-				case 'cyr_to_lat' :
-					$output = $this->cyr_to_lat($output);
-					break;
-					
-				case 'lat_to_cyr' :
-					$output = $this->lat_to_cyr($output);
-					break;
-			}
+			$output = $this->transliterate_text($output);
 
 			echo $output;
 		}
@@ -180,16 +171,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 		public function bloginfo($output, $show=''){
 			if(!empty($show) && in_array($show, array('name','description')))
 			{
-				switch($this->get_current_script($this->get_options()))
-				{
-					case 'cyr_to_lat' :
-						$output = $this->cyr_to_lat($output);
-						break;
-						
-					case 'lat_to_cyr' :
-						$output = $this->lat_to_cyr($output);			
-						break;
-				}
+				$output = $this->transliterate_text($output);
 			}
 			return $output;
 		}
@@ -204,18 +186,11 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 					$content = $this->transliterate_objects($content);
 				}
 			}
-			else if(is_string($content) && !is_numeric($content))
+			else if(is_string($content))
 			{
 					
-				switch($this->get_current_script($this->get_options()))
-				{
-					case 'cyr_to_lat' :
-						$content = $this->cyr_to_lat($content);
-						break;
-						
-					case 'lat_to_cyr' :
-						$content = $this->lat_to_cyr($content);			
-						break;
+				if(method_exists($this, 'transliterate_text')) {
+					$content = $this->transliterate_text($content);
 				}
 			}
 			return $content;
