@@ -36,7 +36,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 				if( $cfgp_dimiss_review == 1 ){
 					add_option( RSTR_NAME . '-reviewed' , true );
 					
-					$parse_url = $this->parse_url();
+					$parse_url = Serbian_Transliteration_Utilities::parse_url();
 					if(wp_safe_redirect(remove_query_arg('cfgp_dimiss_review', $parse_url['url']))) {
 						exit;
 					}
@@ -69,7 +69,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		 * Display Admin Notice, asking for a review
 		**/
 		function display_admin_notice() {
-			$parse_url = $this->parse_url();
+			$parse_url = Serbian_Transliteration_Utilities::parse_url();
 			$dont_disturb = esc_url( add_query_arg('cfgp_dimiss_review', '1', $parse_url['url']) );
 			$plugin_info = get_plugin_data( RSTR_FILE , true, true );       
 			$reviewurl = esc_url( 'https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post' );

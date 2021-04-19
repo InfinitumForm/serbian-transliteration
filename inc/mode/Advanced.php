@@ -141,7 +141,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 					{
 						if(is_object($term) && ((isset($term->name) && !empty($term->name)) || (isset($term->description) && !empty($term->description))))
 						{
-							switch($this->get_current_script($this->get_options()))
+							switch(Serbian_Transliteration_Utilities::get_current_script())
 							{
 								case 'cyr_to_lat' :
 									if(isset($term->name) && !empty($term->name)){

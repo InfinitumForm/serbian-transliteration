@@ -33,13 +33,14 @@ class Serbian_Transliteration_Transliterating {
 	
 	public function transliteration($content, $translation = 'cyr_to_lat'){
 		
+		$locale = $this->get_locale();
+		
 		// Avoid transliteration for the some cases
 		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)){
 			return $content;
 		}
 		
 		// Set variables
-		$locale = $this->get_locale();
 		$path = RSTR_INC . "/transliteration/{$locale}.php";
 		$class_name = "Serbian_Transliteration_{$locale}";
 		$transliterated = false;
@@ -74,21 +75,21 @@ class Serbian_Transliteration_Transliterating {
 		else
 		{
 			// Let's do basic transliteration
-			if($translation === 'cyr_to_lat' || $translation === 'lat') {
+			if($translation === 'cyr_to_lat') {
 				$content = str_replace($this->cyr(), $this->lat(), $content);
 				$content = str_replace(array(
 					'ь', 'ъ', 'Ъ', 'Ь'
 				), '', $content);
-			} if($translation === 'lat_to_cyr' || $translation === 'cyr') {
+			} if($translation === 'lat_to_cyr') {
 				$content = str_replace($this->lat(), $this->cyr(), $content);
 			}
 			
 			// Filter special names from the list
-			if($translation === 'cyr_to_lat' || $translation === 'lat') {
+			if($translation === 'cyr_to_lat') {
 				foreach($this->lat_exclude_list() as $item){
 					$content = str_replace(str_replace($this->cyr(), $this->lat(), $item), $item, $content);
 				}
-			} if($translation === 'lat_to_cyr' || $translation === 'cyr') {
+			} if($translation === 'lat_to_cyr') {
 				foreach($this->cyr_exclude_list() as $item){
 					$content = str_replace(str_replace($this->lat(), $this->cyr(), $item), $item, $content);
 				}
@@ -151,10 +152,18 @@ class Serbian_Transliteration_Transliterating {
 		}
 		
 		global $rstr_cache;
-		if(!$rstr_cache->get('get_locale')){
-			$rstr_cache->set('get_locale', get_locale());
+		
+		$get_locale = $rstr_cache->get('get_locale');
+		
+		if(empty($get_locale)){
+			$locale = get_locale();
+			if(function_exists('pll_current_language')) {
+				$locale = pll_current_language('locale');
+			}
+			$get_locale = $rstr_cache->set('get_locale', get_locale());
 		}
-        return $rstr_cache->get('get_locale');
+        
+		return $get_locale;
 	}
 	
 	/*

@@ -222,5 +222,26 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 </nav>
 	<?php }
 	
+	/* 
+	* Admin action links
+	* @verson    1.0.0
+	*/
+	public function admin_action_links($actions = array()) {
+		$active = (isset($_GET['action']) ? $_GET['action'] : '');
+		$tab = (isset($_GET['tab']) ? $_GET['tab'] : '');
+	?>
+<ul class="action-links">
+<?php foreach($actions as $action=>$name): ?>
+	<li class="action-tab<?php echo ($action==$active ? ' active' : ''); ?>"><a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action); ?>" class="action-link<?php echo ($action==$active ? ' active' : ''); ?>"><?php echo $name; ?></a></li>
+<?php endforeach; ?>
+</ul>
+<select class="action-links-select" onchange="location = this.value;">
+<?php foreach($actions as $action=>$name): ?>
+	<option value="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action); ?>"<?php echo ($action==$active ? ' selected' : ''); ?>><?php echo $name; ?></option>
+<?php endforeach; ?>
+</select>
+	<?php
+	}
+	
 }
 endif;

@@ -1,3 +1,15 @@
+= 1.5.7 =
+* Fixed transliteration problem from version 1.5.6
+* Fixed issue with incorrect script recognition
+* Added email address recognition
+* Fixed issue with broken HTML code
+* Improved PHP code and optimized memory
+* Improved function caching
+
+= 1.5.6 =
+* Fixed developer functions `is_latin()` and `is_cyrillic()`
+* Reorganized global objects
+
 = 1.5.5 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added support to the Divi theme

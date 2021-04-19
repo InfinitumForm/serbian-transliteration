@@ -11,7 +11,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 {
 	function __construct(){
 
-		if($this->is_editor()) {} else
+		if(Serbian_Transliteration_Utilities::is_editor()) {} else
 		{
 			// Shortcodes
 			$this->add_shortcode('rstr_selector', 'rstr_selector_shortcode');
@@ -119,7 +119,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			'default_caption'=>NULL
 		), $attr, 'rstr_img' );
 		
-		switch($this->get_current_script($this->get_options()))
+		switch(Serbian_Transliteration_Utilities::get_current_script())
 		{
 			case 'lat':
 			case 'cyr_to_lat':

@@ -37,7 +37,7 @@ class Serbian_Transliteration_Cache
     public function set($key, $value)
     {   
         $this->cache[$key] = $value;
-        $this->clear_garbage();
+        $this->collect_garbage();
 		return $this->get($key);
     }
 	
@@ -87,7 +87,7 @@ class Serbian_Transliteration_Cache
 	/*
 	 * PRIVATE: Collect garbage
 	 */
-    private function clear_garbage()
+    private function collect_garbage()
     {   
 		if(function_exists('mt_rand')) {
 			$getrandmax = mt_getrandmax();
@@ -99,13 +99,20 @@ class Serbian_Transliteration_Cache
 		
         if (($rand / $getrandmax) && ($this->gcProbability / $this->gcDivisor))
 		{
-			while (count($this->cache) > $this->cap)
-			{
-				reset($this->cache);
-				$key = key($this->cache);
-				$this->remove($key);
-			}
+			$this->clear_garbage();
 		}
     }
+	
+	/*
+	 * PRIVATE: Clear garbage
+	 */
+    private function clear_garbage()
+    {   
+		while (count($this->cache) > $this->cap)
+		{
+			reset($this->cache);
+			unset($this->cache[key($this->cache)]);
+		}
+	}
 }
 endif;

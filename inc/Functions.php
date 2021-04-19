@@ -15,7 +15,7 @@
 if(!function_exists('get_current_url')) :
 function get_current_url()
 {
-	$parse_url = Serbian_Transliteration::__instance()->parse_url();
+	$parse_url = Serbian_Transliteration_Utilities::parse_url();
 	return $parse_url['url'];
 }
 endif;
@@ -28,64 +28,12 @@ endif;
 if(!function_exists('get_script')) :
 	function get_script()
 	{
-		global $rstr_cache;
-		
-		if($get_script = $rstr_cache->get('function_get_script')){
-			return $get_script;
-		}
-		
-		if(isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
-		{
-			return $rstr_cache->set('function_get_script', $_COOKIE['rstr_script']);
-		}
-		else
-		{
-			switch(get_rstr_option('transliteration-mode', 'cyr_to_lat'))
-			{
-				default:
-					return $rstr_cache->set('function_get_script', 'none');
-					break;
-					
-				case 'cyr_to_lat':
-					return $rstr_cache->set('function_get_script', 'lat');
-					break;
-					
-				case 'lat_to_cyr':
-					return $rstr_cache->set('function_get_script', 'cyr');
-					break;
-			}
-		}
+		return Serbian_Transliteration_Utilities::get_current_script();
 	}
 elseif(!function_exists('rstr_get_script')):
 	function rstr_get_script()
 	{
-		global $rstr_cache;
-		
-		if($get_script = $rstr_cache->get('function_get_script')){
-			return $get_script;
-		}
-		
-		if(isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
-		{
-			return $rstr_cache->set('function_get_script', $_COOKIE['rstr_script']);
-		}
-		else
-		{
-			switch(get_rstr_option('transliteration-mode', 'cyr_to_lat'))
-			{
-				default:
-					return $rstr_cache->set('function_get_script', 'none');
-					break;
-					
-				case 'cyr_to_lat':
-					return $rstr_cache->set('function_get_script', 'lat');
-					break;
-					
-				case 'lat_to_cyr':
-					return $rstr_cache->set('function_get_script', 'cyr');
-					break;
-			}
-		}
+		return Serbian_Transliteration_Utilities::get_current_script();
 	}
 endif;
 
@@ -119,14 +67,14 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_latin')) :
-	function is_latin($content)
+	function is_latin()
 	{
 		if(function_exists('get_script')){
 			$script = get_script();
 		} else {
 			$script = rstr_get_script();
 		}
-		return ($script == 'lat');
+		return ($script == 'cyr_to_lat');
 	}
 endif;
 
@@ -136,14 +84,14 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('is_cyrillic')) :
-	function is_cyrillic($content)
+	function is_cyrillic()
 	{
 		if(function_exists('get_script')){
 			$script = get_script();
 		} else {
 			$script = rstr_get_script();
 		}
-		return ($script == 'cyr');
+		return ($script == 'lat_to_cyr');
 	}
 endif;
 
@@ -298,7 +246,7 @@ endif;
 */
 if(!function_exists('script_selector')) :
 	function script_selector ($args) {
-		$parse_url = Serbian_Transliteration::__instance()->parse_url();
+		$parse_url = Serbian_Transliteration_Utilities::parse_url();
 		$url = $parse_url['url'];
 		
 		$ID = uniqid('script_selector_');

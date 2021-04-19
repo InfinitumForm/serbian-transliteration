@@ -70,7 +70,7 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	<?php }
 	
 		public function postbox_contributors(){
-			if($plugin_info = $this->plugin_info(array('contributors' => true, 'donate_link' => true))) : ?>
+			if($plugin_info = Serbian_Transliteration_Utilities::plugin_info(array('contributors' => true, 'donate_link' => true))) : ?>
 <div class="postbox" id="contributors">
 	<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span><?php _e('Contributors & Developers', RSTR_NAME); ?></span></h3><hr>
 	<div class="inside flex">

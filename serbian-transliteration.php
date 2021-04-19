@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.5.5
+ * Version:           1.5.7
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -105,6 +105,13 @@ include_once RSTR_INC . '/Requirements.php';
 $Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(array('file' => RSTR_FILE));
 
 if($Serbian_Transliteration_Activate->passes()) :	
+	/*
+	 * Serbian transliteration utilities
+	 * @since     1.5.7
+	 * @verson    1.0.0
+	 */
+	include_once RSTR_INC . '/Utilities.php';
+	
 	/*
 	 * Serbian transliteration requirements
 	 * @since     1.0.0
@@ -203,7 +210,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 			
 			// Generate unique ID
 			if(!get_option(RSTR_NAME . '-ID')) {
-				add_option(RSTR_NAME . '-ID', Serbian_Transliteration::generate_token(64));
+				add_option(RSTR_NAME . '-ID', Serbian_Transliteration_Utilities::generate_token(64));
 			}
 			
 			// Set default pharams
@@ -247,7 +254,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 				}
 			}
 			
-			Serbian_Transliteration::clear_plugin_cache();
+			Serbian_Transliteration_Utilities::clear_plugin_cache();
 			
 			// Add custom script languages
 			if(!term_exists('lat', 'rstr-script'))
@@ -289,7 +296,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 				add_option(RSTR_NAME . '-deactivation', array(date('Y-m-d H:i:s')));
 			}
 			
-			Serbian_Transliteration::clear_plugin_cache();
+			Serbian_Transliteration_Utilities::clear_plugin_cache();
 			
 			// Reset permalinks
 			flush_rewrite_rules();

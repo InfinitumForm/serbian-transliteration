@@ -132,7 +132,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		
 		if ( $pagenow != 'nav-menus.php' && ! defined( 'DOING_AJAX' ) && isset( $item->url ) && strstr( $item->url, '#transliteration' ) != '' ) {
 			
-			$parse_url = $this->parse_url();
+			$parse_url = Serbian_Transliteration_Utilities::parse_url();
 			$url = $parse_url['url'];
 
 			$get_script = (isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false ? $_COOKIE['rstr_script'] : 'none');

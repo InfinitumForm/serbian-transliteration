@@ -81,7 +81,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		}
 		
 		function __construct(){
-			$this->transient = 'transliteration_cache_' . $this->get_current_script($this->get_options()) . '_' . $this->get_current_page_ID();
+			$this->transient = 'transliteration_cache_' . Serbian_Transliteration_Utilities::get_current_script() . '_' . Serbian_Transliteration_Utilities::get_page_ID();
 
 			$filters = self::filters($this->get_options());
 			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->get_options());
@@ -169,7 +169,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 					{
 						if(is_object($term) && ((isset($term->name) && !empty($term->name)) || (isset($term->description) && !empty($term->description))))
 						{
-							switch($this->get_current_script($this->get_options()))
+							switch(Serbian_Transliteration_Utilities::get_current_script())
 							{
 								case 'cyr_to_lat' :
 									if(isset($term->name) && !empty($term->name)){

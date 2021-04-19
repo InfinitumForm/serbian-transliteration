@@ -37,7 +37,7 @@
 				); ?>
                 <?php printf('<p>%s<p>', __('This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.', RSTR_NAME)); ?>
                 
-			<?php if($plugin_info = $this->plugin_info(array('contributors' => true, 'donate_link' => false))) : ?>
+			<?php if($plugin_info = Serbian_Transliteration_Utilities::plugin_info(array('contributors' => true, 'donate_link' => false))) : ?>
 				<p><?php printf('<strong>%s</strong>', __('Special thanks to the contributors in the development of this plugin:', RSTR_NAME)); ?> <?php
                 	foreach($plugin_info->contributors as $username => $info) {
 						if($username == 'ivijanstefan') continue;

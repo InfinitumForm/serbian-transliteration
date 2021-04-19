@@ -61,7 +61,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
     }
 	
-	function ajax__rstr_filter_mode_options( ) {
+	public function ajax__rstr_filter_mode_options( ) {
 		global $rstr_cache;
 		$mode_class = $this->mode(array('mode'=>sanitize_text_field($_POST['mode'])));
 		
@@ -113,7 +113,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		exit;
 	}
 	
-	function action_links( $links ) {
+	public function action_links( $links ) {
 
 		$links = array_merge( array(
 			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration' ) ) . '">' . __( 'Settings', RSTR_NAME ) . '</a>',
@@ -124,7 +124,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 	}
 	
-	function row_meta_links( $links, $file ) {
+	public function row_meta_links( $links, $file ) {
 		if ( RSTR_BASENAME == $file ) {
 			return array_merge( $links, array(
 				'rstr-shortcodes' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=documentation&action=shortcodes' ) ) . '">' . __( 'Shortcodes', RSTR_NAME ) . '</a>',
@@ -475,7 +475,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			}
 		}
 		
-		parent::clear_plugin_cache();
+		Serbian_Transliteration_Utilities::clear_plugin_cache();
 
         return $new_input;
     }

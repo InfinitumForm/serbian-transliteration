@@ -324,6 +324,24 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				});
 			}
 		}
+		
+		/**
+		 * Add a new item under the (Home icon) site name in the toolbar on the backend.
+		 */
+		add_action( 'wp_before_admin_bar_render', function(){
+			if(current_user_can('administrator'))
+			{
+				global $wp_admin_bar;
+				
+				$wp_admin_bar->add_menu( array(
+					'parent' => 'site-name',
+					'id' => 'serbian_transliteration',
+					'title' => __('Transliteration', RSTR_NAME),
+					'href' => admin_url( '/options-general.php?page=serbian-transliteration' ),
+				));
+			}
+		});
 	}
+	
 }
 endif;
