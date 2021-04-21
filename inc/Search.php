@@ -23,7 +23,7 @@ class Serbian_Transliteration_Search extends Serbian_Transliteration
     {
 //		$this->add_filter( 'request', 'request' );
 //		$this->add_filter( 'get_search_query', 'request' );
-		$this->add_filter('posts_search', 'posts_search', 500, 2);
+		$this->add_filter('posts_search', 'posts_search', (PHP_INT_MAX-1), 2);
     }
 	
 	
@@ -62,10 +62,10 @@ class Serbian_Transliteration_Search extends Serbian_Transliteration
 			$exclude = $exclusion_prefix && ( substr( $term, 0, 1 ) === $exclusion_prefix );
 			
 			if ( $exclude ) {
-				$like_op  = 'NOT LIKE';
+				$like_op = 'NOT LIKE';
 				$andor_op = 'AND';
-				$term     = substr( $term, 1 );
-				$term_transliterated     = substr( $term_transliterated, 1 );
+				$term = substr( $term, 1 );
+				$term_transliterated = substr( $term_transliterated, 1 );
 			} else {
 				$like_op  = 'LIKE';
 				$andor_op = 'OR';
@@ -79,9 +79,9 @@ class Serbian_Transliteration_Search extends Serbian_Transliteration
 				$q['search_orderby_title'][]	= $wpdb->prepare( "{$wpdb->posts}.post_title LIKE %s", $like );
 			}
 			
-			$like      = $n . $wpdb->esc_like( $term ) . $n;
-			$tr_like      = $n . $wpdb->esc_like( $term_transliterated ) . $n;
-			$search   .= $wpdb->prepare("{$searchand}(
+			$like = $n . $wpdb->esc_like( $term ) . $n;
+			$tr_like = $n . $wpdb->esc_like( $term_transliterated ) . $n;
+			$search .= $wpdb->prepare("{$searchand}(
 				(
 					({$wpdb->posts}.post_title {$like_op} %s)
 				{$andor_op}
@@ -110,6 +110,9 @@ class Serbian_Transliteration_Search extends Serbian_Transliteration
 		return $search;
 	}
 	
+	/**
+     * Search by transliterate search query_variable
+	 */
 	public function request ($search_vars) {
 		if ( isset($search_vars['s']) && !empty($search_vars['s']) ) {
 			$search_vars['s'] = $this->transliterate_text(
