@@ -7,6 +7,142 @@
 if(!class_exists('Serbian_Transliteration_Utilities')) :
 class Serbian_Transliteration_Utilities{
 	
+	/*
+	 * Plugin mode
+	 * @return        array/string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function plugin_mode($mode=NULL){
+		$modes = array(
+			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
+			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
+			'forced'	=> __('Forced transliteration (everything)', RSTR_NAME)
+		);
+		
+		if(RSTR_WOOCOMMERCE) {
+			$modes = array_merge($modes, array(
+				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', RSTR_NAME)
+			));
+		}
+		
+		$modes = apply_filters('rstr_plugin_mode', $modes);
+		
+		if($mode){
+			if(isset($modes[$mode])) {
+				return $modes[$mode];
+			}
+			
+			return false;
+		}
+		
+		return $modes;
+	}
+	
+	/*
+	 * Transliteration mode
+	 * @return        array/string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function transliteration_mode($mode=NULL){
+		$modes = array(
+			'none'			=> __('Transliteration disabled', RSTR_NAME),
+			'cyr_to_lat'	=> __('Cyrillic to Latin', RSTR_NAME),
+			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
+		);
+		
+		$modes = apply_filters('rstr_transliteration_mode', $modes);
+		
+		if($mode && isset($modes[$mode])){
+			return $modes[$mode];
+		}
+		
+		return $modes;
+	}
+	
+	/*
+	 * Decode content
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function decode($content, $flag=ENT_NOQUOTES){
+		if (filter_var($content, FILTER_VALIDATE_URL)) {
+			$content = rawurldecode($content);
+		} else {
+			$content = htmlspecialchars_decode($content, $flag);
+			$content = html_entity_decode($content, $flag);
+			$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
+		}
+		return $content;
+	}
+	
+	/*
+	 * Check is already cyrillic
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function already_cyrillic(){
+        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el'))) !== false;
+	}
+	
+	/*
+	 * Check is latin letters
+	 * @return        boolean
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function is_lat($c){
+		return preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, ''));
+	}
+	
+	/*
+	 * Check is cyrillic letters
+	 * @return        boolean
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function is_cyr($c){
+		return preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, ''));
+	}
+	
+	/* 
+	* Get transliteration mode and load important classes
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public static function mode($options=false){
+		
+		if(empty($options)) $options = get_rstr_option();
+		if(is_null($options)) return false;
+		
+		$mode = ucfirst($options['mode']);
+		$class_require = "Serbian_Transliteration_Mode_{$mode}";
+		$path_require = "mode/{$mode}";
+		
+		$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
+		
+		if(!class_exists($class_require))
+		{
+			if(file_exists($path . "/{$path_require}.php"))
+			{
+				include_once $path . "/{$path_require}.php";
+				if(class_exists($class_require)){
+					return $class_require;
+				} else {
+					throw new Exception(sprintf('The class "$1%s" does not exist or is not correctly defined on the line %2%d', $mode_class, (__LINE__-2)));
+				}
+			} else {
+				throw new Exception(sprintf('The file at location "$1%s" does not exist or has a permissions problem.', $path . "/{$path_require}.php"));
+			}
+		}
+		else
+		{
+			return $class_require;
+		}
+		
+		// Clear memory
+		$class_require = $path_require = $path = $mode = NULL;
+		
+		return false;
+	}
+	
 	/* 
 	* Get current transliteration script
 	* @since     1.0.9
@@ -170,6 +306,17 @@ class Serbian_Transliteration_Utilities{
 		}
     }
 	
+	/*
+	 * Get current URL
+	 * @since     1.0.9
+	 * @verson    1.0.0
+	*/
+	public static function get_current_url()
+	{
+		global $wp;
+		return add_query_arg( array(), home_url( $wp->request ) );
+	}
+	
 	/**
 	 * Parse URL
 	 * @since     1.2.2
@@ -222,6 +369,120 @@ class Serbian_Transliteration_Utilities{
 		return $ssl;
 	}
 	
+	/* 
+	* Set current transliteration script
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public static function set_current_script(){		
+		$url_selector = get_rstr_option('url-selector', 'rstr');
+		
+		if(isset($_REQUEST[$url_selector]))
+		{
+			if(in_array($_REQUEST[$url_selector], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
+			{
+				self::setcookie($_REQUEST[$url_selector]);
+				$parse_url = self::parse_url();
+				$url = remove_query_arg($url_selector, $parse_url['url']);
+				
+				if(get_rstr_option('cache-support', 'yes') == 'yes') {
+					$url = add_query_arg('_rstr_nocache', uniqid($url_selector . mt_rand(100,999)), $url);
+				}
+
+				if(wp_safe_redirect($url)) {
+					if(function_exists('nocache_headers')) nocache_headers();
+					exit;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * Set cookie
+	 * @since     1.0.10
+	 * @verson    1.0.0
+	*/
+	public static function setcookie ($val){
+		if( !headers_sent() ) {
+			global $rstr_cache;
+			
+			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
+			$rstr_cache->delete('get_current_script');
+			
+			if(get_rstr_option('cache-support', 'yes') == 'yes') {
+				self::cache_flush();
+			}
+		}
+	}
+	
+	/*
+	 * Flush Cache
+	 * @verson    1.0.1
+	*/
+	public static function cache_flush () {
+		global $post, $user, $w3_plugin_totalcache;
+		
+		// Standard cache
+		header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+		
+		// Set nocache headers
+		if(function_exists('nocache_headers')) {
+			nocache_headers();
+		}
+		
+		// Flush WP cache
+		if (function_exists('wp_cache_flush')) {
+			wp_cache_flush();
+		}
+		
+		// W3 Total Cache
+		if (function_exists('w3tc_flush_all')) {
+			w3tc_flush_all();
+		} else if( $w3_plugin_totalcache ) {
+			$w3_plugin_totalcache->flush_all();
+		}
+		
+		// WP Fastest Cache
+		if (function_exists('wpfc_clear_all_cache')) {
+			wpfc_clear_all_cache(true);
+		}
+		
+		// WP Rocket
+		if ( function_exists( 'rocket_clean_domain' ) ) {
+			rocket_clean_domain();
+		}
+		
+		// WP Super Cache
+		if(function_exists( 'prune_super_cache' ) && function_exists( 'get_supercache_dir' )) {
+			prune_super_cache( get_supercache_dir(), true );
+		}
+		
+		// Cache Enabler.
+		if (function_exists( 'clear_site_cache' )) {
+			clear_site_cache();
+		}
+		
+		// Clean stanrad WP cache
+		if($post && function_exists('clean_post_cache')) {
+			clean_post_cache( $post );
+		}
+		
+		// Comet Cache
+		if(class_exists('comet_cache') && method_exists('comet_cache', 'clear')) {
+			comet_cache::clear();
+		}
+		
+		// Clean user cache
+		if($user && function_exists('clean_user_cache')) {
+			clean_user_cache( $user );
+		}
+	}
+	
 	/**
 	* Get current page ID
 	* @autor    Ivijan-Stefan Stipic
@@ -229,14 +490,14 @@ class Serbian_Transliteration_Utilities{
 	* @version  2.0.0
 	******************************************************************/
 	public static function get_page_ID(){
-		global $post, $wp_query, $rstr_cache;
+		global $post, $rstr_cache;
 		
 		if($current_page_id = $rstr_cache->get('current_page_id')){
 			return $current_page_id;
 		}
 		
-		if(!is_null($wp_query) && isset($wp_query->post) && isset($wp_query->post->ID) && !empty($wp_query->post->ID))
-			return $rstr_cache->set('current_page_id', $wp_query->post->ID);
+		if($id = self::get_page_ID__private__wp_query())
+			return $rstr_cache->set('current_page_id', $id);
 		else if($id = self::get_page_ID__private__get_the_id())
 			return $rstr_cache->set('current_page_id', $id);
 		else if(!is_null($post) && isset($post->ID) && !empty($post->ID))
@@ -262,6 +523,12 @@ class Serbian_Transliteration_Utilities{
 			if($id = get_the_id()) return $id;
 		}
 		return false;
+	}
+	
+	// Get page ID by wp_query
+	protected static function get_page_ID__private__wp_query(){
+		global $wp_query;
+		return ((!is_null($wp_query) && isset($wp_query->post) && isset($wp_query->post->ID) && !empty($wp_query->post->ID)) ? $wp_query->post->ID : false);
 	}
 	
 	// Get page ID by GET[post] in edit mode
@@ -321,5 +588,41 @@ class Serbian_Transliteration_Utilities{
 	/**
 	* END Get current page ID
 	*****************************************************************/
+	
+	/* 
+	* Register language script
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public static function attachment_taxonomies() {
+		if(!taxonomy_exists('rstr-script'))
+		{
+			register_taxonomy( 'rstr-script', array( 'attachment' ), array(
+				'hierarchical'      => true,
+				'labels'            => array(
+					'name'              => _x( 'Script', 'Language script', RSTR_NAME ),
+					'singular_name'     => _x( 'Script', 'Language script', RSTR_NAME ),
+					'search_items'      => __( 'Search by Script', RSTR_NAME ),
+					'all_items'         => __( 'All Scripts', RSTR_NAME ),
+					'parent_item'       => __( 'Parent Script', RSTR_NAME ),
+					'parent_item_colon' => __( 'Parent Script:', RSTR_NAME ),
+					'edit_item'         => __( 'Edit Script', RSTR_NAME ),
+					'update_item'       => __( 'Update Script', RSTR_NAME ),
+					'add_new_item'      => __( 'Add New Script', RSTR_NAME ),
+					'new_item_name'     => __( 'New Script Name', RSTR_NAME ),
+					'menu_name'         => __( 'Script', RSTR_NAME ),
+				),
+				'show_ui'           => true,
+				'show_admin_column' => true,
+				'query_var'         => true,
+				'publicly_queryable'=> false,
+				'show_in_menu'		=> false,
+				'show_in_nav_menus'	=> false,
+				'show_in_rest'		=> false,
+				'show_tagcloud'		=> false,
+				'show_in_quick_edit'=> false
+			) );
+		}
+	}
 }
 endif;

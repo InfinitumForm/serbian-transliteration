@@ -6,73 +6,6 @@
  */
 if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
-	/*
-	 * Plugin mode
-	 * @return        array/string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function plugin_mode($mode=NULL){
-		$modes = array(
-			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
-			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
-			'forced'	=> __('Forced transliteration (everything)', RSTR_NAME)
-		);
-		
-		if(RSTR_WOOCOMMERCE) {
-			$modes = array_merge($modes, array(
-				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', RSTR_NAME)
-			));
-		}
-		
-		$modes = apply_filters('rstr_plugin_mode', $modes);
-		
-		if($mode){
-			if(isset($modes[$mode])) {
-				return $modes[$mode];
-			}
-			
-			return false;
-		}
-		
-		return $modes;
-	}
-	
-	/*
-	 * Transliteration mode
-	 * @return        array/string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function transliteration_mode($mode=NULL){
-		$modes = array(
-			'none'			=> __('Transliteration disabled', RSTR_NAME),
-			'cyr_to_lat'	=> __('Cyrillic to Latin', RSTR_NAME),
-			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
-		);
-		
-		$modes = apply_filters('rstr_transliteration_mode', $modes);
-		
-		if($mode && isset($modes[$mode])){
-			return $modes[$mode];
-		}
-		
-		return $modes;
-	}
-	
-	/*
-	 * Decode content
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function decode($content, $flag=ENT_NOQUOTES){
-		if (filter_var($content, FILTER_VALIDATE_URL)) {
-			$content = rawurldecode($content);
-		} else {
-			$content = htmlspecialchars_decode($content, $flag);
-			$content = html_entity_decode($content, $flag);
-			$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
-		}
-		return $content;
-	}
 	
 	/*
 	 * Translate from cyr to lat
@@ -85,7 +18,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return $content;
 		}
 		
-		$content = $this->decode($content);
+		$content = Serbian_Transliteration_Utilities::decode($content);
 		$content = $this->transliteration($content, 'cyr_to_lat');
 		$content = $this->fix_attributes($content);
 
@@ -144,7 +77,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return $content;
 		}
 		
-		$content = $this->decode($content);
+		$content = Serbian_Transliteration_Utilities::decode($content);
 		
 		if($fix_diacritics) {
 			$content = $this->fix_diacritics($content);
@@ -204,12 +137,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 					
 					if(in_array($word_search, $search)) {
 						if(ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)){
-							$words[]=mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8');
+							$words[] = (function_exists('mb_strtoupper') ? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8') : strtoupper($search[array_search($word_search, $search)]));
 						} else if( preg_match('~^\p{Lu}~u', $word) ) {
 							$ucfirst = $search[array_search($word_search, $search)];
-							$firstChar = mb_substr($ucfirst, 0, 1, 'UTF-8');
-							$then = mb_substr($ucfirst, 1, NULL, 'UTF-8');
-							$words[]=mb_strtoupper($firstChar, 'UTF-8') . $then;
+							$firstChar = (function_exists('mb_substr') ? mb_substr($ucfirst, 0, 1, 'UTF-8') : substr($ucfirst, 0, 1));
+							$then = (function_exists('mb_substr') ? mb_substr($ucfirst, 1, NULL, 'UTF-8') : substr($ucfirst, 1, NULL));
+							$words[]= (function_exists('mb_strtoupper') ? mb_strtoupper($firstChar, 'UTF-8') : strtoupper($firstChar)) . $then;
 						} else {
 							$words[]=$word;
 						}
@@ -241,7 +174,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			$type = Serbian_Transliteration_Utilities::get_current_script();
 		}
 		
-		$content = $this->decode($content);
+		$content = Serbian_Transliteration_Utilities::decode($content);
 		$content = $this->transliteration($content, $type);
 		
 		if(($type == 'lat_to_cyr') && $fix_html){
@@ -302,35 +235,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 
 		return $return;
-	}
-	
-	/*
-	 * Check is already cyrillic
-	 * @return        string
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function already_cyrillic(){
-        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el'))) !== false;
-	}
-	
-	/*
-	 * Check is latin letters
-	 * @return        boolean
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function is_lat($c){
-		return preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, ''));
-	}
-	
-	/*
-	 * Check is cyrillic letters
-	 * @return        boolean
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public function is_cyr($c){
-		return preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, ''));
-	}
-	
+	}	
 	
 	/*
 	 * All available HTML tags
@@ -522,7 +427,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * Prefiler for the upload
 	*/
 	public function upload_prefilter ($file) {
-		$file['name']= $this->cyr_to_lat_sanitize($file['name']);
+		$file['name']= $this->sanitize_file_name($file['name']);
 		return $file;
 	}
 	
@@ -530,7 +435,21 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * Sanitize file name
 	*/
 	public function sanitize_file_name($filename){
-		return $this->cyr_to_lat_sanitize($filename);
+		$delimiter = get_rstr_option('media-delimiter', 'auto');
+		
+		if($delimiter != 'auto') {
+			$name = $this->cyr_to_lat_sanitize($filename);
+			$name = preg_split("/[\-_~\s]+/", $name);
+			$name = array_filter($name);
+			
+			if(!empty($name)) {
+				return join($delimiter, $name);
+			} else {
+				return $filename;
+			}
+		} else {
+			return $filename;
+		}
 	}
 	
 	/*
@@ -549,166 +468,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$data['post_name'] = rawurldecode($data['post_name']);
 		$data['post_name'] = $this->cyr_to_lat_sanitize( $data['post_name'] );
 		return $data;
-	}
-	
-	/* 
-	* Register language script
-	* @since     1.0.9
-	* @verson    1.0.0
-	*/
-	public static function attachment_taxonomies() {
-		if(!taxonomy_exists('rstr-script'))
-		{
-			register_taxonomy( 'rstr-script', array( 'attachment' ), array(
-				'hierarchical'      => true,
-				'labels'            => array(
-					'name'              => _x( 'Script', 'Language script', RSTR_NAME ),
-					'singular_name'     => _x( 'Script', 'Language script', RSTR_NAME ),
-					'search_items'      => __( 'Search by Script', RSTR_NAME ),
-					'all_items'         => __( 'All Scripts', RSTR_NAME ),
-					'parent_item'       => __( 'Parent Script', RSTR_NAME ),
-					'parent_item_colon' => __( 'Parent Script:', RSTR_NAME ),
-					'edit_item'         => __( 'Edit Script', RSTR_NAME ),
-					'update_item'       => __( 'Update Script', RSTR_NAME ),
-					'add_new_item'      => __( 'Add New Script', RSTR_NAME ),
-					'new_item_name'     => __( 'New Script Name', RSTR_NAME ),
-					'menu_name'         => __( 'Script', RSTR_NAME ),
-				),
-				'show_ui'           => true,
-				'show_admin_column' => true,
-				'query_var'         => true,
-				'publicly_queryable'=> false,
-				'show_in_menu'		=> false,
-				'show_in_nav_menus'	=> false,
-				'show_in_rest'		=> false,
-				'show_tagcloud'		=> false,
-				'show_in_quick_edit'=> false
-			) );
-		}
-	}
-	
-	/* 
-	* Set current transliteration script
-	* @since     1.0.9
-	* @verson    1.0.0
-	*/
-	public function set_current_script(){		
-		if(isset($_REQUEST[$this->get_option('url-selector', 'rstr')]))
-		{
-			if(in_array($_REQUEST[$this->get_option('url-selector', 'rstr')], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
-			{
-				$this->setcookie($_REQUEST[$this->get_option('url-selector', 'rstr')]);
-				$parse_url = Serbian_Transliteration_Utilities::parse_url();
-				$url = remove_query_arg($this->get_option('url-selector', 'rstr'), $parse_url['url']);
-				
-				if($this->get_option('cache-support', 'yes') == 'yes') {
-					$url = add_query_arg('_rstr_nocache', uniqid($this->get_option('url-selector', 'rstr') . mt_rand(100,999)), $url);
-				}
-
-				if(wp_safe_redirect($url)) {
-					if(function_exists('nocache_headers')) nocache_headers();
-					exit;
-				}
-			}
-		}
-		return false;
-	}
-	
-	/*
-	 * Set cookie
-	 * @since     1.0.10
-	 * @verson    1.0.0
-	*/
-	public function setcookie ($val){
-		if( !headers_sent() ) {
-			global $rstr_cache;
-			
-			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
-			$rstr_cache->delete('get_current_script');
-			
-			if($this->get_option('cache-support', 'yes') == 'yes') {
-				$this->cache_flush();
-			}
-		}
-	}
-	
-	/*
-	 * Flush Cache
-	 * @verson    1.0.1
-	*/
-	public function cache_flush () {
-		global $post, $user, $w3_plugin_totalcache;
-		
-		// Standard cache
-		header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-		header("Cache-Control: post-check=0, pre-check=0", false);
-		header("Pragma: no-cache");
-		
-		// Set nocache headers
-		if(function_exists('nocache_headers')) {
-			nocache_headers();
-		}
-		
-		// Flush WP cache
-		if (function_exists('wp_cache_flush')) {
-			wp_cache_flush();
-		}
-		
-		// W3 Total Cache
-		if (function_exists('w3tc_flush_all')) {
-			w3tc_flush_all();
-		} else if( $w3_plugin_totalcache ) {
-			$w3_plugin_totalcache->flush_all();
-		}
-		
-		// WP Fastest Cache
-		if (function_exists('wpfc_clear_all_cache')) {
-			wpfc_clear_all_cache(true);
-		}
-		
-		// WP Rocket
-		if ( function_exists( 'rocket_clean_domain' ) ) {
-			rocket_clean_domain();
-		}
-		
-		// WP Super Cache
-		if(function_exists( 'prune_super_cache' ) && function_exists( 'get_supercache_dir' )) {
-			prune_super_cache( get_supercache_dir(), true );
-		}
-		
-		// Cache Enabler.
-		if (function_exists( 'clear_site_cache' )) {
-			clear_site_cache();
-		}
-		
-		// Clean stanrad WP cache
-		if($post && function_exists('clean_post_cache')) {
-			clean_post_cache( $post );
-		}
-		
-		// Comet Cache
-		if(class_exists('comet_cache') && method_exists('comet_cache', 'clear')) {
-			comet_cache::clear();
-		}
-		
-		// Clean user cache
-		if($user && function_exists('clean_user_cache')) {
-			clean_user_cache( $user );
-		}
-	}
-	
-	
-	/*
-	 * Get current URL
-	 * @since     1.0.9
-	 * @verson    1.0.0
-	*/
-	public function get_current_url()
-	{
-		global $wp;
-		return add_query_arg( array(), home_url( $wp->request ) );
 	}
 	
 	/*
@@ -740,12 +499,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		
 		// Fix CSS
 		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($m) {
-				return $this->decode($m[2]);
+				return Serbian_Transliteration_Utilities::decode($m[2]);
 		}, $content);
 		
 		// Fix scripts
 		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($m) {
-				return $this->decode($m[2]);
+				return Serbian_Transliteration_Utilities::decode($m[2]);
 		}, $content);
 		
 		$content = preg_replace_callback('/\\{1,5}&([a-zA-Z]+);/s', function($m) {
@@ -765,42 +524,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 		
 		return $content;
-	}
-	
-	public function mode($options=false){
-		
-		if(empty($options)) $options = get_rstr_option();
-		if(is_null($options)) return false;
-		
-		$mode = ucfirst($options['mode']);
-		$class_require = "Serbian_Transliteration_Mode_{$mode}";
-		$path_require = "mode/{$mode}";
-		
-		$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
-		
-		if(!class_exists($class_require))
-		{
-			if(file_exists($path . "/{$path_require}.php"))
-			{
-				include_once $path . "/{$path_require}.php";
-				if(class_exists($class_require)){
-					return $class_require;
-				} else {
-					throw new Exception(sprintf('The class "$1%s" does not exist or is not correctly defined on the line %2%d', $mode_class, (__LINE__-2)));
-				}
-			} else {
-				throw new Exception(sprintf('The file at location "$1%s" does not exist or has a permissions problem.', $path . "/{$path_require}.php"));
-			}
-		}
-		else
-		{
-			return $class_require;
-		}
-		
-		// Clear memory
-		$class_require = $path_require = $path = $mode = NULL;
-		
-		return false;
 	}
 	
 	/* 

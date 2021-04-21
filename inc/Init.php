@@ -57,18 +57,18 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		{
 			if(isset($options['first-visit-mode']) && $options['first-visit-mode'] == 'lat')
 			{
-				$this->setcookie('lat');
+				Serbian_Transliteration_Utilities::setcookie('lat');
 			}
 			else if(isset($options['first-visit-mode']) && $options['first-visit-mode'] == 'cyr')
 			{
-				$this->setcookie('cyr');
+				Serbian_Transliteration_Utilities::setcookie('cyr');
 			}
 			else
 			{
 				if($options['transliteration-mode'] == 'cyr_to_lat') {
-					$this->setcookie('lat');
+					Serbian_Transliteration_Utilities::setcookie('lat');
 				} else if($options['transliteration-mode'] == 'lat_to_cyr') {
-					$this->setcookie('cyr');
+					Serbian_Transliteration_Utilities::setcookie('cyr');
 				}
 			}
 		}
@@ -94,7 +94,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			$options = get_rstr_option();
 			/* Admin transliterations
 			=========================================*/
-			if($admin_mode_class = $inst->mode(['mode' => 'admin'])) {
+			if($admin_mode_class = Serbian_Transliteration_Utilities::mode(['mode' => 'admin'])) {
 				new $admin_mode_class($options);
 			}
 		}
@@ -159,11 +159,11 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		add_action('wp_head', array($inst, 'wp_head'));
 		
 		// Register taxonomy
-		parent::attachment_taxonomies();		
+		Serbian_Transliteration_Utilities::attachment_taxonomies();		
 		
 		if( !is_admin() )
 		{
-			$inst->set_current_script();
+			Serbian_Transliteration_Utilities::set_current_script();
 		}
 		else
 		{
@@ -194,7 +194,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		}
 
 		// Initialize plugin mode
-		if(isset($options['mode']) && $options['mode'] && in_array( $options['mode'], array_keys($inst->plugin_mode()), true ) !== false)
+		if(isset($options['mode']) && $options['mode'] && in_array( $options['mode'], array_keys(Serbian_Transliteration_Utilities::plugin_mode()), true ) !== false)
 		{
 			if($options['transliteration-mode'] != 'none')
 			{	
@@ -202,7 +202,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				$inst->set_cookie($options);
 		
 				// Include mode class				
-				if($mode_class = $inst->mode($options)) {
+				if($mode_class = Serbian_Transliteration_Utilities::mode($options)) {
 					if(method_exists($mode_class,'run')) {
 						$mode_class::run($options);
 					} else {
@@ -215,7 +215,8 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			=========================================*/
 			if(isset($options['media-transliteration']) && $options['media-transliteration'] == 'yes'){
 				$inst->add_filter('wp_handle_upload_prefilter', 'upload_prefilter', (PHP_INT_MAX-1), 1);
-				$inst->add_filter( 'sanitize_file_name', 'sanitize_file_name', 99 );
+				$inst->add_filter( 'sanitize_file_name', 'sanitize_file_name', (PHP_INT_MAX-1) );
+				$inst->add_filter( 'wp_unique_filename', 'sanitize_file_name', (PHP_INT_MAX-1) );
 			}
 			
 			/* Permalink transliteration

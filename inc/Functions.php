@@ -45,7 +45,7 @@ endif;
 if(!function_exists('is_latin_text')) :
 	function is_latin_text($content)
 	{
-		return Serbian_Transliteration::__instance()->is_lat($content);
+		return Serbian_Transliteration_Utilities::is_lat($content);
 	}
 endif;
 
@@ -57,7 +57,7 @@ endif;
 if(!function_exists('is_cyrillic_text')) :
 	function is_cyrillic_text($content)
 	{
-		return Serbian_Transliteration::__instance()->is_cyr($content);
+		return Serbian_Transliteration_Utilities::is_cyr($content);
 	}
 endif;
 
@@ -103,7 +103,7 @@ endif;
 if(!function_exists('is_already_cyrillic')) :
 	function is_already_cyrillic()
 	{
-		return Serbian_Transliteration::__instance()->already_cyrillic();
+		return Serbian_Transliteration_Utilities::already_cyrillic();
 	}
 endif;
 

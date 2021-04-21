@@ -90,7 +90,8 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 			if(get_rstr_option('enable-alternate-links', 'yes') == 'no') return;
 			if(apply_filters('rstr/alternate_links/disable', false)) return;
 			
-			$url = $this->get_current_url();
+			$parse_url = Serbian_Transliteration_Utilities::parse_url();
+			$url = $parse_url['url'];
 			$locale = get_locale();
 			$title = get_bloginfo('name');
 			

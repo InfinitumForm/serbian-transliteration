@@ -41,7 +41,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 			$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
 			
-			if($mode_class = $this->mode()) {
+			if($mode_class = Serbian_Transliteration_Utilities::mode()) {
 				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_keys($mode_class::filters()));
 			}
 			
@@ -63,16 +63,13 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 	public function ajax__rstr_filter_mode_options( ) {
 		global $rstr_cache;
-		$mode_class = $this->mode(array('mode'=>sanitize_text_field($_POST['mode'])));
+		$mode_class = Serbian_Transliteration_Utilities::mode(array('mode'=>sanitize_text_field($_POST['mode'])));
 		
 		if($mode_class !== false && isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-options') !== false)
 		{
 		
 			$options = get_rstr_option();
 			$options['mode'] = sanitize_text_field($_POST['mode']);
-			
-			$inputs = array();
-			$i = 0;
 			
 			$list = array_keys($mode_class::filters());
 			if($active_plugins = Serbian_Transliteration_Plugins::includes($options, true)->active_filters())
@@ -86,29 +83,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				$active_themes = array_keys($active_themes);
 				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_merge($rstr_cache->get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
 			}
-			
-			$only_woo = false;
-			if(RSTR_WOOCOMMERCE && isset($options['mode']) && $options['mode'] == 'woocommerce') $only_woo = true;
 
-			foreach($list as $k=>$hook)
-			{
-				if($only_woo && strpos($hook, 'woo') === false) continue;
-				$inputs[$i][]=sprintf(
-					'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
-					esc_attr($hook),
-					esc_html($hook),
-					RSTR_NAME,
-					$this->nonce,
-					(isset( $options['transliteration-filter']) ? (is_array($options['transliteration-filter']) && in_array($hook, $options['transliteration-filter']) ? ' checked' : '') : '')
-				);
-				
-				if($i === 2) $i=0; else ++$i;
-			}
-			?>
-			<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
-			<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
-			<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
-			<?php
+			$this->private___list_filter_mode_options($list, $options);
 		}
 		exit;
 	}
@@ -308,16 +284,17 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
             RSTR_NAME . '-global' // Section           
         );
 		
+		
+		
+		
+		
+		
 		$this->add_settings_section(
             RSTR_NAME . '-admin', // ID
             __('WP Admin', RSTR_NAME), // Title
             'print_wp_admin_callback', // Callback
             RSTR_NAME // Page
         );
-		
-		
-		
-		
 		
 		$this->add_settings_field(
             'avoid-admin', // ID
@@ -336,14 +313,6 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         );
 		
 		$this->add_settings_field(
-            'media-transliteration', // ID
-            __('Transliterate filenames to latin', RSTR_NAME), // Title 
-            'media_transliteration_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-admin' // Section           
-        );
-		
-		$this->add_settings_field(
             'permalink-transliteration', // ID
             __('Force transliteration permalinks to latin', RSTR_NAME), // Title 
             'permalink_transliteration_callback', // Callback
@@ -352,6 +321,31 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
         );
 		
 		
+		
+		
+		
+		$this->add_settings_section(
+            RSTR_NAME . '-media', // ID
+            __('Media Settings', RSTR_NAME), // Title
+            'print_media_callback', // Callback
+            RSTR_NAME // Page
+        );
+		
+		$this->add_settings_field(
+            'media-transliteration', // ID
+            __('Transliterate filenames to latin', RSTR_NAME), // Title 
+            'media_transliteration_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-media' // Section           
+        );
+		
+		$this->add_settings_field(
+            'media-delimiter', // ID
+            __('Filename delimiter', RSTR_NAME), // Title 
+            'media_delimiter_callback', // Callback
+            RSTR_NAME, // Page
+            RSTR_NAME . '-media' // Section           
+        );
 		
 		
 		
@@ -466,11 +460,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			switch($new_input[RSTR_NAME]['transliteration-mode'])
 			{
 				case 'cyr_to_lat':
-					$this->setcookie('lat');
+					Serbian_Transliteration_Utilities::setcookie('lat');
 					break;
 					
 				case 'lat_to_cyr':
-					$this->setcookie('cyr');
+					Serbian_Transliteration_Utilities::setcookie('cyr');
 					break;
 			}
 		}
@@ -505,6 +499,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		printf('<p>%s</p>', __('These settings apply to the administrative part.', RSTR_NAME));
 	}
 	
+	public function print_media_callback()
+	{
+		printf('<p>%s</p>', __('Upload, view and control media and files.', RSTR_NAME));
+	}
+	
 	public function print_misc_settings_callback()
 	{
 		printf('<p>%s</p>', __('Various interesting settings that can be used in the development of your project.', RSTR_NAME));
@@ -518,7 +517,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     {
 		$inputs = array();
 		
-		foreach($this->plugin_mode() as $key=>$label)
+		foreach(Serbian_Transliteration_Utilities::plugin_mode() as $key=>$label)
 		{
 			$inputs[]=sprintf(
 				'<label for="mode-%1$s"><input type="radio" id="mode-%1$s" name="%3$s[mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
@@ -565,7 +564,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     {
 		$inputs = array();
 		
-		foreach($this->transliteration_mode() as $key=>$label)
+		foreach(Serbian_Transliteration_Utilities::transliteration_mode() as $key=>$label)
 		{
 			$inputs[]=sprintf(
 				'<label for="transliteration-mode-%1$s"><input type="radio" id="transliteration-mode-%1$s" name="%3$s[transliteration-mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
@@ -618,37 +617,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			__('Select the transliteration filters you want to exclude.', RSTR_NAME),
 			__('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', RSTR_NAME)
 		);
-
-		$inputs = array();
-		$i = 0;
 		
 		$list = $rstr_cache->get('Serbian_Transliteration_Settings__active_filters');
-
-		$only_woo = false;
-		if(RSTR_WOOCOMMERCE && get_rstr_option('mode') == 'woocommerce') $only_woo = true;
-
-		foreach($list as $k=>$hook)
-		{
-			if($only_woo && strpos($hook, 'woo') === false) continue;
-			$inputs[$i][]=sprintf(
-				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
-				esc_attr($hook),
-				esc_html($hook),
-				RSTR_NAME,
-				$this->nonce,
-				(isset( $this->options['transliteration-filter']) ? (is_array($this->options['transliteration-filter']) && in_array($hook, $this->options['transliteration-filter']) ? ' checked' : '') : '')
-			);
-			
-			if($i === 2) $i=0; else ++$i;
-		}
-		?>
-		<div class="row" id="rstr-filter-mode-options">
-			<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
-			<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
-			<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
-		</div>
-		<?php
 		
+		?>
+        <div class="row" id="rstr-filter-mode-options">
+			<?php $this->private___list_filter_mode_options($list); ?>
+        </div>
+		<?php
 		printf(
 			'<br><p><b>%s</b><br>%s %s</p>',
 			__('TIPS & TRICKS:', RSTR_NAME),
@@ -718,6 +694,32 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to convert cyrillic filenames to latin.', RSTR_NAME));
+	}
+	
+	/** 
+     * Filename delimiter. Example: `my-upload-file.jpg`
+     */
+	public function media_delimiter_callback(){
+		$inputs = array();
+		
+		foreach(array(
+			'auto' => __('Automatical (recommended)', RSTR_NAME),
+			'-' => '- (' . __('hyphen', RSTR_NAME) . ')',
+			'_' => '_  (' . __('underscore', RSTR_NAME) . ')',
+			'.' => '. (' . __('dot', RSTR_NAME) . ')',
+			'~' => '~ (' . __('tilde', RSTR_NAME) . ')'
+		) as $label => $name)
+		{
+			$inputs[]=sprintf(
+				'<option value="%1$s"%3$s>%2$s</option>',
+				$label,
+				$name,
+				(isset( $this->options['media-delimiter'] ) ? ($this->options['media-delimiter'] == $label ? ' selected' : '') : ($label == 'auto' ? ' selected' : ''))
+			);
+		}
+        echo '<select name="'.RSTR_NAME.'[media-delimiter]" id="'.RSTR_NAME.'-media-delimiter" data-nonce="'.$this->nonce.'" style="margin-bottom:5px;">' . join('<br>', $inputs) . '</select>';
+		
+		printf('<br><p class="description">%1$s <code>%2$s</code></p>', __('Filename delimiter, example:', RSTR_NAME), __('my-upload-file.jpg', RSTR_NAME));
 	}
 	
 	/** 
@@ -971,6 +973,43 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', RSTR_NAME));
+	}
+	
+	
+	
+	
+	/* PRIVATE - List filter mode options in the AJAX and admin */
+	private function private___list_filter_mode_options($list, $options=array()) {
+		$inputs = array();
+		$i = 0;
+		
+		if(empty($options)) $options = $this->options;
+		
+		$only_woo = false;
+		if(RSTR_WOOCOMMERCE && $options['mode'] == 'woocommerce') {
+			$only_woo = true;
+		}
+		
+		foreach($list as $k=>$hook)
+		{
+			if($only_woo && strpos($hook, 'woo') === false) continue;
+			
+			$inputs[$i][]=sprintf(
+				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
+				esc_attr($hook),
+				esc_html($hook),
+				RSTR_NAME,
+				$this->nonce,
+				(isset( $options['transliteration-filter']) ? (is_array($options['transliteration-filter']) && in_array($hook, $options['transliteration-filter']) ? ' checked' : '') : '')
+			);
+			
+			if($i === 2) $i=0; else ++$i;
+		}
+		?>
+		<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
+		<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
+		<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
+		<?php
 	}
 	
 }

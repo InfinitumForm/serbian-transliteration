@@ -1,3 +1,10 @@
+= 1.5.8 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Added algorithm for filename delimiter
+* Improved filename transliteration
+* New PHP code enhancement and memory optimization
+* Removed deprecated code
+
 = 1.5.7 =
 * Fixed transliteration problem from version 1.5.6
 * Fixed issue with incorrect script recognition

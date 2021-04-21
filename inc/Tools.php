@@ -99,7 +99,7 @@ class Serbian_Transliteration_Tools extends Serbian_Transliteration
 				{
 					// Fix  problematic
 					$get_results = array_map(function($match) use (&$updated, &$wpdb, &$return){
-						$match->post_name = $this->decode( $match->post_name );
+						$match->post_name = Serbian_Transliteration_Utilities::decode( $match->post_name );
 						$match->post_name = $this->cyr_to_lat_sanitize( $match->post_name );
 						if($wpdb->update(
 							$wpdb->posts,
