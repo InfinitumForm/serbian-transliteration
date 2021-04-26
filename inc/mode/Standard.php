@@ -11,7 +11,7 @@
 if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 	class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 	{
-		
+
 		/* Run this script */
 		public static function run() {
 			global $rstr_cache;
@@ -21,23 +21,23 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				$instance = $rstr_cache->set($class, new self());
 			}
 			return $instance;
-		} 
-		
+		}
+
 		public static function filters ($options=array()) {
 			if(empty($options)) $options = get_rstr_option();
-			
+
 			$filters = array(
 				'comment_text'			=> 'content',
 				'comments_template' 	=> 'content',
 				'the_content' 			=> 'content',
-				'the_title' 			=> 'content',
-				'the_date' 				=> 'content',
-				'get_post_time' 		=> 'content',
-				'get_the_date' 			=> 'content',
+				'the_title' 			=> 'no_html_content',
+				'the_date' 				=> 'no_html_content',
+				'get_post_time' 		=> 'no_html_content',
+				'get_the_date' 			=> 'no_html_content',
 				'the_content_more_link' => 'content',
 				'wp_nav_menu_items' 	=> 'content',
-				'wp_title' 				=> 'content',
-				'pre_get_document_title'=> 'content',
+				'wp_title' 				=> 'no_html_content',
+				'pre_get_document_title'=> 'no_html_content',
 				'default_post_metadata'	=> 'content',
 				'get_comment_metadata' 	=> 'content',
 				'get_term_metadata' 	=> 'content',
@@ -48,8 +48,8 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				'ngettext' 				=> 'content',
 				'gettext_with_context' 	=> 'content',
 				'ngettext_with_context' => 'content',
-				'option_blogdescription'=> 'content',
-				'option_blogname' 		=> 'content',
+				'option_blogdescription'=> 'no_html_content',
+				'option_blogname' 		=> 'no_html_content',
 				'document_title_parts' 	=> 'transliterate_objects',
 				'get_the_terms'			=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 				'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
@@ -58,14 +58,14 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				'wp_unique_post_slug'	=> 'force_permalink_to_latin'
 			);
 			asort($filters);
-			
+
 			if (!current_theme_supports( 'title-tag' )){
 				unset($filters['document_title_parts']);
 				unset($filters['pre_get_document_title']);
 			} else {
 				unset($filters['wp_title']);
 			}
-			
+
 			return $filters;
 		}
 
@@ -75,39 +75,43 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 
 			if(!is_admin())
 			{
-				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, (PHP_INT_MAX-1), 1);
-				
+				foreach($filters as $key=>$function){
+					if(has_filter($key) !== false){
+						$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
+					}
+				}
+
 				if(get_rstr_option('enable-rss', 'no') == 'yes')
-				{						
+				{
 					$this->add_action('rss_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('rss_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-					
+
 					$this->add_action('rss2_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('rss2_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-					
+
 					$this->add_action('rdf_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('rdf_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-					
+
 					$this->add_action('atom_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('atom_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
 				}
-				
+
 				if(get_rstr_option('force-widgets', 'no') == 'yes')
 				{
 					$this->add_action('dynamic_sidebar_before', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('dynamic_sidebar_after', 'rss_output_buffer_end', (PHP_INT_MAX-1));
 				}
-				
+
 			}
-			
+
 			$this->add_filter('bloginfo', 'bloginfo', (PHP_INT_MAX-1), 2);
 			$this->add_filter('bloginfo_url', 'bloginfo', (PHP_INT_MAX-1), 2);
 		}
-		
+
 		function rss_output_buffer_start() {
 			ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
-		
+
 		function rss_output_buffer_end() {
 			$output = ob_get_clean();
 
@@ -115,14 +119,14 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 
 			echo $output;
 		}
-		
+
 		/*
 		 * Transliterate WP terms
 		 * @contributor    Ivijan-Stefan Stipić
 		 * @version        2.0.0
 		**/
 		public function transliteration_wp_terms($wp_terms)
-		{	
+		{
 			if (!empty($wp_terms))
 			{
 				if(is_array($wp_terms))
@@ -154,10 +158,10 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 					}
 				}
 			}
-			
+
 			return $wp_terms;
 		}
-		
+
 		public function bloginfo($output, $show=''){
 			if(!empty($show) && in_array($show, array('name','description')))
 			{
@@ -168,8 +172,8 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 
 		public function content ($content='') {
 			if(empty($content)) return $content;
-			
-			
+
+
 			if(is_array($content))
 			{
 				if(method_exists($this, 'transliterate_objects')) {
@@ -178,9 +182,28 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			}
 			else if(is_string($content))
 			{
-					
+
 				if(method_exists($this, 'transliterate_text')) {
 					$content = $this->transliterate_text($content);
+				}
+			}
+			return $content;
+		}
+
+		public function no_html_content ($content='') {
+			if(empty($content)) return $content;
+
+			if(is_array($content))
+			{
+				if(method_exists($this, 'transliterate_objects')) {
+					$content = $this->transliterate_objects($content, NULL, false);
+				}
+			}
+			else if(is_string($content))
+			{
+
+				if(method_exists($this, 'transliterate_text')) {
+					$content = $this->transliterate_text($content, NULL, false);
 				}
 			}
 			return $content;

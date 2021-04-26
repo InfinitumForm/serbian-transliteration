@@ -21,15 +21,15 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			}
 			return $instance;
 		}
-		
+
 		public static function filters ($options=array()) {
 			if(empty($options)) $options = get_rstr_option();
-			
+
 			$filters = array(
 				'get_the_terms'			=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 				'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
 			);
-			
+
 			return $filters;
 		}
 
@@ -39,34 +39,38 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 
 			if(!is_admin())
 			{
-				foreach($filters as $filter=>$function) $this->add_filter($filter, $function, (PHP_INT_MAX-1), 1);
-				
+				foreach($filters as $key=>$function){
+					if(has_filter($key) !== false){
+						$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
+					}
+				}
+
 				if(get_rstr_option('enable-rss', 'no') == 'yes')
-				{						
+				{
 					$this->add_action('rss_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('rss_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-					
+
 					$this->add_action('rss2_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('rss2_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-					
+
 					$this->add_action('rdf_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('rdf_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-					
+
 					$this->add_action('atom_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('atom_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
 				}
-				
+
 				if(get_rstr_option('force-widgets', 'no') == 'yes')
 				{
 					$this->add_action('dynamic_sidebar_before', 'rss_output_buffer_start', (PHP_INT_MAX-1));
 					$this->add_action('dynamic_sidebar_after', 'rss_output_buffer_end', (PHP_INT_MAX-1));
 				}
-				
+
 			}
 		}
-		
+
 		public function transliteration_wp_terms($wp_terms)
-		{	
+		{
 			if (!empty($wp_terms))
 			{
 				if(is_array($wp_terms))
@@ -103,11 +107,11 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			}
 			return $wp_terms;
 		}
-		
+
 		function rss_output_buffer_start() {
 			ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
-		
+
 		function rss_output_buffer_end() {
 			$output = ob_get_clean();
 

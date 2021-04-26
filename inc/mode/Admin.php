@@ -10,7 +10,7 @@
  */
 if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 	class Serbian_Transliteration_Mode_Admin extends Serbian_Transliteration {
-		
+
 		/* Run this script */
 		public static function run() {
 			global $rstr_cache;
@@ -20,11 +20,11 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 				$instance = $rstr_cache->set($class, new self());
 			}
 			return $instance;
-		} 
+		}
 
 		public static function filters( $options = array() ) {
 			global $pagenow;
-			
+
 			if ( empty( $options ) ) {
 				$options = get_rstr_option();
 			}
@@ -40,9 +40,12 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 				'option_blogname' 		=> 'content',
 				'option_blogdescription'=> 'content',
 				'document_title_parts'  => 'title_parts',
-				'wp_get_object_terms'   => 'transliteration_wp_terms'
+				'wp_get_object_terms'   => 'transliteration_wp_terms',
+				'load_script_translations' => 'transliteration_json_content',
+				'pre_load_script_translations' => 'transliteration_json_content',
+				'locale' => 'current_user_locale',
 			);
-			
+
 			// Bug fix on the settings page
 			if( in_array($pagenow, array('options-general.php', 'options.php'), true) !== false && !(isset($_GET['page'])) ){
 				unset($filters['option_blogname']);
@@ -59,13 +62,12 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 					$filters = self::filters( $this->get_options() );
 					$filters = apply_filters( 'rstr/transliteration/exclude/filters/admin', $filters, $this->get_options() );
 
-					foreach ( $filters as $filter => $function ) {
-						$this->add_filter( $filter, $function, (PHP_INT_MAX-1), 1 );
+					foreach($filters as $key=>$function){
+						if(has_filter($key) !== false){
+							$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
+						}
 					}
 				}
-				$this->add_filter( 'load_script_translations', 'transliteration_json_content', (PHP_INT_MAX-1) );
-				$this->add_filter( 'pre_load_script_translations', 'transliteration_json_content', (PHP_INT_MAX-1) );
-				$this->add_filter( 'locale', 'current_user_locale', (PHP_INT_MAX-1) );
 			}
 		}
 
@@ -120,7 +122,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 		 * @version        2.0.0
 		**/
 		public function transliteration_wp_terms($wp_terms)
-		{	
+		{
 			if (!empty($wp_terms))
 			{
 				if(is_array($wp_terms))
@@ -152,10 +154,10 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 					}
 				}
 			}
-			
+
 			return $wp_terms;
 		}
-		
+
 		/**
 		 * @param $locale
 		 *

@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.5.8
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,6 +131,16 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.6.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration for the search
+* Fixed cookie problem
+* Fixed language detection problem
+* Fixed issue with language script detection
+* Fixed issue with first visit mode
+* Added advanced language script recognition
+* Added advanced transliteration algorithm
+
 = 1.5.8 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added algorithm for filename delimiter
@@ -186,6 +196,16 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration for the search
+* Fixed cookie problem
+* Fixed language detection problem
+* Fixed issue with language script detection
+* Fixed issue with first visit mode
+* Added advanced language script recognition
+* Added advanced transliteration algorithm
 
 = 1.5.8 =
 * **MAJOR UPDATE:** You need to review and edit your settings

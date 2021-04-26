@@ -6,7 +6,7 @@
  */
 if(!class_exists('Serbian_Transliteration_Utilities')) :
 class Serbian_Transliteration_Utilities{
-	
+
 	/*
 	 * Plugin mode
 	 * @return        array/string
@@ -18,26 +18,26 @@ class Serbian_Transliteration_Utilities{
 			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
 			'forced'	=> __('Forced transliteration (everything)', RSTR_NAME)
 		);
-		
+
 		if(RSTR_WOOCOMMERCE) {
 			$modes = array_merge($modes, array(
 				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', RSTR_NAME)
 			));
 		}
-		
+
 		$modes = apply_filters('rstr_plugin_mode', $modes);
-		
+
 		if($mode){
 			if(isset($modes[$mode])) {
 				return $modes[$mode];
 			}
-			
+
 			return false;
 		}
-		
+
 		return $modes;
 	}
-	
+
 	/*
 	 * Transliteration mode
 	 * @return        array/string
@@ -49,16 +49,16 @@ class Serbian_Transliteration_Utilities{
 			'cyr_to_lat'	=> __('Cyrillic to Latin', RSTR_NAME),
 			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
 		);
-		
+
 		$modes = apply_filters('rstr_transliteration_mode', $modes);
-		
+
 		if($mode && isset($modes[$mode])){
 			return $modes[$mode];
 		}
-		
+
 		return $modes;
 	}
-	
+
 	/*
 	 * Decode content
 	 * @return        string
@@ -74,50 +74,50 @@ class Serbian_Transliteration_Utilities{
 		}
 		return $content;
 	}
-	
+
 	/*
 	 * Check is already cyrillic
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function already_cyrillic(){
-        return in_array($this->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el'))) !== false;
+        return in_array(Serbian_Transliteration::__instance()->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el'))) !== false;
 	}
-	
+
 	/*
 	 * Check is latin letters
 	 * @return        boolean
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function is_lat($c){
-		return preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, ''));
+		return preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, '')) !== false;
 	}
-	
+
 	/*
 	 * Check is cyrillic letters
 	 * @return        boolean
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function is_cyr($c){
-		return preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, ''));
+		return preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, '')) !== false;
 	}
-	
-	/* 
+
+	/*
 	* Get transliteration mode and load important classes
 	* @since     1.0.9
 	* @verson    1.0.0
 	*/
 	public static function mode($options=false){
-		
+
 		if(empty($options)) $options = get_rstr_option();
 		if(is_null($options)) return false;
-		
+
 		$mode = ucfirst($options['mode']);
 		$class_require = "Serbian_Transliteration_Mode_{$mode}";
 		$path_require = "mode/{$mode}";
-		
+
 		$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
-		
+
 		if(!class_exists($class_require))
 		{
 			if(file_exists($path . "/{$path_require}.php"))
@@ -136,51 +136,67 @@ class Serbian_Transliteration_Utilities{
 		{
 			return $class_require;
 		}
-		
+
 		// Clear memory
 		$class_require = $path_require = $path = $mode = NULL;
-		
+
 		return false;
 	}
-	
-	/* 
+
+	/*
 	* Get current transliteration script
 	* @since     1.0.9
 	* @verson    1.0.0
 	*/
 	public static function get_current_script(){
 		global $rstr_cache;
-		
+
 		$script = $rstr_cache->get('get_current_script');
-		
+
 		if(empty($script))
 		{
-			$options=get_rstr_option();
-			
-			$script = (isset($options['transliteration-mode']) && !empty($options['transliteration-mode']) ? $options['transliteration-mode'] : 'none');
-			
+			$script = $mode = get_rstr_option('transliteration-mode', 'none');
+			$site_script = get_rstr_option('site-script', 'lat');
+			$first_visit = get_rstr_option('first-visit-mode', 'auto');
+
 			if(isset($_COOKIE['rstr_script']) && !empty($_COOKIE['rstr_script']))
 			{
 				if($_COOKIE['rstr_script'] == 'lat') {
-					$script = 'cyr_to_lat';
-					if(isset($options['transliteration-mode']) && $options['site-script'] == 'lat'){
-						$script = 'lat';
+					$script = 'lat';
+					if($mode == 'cyr_to_lat'){
+						$script =  'cyr_to_lat';
 					}
 				} else if($_COOKIE['rstr_script'] == 'cyr') {
-					$script = 'lat_to_cyr';
-					if(isset($options['transliteration-mode']) && $options['site-script'] == 'cyr'){
-						$script =  'cyr';
+					$script = 'cyr';
+					if($mode == 'lat_to_cyr'){
+						$script =  'lat_to_cyr';
 					}
 				}
 			}
-			
+			else
+			{
+				if($first_visit == 'lat') {
+					$script = 'lat';
+					self::setcookie('lat');
+					if($mode == 'cyr_to_lat'){
+						$script =  'cyr_to_lat';
+					}
+				} else if($first_visit == 'cyr') {
+					$script = 'cyr';
+					self::setcookie('cyr');
+					if($mode == 'lat_to_cyr'){
+						$script =  'lat_to_cyr';
+					}
+				}
+			}
+
 			$rstr_cache->set('get_current_script', $script);
 		}
-		
+
 		return $script;
 	}
-	
-	/* 
+
+	/*
 	* Check is block editor screen
 	* @since     1.0.9
 	* @verson    1.0.0
@@ -188,9 +204,9 @@ class Serbian_Transliteration_Utilities{
 	public static function is_editor()
 	{
 		global $rstr_cache;
-		
+
 		$is_editor = $rstr_cache->get('is_editor');
-		
+
 		if(empty($is_editor)) {
 			if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
 				if(!function_exists('get_current_screen')){
@@ -204,11 +220,11 @@ class Serbian_Transliteration_Utilities{
 				$is_editor = $rstr_cache->set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
 			}
 		}
-		
+
 		return $is_editor;
 	}
-	
-	/* 
+
+	/*
 	 * Generate unique token
 	 * @author        Ivijan-Stefan Stipic
 	*/
@@ -225,7 +241,7 @@ class Serbian_Transliteration_Utilities{
 			return substr(str_replace(array('.',' ','_'),mt_rand(1000,9999),uniqid('t'.microtime())), 0, $length);
 		}
 	}
-	
+
 	/*
 	 * Delete all plugin ransients and cached options
 	 * @return        array
@@ -248,7 +264,7 @@ class Serbian_Transliteration_Utilities{
 			delete_option(RSTR_NAME . '-version');
 		}
 	}
-	
+
 	/*
 	 * Return plugin informations
 	 * @return        array/object
@@ -278,7 +294,7 @@ class Serbian_Transliteration_Utilities{
 					'donate_link' => false,               // url
 					'download_link' => false,             // url
 					'downloaded' => false,               // int
-					// 'group' => false,                 // n/a 
+					// 'group' => false,                 // n/a
 					'homepage' => false,                  // url
 					'icons' => false,                    // array( [1x] url, [2x] url )
 					'last_updated' => false,              // datetime
@@ -301,11 +317,11 @@ class Serbian_Transliteration_Utilities{
 					'versions' => false,                  // array( [version] url )
 				), $fields)
 			));
-		 
+
 			return $plugin_data;
 		}
     }
-	
+
 	/*
 	 * Get current URL
 	 * @since     1.0.9
@@ -316,7 +332,7 @@ class Serbian_Transliteration_Utilities{
 		global $wp;
 		return add_query_arg( array(), home_url( $wp->request ) );
 	}
-	
+
 	/**
 	 * Parse URL
 	 * @since     1.2.2
@@ -329,7 +345,7 @@ class Serbian_Transliteration_Utilities{
 			$domain = preg_replace('%:/{3,}%i','://',rtrim($http,'/').'://'.$_SERVER['HTTP_HOST']);
 			$domain = rtrim($domain,'/');
 			$url = preg_replace('%:/{3,}%i','://',$domain.'/'.(isset($_SERVER['REQUEST_URI']) && !empty( $_SERVER['REQUEST_URI'] ) ? ltrim($_SERVER['REQUEST_URI'], '/'): ''));
-				
+
 			$rstr_cache->set('url_parsed', array(
 				'method'	=>	$http,
 				'home_fold'	=>	str_replace($domain,'',home_url()),
@@ -337,10 +353,10 @@ class Serbian_Transliteration_Utilities{
 				'domain'	=>	$domain,
 			));
 		}
-		
+
 		return $rstr_cache->get('url_parsed');
 	}
-	
+
 	/*
 	 * CHECK IS SSL
 	 * @return	true/false
@@ -348,9 +364,9 @@ class Serbian_Transliteration_Utilities{
 	public static function is_ssl($url = false)
 	{
 		global $rstr_cache;
-		
+
 		$ssl = $rstr_cache->get('is_ssl');
-		
+
 		if($url !== false && is_string($url)) {
 			return (preg_match('/(https|ftps)/Ui', $url) !== false);
 		} else if(empty($ssl)) {
@@ -368,15 +384,15 @@ class Serbian_Transliteration_Utilities{
 		}
 		return $ssl;
 	}
-	
-	/* 
+
+	/*
 	* Set current transliteration script
 	* @since     1.0.9
 	* @verson    1.0.0
 	*/
-	public static function set_current_script(){		
+	public static function set_current_script(){
 		$url_selector = get_rstr_option('url-selector', 'rstr');
-		
+
 		if(isset($_REQUEST[$url_selector]))
 		{
 			if(in_array($_REQUEST[$url_selector], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false)
@@ -384,7 +400,7 @@ class Serbian_Transliteration_Utilities{
 				self::setcookie($_REQUEST[$url_selector]);
 				$parse_url = self::parse_url();
 				$url = remove_query_arg($url_selector, $parse_url['url']);
-				
+
 				if(get_rstr_option('cache-support', 'yes') == 'yes') {
 					$url = add_query_arg('_rstr_nocache', uniqid($url_selector . mt_rand(100,999)), $url);
 				}
@@ -397,7 +413,7 @@ class Serbian_Transliteration_Utilities{
 		}
 		return false;
 	}
-	
+
 	/*
 	 * Set cookie
 	 * @since     1.0.10
@@ -406,83 +422,83 @@ class Serbian_Transliteration_Utilities{
 	public static function setcookie ($val){
 		if( !headers_sent() ) {
 			global $rstr_cache;
-			
+
 			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
 			$rstr_cache->delete('get_current_script');
-			
+
 			if(get_rstr_option('cache-support', 'yes') == 'yes') {
 				self::cache_flush();
 			}
 		}
 	}
-	
+
 	/*
 	 * Flush Cache
 	 * @verson    1.0.1
 	*/
 	public static function cache_flush () {
 		global $post, $user, $w3_plugin_totalcache;
-		
+
 		// Standard cache
 		header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-		
+
 		// Set nocache headers
 		if(function_exists('nocache_headers')) {
 			nocache_headers();
 		}
-		
+
 		// Flush WP cache
 		if (function_exists('wp_cache_flush')) {
 			wp_cache_flush();
 		}
-		
+
 		// W3 Total Cache
 		if (function_exists('w3tc_flush_all')) {
 			w3tc_flush_all();
 		} else if( $w3_plugin_totalcache ) {
 			$w3_plugin_totalcache->flush_all();
 		}
-		
+
 		// WP Fastest Cache
 		if (function_exists('wpfc_clear_all_cache')) {
 			wpfc_clear_all_cache(true);
 		}
-		
+
 		// WP Rocket
 		if ( function_exists( 'rocket_clean_domain' ) ) {
 			rocket_clean_domain();
 		}
-		
+
 		// WP Super Cache
 		if(function_exists( 'prune_super_cache' ) && function_exists( 'get_supercache_dir' )) {
 			prune_super_cache( get_supercache_dir(), true );
 		}
-		
+
 		// Cache Enabler.
 		if (function_exists( 'clear_site_cache' )) {
 			clear_site_cache();
 		}
-		
+
 		// Clean stanrad WP cache
 		if($post && function_exists('clean_post_cache')) {
 			clean_post_cache( $post );
 		}
-		
+
 		// Comet Cache
 		if(class_exists('comet_cache') && method_exists('comet_cache', 'clear')) {
 			comet_cache::clear();
 		}
-		
+
 		// Clean user cache
 		if($user && function_exists('clean_user_cache')) {
 			clean_user_cache( $user );
 		}
 	}
-	
+
 	/**
 	* Get current page ID
 	* @autor    Ivijan-Stefan Stipic
@@ -491,11 +507,11 @@ class Serbian_Transliteration_Utilities{
 	******************************************************************/
 	public static function get_page_ID(){
 		global $post, $rstr_cache;
-		
+
 		if($current_page_id = $rstr_cache->get('current_page_id')){
 			return $current_page_id;
 		}
-		
+
 		if($id = self::get_page_ID__private__wp_query())
 			return $rstr_cache->set('current_page_id', $id);
 		else if($id = self::get_page_ID__private__get_the_id())
@@ -515,7 +531,7 @@ class Serbian_Transliteration_Utilities{
 
 		return false;
 	}
-	
+
 	// Get page ID by using get_the_id() function
 	protected static function get_page_ID__private__get_the_id(){
 		if(function_exists('get_the_id'))
@@ -524,34 +540,34 @@ class Serbian_Transliteration_Utilities{
 		}
 		return false;
 	}
-	
+
 	// Get page ID by wp_query
 	protected static function get_page_ID__private__wp_query(){
 		global $wp_query;
 		return ((!is_null($wp_query) && isset($wp_query->post) && isset($wp_query->post->ID) && !empty($wp_query->post->ID)) ? $wp_query->post->ID : false);
 	}
-	
+
 	// Get page ID by GET[post] in edit mode
 	protected static function get_page_ID__private__GET_post(){
 		return ((isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'edit') && (isset($_GET['post']) && is_numeric($_GET['post'])) ? absint($_GET['post']) : false);
 	}
-	
+
 	// Get page ID by GET[page_id]
 	protected static function get_page_ID__private__GET_page_id(){
 		return ((isset($_GET['page_id']) && is_numeric($_GET['page_id']))  ? absint($_GET['page_id']) : false);
 	}
-	
+
 	// Get page ID by GET[p]
 	protected static function get_page_ID__private__GET_p(){
 		return ((isset($_GET['p']) && is_numeric($_GET['p']))  ? absint($_GET['p']) : false);
 	}
-	
+
 	// Get page ID by OPTION[page_for_posts]
 	protected static function get_page_ID__private__page_for_posts(){
 		$page_for_posts = get_option( 'page_for_posts' );
 		return (!is_admin() && 'page' == get_option( 'show_on_front' ) && $page_for_posts ? absint($page_for_posts) : false);
 	}
-	
+
 	// Get page ID by mySQL query
 	protected static function get_page_ID__private__query(){
 		global $wpdb, $rstr_cache;
@@ -564,8 +580,8 @@ class Serbian_Transliteration_Utilities{
 			{
 				if($post_id = $wpdb->get_var(
 					$wpdb->prepare(
-						"SELECT ID FROM {$wpdb->posts} 
-						WHERE 
+						"SELECT ID FROM {$wpdb->posts}
+						WHERE
 							`post_status` = %s
 						AND
 							`post_name` = %s
@@ -581,15 +597,15 @@ class Serbian_Transliteration_Utilities{
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	* END Get current page ID
 	*****************************************************************/
-	
-	/* 
+
+	/*
 	* Register language script
 	* @since     1.0.9
 	* @verson    1.0.0

@@ -1,3 +1,13 @@
+= 1.6.0 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Improved transliteration for the search
+* Fixed cookie problem
+* Fixed language detection problem
+* Fixed issue with language script detection
+* Fixed issue with first visit mode
+* Added advanced language script recognition
+* Added advanced transliteration algorithm
+
 = 1.5.8 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Added algorithm for filename delimiter

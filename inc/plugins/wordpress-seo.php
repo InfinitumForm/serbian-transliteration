@@ -10,7 +10,7 @@
 if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
 	class Serbian_Transliteration__Plugin__wordpress_seo extends Serbian_Transliteration
 	{
-		
+
 		/* Run this script */
 		public static function run($dry = false) {
 			global $rstr_cache;
@@ -21,14 +21,14 @@ if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
 			}
 			return $instance;
 		}
-		
+
 		function __construct($dry = false){
 			if($dry) return;
 			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
-		} 
-		
+		}
+
 		public static function filters ($filters=array()) {
-			
+
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
 				'wpseo_breadcrumb_links' => array($classname, 'content'),
@@ -45,26 +45,26 @@ if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
 			asort($filters);
 			return $filters;
 		}
-		
+
 		public function content ($content='') {
 			if(empty($content)) return $content;
-			
-			
+
+
 			if(is_array($content))
 			{
 				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content);
+					$content = $this->transliterate_objects($content, false);
 				}
 			}
 			else if(is_string($content))
 			{
-					
+
 				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content);
+					$content = $this->transliterate_text($content, false);
 				}
 			}
 			return $content;
 		}
-		
+
 	}
 endif;

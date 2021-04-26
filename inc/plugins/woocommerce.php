@@ -10,7 +10,7 @@
 if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 	class Serbian_Transliteration__Plugin__woocommerce extends Serbian_Transliteration
 	{
-		
+
 		/* Run this script */
 		public static function run($dry = false) {
 			global $rstr_cache;
@@ -21,21 +21,21 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			}
 			return $instance;
 		}
-		
+
 		function __construct($dry = false){
 			if($dry) return;
 			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
-		} 
-		
+		}
+
 		public static function filters ($filters=array()) {
 
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
 				'woocommerce_product_single_add_to_cart_text' => array($classname, 'content'),
 					'woocommerce_email_footer_text' => array($classname, 'content'),
-					'woocommerce_get_availability_text' => array($classname, 'content'),
+					'woocommerce_get_availability_text' => array($classname, 'no_html_content'),
 					'woocommerce_get_price_html_from_text' => array($classname, 'content'),
-					'woocommerce_order_button_text' => array($classname, 'content'),
+					'woocommerce_order_button_text' => array($classname, 'no_html_content'),
 					'woocommerce_pay_order_button_text' => array($classname, 'content'),
 					'filter_woocommerce_product_add_to_cart_text' => array($classname, 'content'),
 					'woocommerce_product_single_add_to_cart_text' => array($classname, 'content'),
@@ -74,11 +74,11 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			asort($filters);
 			return $filters;
 		}
-		
+
 		public function content ($content='') {
 			if(empty($content)) return $content;
-			
-			
+
+
 			if(is_array($content))
 			{
 				if(method_exists($this, 'transliterate_objects')) {
@@ -87,9 +87,28 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			}
 			else if(is_string($content))
 			{
-					
+
 				if(method_exists($this, 'transliterate_text')) {
 					$content = $this->transliterate_text($content);
+				}
+			}
+			return $content;
+		}
+
+		public function no_html_content ($content='') {
+			if(empty($content)) return $content;
+
+			if(is_array($content))
+			{
+				if(method_exists($this, 'transliterate_objects')) {
+					$content = $this->transliterate_objects($content, NULL, false);
+				}
+			}
+			else if(is_string($content))
+			{
+
+				if(method_exists($this, 'transliterate_text')) {
+					$content = $this->transliterate_text($content, NULL, false);
 				}
 			}
 			return $content;
