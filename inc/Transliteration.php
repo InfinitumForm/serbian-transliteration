@@ -9,7 +9,7 @@
  */
 if(!class_exists('Serbian_Transliteration_Transliterating')) :
 class Serbian_Transliteration_Transliterating {
-	
+
 	/*
 	 * Registered languages
 	 * @since     1.4.3
@@ -27,19 +27,21 @@ class Serbian_Transliteration_Transliterating {
 			'mk_MK' => __('Macedoanian', RSTR_NAME),
 			'kk' => __('Kazakh', RSTR_NAME),
 			'uk' => __('Ukrainian', RSTR_NAME),
-			'el' => __('Greek', RSTR_NAME)
+			'el' => __('Greek', RSTR_NAME),
+			'hy' => __('Armenian', RSTR_NAME) . ' - BETA',
+			'ar' => __('Arabic', RSTR_NAME) . ' - BETA'
 		));
 	}
-	
+
 	public function transliteration($content, $translation = 'cyr_to_lat'){
-		
+
 		$locale = $this->get_locale();
-		
+
 		// Avoid transliteration for the some cases
 		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)){
 			return $content;
 		}
-		
+
 		// Set variables
 		$path = RSTR_INC . "/transliteration/{$locale}.php";
 		$class_name = "Serbian_Transliteration_{$locale}";
@@ -50,14 +52,14 @@ class Serbian_Transliteration_Transliterating {
 		{
 			include_once $path;
 		}
-		
+
 		// Load class
 		if(class_exists($class_name))
 		{
 			$content = $class_name::transliterate($content, $translation);
 			$transliterated = true;
 		}
-		
+
 		// If no locale than old fashion way
 		if($transliterated)
 		{
@@ -83,7 +85,7 @@ class Serbian_Transliteration_Transliterating {
 			} if($translation === 'lat_to_cyr') {
 				$content = str_replace($this->lat(), $this->cyr(), $content);
 			}
-			
+
 			// Filter special names from the list
 			if($translation === 'cyr_to_lat') {
 				foreach($this->lat_exclude_list() as $item){
@@ -95,7 +97,7 @@ class Serbian_Transliteration_Transliterating {
 				}
 			}
 		}
-		
+
 		return $content;
 	}
 
@@ -118,7 +120,7 @@ class Serbian_Transliteration_Transliterating {
 			'n', 'o', 'p', 'r', 's', 't', 'ć', 'u', 'f', 'h', 'c', 'č', 'dž', 'š',
 		));
 	}
-	
+
 	/*
 	 * Get cyrillic letters in array
 	 * @return        array
@@ -128,33 +130,33 @@ class Serbian_Transliteration_Transliterating {
 	{
 		return apply_filters('serbian_transliteration_cyr_letters', array(
 			// Variations and special characters
-			'њ', 'Њ', 'Њ', 'Љ', 'Џ', 'Ђ', 'Ђ', 'ђ', 'ѕ', 'Ю', 'ю', 'Я', 'я', 
+			'њ', 'Њ', 'Њ', 'Љ', 'Џ', 'Ђ', 'Ђ', 'ђ', 'ѕ', 'Ю', 'ю', 'Я', 'я',
 			'Щ', 'щ', 'Й', 'й', 'Ё', 'Ё', 'ё', 'Э', 'э', 'Ъ', 'ъ',
 			// Big letters
 			'А', 'Б', 'В', 'Г', 'Д', 'Ђ', 'Е', 'Ж', 'З', 'И', 'Ј', 'К', 'Л', 'Љ', 'М',
 			'Н', 'О', 'П', 'Р', 'С', 'Т', 'Ћ', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Џ', 'Ш',
 			// Small letters
 			'а', 'б', 'в', 'г', 'д', 'ђ', 'е', 'ж', 'з', 'и', 'ј', 'к', 'л', 'љ', 'м',
-			'н', 'о', 'п', 'р', 'с', 'т', 'ћ', 'у', 'ф', 'х', 'ц', 'ч', 'џ', 'ш'			
+			'н', 'о', 'п', 'р', 'с', 'т', 'ћ', 'у', 'ф', 'х', 'ц', 'ч', 'џ', 'ш'
 		));
 	}
-	
-	
+
+
 	/*
 	 * Get locale
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function get_locale(){
-		
+
 		if('auto' != ($language_scheme = get_rstr_option('language-scheme', 'auto'))) {
 			return $language_scheme;
 		}
-		
+
 		global $rstr_cache;
-		
+
 		$get_locale = $rstr_cache->get('get_locale');
-		
+
 		if(empty($get_locale)){
 			$locale = get_locale();
 			if(function_exists('pll_current_language')) {
@@ -162,10 +164,10 @@ class Serbian_Transliteration_Transliterating {
 			}
 			$get_locale = $rstr_cache->set('get_locale', get_locale());
 		}
-        
+
 		return $get_locale;
 	}
-	
+
 	/*
 	 * Get list of available locales
 	 * @return        bool false, array or string on needle
@@ -173,7 +175,7 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function get_locales( $needle = NULL ){
 		$cache = get_transient(RSTR_NAME . '-locales');
-		
+
 		if(empty($cache))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/locale', 'locale.lib');
@@ -186,10 +188,10 @@ class Serbian_Transliteration_Transliterating {
 		if($needle && is_array($cache)) {
 			return (in_array($needle, $cache, true) !== false ? $needle : false);
 		}
-		
+
 		return $cache;
 	}
-	
+
 	/*
 	 * Exclude words or sentences for Cyrillic
 	 * @return        array
@@ -198,19 +200,19 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function cyr_exclude_list(){
 		$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', array());
-		
+
 		$content = ob_get_status() ? ob_get_contents() : false;
 		if ( false !== $content ){
 			if ( preg_match_all('/\\\u[0-9a-f]{4}/i', $content, $exclude_unicode)){
 				$cyr_exclude_list = array_merge($cyr_exclude_list, $exclude_unicode);
 			}
 		}
-		
+
 		$cyr_exclude_list = array_filter($cyr_exclude_list);
-		
+
 		return $cyr_exclude_list;
 	}
-	
+
 	/*
 	 * Exclude words or sentences for Latin
 	 * @return        array
@@ -219,7 +221,7 @@ class Serbian_Transliteration_Transliterating {
 	public function lat_exclude_list(){
 		return apply_filters('rstr/init/exclude/lat', array());
 	}
-	
+
 	/*
 	 * Create only diacritical library
 	 * THIS IS TEST FUNCTION, NOT FOR THE PRODUCTION
@@ -227,17 +229,17 @@ class Serbian_Transliteration_Transliterating {
 	*/
 /*
 	private function create_only_diacritical($file, $new_file){
-		
+
 		if(file_exists($file) || empty($new_file)) return;
 		if(preg_match('/(\.lib)/i', $new_file) === false) return;
-		
+
 		$filesize = filesize(RSTR_ROOT.'/libraries/' . $file);
 		$fp = @fopen($file, "r");
 		$chunk_size = (1<<24); // 16MB arbitrary
 		$position = 0;
-		
+
 		$new_file = fopen(RSTR_ROOT.'/libraries/' . $new_file, "w");
-		
+
 		// if handle $fp to file was created, go ahead
 		if ($fp)
 		{
@@ -245,22 +247,20 @@ class Serbian_Transliteration_Transliterating {
 			{
 				// move pointer to $position in file
 				fseek($fp, $position);
-				
+
 				// take a slice of $chunk_size bytes
 				$chunk = fread($fp,$chunk_size);
-				
+
 				// searching the end of last full text line
 				$last_lf_pos = strrpos($chunk, "\n");
-				
+
 				// $buffer will contain full lines of text
 				// starting from $position to $last_lf_pos
 				$buffer = mb_substr($chunk,0,$last_lf_pos);
-				
-				$words = explode("\n", $buffer);
+
+				$words = Serbian_Transliteration_Utilities::explode("\n", $buffer);
 				$words = array_unique($words);
-				$words = array_filter($words);
-				$words = array_map('trim', $words);
-				
+
 				$save = array();
 				foreach($words as $word) {
 					if(preg_match('/[čćžšđ]/i', $word)){
@@ -268,10 +268,10 @@ class Serbian_Transliteration_Transliterating {
 					}
 				}
 				fwrite($new_file, join("\n", $save)) . "\n";
-				
+
 				// Move $position
 				$position += $last_lf_pos;
-				
+
 				// if remaining is less than $chunk_size, make $chunk_size equal remaining
 				if(($position+$chunk_size) > $filesize) $chunk_size = ($filesize-$position);
 				$buffer = NULL;
@@ -296,14 +296,14 @@ class Serbian_Transliteration_Transliterating {
 				set_transient(RSTR_NAME . '-diacritical-words', $cache, apply_filters('rstr/init/libraries/file/get_diacritical/transient', (DAY_IN_SECONDS*7)));
 			}
 		}
-		
+
 		if($needle && is_array($cache)) {
 			return (in_array($needle, $cache, true) !== false ? $needle : false);
 		}
-		
+
 		return $cache;
 	}
-	
+
 	/*
 	 * Get skip words
 	 * @return        bool false, array or string on needle
@@ -311,7 +311,7 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function get_skip_words( $needle = NULL ){
 		$cache = get_transient(RSTR_NAME . '-skip-words');
-		
+
 		if(empty($cache))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/skip-words', $this->get_locale().'.skip.words.lib');
@@ -320,41 +320,39 @@ class Serbian_Transliteration_Transliterating {
 				set_transient(RSTR_NAME . '-skip-words', $cache, apply_filters('rstr/init/libraries/file/skip-words/transient', (DAY_IN_SECONDS*7)));
 			}
 		}
-		
+
 		if($needle && is_array($cache)) {
 			return (in_array($needle, $cache, true) !== false ? $needle : false);
 		}
-		
+
 		return $cache;
 	}
-	
+
 	/*
 	 * Parse library
 	 * @return        bool false, array or string on needle
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function parse_library($file_name, $needle = NULL) {
-		
+
 		$words = array();
 		$words_file=apply_filters('rstr/init/libraries/file', RSTR_ROOT . '/libraries/' . $file_name);
-		
+
 		if(file_exists($words_file))
 		{
 			if($fopen_locale=fopen($words_file, 'r'))
 			{
 				$contents = fread($fopen_locale, filesize($words_file));
 				fclose($fopen_locale);
-				
+
 				if(!empty($contents))
 				{
-					$words = explode("\n", $contents);
+					$words = Serbian_Transliteration_Utilities::explode("\n", $contents);
 					$words = array_unique($words);
-					$words = array_filter($words);
-					$words = array_map('trim', $words);
 				} else return false;
 			} else return false;
 		} else return false;
-		
+
 		if($needle) {
 			return (in_array($needle, $words, true) !== false ? $needle : false);
 		} else {

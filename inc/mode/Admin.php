@@ -63,9 +63,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 					$filters = apply_filters( 'rstr/transliteration/exclude/filters/admin', $filters, $this->get_options() );
 
 					foreach($filters as $key=>$function){
-						if(has_filter($key) !== false){
-							$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
-						}
+						$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
 					}
 				}
 			}

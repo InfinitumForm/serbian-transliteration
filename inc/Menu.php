@@ -9,7 +9,7 @@
  */
 if(!class_exists('Serbian_Transliteration_Menu')) :
 class Serbian_Transliteration_Menu extends Serbian_Transliteration {
-	
+
 	function __construct(){
 		$this->add_action( 'admin_head-nav-menus.php', 'admin_nav_menu' );
 		$this->add_filter( 'wp_setup_nav_menu_item', 'menu_setup' );
@@ -21,12 +21,12 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	public function admin_nav_menu() {
 		add_meta_box( 'transliteration_menu', __( 'Transliteration', RSTR_NAME ), array( $this, 'admin_nav_menu_callback' ), 'nav-menus', 'side', 'default' );
 	}
-	
+
 	/* Displays Login/Logout/Register Links Metabox */
     public function admin_nav_menu_callback(){
 
 		global $nav_menu_selected_id;
-		
+
 		$elems = array(
 			'#transliteration-lat#'		=> __( 'Latin', RSTR_NAME ),
 			'#transliteration-cyr#'		=> __( 'Cyrillic', RSTR_NAME ),
@@ -45,7 +45,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 			'classes' => array(),
 			'xfn' => '',
 		);
-		
+
 		$elems_obj = array();
 		foreach ( $elems as $value => $title ) {
 			$elems_obj[ $title ] = (object) $logitems;
@@ -53,17 +53,17 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 			$elems_obj[ $title ]->title	= esc_attr( $title );
 			$elems_obj[ $title ]->url	= esc_attr( $value );
 		}
-		
+
 		$walker = new Walker_Nav_Menu_Checklist( array() );
 		?>
 		<div id="transliteration-links" class="transliterationlinksdiv">
-		
+
             <div id="tabs-panel-transliteration-links-all" class="tabs-panel tabs-panel-view-all tabs-panel-active">
               <ul id="transliteration-linkschecklist" class="list:transliteration-links categorychecklist form-no-clear">
                 <?php echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $elems_obj ), 0, (object) array( 'walker' => $walker ) ); ?>
               </ul>
             </div>
-            
+
             <p class="button-controls">
               <span class="list-controls hide-if-no-js">
                 <a href="javascript:void(0);" class="help" onclick="jQuery( '#transliteration-menu-help' ).toggle();"><?php _e( 'Help', RSTR_NAME ); ?></a>
@@ -74,20 +74,20 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
                     ?>
                   </span>
                 </span>
-            
+
                 <span class="add-to-menu">
                   <input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', RSTR_NAME ); ?>" name="add-transliteration-links-menu-item" id="submit-transliteration-links" />
                   <span class="spinner"></span>
                 </span>
               </p>
-		
+
 		</div>
 		<?php
 
     }
-	
+
 	/* Add custom fields to the menu item */
-	public function menu_item_custom_fields($item_id, $item, $depth = 0, $args = NULL, $id = 0) {			
+	public function menu_item_custom_fields($item_id, $item, $depth = 0, $args = NULL, $id = 0) {
 		if($item->url == '#transliteration-latcyr#'){
 			printf(
 				'<p style="padding:10px; background:cornsilk; float:left; margin-right: 10px; font-size:1.1em;"><strong>%s<br><br>%s<br><br>%s</strong></p>',
@@ -96,9 +96,9 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 				__('Note that the white space around them will be cleared.', RSTR_NAME)
 			);
 		}
-		
+
 	}
-	
+
 	/**
 	* Show Login || Logout Menu item for front end.
 	*
@@ -106,20 +106,20 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	* @param object $menu_item The menu item object.
 	*/
 	public function transliteration_setup_title( $title, $options ) {
-	
+
 		$titles = explode( '|', $title );
-		
+
 		if(is_array($titles)) {
 			$titles = array_map('trim', $titles);
 		}
-		
+
 		if ( $options->active == 'cyr' ) {
 			return '{cyr_to_lat}'.esc_html( isset( $titles[0] ) ? $titles[0] : $title ).'{/cyr_to_lat}';
 		} else {
 			return '{lat_to_cyr}'.esc_html( isset( $titles[1] ) ? $titles[1] : $title ).'{/lat_to_cyr}';
 		}
 	}
-	
+
 	/**
 	* Filters a navigation menu item object. Decorates a menu item object with the shared navigation menu item properties on front end.
 	*
@@ -127,43 +127,43 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	* @param object $menu_item The menu item object.
 	*/
 	public function menu_setup( $item ) {
-	
+
 		global $pagenow;
-		
+
 		if ( $pagenow != 'nav-menus.php' && ! defined( 'DOING_AJAX' ) && isset( $item->url ) && strstr( $item->url, '#transliteration' ) != '' ) {
-			
+
 			$parse_url = Serbian_Transliteration_Utilities::parse_url();
 			$url = $parse_url['url'];
 
 			$get_script = (isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], apply_filters('rstr/allowed_script', array('cyr', 'lat')), true) !== false ? $_COOKIE['rstr_script'] : 'none');
-			
+
 			$options = (object)array(
 				'active'	=> $get_script,
 				'cyr'		=> add_query_arg(array(get_rstr_option('url-selector', 'rstr') => 'cyr'), $url),
 				'lat'		=> add_query_arg(array(get_rstr_option('url-selector', 'rstr') => 'lat'), $url)
 			);
-			
+
 			$item_url = substr( $item->url, 0, strpos( $item->url, '#', 1 ) ) . '#';
 			$item_redirect = str_replace( $item_url, '', $item->url );
-			
+
 			if ( $item_redirect == '%current-page%' ) {
 				$item_redirect = $_SERVER['REQUEST_URI'];
 			}
-			
+
 			if($item_url == '#transliteration-latcyr#'){
 				$item_redirect = explode( '|', $item_redirect );
-				
+
 				if ( count( $item_redirect ) != 2 ) {
 					$item_redirect = array_map('trim', $item_redirect);
 					$item_redirect[1] = $item_redirect[0];
 				}
-				
+
 				if ( $options->active == 'cyr' ) {
 					$item->url = $options->lat;
 				} else {
 					$item->url = $options->cyr;
 				}
-				
+
 				$item->title = $this->transliteration_setup_title( $item->title, $options ) ;
 			} else if($item_url == '#transliteration-lat#'){
 				if ( $options->active == 'cyr' ) {
@@ -176,12 +176,12 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 					return $item;
 				}
 			}
-			
+
 			$item->url = esc_url( $item->url );
 		}
 		return $item;
 	}
-	
+
 	public function menu_objects( $sorted_menu_items ) {
 		foreach ( $sorted_menu_items as $menu => $item ) {
 			if ( strstr( $item->url, '#transliteration' ) != '' ) {
@@ -189,6 +189,6 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 			}
 		}
 		return $sorted_menu_items;
-	}	
+	}
 }
 endif;

@@ -86,9 +86,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 			if(!is_admin())
 			{
 				foreach($filters as $key=>$function){
-					if(has_filter($key) !== false){
-						$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
-					}
+					$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
 				}
 
 				if(get_rstr_option('enable-rss', 'no') == 'yes')

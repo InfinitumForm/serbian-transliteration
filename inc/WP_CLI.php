@@ -20,17 +20,17 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 		 */
 		public function permalinks ( $args, $assoc_args ) {
 			global $wpdb;
-			
+
 			$updated = 0;
-			
+
 			$get_post_types = get_post_types(array(
 				'public'   => true
 			), 'names', 'and');
-			
+
 			$post_type = join(', ', $get_post_types);
 			$post_type_query = "FIND_IN_SET(`post_type`, '{$post_type}')";
 			$get_results = $wpdb->get_results("SELECT `ID`, `post_name`, `post_title` FROM `{$wpdb->posts}` WHERE {$post_type_query} AND TRIM(IFNULL(`post_name`,'')) <> '' AND `post_type` NOT LIKE 'revision' AND `post_status` NOT LIKE 'trash' ORDER BY `ID` DESC");
-			
+
 			if($get_results)
 			{
 				$inst = Serbian_Transliteration::__instance();
@@ -61,7 +61,7 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 					}
 				}, $get_results);
 			}
-			
+
 			if($updated > 0){
 				WP_CLI::success( sprintf(__('%d permalink changes were successfully made.', RSTR_NAME), $updated ));
 			} else {
@@ -71,8 +71,7 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 	}
 endif;
 
-
-
+// Add comands
 if( defined( 'WP_CLI' ) && WP_CLI) {
 	WP_CLI::add_command( 'transliterate', 'Serbian_Transliteration_WP_CLI' );
 }

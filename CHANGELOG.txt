@@ -1,3 +1,9 @@
+= 1.6.1 =
+* Fixed missing filters from the previus version
+* Added experimental Armenian transliteration by locale "hy"
+* Added experimental Arabic transliteration by locale "ar"
+* New code improvements
+
 = 1.6.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Improved transliteration for the search

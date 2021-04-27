@@ -342,7 +342,14 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 						'[/'.$rstr_skip.']' => '[/rstr_skip]'
 					));
 				}
-				
+
+				if(Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr') {
+					// Fix emails
+					$content = preg_replace_callback('/([a-z0-9\p{Cyrillic}_\-\.]+@[a-z0-9\p{Cyrillic}_\-\.]+\.[wqyx0-9\p{Cyrillic}_\-\.]+)/siu', function ($m) {
+						return $this->cyr_to_lat($m[1]);
+					}, $content);
+				}
+
 				return $buffer;
 			}, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		},(PHP_INT_MAX-1));

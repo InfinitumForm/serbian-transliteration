@@ -113,11 +113,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 			$search = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $search);
 
-			$arr = explode(' ', $new_string);
-			$arr = array_filter($arr);
+			$arr = Serbian_Transliteration_Utilities::explode(' ', $new_string);
 
-			$arr_origin = explode(' ', $content);
-			$arr_origin = array_filter($arr_origin);
+			$arr_origin = Serbian_Transliteration_Utilities::explode(' ', $content);
 
 			if(!empty($arr))
 			{
@@ -254,15 +252,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if( empty($html_tags) )
 		{
 			$tags = apply_filters('rstr/html/tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
-			$tags_latin = explode(',', $tags);
-			$tags_latin = array_map('trim', $tags_latin);
-			$tags_latin = array_filter($tags_latin);
+
+			$tags_latin = Serbian_Transliteration_Utilities::explode(',', $tags);
 			$tags_latin = apply_filters('rstr_html_tags_lat', $tags_latin);
 
 			$tags_cyr = $this->lat_to_cyr($tags, false);
-			$tags_cyr = explode(',', $tags_cyr);
-			$tags_cyr = array_map('trim', $tags_cyr);
-			$tags_cyr = array_filter($tags_cyr);
+			$tags_cyr = Serbian_Transliteration_Utilities::explode(',', $tags_cyr);
 			$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
 
 			$html_tags = (object)array(
@@ -295,12 +290,15 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		// Fix HTML tags
 		$tags = $this->html_tags();
 
+		$br = $this->lat_to_cyr('br', false);
+		$hr = $this->lat_to_cyr('hr', false);
+
 		$tag_replace = array(
 			'<'.$this->lat_to_cyr('img', false).' ' => '<img ',
-			'<'.$this->lat_to_cyr('br', false).'>' => '<br>',
-			'<'.$this->lat_to_cyr('br', false).' ' => '<br ',
-			'<'.$this->lat_to_cyr('hr', false).'>' => '<hr>',
-			'<'.$this->lat_to_cyr('hr', false).' ' => '<hr ',
+			'<'.$br.'>' => '<br>',
+			'<'.$br.' ' => '<br ',
+			'<'.$hr.'>' => '<hr>',
+			'<'.$hr.' ' => '<hr ',
 		);
 
 		foreach($tags->lat as $i=>$tag){
@@ -324,22 +322,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$lastPos = 0;
 		$positions = array();
 
-/*
-		// Fix tags on the old way
-		while (($lastPos = mb_strpos($content, '<', $lastPos, 'UTF-8')) !== false) {
-			$positions[] = $lastPos;
-			$lastPos = $lastPos + mb_strlen('<', 'UTF-8');
-		}
-
-		foreach ($positions as $position) {
-			if(mb_strpos($content, '>', 0, 'UTF-8') !== false) {
-				$end   = mb_strpos($content, '>', $position, 'UTF-8') - $position;
-				$tag  = mb_substr($content, $position, $end, 'UTF-8');
-				$tag_lat = $this->cyr_to_lat($tag);
-				$content = str_replace($tag, $tag_lat, $content);
-			}
-		}
-		*/
 		/* Fix HTML attributes */
 		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\-]+)(=["\'])/iu', function($m){
 			return ' ' . $this->cyr_to_lat($m[1]) . $m[2];
@@ -509,11 +491,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		// Fix data attributes
 		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
 			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode($m[2]));
-		}, $content);
-
-		// Fix emails
-		$content = preg_replace_callback('/([a-z0-9\p{Cyrillic}_\-\.]+@[a-z0-9\p{Cyrillic}_\-\.]+\.[wqyx0-9\p{Cyrillic}_\-\.]+)/siu', function ($m) {
-			return $this->cyr_to_lat($m[1]);
 		}, $content);
 
 		return $content;

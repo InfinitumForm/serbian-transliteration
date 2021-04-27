@@ -115,7 +115,7 @@ endif;
 if(!function_exists('is_serbian')) :
 	function is_serbian()
 	{
-		return Serbian_Transliteration::__instance()->get_locale() == 'sr_RS';
+		return Serbian_Transliteration_Utilities::get_locale('sr_RS');
 	}
 endif;
 
@@ -127,7 +127,7 @@ endif;
 if(!function_exists('is_russian')) :
 	function is_russian()
 	{
-		return Serbian_Transliteration::__instance()->get_locale() == 'ru_RU';
+		return Serbian_Transliteration_Utilities::get_locale('ru_RU');
 	}
 endif;
 
@@ -139,7 +139,7 @@ endif;
 if(!function_exists('is_belarusian')) :
 	function is_belarusian()
 	{
-		return Serbian_Transliteration::__instance()->get_locale() == 'bel';
+		return Serbian_Transliteration_Utilities::get_locale('bel');
 	}
 endif;
 
@@ -151,7 +151,7 @@ endif;
 if(!function_exists('is_bulgarian')) :
 	function is_bulgarian()
 	{
-		return Serbian_Transliteration::__instance()->get_locale() == 'bg_BG';
+		return Serbian_Transliteration_Utilities::get_locale('bg_BG');
 	}
 endif;
 
@@ -163,7 +163,7 @@ endif;
 if(!function_exists('is_macedonian')) :
 	function is_macedonian()
 	{
-		return Serbian_Transliteration::__instance()->get_locale() == 'mk_MK';
+		return Serbian_Transliteration_Utilities::get_locale('mk_MK');
 	}
 endif;
 
@@ -175,7 +175,7 @@ endif;
 if(!function_exists('is_kazakh')) :
 	function is_kazakh()
 	{
-		return Serbian_Transliteration::__instance()->get_locale() == 'kk';
+		return Serbian_Transliteration_Utilities::get_locale('kk');
 	}
 endif;
 
@@ -187,7 +187,31 @@ endif;
 if(!function_exists('is_greece')) :
 	function is_greece()
 	{
-		return Serbian_Transliteration::__instance()->get_locale() == 'el';
+		return Serbian_Transliteration_Utilities::get_locale('el');
+	}
+endif;
+
+/*
+ * Arabic transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_arabic')) :
+	function is_arabic()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('ar');
+	}
+endif;
+
+/*
+ * Armenian transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_armenian')) :
+	function is_armenian()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('hy');
 	}
 endif;
 
@@ -248,9 +272,9 @@ if(!function_exists('script_selector')) :
 	function script_selector ($args) {
 		$parse_url = Serbian_Transliteration_Utilities::parse_url();
 		$url = $parse_url['url'];
-		
+
 		$ID = uniqid('script_selector_');
-		
+
 		$args = (object)wp_parse_args($args, array(
 			'id'			=> $ID,
 			'display_type' 	=> 'inline',
@@ -259,19 +283,19 @@ if(!function_exists('script_selector')) :
 			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
 			'lat_caption'   => Serbian_Transliteration::__instance()->cyr_to_lat(__('Latin', RSTR_NAME))
 		));
-		
+
 		$options = (object)array(
 			'active'	=> get_script(),
 			'cyr'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'cyr', $url),
 			'lat'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'lat', $url)
 		);
-		
+
 		if(in_array($args->display_type, array('object', 'array'))) {
 			$return = array();
 		} else {
 			$return = '';
 		}
-		
+
 		switch($args->display_type)
 		{
 			default:

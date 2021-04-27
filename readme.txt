@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,8 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 * **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
 * **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
 * **Greek (Elini'ka) latinisation** - Greek Language (by locale:**el**)
+* **Arabic latinisation** - Arabic Language (EXPERIMENTAL) (by locale:**ar**)
+* **Armenian latinisation** - Armenian Language (EXPERIMENTAL) (by locale:**hy**)
 * more languages are coming soon...
 
 = PLUGINS SUPPORT =
@@ -131,6 +133,12 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.6.1 =
+* Fixed missing filters from the previus version
+* Added experimental Armenian transliteration by locale "hy"
+* Added experimental Arabic transliteration by locale "ar"
+* New code improvements
+
 = 1.6.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Improved transliteration for the search
@@ -196,6 +204,12 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.6.1 =
+* Fixed missing filters from the previus version
+* Added experimental Armenian transliteration by locale "hy"
+* Added experimental Arabic transliteration by locale "ar"
+* New code improvements
 
 = 1.6.0 =
 * **MAJOR UPDATE:** You need to review and edit your settings
@@ -277,6 +291,8 @@ This plugin supports several world letters written in Cyrillic and enables their
 * Romanization of Kazakh
 * Romanization of Ukrainian
 * Romanization of Greek
+* Romanization of Arabic (EXPERIMENTAL)
+* Romanization of Armenian (EXPERIMENTAL)
 
 Each of these transliterations is created separately and follows the rules of the active language.
 

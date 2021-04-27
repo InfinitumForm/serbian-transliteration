@@ -546,11 +546,20 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 	public function site_script_callback(){
 		$inputs = array();
+		$locale = Serbian_Transliteration_Utilities::get_locale();
 
-		foreach(array(
+		$checkbox = array(
 			'cyr' => __('Cyrillic', RSTR_NAME),
 			'lat' => __('Latin', RSTR_NAME)
-		) as $key=>$label)
+		);
+
+		if($locale == 'ar'){
+			$checkbox['cyr']= __('Arabic', RSTR_NAME);
+		} else if($locale == 'hy'){
+			$checkbox['cyr']= __('Armenian', RSTR_NAME);
+		}
+
+		foreach($checkbox as $key=>$label)
 		{
 			$inputs[]=sprintf(
 				'<label for="site-script-%1$s"><input type="radio" id="site-script-%1$s" name="%3$s[site-script]" value="%1$s"%4$s> <span>%2$s</span></label>',

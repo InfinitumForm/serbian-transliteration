@@ -50,6 +50,16 @@ class Serbian_Transliteration_Utilities{
 			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
 		);
 
+		$locale = self::get_locale();
+
+		if($locale == 'ar'){
+			$modes['cyr_to_lat']= __('Arabic to Latin', RSTR_NAME);
+			$modes['lat_to_cyr']= __('Latin to Arabic', RSTR_NAME);
+		} else if($locale == 'hy'){
+			$modes['cyr_to_lat']= __('Armenian to Latin', RSTR_NAME);
+			$modes['lat_to_cyr']= __('Latin to Armenian', RSTR_NAME);
+		}
+
 		$modes = apply_filters('rstr_transliteration_mode', $modes);
 
 		if($mode && isset($modes[$mode])){
@@ -57,6 +67,19 @@ class Serbian_Transliteration_Utilities{
 		}
 
 		return $modes;
+	}
+
+	/*
+	 * Get current locale
+	 * @return        string if is $locale empty or bool if is provided $locale
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function get_locale($locale = NULL){
+		if(empty($locale)){
+			return Serbian_Transliteration::__instance()->get_locale();
+		} else {
+			return (Serbian_Transliteration::__instance()->get_locale() === $locale);
+		}
 	}
 
 	/*
@@ -81,7 +104,7 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function already_cyrillic(){
-        return in_array(Serbian_Transliteration::__instance()->get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el'))) !== false;
+        return in_array(self::get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el', 'ar', 'hy'))) !== false;
 	}
 
 	/*
@@ -572,7 +595,7 @@ class Serbian_Transliteration_Utilities{
 	protected static function get_page_ID__private__query(){
 		global $wpdb, $rstr_cache;
 		$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
-		$parts = explode('/', $actual_link);
+		$parts = self::explode('/', $actual_link);
 		if(!empty($parts))
 		{
 			$slug = end($parts);
@@ -639,6 +662,19 @@ class Serbian_Transliteration_Utilities{
 				'show_in_quick_edit'=> false
 			) );
 		}
+	}
+
+	/*
+	* PHP Wrapper for explode — Split a string by a string
+	* @since     1.0.9
+	* @verson    1.0.0
+	* @url       https://www.php.net/manual/en/function.explode.php
+	*/
+	public static function explode($separator , $string , $limit = PHP_INT_MAX ){
+		$string = explode($separator, $string, $limit);
+		$string = array_map('trim', $string);
+		$string = array_filter($string);
+		return $string;
 	}
 }
 endif;
