@@ -70,6 +70,7 @@ We also do special compatible functions with:
 * [Slider Revolution](https://www.sliderrevolution.com/)
 * [Avada theme](https://avada.theme-fusion.com/)
 * [Themify](https://themify.me/)
+* [Divi](https://www.elegantthemes.com/gallery/divi/) (Theme & Builder)
 
 **YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
 
