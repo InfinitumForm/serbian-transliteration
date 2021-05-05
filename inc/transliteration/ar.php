@@ -22,7 +22,11 @@ class Serbian_Transliteration_ar {
 		"ه"=> "h",	"و"=> "w",	"ي"=> "e",	"اي"=> "i",
 		"ة"=> "tt",	"ئ"=> "ae",	"ى"=> "a",	"ء"=> "aa",
 		"ؤ"=> "uo",	"َ"=> "a",	"ُ"=> "u",	"ِ"=> "e",
-		" ٌ"=> "on",	"ٍ"=> "en",	"ً"=> "an",	"تش"=> "tsch"
+		" ٌ"=> "on",	"ٍ"=> "en",	"ً"=> "an",	"تش"=> "tsch",
+		// Numbers - specific for arabic
+		'۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3',
+		'٤' => '4', '۵' => '5', '٦' => '6', '۷' => '7', 
+		'۸' => '8', '۹' => '9', '.' => '.'
 	);
 
 	public static function transliterate ($content, $translation = 'cyr_to_lat')
@@ -34,7 +38,6 @@ class Serbian_Transliteration_ar {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :
-			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
 				break;
 
@@ -44,7 +47,6 @@ class Serbian_Transliteration_ar {
 				});
 				$transliteration = array_flip($transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/ar/lat_to_cyr', $transliteration);
-			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
 				break;
 		}

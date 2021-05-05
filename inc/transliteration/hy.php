@@ -37,7 +37,6 @@ class Serbian_Transliteration_hy {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :
-			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
 				break;
 
@@ -47,7 +46,6 @@ class Serbian_Transliteration_hy {
 				});
 				$transliteration = array_flip($transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/hy/lat_to_cyr', $transliteration);
-			//	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
 				return strtr($content, $transliteration);
 				break;
 		}

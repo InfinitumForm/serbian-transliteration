@@ -5,7 +5,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,10 @@ This plugin has two shortcodes that work independently of the plugin settings. T
 
 `[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]`
 
+**Skip transliteration:**
+
+`[rstr_skip]Keep this in original script[/rstr_skip]`
+
 **Add an image depending on the language script:**
 With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.
 
@@ -106,6 +110,22 @@ This shortcode displays a selector for the transliteration script.
 `[rstr_selector]`
 
 (The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
+
+= Available Tags =
+
+These tags have a special purpose and work separately from short codes and can be used in fields where short codes cannot be used. These tags have no additional settings and can be applied in plugins, themes, widgets and within other short codes.
+
+**Cyrillic to Latin:**
+
+`{cyr_to_lat}Ћирилица у латиницу{/cyr_to_lat}`
+
+**Latin to Cyrillic:**
+
+`{lat_to_cyr}Latinica u ćirilicu{/lat_to_cyr}`
+
+**Skip transliteration:**
+
+`{rstr_skip}Keep this in original script{/rstr_skip}`
 
 = Permalink Tool =
 This tool can rename all existing Cyrillic permalinks to Latin inside the database. This tool is in the configuration of this plugin.
@@ -133,6 +153,12 @@ We also thought of PHP developers where we have enabled several useful functions
 9. Automated test
 
 == Changelog ==
+
+= 1.6.2 =
+* Added return values to cookie
+* Added Arabic numerals
+* Improved settings page
+* Removed deprecated code
 
 = 1.6.1 =
 * Fixed missing filters from the previus version
@@ -205,6 +231,12 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.6.2 =
+* Added return values to cookie
+* Added Arabic numerals
+* Improved settings page
+* Removed deprecated code
 
 = 1.6.1 =
 * Fixed missing filters from the previus version

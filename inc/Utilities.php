@@ -452,7 +452,11 @@ class Serbian_Transliteration_Utilities{
 			if(get_rstr_option('cache-support', 'yes') == 'yes') {
 				self::cache_flush();
 			}
+			
+			return true;
 		}
+		
+		return false;
 	}
 
 	/*

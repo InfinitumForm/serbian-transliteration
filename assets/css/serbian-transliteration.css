@@ -1,3 +1,25 @@
+#serbian-transliteration-settings .serbian-transliteration-sticky-button{
+	position: fixed;
+    z-index: 10;
+    top: 32px;
+    right: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#serbian-transliteration-settings .serbian-transliteration-sticky-button > p.submit{
+	margin:0 !important;
+	padding:0 !important;
+	display:table;
+}
+
+#serbian-transliteration-settings .serbian-transliteration-sticky-button > p.submit > input#submit{
+	margin:8px 10px !important;
+}
+
 #serbian-transliteration-settings .nav-tab > span{
 	display: inline-block;
 	margin-left:5px;

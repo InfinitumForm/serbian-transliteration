@@ -1,3 +1,9 @@
+= 1.6.2 =
+* Added return values to cookie
+* Added Arabic numerals
+* Improved settings page
+* Removed deprecated code
+
 = 1.6.1 =
 * Fixed missing filters from the previus version
 * Added experimental Armenian transliteration by locale "hy"

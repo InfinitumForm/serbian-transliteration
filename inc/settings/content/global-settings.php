@@ -17,6 +17,7 @@
 					do_settings_sections( RSTR_NAME );
 					submit_button();
 				?>
+                <div class="<?php echo RSTR_NAME; ?>-sticky-button"><?php submit_button(); ?></div>
 				</form>
 			</div>
 		</div>
