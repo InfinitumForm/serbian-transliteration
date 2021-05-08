@@ -95,8 +95,8 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 
 			if(!is_admin())
 			{
-				$this->add_action('wp_loaded', 'output_buffer_start', (PHP_INT_MAX-2));
-				$this->add_action('shutdown', 'output_buffer_end', (PHP_INT_MAX-2));
+				$this->add_action('wp_loaded', 'output_buffer_start', (PHP_INT_MAX-10));
+				$this->add_action('shutdown', 'output_buffer_end', (PHP_INT_MAX-10));
 
 				if(get_rstr_option('enable-rss', 'no') == 'yes')
 				{

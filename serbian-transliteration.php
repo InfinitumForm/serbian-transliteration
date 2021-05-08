@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.6.2
+ * Version:           1.6.3
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -58,7 +58,6 @@ include_once RSTR_INC . '/Cache.php';
 $rstr_cache = new Serbian_Transliteration_Cache();
 
 if ( defined( 'RSTR_DEBUG_CACHE' ) && RSTR_DEBUG_CACHE === true ) {
-
 	add_action('wp_footer', function(){
 		if(is_user_logged_in() && current_user_can('administrator')) {
 			global $rstr_cache;
@@ -213,30 +212,32 @@ if($Serbian_Transliteration_Activate->passes()) :
 				add_option(RSTR_NAME . '-ID', Serbian_Transliteration_Utilities::generate_token(64));
 			}
 
-			// Set default pharams
-			if(!get_option(RSTR_NAME)) {
-				add_option(RSTR_NAME, array(
-					'site-script'				=>	'cyr',
-					'transliteration-mode'		=>	'cyr_to_lat',
-					'mode'						=>	'advanced',
-					'avoid-admin'				=>	'yes',
-					'allow-cyrillic-usernames'	=>	'no',
-					'media-transliteration'		=>	'yes',
-					'permalink-transliteration'	=>	'yes',
-					'cache-support'				=>  'yes',
-					'exclude-latin-words'		=>	'WordPress|Latinica',
-					'exclude-cyrillic-words'	=>	'Ћирилица',
-					'enable-search'				=>	'no',
-          'search-mode'       => 'auto',
-					'enable-alternate-links'	=>	'yes',
-					'first-visit-mode'			=>	'auto',
-					'force-widgets'				=>	'no',
-					'enable-rss'				=>	'no',
-					'fix-diacritics'			=>	'no',
-					'url-selector'				=>	'rstr',
-					'language-scheme'			=>	'auto',
-					'enable-body-class'			=>	'no'
-				));
+			// Get current options
+			$options = get_option(RSTR_NAME);
+
+			if(empty($options))
+			{
+				// Set default pharams
+				add_option( RSTR_NAME, Serbian_Transliteration_Utilities::plugin_default_options() );
+			}
+			else
+			{
+				// Set missing options
+				$added=0;
+				foreach(Serbian_Transliteration_Utilities::plugin_default_options() as $key => $value){
+					if( !(isset($options[$key])) ){
+						$options[$key] = $value;
+						++$added;
+					}
+				}
+				// Clear variables
+				$key = $value = NULL;
+				// Save new data
+				if( $added > 0 ) {
+					add_option( RSTR_NAME, $options );
+				}
+				// Clear variable
+				$options = NULL;
 			}
 
 			// Set important cookie

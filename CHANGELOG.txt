@@ -1,3 +1,10 @@
+= 1.6.3 =
+* Fixed bug with script selector
+* Fixed bug with transliteration mode
+* Improved plugin activation
+* Added email transliteration mode
+* Improved UX in admin settings 
+
 = 1.6.2 =
 * Added return values to cookie
 * Added Arabic numerals

@@ -7,6 +7,32 @@
 if(!class_exists('Serbian_Transliteration_Utilities')) :
 class Serbian_Transliteration_Utilities{
 
+	public static function plugin_default_options () {
+		return apply_filters('rstr_plugin_default_options', array(
+			'site-script'				=>	'cyr',
+			'transliteration-mode'		=>	'cyr_to_lat',
+			'mode'						=>	'advanced',
+			'avoid-admin'				=>	'yes',
+			'allow-cyrillic-usernames'	=>	'no',
+			'media-transliteration'		=>	'yes',
+			'permalink-transliteration'	=>	'yes',
+			'cache-support'				=>  'yes',
+			'exclude-latin-words'		=>	'WordPress',
+			'exclude-cyrillic-words'	=>	'',
+			'enable-search'				=>	'no',
+			'search-mode'       => 'auto',
+			'enable-alternate-links'	=>	'yes',
+			'first-visit-mode'			=>	'auto',
+			'enable-rss'				=>	'no',
+			'fix-diacritics'			=>	'no',
+			'url-selector'				=>	'rstr',
+			'language-scheme'			=>	'auto',
+			'enable-body-class'			=>	'no',
+			'force-widgets'				=>	'no',
+			'force-email-transliteration' => 'no'
+		));
+	}
+
 	/*
 	 * Plugin mode
 	 * @return        array/string
@@ -113,7 +139,7 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function is_lat($c){
-		return preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, '')) !== false;
+		return (preg_match_all('/[\p{Latin}]+/gui', strip_tags($c, '')) !== false);
 	}
 
 	/*
@@ -122,7 +148,7 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function is_cyr($c){
-		return preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, '')) !== false;
+		return (preg_match_all('/[\p{Cyrillic}]+/gui', strip_tags($c, '')) !== false);
 	}
 
 	/*
@@ -452,10 +478,10 @@ class Serbian_Transliteration_Utilities{
 			if(get_rstr_option('cache-support', 'yes') == 'yes') {
 				self::cache_flush();
 			}
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
 

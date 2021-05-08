@@ -25,8 +25,8 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			$this->add_action('shutdown', 'output_buffer_end', (PHP_INT_MAX-1));
 		}
 	}
-	
-	
+
+
 	/*
 	 * Script selector
 	 */
@@ -38,28 +38,29 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
 			'lat_caption'   => __('Latin', RSTR_NAME)
 		), $attr, 'rstr_selector');
-		
+
 		return script_selector(array(
+			'echo'					=> false,
 			'display_type' 	=> $args->type,
 			'separator'     => $args->separator,
 			'cyr_caption'   => $args->cyr_caption,
 			'lat_caption'   => $args->lat_caption
 		));
 	}
-	
+
 	/*
 	 * Cyrillic to Latin
 	 */
 	public function cyr_to_lat_shortcode ($attr=array(), $content='')
 	{
 		$attr = (object)shortcode_atts( array('output' => 'shortcode'), $attr, 'rstr_cyr_to_lat' );
-		
+
 		switch($this->get_option('transliteration-mode', ''))
 		{
 			default :
 				return $content;
 			break;
-			
+
 			case 'cyr_to_lat' :
 			case 'lat_to_cyr' :
 				if($attr->output == 'php'){
@@ -70,7 +71,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			break;
 		}
 	}
-	
+
 	/*
 	 * Latin to Cyrillic
 	 */
@@ -81,16 +82,16 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			'fix_html' => true,
 			'fix_diacritics' => false
 		), $attr, 'rstr_lat_to_cyr' );
-		
+
 		$attr->fix_html = ($attr->fix_html == 1 || $attr->fix_html === true || $attr->fix_html == 'true') === true;
 		$attr->fix_diacritics = ($attr->fix_diacritics == 1 || $attr->fix_diacritics === true || $attr->fix_diacritics == 'true') === true;
-		
+
 		switch($this->get_option('transliteration-mode', ''))
 		{
 			default :
 				return $content;
 			break;
-			
+
 			case 'cyr_to_lat' :
 			case 'lat_to_cyr' :
 				if($attr->output == 'php'){
@@ -101,7 +102,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			break;
 		}
 	}
-	
+
 	/*
 	 * Image shortcode
 	 */
@@ -118,10 +119,10 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			'default_title'=>NULL,
 			'default_caption'=>NULL
 		), $attr, 'rstr_img' );
-		
+
 		switch(Serbian_Transliteration_Utilities::get_current_script())
 		{
-			case 'lat':
+		//	case 'lat':
 			case 'cyr_to_lat':
 				if($attr->lat_caption) {
 					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->lat, $attr->lat_title, $attr->lat_caption);
@@ -129,8 +130,8 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 					return sprintf('<img src="%1$s" alt="%2$s">', $attr->lat, $attr->lat_title);
 				}
 			break;
-				
-			case 'cyr':
+
+		//	case 'cyr':
 			case 'lat_to_cyr':
 				if($attr->cyr_caption) {
 					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->cyr, $attr->cyr_title, $attr->cyr_caption);
@@ -138,7 +139,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 					return sprintf('<img src="%1$s" alt="%2$s">', $attr->cyr, $attr->cyr_title);
 				}
 			break;
-				
+
 			default:
 				if($attr->default_caption) {
 					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->default, $attr->default_title, $attr->default_caption);
@@ -148,7 +149,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			break;
 		}
 	}
-	
+
 	/*
 	 * Transliteration
 	 */
@@ -158,47 +159,47 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			'from' => 'cyr',
 			'to' => 'lat'
 		), $attr, 'transliteration' );
-		
+
 		if(in_array($attr->from, array('lat', 'cyr')) === false || in_array($attr->to, array('lat', 'cyr')) === false){
 			return sprintf('<pre>%s</pre>', __('Transliteration shortcode does not have adequate parameters and translation is not possible. Please check the documentation.', RSTR_NAME));
 		}
-		
+
 		switch(strtolower("{$attr->from}_to_{$attr->to}"))
 		{
 			case 'cyr_to_lat' :
 				return '%%%%%-##' . $this->cyr_to_lat(do_shortcode($content)) . '##-%%%%%';
 			break;
-				
+
 			case 'lat_to_cyr' :
 				return '%%%%%-||' . $this->lat_to_cyr(do_shortcode($content)) . '||-%%%%%';
 			break;
 		}
-		
+
 		return $content;
 	}
-	
+
 	/*
 	 * Skip transliteration
 	 */
 	public function skip_shortcode ($attr=array(), $content='')
 	{
 		$attr = (object)shortcode_atts( array(), $attr, 'rstr_skip' );
-		
+
 		switch($this->get_option('transliteration-mode', ''))
 		{
 			case 'cyr_to_lat' :
 				return $this->lat_to_cyr_shortcode(array(), do_shortcode($content));
 			break;
-				
+
 			case 'lat_to_cyr' :
 				return $this->cyr_to_lat_shortcode(array(), do_shortcode($content));
 			break;
 		}
-		
+
 		return $content;
 	}
-	
-	
+
+
 	/*
 	 * Shortcode buffer
 	 */
@@ -211,8 +212,8 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			$buffer = preg_replace_callback('/(?<=%{5}\-\|{2})(.*?)(?=\|{2}\-%{5})/s', function($matches) {
 				return $this->lat_to_cyr($matches[1]);
 			}, $buffer);
-			
-			
+
+
 			$buffer = preg_replace_callback('/(?<=\{lat_to_cyr\})(.*?)(?=\{\/lat_to_cyr\})/s', function($matches) {
 				return $this->lat_to_cyr($matches[1]);
 			}, $buffer);
@@ -225,14 +226,14 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 					case 'cyr_to_lat' :
 						return $this->lat_to_cyr($matches[1]);
 					break;
-						
+
 					case 'lat_to_cyr' :
 						return $this->cyr_to_lat($matches[1]);
 					break;
 				}
 				return $matches[1];
 			}, $buffer);
-			
+
 			$buffer = str_replace(array(
 				'%%%%%-##',
 				'##-%%%%%',
@@ -248,14 +249,14 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 		}
 		return $buffer;
 	}
-	
-	function output_buffer_start() { 
-		ob_start(array(&$this, "output_callback"));
+
+	function output_buffer_start() {
+		ob_start(array(&$this, "output_callback"), 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 	}
-	
-	function output_buffer_end() { 
+
+	function output_buffer_end() {
 		ob_get_clean();
 	}
-	
+
 }
 endif;

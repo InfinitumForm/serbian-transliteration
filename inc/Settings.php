@@ -186,262 +186,280 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		global $rstr_cache;
 
         $this->register_setting(
-            RSTR_NAME . '-group', // Option group
-            RSTR_NAME, // Option name
-            array(
-				'type' => 'array',
-				'sanitize_callback' => array($this,'sanitize')
-			) // Sanitize
-        );
+		            RSTR_NAME . '-group', // Option group
+		            RSTR_NAME, // Option name
+		            array(
+						'type' => 'array',
+						'sanitize_callback' => array($this,'sanitize')
+					) // Sanitize
+		        );
 
 
-        $this->add_settings_section(
-            RSTR_NAME . '-global', // ID
-            __('Global Settings', RSTR_NAME), // Title
-            'print_global_settings_callback', // Callback
-            RSTR_NAME // Page
-        );
+		        $this->add_settings_section(
+		            RSTR_NAME . '-global', // ID
+		            __('Global Settings', RSTR_NAME), // Title
+		            'print_global_settings_callback', // Callback
+		            RSTR_NAME // Page
+		        );
 
-		$this->add_settings_field(
-            'site-script', // ID
-            __('My site is', RSTR_NAME), // Title
-            'site_script_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
+				$this->add_settings_field(
+		            'site-script', // ID
+		            __('My site is', RSTR_NAME), // Title
+		            'site_script_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-global' // Section
+		        );
 
-		$this->add_settings_field(
-            'transliteration-mode', // ID
-            __('Transliteration Mode', RSTR_NAME), // Title
-            'transliteration_mode_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
+				$this->add_settings_field(
+		            'transliteration-mode', // ID
+		            __('Transliteration Mode', RSTR_NAME), // Title
+		            'transliteration_mode_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-global' // Section
+		        );
 
-        $this->add_settings_field(
-            'mode', // ID
-            __('Plugin Mode', RSTR_NAME), // Title
-            'mode_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
+		        $this->add_settings_field(
+		            'mode', // ID
+		            __('Plugin Mode', RSTR_NAME), // Title
+		            'mode_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-global' // Section
+		        );
 
-		$this->add_settings_field(
-            'language-scheme', // ID
-            __('Language scheme', RSTR_NAME), // Title
-            'language_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
+				$this->add_settings_field(
+		            'language-scheme', // ID
+		            __('Language scheme', RSTR_NAME), // Title
+		            'language_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-global' // Section
+		        );
 
-		if($rstr_cache->get('Serbian_Transliteration_Settings__active_filters')) {
-			$this->add_settings_field(
-				'transliteration-filter', // ID
-				__('Transliteration Filters', RSTR_NAME), // Title
-				'transliteration_filter_callback', // Callback
-				RSTR_NAME, // Page
-				RSTR_NAME . '-global' // Section
-			);
-		}
+				if($rstr_cache->get('Serbian_Transliteration_Settings__active_filters')) {
+					$this->add_settings_field(
+						'transliteration-filter', // ID
+						__('Transliteration Filters', RSTR_NAME), // Title
+						'transliteration_filter_callback', // Callback
+						RSTR_NAME, // Page
+						RSTR_NAME . '-global' // Section
+					);
+				}
 
-		$this->add_settings_field(
-            'force-widgets', // ID
-            __('Force widget transliteration', RSTR_NAME), // Title
-            'force_widgets_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
+				$this->add_settings_field(
+		            'exclude-latin-words', // ID
+		            __('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', RSTR_NAME), // Title
+		            'exclude_latin_words_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-global' // Section
+		        );
 
-		$this->add_settings_field(
-            'enable-rss', // ID
-            __('RSS transliteration', RSTR_NAME), // Title
-            'enable_rss_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
-
-		$this->add_settings_field(
-            'cache-support', // ID
-            __('Enable cache support', RSTR_NAME), // Title
-            'cache_support_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
-
-		$this->add_settings_field(
-            'exclude-latin-words', // ID
-            __('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', RSTR_NAME), // Title
-            'exclude_latin_words_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
-
-		$this->add_settings_field(
-            'exclude-cyrillic-words', // ID
-            __('Exclude Cyrillic words that you do not want to be transliterated to the Latin.', RSTR_NAME), // Title
-            'exclude_cyrillic_words_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-global' // Section
-        );
+				$this->add_settings_field(
+		            'exclude-cyrillic-words', // ID
+		            __('Exclude Cyrillic words that you do not want to be transliterated to the Latin.', RSTR_NAME), // Title
+		            'exclude_cyrillic_words_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-global' // Section
+		        );
 
 
 
 
 
+				$this->add_settings_section(
+								RSTR_NAME . '-special-settings', // ID
+								__('Special Settings', RSTR_NAME), // Title
+								'print_special_settings_callback', // Callback
+								RSTR_NAME // Page
+						);
 
-		$this->add_settings_section(
-            RSTR_NAME . '-admin', // ID
-            __('WP Admin', RSTR_NAME), // Title
-            'print_wp_admin_callback', // Callback
-            RSTR_NAME // Page
-        );
+					$this->add_settings_field(
+			            'cache-support', // ID
+			            __('Enable cache support', RSTR_NAME), // Title
+			            'cache_support_callback', // Callback
+			            RSTR_NAME, // Page
+			            RSTR_NAME . '-special-settings' // Section
+			        );
 
-		$this->add_settings_field(
-            'avoid-admin', // ID
-            __('Disable transliteration inside wp-admin', RSTR_NAME), // Title
-            'avoid_admin_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-admin' // Section
-        );
+					$this->add_settings_field(
+			            'force-widgets', // ID
+			            __('Force widget transliteration', RSTR_NAME), // Title
+			            'force_widgets_callback', // Callback
+			            RSTR_NAME, // Page
+			            RSTR_NAME . '-special-settings' // Section
+			        );
 
-		$this->add_settings_field(
-            'allow-cyrillic-usernames', // ID
-            __('Allow Cyrillic Usernames', RSTR_NAME), // Title
-            'allow_cyrillic_usernames_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-admin' // Section
-        );
-
-		$this->add_settings_field(
-            'permalink-transliteration', // ID
-            __('Force transliteration permalinks to latin', RSTR_NAME), // Title
-            'permalink_transliteration_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-admin' // Section
-        );
-
-
-
-
-
-		$this->add_settings_section(
-            RSTR_NAME . '-media', // ID
-            __('Media Settings', RSTR_NAME), // Title
-            'print_media_callback', // Callback
-            RSTR_NAME // Page
-        );
-
-		$this->add_settings_field(
-            'media-transliteration', // ID
-            __('Transliterate filenames to latin', RSTR_NAME), // Title
-            'media_transliteration_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-media' // Section
-        );
-
-		$this->add_settings_field(
-            'media-delimiter', // ID
-            __('Filename delimiter', RSTR_NAME), // Title
-            'media_delimiter_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-media' // Section
-        );
-
-
-
-
-		$this->register_setting(
-            RSTR_NAME . '-search', // Option group
-            RSTR_NAME, // Option name
-            array(
-				'type' => 'array',
-				'sanitize_callback' => array($this,'sanitize')
-			) // Sanitize
-        );
-		$this->add_settings_section(
-            RSTR_NAME . '-search', // ID
-            __('WordPress search', RSTR_NAME), // Title
-            'print_search_settings_callback', // Callback
-            RSTR_NAME // Page
-        );
-
-		$this->add_settings_field(
-            'enable-search', // ID
-            __('Enable search transliteration', RSTR_NAME), // Title
-            'enable_search_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-search' // Section
-        );
-
-		if(Serbian_Transliteration::__instance()->get_locale() == 'sr_RS'){
-			$this->add_settings_field(
-				'fix-diacritics', // ID
-				__('Fix Diacritics', RSTR_NAME), // Title
-				'fix_diacritics_callback', // Callback
-				RSTR_NAME, // Page
-				RSTR_NAME . '-search' // Section
-			);
-		}
-
-		$this->add_settings_field(
-            'search-mode', // ID
-            __('Search Mode', RSTR_NAME), // Title
-            'search_mode_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-search' // Section
-        );
+					$this->add_settings_field(
+									'force-email-transliteration', // ID
+									__('Force e-mail transliteration', RSTR_NAME), // Title
+									'force_email_transliteration_callback', // Callback
+									RSTR_NAME, // Page
+									RSTR_NAME . '-special-settings' // Section
+							);
 
 
 
 
 
-		$this->add_settings_section(
-            RSTR_NAME . '-seo', // ID
-            __('SEO Settings', RSTR_NAME), // Title
-            'print_seo_settings_callback', // Callback
-            RSTR_NAME // Page
-        );
+				$this->add_settings_section(
+		            RSTR_NAME . '-admin', // ID
+		            __('WP Admin', RSTR_NAME), // Title
+		            'print_wp_admin_callback', // Callback
+		            RSTR_NAME // Page
+		        );
 
-		$this->add_settings_field(
-            'first-visit-mode', // ID
-            __('First visit mode', RSTR_NAME), // Title
-            'first_visit_mode_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-seo' // Section
-        );
+				$this->add_settings_field(
+		            'avoid-admin', // ID
+		            __('Disable transliteration inside wp-admin', RSTR_NAME), // Title
+		            'avoid_admin_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-admin' // Section
+		        );
 
-		$this->add_settings_field(
-            'enable-alternate-links', // ID
-            __('Enable alternet links', RSTR_NAME), // Title
-            'enable_alternate_links_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-seo' // Section
-        );
+				$this->add_settings_field(
+		            'allow-cyrillic-usernames', // ID
+		            __('Allow Cyrillic Usernames', RSTR_NAME), // Title
+		            'allow_cyrillic_usernames_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-admin' // Section
+		        );
 
-		$this->add_settings_field(
-            'parameter-url-selector', // ID
-            __('Parameter URL selector', RSTR_NAME), // Title
-            'parameter_url_selector_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-seo' // Section
-        );
+				$this->add_settings_field(
+		            'permalink-transliteration', // ID
+		            __('Force transliteration permalinks to latin', RSTR_NAME), // Title
+		            'permalink_transliteration_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-admin' // Section
+		        );
 
 
 
-		$this->add_settings_section(
-            RSTR_NAME . '-misc', // ID
-            __('Misc.', RSTR_NAME), // Title
-            'print_misc_settings_callback', // Callback
-            RSTR_NAME // Page
-        );
 
-		$this->add_settings_field(
-            'enable-body-class', // ID
-            __('Enable body class', RSTR_NAME), // Title
-            'enable_body_class_callback', // Callback
-            RSTR_NAME, // Page
-            RSTR_NAME . '-misc' // Section
-        );
+
+				$this->add_settings_section(
+		            RSTR_NAME . '-media', // ID
+		            __('Media Settings', RSTR_NAME), // Title
+		            'print_media_callback', // Callback
+		            RSTR_NAME // Page
+		        );
+
+				$this->add_settings_field(
+		            'media-transliteration', // ID
+		            __('Transliterate filenames to latin', RSTR_NAME), // Title
+		            'media_transliteration_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-media' // Section
+		        );
+
+				$this->add_settings_field(
+		            'media-delimiter', // ID
+		            __('Filename delimiter', RSTR_NAME), // Title
+		            'media_delimiter_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-media' // Section
+		        );
+
+
+
+
+				$this->register_setting(
+		            RSTR_NAME . '-search', // Option group
+		            RSTR_NAME, // Option name
+		            array(
+						'type' => 'array',
+						'sanitize_callback' => array($this,'sanitize')
+					) // Sanitize
+		        );
+				$this->add_settings_section(
+		            RSTR_NAME . '-search', // ID
+		            __('WordPress search', RSTR_NAME), // Title
+		            'print_search_settings_callback', // Callback
+		            RSTR_NAME // Page
+		        );
+
+				$this->add_settings_field(
+		            'enable-search', // ID
+		            __('Enable search transliteration', RSTR_NAME), // Title
+		            'enable_search_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-search' // Section
+		        );
+
+				if(Serbian_Transliteration::__instance()->get_locale() == 'sr_RS'){
+					$this->add_settings_field(
+						'fix-diacritics', // ID
+						__('Fix Diacritics', RSTR_NAME), // Title
+						'fix_diacritics_callback', // Callback
+						RSTR_NAME, // Page
+						RSTR_NAME . '-search' // Section
+					);
+				}
+
+				$this->add_settings_field(
+		            'search-mode', // ID
+		            __('Search Mode', RSTR_NAME), // Title
+		            'search_mode_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-search' // Section
+		        );
+
+
+
+
+
+				$this->add_settings_section(
+		            RSTR_NAME . '-seo', // ID
+		            __('SEO Settings', RSTR_NAME), // Title
+		            'print_seo_settings_callback', // Callback
+		            RSTR_NAME // Page
+		        );
+
+				$this->add_settings_field(
+		            'first-visit-mode', // ID
+		            __('First visit mode', RSTR_NAME), // Title
+		            'first_visit_mode_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-seo' // Section
+		        );
+
+				$this->add_settings_field(
+		            'enable-alternate-links', // ID
+		            __('Enable alternet links', RSTR_NAME), // Title
+		            'enable_alternate_links_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-seo' // Section
+		        );
+
+				$this->add_settings_field(
+		            'parameter-url-selector', // ID
+		            __('Parameter URL selector', RSTR_NAME), // Title
+		            'parameter_url_selector_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-seo' // Section
+		        );
+
+				$this->add_settings_field(
+								'enable-rss', // ID
+								__('RSS transliteration', RSTR_NAME), // Title
+								'enable_rss_callback', // Callback
+								RSTR_NAME, // Page
+								RSTR_NAME . '-seo' // Section
+						);
+
+
+
+				$this->add_settings_section(
+		            RSTR_NAME . '-misc', // ID
+		            __('Misc.', RSTR_NAME), // Title
+		            'print_misc_settings_callback', // Callback
+		            RSTR_NAME // Page
+		        );
+
+				$this->add_settings_field(
+		            'enable-body-class', // ID
+		            __('Enable body class', RSTR_NAME), // Title
+		            'enable_body_class_callback', // Callback
+		            RSTR_NAME, // Page
+		            RSTR_NAME . '-misc' // Section
+		        );
     }
 
     /**
@@ -504,6 +522,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	public function print_wp_admin_callback()
 	{
 		printf('<p>%s</p>', __('These settings apply to the administrative part.', RSTR_NAME));
+	}
+
+	public function print_special_settings_callback()
+	{
+		printf('<p>%s</p>', __('These are special settings that can enhance transliteration and are used only if you need them.', RSTR_NAME));
 	}
 
 	public function print_media_callback()
@@ -1009,6 +1032,25 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', RSTR_NAME));
+	}
+
+	public function force_email_transliteration_callback () {
+		$inputs = array();
+
+		foreach(array(
+			'yes' => __('Yes', RSTR_NAME),
+			'no' => __('No', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="force-email-transliteration-%1$s"><input type="radio" id="force-email-transliteration-%1$s" name="%3$s[force-email-transliteration]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['force-email-transliteration'] ) ? ($this->options['force-email-transliteration'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of email content.', RSTR_NAME));
 	}
 
 

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2021-04-26 09:48+0200\n"
-"PO-Revision-Date: 2021-04-26 09:51+0200\n"
+"POT-Creation-Date: 2021-05-08 23:28+0200\n"
+"PO-Revision-Date: 2021-05-08 23:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -22,19 +22,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: inc/Functions.php:259 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:551
-#: inc/Settings.php:948 inc/Shortcodes.php:38
+#: inc/Functions.php:283 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:575
+#: inc/Settings.php:980 inc/Shortcodes.php:38
 #: inc/settings/content/php-functions.php:113
 msgid "Cyrillic"
 msgstr "Ćirilica"
 
-#: inc/Functions.php:260 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:552
-#: inc/Settings.php:947 inc/Shortcodes.php:39
+#: inc/Functions.php:284 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:576
+#: inc/Settings.php:979 inc/Shortcodes.php:39
 #: inc/settings/content/php-functions.php:118
 msgid "Latin"
 msgstr "Latinski"
 
-#: inc/Functions.php:278
+#: inc/Functions.php:302
 #, php-format
 msgid ""
 "Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
@@ -43,7 +43,7 @@ msgstr ""
 "Odaberite jednu od vrsta prikaza: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
 "\"%5$s\" ili \"%6$s\""
 
-#: inc/Init.php:311 inc/Menu.php:22 inc/Settings.php:157 inc/Settings.php:175
+#: inc/Init.php:330 inc/Menu.php:22 inc/Settings.php:157 inc/Settings.php:175
 msgid "Transliteration"
 msgstr "Transliteracija"
 
@@ -289,18 +289,6 @@ msgid "Transliteration Filters"
 msgstr "Filteri za transliteraciju"
 
 #: inc/Settings.php:249
-msgid "Force widget transliteration"
-msgstr "Prisilna transliteracija widgeta"
-
-#: inc/Settings.php:257
-msgid "RSS transliteration"
-msgstr "RSS transliteracija"
-
-#: inc/Settings.php:265
-msgid "Enable cache support"
-msgstr "Omogućite podršku za predmemoriju"
-
-#: inc/Settings.php:273
 msgid ""
 "Exclude Latin words that you do not want to be transliterated to the "
 "Cyrillic."
@@ -308,88 +296,108 @@ msgstr ""
 "Isključite latinične riječi za koje ne želite da se transliteriraju u "
 "ćirilicu."
 
-#: inc/Settings.php:281
+#: inc/Settings.php:257
 msgid ""
 "Exclude Cyrillic words that you do not want to be transliterated to the "
 "Latin."
 msgstr ""
 "Izuzmite ćirilične riječi za koje ne želite da se transliteriraju u latinicu."
 
-#: inc/Settings.php:294
+#: inc/Settings.php:269
+msgid "Special Settings"
+msgstr "Posebne postavke"
+
+#: inc/Settings.php:276
+msgid "Enable cache support"
+msgstr "Omogućite podršku za predmemoriju"
+
+#: inc/Settings.php:284
+msgid "Force widget transliteration"
+msgstr "Prisilna transliteracija widgeta"
+
+#: inc/Settings.php:292
+msgid "Force e-mail transliteration"
+msgstr "Prisilna transliteracija e-pošte"
+
+#: inc/Settings.php:304
 msgid "WP Admin"
 msgstr "WP Admin"
 
-#: inc/Settings.php:301
+#: inc/Settings.php:311
 msgid "Disable transliteration inside wp-admin"
 msgstr "Onemogućite transliteraciju unutar wp-admin"
 
-#: inc/Settings.php:309
+#: inc/Settings.php:319
 msgid "Allow Cyrillic Usernames"
 msgstr "Dopusti korisnička imena na ćirilici"
 
-#: inc/Settings.php:317
+#: inc/Settings.php:327
 msgid "Force transliteration permalinks to latin"
 msgstr "Prisiliti transliteraciju permalinki na latinicu"
 
-#: inc/Settings.php:329
+#: inc/Settings.php:339
 msgid "Media Settings"
 msgstr "Postavke medija"
 
-#: inc/Settings.php:336
+#: inc/Settings.php:346
 msgid "Transliterate filenames to latin"
 msgstr "Transliterirajte nazive na latinicu"
 
-#: inc/Settings.php:344
+#: inc/Settings.php:354
 msgid "Filename delimiter"
 msgstr "Graničnik imena datoteke"
 
-#: inc/Settings.php:363
+#: inc/Settings.php:373
 msgid "WordPress search"
 msgstr "WordPress pretraživanje"
 
-#: inc/Settings.php:370
+#: inc/Settings.php:380
 msgid "Enable search transliteration"
 msgstr "Omogućite transliteraciju pretraživanja"
 
-#: inc/Settings.php:379
+#: inc/Settings.php:389
 msgid "Fix Diacritics"
 msgstr "Popravite dijakritiku"
 
-#: inc/Settings.php:388
+#: inc/Settings.php:398
 msgid "Search Mode"
 msgstr "Način pretraživanja"
 
-#: inc/Settings.php:400
+#: inc/Settings.php:410
 msgid "SEO Settings"
 msgstr "SEO postavke"
 
-#: inc/Settings.php:407
+#: inc/Settings.php:417
 msgid "First visit mode"
 msgstr "Način prve posjete"
 
-#: inc/Settings.php:415
+#: inc/Settings.php:425
 msgid "Enable alternet links"
 msgstr "Omogući alternativne veze"
 
-#: inc/Settings.php:423
+#: inc/Settings.php:433
 msgid "Parameter URL selector"
 msgstr "Birač URL-a parametra"
 
-#: inc/Settings.php:433
+#: inc/Settings.php:441
+msgid "RSS transliteration"
+msgstr "RSS transliteracija"
+
+#: inc/Settings.php:451
 msgid "Misc."
 msgstr "Razno"
 
-#: inc/Settings.php:440
+#: inc/Settings.php:458
 msgid "Enable body class"
 msgstr "Omogući body klasu"
 
-#: inc/Settings.php:489
+#: inc/Settings.php:507
 msgid ""
 "This setting determines the mode of operation for the Serbian "
 "Transliteration plugin."
 msgstr "Ova postavka određuje način rada dodatka za transliteraciju."
 
-#: inc/Settings.php:490
+#: inc/Settings.php:508
 msgid ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
@@ -397,7 +405,7 @@ msgstr ""
 "Pažljivo odaberite opciju koja je najbolja za vašu stranicu i dodatak će "
 "automatski postaviti sve što je potrebno za optimalne performanse."
 
-#: inc/Settings.php:495
+#: inc/Settings.php:513
 msgid ""
 "This setting determines the search mode within the WordPress core depending "
 "on the type of language located in the database."
@@ -405,7 +413,7 @@ msgstr ""
 "Ova postavka određuje način pretraživanja unutar jezgre WordPress-a, ovisno "
 "o vrsti jezika koji se nalazi u bazi podataka."
 
-#: inc/Settings.php:496
+#: inc/Settings.php:514
 msgid ""
 "The search type setting is mostly experimental and you need to test each "
 "variant so you can get the best result you need."
@@ -413,29 +421,37 @@ msgstr ""
 "Postavka vrste pretraživanja uglavnom je eksperimentalna i trebate testirati "
 "svaku varijantu kako biste postigli najbolji rezultat koji vam je potreban."
 
-#: inc/Settings.php:501
+#: inc/Settings.php:519
 msgid ""
 "Our plugin also has special SEO options that are very important for your "
 "project."
 msgstr ""
 "Naš dodatak također ima posebne SEO opcije koje su vrlo važne za vaš projekt."
 
-#: inc/Settings.php:506
+#: inc/Settings.php:524
 msgid "These settings apply to the administrative part."
 msgstr "Ove postavke se odnose na administrativni dio."
 
-#: inc/Settings.php:511
+#: inc/Settings.php:529
+msgid ""
+"These are special settings that can enhance transliteration and are used "
+"only if you need them."
+msgstr ""
+"To su posebne postavke koje mogu poboljšati transliteraciju i koriste se "
+"samo ako su vam potrebne."
+
+#: inc/Settings.php:534
 msgid "Upload, view and control media and files."
 msgstr "Prenesite, pregledajte i kontrolirajte medije i datoteke."
 
-#: inc/Settings.php:516
+#: inc/Settings.php:539
 msgid ""
 "Various interesting settings that can be used in the development of your "
 "project."
 msgstr ""
 "Razne zanimljive postavke koje se mogu koristiti u razvoju vašeg projekta."
 
-#: inc/Settings.php:542
+#: inc/Settings.php:565
 msgid ""
 "Forced transliteration can sometimes cause problems if Latin is translated "
 "into Cyrillic in pages and posts. To this combination must be approached "
@@ -445,11 +461,19 @@ msgstr ""
 "stranicama i u postovima prevede na ćirilicu. Ovoj se kombinaciji mora "
 "pristupiti eksperimentalno."
 
-#: inc/Settings.php:594 inc/Settings.php:713 inc/Settings.php:906
+#: inc/Settings.php:580 inc/Transliteration.php:32
+msgid "Arabic"
+msgstr "Arapski"
+
+#: inc/Settings.php:582 inc/Transliteration.php:31
+msgid "Armenian"
+msgstr "Jermenski"
+
+#: inc/Settings.php:626 inc/Settings.php:745 inc/Settings.php:938
 msgid "Automatical (recommended)"
 msgstr "Automatski (preporučeno)"
 
-#: inc/Settings.php:606
+#: inc/Settings.php:638
 msgid ""
 "This option defines the language script. Automatic script detection is the "
 "best way but if you are using a WordPress installation in a language that "
@@ -461,15 +485,15 @@ msgstr ""
 "podudara sa skriptama koje podržava ovaj dodatak, odaberite na kojoj skripti "
 "želite da se izvrši transliteracija."
 
-#: inc/Settings.php:618
+#: inc/Settings.php:650
 msgid "Exclude filters you don't need (optional)"
 msgstr "Izuzmite filtre koji vam nisu potrebni (opcionalno)"
 
-#: inc/Settings.php:624
+#: inc/Settings.php:656
 msgid "Select the transliteration filters you want to exclude."
 msgstr "Odaberite filtre za transliteraciju koje želite izuzeti (isključiti)."
 
-#: inc/Settings.php:625
+#: inc/Settings.php:657
 msgid ""
 "The filters you select here will not be transliterated (these filters do not "
 "work on forced transliteration)."
@@ -477,15 +501,15 @@ msgstr ""
 "Ovdje odabrani filtri neće biti transliterirani (ti filtri ne rade na "
 "prisilnoj transliteraciji)."
 
-#: inc/Settings.php:637
+#: inc/Settings.php:669
 msgid "TIPS & TRICKS:"
 msgstr "SAVJETI I TRIKOVI:"
 
-#: inc/Settings.php:638
+#: inc/Settings.php:670
 msgid "You can find details about some of the listed filters in this article:"
 msgstr "Pojedinosti o nekim od navedenih filtara možete pronaći u ovom članku:"
 
-#: inc/Settings.php:647
+#: inc/Settings.php:679
 #, php-format
 msgid ""
 "Since you are already a WooCommerce user, you also can see the following "
@@ -494,53 +518,53 @@ msgstr ""
 "Budući da ste već korisnik WooCommerce-a, možete vidjeti i sljedeću "
 "dokumentaciju: %s"
 
-#: inc/Settings.php:667 inc/Settings.php:691 inc/Settings.php:740
-#: inc/Settings.php:764 inc/Settings.php:784 inc/Settings.php:804
-#: inc/Settings.php:845 inc/Settings.php:865 inc/Settings.php:886
-#: inc/Settings.php:926 inc/Settings.php:990
+#: inc/Settings.php:699 inc/Settings.php:723 inc/Settings.php:772
+#: inc/Settings.php:796 inc/Settings.php:816 inc/Settings.php:836
+#: inc/Settings.php:877 inc/Settings.php:897 inc/Settings.php:918
+#: inc/Settings.php:958 inc/Settings.php:1022 inc/Settings.php:1041
 msgid "Yes"
 msgstr "Da"
 
-#: inc/Settings.php:668 inc/Settings.php:692 inc/Settings.php:741
-#: inc/Settings.php:765 inc/Settings.php:785 inc/Settings.php:805
-#: inc/Settings.php:846 inc/Settings.php:866 inc/Settings.php:887
-#: inc/Settings.php:927 inc/Settings.php:991
+#: inc/Settings.php:700 inc/Settings.php:724 inc/Settings.php:773
+#: inc/Settings.php:797 inc/Settings.php:817 inc/Settings.php:837
+#: inc/Settings.php:878 inc/Settings.php:898 inc/Settings.php:919
+#: inc/Settings.php:959 inc/Settings.php:1023 inc/Settings.php:1042
 msgid "No"
 msgstr "Ne"
 
-#: inc/Settings.php:703
+#: inc/Settings.php:735
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr "Omogući ako želite pretvoriti ćirilične datoteke u latinicu."
 
-#: inc/Settings.php:714
+#: inc/Settings.php:746
 msgid "hyphen"
 msgstr "crtica"
 
-#: inc/Settings.php:715
+#: inc/Settings.php:747
 msgid "underscore"
 msgstr "podvlaka"
 
-#: inc/Settings.php:716
+#: inc/Settings.php:748
 msgid "dot"
 msgstr "točka"
 
-#: inc/Settings.php:717
+#: inc/Settings.php:749
 msgid "tilde"
 msgstr "tilda"
 
-#: inc/Settings.php:729
+#: inc/Settings.php:761
 msgid "Filename delimiter, example:"
 msgstr "Graničnik imena datoteke, primjer:"
 
-#: inc/Settings.php:729
+#: inc/Settings.php:761
 msgid "my-upload-file.jpg"
 msgstr "moj-fajl.jpg"
 
-#: inc/Settings.php:753
+#: inc/Settings.php:785
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr "Omogući ako želite prisiliti ćirilicu na latinicu za permalinkove."
 
-#: inc/Settings.php:755
+#: inc/Settings.php:787
 #, php-format
 msgid ""
 "You don't need to force transliteration permalinks to latin because your "
@@ -549,7 +573,7 @@ msgstr ""
 "Ne morate forsirati permalinkove za transliteraciju na latinicu jer je vaš "
 "trenutni jezik postavljen na %s što će automatski promijeniti permalinkove."
 
-#: inc/Settings.php:777
+#: inc/Settings.php:809
 msgid ""
 "This option forces the widget to transliterate. There may be some unusual "
 "behaviour in the rare cases."
@@ -557,11 +581,11 @@ msgstr ""
 "Ova opcija prisiljava widget na transliteraciju. U rijetkim slučajevima može "
 "se dogoditi neko neobično ponašanje."
 
-#: inc/Settings.php:797
+#: inc/Settings.php:829
 msgid "This option transliterate the RSS feed."
 msgstr "Ova opcija transliterira RSS feed."
 
-#: inc/Settings.php:817
+#: inc/Settings.php:849
 msgid ""
 "If you have a problem caching your pages, our plugin solves this problem by "
 "clearing the cache when changing the language script."
@@ -569,7 +593,7 @@ msgstr ""
 "Ako imate problem s predmemoriranjem stranica, naš dodatak rješava taj "
 "problem brisanjem predmemorije prilikom promjene jezične skripte."
 
-#: inc/Settings.php:827 inc/Settings.php:837
+#: inc/Settings.php:859 inc/Settings.php:869
 #, php-format
 msgid ""
 "Separate words, phrases, names and expressions with the sign %s or put it in "
@@ -578,25 +602,25 @@ msgstr ""
 "Odvojite riječi, fraze, imena i izraze znakom %s ili ih stavite u novi red. "
 "HTML nije dopušten."
 
-#: inc/Settings.php:857
+#: inc/Settings.php:889
 msgid "Allows to create users with usernames containing Cyrillic characters."
 msgstr ""
 "Omogućuje stvaranje korisnika s korisničkim imenima koja sadrže ćirilične "
 "znakove."
 
-#: inc/Settings.php:877
+#: inc/Settings.php:909
 msgid "Approve if you want transliteration for the search field."
 msgstr "Odobrite ako želite transliteraciju za polje za pretraživanje."
 
-#: inc/Settings.php:898
+#: inc/Settings.php:930
 msgid "Try to fix the diacritics in the search field."
 msgstr "Pokušajte popraviti dijakritike u polju za pretraživanje."
 
-#: inc/Settings.php:907
+#: inc/Settings.php:939
 msgid "Based on the plugin mode"
 msgstr "Na temelju rada dodatka"
 
-#: inc/Settings.php:918
+#: inc/Settings.php:950
 msgid ""
 "The search has two working modes. Choose the one that works best with your "
 "search."
@@ -604,7 +628,7 @@ msgstr ""
 "Pretraživanje ima dva načina rada. Odaberite onu koja najbolje odgovara "
 "vašoj pretrazi."
 
-#: inc/Settings.php:938
+#: inc/Settings.php:970
 msgid ""
 "Tell Google, Bing, Yandex and other search engines about transliterated "
 "versions of your page."
@@ -612,11 +636,11 @@ msgstr ""
 "Obavijestite Google, Bing, Yandex i druge tražilice o transliteriranim "
 "verzijama vaše stranice."
 
-#: inc/Settings.php:946
+#: inc/Settings.php:978
 msgid "Auto (Based on Transliteration Mode)"
 msgstr "Automatski (na temelju načina transliteracije)"
 
-#: inc/Settings.php:959
+#: inc/Settings.php:991
 msgid ""
 "This option determines the type of language script that the visitors sees "
 "when they first come to your site."
@@ -624,26 +648,26 @@ msgstr ""
 "Ova opcija određuje vrstu jezične skripte koju posjetitelji vide kada prvi "
 "put dođu na vašu stranicu."
 
-#: inc/Settings.php:967
+#: inc/Settings.php:999
 msgid "(safe)"
 msgstr "(bezbjedno)"
 
-#: inc/Settings.php:968
+#: inc/Settings.php:1000
 msgid "(standard)"
 msgstr "(standardan)"
 
-#: inc/Settings.php:969 inc/Settings.php:970 inc/Settings.php:971
-#: inc/Settings.php:972
+#: inc/Settings.php:1001 inc/Settings.php:1002 inc/Settings.php:1003
+#: inc/Settings.php:1004
 msgid "(optional)"
 msgstr "opcionalno"
 
-#: inc/Settings.php:983
+#: inc/Settings.php:1015
 msgid ""
 "This option dictates which URL parameter will be used to change the language."
 msgstr ""
 "Ova opcija određuje koji će se parametar URL-a koristiti za promjenu jezika."
 
-#: inc/Settings.php:1002
+#: inc/Settings.php:1034
 msgid ""
 "This option adds CSS classes to your body HTML tag. These CSS classes vary "
 "depending on the language script."
@@ -651,7 +675,13 @@ msgstr ""
 "Ova opcija dodaje CSS klase u vašu HTML oznaku tijela. Te se CSS klase "
 "razlikuju ovisno o jezičnoj skripti."
 
-#: inc/Shortcodes.php:163
+#: inc/Settings.php:1053
+msgid ""
+"Enable this feature if you want to force transliteration of email content."
+msgstr ""
+"Omogućite ovu značajku ako želite prisiliti transliteraciju sadržaja e-pošte."
+
+#: inc/Shortcodes.php:164
 msgid ""
 "Transliteration shortcode does not have adequate parameters and translation "
 "is not possible. Please check the documentation."
@@ -714,11 +744,11 @@ msgstr "Ukrajinski"
 msgid "Greek"
 msgstr "Grčki"
 
-#: inc/Utilities.php:17
+#: inc/Utilities.php:43
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr "Standardni način rada (sadržaj, teme, dodaci, prijevodi, izbornik)"
 
-#: inc/Utilities.php:18
+#: inc/Utilities.php:44
 msgid ""
 "Advanced mode (content, widgets, themes, plugins, translations, "
 "menu‚ permalinks, media)"
@@ -726,11 +756,11 @@ msgstr ""
 "Napredni način rada (sadržaj, widgeti, teme, dodaci, prijevodi, izbornik, "
 "stalne veze, mediji)"
 
-#: inc/Utilities.php:19
+#: inc/Utilities.php:45
 msgid "Forced transliteration (everything)"
 msgstr "Prisilna transliteracija (sve)"
 
-#: inc/Utilities.php:24
+#: inc/Utilities.php:50
 msgid ""
 "Only WooCommerce (It bypasses all other transliterations and focuses only on "
 "WooCommerce)"
@@ -738,58 +768,74 @@ msgstr ""
 "Samo WooCommerce (zaobilazi sve ostale transliteracije i fokusira se samo na "
 "WooCommerce)"
 
-#: inc/Utilities.php:48
+#: inc/Utilities.php:74
 msgid "Transliteration disabled"
 msgstr "Transliteracija je onemogućena"
 
-#: inc/Utilities.php:49 inc/settings/content/shortcodes.php:27
+#: inc/Utilities.php:75 inc/settings/content/shortcodes.php:27
 #: inc/settings/content/tags.php:25
 msgid "Cyrillic to Latin"
 msgstr "Ćirilica na latinicu"
 
-#: inc/Utilities.php:50 inc/settings/content/shortcodes.php:30
+#: inc/Utilities.php:76 inc/settings/content/shortcodes.php:30
 #: inc/settings/content/tags.php:28
 msgid "Latin to Cyrillic"
 msgstr "Latinica na ćirilicu"
 
-#: inc/Utilities.php:619 inc/Utilities.php:620
+#: inc/Utilities.php:82
+msgid "Arabic to Latin"
+msgstr "S arapskog na latinski"
+
+#: inc/Utilities.php:83
+msgid "Latin to Arabic"
+msgstr "Latinski na arapski"
+
+#: inc/Utilities.php:85
+msgid "Armenian to Latin"
+msgstr "Armenski na latinski"
+
+#: inc/Utilities.php:86
+msgid "Latin to Armenian"
+msgstr "Latinski na armenski"
+
+#: inc/Utilities.php:672 inc/Utilities.php:673
 msgctxt "Language script"
 msgid "Script"
 msgstr "Skripta"
 
-#: inc/Utilities.php:621
+#: inc/Utilities.php:674
 msgid "Search by Script"
 msgstr "Pretraživanje po skripti"
 
-#: inc/Utilities.php:622
+#: inc/Utilities.php:675
 msgid "All Scripts"
 msgstr "Sve skripte"
 
-#: inc/Utilities.php:623
+#: inc/Utilities.php:676
 msgid "Parent Script"
 msgstr "Nadređena skripta"
 
-#: inc/Utilities.php:624
+#: inc/Utilities.php:677
 msgid "Parent Script:"
 msgstr "Nadređena skripta:"
 
-#: inc/Utilities.php:625
+#: inc/Utilities.php:678
 msgid "Edit Script"
 msgstr "Uređivanje skripte"
 
-#: inc/Utilities.php:626
+#: inc/Utilities.php:679
 msgid "Update Script"
 msgstr "Ažuriraj skriptu"
 
-#: inc/Utilities.php:627
+#: inc/Utilities.php:680
 msgid "Add New Script"
 msgstr "Dodaj novu skriptu"
 
-#: inc/Utilities.php:628
+#: inc/Utilities.php:681
 msgid "New Script Name"
 msgstr "Novi naziv skripte"
 
-#: inc/Utilities.php:629
+#: inc/Utilities.php:682
 msgid "Script"
 msgstr "Skripta"
 

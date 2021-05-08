@@ -38,7 +38,7 @@ class Serbian_Transliteration_Transliterating {
 		$locale = $this->get_locale();
 
 		// Avoid transliteration for the some cases
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)){
+		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || !in_array($translation, array('lat_to_cyr', 'cyr_to_lat'))){
 			return $content;
 		}
 
@@ -59,7 +59,6 @@ class Serbian_Transliteration_Transliterating {
 			$content = $class_name::transliterate($content, $translation);
 			$transliterated = true;
 		}
-
 		// If no locale than old fashion way
 		if($transliterated)
 		{
@@ -200,7 +199,6 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public function cyr_exclude_list(){
 		$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', array());
-
 		$content = ob_get_status() ? ob_get_contents() : false;
 		if ( false !== $content ){
 			if ( preg_match_all('/\\\u[0-9a-f]{4}/i', $content, $exclude_unicode)){

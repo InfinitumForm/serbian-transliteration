@@ -62,7 +62,7 @@ if(!function_exists('is_cyrillic_text')) :
 endif;
 
 /*
- * Check is latin letters
+ * Check is site on latin
  * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
@@ -74,12 +74,12 @@ if(!function_exists('is_latin')) :
 		} else {
 			$script = rstr_get_script();
 		}
-		return ($script == 'cyr_to_lat');
+		return in_array($script, array('cyr_to_lat', 'lat'));
 	}
 endif;
 
 /*
- * Check is cyrillic letters
+ * Check is site on cyrillic
  * @return        boolean
  * @author        Ivijan-Stefan Stipic
 */
@@ -91,7 +91,7 @@ if(!function_exists('is_cyrillic')) :
 		} else {
 			$script = rstr_get_script();
 		}
-		return ($script == 'lat_to_cyr');
+		return in_array($script, array('lat_to_cyr', 'cyr'));
 	}
 endif;
 
@@ -278,14 +278,14 @@ if(!function_exists('script_selector')) :
 		$args = (object)wp_parse_args($args, array(
 			'id'			=> $ID,
 			'display_type' 	=> 'inline',
-			'echo' 			=> false,
+			'echo' 					=> false,
 			'separator'     => ' | ',
 			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
-			'lat_caption'   => Serbian_Transliteration::__instance()->cyr_to_lat(__('Latin', RSTR_NAME))
+			'lat_caption'   => __('Latin', RSTR_NAME)
 		));
 
 		$options = (object)array(
-			'active'	=> get_script(),
+			'active'	=> (function_exists('rstr_get_script') ? rstr_get_script() : get_script()),
 			'cyr'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'cyr', $url),
 			'lat'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'lat', $url)
 		);
@@ -310,12 +310,12 @@ if(!function_exists('script_selector')) :
 						$options
 					),
 					$options->lat,
-					$args->lat_caption,
+					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
 					$args->separator,
 					$options->cyr,
 					$args->cyr_caption,
-					($options->active == 'lat' ? ' active' : ' inactive'),
-					($options->active == 'cyr' ? ' active' : ' inactive')
+					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
+					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
 				);
 				break;
 			case 'select':
@@ -328,11 +328,11 @@ if(!function_exists('script_selector')) :
 						$options
 					),
 					$options->lat,
-					$args->lat_caption,
+					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
 					$options->cyr,
 					$args->cyr_caption,
-					($options->active == 'lat' ? ' selected' : ''),
-					($options->active == 'cyr' ? ' selected' : '')
+					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' selected' : ''),
+					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' selected' : '')
 				);
 				break;
 			case 'list':
@@ -343,11 +343,11 @@ if(!function_exists('script_selector')) :
 						$options
 					),
 					$options->lat,
-					$args->lat_caption,
+					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
 					$options->cyr,
 					$args->cyr_caption,
-					($options->active == 'lat' ? ' active' : ' inactive'),
-					($options->active == 'cyr' ? ' active' : ' inactive')
+					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
+					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
 				);
 				break;
 			case 'list_items':
@@ -359,11 +359,11 @@ if(!function_exists('script_selector')) :
 						$options
 					),
 					$options->lat,
-					$args->lat_caption,
+					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
 					$options->cyr,
 					$args->cyr_caption,
-					($options->active == 'lat' ? ' active' : ' inactive'),
-					($options->active == 'cyr' ? ' active' : ' inactive')
+					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
+					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
 				);
 				break;
 			case 'array':
@@ -373,7 +373,7 @@ if(!function_exists('script_selector')) :
 						'url' => $options->cyr,
 					),
 					'lat' => array(
-						'caption' => $args->lat_caption,
+						'caption' => '{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
 						'url' => $options->lat,
 					)
 				), $args, $options);
@@ -385,7 +385,7 @@ if(!function_exists('script_selector')) :
 						'url' => $options->cyr,
 					),
 					'lat' => (object)array(
-						'caption' => $args->lat_caption,
+						'caption' => '{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
 						'url' => $options->lat,
 					)
 				), $args, $options);
