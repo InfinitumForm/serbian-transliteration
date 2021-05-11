@@ -76,12 +76,15 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		/* Do special filtering
 		====================================*/
 		add_filter('rstr/transliteration/exclude/filters', function($filters, $options) {
-			if(isset($options['transliteration-filter']) && is_array($options['transliteration-filter'])) {
+			
+			$transliteration_filter = get_rstr_option('transliteration-filter');
+			
+			if(is_array($transliteration_filter)) {
 
 				$only_woo = false;
-				if(RSTR_WOOCOMMERCE && isset($options['mode']) && $options['mode'] == 'woocommerce') $only_woo = true;
+				if(RSTR_WOOCOMMERCE && get_rstr_option('mode') == 'woocommerce') $only_woo = true;
 
-				foreach($options['transliteration-filter'] as $filter){
+				foreach($transliteration_filter as $filter){
 
 					if($only_woo && strpos($filter, 'woo') === false){
 						unset($filters[$filter]);
@@ -97,7 +100,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				}
 			}
 			return $filters;
-		}, PHP_INT_MAX, 2);
+		}, 10, 2);
 
 		/* Load menu
 		====================================*/

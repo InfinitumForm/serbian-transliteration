@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.6.3
+ * Version:           1.6.4
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -110,6 +110,13 @@ if($Serbian_Transliteration_Activate->passes()) :
 	 * @verson    1.0.0
 	 */
 	include_once RSTR_INC . '/Utilities.php';
+	
+	/*
+	 * Serbian transliteration statistic
+	 * @since     1.5.7
+	 * @verson    1.0.0
+	 */
+	include_once RSTR_INC . '/Statistic.php';
 
 	/*
 	 * Serbian transliteration requirements
@@ -218,7 +225,8 @@ if($Serbian_Transliteration_Activate->passes()) :
 			if(empty($options))
 			{
 				// Set default pharams
-				add_option( RSTR_NAME, Serbian_Transliteration_Utilities::plugin_default_options() );
+				$options = Serbian_Transliteration_Utilities::plugin_default_options();
+				add_option( RSTR_NAME, $options );
 			}
 			else
 			{
@@ -236,8 +244,6 @@ if($Serbian_Transliteration_Activate->passes()) :
 				if( $added > 0 ) {
 					add_option( RSTR_NAME, $options );
 				}
-				// Clear variable
-				$options = NULL;
 			}
 
 			// Set important cookie
@@ -279,6 +285,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 
 			// Reset permalinks
 			flush_rewrite_rules();
+			
+			// Send plugin statistic
+			Serbian_Transliteration_Statistic::activation(array('settings' => $options));
 
 			return $success;
 		});
@@ -302,6 +311,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 
 			// Reset permalinks
 			flush_rewrite_rules();
+			
+			// Send plugin statistic
+			Serbian_Transliteration_Statistic::deactivation();
 		});
 
 		/* Run plugin
