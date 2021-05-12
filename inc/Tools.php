@@ -10,6 +10,16 @@
 if(!class_exists('Serbian_Transliteration_Tools')) :
 class Serbian_Transliteration_Tools extends Serbian_Transliteration
 {
+	public static function instance() {
+		global $rstr_cache;
+		$class = self::class;
+		$instance = $rstr_cache->get($class);
+		if ( !$instance ) {
+			$instance = $rstr_cache->set($class, new self());
+		}
+		return $instance;
+	}
+	
 	function __construct() {
 		$this->add_action( 'wp_ajax_rstr_run_permalink_transliteration', 'ajax__run_permalink_transliteration');
 		$this->add_action( 'wp_ajax_rstr_transliteration_letters', 'ajax__rstr_transliteration_letters');

@@ -370,6 +370,13 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 						return $this->cyr_to_lat($m[1]);
 					}, $content);
 				}
+				
+				// Force AJAX transliteration
+				if(get_rstr_option('force-ajax-calls', 'no') == 'yes'){
+					if(wp_doing_ajax() && !Serbian_Transliteration_Utilities::skip_transliteration()) {
+						$buffer = $inst->cyr_to_lat($buffer);
+					}
+				}
 
 				return $buffer;
 			}, 0, PHP_OUTPUT_HANDLER_REMOVABLE);

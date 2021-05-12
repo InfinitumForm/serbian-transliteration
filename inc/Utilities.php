@@ -12,25 +12,30 @@ class Serbian_Transliteration_Utilities{
 			'site-script'				=>	'cyr',
 			'transliteration-mode'		=>	'cyr_to_lat',
 			'mode'						=>	'advanced',
-			'avoid-admin'				=>	'yes',
+			'avoid-admin'				=>	'no',
 			'allow-cyrillic-usernames'	=>	'no',
 			'media-transliteration'		=>	'yes',
 			'permalink-transliteration'	=>	'yes',
 			'cache-support'				=>  'yes',
 			'exclude-latin-words'		=>	'WordPress',
 			'exclude-cyrillic-words'	=>	'',
-			'enable-search'				=>	'no',
-			'search-mode'       => 'auto',
+			'enable-search'				=>	'yes',
+			'search-mode'       		=>	'auto',
 			'enable-alternate-links'	=>	'yes',
 			'first-visit-mode'			=>	'auto',
 			'enable-rss'				=>	'no',
-			'fix-diacritics'			=>	'no',
+			'fix-diacritics'			=>	'yes',
 			'url-selector'				=>	'rstr',
 			'language-scheme'			=>	'auto',
-			'enable-body-class'			=>	'no',
+			'enable-body-class'			=>	'yes',
 			'force-widgets'				=>	'no',
-			'force-email-transliteration' => 'no'
+			'force-email-transliteration' => 'no',
+			'force-ajax-calls' 			=> 'no'
 		));
+	}
+	
+	public static function skip_transliteration(){
+		return (isset($_REQUEST['rstr_skip']) && in_array($_REQUEST['rstr_skip'], array('true', true, 1, '1', 'yes')) !== false);
 	}
 
 	/*

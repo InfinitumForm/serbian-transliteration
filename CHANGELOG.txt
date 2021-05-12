@@ -1,3 +1,11 @@
+= 1.6.5 =
+* Added forced transliteration option for the AJAX calls
+* Added redirectin after plugin activation
+* Improved tools integration
+* Changed default settings
+* Improved PHP code
+* Update translations
+
 = 1.6.4 =
 * Improved action hooks for the transliteration
 * Improved settings page

@@ -99,7 +99,8 @@
 					ajax('POST', RSTR.ajax, {
 						'action' : 'rstr_filter_mode_options',
 						'nonce'  : e.target.dataset.nonce,
-						'mode' : e.target.value
+						'mode' : e.target.value,
+						'rstr_skip' : true
 					}, {
 						'Accept' : 'text/html'
 					});
@@ -141,7 +142,8 @@
 							'action' : 'rstr_transliteration_letters',
 							'mode'   : button[index].dataset.mode,
 							'nonce'  : button[index].dataset.nonce,
-							'value'  : textarea.value
+							'value'  : textarea.value,
+							'rstr_skip' : true
 						}, {
 							'Accept' : 'text/plain'
 						});
@@ -223,7 +225,8 @@
 						ajax('POST', RSTR.ajax, {
 							'action' : 'rstr_run_permalink_transliteration',
 							'nonce'  : e.target.dataset.nonce,
-							'post_type' : Array.from(document.querySelectorAll("input.tools-transliterate-permalinks-post-types:checked")).map(e => e.value)
+							'post_type' : Array.from(document.querySelectorAll("input.tools-transliterate-permalinks-post-types:checked")).map(e => e.value),
+							'rstr_skip' : true
 						}, {
 							'Accept' : 'application/json'
 						});

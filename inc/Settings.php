@@ -38,7 +38,18 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
 			$this->add_action( 'plugin_action_links_' . RSTR_BASENAME, 'action_links' );
 			$this->add_action( 'plugin_row_meta', 'row_meta_links', 10, 2);
+			
+			if(isset($_GET['rstr-activation']) && $_GET['rstr-activation'] == 'true'){				
+				$this->add_action( 'admin_notices', 'admin_notice__activation', 10, 0);
+				if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true'){
+					set_transient(RSTR_BASENAME . '_nonce_save', 'true', 30);
+					$this->add_action( 'admin_init', 'updated_option__redirection', 10, 0);
+				}
+			}
 
+			if(get_transient(RSTR_BASENAME . '_nonce_save') == 'true') {
+				$this->add_action( 'admin_notices', 'admin_notice__success', 10, 0);
+			}
 			$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
 
 			if($mode_class = Serbian_Transliteration_Utilities::mode()) {
@@ -60,8 +71,36 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
 		}
     }
+	
+	public function updated_option__redirection(){
+		if( wp_safe_redirect( admin_url( 'options-general.php?page=serbian-transliteration' ) ) ) {
+			exit;
+		}
+	}
+	
+	public function admin_notice__activation(){
+		global $pagenow;
+		if ( $pagenow == 'options-general.php' ) {
+			 printf(
+			 	'<div class="notice notice-warning is-dismissible">%s%s</div>',
+				sprintf('<h3>%s</h3>', __('PLEASE UPDATE PLUGIN SETTINGS', RSTR_NAME)),
+				sprintf('<p>%s</p>', __('Carefully review the transliteration plugin settings and adjust how it fits your WordPress installation. It is important that every time you change the settings, you test the parts of the site that are affected by this plugin.', RSTR_NAME))
+			 );
+		}
+	}
+	
+	public function admin_notice__success(){
+		global $pagenow;
+		if ( $pagenow == 'options-general.php' ) {
+			 printf(
+			 	'<div class="notice notice-success is-dismissible">%s</div>',
+				sprintf('<p>%s</p>', __('Settings saved.', RSTR_NAME))
+			 );
+			 delete_transient(RSTR_BASENAME . '_nonce_save');
+		}
+	}
 
-	public function ajax__rstr_filter_mode_options( ) {
+	public function ajax__rstr_filter_mode_options() {
 		global $rstr_cache;
 		$mode_class = Serbian_Transliteration_Utilities::mode(array('mode'=>sanitize_text_field($_POST['mode'])));
 
@@ -295,6 +334,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				'force-email-transliteration', // ID
 				__('Force e-mail transliteration', RSTR_NAME), // Title
 				'force_email_transliteration_callback', // Callback
+				RSTR_NAME, // Page
+				RSTR_NAME . '-special-settings' // Section
+			);
+			
+			$this->add_settings_field(
+				'force-ajax-calls', // ID
+				__('Force transliteration for AJAX calls', RSTR_NAME), // Title
+				'force_ajax_calls_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-special-settings' // Section
 			);
@@ -1056,6 +1103,25 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of email content.', RSTR_NAME));
+	}
+	
+	public function force_ajax_calls_callback () {
+		$inputs = array();
+
+		foreach(array(
+			'yes' => __('Yes', RSTR_NAME),
+			'no' => __('No', RSTR_NAME)
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="force-ajax-calls-%1$s"><input type="radio" id="force-ajax-calls-%1$s" name="%3$s[force-ajax-calls]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['force-ajax-calls'] ) ? ($this->options['force-ajax-calls'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), sprintf(__('Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s', RSTR_NAME), '<code>rstr_skip=true</code>'));
 	}
 
 
