@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2021-05-12 14:08+0200\n"
-"PO-Revision-Date: 2021-05-12 14:11+0200\n"
+"POT-Creation-Date: 2021-05-14 13:36+0200\n"
+"PO-Revision-Date: 2021-05-14 13:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -921,16 +921,16 @@ msgstr "Дебаговање"
 msgid "Credits & Info"
 msgstr "Информације"
 
-#: inc/settings/content/credits.php:30
+#: inc/settings/content/credits.php:45
 msgid "Credits"
 msgstr "Информације"
 
-#: inc/settings/content/credits.php:34
+#: inc/settings/content/credits.php:49
 #, php-format
 msgid "This plugin is made by %1$s"
 msgstr "Овај додатак је направио %1$s"
 
-#: inc/settings/content/credits.php:38
+#: inc/settings/content/credits.php:53
 msgid ""
 "This is a light weight, simple and easy plugin with which you can "
 "transliterate your WordPress installation from Cyrillic to Latin and vice "
@@ -942,24 +942,37 @@ msgstr ""
 "(транслитерацију) такође подржава посебне кратке кодове и функције које "
 "користе колачиће за одређивање језичке скрипте."
 
-#: inc/settings/content/credits.php:41
+#: inc/settings/content/credits.php:68
+msgid "Sponsors of this plugin:"
+msgstr "Спонзори овог додатка:"
+
+#: inc/settings/content/credits.php:72
+#, php-format
+msgid ""
+"If you want to help develop this plugin and be one of the sponsors, please "
+"contact us at: %s"
+msgstr ""
+"Ако желите да помогнете у развоју овог додатка и будете један од спонзора, "
+"контактирајте нас на: %s"
+
+#: inc/settings/content/credits.php:96
 msgid "Special thanks to the contributors in the development of this plugin:"
 msgstr "Посебна захвалност сарадницима у развоју овог додатка:"
 
-#: inc/settings/content/credits.php:50
+#: inc/settings/content/credits.php:102
 msgid "Copyright"
 msgstr "Ауторско право"
 
-#: inc/settings/content/credits.php:54
+#: inc/settings/content/credits.php:106
 #, php-format
 msgid "Copyright &copy; 2020 - %1$d %2$s by %3$s. All Right Reserved."
 msgstr "Ауторско право &copy; 2020 - %1$d %2$s од %3$s. Сва права задржава."
 
-#: inc/settings/content/credits.php:56
+#: inc/settings/content/credits.php:108
 msgid "Transliterator – WordPress Transliteration"
 msgstr "Транслитерација - WordPress транслитерација"
 
-#: inc/settings/content/credits.php:61
+#: inc/settings/content/credits.php:113
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -971,7 +984,7 @@ msgstr ""
 "Фондација за слободан софтвер; било верзију 2 лиценце, или (по вашој жељи) "
 "било коју новију верзију."
 
-#: inc/settings/content/credits.php:62
+#: inc/settings/content/credits.php:114
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -981,11 +994,11 @@ msgstr ""
 "ГАРАНЦИЈЕ; чак ни под подразумеваном гаранцијом ЗА ПРОДАЈУ И СПОСОБНОСТИ ЗА "
 "ОДРЕЂЕНУ СВРХУ."
 
-#: inc/settings/content/credits.php:63
+#: inc/settings/content/credits.php:115
 msgid "See the GNU General Public License for more details."
 msgstr "Погледајте ГНУ (General Public License) за више детаља."
 
-#: inc/settings/content/credits.php:64
+#: inc/settings/content/credits.php:116
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 51 "

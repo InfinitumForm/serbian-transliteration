@@ -72,7 +72,8 @@ class Serbian_Transliteration_Cache
 	 */
 	public function debug()
 	{
-		echo '<pre class="rstr-cache-debug">', var_dump(
+		ob_start();
+		echo var_dump(
 			array_merge(array(
 				'Serbian_Transliteration_Cache' => array(
 					'capability' => $this->cap,
@@ -81,7 +82,9 @@ class Serbian_Transliteration_Cache
 					'cache_objects_length' => count($this->cache)
 				)
 			), $this->cache)
-		), '</pre>';
+		);
+		$debug = ob_get_clean();
+		echo '<pre class="rstr-cache-debug">' . htmlspecialchars($debug) . '</pre>';
 	}
 
 	/*

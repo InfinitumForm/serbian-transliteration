@@ -1,4 +1,19 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); } ?>
+<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); };
+
+$special_thanks_sponsors = array(
+	'INFINITUM FORM' => 'https://infinitumform.com/',
+	'UG PREOBRAŽENJE' => 'https://preobrazenje.rs/',
+	'Fondacija Tijana Jurić' => 'https://tijana.rs/'
+);
+
+$special_thanks = array(
+	'dizajn24' => 'https://profiles.wordpress.org/dizajn24',
+	'tihi' => 'https://profiles.wordpress.org/tihi',
+	'Slobodan Pantović' => '',
+	'Ivan Stanojević' => ''
+);
+
+?>
 <script>function rstr_popup(url, title, w, h) {
 	// Fixes dual-screen position Most browsers Firefox
 	var dualScreenLeft = (window.screenLeft != undefined ? window.screenLeft : screen.left),
@@ -36,15 +51,52 @@
 					)
 				); ?>
                 <?php printf('<p>%s<p>', __('This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.', RSTR_NAME)); ?>
-                
-			<?php if($plugin_info = Serbian_Transliteration_Utilities::plugin_info(array('contributors' => true, 'donate_link' => false))) : ?>
-				<p><?php printf('<strong>%s</strong>', __('Special thanks to the contributors in the development of this plugin:', RSTR_NAME)); ?> <?php
-                	foreach($plugin_info->contributors as $username => $info) {
-						if($username == 'ivijanstefan') continue;
-						$info = (object)$info;
-						echo '<a href="' . esc_url($info->profile) . '" target="_blank">' . $info->display_name . '</a>, ';
+                <p><?php
+				
+					$special_thanks_sponsors_render = array();
+        
+		        	foreach($special_thanks_sponsors as $name => $thanks_url){
+						if(!empty($thanks_url)) {
+							$special_thanks_sponsors_render[sanitize_title($name)]= '<a href="' . esc_url($thanks_url) . '" target="_blank">' . $name . '</a>';
+						} else {
+							$special_thanks_sponsors_render[sanitize_title($name)]= $name;
+						}
 					}
-				?>Ivan Stanojević, Slobodan Pantović</p>
+					
+					printf(
+						'<strong>%s</strong> %s %s',
+						__('Sponsors of this plugin:', RSTR_NAME),
+						join(', ', $special_thanks_sponsors_render),
+						sprintf(
+							'( %s )',
+							sprintf(__('If you want to help develop this plugin and be one of the sponsors, please contact us at: %s', RSTR_NAME), '<a href="mailto:infinitumform@gmail.com">infinitumform@gmail.com</a>')
+						)
+					);
+					
+				?></p>
+			<?php if(!empty($special_thanks) && $plugin_info = Serbian_Transliteration_Utilities::plugin_info(array('contributors' => true, 'donate_link' => false))) : ?>
+				<p><?php
+				
+                	$special_thanks_render = array();
+					
+					foreach($plugin_info->contributors as $username => $info) {
+						if(in_array($username, array('ivijanstefan', 'creativform', 'infinitumform'))) continue;
+						$info = (object)$info;
+						$special_thanks_render[sanitize_title($info->display_name)]= '<a href="' . esc_url($info->profile) . '" target="_blank">' . $info->display_name . '</a>';
+					}
+					
+					foreach($special_thanks as $name => $thanks_url){
+						if(!empty($thanks_url)) {
+							$special_thanks_render[sanitize_title($name)]= '<a href="' . esc_url($thanks_url) . '" target="_blank">' . $name . '</a>';
+						} else {
+							$special_thanks_render[sanitize_title($name)]= $name;
+						}
+					}
+					
+					printf('<strong>%s</strong> %s', __('Special thanks to the contributors in the development of this plugin:', RSTR_NAME), join(', ', $special_thanks_render));
+					
+				?></p>
+                
             <?php endif; ?>
                 
                 <h3>&copy; <?php _e('Copyright', RSTR_NAME); ?></h3>

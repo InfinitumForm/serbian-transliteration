@@ -30,7 +30,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		}
 		
 		// remove the notice for the user if review already done or if the user does not want to
-		function cfgp_dimiss_review(){    
+		public function cfgp_dimiss_review(){    
 			if( isset( $_GET['cfgp_dimiss_review'] ) && !empty( $_GET['cfgp_dimiss_review'] ) ){
 				$cfgp_dimiss_review = $_GET['cfgp_dimiss_review'];
 				if( $cfgp_dimiss_review == 1 ){
@@ -68,7 +68,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		/**
 		 * Display Admin Notice, asking for a review
 		**/
-		function display_admin_notice() {
+		public function display_admin_notice() {
 			$parse_url = Serbian_Transliteration_Utilities::parse_url();
 			$dont_disturb = esc_url( add_query_arg('cfgp_dimiss_review', '1', $parse_url['url']) );
 			$plugin_info = get_plugin_data( RSTR_FILE , true, true );       

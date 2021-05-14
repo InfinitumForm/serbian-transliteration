@@ -31,7 +31,7 @@ class Serbian_Transliteration_Tools extends Serbian_Transliteration
 	public function ajax__rstr_transliteration_letters () {
 		if(isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-transliteration-letters') !== false){
 			$value = sanitize_textarea_field($_REQUEST['value']);
-			$value = $this->fix_diacritics($value);
+			$value = parent::fix_diacritics($value);
 			echo esc_html( $this->transliterate_text($value, sanitize_text_field($_REQUEST['mode']), true) );
 			exit;
 		}

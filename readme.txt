@@ -1,11 +1,10 @@
 ﻿=== Transliterator - WordPress Transliteration ===
-Contributors: ivijanstefan, creativform, dizajn24, tihi
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=creativform@gmail.com
+Contributors: ivijanstefan, creativform
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.6.5
+Stable tag: 1.6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +153,14 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.6.6 =
+* Improved transliteration of the Cyrillic alphabet
+* Improved and optimized PHP code
+* Improved cache
+* Improved AJAX calls
+* Improved license
+* Added sponsors and contributors to the plugin Credits & Info page
+
 = 1.6.5 =
 * Added forced transliteration option for the AJAX calls
 * Added redirectin after plugin activation
@@ -251,6 +258,14 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.6.6 =
+* Improved transliteration of the Cyrillic alphabet
+* Improved and optimized PHP code
+* Improved cache
+* Improved AJAX calls
+* Improved license
+* Added sponsors and contributors to the plugin Credits & Info page
 
 = 1.6.5 =
 * Added forced transliteration option for the AJAX calls

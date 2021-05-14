@@ -20,7 +20,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		$content = Serbian_Transliteration_Utilities::decode($content);
 		$content = $this->transliteration($content, 'cyr_to_lat');
-		$content = $this->fix_attributes($content);
+		$content = self::fix_attributes($content);
 
 		return $content;
 	}
@@ -55,7 +55,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		if(function_exists('iconv'))
 		{
-			if($locale = $this->get_locales( $this->get_locale() )) {
+			if($locale = parent::get_locales( $this->get_locale() )) {
 				setlocale(LC_CTYPE, $locale);
 			}
 
@@ -80,27 +80,27 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$content = Serbian_Transliteration_Utilities::decode($content);
 
 		if($fix_diacritics) {
-			$content = $this->fix_diacritics($content);
+			$content = self::fix_diacritics($content);
 		}
 
 		$content = $this->transliteration($content, 'lat_to_cyr');
 
 		if($fix_html){
-			$content = $this->fix_cyr_html($content);
-			$content = $this->fix_attributes($content);
+			$content = self::fix_cyr_html($content);
+			$content = self::fix_attributes($content);
 		}
 
 		return $content;
 	}
 
-	public function fix_diacritics($content){
+	public static function fix_diacritics($content){
 		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || Serbian_Transliteration_Utilities::is_editor()){
 			return $content;
 		}
 
-		if($this->get_locale() != 'sr_RS') return $content;
+		if(self::__instance()->get_locale() != 'sr_RS') return $content;
 
-		if($search = $this->get_diacritical())
+		if($search = parent::get_diacritical())
 		{
 			$new_string = str_replace(
 				array('dj', 'Dj', 'DJ', 'sh', 'Sh', 'SH', 'ch', 'Ch', 'CH', 'cs', 'Cs', 'CS', 'dz', 'Dz', 'DZ'),
@@ -108,7 +108,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$content
 			);
 
-			$skip_words = $this->get_skip_words();
+			$skip_words = parent::get_skip_words();
 			$skip_words = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $skip_words);
 
 			$search = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $search);
@@ -176,8 +176,8 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$content = $this->transliteration($content, $type);
 
 		if(($type == 'lat_to_cyr') && $fix_html){
-			$content = $this->fix_cyr_html($content);
-			$content = $this->fix_attributes($content);
+			$content = self::fix_cyr_html($content);
+			$content = self::fix_attributes($content);
 		}
 
 		return $content;
@@ -240,13 +240,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function html_tags() {
-		global $rstr_cache;
-
-		if($html_tags = $rstr_cache->get('html-tags')){
-			return apply_filters('rstr_html_tags_collected', $html_tags);
-		}
-
+	public static function html_tags() {
 		$html_tags = get_option(RSTR_NAME . '-html-tags');
 
 		if( empty($html_tags) )
@@ -256,7 +250,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			$tags_latin = Serbian_Transliteration_Utilities::explode(',', $tags);
 			$tags_latin = apply_filters('rstr_html_tags_lat', $tags_latin);
 
-			$tags_cyr = $this->lat_to_cyr($tags, false);
+			$tags_cyr = self::__instance()->lat_to_cyr($tags, false);
 			$tags_cyr = Serbian_Transliteration_Utilities::explode(',', $tags_cyr);
 			$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
 
@@ -270,7 +264,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			}
 		}
 
-		return apply_filters('rstr_html_tags_collected', $rstr_cache->set('html-tags', $html_tags));
+		return apply_filters('rstr_html_tags_collected', $html_tags);
 	}
 
 	/*
@@ -278,44 +272,42 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string/html
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function fix_cyr_html($content){
+	public static function fix_cyr_html($content){
+		global $rstr_cache;
+		
 		$content = htmlspecialchars_decode($content);
 
 		// Fix HTML entities
 		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω]+)\;/iu', function($m){
-			return '&' . $this->cyr_to_lat($m[1]) . ';';
+			return '&' . self::__instance()->cyr_to_lat($m[1]) . ';';
 		}, $content);
 
+		$tag_replace = $rstr_cache->get('fix_cyr_html');
 
-		// Fix HTML tags
-		$tags = $this->html_tags();
-
-		$br = $this->lat_to_cyr('br', false);
-		$hr = $this->lat_to_cyr('hr', false);
-
-		$tag_replace = array(
-			'<'.$this->lat_to_cyr('img', false).' ' => '<img ',
-			'<'.$br.'>' => '<br>',
-			'<'.$br.' ' => '<br ',
-			'<'.$hr.'>' => '<hr>',
-			'<'.$hr.' ' => '<hr ',
-		);
-
-		foreach($tags->lat as $i=>$tag){
-			$tag_cyr = $tags->cyr[$i];
-
-			$tag_replace['<' . $tag_cyr] = '<' . $tag;
-			$tag_replace['</' . $tag_cyr . '>'] = '</' . $tag . '>';
+		if(empty($tag_replace))
+		{
+			// Fix HTML tags
+			$tags = self::html_tags();
+	
+			foreach($tags->lat as $i=>$tag_lat){
+				$tag_cyr = $tags->cyr[$i];
+	
+				$tag_replace['<' . $tag_cyr] = '<' . $tag_lat;
+				$tag_replace['</' . $tag_cyr . '>'] = '</' . $tag_lat . '>';
+			}
+			$tags = NULL;
+			
+			$tag_replace = apply_filters('rstr/html/tags/replace', array_merge($tag_replace, array(
+				self::__instance()->lat_to_cyr('href', false) => 'href',
+				self::__instance()->lat_to_cyr('src', false) => 'src',
+				'&'.self::__instance()->lat_to_cyr('scaron', false).';' => 'ш',
+				'&'.self::__instance()->lat_to_cyr('Scaron', false).';' => 'Ш'
+			)), $tag_replace);
+			
+			$rstr_cache->set('fix_cyr_html', $tag_replace);
 		}
-		$tags = NULL;
-
 		// Fix some characters
-		$content = strtr($content, apply_filters('rstr/html/tags/replace', array_merge($tag_replace, array(
-			$this->lat_to_cyr('href', false) => 'href',
-			$this->lat_to_cyr('src', false) => 'src',
-			'&'.$this->lat_to_cyr('scaron', false).';' => 'ш',
-			'&'.$this->lat_to_cyr('Scaron', false).';' => 'Ш'
-		)), $tag_replace));
+		$content = strtr($content, $tag_replace);
 
 		$tag_replace = NULL;
 
@@ -324,75 +316,75 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		/* Fix HTML attributes */
 		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\-]+)(=["\'])/iu', function($m){
-			return ' ' . $this->cyr_to_lat($m[1]) . $m[2];
+			return ' ' . self::__instance()->cyr_to_lat($m[1]) . $m[2];
 		}, $content);
 		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf(' %1$s="%2$s"', $m[1], $this->cyr_to_lat($m[2]));
+			return sprintf(' %1$s="%2$s"', $m[1], self::__instance()->cyr_to_lat($m[2]));
 		}, $content);
 		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?\'(.*?)\'/iu', function($m){
-			return sprintf(' %1$s=\'%2$s\'', $m[1], $this->cyr_to_lat($m[2]));
+			return sprintf(' %1$s=\'%2$s\'', $m[1], self::__instance()->cyr_to_lat($m[2]));
 		}, $content);
 
 		// Fix attributes with doublequote
-		$content = preg_replace_callback ('/('.$this->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf('%1$s="%2$s"', $this->cyr_to_lat($m[1]), esc_attr($this->lat_to_cyr($m[3], false)));
+		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
+			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
 		}, $content);
 		// Fix attributes with singlequote
-		$content = preg_replace_callback ('/('.$this->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
-			return sprintf('%1$s="%2$s"', $this->cyr_to_lat($m[1]), esc_attr($this->lat_to_cyr($m[3], false)));
+		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
+			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
 		}, $content);
 
 		// Fix data attributes
 		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode($this->cyr_to_lat($m[2])));
+			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode(self::__instance()->cyr_to_lat($m[2])));
 		}, $content);
 
 		// Fix open tags
 		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
-			return $this->cyr_to_lat($m[1]);
+			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix closed tags
 		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω]+>)/iu', function($m){
-			return $this->cyr_to_lat($m[1]);
+			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix JavaScript
 		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($m) {
-			return $this->cyr_to_lat($m[2]);
+			return self::__instance()->cyr_to_lat($m[2]);
 		}, $content);
 
 		// Fix CSS
 		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($m) {
-			return $this->cyr_to_lat($m[2]);
+			return self::__instance()->cyr_to_lat($m[2]);
 		}, $content);
 
 		// Fix email
 		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\_\-\.]+)@([\x{0400}-\x{04FF}0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}0-9α-ωΑ-Ω]{3,10}))/iu', function($m){
-			return $this->cyr_to_lat($m[1]);
+			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix URL
 		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}α-ωΑ-Ω]{4,5}):\/{2}([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
-			return $this->cyr_to_lat($m[1]);
+			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
-		$content = preg_replace_callback ('/"('.$this->lat_to_cyr('https', false).'?:\/\/.*?)"/iu', function($m){
-			return $this->cyr_to_lat($m[1]);
+		$content = preg_replace_callback ('/"('.self::__instance()->lat_to_cyr('https', false).'?:\/\/.*?)"/iu', function($m){
+			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix mailto link
-		$content = preg_replace_callback ('/"('.$this->lat_to_cyr('mailto', false).':\/\/.*?)"/iu', function($m){
-			return $this->cyr_to_lat($m[1]);
+		$content = preg_replace_callback ('/"('.self::__instance()->lat_to_cyr('mailto', false).':\/\/.*?)"/iu', function($m){
+			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix attributes with doublequote
 		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf('%1$s="%2$s"', $m[1], esc_attr($this->lat_to_cyr($m[3], false)));
+			return sprintf('%1$s="%2$s"', $m[1], esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
 		}, $content);
 
 		// Fix attributes with single quote
 		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?\'(.*?)\'/iu', function($m){
-			return sprintf('%1$s=\'%2$s\'', $m[1], esc_attr($this->lat_to_cyr($m[3], false)));
+			return sprintf('%1$s=\'%2$s\'', $m[1], esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
 		}, $content);
 
 		return $content;
@@ -450,7 +442,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function fix_attributes($content){
+	public static function fix_attributes($content){
 
 		// Fix bad attribute space
 		$content = preg_replace('/"([a-z-_]+\s?=)/i', ' $1', $content);
