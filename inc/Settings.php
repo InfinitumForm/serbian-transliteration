@@ -646,6 +646,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 
         echo join('<br>', $inputs);
+		printf('<br><p class="description">%1$s</p>', __('You must indicate which letter is currently represented on your web site. If the site is written in Cyrillic - choose Cyrillic. Or vice versa.', RSTR_NAME));
 	}
 
 	/**
@@ -668,6 +669,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 
         echo join('<br>', $inputs);
+		printf('<br><p class="description">%1$s</p>', __('This option determines the global transliteration of your web site. If you do not want to transliterate the entire website and use this plugin for other purposes, disable this option. This option does not affect to the functionality of short codes and tags.', RSTR_NAME));
 	}
 
 	/**

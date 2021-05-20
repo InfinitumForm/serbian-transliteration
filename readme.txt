@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.6.6
+Stable tag: 1.6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,14 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.6.7 =
+* Improved permalink transliteration
+* Improved PHP memory size
+* Improved diacritical words
+* Improved libraries
+* Added character normalization
+* Added POT file for translation
+
 = 1.6.6 =
 * Improved transliteration of the Cyrillic alphabet
 * Improved and optimized PHP code
@@ -258,6 +266,14 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.6.7 =
+* Improved permalink transliteration
+* Improved PHP memory size
+* Improved diacritical words
+* Improved libraries
+* Added character normalization
+* Added POT file for translation
 
 = 1.6.6 =
 * Improved transliteration of the Cyrillic alphabet

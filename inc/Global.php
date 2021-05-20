@@ -37,21 +37,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		$content = $this->cyr_to_lat($content);
 
-		$content = strtr($content, apply_filters('rstr_cyr_to_lat_sanitize', array(
-			'Ć' => 'C',
-			'ć' => 'c',
-			'Č' => 'C',
-			'č' => 'c',
-			'Š' => 'S',
-			'š' => 's',
-			'Ž' => 'Z',
-			'ž' => 'z',
-			'Đ' => 'Dj',
-			'dj' => 'dj',
-			'DŽ' => 'DZ',
-			'Dž' => 'Dz',
-			'dž' => 'dz'
-		)));
+		$content = Serbian_Transliteration_Utilities::normalize_latin_string($content);
 
 		if(function_exists('iconv'))
 		{
@@ -119,7 +105,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 			if(!empty($arr))
 			{
-				$words = array();
+				// Proccess via buffer to made it a bit faster
+				ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
+				$count = count($arr);
 				foreach($arr as $i=>$word)
 				{
 					$word_search = (function_exists('mb_strtolower') ? mb_strtolower($word, 'UTF-8') : strtolower($word));
@@ -129,29 +117,44 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 					$word_search_origin = preg_replace('/[.,?!-*_#$]+/i','',$word_search_origin);
 
 					if(in_array($word_search_origin, $skip_words)){
-						$words[]=$arr_origin[$i];
+						echo $arr_origin[$i];
+						
+						if($count > $i+1) {
+							echo ' ';
+						} else {
+							continue;
+						}
+						
 						continue;
 					}
 
 					if(in_array($word_search, $search)) {
 						if(ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)){
-							$words[] = (function_exists('mb_strtoupper') ? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8') : strtoupper($search[array_search($word_search, $search)]));
+							echo (function_exists('mb_strtoupper') ? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8') : strtoupper($search[array_search($word_search, $search)]));
 						} else if( preg_match('~^\p{Lu}~u', $word) ) {
 							$ucfirst = $search[array_search($word_search, $search)];
 							$firstChar = (function_exists('mb_substr') ? mb_substr($ucfirst, 0, 1, 'UTF-8') : substr($ucfirst, 0, 1));
 							$then = (function_exists('mb_substr') ? mb_substr($ucfirst, 1, NULL, 'UTF-8') : substr($ucfirst, 1, NULL));
-							$words[]= (function_exists('mb_strtoupper') ? mb_strtoupper($firstChar, 'UTF-8') : strtoupper($firstChar)) . $then;
+							echo (function_exists('mb_strtoupper') ? mb_strtoupper($firstChar, 'UTF-8') : strtoupper($firstChar)) . $then;
 						} else {
-							$words[]=$word;
+							echo $word;
 						}
 					} else {
-						$words[]=$word;
+						echo $word;
+					}
+					
+					if($count > $i+1) {
+						echo ' ';
+					} else {
+						continue;
 					}
 				}
-
 				$new_string = $skip_words = $search = $arr = $arr_origin = NULL;
+				
+				$words = ob_get_contents();
+				ob_end_clean();
 
-				if(!empty($words)) return join(' ', $words);
+				if(!empty($words)) return $words;
 			}
 		}
 

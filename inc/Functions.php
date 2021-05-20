@@ -7,6 +7,9 @@
  * @package           Serbian_Transliteration
  ***********************************************/
 
+// Indicate functions file for the extended plugins
+if(!defined('RSTR_FUNCTIONS')) define('RSTR_FUNCTIONS', true);
+
 /*
  * Get current URL
  * @return        string

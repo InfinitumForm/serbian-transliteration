@@ -58,7 +58,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 				$install_date = strtotime($get_dates);
 			}
 			
-			$past_date = strtotime( '-7 days' );
+			$past_date = strtotime( '-5 days' );
 		 
 			if ( $past_date >= $install_date) {
 				$this->add_action( 'admin_notices', 'display_admin_notice' );

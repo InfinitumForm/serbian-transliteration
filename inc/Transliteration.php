@@ -285,13 +285,15 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function get_diacritical( $needle = NULL ){
-		$cache = get_transient(RSTR_NAME . '-diacritical-words');
+		$locale = self::__init()->get_locale();
+		$transient_name = RSTR_NAME . "-diacritical-words-{$locale}";
+		$cache = get_transient($transient_name);
 		if(empty($cache))
 		{
-			$file_name=apply_filters('rstr/init/libraries/file/get_diacritical', self::__init()->get_locale().'.diacritical.words.lib');
+			$file_name=apply_filters('rstr/init/libraries/file/get_diacritical', "{$locale}.diacritical.words.lib", $locale, $transient_name);
 			$cache = self::parse_library($file_name);
 			if(!empty($cache)) {
-				set_transient(RSTR_NAME . '-diacritical-words', $cache, apply_filters('rstr/init/libraries/file/get_diacritical/transient', (DAY_IN_SECONDS*7)));
+				set_transient($transient_name, $cache, apply_filters('rstr/init/libraries/file/get_diacritical/transient', (DAY_IN_SECONDS*7)));
 			}
 		}
 
@@ -308,14 +310,15 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function get_skip_words( $needle = NULL ){
-		$cache = get_transient(RSTR_NAME . '-skip-words');
-
+		$locale = self::__init()->get_locale();
+		$transient_name = RSTR_NAME . "-skip-words-{$locale}";
+		$cache = get_transient($transient_name);
 		if(empty($cache))
 		{
-			$file_name=apply_filters('rstr/init/libraries/file/skip-words', self::__init()->get_locale().'.skip.words.lib');
+			$file_name=apply_filters('rstr/init/libraries/file/skip-words', "{$locale}.skip.words.lib", $locale, $transient_name);
 			$cache = self::parse_library($file_name);
 			if(!empty($cache)) {
-				set_transient(RSTR_NAME . '-skip-words', $cache, apply_filters('rstr/init/libraries/file/skip-words/transient', (DAY_IN_SECONDS*7)));
+				set_transient($transient_name, $cache, apply_filters('rstr/init/libraries/file/skip-words/transient', (DAY_IN_SECONDS*7)));
 			}
 		}
 
@@ -338,23 +341,40 @@ class Serbian_Transliteration_Transliterating {
 
 		if(file_exists($words_file))
 		{
-			if($fopen_locale=fopen($words_file, 'r'))
-			{
-				$contents = fread($fopen_locale, filesize($words_file));
-				fclose($fopen_locale);
+				$contents = '';
+				if($read_file_chunks = self::read_file_chunks($words_file))
+				{
+					foreach ($read_file_chunks as $chunk) {
+						$contents.=$chunk;
+					}
+				}
 
 				if(!empty($contents))
 				{
 					$words = Serbian_Transliteration_Utilities::explode("\n", $contents);
 					$words = array_unique($words);
 				} else return false;
-			} else return false;
 		} else return false;
 
 		if($needle) {
 			return (in_array($needle, $words, true) !== false ? $needle : false);
 		} else {
 			return $words;
+		}
+	}
+	
+	/*
+	* Read file with chunks with memory free
+	* @since     1.6.7
+	*/
+	private static function read_file_chunks($path) {
+		if($handle = fopen($path, "r")) {
+			while(!feof($handle)) {
+				yield fgets($handle);
+			}
+			fclose($handle);
+		} else {
+			return false;
 		}
 	}
 	

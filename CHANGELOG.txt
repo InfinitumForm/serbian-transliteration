@@ -1,3 +1,11 @@
+= 1.6.7 =
+* Improved permalink transliteration
+* Improved PHP memory size
+* Improved diacritical words
+* Improved libraries
+* Added character normalization
+* Added POT file for translation
+
 = 1.6.6 =
 * Improved transliteration of the Cyrillic alphabet
 * Improved and optimized PHP code

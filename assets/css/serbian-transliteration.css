@@ -1,3 +1,15 @@
+.rstr-cache-debug{
+	margin: 15px auto 100px auto;
+    display: block;
+    width: 100%;
+    max-width: 50%;
+    font-family: monospace, sans-serif;
+    color: #fff;
+    background: #000;
+    padding: 10px 15px;
+    white-space: pre-wrap;
+}
+
 #serbian-transliteration-settings .serbian-transliteration-sticky-button{
 	position: fixed;
     z-index: 10;
