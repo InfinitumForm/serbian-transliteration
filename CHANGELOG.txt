@@ -1,3 +1,12 @@
+= 1.7.0 =
+* Fixed blank screen on the Cyrillic transliteration
+* Improved WP Cache object
+* Removed regular expression error
+* Moved to the static cache objects
+* Improved AJAX calls
+* Added algorithm for faster language recognition
+* Removed scripts that slow down the site
+
 = 1.6.9 =
 * Fixed blank screen on the Cyrillic transliteration
 * Improved WP Cache object

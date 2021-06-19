@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.6.9
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,15 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.7.0 =
+* Fixed blank screen on the Cyrillic transliteration
+* Improved WP Cache object
+* Removed regular expression error
+* Moved to the static cache objects
+* Improved AJAX calls
+* Added algorithm for faster language recognition
+* Removed scripts that slow down the site
+
 = 1.6.9 =
 * Fixed blank screen on the Cyrillic transliteration
 * Improved WP Cache object
@@ -278,6 +287,15 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.7.0 =
+* Fixed blank screen on the Cyrillic transliteration
+* Improved WP Cache object
+* Removed regular expression error
+* Moved to the static cache objects
+* Improved AJAX calls
+* Added algorithm for faster language recognition
+* Removed scripts that slow down the site
 
 = 1.6.9 =
 * Fixed blank screen on the Cyrillic transliteration
