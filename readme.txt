@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.6.7
+Stable tag: 1.6.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,44 +15,44 @@ This is a light weight, simple and easy plugin with which you can transliterate 
 
 = FEATURES =
 
-* WordPress Cyrillic to Latin and Latin to Cyrillic
-* Converts Cyrillic, European and Georgian characters in post, page and term slugs to Latin characters.
-* Transliterate Cyrillic filenames to Latin
-* Transliterate Cyrillic permalinks to Latin
-* Allow Cyrillic Usernames
-* Search posts, pages, custom post types written in cyrillic using both latin and cyrillic script
-* WP-CLI Support
+ &#9989; WordPress Cyrillic to Latin and Latin to Cyrillic
+ &#9989; Converts Cyrillic, European and Georgian characters in post, page and term slugs to Latin characters.
+ &#9989; Transliterate Cyrillic filenames to Latin
+ &#9989; Transliterate Cyrillic permalinks to Latin
+ &#9989; Allow Cyrillic Usernames
+ &#9989; Search posts, pages, custom post types written in cyrillic using both latin and cyrillic script
+ &#9989; WP-CLI Support
 
 = BENEFITS =
 
-* Compatible with Multilanguage Plugins
-* Compatible with any WordPress template
-* Compatible with SEO plugins
-* Possibility of partial transliteration
-* Scalable and customizable
-* It does not affect on the HTML, CSS or JS codes
-* Multilingual support
-* Transcription mode selection
-* Diacritical support (currently for the Serbian language)
-* Support for special characters
-* Support [PHP version 7.4.8](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
-* Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+ &#9989; Compatible with Multilanguage Plugins
+ &#9989; Compatible with any WordPress template
+ &#9989; Compatible with SEO plugins
+ &#9989; Possibility of partial transliteration
+ &#9989; Scalable and customizable
+ &#9989; It does not affect on the HTML, CSS or JS codes
+ &#9989; Multilingual support
+ &#9989; Transcription mode selection
+ &#9989; Diacritical support (currently for the Serbian language)
+ &#9989; Support for special characters
+ &#9989; Support [PHP version 7.4.8](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+ &#9989; Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 
 = LANGUAGE SUPPORT =
 
-* **Serbian latinisation** - Serbian language (by locale:**sr_RS**)
-* **Bosnian latinisation** - Bosnian language (follows the rules of the Serbian language with additional special characters)
-* **Montenegrin latinisation** - Montenegrin language (follows the rules of the Serbian language with additional special characters)
-* **Russian latinisation** - Russian language (by locale:**ru_RU**)
-* **Belarusian latinisation** - Belarusian language (by locale:**bel**)
-* **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
-* **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
-* **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
-* **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
-* **Greek (Elini'ka) latinisation** - Greek Language (by locale:**el**)
-* **Arabic latinisation** - Arabic Language (EXPERIMENTAL) (by locale:**ar**)
-* **Armenian latinisation** - Armenian Language (EXPERIMENTAL) (by locale:**hy**)
-* more languages are coming soon...
+ &#9989; **Serbian latinisation** - Serbian language (by locale:**sr_RS**)
+ &#9989; **Bosnian latinisation** - Bosnian language (follows the rules of the Serbian language with additional special characters)
+ &#9989; **Montenegrin latinisation** - Montenegrin language (follows the rules of the Serbian language with additional special characters)
+ &#9989; **Russian latinisation** - Russian language (by locale:**ru_RU**)
+ &#9989; **Belarusian latinisation** - Belarusian language (by locale:**bel**)
+ &#9989; **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
+ &#9989; **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
+ &#9989; **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
+ &#9989; **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
+ &#9989; **Greek (Elini'ka) latinisation** - Greek Language (by locale:**el**)
+ &#128312; **Arabic latinisation** - Arabic Language (EXPERIMENTAL) (by locale:**ar**)
+ &#128312; **Armenian latinisation** - Armenian Language (EXPERIMENTAL) (by locale:**hy**)
+ &#9989; more languages are coming soon...
 
 = PLUGINS SUPPORT =
 
@@ -60,16 +60,16 @@ This plugin is made to support all known plugins and visual editors.
 
 We also do special compatible functions with:
 
-* [WooCommerce](https://wordpress.org/plugins/woocommerce/)
-* [Polylang](https://wordpress.org/plugins/polylang/)
-* [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
-* [WordPress Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
-* [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
-* [Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/)
-* [Slider Revolution](https://www.sliderrevolution.com/)
-* [Avada theme](https://avada.theme-fusion.com/)
-* [Themify](https://themify.me/)
-* [Divi](https://www.elegantthemes.com/gallery/divi/) (Theme & Builder)
+ &#9989; [WooCommerce](https://wordpress.org/plugins/woocommerce/)
+ &#9989; [Polylang](https://wordpress.org/plugins/polylang/)
+ &#9989; [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
+ &#9989; [WordPress Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
+ &#9989; [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
+ &#9989; [Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/)
+ &#9989; [Slider Revolution](https://www.sliderrevolution.com/)
+ &#9989; [Avada theme](https://avada.theme-fusion.com/)
+ &#9989; [Themify](https://themify.me/)
+ &#9989; [Divi](https://www.elegantthemes.com/gallery/divi/) (Theme & Builder)
 
 **YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
 
@@ -152,6 +152,18 @@ We also thought of PHP developers where we have enabled several useful functions
 9. Automated test
 
 == Changelog ==
+
+= 1.6.9 =
+* Fixed blank screen on the Cyrillic transliteration
+* Improved WP Cache object
+* Removed regular expression error
+* Moved to the static cache objects
+* Improved AJAX calls
+
+= 1.6.8 =
+* Transferred reliance on WP Cache object
+* Updated word base
+* Fixed error loading media when forced AJAX is on
 
 = 1.6.7 =
 * Improved permalink transliteration
@@ -266,6 +278,18 @@ We also thought of PHP developers where we have enabled several useful functions
 * Updated GNU License
 
 == Upgrade Notice ==
+
+= 1.6.9 =
+* Fixed blank screen on the Cyrillic transliteration
+* Improved WP Cache object
+* Removed regular expression error
+* Moved to the static cache objects
+* Improved AJAX calls
+
+= 1.6.8 =
+* Transferred reliance on WP Cache object
+* Updated word base
+* Fixed error loading media when forced AJAX is on
 
 = 1.6.7 =
 * Improved permalink transliteration

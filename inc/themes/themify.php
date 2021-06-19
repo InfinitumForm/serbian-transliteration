@@ -13,11 +13,10 @@ if(!class_exists('Serbian_Transliteration__Theme__themify')) :
 		
 		/* Run this script */
 		public static function run($dry = false) {
-			global $rstr_cache;
 			$class = self::class;
-			$instance = $rstr_cache->get($class);
+			$instance = Serbian_Transliteration_Cache::get($class);
 			if ( !$instance ) {
-				$instance = $rstr_cache->set($class, new self($dry));
+				$instance = Serbian_Transliteration_Cache::set($class, new self($dry));
 			}
 			return $instance;
 		}

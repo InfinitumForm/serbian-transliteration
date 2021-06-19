@@ -19,11 +19,10 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 		
 		/* Run this script */
 		public static function includes($options = array(), $only_object = false ) {
-			global $rstr_cache;
 			$class = self::class;
-			$instance = $rstr_cache->get($class);
+			$instance = Serbian_Transliteration_Cache::get($class);
 			if ( !$instance ) {
-				$instance = $rstr_cache->set($class, new self($options, $only_object));
+				$instance = Serbian_Transliteration_Cache::set($class, new self($options, $only_object));
 			}
 			return $instance;
 		}

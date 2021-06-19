@@ -144,7 +144,7 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function is_lat($c){
-		return (preg_match_all('/[\p{Latin}]+/gui', strip_tags($c, '')) !== false);
+		return (preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, '')) !== false);
 	}
 
 	/*
@@ -153,7 +153,7 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function is_cyr($c){
-		return (preg_match_all('/[\p{Cyrillic}]+/gui', strip_tags($c, '')) !== false);
+		return (preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, '')) !== false);
 	}
 
 	/*
@@ -203,9 +203,8 @@ class Serbian_Transliteration_Utilities{
 	* @verson    1.0.0
 	*/
 	public static function get_current_script(){
-		global $rstr_cache;
 
-		$script = $rstr_cache->get('get_current_script');
+		$script = Serbian_Transliteration_Cache::get('get_current_script');
 
 		if(empty($script))
 		{
@@ -244,7 +243,7 @@ class Serbian_Transliteration_Utilities{
 				}
 			}
 
-			$rstr_cache->set('get_current_script', $script);
+			Serbian_Transliteration_Cache::set('get_current_script', $script);
 		}
 
 		return $script;
@@ -257,9 +256,8 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function is_editor()
 	{
-		global $rstr_cache;
 
-		$is_editor = $rstr_cache->get('is_editor');
+		$is_editor = Serbian_Transliteration_Cache::get('is_editor');
 
 		if(empty($is_editor)) {
 			if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
@@ -268,10 +266,10 @@ class Serbian_Transliteration_Utilities{
 				}
 				$get_current_screen = get_current_screen();
 				if(is_callable(array($get_current_screen, 'is_block_editor')) && method_exists($get_current_screen, 'is_block_editor')) {
-					$is_editor = $rstr_cache->set('is_editor', $get_current_screen->is_block_editor());
+					$is_editor = Serbian_Transliteration_Cache::set('is_editor', $get_current_screen->is_block_editor());
 				}
 			} else {
-				$is_editor = $rstr_cache->set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
+				$is_editor = Serbian_Transliteration_Cache::set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
 			}
 		}
 
@@ -393,14 +391,13 @@ class Serbian_Transliteration_Utilities{
 	 * @verson    1.0.0
 	 */
 	public static function parse_url(){
-		global $rstr_cache;
-		if(!$rstr_cache->get('url_parsed')) {
+		if(!Serbian_Transliteration_Cache::get('url_parsed')) {
 			$http = 'http'.( self::is_ssl() ?'s':'');
 			$domain = preg_replace('%:/{3,}%i','://',rtrim($http,'/').'://'.$_SERVER['HTTP_HOST']);
 			$domain = rtrim($domain,'/');
 			$url = preg_replace('%:/{3,}%i','://',$domain.'/'.(isset($_SERVER['REQUEST_URI']) && !empty( $_SERVER['REQUEST_URI'] ) ? ltrim($_SERVER['REQUEST_URI'], '/'): ''));
 
-			$rstr_cache->set('url_parsed', array(
+			Serbian_Transliteration_Cache::set('url_parsed', array(
 				'method'	=>	$http,
 				'home_fold'	=>	str_replace($domain,'',home_url()),
 				'url'		=>	$url,
@@ -408,7 +405,7 @@ class Serbian_Transliteration_Utilities{
 			));
 		}
 
-		return $rstr_cache->get('url_parsed');
+		return Serbian_Transliteration_Cache::get('url_parsed');
 	}
 
 	/*
@@ -417,9 +414,8 @@ class Serbian_Transliteration_Utilities{
 	 */
 	public static function is_ssl($url = false)
 	{
-		global $rstr_cache;
 
-		$ssl = $rstr_cache->get('is_ssl');
+		$ssl = Serbian_Transliteration_Cache::get('is_ssl');
 
 		if($url !== false && is_string($url)) {
 			return (preg_match('/(https|ftps)/Ui', $url) !== false);
@@ -433,7 +429,7 @@ class Serbian_Transliteration_Utilities{
 				|| (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
 				|| (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
 			) {
-				$ssl = $rstr_cache->set('is_ssl', true);
+				$ssl = Serbian_Transliteration_Cache::set('is_ssl', true);
 			}
 		}
 		return $ssl;
@@ -475,10 +471,9 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function setcookie ($val){
 		if( !headers_sent() ) {
-			global $rstr_cache;
 
 			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
-			$rstr_cache->delete('get_current_script');
+			Serbian_Transliteration_Cache::delete('get_current_script');
 
 			if(get_rstr_option('cache-support', 'yes') == 'yes') {
 				self::cache_flush();
@@ -564,28 +559,28 @@ class Serbian_Transliteration_Utilities{
 	* @version  2.0.0
 	******************************************************************/
 	public static function get_page_ID(){
-		global $post, $rstr_cache;
+		global $post;
 
-		if($current_page_id = $rstr_cache->get('current_page_id')){
+		if($current_page_id = Serbian_Transliteration_Cache::get('current_page_id')){
 			return $current_page_id;
 		}
 
 		if($id = self::get_page_ID__private__wp_query())
-			return $rstr_cache->set('current_page_id', $id);
+			return Serbian_Transliteration_Cache::set('current_page_id', $id);
 		else if($id = self::get_page_ID__private__get_the_id())
-			return $rstr_cache->set('current_page_id', $id);
+			return Serbian_Transliteration_Cache::set('current_page_id', $id);
 		else if(!is_null($post) && isset($post->ID) && !empty($post->ID))
-			return $rstr_cache->set('current_page_id', $post->ID);
+			return Serbian_Transliteration_Cache::set('current_page_id', $post->ID);
 		else if($post = self::get_page_ID__private__GET_post())
-			return $rstr_cache->set('current_page_id', $post);
+			return Serbian_Transliteration_Cache::set('current_page_id', $post);
 		else if($p = self::get_page_ID__private__GET_p())
-			return $rstr_cache->set('current_page_id', $p);
+			return Serbian_Transliteration_Cache::set('current_page_id', $p);
 		else if($page_id = self::get_page_ID__private__GET_page_id())
-			return $rstr_cache->set('current_page_id', $page_id);
+			return Serbian_Transliteration_Cache::set('current_page_id', $page_id);
 		else if(!is_admin() && $id = self::get_page_ID__private__query())
 			return $id;
 		else if($id = self::get_page_ID__private__page_for_posts())
-			return $rstr_cache->set('current_page_id', get_option( 'page_for_posts' ));
+			return Serbian_Transliteration_Cache::set('current_page_id', get_option( 'page_for_posts' ));
 
 		return false;
 	}
@@ -628,7 +623,7 @@ class Serbian_Transliteration_Utilities{
 
 	// Get page ID by mySQL query
 	protected static function get_page_ID__private__query(){
-		global $wpdb, $rstr_cache;
+		global $wpdb;
 		$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
 		$parts = self::explode('/', $actual_link);
 		if(!empty($parts))
@@ -651,7 +646,7 @@ class Serbian_Transliteration_Utilities{
 					)
 				))
 				{
-					return $rstr_cache->set('current_page_id', absint($post_id));
+					return Serbian_Transliteration_Cache::set('current_page_id', absint($post_id));
 				}
 			}
 		}

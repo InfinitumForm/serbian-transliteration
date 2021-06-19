@@ -12,14 +12,13 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 	{
 		/* Run this script */
 		public static function init() {
-			global $rstr_cache;
 			$class = get_called_class();
 			if(!$class){
 				$class = self::class;
 			}
-			$instance = $rstr_cache->get($class);
+			$instance = Serbian_Transliteration_Cache::get($class);
 			if ( !$instance ) {
-				$instance = $rstr_cache->set($class, new self());
+				$instance = Serbian_Transliteration_Cache::set($class, new self());
 			}
 			return $instance;
 		}

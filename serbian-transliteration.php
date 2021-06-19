@@ -8,7 +8,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.6.7
+ * Version:           1.6.9
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
@@ -37,7 +37,6 @@ if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 // Globals
-global $rstr_cache;
 
 /*
  * Main plugin constants
@@ -55,13 +54,11 @@ include_once __DIR__ . '/constants.php';
  * @verson    1.0.0
  */
 include_once RSTR_INC . '/Cache.php';
-$rstr_cache = new Serbian_Transliteration_Cache();
-
+Serbian_Transliteration_Cache::instance();
 if ( defined( 'RSTR_DEBUG_CACHE' ) && RSTR_DEBUG_CACHE === true ) {
 	add_action('wp_footer', function(){
 		if(is_user_logged_in() && current_user_can('administrator')) {
-			global $rstr_cache;
-			$rstr_cache->debug();
+			Serbian_Transliteration_Cache::debug();
 		}
 	});
 }
@@ -74,11 +71,10 @@ if ( defined( 'RSTR_DEBUG_CACHE' ) && RSTR_DEBUG_CACHE === true ) {
 if(!function_exists('get_rstr_option'))
 {
 	function get_rstr_option($name = false, $default = NULL) {
-		global $rstr_cache;
-		$get_rstr_options = $rstr_cache->get('options');
+		$get_rstr_options = Serbian_Transliteration_Cache::get('options');
 
 		if( !$get_rstr_options ){
-			$get_rstr_options = $rstr_cache->set('options', get_option( RSTR_NAME ));
+			$get_rstr_options = Serbian_Transliteration_Cache::set('options', get_option( RSTR_NAME ));
 		}
 
 		if($get_rstr_options) {
@@ -293,6 +289,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 		
 		/* Redirect after activation
 		====================================*/
+/*
 		add_action('activated_plugin', function ($plugin) {
 			if( $plugin === RSTR_BASENAME ) {
 				if( wp_safe_redirect( admin_url( 'options-general.php?page=serbian-transliteration&rstr-activation=true' ) ) ) {
@@ -300,7 +297,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 				}
 			}
 		}, 10, 1);
-
+*/
 		/* Deactivate plugin
 		====================================*/
 		Serbian_Transliteration::register_deactivation_hook(function(){

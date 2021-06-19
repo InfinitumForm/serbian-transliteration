@@ -33,14 +33,13 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	
 	public static function instance($object)
 	{
-		global $rstr_cache;
 		$class = get_called_class();
 		if(!$class){
 			$class = self::class;
 		}
-		$instance = $rstr_cache->get($class);
+		$instance = Serbian_Transliteration_Cache::get($class);
 		if ( !$instance ) {
-			$instance = $rstr_cache->set($class, new self($object));
+			$instance = Serbian_Transliteration_Cache::set($class, new self($object));
 		}
 		return $instance;
 	}

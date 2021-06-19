@@ -16,11 +16,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	 */
 	private static function get_instance()
 	{
-		global $rstr_cache;
 		$class = self::class;
-		$instance = $rstr_cache->get($class);
+		$instance = Serbian_Transliteration_Cache::get($class);
 		if ( !$instance ) {
-			$instance = $rstr_cache->set($class, new self());
+			$instance = Serbian_Transliteration_Cache::set($class, new self());
 		}
 		return $instance;
 	}
@@ -342,11 +341,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		add_action('wp_loaded', function () {
 			ob_start(function($buffer){
 //				if( Serbian_Transliteration_Utilities::is_cyr($buffer) ) {
-					$inst = Serbian_Transliteration::__instance();
 					// Fix internal tags
-					$cyr_to_lat = $inst->lat_to_cyr('cyr_to_lat', false);
-					$lat_to_cyr = $inst->lat_to_cyr('lat_to_cyr', false);
-					$rstr_skip = $inst->lat_to_cyr('rstr_skip', false);
+					$cyr_to_lat = Serbian_Transliteration::__instance()->lat_to_cyr('cyr_to_lat', false);
+					$lat_to_cyr = Serbian_Transliteration::__instance()->lat_to_cyr('lat_to_cyr', false);
+					$rstr_skip = Serbian_Transliteration::__instance()->lat_to_cyr('rstr_skip', false);
 
 					$buffer = strtr($buffer, array(
 						'{'.$cyr_to_lat.'}' => '{cyr_to_lat}',
@@ -364,17 +362,27 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 					));
 //				}
 
-				if(Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr') {
-					// Fix emails
-					$content = preg_replace_callback('/([a-z0-9\p{Cyrillic}_\-\.]+@[a-z0-9\p{Cyrillic}_\-\.]+\.[wqyx0-9\p{Cyrillic}_\-\.]+)/siu', function ($m) {
-						return $this->cyr_to_lat($m[1]);
-					}, $content);
+				// Fix emails
+				if(Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr' && !empty($buffer) && is_string($buffer)) {
+					/*$buffer = preg_replace_callback('/([a-z0-9\p{Cyrillic}_\-\.]+@[a-z0-9\p{Cyrillic}_\-\.]+\.[wqyx0-9\p{Cyrillic}_\-\.]+)/iu', function ($m) {
+						return Serbian_Transliteration::__instance()->cyr_to_lat($m[1]);
+					}, $buffer);*/
 				}
 				
 				// Force AJAX transliteration
 				if(get_rstr_option('force-ajax-calls', 'no') == 'yes'){
 					if(wp_doing_ajax() && !Serbian_Transliteration_Utilities::skip_transliteration()) {
-						$buffer = $inst->cyr_to_lat($buffer);
+						if(isset($_REQUEST['action']) && in_array(
+							$_REQUEST['action'],
+							array(
+								'find_posts',
+								'heartbeat',
+								'query-attachments',
+								'wp_block'
+							)
+						) !== false) {} else {
+							$buffer = Serbian_Transliteration::__instance()->cyr_to_lat($buffer);
+						}
 					}
 				}
 

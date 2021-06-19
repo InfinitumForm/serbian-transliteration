@@ -1,3 +1,15 @@
+= 1.6.9 =
+* Fixed blank screen on the Cyrillic transliteration
+* Improved WP Cache object
+* Removed regular expression error
+* Moved to the static cache objects
+* Improved AJAX calls
+
+= 1.6.8 =
+* Transferred reliance on WP Cache object
+* Updated word base
+* Fixed error loading media when forced AJAX is on
+
 = 1.6.7 =
 * Improved permalink transliteration
 * Improved PHP memory size

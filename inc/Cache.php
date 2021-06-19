@@ -4,118 +4,104 @@
  *
  * @link              http://infinitumform.com/
  * @since             1.4.1
- * @package           Serbian_Transliteration
+ * @package           RSTR
  * @autor             Ivijan-Stefan Stipic
  */
 if(!class_exists('Serbian_Transliteration_Cache')) :
 class Serbian_Transliteration_Cache
 {
-	private $cap = 100;
-    private $gcProbability = 1;
-    private $gcDivisor = 100;
-    
-	// Collection
-	private $cache = array();
+	const PREFIX = '';
+	const GROUP = 'serbian-transliteration';
 	
-	public function __construct(){
-		if(defined('RSTR_CACHE_CAPABILITY')) 						$this->cap = RSTR_CACHE_CAPABILITY;
-		if(defined('RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY'))	$this->gcProbability = RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY;
-		if(defined('RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR'))		$this->gcDivisor = RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR;
+	/*
+	 * Add a group to the list of global groups
+	 */
+	public static function instance(){
+		wp_cache_add_global_groups(self::GROUP);
 	}
 
 	/*
 	 * Get cached object
+	 *
+	 * Returns the value of the cached object, or false if the cache key doesn’t exist
 	 */
-    public function get($key)
+    public static function get($key, $force = false, $found = NULL)
     {
-        return isset($this->cache[$key]) ? $this->cache[$key] : false;
+        return wp_cache_get(self::PREFIX.$key, self::GROUP, $force, $found);
+    }
+	
+	/*
+	 * Save object to cache
+	 *
+	 * This function adds data to the cache if the cache key doesn’t already exist.
+	 * If it does exist, the data is not added and the function returns
+	 */
+    public static function add($key, $value, $expire=0)
+    {   
+		return (wp_cache_add( self::PREFIX.$key, $value, self::GROUP, $expire )!==false ? $value : false);
     }
 
 	/*
 	 * Save object to cache
+	 *
+	 * Adds data to the cache. If the cache key already exists, then it will be overwritten;
+	 * if not then it will be created.
 	 */
-    public function set($key, $value)
+    public static function set($key, $value, $expire=0)
     {   
-        $this->cache[$key] = $value;
-        $this->collect_garbage();
-		return $this->get($key);
+		return (wp_cache_set( self::PREFIX.$key, $value, self::GROUP, $expire )!==false ? $value : false);
+    }
+	
+	/*
+	 * Replace cached object
+	 *
+	 * Replaces the given cache if it exists, returns false otherwise.
+	 */
+    public static function replace($key, $value, $expire=0)
+    {
+        return (wp_cache_replace( self::PREFIX.$key, $value, self::GROUP, $expire )!==false ? $value : false);
     }
 	
 	/*
 	 * Delete cached object
+	 *
+	 * Clears data from the cache for the given key.
 	 */
-	public function delete($key)
+	public static function delete($key)
     {
-		if(is_array($key))
-		{
-			$i = 0;
-			foreach($key as $k){
-				if(isset($this->cache[$k])){
-					unset($this->cache[$k]);
-					++$i;
-				}
-			}
-			return ($i > 0);
-		}
-		else
-		{
-			if(isset($this->cache[$key])){
-				unset($this->cache[$key]);
-				return true;
-			}
-		}
-		return false;
-    }
-
-	/*
-	 * Debug cache
-	 */
-	public function debug()
-	{
-		ob_start();
-		echo var_dump(
-			array_merge(array(
-				'Serbian_Transliteration_Cache' => array(
-					'capability' => $this->cap,
-					'garbage_collection_probability' => $this->gcProbability,
-					'garbage_collection_divisor' => $this->gcDivisor,
-					'cache_objects_length' => count($this->cache)
-				)
-			), $this->cache)
-		);
-		$debug = ob_get_clean();
-		echo '<pre class="rstr-cache-debug">' . htmlspecialchars($debug) . '</pre>';
-	}
-
-	/*
-	 * PRIVATE: Collect garbage
-	 */
-    private function collect_garbage()
-    {   
-		if(function_exists('mt_rand')) {
-			$getrandmax = mt_getrandmax();
-			$rand = mt_rand();
-		} else {
-			$getrandmax = getrandmax();
-			$rand = rand();
-		}
-		
-        if (($rand / $getrandmax) && ($this->gcProbability / $this->gcDivisor))
-		{
-			$this->clear_garbage();
-		}
+		return wp_cache_delete(self::PREFIX.$key, self::GROUP)!==false;
     }
 	
 	/*
-	 * PRIVATE: Clear garbage
+	 * Clears all cached data
 	 */
-    private function clear_garbage()
-    {   
-		while (count($this->cache) > $this->cap)
-		{
-			reset($this->cache);
-			unset($this->cache[key($this->cache)]);
+	public static function flush()
+    {
+		global $wp_object_cache;
+		if($wp_object_cache && isset($wp_object_cache->cache[self::GROUP])){
+			unset($wp_object_cache->cache[self::GROUP]);
+			return true;
 		}
+		return false;
+    }
+	
+	/*
+	 * Debug cache
+	 */
+	public static function debug()
+	{
+		global $wp_object_cache;
+		$debug = array();
+		if(isset($wp_object_cache->cache[self::GROUP])) {
+			ob_start();
+				var_dump($wp_object_cache->cache[self::GROUP]);
+			$debug = ob_get_clean();
+		}
+		echo '<pre class="rstr-cache-debug">' . htmlspecialchars(preg_replace(
+			array('/(\=\>\n\s{2,4})/'),
+			array(' => '),
+			$debug
+		)) . '</pre>';
 	}
 }
 endif;

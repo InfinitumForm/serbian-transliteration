@@ -152,16 +152,14 @@ class Serbian_Transliteration_Transliterating {
 			return $language_scheme;
 		}
 
-		global $rstr_cache;
-
-		$get_locale = $rstr_cache->get('get_locale');
+		$get_locale = Serbian_Transliteration_Cache::get('get_locale');
 
 		if(empty($get_locale)){
 			$locale = get_locale();
 			if(function_exists('pll_current_language')) {
 				$locale = pll_current_language('locale');
 			}
-			$get_locale = $rstr_cache->set('get_locale', get_locale());
+			$get_locale = Serbian_Transliteration_Cache::set('get_locale', get_locale());
 		}
 
 		return $get_locale;
@@ -385,11 +383,10 @@ class Serbian_Transliteration_Transliterating {
 	*/
 	public static function __init()
 	{
-		global $rstr_cache;
 		$class = self::class;
-		$instance = $rstr_cache->get($class);
+		$instance = Serbian_Transliteration_Cache::get($class);
 		if ( !$instance ) {
-			$instance = $rstr_cache->set($class, new self());
+			$instance = Serbian_Transliteration_Cache::set($class, new self());
 		}
 		return $instance;
 	}

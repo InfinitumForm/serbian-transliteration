@@ -4,7 +4,7 @@
  *
  * @link              http://infinitumform.com/
  * @since             1.0.0
- * @package           Serbian_Transliteration
+ * @package           RSTR
  */
 
 // Include codes
@@ -29,7 +29,6 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     public function __construct()
     {
-		global $rstr_cache;
 
 		if(current_user_can('administrator'))
 		{
@@ -53,19 +52,19 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
 
 			if($mode_class = Serbian_Transliteration_Utilities::mode()) {
-				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_keys($mode_class::filters()));
+				Serbian_Transliteration_Cache::set('Serbian_Transliteration_Settings__active_filters', array_keys($mode_class::filters()));
 			}
 
 			if($active_plugins = Serbian_Transliteration_Plugins::includes(array(), true)->active_filters())
 			{
 				$active_plugins = array_keys($active_plugins);
-				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_merge($rstr_cache->get('Serbian_Transliteration_Settings__active_filters'), $active_plugins));
+				Serbian_Transliteration_Cache::set('Serbian_Transliteration_Settings__active_filters', array_merge(Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters'), $active_plugins));
 			}
 
 			if($active_themes = Serbian_Transliteration_Themes::includes(array(), true)->active_filters())
 			{
 				$active_themes = array_keys($active_themes);
-				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_merge($rstr_cache->get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
+				Serbian_Transliteration_Cache::set('Serbian_Transliteration_Settings__active_filters', array_merge(Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
 			}
 
 			$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
@@ -101,7 +100,6 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	}
 
 	public function ajax__rstr_filter_mode_options() {
-		global $rstr_cache;
 		$mode_class = Serbian_Transliteration_Utilities::mode(array('mode'=>sanitize_text_field($_POST['mode'])));
 
 		if($mode_class !== false && isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-options') !== false)
@@ -123,7 +121,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			if($active_themes = Serbian_Transliteration_Themes::includes($this->options, true)->active_filters())
 			{
 				$active_themes = array_keys($active_themes);
-				$rstr_cache->set('Serbian_Transliteration_Settings__active_filters', array_merge($rstr_cache->get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
+				Serbian_Transliteration_Cache::set('Serbian_Transliteration_Settings__active_filters', array_merge(Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
 			}
 
 			$this->private___list_filter_mode_options($list, $this->options);
@@ -227,7 +225,6 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     public function page_init()
     {
-		global $rstr_cache;
 
         $this->register_setting(
 			RSTR_NAME . '-group', // Option group
@@ -260,6 +257,22 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
 			);
+			
+			$this->add_settings_field(
+				'first-visit-mode', // ID
+				__('First visit mode', RSTR_NAME), // Title
+				'first_visit_mode_callback', // Callback
+				RSTR_NAME, // Page
+				RSTR_NAME . '-global' // Section
+			);
+			
+			$this->add_settings_field(
+				'language-scheme', // ID
+				__('Language scheme', RSTR_NAME), // Title
+				'language_callback', // Callback
+				RSTR_NAME, // Page
+				RSTR_NAME . '-global' // Section
+			);
 	
 			$this->add_settings_field(
 				'mode', // ID
@@ -269,15 +282,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				RSTR_NAME . '-global' // Section
 			);
 	
-			$this->add_settings_field(
-				'language-scheme', // ID
-				__('Language scheme', RSTR_NAME), // Title
-				'language_callback', // Callback
-				RSTR_NAME, // Page
-				RSTR_NAME . '-global' // Section
-			);
-	
-			if($rstr_cache->get('Serbian_Transliteration_Settings__active_filters')) {
+			if(Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters')) {
 				$this->add_settings_field(
 					'transliteration-filter', // ID
 					__('Transliteration Filters', RSTR_NAME), // Title
@@ -340,7 +345,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			
 			$this->add_settings_field(
 				'force-ajax-calls', // ID
-				__('Force transliteration for AJAX calls', RSTR_NAME), // Title
+				__('Force transliteration for AJAX calls', RSTR_NAME) . ' (' . __('EXPERIMENTAL', RSTR_NAME) . ')', // Title
 				'force_ajax_calls_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-special-settings' // Section
@@ -463,14 +468,6 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			'print_seo_settings_callback', // Callback
 			RSTR_NAME // Page
 		);
-
-			$this->add_settings_field(
-				'first-visit-mode', // ID
-				__('First visit mode', RSTR_NAME), // Title
-				'first_visit_mode_callback', // Callback
-				RSTR_NAME, // Page
-				RSTR_NAME . '-seo' // Section
-			);
 	
 			$this->add_settings_field(
 				'enable-alternate-links', // ID
@@ -646,7 +643,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 
         echo join('<br>', $inputs);
-		printf('<br><p class="description">%1$s</p>', __('You must indicate which letter is currently represented on your web site. If the site is written in Cyrillic - choose Cyrillic. Or vice versa.', RSTR_NAME));
+		printf('<br><p class="description">%1$s</p>', __('Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly.', RSTR_NAME));
 	}
 
 	/**
@@ -697,8 +694,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     public function transliteration_filter_callback()
     {
-		global $rstr_cache;
-		if(!$rstr_cache->get('Serbian_Transliteration_Settings__active_filters')) return;
+		if(!Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters')) return;
 ?>
 <div class="accordion-container">
 	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', RSTR_NAME); ?></button>
@@ -711,7 +707,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			__('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', RSTR_NAME)
 		);
 
-		$list = $rstr_cache->get('Serbian_Transliteration_Settings__active_filters');
+		$list = Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters');
 
 		?>
         <div class="row" id="rstr-filter-mode-options">
@@ -1018,7 +1014,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
-				(isset( $this->options['enable-alternate-links'] ) ? ($this->options['enable-alternate-links'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
+				(isset( $this->options['enable-alternate-links'] ) ? ($this->options['enable-alternate-links'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Tell Google, Bing, Yandex and other search engines about transliterated versions of your page.', RSTR_NAME));
@@ -1042,7 +1038,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['first-visit-mode'] ) ? ($this->options['first-visit-mode'] == $key ? ' checked' : '') : ($key == 'auto' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first come to your site.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first time come to your site.', RSTR_NAME));
 	}
 
 	public function parameter_url_selector_callback()

@@ -276,7 +276,6 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function fix_cyr_html($content){
-		global $rstr_cache;
 		
 		$content = htmlspecialchars_decode($content);
 
@@ -285,7 +284,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return '&' . self::__instance()->cyr_to_lat($m[1]) . ';';
 		}, $content);
 
-		$tag_replace = $rstr_cache->get('fix_cyr_html');
+		$tag_replace = Serbian_Transliteration_Cache::get('fix_cyr_html');
 
 		if(empty($tag_replace))
 		{
@@ -307,7 +306,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				'&'.self::__instance()->lat_to_cyr('Scaron', false).';' => 'Ш'
 			)), $tag_replace);
 			
-			$rstr_cache->set('fix_cyr_html', $tag_replace);
+			Serbian_Transliteration_Cache::set('fix_cyr_html', $tag_replace);
 		}
 		// Fix some characters
 		$content = strtr($content, $tag_replace);
@@ -640,11 +639,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public static function __instance()
 	{
-		global $rstr_cache;
 		$class = self::class;
-		$instance = $rstr_cache->get($class);
+		$instance = Serbian_Transliteration_Cache::get($class);
 		if ( !$instance ) {
-			$instance = $rstr_cache->set($class, new self());
+			$instance = Serbian_Transliteration_Cache::set($class, new self());
 		}
 		return $instance;
 	}

@@ -11,11 +11,10 @@ if(!class_exists('Serbian_Transliteration_Tools')) :
 class Serbian_Transliteration_Tools extends Serbian_Transliteration
 {
 	public static function instance() {
-		global $rstr_cache;
 		$class = self::class;
-		$instance = $rstr_cache->get($class);
+		$instance = Serbian_Transliteration_Cache::get($class);
 		if ( !$instance ) {
-			$instance = $rstr_cache->set($class, new self());
+			$instance = Serbian_Transliteration_Cache::set($class, new self());
 		}
 		return $instance;
 	}
