@@ -1,3 +1,9 @@
+= 1.7.1 =
+* Improved transliterations for the Serbian, Bosnian and montenegrin
+* Improved current URL recognation
+* Improved plugin cache
+* Tested up to WordPress version 5.8
+
 = 1.7.0 =
 * Fixed blank screen on the Cyrillic transliteration
 * Improved WP Cache object

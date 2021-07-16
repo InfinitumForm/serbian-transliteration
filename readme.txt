@@ -2,9 +2,9 @@
 Contributors: ivijanstefan, creativform
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 5.4
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,12 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.7.1 =
+* Improved transliterations for the Serbian, Bosnian and montenegrin
+* Improved current URL recognation
+* Improved plugin cache
+* Tested up to WordPress version 5.8
+
 = 1.7.0 =
 * Fixed blank screen on the Cyrillic transliteration
 * Improved WP Cache object
@@ -231,63 +237,15 @@ We also thought of PHP developers where we have enabled several useful functions
 * Fixed issue with first visit mode
 * Added advanced language script recognition
 * Added advanced transliteration algorithm
-
-= 1.5.8 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added algorithm for filename delimiter
-* Improved filename transliteration
-* New PHP code enhancement and memory optimization
-* Removed deprecated code
-
-= 1.5.7 =
-* Fixed transliteration problem from version 1.5.6
-* Fixed issue with incorrect script recognition
-* Added email address recognition
-* Fixed issue with broken HTML code
-* Improved PHP code and optimized memory
-* Improved function caching
-
-= 1.5.6 =
-* Fixed developer functions `is_latin()` and `is_cyrillic()`
-* Reorganized global objects
-
-= 1.5.5 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added support to the Divi theme
-* Add security measures
-* Added support for cache plugins
-* Improved transliteration
-
-= 1.5.4 =
-* Fixed php error "too few arguments to function" in menu
-* Improved plugin initialization
-* Added new words to the library
-
-= 1.5.3 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Improved transliteration
-* Improved plugin optimization for large amounts of data
-* Improved object detection
-* Removed transliteration of unnecessary strings
-
-= 1.5.2 =
-* **BUGFIX:** Changed WooCommerce deprecated filters
-
-= 1.5.1 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added `body` classes
-* Fixed `get_script()` function
-* Added alternate function `rstr_get_script()` if `get_script()` is already used by other plugin.
-
-= 1.5.0 =
-* Improved caching of PHP functions
-* Improved transliteration algorithm
-* Advanced standard transliteration mode
-* Removed transliteration from editor mode
-* Updated GNU License
 
 == Upgrade Notice ==
 
+= 1.7.1 =
+* Improved transliterations for the Serbian, Bosnian and montenegrin
+* Improved current URL recognation
+* Improved plugin cache
+* Tested up to WordPress version 5.8
+
 = 1.7.0 =
 * Fixed blank screen on the Cyrillic transliteration
 * Improved WP Cache object
@@ -296,130 +254,6 @@ We also thought of PHP developers where we have enabled several useful functions
 * Improved AJAX calls
 * Added algorithm for faster language recognition
 * Removed scripts that slow down the site
-
-= 1.6.9 =
-* Fixed blank screen on the Cyrillic transliteration
-* Improved WP Cache object
-* Removed regular expression error
-* Moved to the static cache objects
-* Improved AJAX calls
-
-= 1.6.8 =
-* Transferred reliance on WP Cache object
-* Updated word base
-* Fixed error loading media when forced AJAX is on
-
-= 1.6.7 =
-* Improved permalink transliteration
-* Improved PHP memory size
-* Improved diacritical words
-* Improved libraries
-* Added character normalization
-* Added POT file for translation
-
-= 1.6.6 =
-* Improved transliteration of the Cyrillic alphabet
-* Improved and optimized PHP code
-* Improved cache
-* Improved AJAX calls
-* Improved license
-* Added sponsors and contributors to the plugin Credits & Info page
-
-= 1.6.5 =
-* Added forced transliteration option for the AJAX calls
-* Added redirectin after plugin activation
-* Improved tools integration
-* Changed default settings
-* Improved PHP code
-* Update translations
-
-= 1.6.4 =
-* Improved action hooks for the transliteration
-* Improved settings page
-* Improved ajax calls
-
-= 1.6.3 =
-* Fixed bug with script selector
-* Fixed bug with transliteration mode
-* Improved plugin activation
-* Added email transliteration mode
-* Improved UX in admin settings 
-
-= 1.6.2 =
-* Added return values to cookie
-* Added Arabic numerals
-* Improved settings page
-* Removed deprecated code
-
-= 1.6.1 =
-* Fixed missing filters from the previus version
-* Added experimental Armenian transliteration by locale "hy"
-* Added experimental Arabic transliteration by locale "ar"
-* New code improvements
-
-= 1.6.0 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Improved transliteration for the search
-* Fixed cookie problem
-* Fixed language detection problem
-* Fixed issue with language script detection
-* Fixed issue with first visit mode
-* Added advanced language script recognition
-* Added advanced transliteration algorithm
-
-= 1.5.8 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added algorithm for filename delimiter
-* Improved filename transliteration
-* New PHP code enhancement and memory optimization
-* Removed deprecated code
-
-= 1.5.7 =
-* Fixed transliteration problem from version 1.5.6
-* Fixed issue with incorrect script recognition
-* Added email address recognition
-* Fixed issue with broken HTML code
-* Improved PHP code and optimized memory
-* Improved function caching
-
-= 1.5.6 =
-* Fixed developer functions `is_latin()` and `is_cyrillic()`
-* Reorganized global objects
-
-= 1.5.5 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added support to the Divi theme
-* Add security measures
-* Added support for cache plugins
-* Improved transliteration
-
-= 1.5.4 =
-* Fixed php error "too few arguments to function" in menu
-* Improved plugin initialization
-* Added new words to the library
-
-= 1.5.3 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Improved transliteration
-* Improved plugin optimization for large amounts of data
-* Improved object detection
-* Removed transliteration of unnecessary strings
-
-= 1.5.2 =
-* **BUGFIX:** Changed WooCommerce deprecated filters
-
-= 1.5.1 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Added `body` classes
-* Fixed `get_script()` function
-* Added alternate function `rstr_get_script()` if `get_script()` is already used by other plugin.
-
-= 1.5.0 =
-* Improved caching of PHP functions
-* Improved transliteration algorithm
-* Advanced standard transliteration mode
-* Removed transliteration from editor mode
-* Updated GNU License
 
 == Frequently Asked Questions ==
 
