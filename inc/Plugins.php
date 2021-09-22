@@ -14,7 +14,8 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 			'revslider' => 'revslider',
 			'woocommerce' => 'woocommerce',
 			'wordpress-seo' => 'wp-seo',
-			'data-tables-generator-by-supsystic' => 'index'
+			'data-tables-generator-by-supsystic' => 'index',
+			'contact-form-7' => 'wp-contact-form-7'
 		);
 		
 		/* Run this script */

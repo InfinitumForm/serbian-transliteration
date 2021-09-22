@@ -1,3 +1,13 @@
+= 1.7.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Fixed transliteration filters
+* Improved Contact Form 7 transliteration
+
+= 1.7.2 =
+* Improved cache
+* Fixed object transliteration
+* Adding support for the CF7
+
 = 1.7.1 =
 * Improved transliterations for the Serbian, Bosnian and montenegrin
 * Improved current URL recognation

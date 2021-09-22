@@ -211,35 +211,35 @@ class Serbian_Transliteration_Utilities{
 			$script = $mode = get_rstr_option('transliteration-mode', 'none');
 			$site_script = get_rstr_option('site-script', 'lat');
 			$first_visit = get_rstr_option('first-visit-mode', 'auto');
-
+			
 			if(isset($_COOKIE['rstr_script']) && !empty($_COOKIE['rstr_script']))
 			{
 				if($_COOKIE['rstr_script'] == 'lat') {
-					$script = 'lat';
-					if($mode == 'cyr_to_lat'){
+					$script = 'cyr_to_lat';
+					/*if($mode == 'cyr_to_lat'){
 						$script =  'cyr_to_lat';
-					}
+					}*/
 				} else if($_COOKIE['rstr_script'] == 'cyr') {
-					$script = 'cyr';
-					if($mode == 'lat_to_cyr'){
+					$script = 'lat_to_cyr';
+					/*if($mode == 'lat_to_cyr'){
 						$script =  'lat_to_cyr';
-					}
+					}*/
 				}
 			}
 			else
 			{
 				if($first_visit == 'lat') {
-					$script = 'lat';
+					$script = 'cyr_to_lat';
 					self::setcookie('lat');
-					if($mode == 'cyr_to_lat'){
+					/*if($mode == 'cyr_to_lat'){
 						$script =  'cyr_to_lat';
-					}
+					}*/
 				} else if($first_visit == 'cyr') {
-					$script = 'cyr';
+					$script = 'lat_to_cyr';
 					self::setcookie('cyr');
-					if($mode == 'lat_to_cyr'){
+					/*if($mode == 'lat_to_cyr'){
 						$script =  'lat_to_cyr';
-					}
+					}*/
 				}
 			}
 

@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.7.1
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,16 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.7.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Fixed transliteration filters
+* Improved Contact Form 7 transliteration
+
+= 1.7.2 =
+* Improved cache
+* Fixed object transliteration
+* Adding support for the CF7
+
 = 1.7.1 =
 * Improved transliterations for the Serbian, Bosnian and montenegrin
 * Improved current URL recognation
@@ -168,77 +178,17 @@ We also thought of PHP developers where we have enabled several useful functions
 * Added algorithm for faster language recognition
 * Removed scripts that slow down the site
 
-= 1.6.9 =
-* Fixed blank screen on the Cyrillic transliteration
-* Improved WP Cache object
-* Removed regular expression error
-* Moved to the static cache objects
-* Improved AJAX calls
-
-= 1.6.8 =
-* Transferred reliance on WP Cache object
-* Updated word base
-* Fixed error loading media when forced AJAX is on
-
-= 1.6.7 =
-* Improved permalink transliteration
-* Improved PHP memory size
-* Improved diacritical words
-* Improved libraries
-* Added character normalization
-* Added POT file for translation
-
-= 1.6.6 =
-* Improved transliteration of the Cyrillic alphabet
-* Improved and optimized PHP code
-* Improved cache
-* Improved AJAX calls
-* Improved license
-* Added sponsors and contributors to the plugin Credits & Info page
-
-= 1.6.5 =
-* Added forced transliteration option for the AJAX calls
-* Added redirectin after plugin activation
-* Improved tools integration
-* Changed default settings
-* Improved PHP code
-* Update translations
-
-= 1.6.4 =
-* Improved action hooks for the transliteration
-* Improved settings page
-* Improved ajax calls
-
-= 1.6.3 =
-* Fixed bug with script selector
-* Fixed bug with transliteration mode
-* Improved plugin activation
-* Added email transliteration mode
-* Improved UX in admin settings 
-
-= 1.6.2 =
-* Added return values to cookie
-* Added Arabic numerals
-* Improved settings page
-* Removed deprecated code
-
-= 1.6.1 =
-* Fixed missing filters from the previus version
-* Added experimental Armenian transliteration by locale "hy"
-* Added experimental Arabic transliteration by locale "ar"
-* New code improvements
-
-= 1.6.0 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Improved transliteration for the search
-* Fixed cookie problem
-* Fixed language detection problem
-* Fixed issue with language script detection
-* Fixed issue with first visit mode
-* Added advanced language script recognition
-* Added advanced transliteration algorithm
-
 == Upgrade Notice ==
+
+= 1.7.3 =
+* **MAJOR UPDATE:** You need to review and edit your settings
+* Fixed transliteration filters
+* Improved Contact Form 7 transliteration
+
+= 1.7.2 =
+* Improved cache
+* Fixed object transliteration
+* Adding support for the CF7
 
 = 1.7.1 =
 * Improved transliterations for the Serbian, Bosnian and montenegrin

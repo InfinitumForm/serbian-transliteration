@@ -41,6 +41,14 @@ class Serbian_Transliteration_Transliterating {
 		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || !in_array($translation, array('lat_to_cyr', 'cyr_to_lat'))){
 			return $content;
 		}
+		
+		$site_script = get_rstr_option('site-script', 'lat');
+		$mode = get_rstr_option('transliteration-mode', 'none') == 'cyr_to_lat' ? 'cyr' : 'lat';
+		$current = Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr' ? 'cyr' : 'lat';
+
+		if(!is_admin() && ($site_script === $mode) && ($mode === $current) && ($current === 'cyr')){
+			return $content;
+		}
 
 		// Set variables
 		$path = RSTR_INC . "/transliteration/{$locale}.php";

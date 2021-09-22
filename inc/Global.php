@@ -191,7 +191,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function transliterate_objects($array, $type = NULL, $fix_html = true)
+	public function transliterate_objects($array, $type = NULL, $fix_html = true, $object=false)
 	{
 		// First setup all properly
 		if(empty($array) || Serbian_Transliteration_Utilities::is_editor()) {
@@ -204,13 +204,19 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		$return = '';
 		// Infinity loop... Until end.
+		
+		if(is_object($array)){
+			$array = (array)$array;
+			$object = true;
+		}
+		
 		if( is_array($array) )
 		{
 			$data = array();
 
 			foreach($array as $key => $val)
 			{
-				$data[$key] = $this->transliterate_objects($val, $fix_html);
+				$data[$key] = $this->transliterate_objects($val, $type, $fix_html, $object);
 			}
 
 			$return = $data;
@@ -219,12 +225,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		else
 		{
 			if(
-				is_int($array)
+				is_object($array)
+				|| is_int($array)
 				|| is_float($array)
 				|| is_numeric($array)
 				|| is_file($array)
 				|| is_bool($array)
-				|| is_object($array)
 				|| is_link($array)
 				|| filter_var($array, FILTER_VALIDATE_URL)
 				|| filter_var($array, FILTER_VALIDATE_EMAIL)
@@ -234,8 +240,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				$return = $this->transliterate_text($array, $type, $fix_html);
 			}
 		}
-
-		return $return;
+		
+		if($object){
+			return (object)$return;
+		} else {
+			return $return;
+		}
 	}
 
 	/*
@@ -280,7 +290,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$content = htmlspecialchars_decode($content);
 
 		// Fix HTML entities
-		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω]+)\;/iu', function($m){
+		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω]+)\;/iu', function($m){
 			return '&' . self::__instance()->cyr_to_lat($m[1]) . ';';
 		}, $content);
 
@@ -290,10 +300,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		{
 			// Fix HTML tags
 			$tags = self::html_tags();
-	
+
 			foreach($tags->lat as $i=>$tag_lat){
 				$tag_cyr = $tags->cyr[$i];
-	
 				$tag_replace['<' . $tag_cyr] = '<' . $tag_lat;
 				$tag_replace['</' . $tag_cyr . '>'] = '</' . $tag_lat . '>';
 			}
@@ -308,6 +317,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			
 			Serbian_Transliteration_Cache::set('fix_cyr_html', $tag_replace);
 		}
+	
 		// Fix some characters
 		$content = strtr($content, $tag_replace);
 
@@ -317,7 +327,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		$positions = array();
 
 		/* Fix HTML attributes */
-		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\-]+)(=["\'])/iu', function($m){
+		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\-]+)(=["\'])/iu', function($m){
 			return ' ' . self::__instance()->cyr_to_lat($m[1]) . $m[2];
 		}, $content);
 		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?"(.*?)"/iu', function($m){
@@ -328,11 +338,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 
 		// Fix attributes with doublequote
-		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
+		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
 			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
 		}, $content);
 		// Fix attributes with singlequote
-		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
+		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
 			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
 		}, $content);
 
@@ -342,12 +352,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 
 		// Fix open tags
-		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
+		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
 			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix closed tags
-		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwy0-9a-zA-Zα-ωΑ-Ω]+>)/iu', function($m){
+		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω]+>)/iu', function($m){
 			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
@@ -362,12 +372,12 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 
 		// Fix email
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\_\-\.]+)@([\x{0400}-\x{04FF}0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}0-9α-ωΑ-Ω]{3,10}))/iu', function($m){
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\_\-\.]+)@([\x{0400}-\x{04FF}0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}0-9α-ωΑ-Ω]{3,10}))/iu', function($m){
 			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 
 		// Fix URL
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}α-ωΑ-Ω]{4,5}):\/{2}([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}qwy0-9α-ωΑ-Ω]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}α-ωΑ-Ω]{4,5}):\/{2}([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
 			return self::__instance()->cyr_to_lat($m[1]);
 		}, $content);
 		$content = preg_replace_callback ('/"('.self::__instance()->lat_to_cyr('https', false).'?:\/\/.*?)"/iu', function($m){
@@ -387,6 +397,16 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		// Fix attributes with single quote
 		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?\'(.*?)\'/iu', function($m){
 			return sprintf('%1$s=\'%2$s\'', $m[1], esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
+		}, $content);
+		
+
+		// Fix shortcode
+		$content = preg_replace_callback ('/\[\/([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\/\=\“\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+)\]/iu', function($m){
+			return '[/'.self::__instance()->cyr_to_lat($m[1]).']';
+		}, $content);
+		
+		$content = preg_replace_callback ('/\[([\x{0400}-\x{04FF}qwxy0-9α-ωΑ-Ω\/\=\“\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+)\]/iu', function($m){
+			return '['.self::__instance()->cyr_to_lat($m[1]).']';
 		}, $content);
 
 		return $content;
