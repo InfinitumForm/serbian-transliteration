@@ -1152,11 +1152,10 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 			if($i === 2) $i=0; else ++$i;
 		}
-		?>
-		<div class="col"><?php echo isset($inputs[0]) ? join(PHP_EOL, $inputs[0]) : ''; ?></div>
-		<div class="col"><?php echo isset($inputs[1]) ? join(PHP_EOL, $inputs[1]) : ''; ?></div>
-		<div class="col"><?php echo isset($inputs[2]) ? join(PHP_EOL, $inputs[2]) : ''; ?></div>
-		<?php
+		
+		foreach($inputs as $x => $options){
+			printf('<div class="col">%s</div>', join(PHP_EOL, $options));
+		}
 	}
 
 }

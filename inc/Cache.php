@@ -10,6 +10,8 @@
 if(!class_exists('Serbian_Transliteration_Cache')) :
 class Serbian_Transliteration_Cache
 {
+	private static $cache = NULL;
+	
 	// Cache group
 	const GROUP = 'serbian-transliteration';
 	
@@ -17,20 +19,19 @@ class Serbian_Transliteration_Cache
 	 * Add a group to the list of global groups
 	 */
 	public static function instance(){
-		wp_cache_add_global_groups(self::GROUP);
+	
 	}
 	
 	/*
 	 * Cache prefix
 	 */
-	public static function prefix($key = '') {
+	public static function prefix($key) {
+		static $prefix;
+		
 		$key = trim($key);
-		$name = self::GROUP . '_cache_prefix__';
-		$prefix = wp_cache_get( $name, self::GROUP );
 
-		if ( false === $prefix ) {
+		if ( empty($prefix) ) {
 			$prefix = str_replace('.', '', (string)microtime(true));
-			wp_cache_set( $name, $prefix, self::GROUP );
 		}
 
 		return "rstr_cache_{$prefix}__{$key}";
@@ -41,9 +42,9 @@ class Serbian_Transliteration_Cache
 	 *
 	 * Returns the value of the cached object, or false if the cache key doesn’t exist
 	 */
-    public static function get($key, $force = false, $found = NULL)
+    public static function get($key)
     {
-        return wp_cache_get(self::prefix($key), self::GROUP, $force, $found);
+        return self::$cache[ self::prefix($key) ] ?? NULL;
     }
 	
 	/*
@@ -52,9 +53,12 @@ class Serbian_Transliteration_Cache
 	 * This function adds data to the cache if the cache key doesn’t already exist.
 	 * If it does exist, the data is not added and the function returns
 	 */
-    public static function add($key, $value, $expire=0)
+    public static function add($key, $value)
     {   
-		return (wp_cache_add( self::prefix($key), $value, self::GROUP, $expire )!==false ? $value : false);
+		if(!isset(self::$cache[ self::prefix($key) ])) {
+			self::$cache[ self::prefix($key) ] = $value;
+		}
+		return self::$cache[ self::prefix($key) ];
     }
 
 	/*
@@ -64,8 +68,9 @@ class Serbian_Transliteration_Cache
 	 * if not then it will be created.
 	 */
     public static function set($key, $value, $expire=0)
-    {   
-		return (wp_cache_set( self::prefix($key), $value, self::GROUP, $expire )!==false ? $value : false);
+    {
+		self::$cache[ self::prefix($key) ] = $value;
+		return self::$cache[ self::prefix($key) ];
     }
 	
 	/*
@@ -75,7 +80,10 @@ class Serbian_Transliteration_Cache
 	 */
     public static function replace($key, $value, $expire=0)
     {
-        return (wp_cache_replace( self::prefix($key), $value, self::GROUP, $expire )!==false ? $value : false);
+        if(isset(self::$cache[ self::prefix($key) ])) {
+			self::$cache[ self::prefix($key) ] = $value;
+		}
+		return self::$cache[ self::prefix($key) ];
     }
 	
 	/*
@@ -85,7 +93,9 @@ class Serbian_Transliteration_Cache
 	 */
 	public static function delete($key)
     {
-		return wp_cache_delete(self::prefix($key), self::GROUP)!==false;
+		if(isset(self::$cache[ self::prefix($key) ])) {
+			unset(self::$cache[ self::prefix($key) ]);
+		}
     }
 	
 	/*
@@ -93,12 +103,8 @@ class Serbian_Transliteration_Cache
 	 */
 	public static function flush()
     {
-		global $wp_object_cache;
-		if($wp_object_cache && isset($wp_object_cache->cache[self::GROUP])){
-			unset($wp_object_cache->cache[self::GROUP]);
-			return true;
-		}
-		return false;
+		self::$cache=NULL;
+		return true;
     }
 	
 	/*
@@ -106,13 +112,9 @@ class Serbian_Transliteration_Cache
 	 */
 	public static function debug()
 	{
-		global $wp_object_cache;
-		$debug = array();
-		if(isset($wp_object_cache->cache[self::GROUP])) {
-			ob_start();
-				var_dump($wp_object_cache->cache[self::GROUP]);
-			$debug = ob_get_clean();
-		}
+		ob_start();
+			var_dump(self::$cache);
+		$debug = ob_get_clean();
 		echo '<pre class="rstr-cache-debug">' . htmlspecialchars(preg_replace(
 			array('/(\=\>\n\s{2,4})/'),
 			array(' => '),

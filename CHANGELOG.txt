@@ -1,3 +1,7 @@
+= 1.7.4 =
+* Fixing WordPress memory leaking
+* Improved cache functionality
+
 = 1.7.3 =
 * **MAJOR UPDATE:** You need to review and edit your settings
 * Fixed transliteration filters
