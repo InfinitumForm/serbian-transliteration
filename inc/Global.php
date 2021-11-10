@@ -424,9 +424,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * Sanitize file name
 	*/
 	public function sanitize_file_name($filename){
-		$delimiter = get_rstr_option('media-delimiter', 'auto');
+		$delimiter = get_rstr_option('media-delimiter', 'no');
 
-		if($delimiter != 'auto') {
+		if($delimiter != 'no') {
 			$name = $this->cyr_to_lat_sanitize($filename);
 			$name = preg_split("/[\-_~\s]+/", $name);
 			$name = array_filter($name);
@@ -436,9 +436,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			} else {
 				return $filename;
 			}
-		} else {
-			return $filename;
 		}
+		
+		return $filename;
 	}
 
 	/*

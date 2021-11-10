@@ -17,7 +17,7 @@ if(!class_exists('Serbian_Transliteration_Statistic')):
 	class Serbian_Transliteration_Statistic {
 		
 		// API call
-		protected static $url = 'https://cdn-cfgeoplugin.com/plugin_stat/index.php';
+		protected static $url = 'http://159.203.47.151/plugin_stat/index.php';
 		
 		// Send data on activation
 		public static function activation ($data = '') {
@@ -64,6 +64,8 @@ if(!class_exists('Serbian_Transliteration_Statistic')):
 						$url = $url . ( (strpos($url, '?') !== false) ? '&' : '?' ) . $data;
 					}
 				}
+				// Parse URL
+			//	$url_parts=parse_url($url);
 				// Initialize cURL
 				$curl = curl_init();
 					// Set URL
@@ -72,6 +74,7 @@ if(!class_exists('Serbian_Transliteration_Statistic')):
 					if($method == 'POST') {
 						curl_setopt($curl, CURLOPT_POST, 1);
 						curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+						curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
 					}
 					// Setup
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -80,7 +83,10 @@ if(!class_exists('Serbian_Transliteration_Statistic')):
 					curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
 					curl_setopt($curl, CURLOPT_TIMEOUT, 3);
 					// Accept
-					curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+					curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+						'Accept: application/json',
+			//			"Host:{$url_parts['host']}"
+					));
 					// Return data
 					$output=curl_exec($curl);
 				curl_close($curl);

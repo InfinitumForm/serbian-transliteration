@@ -792,18 +792,19 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'auto' => __('Automatical (recommended)', RSTR_NAME),
-			'-' => '- (' . __('hyphen', RSTR_NAME) . ')',
+			'-' => '- (' . __('hyphen (default)', RSTR_NAME) . ')',
 			'_' => '_  (' . __('underscore', RSTR_NAME) . ')',
 			'.' => '. (' . __('dot', RSTR_NAME) . ')',
-			'~' => '~ (' . __('tilde', RSTR_NAME) . ')'
+			'~' => '~ (' . __('tilde', RSTR_NAME) . ')',
+			'|' => '| (' . __('vartical bar', RSTR_NAME) . ')',
+			'*' => '* (' . __('asterisk', RSTR_NAME) . ')'
 		) as $label => $name)
 		{
 			$inputs[]=sprintf(
 				'<option value="%1$s"%3$s>%2$s</option>',
 				$label,
 				$name,
-				(isset( $this->options['media-delimiter'] ) ? ($this->options['media-delimiter'] == $label ? ' selected' : '') : ($label == 'auto' ? ' selected' : ''))
+				(isset( $this->options['media-delimiter'] ) ? ($this->options['media-delimiter'] == $label ? ' selected' : '') : ($label == '-' ? ' selected' : ''))
 			);
 		}
         echo '<select name="'.RSTR_NAME.'[media-delimiter]" id="'.RSTR_NAME.'-media-delimiter" data-nonce="'.$this->nonce.'" style="margin-bottom:5px;">' . join('<br>', $inputs) . '</select>';
@@ -1046,12 +1047,13 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'rstr' => '?<b>rstr</b>=lat ' . __('(safe)', RSTR_NAME),
-			'script' => '?<b>script</b>=lat ' . __('(standard)', RSTR_NAME),
-			'lang_script' => '?<b>lang_script</b>=lat ' . __('(optional)', RSTR_NAME),
-			'letter' => '?<b>letter</b>=lat ' . __('(optional)', RSTR_NAME),
-			'skripta' => '?<b>skripta</b>=lat ' . __('(optional)', RSTR_NAME),
-			'pismo' => '?<b>pismo</b>=lat ' . __('(optional)', RSTR_NAME)
+			'rstr'			=> '?<b>rstr</b>=lat ' . __('(safe)', RSTR_NAME),
+			'script'		=> '?<b>script</b>=lat ' . __('(standard)', RSTR_NAME),
+			'lang_script'	=> '?<b>lang_script</b>=lat ' . __('(optional)', RSTR_NAME),
+			'letter'		=> '?<b>letter</b>=lat ' . __('(optional)', RSTR_NAME),
+			'translt'		=> '?<b>translt</b>=lat ' . __('(optional)', RSTR_NAME),
+			'skripta'		=> '?<b>skripta</b>=lat ' . __('(optional)', RSTR_NAME),
+			'pismo'			=> '?<b>pismo</b>=lat ' . __('(optional)', RSTR_NAME)
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(

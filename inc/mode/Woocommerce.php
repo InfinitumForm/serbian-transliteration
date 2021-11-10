@@ -27,6 +27,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			$filters = array(
 				'get_the_terms'			=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 				'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
+				'wp_mail'				=> 'wp_mail'
 			);
 
 			return $filters;
@@ -64,6 +65,19 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				}
 
 			}
+		}
+		
+		function wp_mail ($args) {
+			
+			if( $args['message'] ?? false ) {
+				$args['message'] = $this->transliterate_text($args['message']);
+			}
+			
+			if( $args['subject'] ?? false ) {
+				$args['subject'] = $this->transliterate_text($args['subject']);
+			}
+			
+			return $args;
 		}
 
 		public function transliteration_wp_terms($wp_terms)

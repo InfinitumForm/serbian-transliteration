@@ -18,18 +18,18 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function registered_languages(){
 		return apply_filters('rstr_registered_languages', array(
-			'sr_RS' => __('Serbian', RSTR_NAME),
-			'bs_BA' => __('Bosnian', RSTR_NAME),
-			'cnr' => __('Montenegrin', RSTR_NAME),
-			'ru_RU' => __('Russian', RSTR_NAME),
-			'bel' => __('Belarusian', RSTR_NAME),
-			'bg_BG' => __('Bulgarian', RSTR_NAME),
-			'mk_MK' => __('Macedoanian', RSTR_NAME),
-			'kk' => __('Kazakh', RSTR_NAME),
-			'uk' => __('Ukrainian', RSTR_NAME),
-			'el' => __('Greek', RSTR_NAME),
-			'hy' => __('Armenian', RSTR_NAME) . ' - BETA',
-			'ar' => __('Arabic', RSTR_NAME) . ' - BETA'
+			'sr_RS'  => __('Serbian', RSTR_NAME),
+			'bs_BA'  => __('Bosnian', RSTR_NAME),
+			'cnr'    => __('Montenegrin', RSTR_NAME),
+			'ru_RU'  => __('Russian', RSTR_NAME),
+			'bel'    => __('Belarusian', RSTR_NAME),
+			'bg_BG'  => __('Bulgarian', RSTR_NAME),
+			'mk_MK'  => __('Macedoanian', RSTR_NAME),
+			'kk'     => __('Kazakh', RSTR_NAME),
+			'uk'     => __('Ukrainian', RSTR_NAME),
+			'el'     => __('Greek', RSTR_NAME),
+			'hy'     => __('Armenian', RSTR_NAME) . ' - BETA',
+			'ar'     => __('Arabic', RSTR_NAME) . ' - BETA'
 		));
 	}
 
@@ -228,11 +228,10 @@ class Serbian_Transliteration_Transliterating {
 
 	/*
 	 * Create only diacritical library
-	 * THIS IS TEST FUNCTION, NOT FOR THE PRODUCTION
+	 * THIS IS DEVELOPMENT FUNCTION, NOT FOR THE PRODUCTION
 	 * @author        Ivijan-Stefan Stipic
 	*/
-/*
-	private function create_only_diacritical($file, $new_file){
+/*	private function create_only_diacritical($file, $new_file){
 
 		if(file_exists($file) || empty($new_file)) return;
 		if(preg_match('/(\.lib)/i', $new_file) === false) return;
@@ -283,8 +282,8 @@ class Serbian_Transliteration_Transliterating {
 			fclose($fp);
 			fclose($new_file);
 		}
-	}
-*/
+	}*/
+
 	/*
 	 * Get list of diacriticals
 	 * @return        bool false, array or string on needle

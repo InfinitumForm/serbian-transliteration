@@ -1,3 +1,10 @@
+= 1.7.5 =
+* Fixed mail transliterations
+* Fixed file transliterations
+* Improved redirection links
+* Improved cache
+* Improved admin settings
+
 = 1.7.4 =
 * Fixing WordPress memory leaking
 * Improved cache functionality

@@ -15,6 +15,7 @@ class Serbian_Transliteration_Utilities{
 			'avoid-admin'				=>	'no',
 			'allow-cyrillic-usernames'	=>	'no',
 			'media-transliteration'		=>	'yes',
+			'media-delimiter'			=>	'-',
 			'permalink-transliteration'	=>	'yes',
 			'cache-support'				=>  'yes',
 			'exclude-latin-words'		=>	'WordPress',

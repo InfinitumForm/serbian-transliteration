@@ -32,8 +32,8 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 				'get_archives_link'				=>'content', //Widget achives
 				'get_the_terms'					=>'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 				'get_the_excerpt' 				=> 'content',
-				'the_excerpt'					=>'content',
-				'oceanwp_excerpt'				=>'content',//Oceanwp
+				'the_excerpt'					=> 'content',
+				'oceanwp_excerpt'				=> 'content',//Oceanwp
 				'get_calendar' 					=> 'content',
 			//	'pre_kses' 						=> 'content',
 				'date_i18n'						=> 'no_html_content',
@@ -71,7 +71,8 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 				'document_title_parts' 			=> 'transliterate_objects',
 				'sanitize_title'				=> 'force_permalink_to_latin',
 				'the_permalink'					=> 'force_permalink_to_latin',
-				'wp_unique_post_slug'			=> 'force_permalink_to_latin'
+				'wp_unique_post_slug'			=> 'force_permalink_to_latin',
+				'wp_mail'						=> 'wp_mail'
 			);
 			asort($filters);
 
@@ -112,6 +113,19 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 
 			$this->add_filter('bloginfo', 'bloginfo', (PHP_INT_MAX-1), 2);
 			$this->add_filter('bloginfo_url', 'bloginfo', (PHP_INT_MAX-1), 2);
+		}
+		
+		function wp_mail ($args) {
+			
+			if( $args['message'] ?? false ) {
+				$args['message'] = $this->transliterate_text($args['message']);
+			}
+			
+			if( $args['subject'] ?? false ) {
+				$args['subject'] = $this->transliterate_text($args['subject']);
+			}
+			
+			return $args;
 		}
 
 		function rss_output_buffer_start() {
@@ -178,8 +192,22 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 		}
 
 		public function content ($content='') {
+			
+			static $actions = [];
+			
 			if(empty($content)) return $content;
-
+			
+			/*$filter = current_filter();
+			if(in_array($filter, [
+				'the_content'
+			])) {
+				if ( isset( $actions[$filter] )) {
+					return $content;
+				} else {
+					$actions[$filter]=1;
+				}
+			}*/
+			
 			if(is_array($content))
 			{
 				if(method_exists($this, 'transliterate_objects')) {
