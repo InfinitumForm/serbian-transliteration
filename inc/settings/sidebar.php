@@ -62,7 +62,7 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	<div class="inside">
 	<?php
 		printf('<p>%s</p>', __('If you need hosting for your personal needs, for business, any web applications, cloud or dedicated servers, we have the ideal solution for you!', RSTR_NAME));
-		printf('<p><a href="%1$s" target="_blank">%2$s</a></p>', 'https://www.draxhost.com/checkout/aff.php?aff=1', __('Read more...', RSTR_NAME));
+		printf('<p><a href="%1$s" target="_blank">%2$s</a></p>', 'https://portal.draxhost.com/?affid=1', __('Read more...', RSTR_NAME));
 	?>
 	</div>
 </div>

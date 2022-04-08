@@ -284,10 +284,11 @@ class Serbian_Transliteration_Utilities{
 	public static function generate_token($length=16){
 		if(function_exists('openssl_random_pseudo_bytes') || function_exists('random_bytes'))
 		{
-			if (version_compare(PHP_VERSION, '7.0.0', '>='))
+			if (version_compare(PHP_VERSION, '7.0.0', '>=')) {
 				return substr(str_rot13(bin2hex(random_bytes(ceil($length * 2)))), 0, $length);
-			else
+			} else {
 				return substr(str_rot13(bin2hex(openssl_random_pseudo_bytes(ceil($length * 2)))), 0, $length);
+			}
 		}
 		else
 		{
@@ -301,6 +302,8 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function clear_plugin_cache(){
+		global $wpdb;
+		
 		if(get_transient(RSTR_NAME . '-skip-words')) {
 			delete_transient(RSTR_NAME . '-skip-words');
 		}
@@ -315,6 +318,11 @@ class Serbian_Transliteration_Utilities{
 		}
 		if(get_option(RSTR_NAME . '-version')) {
 			delete_option(RSTR_NAME . '-version');
+		}
+		
+		if($wpdb) {
+			$RSTR_NAME = RSTR_NAME;
+			$wpdb->query("DELETE FROM `{$wpdb->options}` WHERE `{$wpdb->options}`.`option_name` REGEXP '^_transient_(.*)?{$RSTR_NAME}(.*|$)'");
 		}
 	}
 

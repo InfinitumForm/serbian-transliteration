@@ -45,7 +45,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 				setlocale(LC_CTYPE, $locale);
 			}
 
-			if($converted = iconv("UTF-8","ASCII//TRANSLIT", $content)) {
+			if($converted = iconv('UTF-8','ASCII//TRANSLIT//IGNORE', $content)) {
 				$content = str_replace(array("\"","'","`","^","~"), '', $converted);
 			}
 		}

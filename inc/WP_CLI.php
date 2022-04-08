@@ -2,7 +2,8 @@
 /*
  * WP-CLI Helpers
  * @since     1.4.3
- * @verson    1.0.0
+ * @verson    1.0.1
+ * @author    Ivijan-Stefan Stipic
  */
 
 if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_CLI')):
@@ -12,9 +13,14 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 		 *
 		 * ## OPTIONS
 		 *
+		 *     --script=<lat|cyr>    (optional) Change transliteration type (Latin or Cyrillic)
+		 *                                      If it is set to "cyr", then it will translate permalinks
+		 *                                      from Latin to Cyrillic
+		 *
 		 * ## EXAMPLES
 		 *
-		 *     wp transliterate permalinks
+		 *     wp transliterate permalinks                  Translate permalinks from Cyrillic to Latin
+		 *     wp transliterate permalinks --script=cyr     Translate permalinks from Latin to Cyrillic 
 		 *
 		 * @when after_wp_load
 		 */
@@ -22,6 +28,13 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 			global $wpdb;
 
 			$updated = 0;
+			
+			$type = $assoc_args['script'] ?? 'lat';
+			if('cyr' === $type) {
+				$type = 'lat_to_cyr';
+			} else {
+				$type = 'cyr_to_lat';
+			}
 
 			$get_post_types = get_post_types(array(
 				'public'   => true
@@ -35,9 +48,17 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 			{
 				$inst = Serbian_Transliteration::__instance();
 				// Fix  problematic
-				$get_results = array_map(function($match) use (&$wpdb, &$inst, &$updated){
-					$match->post_name = $inst->decode( $match->post_name );
-					$match->post_name = $inst->cyr_to_lat_sanitize( $match->post_name );
+				$get_results = array_map(function($match) use (&$wpdb, &$inst, &$updated, &$type){
+					
+					$old_post_name = $match->post_name;
+					
+					$match->post_name = Serbian_Transliteration_Utilities::decode( $match->post_name );
+					if('lat_to_cyr' === $type) {
+						$match->post_name = $inst->lat_to_cyr( $match->post_name, false, false );
+					} else {
+						$match->post_name = $inst->cyr_to_lat_sanitize( $match->post_name );
+					}
+					
 					if($wpdb->update(
 						$wpdb->posts,
 						array(
@@ -51,6 +72,16 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 							'%d'
 						)
 					)) {
+						
+						delete_post_meta($match->ID, '_wp_old_slug');
+						
+						if('lat_to_cyr' === $type) {
+							update_post_meta($match->ID, '_wp_cyr_slug', $inst->lat_to_cyr($match->post_name));
+							update_post_meta($match->ID, '_wp_lat_slug', $inst->cyr_to_lat_sanitize($old_post_name));
+						} else {
+							update_post_meta($match->ID, '_wp_cyr_slug', $inst->lat_to_cyr($old_post_name));
+							update_post_meta($match->ID, '_wp_lat_slug', $inst->cyr_to_lat_sanitize($match->post_name));
+						}
 						++$updated;
 						WP_CLI::success( sprintf(
 							__('Updated page ID %1$d, (%2$s) at URL: %3$s', RSTR_NAME),
@@ -63,7 +94,7 @@ if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_C
 			}
 
 			if($updated > 0){
-				WP_CLI::success( sprintf(__('%d permalink changes were successfully made.', RSTR_NAME), $updated ));
+				WP_CLI::success( sprintf(_n('%d permalink was successfully transliterated.', '%d permalinks were successfully transliterated.', $updated, RSTR_NAME), $updated ));
 			} else {
 				WP_CLI::error( __('No changes to the permalink have been made.', RSTR_NAME), false );
 			}

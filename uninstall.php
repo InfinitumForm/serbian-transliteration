@@ -10,8 +10,12 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+global $wpdb;
+
 // Plugin name
 if (!defined('RSTR_NAME')) define('RSTR_NAME', 'serbian-transliteration');
+$RSTR_NAME = RSTR_NAME;
 
 // Remove statistic data
 if(file_exists(__DIR__ . '/inc/Statistic.php')) {
@@ -64,5 +68,9 @@ if(get_transient(RSTR_NAME . '-diacritical-words')) {
 }
 if(get_transient(RSTR_NAME . '-locales')) {
 	delete_transient(RSTR_NAME . '-locales');
+}
+
+if($wpdb) {
+	$wpdb->query("DELETE FROM `{$wpdb->options}` WHERE `{$wpdb->options}`.`option_name` REGEXP '^_transient_(.*)?{$RSTR_NAME}(.*|$)'");
 }
 //-END

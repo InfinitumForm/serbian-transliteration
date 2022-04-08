@@ -2,9 +2,9 @@
 Contributors: ivijanstefan, creativform
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 5.4
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 7.0
-Stable tag: 1.7.5
+Stable tag: 1.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,16 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.7.8 =
+* Fixing missing constants
+
+= 1.7.7 =
+* Fixed critical errors on the multisite installations
+
+= 1.7.6 =
+* Fixed iconv() PHP error
+* Fixed block editor bugs
+
 = 1.7.5 =
 * Fixed mail transliterations
 * Fixed file transliterations
@@ -190,6 +200,16 @@ We also thought of PHP developers where we have enabled several useful functions
 * Removed scripts that slow down the site
 
 == Upgrade Notice ==
+
+= 1.7.8 =
+* Fixing missing constants
+
+= 1.7.7 =
+* Fixed critical errors on the multisite installations
+
+= 1.7.6 =
+* Fixed iconv() PHP error
+* Fixed block editor bugs
 
 = 1.7.5 =
 * Fixed mail transliterations
