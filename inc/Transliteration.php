@@ -163,11 +163,11 @@ class Serbian_Transliteration_Transliterating {
 		$get_locale = Serbian_Transliteration_Cache::get('get_locale');
 
 		if(empty($get_locale)){
-			$locale = get_locale();
+			$get_locale = get_locale();
 			if(function_exists('pll_current_language')) {
-				$locale = pll_current_language('locale');
+				$get_locale = pll_current_language('locale');
 			}
-			$get_locale = Serbian_Transliteration_Cache::set('get_locale', get_locale());
+			$get_locale = Serbian_Transliteration_Cache::set('get_locale', $get_locale);
 		}
 
 		return $get_locale;

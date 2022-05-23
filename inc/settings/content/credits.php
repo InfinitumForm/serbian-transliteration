@@ -119,7 +119,7 @@ $special_thanks = array(
 				<?php printf('<p>%s</p>', __('This plugin is 100% free. If you want to buy us one coffee, beer or in general help the development of this plugin through a monetary donation, you can do it in the following ways:', RSTR_NAME)); ?>
 				<ul>
 					<?php printf('<li><b>%s</b>: %s</li>', __('PayPal', RSTR_NAME), 'creativform@gmail.com'); ?>
-					<?php printf('<li><b>%s</b>: %s (%s)</li>', __('From Serbia', RSTR_NAME), '115-0000000138835-77', __('Telenor Bank', RSTR_NAME)); ?>
+					<?php printf('<li><b>%s</b>: %s (%s)</li>', __('From Serbia', RSTR_NAME), '115-0000000138835-77', __('Mobi Bank', RSTR_NAME)); ?>
 				</ul>
 			</div>
 		</div>

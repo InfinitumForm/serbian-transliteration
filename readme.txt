@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 5.9
 Requires PHP: 7.0
-Stable tag: 1.7.8
+Stable tag: 1.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.7.9 =
+* Fixing activation code
+* Fixing translations
+* Improving settings
+
 = 1.7.8 =
 * Fixing missing constants
 
@@ -201,51 +206,10 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.7.8 =
-* Fixing missing constants
-
-= 1.7.7 =
-* Fixed critical errors on the multisite installations
-
-= 1.7.6 =
-* Fixed iconv() PHP error
-* Fixed block editor bugs
-
-= 1.7.5 =
-* Fixed mail transliterations
-* Fixed file transliterations
-* Improved redirection links
-* Improved cache
-* Improved admin settings
-
-= 1.7.4 =
-* Fixing WordPress memory leaking
-* Improved cache functionality
-
-= 1.7.3 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Fixed transliteration filters
-* Improved Contact Form 7 transliteration
-
-= 1.7.2 =
-* Improved cache
-* Fixed object transliteration
-* Adding support for the CF7
-
-= 1.7.1 =
-* Improved transliterations for the Serbian, Bosnian and montenegrin
-* Improved current URL recognation
-* Improved plugin cache
-* Tested up to WordPress version 5.8
-
-= 1.7.0 =
-* Fixed blank screen on the Cyrillic transliteration
-* Improved WP Cache object
-* Removed regular expression error
-* Moved to the static cache objects
-* Improved AJAX calls
-* Added algorithm for faster language recognition
-* Removed scripts that slow down the site
+= 1.7.9 =
+* Fixing activation code
+* Fixing translations
+* Improving settings
 
 == Frequently Asked Questions ==
 

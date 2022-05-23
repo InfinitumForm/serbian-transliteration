@@ -58,13 +58,31 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			if($active_plugins = Serbian_Transliteration_Plugins::includes(array(), true)->active_filters())
 			{
 				$active_plugins = array_keys($active_plugins);
-				Serbian_Transliteration_Cache::set('Serbian_Transliteration_Settings__active_filters', array_merge(Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters'), $active_plugins));
+				if(empty($active_plugins)) {
+					$active_plugins = [];
+				}
+				Serbian_Transliteration_Cache::set(
+					'Serbian_Transliteration_Settings__active_filters',
+					array_merge(
+						Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters') ?? [],
+						$active_plugins
+					)
+				);
 			}
 
 			if($active_themes = Serbian_Transliteration_Themes::includes(array(), true)->active_filters())
 			{
 				$active_themes = array_keys($active_themes);
-				Serbian_Transliteration_Cache::set('Serbian_Transliteration_Settings__active_filters', array_merge(Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters'), $active_themes));
+				if(empty($active_themes)) {
+					$active_themes = [];
+				}
+				Serbian_Transliteration_Cache::set(
+					'Serbian_Transliteration_Settings__active_filters',
+					array_merge(
+						Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters') ?? [],
+						$active_themes
+					)
+				);
 			}
 
 			$this->add_action( 'wp_ajax_rstr_filter_mode_options', 'ajax__rstr_filter_mode_options');
@@ -675,6 +693,16 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	public function language_callback(){
 		$inputs = array();
 		$languages = array_merge(array('auto' => __('Automatical (recommended)', RSTR_NAME)), Serbian_Transliteration_Transliterating::registered_languages());
+		
+		if( !isset($this->options['language-scheme']) ) {
+			$this->options['language-scheme'] = ( 
+				in_array(
+					Serbian_Transliteration_Utilities::get_locale(),
+					array_keys(Serbian_Transliteration_Transliterating::registered_languages())
+				) ? Serbian_Transliteration_Utilities::get_locale() : 'auto'
+			);
+		}
+
 		foreach($languages as $locale=>$label)
 		{
 			$inputs[]=sprintf(

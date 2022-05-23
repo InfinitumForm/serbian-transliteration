@@ -22,12 +22,17 @@ class Serbian_Transliteration_Utilities{
 			'exclude-cyrillic-words'	=>	'',
 			'enable-search'				=>	'yes',
 			'search-mode'       		=>	'auto',
-			'enable-alternate-links'	=>	'yes',
+			'enable-alternate-links'	=>	'no',
 			'first-visit-mode'			=>	'auto',
-			'enable-rss'				=>	'no',
+			'enable-rss'				=>	'yes',
 			'fix-diacritics'			=>	'yes',
 			'url-selector'				=>	'rstr',
-			'language-scheme'			=>	'auto',
+			'language-scheme'			=>	( 
+				in_array(
+					self::get_locale(),
+					array_keys(Serbian_Transliteration_Transliterating::registered_languages())
+				) ? self::get_locale() : 'auto'
+			),
 			'enable-body-class'			=>	'yes',
 			'force-widgets'				=>	'no',
 			'force-email-transliteration' => 'no',
@@ -839,7 +844,7 @@ class Serbian_Transliteration_Utilities{
 			'Ĵ'=>'J',
 			'ĵ'=>'j',
 
-			'Ķ'=>'K',
+			'Ķ'=>'K', 'Ƙ'=>'K',
 			'ķ'=>'k', 'ĸ'=>'k',
 
 			'Ĺ'=>'L', 'Ļ'=>'L', 'Ľ'=>'L', 'Ŀ'=>'L', 'Ł'=>'L',
