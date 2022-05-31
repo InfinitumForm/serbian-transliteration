@@ -41,12 +41,12 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			if(isset($_GET['rstr-activation']) && $_GET['rstr-activation'] == 'true'){				
 				$this->add_action( 'admin_notices', 'admin_notice__activation', 10, 0);
 				if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true'){
-					set_transient(RSTR_BASENAME . '_nonce_save', 'true', 30);
+					Serbian_Transliteration_DB_Cache::set(RSTR_BASENAME . '_nonce_save', 'true', 30);
 					$this->add_action( 'admin_init', 'updated_option__redirection', 10, 0);
 				}
 			}
 
-			if(get_transient(RSTR_BASENAME . '_nonce_save') == 'true') {
+			if(Serbian_Transliteration_DB_Cache::get(RSTR_BASENAME . '_nonce_save') == 'true') {
 				$this->add_action( 'admin_notices', 'admin_notice__success', 10, 0);
 			}
 			$this->nonce = esc_attr(wp_create_nonce('rstr-options'));
@@ -113,7 +113,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			 	'<div class="notice notice-success is-dismissible">%s</div>',
 				sprintf('<p>%s</p>', __('Settings saved.', RSTR_NAME))
 			 );
-			 delete_transient(RSTR_BASENAME . '_nonce_save');
+			 Serbian_Transliteration_DB_Cache::delete(RSTR_BASENAME . '_nonce_save');
 		}
 	}
 

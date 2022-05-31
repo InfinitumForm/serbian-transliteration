@@ -170,6 +170,21 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     '10 S',
                     '10 OEM',
                     '10',
+					
+					'11.1',
+                    '11 Home',
+                    '11 Pro Education',
+                    '11 Pro',
+                    '11 Education',
+                    '11 Enterprise LTSB',
+                    '11 Enterprise',
+                    '11 IoT Core',
+                    '11 IoT Enterprise',
+                    '11 IoT',
+                    '11 S',
+                    '11 OEM',
+                    '11',
+					
                     'server',
                     'vista',
                     'me',
@@ -222,6 +237,14 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     'windows 10 home' => 'Windows 10',
                     'windows 10 pro' => 'Windows 10',
                     'windows nt 10' => 'Windows 10',
+					
+					'win11' => 'Windows 11',
+                    'windows 11' => 'Windows 11',
+                    'windows 11 enterprise' => 'Windows 11',
+                    'windows 11 home' => 'Windows 11',
+                    'windows 11 pro' => 'Windows 11',
+                    'windows nt 11' => 'Windows 11',
+					
                     'windows nt 6.3' => 'Windows 8.1',
                     'windows nt 6.2' => 'Windows 8',
                     'windows nt 6.1|windows nt 7.0' => 'Windows 7',
@@ -323,12 +346,26 @@ if (!class_exists('Serbian_Transliteration_OS')):
             }
             foreach ($os_array as $regex => $value)
             {
-                if (preg_match('{\b(' . $regex . ')\b}i', $user_agent))
+                if (preg_match('~\b(' . str_replace( array (
+					'.',
+					'\\\.',
+					'\\.',
+					'/',
+					'\\\/',
+					'\\/'
+				), array (
+					'\.',
+					'\.',
+					'\.',
+					'\/',
+					'\/',
+					'\/'
+				), $regex ) . ')\b~i', $user_agent))
                 {
                     return $value;
                 }
             }
-            return 'undefined';
+            return __('undefined', RSTR_NAME);
         }
     }
 endif;

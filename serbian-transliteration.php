@@ -10,7 +10,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.7.9
+ * Version:           1.8.0
  * Requires at least: 5.4
  * Requires PHP:      7.0
  * Author:            Ivijan-Stefan Stipić
@@ -103,6 +103,22 @@ include_once RSTR_INC . '/Requirements.php';
 $Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(array('file' => RSTR_FILE));
 
 if($Serbian_Transliteration_Activate->passes()) :
+	/*
+	 * Register database tables
+	 * @since     1.8.1
+	 * @verson    1.0.0
+	 */
+	global $wpdb;
+	$wpdb->rstr_cache = $wpdb->get_blog_prefix() . 'rstr_cache';
+	
+	/*
+	 * Serbian transliteration database cache
+	 * @since     1.5.7
+	 * @verson    1.0.0
+	 */
+	include_once RSTR_INC . '/Cache_DB.php';
+	Serbian_Transliteration_DB_Cache::instance();
+	
 	/*
 	 * Serbian transliteration utilities
 	 * @since     1.5.7
@@ -260,6 +276,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 				}
 			}
 
+			// Clear plugin cache
 			Serbian_Transliteration_Utilities::clear_plugin_cache();
 
 			// Add custom script languages
@@ -280,6 +297,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 					'cyr' => get_term_by('slug', 'cyr', 'rstr-script')->term_id
 				));
 			}
+			
+			// Install database tables
+			Serbian_Transliteration_DB_Cache::table_install();
 
 			// Reset permalinks
 			flush_rewrite_rules();
@@ -301,6 +321,25 @@ if($Serbian_Transliteration_Activate->passes()) :
 			}
 		}, 10, 1);
 */
+
+		/* Run script on the plugin upgrade
+		 ====================================*/
+		add_action( 'plugins_loaded', function () {
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				return;
+			}
+			
+			// Install database tables
+			Serbian_Transliteration_DB_Cache::table_install();
+			
+			// Clear plugin cache
+			Serbian_Transliteration_Utilities::clear_plugin_cache();
+
+			// Reset permalinks
+			flush_rewrite_rules();
+		}, 1 );
+		
+
 		/* Deactivate plugin
 		====================================*/
 		Serbian_Transliteration::register_deactivation_hook(function(){

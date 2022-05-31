@@ -179,14 +179,14 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function get_locales( $needle = NULL ){
-		$cache = get_transient(RSTR_NAME . '-locales');
+		$cache = Serbian_Transliteration_DB_Cache::get(RSTR_NAME . '-locales');
 
 		if(empty($cache))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/locale', 'locale.lib');
 			$cache = self::parse_library($file_name);
 			if(!empty($cache)) {
-				set_transient(RSTR_NAME . '-locales', $cache, apply_filters('rstr/init/libraries/file/locale/transient', YEAR_IN_SECONDS));
+				Serbian_Transliteration_DB_Cache::set(RSTR_NAME . '-locales', $cache, apply_filters('rstr/init/libraries/file/locale/transient', YEAR_IN_SECONDS));
 			}
 		}
 
@@ -292,13 +292,13 @@ class Serbian_Transliteration_Transliterating {
 	public static function get_diacritical( $needle = NULL ){
 		$locale = self::__init()->get_locale();
 		$transient_name = RSTR_NAME . "-diacritical-words-{$locale}";
-		$cache = get_transient($transient_name);
+		$cache = Serbian_Transliteration_DB_Cache::get($transient_name);
 		if(empty($cache))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/get_diacritical', "{$locale}.diacritical.words.lib", $locale, $transient_name);
 			$cache = self::parse_library($file_name);
 			if(!empty($cache)) {
-				set_transient($transient_name, $cache, apply_filters('rstr/init/libraries/file/get_diacritical/transient', (DAY_IN_SECONDS*7)));
+				Serbian_Transliteration_DB_Cache::set($transient_name, $cache, apply_filters('rstr/init/libraries/file/get_diacritical/transient', (DAY_IN_SECONDS*7)));
 			}
 		}
 
@@ -317,13 +317,13 @@ class Serbian_Transliteration_Transliterating {
 	public static function get_skip_words( $needle = NULL ){
 		$locale = self::__init()->get_locale();
 		$transient_name = RSTR_NAME . "-skip-words-{$locale}";
-		$cache = get_transient($transient_name);
+		$cache = Serbian_Transliteration_DB_Cache::get($transient_name);
 		if(empty($cache))
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/skip-words', "{$locale}.skip.words.lib", $locale, $transient_name);
 			$cache = self::parse_library($file_name);
 			if(!empty($cache)) {
-				set_transient($transient_name, $cache, apply_filters('rstr/init/libraries/file/skip-words/transient', (DAY_IN_SECONDS*7)));
+				Serbian_Transliteration_DB_Cache::set($transient_name, $cache, apply_filters('rstr/init/libraries/file/skip-words/transient', (DAY_IN_SECONDS*7)));
 			}
 		}
 

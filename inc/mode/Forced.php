@@ -147,7 +147,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			{
 				$sufix = '_' . strlen($buffer);
 
-				$forced_cache = get_transient( $this->transient.$sufix );
+				$forced_cache = Serbian_Transliteration_DB_Cache::get( $this->transient.$sufix );
 
 				if (!is_admin() && empty($forced_cache) )
 				{
@@ -156,7 +156,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 						return $matches[2];
 					}, $buffer);
 
-					if(!empty($buffer)) set_transient( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+					if(!empty($buffer)) Serbian_Transliteration_DB_Cache::set( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
 				}
 				else
 				{

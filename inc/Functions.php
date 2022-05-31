@@ -273,15 +273,12 @@ endif;
 */
 if(!function_exists('script_selector')) :
 	function script_selector ($args) {
-		$parse_url = Serbian_Transliteration_Utilities::parse_url();
-		$url = $parse_url['url'];
-
 		$ID = uniqid('script_selector_');
 
 		$args = (object)wp_parse_args($args, array(
 			'id'			=> $ID,
 			'display_type' 	=> 'inline',
-			'echo' 					=> false,
+			'echo' 			=> false,
 			'separator'     => ' | ',
 			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
 			'lat_caption'   => __('Latin', RSTR_NAME)
@@ -289,8 +286,8 @@ if(!function_exists('script_selector')) :
 
 		$options = (object)array(
 			'active'	=> (function_exists('rstr_get_script') ? rstr_get_script() : get_script()),
-			'cyr'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'cyr', $url),
-			'lat'		=> add_query_arg(get_rstr_option('url-selector', 'rstr'), 'lat', $url)
+			'cyr'		=> add_query_arg( get_rstr_option('url-selector', 'rstr'), 'cyr' ),
+			'lat'		=> add_query_arg( get_rstr_option('url-selector', 'rstr'), 'lat' )
 		);
 
 		if(in_array($args->display_type, array('object', 'array'))) {
