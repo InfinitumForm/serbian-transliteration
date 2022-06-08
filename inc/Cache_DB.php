@@ -349,10 +349,9 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 	 * @verson    1.0.0
 	 */
 	public static function instance() {
-		$class = self::class;
-		$instance = CFGP_Cache::get($class);
+		static $instance;
 		if ( !$instance ) {
-			$instance = CFGP_Cache::set($class, new self());
+			$instance = new self();
 		}
 		return $instance;
 	}

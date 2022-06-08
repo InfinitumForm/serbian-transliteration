@@ -363,6 +363,14 @@ if($Serbian_Transliteration_Activate->passes()) :
 			// Send plugin statistic
 			Serbian_Transliteration_Statistic::deactivation();
 		});
+		
+		/* Clear cache on the post update
+		====================================*/
+		add_action('transition_post_status', function(){
+			// Clear plugin cache
+			Serbian_Transliteration_Utilities::clear_plugin_cache();
+			Serbian_Transliteration_DB_Cache::flush();
+		});
 
 		/* Load tools
 		====================================*/
