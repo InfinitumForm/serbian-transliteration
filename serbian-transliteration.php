@@ -10,7 +10,7 @@
  * Plugin Name:       Transliterator - WordPress Transliteration
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.8.0
+ * Version:           1.8.1
  * Requires at least: 5.4
  * Requires PHP:      7.0
  * Author:            Ivijan-Stefan Stipić
@@ -40,7 +40,10 @@
 if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-// Globals
+// Database version
+if ( ! defined( 'RSTR_DATABASE_VERSION' ) ){
+	define( 'RSTR_DATABASE_VERSION', '1.0.0');
+}
 
 /*
  * Main plugin constants
@@ -219,6 +222,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 			$success = true;
 
 			Serbian_Transliteration_Utilities::attachment_taxonomies();
+			
+			// Save version
+			update_option(RSTR_NAME . '-version', RSTR_VERSION, false);
 
 			// Add activation date
 			if($activation = get_option(RSTR_NAME . '-activation')) {
@@ -299,7 +305,10 @@ if($Serbian_Transliteration_Activate->passes()) :
 			}
 			
 			// Install database tables
-			Serbian_Transliteration_DB_Cache::table_install();
+			if( RSTR_DATABASE_VERSION !== get_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION) ) {
+				Serbian_Transliteration_DB_Cache::table_install();
+				update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, false);
+			}
 
 			// Reset permalinks
 			flush_rewrite_rules();
@@ -325,18 +334,26 @@ if($Serbian_Transliteration_Activate->passes()) :
 		/* Run script on the plugin upgrade
 		 ====================================*/
 		add_action( 'plugins_loaded', function () {
-			if ( ! current_user_can( 'activate_plugins' ) ) {
-				return;
-			}
-			
-			// Install database tables
-			Serbian_Transliteration_DB_Cache::table_install();
-			
-			// Clear plugin cache
-			Serbian_Transliteration_Utilities::clear_plugin_cache();
+			if( is_admin() && (RSTR_VERSION !== get_option(RSTR_NAME . '-version', RSTR_VERSION)) ) {
+				if ( ! current_user_can( 'activate_plugins' ) ) {
+					return;
+				}
+				
+				// Install database tables
+				if( RSTR_DATABASE_VERSION !== get_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION) ) {
+					Serbian_Transliteration_DB_Cache::table_install();
+					update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, false);
+				}
+				
+				// Clear plugin cache
+				Serbian_Transliteration_Utilities::clear_plugin_cache();
 
-			// Reset permalinks
-			flush_rewrite_rules();
+				// Reset permalinks
+				flush_rewrite_rules();
+				
+				// Save version
+				update_option(RSTR_NAME . '-version', RSTR_VERSION, false);
+			}
 		}, 1 );
 		
 

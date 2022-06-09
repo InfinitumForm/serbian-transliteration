@@ -48,6 +48,9 @@ if(get_option(RSTR_NAME . '-reviewed')) {
 if(get_option(RSTR_NAME . '-version')) {
 	delete_option(RSTR_NAME . '-version');
 }
+if(get_option(RSTR_NAME . '-db-version')) {
+	delete_option(RSTR_NAME . '-db-version');
+}
 // Delete terms
 if(term_exists('lat', 'rstr-script')) {
 	wp_delete_term(get_term_by('slug','lat','rstr-script')->term_id, 'rstr-script');
@@ -72,5 +75,6 @@ if(get_transient(RSTR_NAME . '-locales')) {
 
 if($wpdb) {
 	$wpdb->query("DELETE FROM `{$wpdb->options}` WHERE `{$wpdb->options}`.`option_name` REGEXP '^_transient_(.*)?{$RSTR_NAME}(.*|$)'");
+	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}rstr_cache");
 }
 //-END

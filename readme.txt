@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.8.1 =
+* Added advanced cache functionality
+* Updated Ukrainian transliteration
+* Optimized PHP code
+
 = 1.8.0 =
 * Added support for the WordPress version 6.0
 * Update transliterations
@@ -210,6 +215,11 @@ We also thought of PHP developers where we have enabled several useful functions
 * Removed scripts that slow down the site
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+* Added advanced cache functionality
+* Updated Ukrainian transliteration
+* Optimized PHP code
 
 = 1.8.0 =
 * Added support for the WordPress version 6.0

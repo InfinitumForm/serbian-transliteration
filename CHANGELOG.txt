@@ -1,3 +1,8 @@
+= 1.8.1 =
+* Added advanced cache functionality
+* Updated Ukrainian transliteration
+* Optimized PHP code
+
 = 1.8.0 =
 * Added support for the WordPress version 6.0
 * Update transliterations
