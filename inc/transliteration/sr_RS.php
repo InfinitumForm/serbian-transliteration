@@ -63,7 +63,18 @@ class Serbian_Transliteration_sr_RS {
 				$lat_to_cyr = apply_filters('rstr/inc/transliteration/sr_RS/lat_to_cyr', $lat_to_cyr);
 
 			//	return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
-				return strtr($content, $lat_to_cyr);
+				$content = strtr($content, $lat_to_cyr);
+				
+				// Fix some special words
+				$content = str_replace(array(
+					'оџљебња',
+					'ОЏЉЕБЊА'
+				), array(
+					'оджљебња',
+					'ОДЖЉЕБЊА'
+				), $content);
+				
+				return $content;
 				break;
 		}
 

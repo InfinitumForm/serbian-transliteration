@@ -309,11 +309,13 @@ class Serbian_Transliteration_Utilities{
 	public static function clear_plugin_cache(){
 		global $wpdb;
 		
-		if(Serbian_Transliteration_DB_Cache::get(RSTR_NAME . '-skip-words')) {
-			Serbian_Transliteration_DB_Cache::delete(RSTR_NAME . '-skip-words');
+		$locale = Serbian_Transliteration_Transliterating::__init()->get_locale();
+		
+		if(Serbian_Transliteration_DB_Cache::get(RSTR_NAME . "-skip-words-{$locale}")) {
+			Serbian_Transliteration_DB_Cache::delete(RSTR_NAME . "-skip-words-{$locale}");
 		}
-		if(Serbian_Transliteration_DB_Cache::get(RSTR_NAME . '-diacritical-words')) {
-			Serbian_Transliteration_DB_Cache::delete(RSTR_NAME . '-diacritical-words');
+		if(Serbian_Transliteration_DB_Cache::get(RSTR_NAME . "-diacritical-words-{$locale}")) {
+			Serbian_Transliteration_DB_Cache::delete(RSTR_NAME . "-diacritical-words-{$locale}");
 		}
 		if(Serbian_Transliteration_DB_Cache::get(RSTR_NAME . '-locales')) {
 			Serbian_Transliteration_DB_Cache::delete(RSTR_NAME . '-locales');

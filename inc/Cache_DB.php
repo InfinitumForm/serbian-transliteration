@@ -260,9 +260,9 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 	 * @verson    1.0.0
 	 */
 	public static function table_install() {
-		if( !self::table_exists(true) ) {
-			global $wpdb;
-			
+		global $wpdb;
+		
+		if( !self::table_exists(true) ) {	
 			// Include important library
 			if(!function_exists('dbDelta')){
 				require_once ABSPATH . DIRECTORY_SEPARATOR . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'upgrade.php';
@@ -273,12 +273,14 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 			dbDelta("
 			CREATE TABLE IF NOT EXISTS {$wpdb->rstr_cache} (
 				`key` varchar(255) NOT NULL,
-				`value` text NOT NULL,
+				`value` longtext NOT NULL,
 				`expire` int(11) NOT NULL DEFAULT 0,
 				UNIQUE KEY `cache_key` (`key`),
 				KEY `cache_expire` (`expire`)
 			) {$charset_collate}
 			");
+		} else if( RSTR_DATABASE_VERSION === '1.0.1' ) {
+			$wpdb->query("ALTER TABLE `wp_rstr_cache` CHANGE `value` `value` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;");
 		}
 	}
 	

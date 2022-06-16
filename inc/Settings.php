@@ -90,6 +90,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     }
 	
 	public function updated_option__redirection(){
+		Serbian_Transliteration_Utilities::clear_plugin_cache();
 		if( wp_safe_redirect( admin_url( 'options-general.php?page=serbian-transliteration' ) ) ) {
 			exit;
 		}
