@@ -125,12 +125,14 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function decode($content, $flag=ENT_NOQUOTES){
-		if (filter_var($content, FILTER_VALIDATE_URL)) {
-			$content = rawurldecode($content);
-		} else {
-			$content = htmlspecialchars_decode($content, $flag);
-			$content = html_entity_decode($content, $flag);
-			$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
+		if ( !empty($content) && is_string($content) && !is_numeric($content) ) {
+			if (filter_var($content, FILTER_VALIDATE_URL)) {
+				$content = rawurldecode($content);
+			} else {
+				$content = htmlspecialchars_decode($content, $flag);
+				$content = html_entity_decode($content, $flag);
+				$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
+			}
 		}
 		return $content;
 	}

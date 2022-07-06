@@ -4,9 +4,10 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Donate link: https://www.buymeacoffee.com/ivijanstefan
 
 Transliterate Cyrillic into Latin, enable Cyrillic usernames, search in multiple letter scripts, and more...
 
@@ -153,6 +154,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.8.3 =
+* Fixed encoding
+* Fixed operating system mode
+* Fixed memory leaking
+
 = 1.8.2 =
 * Updated Ukrainian transliteration
 * Updated Serbian transliteration
@@ -222,11 +228,10 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.8.2 =
-* Updated Ukrainian transliteration
-* Updated Serbian transliteration
-* Updated libraries
-* Fixed cache algorithm
+= 1.8.3 =
+* Fixed encoding
+* Fixed operating system mode
+* Fixed memory leaking
 
 == Frequently Asked Questions ==
 
