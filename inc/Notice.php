@@ -25,18 +25,18 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		
 		public function __construct() {
 			$this->add_action( 'admin_init', 'check_installation_time' );
-			$this->add_action( 'admin_init', 'cfgp_dimiss_review', 5 );
+			$this->add_action( 'admin_init', 'rstr_dimiss_review', 5 );
 		}
 		
 		// remove the notice for the user if review already done or if the user does not want to
-		public function cfgp_dimiss_review(){    
-			if( isset( $_GET['cfgp_dimiss_review'] ) && !empty( $_GET['cfgp_dimiss_review'] ) ){
-				$cfgp_dimiss_review = $_GET['cfgp_dimiss_review'];
-				if( $cfgp_dimiss_review == 1 ){
+		public function rstr_dimiss_review(){    
+			if( isset( $_GET['rstr_dimiss_review'] ) && !empty( $_GET['rstr_dimiss_review'] ) ){
+				$rstr_dimiss_review = $_GET['rstr_dimiss_review'];
+				if( $rstr_dimiss_review == 1 ){
 					add_option( RSTR_NAME . '-reviewed' , true );
 					
 					$parse_url = Serbian_Transliteration_Utilities::parse_url();
-					if(wp_safe_redirect(remove_query_arg('cfgp_dimiss_review', $parse_url['url']))) {
+					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_review', $parse_url['url']))) {
 						exit;
 					}
 				}
@@ -69,7 +69,7 @@ if(!class_exists('Serbian_Transliteration_Notice')) :
 		**/
 		public function display_admin_notice() {
 			$parse_url = Serbian_Transliteration_Utilities::parse_url();
-			$dont_disturb = esc_url( add_query_arg('cfgp_dimiss_review', '1', $parse_url['url']) );
+			$dont_disturb = esc_url( add_query_arg('rstr_dimiss_review', '1', $parse_url['url']) );
 			$plugin_info = get_plugin_data( RSTR_FILE , true, true );       
 			$reviewurl = esc_url( 'https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post' );
 		 
