@@ -1,4 +1,4 @@
-﻿=== Transliterator - WordPress Transliteration ===
+﻿=== Transliterator ===
 Contributors: ivijanstefan, creativform
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 5.4
@@ -9,7 +9,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
 
-Transliterate Cyrillic into Latin, enable Cyrillic usernames, search in multiple letter scripts, and more...
+Plugin for transliterating permalinks, posts, pages, tags, categories, media & files, search and more...
 
 == Description ==
 This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.
@@ -64,7 +64,7 @@ We also do special compatible functions with:
  &#9989; [WooCommerce](https://wordpress.org/plugins/woocommerce/)
  &#9989; [Polylang](https://wordpress.org/plugins/polylang/)
  &#9989; [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
- &#9989; [WordPress Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
+ &#9989; [CF Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
  &#9989; [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
  &#9989; [Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/)
  &#9989; [Slider Revolution](https://www.sliderrevolution.com/)
