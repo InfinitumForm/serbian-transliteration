@@ -65,7 +65,6 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		{
 			// Load options
 			$options = get_rstr_option();
-			
 			/* Admin transliterations
 			=========================================*/
 			if($admin_mode_class = Serbian_Transliteration_Utilities::mode(['mode' => 'admin'])) {
@@ -111,6 +110,15 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			new Serbian_Transliteration_Menu();
 		}
 
+		/* Load plugins support
+		====================================*/
+		Serbian_Transliteration_Plugins::includes();
+		/* Load themes support
+		====================================*/
+		Serbian_Transliteration_Themes::includes();
+		/* Load SEO support
+		====================================*/
+		Serbian_Transliteration_SEO::init();
 		/* Load Notice
 		====================================*/
 		Serbian_Transliteration_Notice::init();

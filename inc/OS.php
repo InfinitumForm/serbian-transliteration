@@ -132,13 +132,15 @@ if (!class_exists('Serbian_Transliteration_OS')):
          */
         public static function getOS($user_agent = null)
         {
-            $os_array = array();
+			$os_array = [];
             if (empty($user_agent))
             {
-                if (function_exists('php_uname')) $user_agent = php_uname('a');
-                else if (function_exists('shell_exec') && !self::is_win()) $user_agent = shell_exec('uname -a');
-                else if (function_exists('shell_exec') && self::is_win()) $user_agent = shell_exec('ver');
-                else $user_agent = NULL;
+                if (function_exists('php_uname')) {
+					$user_agent = php_uname('a');
+                } else {
+					$user_agent = NULL;
+				}
+				
                 // Get Windows versions
                 foreach (apply_filters('rstr_windows_version', array(
                     '95',
@@ -146,18 +148,18 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     '2000',
                     'XP Professional',
                     'XP',
-                    '7.1',
+                    '7\.1',
                     '7',
-                    '8.1 Pro',
-                    '8.1 Home',
-                    '8.1 Enterprise',
-                    '8.1 OEM',
-                    '8.1',
+                    '8\.1 Pro',
+                    '8\.1 Home',
+                    '8\.1 Enterprise',
+                    '8\.1 OEM',
+                    '8\.1',
                     '8 Home',
                     '8 Enterprise',
                     '8 OEM',
                     '8',
-                    '10.1',
+                    '10\.1',
                     '10 Home',
                     '10 Pro Education',
                     '10 Pro',
@@ -171,7 +173,7 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     '10 OEM',
                     '10',
 					
-					'11.1',
+					'11\.1',
                     '11 Home',
                     '11 Pro Education',
                     '11 Pro',
@@ -227,7 +229,7 @@ if (!class_exists('Serbian_Transliteration_OS')):
                 }
 				
 				$regex_check = apply_filters('rstr_unix_version_regex', array(
-					'Mac OS X 10.1[^0-9]' => 'Mac OS X Puma'
+					'Mac OS X 10\.1[^0-9]' => 'Mac OS X Puma'
 				));
             }
             else
@@ -246,15 +248,15 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     'windows 11 home' => 'Windows 11',
                     'windows 11 pro' => 'Windows 11',
                     'windows nt 11' => 'Windows 11',
-                    'windows nt 6.3' => 'Windows 8.1',
-                    'windows nt 6.2' => 'Windows 8',
-                    'windows nt 6.0' => 'Windows Vista',
-                    'windows nt 5.2' => 'Windows Server 2003/XP x64',
-                    'windows nt 5.1' => 'Windows XP',
+                    'windows nt 6\.3' => 'Windows 8.1',
+                    'windows nt 6\.2' => 'Windows 8',
+                    'windows nt 6\.0' => 'Windows Vista',
+                    'windows nt 5\.2' => 'Windows Server 2003/XP x64',
+                    'windows nt 5\.1' => 'Windows XP',
                     'windows me' => 'Windows ME',
                     'windows ce' => 'Windows CE',
                     'win16' => 'Windows 3.11',
-                    'mac_powerpc' => 'Mac OS 9',
+                    'mac\_powerpc' => 'Mac OS 9',
                     'linux' => 'Linux',
                     'ubuntu' => 'Linux - Ubuntu',
                     'iphone' => 'iPhone',
@@ -263,13 +265,13 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     'android' => 'Android',
                     'blackberry' => 'BlackBerry',
                     'webos' => 'Mobile',
-                    'Win 9x 4.90' => 'Windows ME',
+                    'Win 9x 4\.90' => 'Windows ME',
                     'win32' => 'Windows',
                     'dos x86' => 'DOS',
                     'Mac OS X' => 'Mac OS X',
-                    'Mac_PowerPC' => 'Macintosh PowerPC',
+                    'Mac\_PowerPC' => 'Macintosh PowerPC',
                     'unix' => 'Unix',
-                    'os/2' => 'OS/2',
+                    'os\/2' => 'OS/2',
                     'freebsd' => 'FreeBSD',
                     'openbsd' => 'OpenBSD',
                     'netbsd' => 'NetBSD',
@@ -278,12 +280,12 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     'osf' => 'OSF',
                     'aix' => 'AIX',
                     'GNU Hurd' => 'GNU Hurd',
-                    'amiga-aweb' => 'AmigaOS',
+                    'amiga\-aweb' => 'AmigaOS',
                     'amiga' => 'Amiga',
                     'AvantGo' => 'PalmOS',
                     'Dreamcast' => 'Dreamcast OS',
                     'GetRight' => 'Windows',
-                    'go!zilla' => 'Windows',
+                    'go\!zilla' => 'Windows',
                     'gozilla' => 'Windows',
                     'gulliver' => 'Windows',
                     'ia archiver' => 'Windows',
@@ -302,13 +304,13 @@ if (!class_exists('Serbian_Transliteration_OS')):
                     'Java' => 'Unknown',
                     'flashget' => 'Windows',
                     'MS FrontPage' => 'Windows',
-                    'libwww-perl' => 'Unix',
-                    'UP.Browser' => 'Windows CE',
-                    'NetAnts' => 'Windows'
+                    'libwww\-perl' => 'Unix',
+                    'UP\.Browser' => 'Windows CE',
+                    'NetAnts' => 'Windows',
+                    'ios' => 'iOS'
                 ));
 				
 				$regex_check = apply_filters('rstr_os_version_regex', array(
-					'windows nt 6.1|windows nt 7.0' => 'Windows 7',
 					'(fedora)' => 'Linux - Fedora',
 					'(kubuntu)' => 'Linux - Kubuntu',
 					'(ubuntu)' => 'Linux - Ubuntu',
@@ -318,15 +320,16 @@ if (!class_exists('Serbian_Transliteration_OS')):
 					'(ASPLinux)' => 'Linux - ASPLinux',
 					'(Red Hat)' => 'Linux - Red Hat',
 					'(linux)' => 'Linux',
-					'windows nt 5.0|windows nt5.1|windows 2000' => 'Windows 2000',
-					'windows nt 4.0|winnt4.0' => 'Windows NT',
+					'windows nt 6\.1|windows nt 7\.0' => 'Windows 7',
+					'windows nt 5\.0|windows nt5.1|windows 2000' => 'Windows 2000',
+					'windows nt 4\.0|winnt4\.0' => 'Windows NT',
 					'windows 98|win98' => 'Windows 98',
 					'windows 95|win95' => 'Windows 95',
-					'mac os x 10.1[^0-9]' => 'Mac OS X Puma',
+					'mac os x 10\.1[^0-9]' => 'Mac OS X Puma',
 					'macintosh|mac os x' => 'Mac OS X',
 					'(windows)([0-9]{1,2}\.[0-9]{1,2})' => 'Windows',
-					'Mac OS X 10.1[^0-9]' => 'Mac OS X Puma',
-					'(media center pc).([0-9]{1,2}\.[0-9]{1,2})' => 'Windows Media Center',
+					'Mac OS X 10\.1[^0-9]' => 'Mac OS X Puma',
+					'(media center pc)\.([0-9]{1,2}\.[0-9]{1,2})' => 'Windows Media Center',
 					'(win)([0-9]{1,2}\.[0-9x]{1,2})' => 'Windows',
 					'(win)([0-9]{2})' => 'Windows',
 					'(windows)([0-9x]{2})' => 'Windows',
@@ -339,78 +342,42 @@ if (!class_exists('Serbian_Transliteration_OS')):
 					'(beos)([0-9]{1,2}\.[0-9]{1,2}){0,1}' => 'BeOS',
 					'(risc os)([0-9]{1,2}\.[0-9]{1,2})' => 'RISC OS',
 					'(Mandriva).([0-9]{1,3}(\.[0-9]{1,3})?(\.[0-9]{1,3})?)' => 'Linux - Mandriva',
-					'(SUSE).([0-9]{1,3}(\.[0-9]{1,3})?(\.[0-9]{1,3})?)' => 'Linux - SUSE',
+					'(SUSE)\.([0-9]{1,3}(\.[0-9]{1,3})?(\.[0-9]{1,3})?)' => 'Linux - SUSE',
 					'(amigaos)([0-9]{1,2}\.[0-9]{1,2})' => 'AmigaOS',
-					'[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3})' => 'Linux',
+					'([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,3})' => 'Linux',
 					'(webtv)/([0-9]{1,2}\.[0-9]{1,2})' => 'WebTV',
-					'(msproxy)/([0-9]{1,2}.[0-9]{1,2})' => 'Windows',
-					'(msie)([0-9]{1,2}.[0-9]{1,2})' => 'Windows'
+					'(msproxy)/([0-9]{1,2}\.[0-9]{1,2})' => 'Windows',
+					'(msie)([0-9]{1,2}\.[0-9]{1,2})' => 'Windows'
 				));
             }
 			
             foreach ($os_array as $regex => $value)
             {
-                if (@preg_match('~\b(' . str_replace( array (
-					'.',
-					'\\\.',
-					'\\.',
-					'-',
-					'\\\-',
-					'\\-',
-					'/',
-					'\\\/',
-					'\\/',
-					'!',
-					'\\\!',
-					'\\!',
-					' '
-				), array (
-					'\.',
-					'\.',
-					'\.',
-					'\-',
-					'\-',
-					'\-',
-					'\/',
-					'\/',
-					'\/',
-					'\!',
-					'\!',
-					'\!',
-					'\s'
-				), $regex ) . ')\b~i', $user_agent)) {
+                if (@preg_match('~\b(' . self::preg_quote( $regex ) . ')\b~i', $user_agent)) {
                     return $value;
                 }
             }
 			
 			foreach ($regex_check as $regex => $value)
             {
-                if (@preg_match('~\b(' . str_replace( array (
-					'.',
-					'\\\.',
-					'\\.',
-					'-',
-					'\\\-',
-					'\\-',
-					'/',
-					'\\\/',
-					'\\/'
-				), array (
-					'\.',
-					'\.',
-					'\.',
-					'\-',
-					'\-',
-					'\-',
-					'\/',
-					'\/',
-					'\/'
-				), $regex ) . ')\b~i', $user_agent)) {
+                if ( @preg_match('~\b(' . self::preg_quote( $regex ) . ')\b~i', $user_agent) ) {
                     return $value;
                 }
             }
-            return __('undefined', RSTR_NAME);
+            return __('undefined', 'cf-geoplugin');
         }
+		
+		/**
+         * PRIVATE: Quote regular expression characters
+         *
+         * @param $regex
+         * @return string
+         */
+		private static function preg_quote ($regex) {
+		//	$regex = preg_quote($regex);
+			return $regex;	
+		}
+		
     }
 endif;
 

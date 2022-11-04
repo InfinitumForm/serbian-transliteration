@@ -1,5 +1,12 @@
+= 1.8.6 =
+* Fixed memory leaking on the admin pages
+
+= 1.8.5 =
+* Improved encoding
+
 = 1.8.4 =
-* Added ACF support
+* Improving optimization
+* Preventing memory leaks
 
 = 1.8.3 =
 * Fixed encoding

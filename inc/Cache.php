@@ -33,12 +33,13 @@ if (!class_exists('Serbian_Transliteration_Cache')):
          * If it does exist, the data is not added and the function returns
         */
         public static function add($key, $value) {
-            self::garbage_cleaner();
-            if (!isset(self::$cache[self::key($key) ])) {
-                self::$cache[self::key($key) ] = $value;
-            }
-            return self::$cache[self::key($key) ];
-        }
+			$key = self::key($key);
+			if(!isset(self::$cache[ $key ])) {
+				self::garbage_cleaner();
+				self::$cache[ $key ] = $value;
+			}
+			return self::$cache[ $key ];
+		}
 
         /*
          * Save object to cache
@@ -46,23 +47,25 @@ if (!class_exists('Serbian_Transliteration_Cache')):
          * Adds data to the cache. If the cache key already exists, then it will be overwritten;
          * if not then it will be created.
         */
-        public static function set($key, $value) {
-            self::garbage_cleaner();
-            self::$cache[self::key($key) ] = $value;
-            return self::$cache[self::key($key) ];
-        }
+        public static function set($key, $value, $expire=0) {
+			$key = self::key($key);
+			self::garbage_cleaner();
+			self::$cache[ $key ] = $value;
+			return self::$cache[ $key ];
+		}
 
         /*
          * Replace cached object
          *
          * Replaces the given cache if it exists, returns false otherwise.
         */
-        public static function replace($key, $value) {
-            if (isset(self::$cache[self::key($key) ])) {
-                self::$cache[self::key($key) ] = $value;
-            }
-            return self::$cache[self::key($key) ];
-        }
+         public static function replace($key, $value, $expire=0) {
+			$key = self::key($key);
+			if(isset(self::$cache[ $key ])) {
+				self::$cache[ $key ] = $value;
+			}
+			return self::$cache[ $key ];
+		}
 
         /*
          * Delete cached object

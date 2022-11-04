@@ -125,13 +125,13 @@ class Serbian_Transliteration_Utilities{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function decode($content, $flag=ENT_NOQUOTES){
-		if ( !empty($content) && is_string($content) && !is_numeric($content) ) {
+		if ( !empty($content) && is_string($content) && !is_numeric($content) && !is_array($content) && !is_object($content) ) {
 			if (filter_var($content, FILTER_VALIDATE_URL)) {
 				$content = rawurldecode($content);
 			} else {
 				$content = htmlspecialchars_decode($content, $flag);
 				$content = html_entity_decode($content, $flag);
-				$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
+			//	$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
 			}
 		}
 		return $content;
@@ -686,7 +686,7 @@ class Serbian_Transliteration_Utilities{
 			return Serbian_Transliteration_Cache::set('current_page_id', $p);
 		else if($page_id = self::get_page_ID__private__GET_page_id())
 			return Serbian_Transliteration_Cache::set('current_page_id', $page_id);
-		else if(!is_admin() && $id = self::get_page_ID__private__query())
+		else if($id = self::get_page_ID__private__query())
 			return $id;
 		else if($id = self::get_page_ID__private__page_for_posts())
 			return Serbian_Transliteration_Cache::set('current_page_id', get_option( 'page_for_posts' ));
@@ -732,6 +732,11 @@ class Serbian_Transliteration_Utilities{
 
 	// Get page ID by mySQL query
 	protected static function get_page_ID__private__query(){
+		
+		if( is_admin() ) {
+			return false;
+		}
+		
 		global $wpdb;
 		$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
 		$parts = self::explode('/', $actual_link);

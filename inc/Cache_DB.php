@@ -23,15 +23,22 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 	 * Returns the value of the cached object, or false if the cache key doesn’t exist
 	 */
 	public static function get( string $key, $default=NULL ) {
+		static $cache = [];
 		
 		$key = self::key($key);
+		
+		if( $cache[$key] ?? NULL ) {
+			return $cache[$key];
+		}
 
 		if( !self::table_exists() ) {
 			if( $transient = get_transient( $key ) ) {
-				return $transient;
+				$cache[$key] = $transient;
 			} else {
-				return $default;
+				$cache[$key] = $default;
 			}
+			
+			return $cache[$key];
 		}
 		
 		global $wpdb;
@@ -47,10 +54,14 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 			if(is_serialized($result) || self::is_serialized($result)){
 				$result = unserialize($result);
 			}
-			return $result;
+			$cache[$key] = $result;
+			
+			return $cache[$key];
 		}
 		
-		return $default;
+		$cache[$key] = $default;
+		
+		return $cache[$key];
 	}
 	
 	/*
@@ -108,17 +119,19 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 		
 		$key = self::key($key);
 		
-		if( !self::table_exists() ) {
-			if( set_transient( $key, $value, $expire ) ) {
-				return $value;
-			} else {
-				return NULL;
+		if(self::get($key, NULL) !== $value) {
+			if( !self::table_exists() ) {
+				if( set_transient( $key, $value, $expire ) ) {
+					return $value;
+				} else {
+					return NULL;
+				}
 			}
-		}
-		
-		if( !self::add($key, $value, $expire) ) {
-			if( self::replace($key, $value, $expire) ) {
-				return $value;
+			
+			if( !self::add($key, $value, $expire) ) {
+				if( self::replace($key, $value, $expire) ) {
+					return $value;
+				}
 			}
 		}
 		

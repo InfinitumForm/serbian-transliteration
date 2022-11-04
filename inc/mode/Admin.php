@@ -41,8 +41,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 				'document_title_parts'  => 'title_parts',
 				'wp_get_object_terms'   => 'transliteration_wp_terms',
 				'load_script_translations' => 'transliteration_json_content',
-				'pre_load_script_translations' => 'transliteration_json_content',
-				'locale' => 'current_user_locale',
+				'pre_load_script_translations' => 'transliteration_json_content'
 			);
 
 			// Bug fix on the settings page
