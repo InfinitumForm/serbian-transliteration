@@ -9,7 +9,19 @@
  * @version       1.0.0
  */
 if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliteration_DB_Cache {
+	/*
+	 * Save all cached objcts to this variable
+	 */
+	private static $cache = [];
 	
+	/*
+	 * Main instance variable for memory cache
+	 */
+	protected static $__instance;
+	
+	/*
+	 * Main constructor
+	 */
 	private function __construct() {
 		if( self::table_exists() ) {
 			global $wpdb;
@@ -23,45 +35,41 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 	 * Returns the value of the cached object, or false if the cache key doesn’t exist
 	 */
 	public static function get( string $key, $default=NULL ) {
-		static $cache = [];
 		
 		$key = self::key($key);
 		
-		if( $cache[$key] ?? NULL ) {
-			return $cache[$key];
+		if( self::$cache[$key] ?? NULL ) {
+			return self::$cache[$key];
 		}
 
 		if( !self::table_exists() ) {
 			if( $transient = get_transient( $key ) ) {
-				$cache[$key] = $transient;
+				self::$cache[$key] = $transient;
 			} else {
-				$cache[$key] = $default;
+				self::$cache[$key] = $default;
 			}
 			
-			return $cache[$key];
+			return self::$cache[$key];
 		}
 		
 		global $wpdb;
 		
 		if( !empty($key) && ($result = $wpdb->get_var( $wpdb->prepare("
-			SELECT
-				`{$wpdb->rstr_cache}`.`value`
-			FROM
-				`{$wpdb->rstr_cache}`
-			WHERE
-				`{$wpdb->rstr_cache}`.`key` = %s
+			SELECT `{$wpdb->rstr_cache}`.`value` 
+			FROM `{$wpdb->rstr_cache}` 
+			WHERE `{$wpdb->rstr_cache}`.`key` = %s
 		", $key ))) ) {
 			if(is_serialized($result) || self::is_serialized($result)){
 				$result = unserialize($result);
 			}
-			$cache[$key] = $result;
+			self::$cache[$key] = $result;
 			
-			return $cache[$key];
+			return self::$cache[$key];
 		}
 		
-		$cache[$key] = $default;
+		self::$cache[$key] = $default;
 		
-		return $cache[$key];
+		return self::$cache[$key];
 	}
 	
 	/*
@@ -72,9 +80,8 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 	 */
     public static function add(string $key, $value, int $expire = 0) {
 		
-		$key = self::key($key);
-		
 		if(self::get($key, NULL) === NULL) {
+			$key = self::key($key);
 			
 			if( !self::table_exists() ) {
 				$save = set_transient( $key, $value, $expire );
@@ -96,7 +103,8 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 			}
 			
 			if($save && !is_wp_error($save)){
-				return $value;
+				self::$cache[$key] = $value;
+				return self::$cache[$key];
 			}
 			
 			return NULL;
@@ -117,21 +125,13 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 			return NULL;
 		}
 		
-		$key = self::key($key);
-		
-		if(self::get($key, NULL) !== $value) {
-			if( !self::table_exists() ) {
-				if( set_transient( $key, $value, $expire ) ) {
-					return $value;
-				} else {
-					return NULL;
-				}
-			}
-			
-			if( !self::add($key, $value, $expire) ) {
-				if( self::replace($key, $value, $expire) ) {
-					return $value;
-				}
+		if( $value == ($existing_value = self::get($key, NULL)) ) {
+			return $existing_value;
+		} else {			
+			if( $return = self::add($key, $value, $expire) ) {
+				return $return;
+			} else if( $return = self::replace($key, $value, $expire) ) {
+				return $return;
 			}
 		}
 		
@@ -173,7 +173,8 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 		}
 		
 		if($save && !is_wp_error($save)){
-			return $value;
+			self::$cache[$key] = $value;
+			return self::$cache[$key];
 		}
 		
 		return NULL;
@@ -194,7 +195,15 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 		
 		global $wpdb;
 		
-		return $wpdb->query( $wpdb->prepare("DELETE FROM `{$wpdb->rstr_cache}` WHERE `key` = %s", $key ));
+		
+		if(isset(self::$cache[$key])) {
+			unset(self::$cache[$key]);
+		}
+		
+		return $wpdb->query( $wpdb->prepare(
+			"DELETE FROM `{$wpdb->rstr_cache}` 
+			WHERE `key` = %s", $key 
+		));
     }
 	
 	/*
@@ -206,6 +215,8 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 			Serbian_Transliteration_Utilities::clear_plugin_cache();
 			return true;
 		}
+		
+		self::$cache = [];
 		
 		global $wpdb;
 		return $wpdb->query("TRUNCATE TABLE `{$wpdb->rstr_cache}`");
@@ -364,11 +375,10 @@ if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliter
 	 * @verson    1.0.0
 	 */
 	public static function instance() {
-		static $instance;
-		if ( !$instance ) {
-			$instance = new self();
+		if ( !self::$__instance ) {
+			self::$__instance = new self();
 		}
-		return $instance;
+		return self::$__instance;
 	}
 	
 } endif;

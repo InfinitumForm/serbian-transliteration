@@ -1,3 +1,13 @@
+= 1.8.8 =
+* Fixed memory leaking in WP admin
+
+= 1.8.7 =
+* Added new skipped words for the Serbian language
+* Fixed Macedonian transliteration
+* Fixed locale recognation
+* Improved database cache
+* Optimized PHP code
+
 = 1.8.6 =
 * Fixed memory leaking on the admin pages
 

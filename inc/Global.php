@@ -42,7 +42,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if(function_exists('iconv'))
 		{
 			if($locale = parent::get_locales( $this->get_locale() )) {
-				setlocale(LC_CTYPE, $locale);
+				if( preg_match('/([a-zA-Z]{2})(_[a-zA-Z]{2})?/', $locale) ) {
+					setlocale(LC_CTYPE, $locale);
+				}
 			}
 
 			if($converted = iconv('UTF-8','ASCII//TRANSLIT//IGNORE', $content)) {

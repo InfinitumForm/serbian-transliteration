@@ -59,7 +59,7 @@ if (!class_exists('Serbian_Transliteration_Cache')):
          *
          * Replaces the given cache if it exists, returns false otherwise.
         */
-         public static function replace($key, $value, $expire=0) {
+        public static function replace($key, $value, $expire=0) {
 			$key = self::key($key);
 			if(isset(self::$cache[ $key ])) {
 				self::$cache[ $key ] = $value;

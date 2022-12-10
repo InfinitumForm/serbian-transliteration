@@ -4,12 +4,12 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 1.8.6
+Stable tag: 1.8.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
 
-Plugin for transliterating permalinks, posts, pages, tags, categories, media & files, search and more...
+Universal transliterator for permalinks, posts, pages, tags, categories, media & files, search and more...
 
 == Description ==
 This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.
@@ -154,6 +154,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.8.7 =
+* Added new skipped words for the Serbian language
+* Fixed Macedonian transliteration
+* Fixed locale recognation
+* Improved database cache
+* Optimized PHP code
+
 = 1.8.6 =
 * Fixed memory leaking on the admin pages
 
@@ -237,6 +244,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Removed scripts that slow down the site
 
 == Upgrade Notice ==
+
+= 1.8.7 =
+* Added new skipped words for the Serbian language
+* Fixed Macedonian transliteration
+* Fixed locale recognation
+* Improved database cache
+* Optimized PHP code
 
 = 1.8.6 =
 * Fixed memory leaking on the admin pages

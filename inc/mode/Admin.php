@@ -68,6 +68,11 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 		}
 
 		public function transliteration_json_content( $json_content ) {
+			
+			if( empty($json_content) ) {
+				return $json_content;
+			}
+			
 			$content = json_decode( $json_content, true );
 			if ( json_last_error() !== JSON_ERROR_NONE ) {
 				return $json_content;
