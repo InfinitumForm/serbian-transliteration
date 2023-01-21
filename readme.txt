@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 1.8.8
+Stable tag: 1.8.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,6 +154,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.8.9 =
+* Improved Macedonian language
+* Improved UX
+
+= 1.8.8 =
+* Fixed memory leaking in WP admin
+
 = 1.8.7 =
 * Added new skipped words for the Serbian language
 * Fixed Macedonian transliteration
@@ -244,6 +251,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Removed scripts that slow down the site
 
 == Upgrade Notice ==
+
+= 1.8.9 =
+* Improved Macedonian language
+* Improved UX
+
+= 1.8.8 =
+* Fixed memory leaking in WP admin
 
 = 1.8.7 =
 * Added new skipped words for the Serbian language

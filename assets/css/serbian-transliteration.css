@@ -285,18 +285,19 @@
 	background-color: #555; 
 }
 
-#serbian-transliteration-settings .accordion-container .accordion-link:after {
+#serbian-transliteration-settings .accordion-container .accordion-link:before {
 	content: '+'; /* Unicode character for "plus" sign (+) */
 	font-size: 13px;
-	color: #777777;
-	float: right;
-	margin-left: 5px;
-	margin-left: 5px;
+	color: #fefefe;
+	float: left;
+	margin-left: 0;
 	margin-top: 1px;
+	margin-right: 10px;
 }
 
-#serbian-transliteration-settings .accordion-container .accordion-link.active:after {
+#serbian-transliteration-settings .accordion-container .accordion-link.active:before {
 	content: "-"; /* Unicode character for "minus" sign (-) */
+	margin-right: 14px;
 }
 
 #serbian-transliteration-settings .accordion-container .accordion-panel {

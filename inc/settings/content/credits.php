@@ -10,6 +10,7 @@ $special_thanks = array(
 	'dizajn24' => 'https://profiles.wordpress.org/dizajn24',
 	'tihi' => 'https://profiles.wordpress.org/tihi',
 	'Yaroslav Ingulskyi' => 'https://wordpress.org/support/users/ingyaroslav/',
+	'Slobodan Mirić' => 'https://www.facebook.com/websitesworkshop',
 	'Slobodan Pantović' => '',
 	'Ivan Stanojević' => '',
 );

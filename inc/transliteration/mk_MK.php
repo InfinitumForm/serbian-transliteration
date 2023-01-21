@@ -14,7 +14,7 @@ class Serbian_Transliteration_mk_MK {
 		// Variations and special characters
 		'Ѓ' => 'Gj',	'ѓ' => 'gj',	'Ѕ' => 'Dz',	'ѕ' => 'dz',	'Њ' => 'Nj',
 		'њ' => 'nj',	'Љ' => 'Lj',	'љ' => 'lj',	'Ќ' => 'Kj',	'ќ' => 'kj',
-		'Ч' => 'Ch',	'ч' => 'ch',	'Џ' => 'Dj',	'џ' => 'dj',	'Ж' => 'Zh',
+		'Ч' => 'Ch',	'ч' => 'ch',	'Џ' => 'Dj',	'џ' => 'dj',	'Ж' => 'zh',
 		'ж' => 'zh',	'Ш' => 'Sh',	'ш' => 'sh',
 
 		// All other letters
