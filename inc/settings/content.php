@@ -60,7 +60,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Nav tab settings
 	**/
 	public function nav_tab_settings(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=settings'); ?>" class="dashicons-before dashicons-admin-settings nav-tab<?php echo is_null($this->tab) || $this->tab == 'settings' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-settings"><span><?php _e('General Settings', RSTR_NAME); ?></span></a>
+		<a href="<?php echo esc_url( admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=settings') ); ?>" class="dashicons-before dashicons-admin-settings nav-tab<?php echo esc_attr(is_null($this->tab) || $this->tab == 'settings' ? ' nav-tab-active' : '') ;?>" id="rstr-settings-tab-settings"><span><?php esc_html_e('General Settings', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -76,7 +76,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Nav tab tools
 	**/
 	public function nav_tab_tools(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=tools&action=transliteration'); ?>" class="dashicons-before dashicons-admin-generic nav-tab<?php echo $this->tab == 'tools' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-tools"><span><?php _e('Tools', RSTR_NAME); ?></span></a>
+		<a href="<?php echo esc_url( admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=tools&action=transliteration') ); ?>" class="dashicons-before dashicons-admin-generic nav-tab<?php echo esc_attr( $this->tab == 'tools' ? ' nav-tab-active' : '') ;?>" id="rstr-settings-tab-tools"><span><?php esc_html_e('Tools', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -125,7 +125,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Nav tab documentation
 	**/
 	public function nav_tab_documentation(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=documentation&action=shortcodes'); ?>" class="dashicons-before dashicons-media-spreadsheet nav-tab<?php echo $this->tab == 'documentation' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-documentation"><span><?php _e('Documentation', RSTR_NAME); ?></span></a>
+		<a href="<?php echo esc_url( admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=documentation&action=shortcodes') ); ?>" class="dashicons-before dashicons-media-spreadsheet nav-tab<?php echo esc_attr($this->tab == 'documentation' ? ' nav-tab-active' : '') ;?>" id="rstr-settings-tab-documentation"><span><?php esc_html_e('Documentation', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -170,7 +170,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Debug
 	**/
 	public function nav_tab_debug(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=debug'); ?>" class="dashicons-before dashicons-sos nav-tab<?php echo $this->tab == 'debug' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-debug"><span><?php _e('Debug', RSTR_NAME); ?></span></a>
+		<a href="<?php echo esc_url( admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=debug') ); ?>" class="dashicons-before dashicons-sos nav-tab<?php echo esc_attr($this->tab == 'debug' ? ' nav-tab-active' : ''); ?>" id="rstr-settings-tab-debug"><span><?php esc_html_e('Debug', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -186,7 +186,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Credits
 	**/
 	public function nav_tab_credits(){ ?>
-		<a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=credits'); ?>" class="dashicons-before dashicons-info-outline nav-tab<?php echo $this->tab == 'credits' ? ' nav-tab-active' : '' ;?>" id="rstr-settings-tab-credits"><span><?php _e('Credits & Info', RSTR_NAME); ?></span></a>
+		<a href="<?php echo esc_url( admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=credits') ); ?>" class="dashicons-before dashicons-info-outline nav-tab<?php echo esc_attr($this->tab == 'credits' ? ' nav-tab-active' : ''); ?>" id="rstr-settings-tab-credits"><span><?php esc_html_e('Credits & Info', RSTR_NAME); ?></span></a>
 	<?php }
 	
 	/*
@@ -200,7 +200,7 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Tab content container
 	**/
 	public function tab_content(){ ?>
-<div class="tab-content" id="tab-<?php $this->tab ? printf('%s-%s', RSTR_NAME, $this->tab) : RSTR_NAME; ?>">
+<div class="tab-content" id="tab-<?php echo esc_attr($this->tab ? sprintf('%s-%s', RSTR_NAME, $this->tab) : RSTR_NAME); ?>">
 	<?php 
 		do_action('rstr/settings/tab/content/before');
 		if(is_null($this->tab)) {
@@ -232,12 +232,12 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	?>
 <ul class="action-links">
 <?php foreach($actions as $action=>$name): ?>
-	<li class="action-tab<?php echo ($action==$active ? ' active' : ''); ?>"><a href="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action); ?>" class="action-link<?php echo ($action==$active ? ' active' : ''); ?>"><?php echo $name; ?></a></li>
+	<li class="action-tab<?php echo ($action==$active ? ' active' : ''); ?>"><a href="<?php echo esc_url( admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action) ); ?>" class="action-link<?php echo esc_attr($action==$active ? ' active' : ''); ?>"><?php echo esc_html($name); ?></a></li>
 <?php endforeach; ?>
 </ul>
 <select class="action-links-select" onchange="location = this.value;">
 <?php foreach($actions as $action=>$name): ?>
-	<option value="<?php echo admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action); ?>"<?php echo ($action==$active ? ' selected' : ''); ?>><?php echo $name; ?></option>
+	<option value="<?php echo esc_url( admin_url('/options-general.php?page=' . RSTR_NAME . '&tab=' . $tab . '&action=' . $action) ); ?>"<?php echo esc_attr($action==$active ? ' selected' : ''); ?>><?php echo esc_html($name); ?></option>
 <?php endforeach; ?>
 </select>
 	<?php

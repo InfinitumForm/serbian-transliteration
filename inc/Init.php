@@ -259,7 +259,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			if(get_rstr_option('allow-cyrillic-usernames', 'no') == 'yes')
 			{
 				add_filter('sanitize_user', function ($username, $raw_username, $strict) {
-					$username = wp_strip_all_tags( $raw_username );
+					$username = wp_strip_all_tags( $raw_username ?? '' );
 					$username = remove_accents( $username );
 
 					// Kill octets

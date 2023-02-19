@@ -18,8 +18,8 @@ $nonce = esc_attr(wp_create_nonce('rstr-transliteration-letters')); ?>
                 <form class="rstr-row">
                 	<div class="rstr-col">
                     	<textarea name="rstr-transliteration-letters" id="rstr-transliteration-letters" class="form-control" rows="10"></textarea>
-                        <button type="button" class="button button-primary button-transliteration-letters" data-mode="cyr_to_lat" data-nonce="<?php echo $nonce; ?>"><?php _e('Convert to Latin', RSTR_NAME); ?></button>
-                        <button type="button" class="button button-primary button-transliteration-letters" data-mode="lat_to_cyr" data-nonce="<?php echo $nonce; ?>"><?php _e('Convert to Cyrillic', RSTR_NAME); ?></button>
+                        <button type="button" class="button button-primary button-transliteration-letters" data-mode="cyr_to_lat" data-nonce="<?php echo esc_attr($nonce); ?>"><?php _e('Convert to Latin', RSTR_NAME); ?></button>
+                        <button type="button" class="button button-primary button-transliteration-letters" data-mode="lat_to_cyr" data-nonce="<?php echo esc_attr($nonce); ?>"><?php _e('Convert to Cyrillic', RSTR_NAME); ?></button>
                     </div>
                     <div class="rstr-col">
                     	<textarea name="rstr-transliteration-letters-result" id="rstr-transliteration-letters-result" class="form-control" rows="10" readonly></textarea>

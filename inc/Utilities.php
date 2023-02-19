@@ -22,7 +22,7 @@ class Serbian_Transliteration_Utilities{
 			'exclude-cyrillic-words'	=>	'',
 			'enable-search'				=>	'yes',
 			'search-mode'       		=>	'auto',
-			'enable-alternate-links'	=>	'no',
+			'enable-alternate-links'	=>	'yes',
 			'first-visit-mode'			=>	'auto',
 			'enable-rss'				=>	'yes',
 			'fix-diacritics'			=>	'yes',

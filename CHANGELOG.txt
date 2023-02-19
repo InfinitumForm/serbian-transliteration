@@ -1,3 +1,17 @@
+= 1.9.0 =
+* Added support for user locales
+* Fixed languages detection
+
+= 1.8.12 =
+* Added support for the [Geo Controller](https://wordpress.org/plugins/cf-geoplugin/) plugin
+
+= 1.8.11 =
+* Fixed alternate links for SEO
+* Security updates
+
+= 1.8.10 =
+* Fixed Polylang transliteration error 
+
 = 1.8.9 =
 * Improved Macedonian language
 * Improved UX

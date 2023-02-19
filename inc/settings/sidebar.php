@@ -99,17 +99,17 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span class="dashicons dashicons-superhero-alt"></span> <span><?php _e('Contributors & Developers', RSTR_NAME); ?></span></h3><hr>
 	<div class="inside flex">
 		<?php foreach($plugin_info->contributors as $username => $info) : $info = (object)$info; ?>
-		<div class="contributor contributor-<?php echo $username; ?>" id="contributor-<?php echo $username; ?>">
+		<div class="contributor contributor-<?php echo esc_attr($username); ?>" id="contributor-<?php echo esc_attr($username); ?>">
 			<a href="<?php echo esc_url($info->profile); ?>" target="_blank">
 				<img src="<?php echo esc_url($info->avatar); ?>">
-				<h3><?php echo $info->display_name; ?></h3>
+				<h3><?php echo esc_html($info->display_name); ?></h3>
 			</a>
 		</div>
 		<?php endforeach; ?>
 	</div>
 	<div class="inside">
 		<?php printf('<p>%s</p>', sprintf(__('If you want to support our work and effort, if you have new ideas or want to improve the existing code, %s.', RSTR_NAME), '<a href="https://github.com/CreativForm/serbian-transliteration" target="_blank">' . __('join our team', RSTR_NAME) . '</a>')); ?>
-		<?php /*printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>'));*/ ?>
+		<?php printf('<p>%s</p>', sprintf(__('If you want to help further plugin development, you can also %s.', RSTR_NAME), '<a href="' . esc_url($plugin_info->donate_link) . '" target="_blank">' . __('donate something for effort', RSTR_NAME) . '</a>')); ?>
 	</div>
 </div>
 <?php endif;

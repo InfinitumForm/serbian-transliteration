@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 1.8.9
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,6 +154,20 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.9.0 =
+* Added support for user locales
+* Fixed languages detection
+
+= 1.8.12 =
+* Added support for the [Geo Controller](https://wordpress.org/plugins/cf-geoplugin/) plugin
+
+= 1.8.11 =
+* Fixed alternate links for SEO
+* Security updates
+
+= 1.8.10 =
+* Fixed Polylang transliteration error 
+
 = 1.8.9 =
 * Improved Macedonian language
 * Improved UX
@@ -252,34 +266,16 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.8.9 =
-* Improved Macedonian language
-* Improved UX
+= 1.9.0 =
+* Added support for user locales
+* Fixed languages detection
 
-= 1.8.8 =
-* Fixed memory leaking in WP admin
+= 1.8.12 =
+* Added support for the [Geo Controller](https://wordpress.org/plugins/cf-geoplugin/) plugin
 
-= 1.8.7 =
-* Added new skipped words for the Serbian language
-* Fixed Macedonian transliteration
-* Fixed locale recognation
-* Improved database cache
-* Optimized PHP code
-
-= 1.8.6 =
-* Fixed memory leaking on the admin pages
-
-= 1.8.5 =
-* Improved encoding
-
-= 1.8.4 =
-* Improving optimization
-* Preventing memory leaks
-
-= 1.8.3 =
-* Fixed encoding
-* Fixed operating system mode
-* Fixed memory leaking
+= 1.8.11 =
+* Fixed alternate links for SEO
+* Security updates
 
 == Frequently Asked Questions ==
 

@@ -10,7 +10,8 @@
  * Plugin Name:       Transliterator
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           1.8.9
+ * Donate link:       https://www.buymeacoffee.com/ivijanstefan
+ * Version:           1.9.0
  * Requires at least: 5.4
  * Tested up to:      6.1
  * Requires PHP:      7.0
@@ -205,11 +206,38 @@ if($Serbian_Transliteration_Activate->passes()) :
 		/* Do translations
 		====================================*/
 		add_action('plugins_loaded', function () {
-			$locale = apply_filters( 'rstr_plugin_locale', get_locale(), RSTR_NAME );
-			if ( $loaded = load_textdomain( RSTR_NAME, RSTR_ROOT . '/languages' . '/' . RSTR_NAME . '-' . $locale . '.mo' ) ) {
-				return $loaded;
-			} else {
-				load_plugin_textdomain( RSTR_NAME, FALSE, RSTR_ROOT . '/languages' );
+			if ( is_textdomain_loaded( RSTR_NAME ) ) {
+				return;
+			}
+		
+			$locale = get_locale();
+			if( is_user_logged_in() ) {
+				if( $user_locale = get_user_locale( get_current_user_id() ) ) {
+					$locale = $user_locale;
+				}
+			}
+			$locale = apply_filters( 'rstr_plugin_locale', $locale, RSTR_NAME );
+			
+			$mofile = sprintf( '%s-%s.mo', RSTR_NAME, $locale );
+			// Check first inside `/wp-content/languages/plugins`
+			$domain_path = path_join( WP_LANG_DIR, 'plugins' );
+			$loaded = load_textdomain( RSTR_NAME, path_join( $domain_path, $mofile ) );
+			// Or inside `/wp-content/languages`
+			if ( ! $loaded ) {
+				$loaded = load_textdomain( RSTR_NAME, path_join( WP_LANG_DIR, $mofile ) );
+			}
+			// Or inside `/wp-content/plugin/cf-geoplugin/languages`
+			if ( ! $loaded ) {
+				$domain_path = CFGP_ROOT . DIRECTORY_SEPARATOR . 'languages';
+				$loaded = load_textdomain( RSTR_NAME, path_join( $domain_path, $mofile ) );
+				// Or load with only locale without prefix
+				if ( ! $loaded ) {
+					$loaded = load_textdomain( RSTR_NAME, path_join( $domain_path, "{$locale}.mo" ) );
+				}
+				// Or old fashion way
+				if ( ! $loaded && function_exists('load_plugin_textdomain') ) {
+					load_plugin_textdomain( RSTR_NAME, false, $domain_path );
+				}
 			}
 		});
 

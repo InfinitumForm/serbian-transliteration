@@ -47,30 +47,30 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 				switch ( $type )
 				{
 					case 'html':
-						$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . RSTR_VERSION . '">';
+						$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . esc_html(RSTR_VERSION) . '">';
 						break;
 					case 'xhtml':
-						$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . RSTR_VERSION . '" />';
+						$gen.= PHP_EOL . '<meta name="generator" content="WordPress Transliterator ' . esc_html(RSTR_VERSION) . '" />';
 						break;
 /*
 					case 'atom':
-						$gen.= PHP_EOL . '<generator uri="https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip" version="' . RSTR_VERSION . '">WordPress Transliterator</generator>';
+						$gen.= PHP_EOL . '<generator uri="https://downloads.wordpress.org/plugin/serbian-transliteration.' . esc_html(RSTR_VERSION) . '.zip" version="' . RSTR_VERSION . '">WordPress Transliterator</generator>';
 						break;
 					case 'rss2':
-						$gen.= PHP_EOL . '<generator>' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip' ) . '</generator>';
+						$gen.= PHP_EOL . '<generator>' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . esc_html(RSTR_VERSION) . '.zip' ) . '</generator>';
 						break;
 					case 'rdf':
-						$gen.= PHP_EOL . '<admin:generatorAgent rdf:resource="' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip' ) . '" />';
+						$gen.= PHP_EOL . '<admin:generatorAgent rdf:resource="' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . esc_html(RSTR_VERSION) . '.zip' ) . '" />';
 						break;
 					case 'comment':
-						$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . RSTR_VERSION . '" -->';
+						$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . esc_html(RSTR_VERSION) . '" -->';
 						break;
 					case 'export':
-						$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . RSTR_VERSION . '" created="' . gmdate( 'Y-m-d H:i' ) . '" -->';
+						$gen.= PHP_EOL . '<!-- generator="WordPress Transliterator/' . esc_html(RSTR_VERSION) . '" created="' . gmdate( 'Y-m-d H:i' ) . '" -->';
 						break;
 					default:
 						if(preg_match('~<generator>(.*?)</generator>~i', $gen)){
-							$gen.= PHP_EOL . '<generator>' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . RSTR_VERSION . '.zip' ) . '</generator>';
+							$gen.= PHP_EOL . '<generator>' . esc_url_raw( 'https://downloads.wordpress.org/plugin/serbian-transliteration.' . esc_html(RSTR_VERSION) . '.zip' ) . '</generator>';
 						}
 						break;
 */
@@ -89,21 +89,48 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 			if(get_rstr_option('enable-alternate-links', 'yes') == 'no') return;
 			if(apply_filters('rstr/alternate_links/disable', false)) return;
 			
+			$locale = get_locale();
+			
+			if( !in_array(
+					$locale,
+					array_keys(Serbian_Transliteration_Transliterating::registered_languages())
+				) ) {
+				return;
+			}
+			
 			$parse_url = Serbian_Transliteration_Utilities::parse_url();
 			$url = $parse_url['url'];
-			$locale = get_locale();
-			$title = get_bloginfo('name');
+			
+			ob_start();
+				wp_title();
+			$title = ob_get_clean();
 			
 			if(strpos($locale, '_') !== false){
-				$hreflang_lat = strtr($locale, array('_'=>'_Latn_'));
-				$hreflang_cyr = strtr($locale, array('_'=>'_Cyrl_'));
+				$locale = strtolower($locale);
+				$hreflang_lat = strtr($locale, array('_'=>'-Latn-'));
+				$hreflang_cyr = strtr($locale, array('_'=>'-Cyrl-'));
 			} else {
-				$hreflang_lat = $locale . '_Latn';
-				$hreflang_cyr = $locale . '_Cyrl';
+				$hreflang_lat = $locale . '-Latn';
+				$hreflang_cyr = $locale . '-Cyrl';
 			}
+			
+			$alternate_cyr_url = add_query_arg(get_rstr_option('url-selector', 'rstr'), 'cyr', $url);
+			$alternate_lat_url = add_query_arg(get_rstr_option('url-selector', 'rstr'), 'lat', $url);
 		?>
-<link rel="alternate" title="<?php echo esc_attr($this->lat_to_cyr($title, false)); ?>" href="<?php echo add_query_arg('rstr', 'cyr', $url); ?>" hreflang="<?php echo $hreflang_cyr; ?>" />
-<link rel="alternate" title="<?php echo esc_attr($this->cyr_to_lat($title)); ?>" href="<?php echo add_query_arg('rstr', 'lat', $url); ?>" hreflang="<?php echo $hreflang_lat; ?>" />
+<link rel="alternate" title="<?php 
+	echo esc_attr($this->lat_to_cyr($title, false)); 
+?>" href="<?php 
+	echo esc_url($alternate_cyr_url); 
+?>" hreflang="<?php 
+	echo esc_attr($hreflang_cyr);
+?>" />
+<link rel="alternate" title="<?php
+	echo esc_attr($this->cyr_to_lat($title));
+?>" href="<?php
+	echo esc_url($alternate_lat_url);
+?>" hreflang="<?php
+	echo esc_attr($hreflang_lat);
+?>" />
 		<?php
 		}
 		
@@ -118,10 +145,23 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 		public function ip($blacklistIP=array())
 		{
 			
+			// Let's relay on Geo Controller plugin
+			if( class_exists('CFGP_IP') ) {
+				
+				add_filter(
+					'cfgp/ip/blacklist',
+					function($blacklist) use ($blacklistIP) {
+						return array_merge($blacklist, $blacklistIP);
+					}, 10, 1
+				);
+				
+				return CFGP_IP::get();
+			}
+			
 			if($ip = Serbian_Transliteration_Cache::get('IP')) return $ip;
 			
 			$findIP=apply_filters( 'rstr/seo/ip/constants', array_merge($findIP, array(
-				'HTTP_CF_CONNECTING_IP', // Cloudflare
+				'HTTP_X_REAL_IP',
 				'HTTP_X_FORWARDED_FOR', // X-Forwarded-For: <client>, <proxy1>, <proxy2> client = client ip address; https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
 				'HTTP_X_FORWARDED',
 				'HTTP_X_CLUSTER_CLIENT_IP', // Private LAN address
@@ -229,70 +269,21 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 			// let's try the last thing, why not?
 			if( self::is_connected() )
 			{
+				$external_servers = apply_filters('rstr/ip/external_servers', array(
+					'https://ident.me',
+					'https://api.ipify.org',
+					'https://api.my-ip.io/ip',
+					'https://ip4.seeip.org'
+				));
 				$result = NULL;
-				
-				if(function_exists('file_get_contents'))
-				{
-					$context = self::set_stream_context( array( 'Accept: application/json' ), 'GET' );
-					$result = @file_get_contents( 'https://api.ipify.org/?format=json', false, $context );
-				}
-				if($result)
-				{
-					$result = json_decode($result);
-					if(isset($result->ip))
-					{
-						$ip = $result->ip;
-						if($this->filter_ip($ip)!==false)
-						{
+
+				foreach($external_servers as $server) {
+					$response = wp_remote_get($server);
+					if ( is_array( $response ) && !is_wp_error( $response ) ) {
+						$ip = $response['body'];
+						if($this->filter_ip($ip, $blacklistIP)!==false) {
 							return Serbian_Transliteration_Cache::set('IP', $ip);
 						}
-					}
-				}
-			}
-			// Let's ask server?
-			if(stristr(PHP_OS, 'WIN'))
-			{
-				if(function_exists('shell_exec'))
-				{
-					$ip = shell_exec('powershell.exe -InputFormat none -ExecutionPolicy Unrestricted -NoProfile -Command "(Invoke-WebRequest https://api.ipify.org).Content.Trim()"');
-					if($this->filter_ip($ip)!==false)
-					{
-						return Serbian_Transliteration_Cache::set('IP', $ip);
-					}
-					
-					$ip = shell_exec('powershell.exe -InputFormat none -ExecutionPolicy Unrestricted -NoProfile -Command "(Invoke-WebRequest https://smart-ip.net/myip).Content.Trim()"');
-					if($this->filter_ip($ip)!==false)
-					{
-						return Serbian_Transliteration_Cache::set('IP', $ip);
-					}
-					
-					$ip = shell_exec('powershell.exe -InputFormat none -ExecutionPolicy Unrestricted -NoProfile -Command "(Invoke-WebRequest https://ident.me).Content.Trim()"');
-					if($this->filter_ip($ip)!==false)
-					{
-						return Serbian_Transliteration_Cache::set('IP', $ip);
-					}
-				}
-			}
-			else
-			{
-				if(function_exists('shell_exec'))
-				{
-					$ip = shell_exec('curl https://api.ipify.org##*( )');
-					if($this->filter_ip($ip)!==false)
-					{
-						return Serbian_Transliteration_Cache::set('IP', $ip);
-					}
-					
-					$ip = shell_exec('curl https://smart-ip.net/myip##*( )');
-					if($this->filter_ip($ip)!==false)
-					{
-						return Serbian_Transliteration_Cache::set('IP', $ip);
-					}
-					
-					$ip = shell_exec('curl https://ident.me##*( )');
-					if($this->filter_ip($ip)!==false)
-					{
-						return Serbian_Transliteration_Cache::set('IP', $ip);
 					}
 				}
 			}
@@ -308,6 +299,11 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 		 * @verson    1.0.0
 		*/
 		private function is_crawler($ip){
+			// Let's relay on Geo Controller plugin
+			if( class_exists('CFGP_U') ) {
+				return CFGP_U::is_bot();
+			}
+			
 			// IP => RANGE
 			$range=apply_filters('rstr/seo/is_crawler/range', array(
 				// Google
