@@ -1,3 +1,10 @@
+= 1.9.3 =
+* Added W3 Total Cache support
+
+= 1.9.2 =
+* Fixed memory leaking in WP admin
+* Fixed wp admin login issue for non standard language settings
+
 = 1.9.1 =
 * Fixed fatal error on deprecated constants
 

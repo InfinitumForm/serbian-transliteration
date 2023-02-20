@@ -164,19 +164,9 @@ class Serbian_Transliteration_Transliterating {
 
 		if(empty($get_locale)){
 			$get_locale = get_locale();
-			
-			if( is_user_logged_in() ) {
-				if( $user_locale = get_user_locale( get_current_user_id() ) ) {
-					$get_locale = $user_locale;
-				}
-			}
-			
 			if(function_exists('pll_current_language')) {
-				if( $locale = pll_current_language('locale') ) {
-					$get_locale = $locale;
-				}
+				$get_locale = pll_current_language('locale');
 			}
-			
 			$get_locale = Serbian_Transliteration_Cache::set('get_locale', $get_locale);
 		}
 
