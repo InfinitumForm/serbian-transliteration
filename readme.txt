@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,6 +154,9 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.9.4 =
+* Fix browser cache
+
 = 1.9.3 =
 * Added W3 Total Cache support
 
@@ -276,6 +279,9 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.9.4 =
+* Fix browser cache
+
 = 1.9.3 =
 * Added W3 Total Cache support
 
@@ -289,13 +295,6 @@ We also thought of PHP developers where we have enabled several useful functions
 = 1.9.0 =
 * Added support for user locales
 * Fixed languages detection
-
-= 1.8.12 =
-* Added support for the [Geo Controller](https://wordpress.org/plugins/cf-geoplugin/) plugin
-
-= 1.8.11 =
-* Fixed alternate links for SEO
-* Security updates
 
 == Frequently Asked Questions ==
 

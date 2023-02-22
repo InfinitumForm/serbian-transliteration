@@ -562,6 +562,7 @@ class Serbian_Transliteration_Utilities{
 
 				if(get_rstr_option('cache-support', 'yes') == 'yes') {
 					$url = add_query_arg('_rstr_nocache', uniqid($url_selector . mt_rand(100,999)), $url);
+					if(function_exists('nocache_headers')) nocache_headers();
 				}
 
 				if(wp_safe_redirect($url)) {
@@ -604,8 +605,9 @@ class Serbian_Transliteration_Utilities{
 		// Standard cache
 		header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate");
+		header('Clear-Site-Data: "cache", "storage", "executionContexts"');
 		header("Pragma: no-cache");
 
 		// Set nocache headers
