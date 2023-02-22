@@ -43,6 +43,14 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 				'load_script_translations' => 'transliteration_json_content',
 				'pre_load_script_translations' => 'transliteration_json_content'
 			);
+			
+			// WooCommerce fix
+			if(RSTR_WOOCOMMERCE) {
+				$filters = array_merge($filters, array(
+					'woocommerce_currency_symbol' => 'content',
+					'woocommerce_currencies' => 'content'
+				));
+			}
 
 			// Bug fix on the settings page
 			if( in_array($pagenow, array('options-general.php', 'options.php'), true) !== false && !(isset($_GET['page'])) ){

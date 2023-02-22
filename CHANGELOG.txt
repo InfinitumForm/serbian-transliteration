@@ -1,3 +1,7 @@
+= 1.9.5 =
+* Fix WooCommerce transliteration problems
+* Improved AJAX call transliteration
+
 = 1.9.4 =
 * Fix browser cache
 

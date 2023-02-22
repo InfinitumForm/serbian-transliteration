@@ -68,7 +68,9 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 					'woocommerce_get_stock_html' => array($classname, 'content'),
 					'woocommerce_single_product_image_thumbnail_html' => array($classname, 'content'),
 					'woocommerce_variable_price_html' => array($classname, 'content'),
-					'woocommerce_variable_empty_price_html' => array($classname, 'content')
+					'woocommerce_variable_empty_price_html' => array($classname, 'content'),
+					'woocommerce_currency_symbol' => array($classname, 'content'),
+					'woocommerce_currencies' => array($classname, 'content')
 			));
 			asort($filters);
 			return $filters;
