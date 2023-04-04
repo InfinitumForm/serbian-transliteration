@@ -69,7 +69,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			return $filters;
 		}
 
-		function __construct(){
+		public function __construct(){
 			$filters = self::filters($this->get_options());
 			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->get_options());
 
@@ -78,35 +78,39 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				foreach($filters as $key=>$function){
 					$this->add_filter($key, $function, (PHP_INT_MAX-1), 1);
 				}
-
-				if(get_rstr_option('enable-rss', 'no') == 'yes')
-				{
-					$this->add_action('rss_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('rss_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-
-					$this->add_action('rss2_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('rss2_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-
-					$this->add_action('rdf_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('rdf_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-
-					$this->add_action('atom_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('atom_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-				}
-
-				if(get_rstr_option('force-widgets', 'no') == 'yes')
-				{
-					$this->add_action('dynamic_sidebar_before', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('dynamic_sidebar_after', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-				}
-
 			}
 
 			$this->add_filter('bloginfo', 'bloginfo', (PHP_INT_MAX-1), 2);
 			$this->add_filter('bloginfo_url', 'bloginfo', (PHP_INT_MAX-1), 2);
 		}
 		
-		function wp_mail ($args) {
+		public static function execute_buffer() {
+			if(!is_admin())
+			{
+				if(get_rstr_option('enable-rss', 'no') == 'yes')
+				{
+					add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+
+					add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+
+					add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+
+					add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+				}
+
+				if(get_rstr_option('force-widgets', 'no') == 'yes')
+				{
+					add_action('dynamic_sidebar_before', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('dynamic_sidebar_after', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+				}
+			}
+		}
+		
+		public function wp_mail ($args) {
 			
 			if( $args['message'] ?? false ) {
 				$args['message'] = $this->transliterate_text($args['message']);
@@ -119,14 +123,14 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 			return $args;
 		}
 
-		function rss_output_buffer_start() {
+		public static function rss_output_buffer_start() {
 			ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
 
-		function rss_output_buffer_end() {
+		public static function rss_output_buffer_end() {
 			$output = ob_get_clean();
 
-			$output = $this->transliterate_text($output);
+			$output = self::get()->transliterate_text($output);
 
 			echo $output;
 		}

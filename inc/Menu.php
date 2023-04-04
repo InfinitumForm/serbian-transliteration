@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  * @autor             Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration_Menu')) :
+if(!class_exists('Serbian_Transliteration_Menu', false)) :
 class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 
 	function __construct(){

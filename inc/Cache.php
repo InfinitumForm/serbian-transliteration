@@ -9,7 +9,7 @@
  * @package           RSTR
  * @autor             Ivijan-Stefan Stipic
  */
-if (!class_exists('Serbian_Transliteration_Cache')):
+if (!class_exists('Serbian_Transliteration_Cache', false)):
     class Serbian_Transliteration_Cache {
 
         /*

@@ -4,7 +4,7 @@
  * @since     1.0.0
  * @verson    1.0.0
  */
-if(!class_exists('Serbian_Transliteration_Utilities')) :
+if(!class_exists('Serbian_Transliteration_Utilities', false)) :
 class Serbian_Transliteration_Utilities{
 
 	public static function plugin_default_options () {
@@ -59,6 +59,12 @@ class Serbian_Transliteration_Utilities{
 		if(RSTR_WOOCOMMERCE) {
 			$modes = array_merge($modes, array(
 				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', RSTR_NAME)
+			));
+		}
+		
+		if( defined('RSTR_DEBUG') && RSTR_DEBUG ) {
+			$modes = array_merge($modes, array(
+				'dev'	=> __('Dev Mode (Only for developers and testers)', RSTR_NAME)
 			));
 		}
 
@@ -180,12 +186,12 @@ class Serbian_Transliteration_Utilities{
 
 		$path = apply_filters('rstr/mode/path', RSTR_INC, $class_require, $options['mode']);
 
-		if(!class_exists($class_require))
+		if(!class_exists($class_require, false))
 		{
 			if(file_exists($path . "/{$path_require}.php"))
 			{
 				include_once $path . "/{$path_require}.php";
-				if(class_exists($class_require)){
+				if(class_exists($class_require, false)){
 					return $class_require;
 				} else {
 					throw new Exception(sprintf('The class "$1%s" does not exist or is not correctly defined on the line %2%d', $mode_class, (__LINE__-2)));
@@ -653,7 +659,7 @@ class Serbian_Transliteration_Utilities{
 		}
 
 		// Comet Cache
-		if(class_exists('comet_cache') && method_exists('comet_cache', 'clear')) {
+		if(class_exists('comet_cache', false) && method_exists('comet_cache', 'clear')) {
 			comet_cache::clear();
 		}
 

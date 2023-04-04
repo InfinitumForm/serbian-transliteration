@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration_Themes')) :
+if(!class_exists('Serbian_Transliteration_Themes', false)) :
 	class Serbian_Transliteration_Themes extends Serbian_Transliteration
 	{
 		private $themes = array(
@@ -44,11 +44,11 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 				{
 					if ( strpos($this->theme, $theme_name) !== false || strpos($this->theme, $theme_name) !== false ) {
 						$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
-						if(class_exists($theme_class)) {
+						if(class_exists($theme_class, false)) {
 							$theme_class::run();
 						} else {
 							include_once RSTR_INC . "/themes/{$file_name}.php";
-							if(class_exists($theme_class)) {
+							if(class_exists($theme_class, false)) {
 								$theme_class::run();
 							}
 						}
@@ -74,11 +74,11 @@ if(!class_exists('Serbian_Transliteration_Themes')) :
 			{
 				if ( strpos($this->theme, $theme_name) !== false || strpos($this->theme, $theme_name) !== false ) {
 					$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
-					if(class_exists($theme_class)) {
+					if(class_exists($theme_class, false)) {
 						$return = array_merge($return, $theme_class::filters());
 					} else {
 						include_once RSTR_INC . "/themes/{$file_name}.php";
-						if(class_exists($theme_class)) {
+						if(class_exists($theme_class, false)) {
 							$return = array_merge($return, $theme_class::filters());
 						}
 					}

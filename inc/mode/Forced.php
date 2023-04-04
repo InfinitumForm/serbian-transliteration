@@ -80,7 +80,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			return $filters;
 		}
 
-		function __construct(){
+		public function __construct(){
 			$this->transient = 'transliteration_cache_' . Serbian_Transliteration_Utilities::get_current_script() . '_' . Serbian_Transliteration_Utilities::get_page_ID();
 
 			$filters = self::filters($this->get_options());
@@ -93,33 +93,34 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 				}
 			}
 
-			if(!is_admin())
-			{
-				$this->add_action('wp_loaded', 'output_buffer_start', (PHP_INT_MAX-10));
-				$this->add_action('shutdown', 'output_buffer_end', (PHP_INT_MAX-10));
-
-				if(get_rstr_option('enable-rss', 'no') == 'yes')
-				{
-					$this->add_action('rss_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('rss_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-
-					$this->add_action('rss2_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('rss2_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-
-					$this->add_action('rdf_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('rdf_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-
-					$this->add_action('atom_head', 'rss_output_buffer_start', (PHP_INT_MAX-1));
-					$this->add_action('atom_footer', 'rss_output_buffer_end', (PHP_INT_MAX-1));
-				}
-
-			}
-
 			$this->add_filter('bloginfo', 'bloginfo', (PHP_INT_MAX-1), 2);
 			$this->add_filter('bloginfo_url', 'bloginfo', (PHP_INT_MAX-1), 2);
 		}
 		
-		function wp_mail ($args) {
+		public static function execute_buffer() {
+			if(!is_admin())
+			{
+				if(get_rstr_option('enable-rss', 'no') == 'yes')
+				{
+					add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+
+					add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+
+					add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+
+					add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
+					add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+				}
+
+				add_action('wp_loaded', array(__CLASS__, 'output_buffer_start'), (PHP_INT_MAX-10));
+				add_action('shutdown', array(__CLASS__, 'output_buffer_end'), (PHP_INT_MAX-10));
+			}
+		}
+		
+		public function wp_mail ($args) {
 			
 			if( $args['message'] ?? false ) {
 				$args['message'] = $this->transliterate_text($args['message']);
@@ -132,15 +133,15 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			return $args;
 		}
 
-		function output_buffer_start() {
-			ob_start(array(&$this, 'output_callback'), 0, PHP_OUTPUT_HANDLER_REMOVABLE);
+		public static function output_buffer_start() {
+			ob_start(array(__CLASS__, 'output_callback'), 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
 
-		function output_buffer_end() {
+		public static function output_buffer_end() {
 			ob_get_clean();
 		}
 
-		public function output_callback ($buffer='') {
+		public static function output_callback ($buffer='') {
 			if(empty($buffer)) return $buffer;
 
 			if(!(defined('DOING_AJAX') && DOING_AJAX))
@@ -217,14 +218,14 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			return $output;
 		}
 
-		function rss_output_buffer_start() {
+		public static function rss_output_buffer_start() {
 			ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
 
-		function rss_output_buffer_end() {
+		public static function rss_output_buffer_end() {
 			$output = ob_get_clean();
 
-			$output = $this->transliterate_text($output);
+			$output = self::run()->transliterate_text($output);
 
 			echo $output;
 		}

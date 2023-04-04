@@ -15,7 +15,7 @@ if(file_exists(RSTR_INC . '/settings/content.php')) {
 	include_once RSTR_INC . '/settings/content.php';
 }
 
-if(!class_exists('Serbian_Transliteration_Settings')) :
+if(!class_exists('Serbian_Transliteration_Settings', false)) :
 class Serbian_Transliteration_Settings extends Serbian_Transliteration
 {
     /**

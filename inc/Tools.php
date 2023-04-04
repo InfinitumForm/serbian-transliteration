@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  * @autor             Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration_Tools')) :
+if(!class_exists('Serbian_Transliteration_Tools', false)) :
 class Serbian_Transliteration_Tools extends Serbian_Transliteration
 {
 	public static function instance() {

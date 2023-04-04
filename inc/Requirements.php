@@ -6,7 +6,7 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
-if(!class_exists('Serbian_Transliteration_Requirements')) :
+if(!class_exists('Serbian_Transliteration_Requirements', false)) :
 class Serbian_Transliteration_Requirements
 {
     private $title = 'WordPress Transliteration';

@@ -7,7 +7,7 @@
  * @author     Ivijan-Stefan Stipic
  * @url        https://github.com/CreativForm/PHP-Solutions/blob/master/class.os.php
  */
-if (!class_exists('Serbian_Transliteration_OS')):
+if (!class_exists('Serbian_Transliteration_OS', false)):
     class Serbian_Transliteration_OS
     {
         /*

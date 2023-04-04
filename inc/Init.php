@@ -6,7 +6,7 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
-if(!class_exists('Serbian_Transliteration_Init') && class_exists('Serbian_Transliteration')) :
+if(!class_exists('Serbian_Transliteration_Init', false) && class_exists('Serbian_Transliteration', false)) :
 final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 
 	/**
@@ -103,10 +103,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 
 		/* Load menu
 		====================================*/
-		if(!class_exists('Serbian_Transliteration_Menu') && file_exists(RSTR_INC . '/Menu.php')) {
+		if(!class_exists('Serbian_Transliteration_Menu', false) && file_exists(RSTR_INC . '/Menu.php')) {
 			include_once RSTR_INC . '/Menu.php';
 		}
-		if(class_exists('Serbian_Transliteration_Menu')){
+		if(class_exists('Serbian_Transliteration_Menu', false)){
 			new Serbian_Transliteration_Menu();
 		}
 
@@ -148,10 +148,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			// Add soem scripts
 			add_action('admin_head', array($inst, 'admin_head'));
 			// Load settings page
-			if(!class_exists('Serbian_Transliteration_Settings') && file_exists(RSTR_INC . '/Settings.php')) {
+			if(!class_exists('Serbian_Transliteration_Settings', false) && file_exists(RSTR_INC . '/Settings.php')) {
 				include_once RSTR_INC . '/Settings.php';
 			}
-			if(class_exists('Serbian_Transliteration_Settings')){
+			if(class_exists('Serbian_Transliteration_Settings', false)){
 				$Serbian_Transliteration_Settings = new Serbian_Transliteration_Settings();
 				new Serbian_Transliteration_Settings_Sidebar( $Serbian_Transliteration_Settings );
 				new Serbian_Transliteration_Settings_Content( $Serbian_Transliteration_Settings );
@@ -159,10 +159,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		}
 
 		// Load shortcodes
-		if(!class_exists('Serbian_Transliteration_Shortcodes') && file_exists(RSTR_INC . '/Shortcodes.php')) {
+		if(!class_exists('Serbian_Transliteration_Shortcodes', false) && file_exists(RSTR_INC . '/Shortcodes.php')) {
 			include_once RSTR_INC . '/Shortcodes.php';
 		}
-		if(class_exists('Serbian_Transliteration_Shortcodes')){
+		if(class_exists('Serbian_Transliteration_Shortcodes', false)){
 			new Serbian_Transliteration_Shortcodes();
 		}
 
@@ -208,10 +208,10 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			=========================================*/
 			if(get_rstr_option('enable-search', 'no') == 'yes')
 			{
-				if(!class_exists('Serbian_Transliteration_Search') && file_exists(RSTR_INC . '/Search.php')) {
+				if(!class_exists('Serbian_Transliteration_Search', false) && file_exists(RSTR_INC . '/Search.php')) {
 					include_once RSTR_INC . '/Search.php';
 				}
-				if(class_exists('Serbian_Transliteration_Search')){
+				if(class_exists('Serbian_Transliteration_Search', false)){
 					new Serbian_Transliteration_Search();
 				}
 			}

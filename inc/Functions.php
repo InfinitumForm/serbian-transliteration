@@ -399,3 +399,20 @@ if(!function_exists('script_selector')) :
 		}
 	}
 endif;
+
+
+/*
+ * INTERNAL FUNCTION: Execute Transliteration Buffer
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('rstr_execute_transliteration_buffer')) :
+function rstr_execute_transliteration_buffer()
+{
+	if(class_exists(Serbian_Transliteration_Utilities::mode(), false)) {
+		$class = Serbian_Transliteration_Utilities::mode();
+		if( method_exists($class, 'execute_buffer') ) {
+			$class::execute_buffer();
+		}
+	}
+}
+endif;

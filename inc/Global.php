@@ -4,7 +4,7 @@
  * @since     1.0.0
  * @verson    1.0.0
  */
-if(!class_exists('Serbian_Transliteration') && class_exists('Serbian_Transliteration_Transliterating')) :
+if(!class_exists('Serbian_Transliteration', false) && class_exists('Serbian_Transliteration_Transliterating', false)) :
 class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 	/*

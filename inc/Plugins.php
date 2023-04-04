@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration_Plugins')) :
+if(!class_exists('Serbian_Transliteration_Plugins', false)) :
 	class Serbian_Transliteration_Plugins extends Serbian_Transliteration
 	{
 		private $plugins = array(
@@ -47,11 +47,11 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 						$class_name = str_replace(['-','.'], '_', $dir_name);
 						$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
 
-						if(class_exists($plugin_class) && method_exists($plugin_class, 'run')) {
+						if(class_exists($plugin_class, false) && method_exists($plugin_class, 'run')) {
 							$plugin_class::run();
 						} else {
 							include_once $addon;
-							if(class_exists($plugin_class) && method_exists($plugin_class, 'run')) {
+							if(class_exists($plugin_class, false) && method_exists($plugin_class, 'run')) {
 								$plugin_class::run();
 							}
 						}
@@ -77,11 +77,11 @@ if(!class_exists('Serbian_Transliteration_Plugins')) :
 				{
 					$class_name = str_replace(['-','.'], '_', $dir_name);
 					$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
-					if(class_exists($plugin_class) && method_exists($plugin_class, 'filters')) {
+					if(class_exists($plugin_class, false) && method_exists($plugin_class, 'filters')) {
 						$return = array_merge($return, $plugin_class::filters());
 					} else {
 						include $addon;
-						if(class_exists($plugin_class) && method_exists($plugin_class, 'filters')) {
+						if(class_exists($plugin_class, false) && method_exists($plugin_class, 'filters')) {
 							$return = array_merge($return, $plugin_class::filters());
 						}
 					}

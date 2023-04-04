@@ -8,7 +8,7 @@
  * @author            Ivijan-Sefan Stipic
  * @contributor       Igor Milenkovic (@dizajn24)
  */
-if(!class_exists('Serbian_Transliteration_Search')) :
+if(!class_exists('Serbian_Transliteration_Search', false)) :
 class Serbian_Transliteration_Search extends Serbian_Transliteration
 {
     /**

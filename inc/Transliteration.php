@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  *
  */
-if(!class_exists('Serbian_Transliteration_Transliterating')) :
+if(!class_exists('Serbian_Transliteration_Transliterating', false)) :
 class Serbian_Transliteration_Transliterating {
 
 	/*
@@ -56,13 +56,13 @@ class Serbian_Transliteration_Transliterating {
 		$transliterated = false;
 
 		// Include class
-		if(!class_exists($class_name) && file_exists($path))
+		if(!class_exists($class_name, false) && file_exists($path))
 		{
 			include_once $path;
 		}
 
 		// Load class
-		if(class_exists($class_name))
+		if(class_exists($class_name, false))
 		{
 			$content = $class_name::transliterate($content, $translation);
 			$transliterated = true;

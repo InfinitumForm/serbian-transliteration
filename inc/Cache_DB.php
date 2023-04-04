@@ -8,7 +8,7 @@
  * @author        Ivijan-Stefan Stipic
  * @version       1.0.0
  */
-if(!class_exists('Serbian_Transliteration_DB_Cache')) : class Serbian_Transliteration_DB_Cache {
+if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Transliteration_DB_Cache {
 	/*
 	 * Save all cached objcts to this variable
 	 */

@@ -6,7 +6,7 @@
  * @author    Ivijan-Stefan Stipic
  */
 
-if(class_exists('WP_CLI_Command') && !class_exists('Serbian_Transliteration_WP_CLI')):
+if(class_exists('WP_CLI_Command', false) && !class_exists('Serbian_Transliteration_WP_CLI', false)):
 	class Serbian_Transliteration_WP_CLI extends WP_CLI_Command {
 		/**
 		 * This tool can rename all existing Cyrillic permalinks to Latin inside database

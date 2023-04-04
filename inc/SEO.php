@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration_SEO')) :
+if(!class_exists('Serbian_Transliteration_SEO', false)) :
 	class Serbian_Transliteration_SEO extends Serbian_Transliteration
 	{	
 		public function __construct(){
@@ -146,7 +146,7 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 		{
 			
 			// Let's relay on Geo Controller plugin
-			if( class_exists('CFGP_IP') ) {
+			if( class_exists('CFGP_IP', false) ) {
 				
 				add_filter(
 					'cfgp/ip/blacklist',
@@ -300,7 +300,7 @@ if(!class_exists('Serbian_Transliteration_SEO')) :
 		*/
 		private function is_crawler($ip){
 			// Let's relay on Geo Controller plugin
-			if( class_exists('CFGP_U') ) {
+			if( class_exists('CFGP_U', false) ) {
 				return CFGP_U::is_bot();
 			}
 			

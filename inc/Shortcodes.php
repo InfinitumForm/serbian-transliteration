@@ -6,7 +6,7 @@
  * @since             1.0.0
  * @package           Serbian_Transliteration
  */
-if(!class_exists('Serbian_Transliteration_Shortcodes')) :
+if(!class_exists('Serbian_Transliteration_Shortcodes', false)) :
 class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 {
 	function __construct(){

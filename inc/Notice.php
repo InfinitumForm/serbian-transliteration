@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration_Notice')) :
+if(!class_exists('Serbian_Transliteration_Notice', false)) :
 	class Serbian_Transliteration_Notice extends Serbian_Transliteration
 	{
 		/* Run this script */
