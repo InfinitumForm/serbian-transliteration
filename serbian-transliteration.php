@@ -13,7 +13,7 @@
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
  * Version:           1.9.6
  * Requires at least: 5.4
- * Tested up to:      6.1
+ * Tested up to:      6.2
  * Requires PHP:      7.0
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/

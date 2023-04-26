@@ -2,7 +2,7 @@
 Contributors: ivijanstefan, creativform
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 5.4
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.0
 Stable tag: 1.9.6
 License: GPLv2 or later
