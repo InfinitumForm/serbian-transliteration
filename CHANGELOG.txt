@@ -1,3 +1,8 @@
+= 1.9.6 =
+* Fixed transliteration objects
+* Introduced cached algorithms
+* Removed unnecessary calling of PHP classes
+
 = 1.9.5 =
 * Fix WooCommerce transliteration problems
 * Improved AJAX call transliteration

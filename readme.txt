@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 1.9.5
+Stable tag: 1.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,6 +154,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.9.6 =
+* Fixed transliteration objects
+* Introduced cached algorithms
+* Removed unnecessary calling of PHP classes
+
 = 1.9.5 =
 * Fix WooCommerce transliteration problems
 * Improved AJAX call transliteration
@@ -283,26 +288,14 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.9.6 =
+* Fixed transliteration objects
+* Introduced cached algorithms
+* Removed unnecessary calling of PHP classes
+
 = 1.9.5 =
 * Fix WooCommerce transliteration problems
 * Improved AJAX call transliteration
-
-= 1.9.4 =
-* Fix browser cache
-
-= 1.9.3 =
-* Added W3 Total Cache support
-
-= 1.9.2 =
-* Fixed memory leaking in WP admin
-* Fixed wp admin login issue for non standard language settings
-
-= 1.9.1 =
-* Fixed fatal error on deprecated constants
-
-= 1.9.0 =
-* Added support for user locales
-* Fixed languages detection
 
 == Frequently Asked Questions ==
 

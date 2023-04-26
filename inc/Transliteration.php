@@ -32,13 +32,37 @@ class Serbian_Transliteration_Transliterating {
 			'ar'     => __('Arabic', RSTR_NAME) . ' - BETA'
 		));
 	}
+	
+	/*
+	 * Check if it can be transliterated
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function can_trasliterate($content){
+		return (
+			empty($content) 
+			|| is_array($content) 
+			|| is_object($content) 
+			|| is_numeric($content) 
+			|| is_bool($content)
+			|| is_file($content)
+			|| is_link($content)
+			|| filter_var($content, FILTER_VALIDATE_URL)
+			|| filter_var($content, FILTER_VALIDATE_EMAIL)
+		);
+	}
 
+	/*
+	 * Do transliteration
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	 */
 	public function transliteration($content, $translation = 'cyr_to_lat'){
 
 		$locale = $this->get_locale();
 
 		// Avoid transliteration for the some cases
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || !in_array($translation, array('lat_to_cyr', 'cyr_to_lat'))){
+		if( self::can_trasliterate($content) || !in_array($translation, array('lat_to_cyr', 'cyr_to_lat')) ){
 			return $content;
 		}
 		
@@ -167,6 +191,11 @@ class Serbian_Transliteration_Transliterating {
 			if(function_exists('pll_current_language')) {
 				$get_locale = pll_current_language('locale');
 			}
+			
+			if(empty($get_locale)){
+				$get_locale = get_user_locale( wp_get_current_user() );
+			}
+			
 			$get_locale = Serbian_Transliteration_Cache::set('get_locale', $get_locale);
 		}
 

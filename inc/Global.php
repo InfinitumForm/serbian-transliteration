@@ -14,7 +14,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	*/
 	public function cyr_to_lat($content){
 
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || Serbian_Transliteration_Utilities::is_editor()){
+		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
 			return $content;
 		}
 
@@ -31,7 +31,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function cyr_to_lat_sanitize($content){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)){
+		if(parent::can_trasliterate($content)){
 			return $content;
 		}
 
@@ -41,7 +41,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		if(function_exists('iconv'))
 		{
-			if($locale = parent::get_locales( $this->get_locale() )) {
+			if($this->get_locale() && ( $locale = parent::get_locales( $this->get_locale() ) ) ) {
 				if( preg_match('/([a-zA-Z]{2})(_[a-zA-Z]{2})?/', $locale) ) {
 					setlocale(LC_CTYPE, $locale);
 				}
@@ -61,7 +61,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function lat_to_cyr($content, $fix_html = true, $fix_diacritics = false){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || Serbian_Transliteration_Utilities::is_editor()){
+		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
 			return $content;
 		}
 
@@ -82,7 +82,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	}
 
 	public static function fix_diacritics($content){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || Serbian_Transliteration_Utilities::is_editor()){
+		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
 			return $content;
 		}
 
@@ -132,12 +132,28 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 					if(in_array($word_search, $search)) {
 						if(ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)){
-							echo (function_exists('mb_strtoupper') ? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8') : strtoupper($search[array_search($word_search, $search)]));
+							echo (
+								function_exists('mb_strtoupper') 
+								? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8') 
+								: strtoupper($search[array_search($word_search, $search)])
+							);
 						} else if( preg_match('~^\p{Lu}~u', $word) ) {
 							$ucfirst = $search[array_search($word_search, $search)];
-							$firstChar = (function_exists('mb_substr') ? mb_substr($ucfirst, 0, 1, 'UTF-8') : substr($ucfirst, 0, 1));
-							$then = (function_exists('mb_substr') ? mb_substr($ucfirst, 1, NULL, 'UTF-8') : substr($ucfirst, 1, NULL));
-							echo (function_exists('mb_strtoupper') ? mb_strtoupper($firstChar, 'UTF-8') : strtoupper($firstChar)) . $then;
+							$firstChar = (
+								function_exists('mb_substr') 
+								? mb_substr($ucfirst, 0, 1, 'UTF-8') 
+								: substr($ucfirst, 0, 1)
+							);
+							$then = (
+								function_exists('mb_substr') 
+								? mb_substr($ucfirst, 1, NULL, 'UTF-8') 
+								: substr($ucfirst, 1, NULL)
+							);
+							echo (
+								function_exists('mb_strtoupper') ? 
+								mb_strtoupper($firstChar, 'UTF-8') 
+								: strtoupper($firstChar)
+							) . $then;
 						} else {
 							echo $word;
 						}
@@ -169,7 +185,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public function transliterate_text($content, $type = NULL, $fix_html = true){
-		if(empty($content) || is_array($content) || is_object($content) || is_numeric($content) || is_bool($content) || Serbian_Transliteration_Utilities::is_editor()){
+		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
 			return $content;
 		}
 
