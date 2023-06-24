@@ -48,7 +48,11 @@ if(class_exists('WP_CLI_Command', false) && !class_exists('Serbian_Transliterati
 			{
 				$inst = Serbian_Transliteration::__instance();
 				// Fix  problematic
-				$get_results = array_map(function($match) use (&$wpdb, &$inst, &$updated, &$type){
+				WP_CLI::log( PHP_EOL.PHP_EOL );
+				WP_CLI::log( __('Please wait! Do not close the terminal or terminate the script until this operation is completed!', RSTR_NAME) );
+				$progress = \WP_CLI\Utils\make_progress_bar( __('Progress:', RSTR_NAME), count($get_results) );
+				$get_results = array_map(function($match) use (&$wpdb, &$inst, &$updated, &$type, &$progress){
+					$progress->tick();
 					
 					$old_post_name = $match->post_name;
 					
@@ -91,6 +95,9 @@ if(class_exists('WP_CLI_Command', false) && !class_exists('Serbian_Transliterati
 						));
 					}
 				}, $get_results);
+				
+				$progress->finish();
+				WP_CLI::log( PHP_EOL.PHP_EOL );
 			}
 
 			if($updated > 0){

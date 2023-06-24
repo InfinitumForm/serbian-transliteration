@@ -23,7 +23,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
          * Returns the value of the cached object, or false if the cache key doesn’t exist
         */
         public static function get($key) {
-            return self::$cache[self::key($key) ] ?? NULL;
+            return self::$cache[ self::key($key) ] ?? NULL;
         }
 
         /*
@@ -73,8 +73,8 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
          * Clears data from the cache for the given key.
         */
         public static function delete($key) {
-            if (isset(self::$cache[self::key($key) ])) {
-                unset(self::$cache[self::key($key) ]);
+            if (isset(self::$cache[ self::key($key) ])) {
+                unset(self::$cache[ self::key($key) ]);
             }
         }
 

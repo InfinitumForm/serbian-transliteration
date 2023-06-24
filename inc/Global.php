@@ -193,6 +193,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			$type = Serbian_Transliteration_Utilities::get_current_script();
 		}
 
+		// If site script is cyr and transliteration from latin to cyr, stop execution
+		if( get_rstr_option('site-script') === 'cyr' && $type === 'lat_to_cyr' ) {
+			return $content;
+		}
+
 		$content = Serbian_Transliteration_Utilities::decode($content);
 		$content = $this->transliteration($content, $type);
 
@@ -366,7 +371,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		// Fix data attributes
 		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf('%1$s="%2$s"', $m[1], htmlspecialchars_decode(self::__instance()->cyr_to_lat($m[2])));
+			if($m[1] == 'data-nectar-animated-gradient-settings'){
+		//		echo '<pre>', var_dump($m[2], self::__instance()->cyr_to_lat($m[2])), '</pre>';
+			}
+			return sprintf('%1$s="%2$s"', $m[1], self::__instance()->cyr_to_lat($m[2]));
 		}, $content);
 
 		// Fix open tags
