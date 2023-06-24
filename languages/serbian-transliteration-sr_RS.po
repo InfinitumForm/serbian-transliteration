@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2023-02-01 11:05+0100\n"
-"PO-Revision-Date: 2023-02-01 11:06+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2023-06-24 18:10+0200\n"
+"PO-Revision-Date: 2023-06-24 18:11+0200\n"
+"Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: sr_RS\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: serbian-transliteration.php\n"
@@ -837,184 +837,200 @@ msgstr ""
 "Само WooCommerce (заобилази све остале транслитерације и фокусира се само на "
 "WooCommerce)"
 
-#: inc/Utilities.php:85
+#: inc/Utilities.php:67
+msgid "Dev Mode (Only for developers and testers)"
+msgstr "Програмерски мод (само за програмере)"
+
+#: inc/Utilities.php:91
 msgid "Transliteration disabled"
 msgstr "Угаси пресловљавање"
 
-#: inc/Utilities.php:86 inc/settings/content/shortcodes.php:27
+#: inc/Utilities.php:92 inc/settings/content/shortcodes.php:27
 #: inc/settings/content/tags.php:25
 msgid "Cyrillic to Latin"
 msgstr "Ћирилица у латиницу"
 
-#: inc/Utilities.php:87 inc/settings/content/shortcodes.php:30
+#: inc/Utilities.php:93 inc/settings/content/shortcodes.php:30
 #: inc/settings/content/tags.php:28
 msgid "Latin to Cyrillic"
 msgstr "Латиница у ћирилицу"
 
-#: inc/Utilities.php:93
+#: inc/Utilities.php:99
 msgid "Arabic to Latin"
 msgstr "Арапски у латиницу"
 
-#: inc/Utilities.php:94
+#: inc/Utilities.php:100
 msgid "Latin to Arabic"
 msgstr "Латиница у арапски"
 
-#: inc/Utilities.php:96
+#: inc/Utilities.php:102
 msgid "Armenian to Latin"
 msgstr "Арменијски у латиницу"
 
-#: inc/Utilities.php:97
+#: inc/Utilities.php:103
 msgid "Latin to Armenian"
 msgstr "Латиница у арменијски"
 
-#: inc/Utilities.php:786 inc/Utilities.php:787
+#: inc/Utilities.php:794 inc/Utilities.php:795
 msgctxt "Language script"
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:788
+#: inc/Utilities.php:796
 msgid "Search by Script"
 msgstr "Претражи по скрипти"
 
-#: inc/Utilities.php:789
+#: inc/Utilities.php:797
 msgid "All Scripts"
 msgstr "Све скрипте"
 
-#: inc/Utilities.php:790
+#: inc/Utilities.php:798
 msgid "Parent Script"
 msgstr "Родитељска скрипта"
 
-#: inc/Utilities.php:791
+#: inc/Utilities.php:799
 msgid "Parent Script:"
 msgstr "Родитељска скрипта:"
 
-#: inc/Utilities.php:792
+#: inc/Utilities.php:800
 msgid "Edit Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:793
+#: inc/Utilities.php:801
 msgid "Update Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:794
+#: inc/Utilities.php:802
 msgid "Add New Script"
 msgstr "Додај нову скрипту"
 
-#: inc/Utilities.php:795
+#: inc/Utilities.php:803
 msgid "New Script Name"
 msgstr "Нови назив скрипте"
 
-#: inc/Utilities.php:796
+#: inc/Utilities.php:804
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:889
+#: inc/Utilities.php:897
 msgid " degrees "
 msgstr " степени "
 
-#: inc/Utilities.php:891
+#: inc/Utilities.php:899
 msgid " divided by "
 msgstr " подељено са "
 
-#: inc/Utilities.php:891
+#: inc/Utilities.php:899
 msgid " times "
 msgstr " пута "
 
-#: inc/Utilities.php:891
+#: inc/Utilities.php:899
 msgid " plus-minus "
 msgstr " плус-минус "
 
-#: inc/Utilities.php:891
+#: inc/Utilities.php:899
 msgid " square root "
 msgstr " квадратни корен "
 
-#: inc/Utilities.php:892
+#: inc/Utilities.php:900
 msgid " infinity "
 msgstr " бесконачност "
 
-#: inc/Utilities.php:892
+#: inc/Utilities.php:900
 msgid " almost equal to "
 msgstr " скоро једнако са "
 
-#: inc/Utilities.php:892
+#: inc/Utilities.php:900
 msgid " not equal to "
 msgstr " није једнако са "
 
-#: inc/Utilities.php:893
+#: inc/Utilities.php:901
 msgid " identical to "
 msgstr " индентично са "
 
-#: inc/Utilities.php:893
+#: inc/Utilities.php:901
 msgid " less than or equal to "
 msgstr " мање или једнако "
 
-#: inc/Utilities.php:893
+#: inc/Utilities.php:901
 msgid " greater than or equal to "
 msgstr " веће или једнако са "
 
-#: inc/Utilities.php:894
+#: inc/Utilities.php:902
 msgid " left "
 msgstr " лево "
 
-#: inc/Utilities.php:894
+#: inc/Utilities.php:902
 msgid " right "
 msgstr " десно "
 
-#: inc/Utilities.php:894
+#: inc/Utilities.php:902
 msgid " up "
 msgstr " горе "
 
-#: inc/Utilities.php:894
+#: inc/Utilities.php:902
 msgid " down "
 msgstr " доле "
 
-#: inc/Utilities.php:895
+#: inc/Utilities.php:903
 msgid " left and right "
 msgstr " лево и десно "
 
-#: inc/Utilities.php:895
+#: inc/Utilities.php:903
 msgid " up and down "
 msgstr " горе и доле "
 
-#: inc/Utilities.php:895
+#: inc/Utilities.php:903
 msgid " care of "
 msgstr " брига о "
 
-#: inc/Utilities.php:896
+#: inc/Utilities.php:904
 msgid " estimated "
 msgstr " процењено "
 
-#: inc/Utilities.php:896
+#: inc/Utilities.php:904
 msgid " ohm "
 msgstr " ом "
 
-#: inc/Utilities.php:896
+#: inc/Utilities.php:904
 msgid " female "
 msgstr " женско "
 
-#: inc/Utilities.php:896
+#: inc/Utilities.php:904
 msgid " male "
 msgstr " мушко "
 
-#: inc/Utilities.php:897
+#: inc/Utilities.php:905
 msgid " Copyright "
 msgstr " Ауторско право "
 
-#: inc/Utilities.php:897
+#: inc/Utilities.php:905
 msgid " Registered "
 msgstr " Регистровано "
 
-#: inc/Utilities.php:897
+#: inc/Utilities.php:905
 msgid " Trademark "
 msgstr " Заштитни знак "
 
-#: inc/WP_CLI.php:87
+#: inc/WP_CLI.php:52
+msgid ""
+"Please wait! Do not close the terminal or terminate the script until this "
+"operation is completed!"
+msgstr ""
+"Сачекајте! Немојте затварати терминал или прекидати скрипту док се ова "
+"операција не заврши!"
+
+#: inc/WP_CLI.php:53
+msgid "Progress:"
+msgstr "Напредак:"
+
+#: inc/WP_CLI.php:91
 #, php-format
 msgid "Updated page ID %1$d, (%2$s) at URL: %3$s"
 msgstr ""
 "Ажурирана страница \"%2$s\" на адреси %3$s са индентификатором (ID): %1$d"
 
-#: inc/WP_CLI.php:97
+#: inc/WP_CLI.php:104
 #, php-format
 msgid "%d permalink was successfully transliterated."
 msgid_plural "%d permalinks were successfully transliterated."
@@ -1022,7 +1038,7 @@ msgstr[0] "Успешно је ажурирана %d страница."
 msgstr[1] "Успешно је ажурирано %d страница."
 msgstr[2] "Успешно је ажурирано %d страница."
 
-#: inc/WP_CLI.php:99
+#: inc/WP_CLI.php:106
 msgid "No changes to the permalink have been made."
 msgstr "Није промењена ниједна трајна веза."
 
@@ -1154,7 +1170,7 @@ msgid "Donations"
 msgstr "Донације"
 
 #: inc/settings/content/credits.php:121 inc/settings/sidebar.php:63
-#, php-format
+#, no-php-format
 msgid ""
 "This plugin is 100% free. If you want to buy us one coffee, beer or in "
 "general help the development of this plugin through a monetary donation, you "
@@ -1174,7 +1190,7 @@ msgstr "Из Србије"
 
 #: inc/settings/content/credits.php:124 inc/settings/sidebar.php:66
 msgid "Mobi Bank"
-msgstr ""
+msgstr "Моби Банка"
 
 #: inc/settings/content/debug.php:24
 msgid "Debug information"
