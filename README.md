@@ -11,4 +11,6 @@ You are invited to collaborate in development of this plugin and to participate 
 
 You can find more about this plugin here: [https://wordpress.org/plugins/serbian-transliteration/](https://wordpress.org/plugins/serbian-transliteration/)
 
+You can join DREAM (DEV) TEAM on the Slack: [https://wptransliterator.slack.com](https://join.slack.com/t/wptransliterator/shared_invite/zt-1xwf1cln9-QdTA3zCKaJ6_JHosuEH3sg)
+
 For collaboration and details, please contact me: infinitumform@gmail.com
