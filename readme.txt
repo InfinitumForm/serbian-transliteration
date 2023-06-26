@@ -351,4 +351,41 @@ Therefore, you must re-asign your sitemap or make additional efforts to redirect
 
 If you are using WP-CLI, this function can also be started with a simple shell command: `wp transliterate permalinks`
 
+= How can I define my own substitutions? =
+
+Inside your theme's `functions.php` you can define your own substitutions for each language using filters:
+
+`add_filter( 'rstr/inc/transliteration/{$locale}', 'function_callback', 10, 1 );`
+
+Here's an example.
+
+`/**
+ * Modify conversion table for Serbian language.
+ *
+ * @param array $map Conversion map.
+ *
+ * @return array
+ */
+function my_transliteration__sr_RS( $map ) {
+
+	// Example For 2 or more letters
+	$new_map = [
+		'Ња' => 'nja',
+		'Ње' => 'nje',
+		'Обједињени' => 'Objedinjeni'
+	];
+	$map = array_merge($new_map, $map);
+	
+	// Example for one letter
+	$new_map = [
+		'А'=>'X',
+		'Б'=>'Y',
+		'В'=>'Z'
+	];
+	$map = array_merge($map, $new_map);
+	
+	return $map;
+}
+add_filter( 'rstr/inc/transliteration/sr_RS', 'my_transliteration__sr_RS', 10, 1 );`
+
 == Other Notes ==
