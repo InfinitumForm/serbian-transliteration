@@ -262,6 +262,23 @@ class Serbian_Transliteration_Utilities{
 
 		return $script;
 	}
+	
+	/*
+	 * Check is plugin active
+	 */
+	public static function is_plugin_active($plugin)
+	{
+		static $active_plugins = [];
+		
+		if( !isset($active_plugins[$plugin]) ) {
+			if(!function_exists('is_plugin_active')) {
+				self::include_once( WP_ADMIN_DIR . '/includes/plugin.php' );
+			}
+			$active_plugins[$plugin] = is_plugin_active($plugin);
+		}
+
+		return $active_plugins[$plugin];
+	}
 
 	/*
 	* Check is block editor screen
@@ -273,7 +290,7 @@ class Serbian_Transliteration_Utilities{
 
 		$is_editor = Serbian_Transliteration_Cache::get('is_editor');
 
-		if(empty($is_editor)) {
+		if(NULL === $is_editor) {
 			if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
 				if(!function_exists('get_current_screen')){
 					include_once ABSPATH  . '/wp-admin/includes/screen.php';
@@ -285,9 +302,54 @@ class Serbian_Transliteration_Utilities{
 			} else {
 				$is_editor = Serbian_Transliteration_Cache::set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
 			}
+			
+			if( self::is_elementor_editor() ) {
+				$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
+			}
 		}
 
 		return $is_editor;
+	}
+	
+	/* 
+	 * Check is in the editor mode
+	 * @verson    1.0.0
+	 */
+	public static function is_elementor_editor(){
+		if(
+			self::is_plugin_active('elementor/elementor.php') 
+			&& ($_GET['action'] ?? NULL) === 'elementor'
+			&& is_numeric($_GET['post'] ?? NULL)
+		) {
+			return true;
+			
+			// Deprecated
+			//	return \Elementor\Plugin::$instance->editor->is_edit_mode();
+		}
+		
+		return false;
+	}
+	
+	/* 
+	 * Check is in the preview mode
+	 * @verson    1.0.0
+	 */
+	public static function is_elementor_preview(){
+		if(
+			!is_admin()
+			&& self::is_plugin_active('elementor/elementor.php') 
+			&& ($_GET['preview'] ?? NULL) == 'true'
+			&& is_numeric($_GET['page_id'] ?? NULL)
+			&& is_numeric($_GET['preview_id'] ?? NULL)
+			&& !empty($_GET['preview_nonce'] ?? NULL)
+		) {
+			return true;
+			
+			// Deprecated
+			//	return \Elementor\Plugin::$instance->preview->is_preview_mode();
+		}
+		
+		return false;
 	}
 
 	/*
