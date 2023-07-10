@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 1.9.7
+Stable tag: 1.9.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,6 +154,9 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.9.8 =
+* Fixed a problem with the Elementor blank screen
+
 = 1.9.7 =
 * Fixed a problem with the Cyrillic version of the transliteration
 * Fixed issue with JSON transliteration
@@ -292,18 +295,12 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.9.8 =
+* Fixed a problem with the Elementor blank screen
+
 = 1.9.7 =
 * Fixed a problem with the Cyrillic version of the transliteration
 * Fixed issue with JSON transliteration
-
-= 1.9.6 =
-* Fixed transliteration objects
-* Introduced cached algorithms
-* Removed unnecessary calling of PHP classes
-
-= 1.9.5 =
-* Fix WooCommerce transliteration problems
-* Improved AJAX call transliteration
 
 == Frequently Asked Questions ==
 
