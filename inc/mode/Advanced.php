@@ -72,7 +72,8 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 				'sanitize_title'				=> 'force_permalink_to_latin',
 				'the_permalink'					=> 'force_permalink_to_latin',
 				'wp_unique_post_slug'			=> 'force_permalink_to_latin',
-				'wp_mail'						=> 'wp_mail'
+				'wp_mail'						=> 'wp_mail',
+				'register_post_type_args'		=> 'objects'
 			);
 			asort($filters);
 
@@ -194,6 +195,10 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 				$output = $this->transliterate_text($output);
 			}
 			return $output;
+		}
+		
+		public function objects ($obj) {
+			return $this->transliterate_objects($obj);
 		}
 
 		public function content ($content='') {

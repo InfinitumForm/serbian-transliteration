@@ -73,11 +73,16 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 				'sanitize_title'				=> 'force_permalink_to_latin',
 				'the_permalink'					=> 'force_permalink_to_latin',
 				'wp_unique_post_slug'			=> 'force_permalink_to_latin',
-				'wp_mail'						=> 'wp_mail'
+				'wp_mail'						=> 'wp_mail',
+				'register_post_type_args'		=> 'objects'
 			);
 			asort($filters);
 
 			return $filters;
+		}
+		
+		public function objects ($obj) {
+			return $this->transliterate_objects($obj);
 		}
 
 		public function __construct(){
@@ -157,7 +162,9 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 						return $matches[2];
 					}, $buffer);
 
-					if(!empty($buffer)) Serbian_Transliteration_DB_Cache::set( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+					if(!empty($buffer)) {
+						Serbian_Transliteration_DB_Cache::set( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+					}
 				}
 				else
 				{
