@@ -7,8 +7,8 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration__Plugin__advanced_custom_fields')) :
-	class Serbian_Transliteration__Plugin__advanced_custom_fields extends Serbian_Transliteration
+if(!class_exists('Serbian_Transliteration__Plugin__advanced_custom_fields_pro')) :
+	class Serbian_Transliteration__Plugin__advanced_custom_fields_pro extends Serbian_Transliteration
 	{
 		
 		/* Run this script */
