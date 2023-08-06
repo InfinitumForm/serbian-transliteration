@@ -15,15 +15,21 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
         /*
          * Save all cached objcts to this variable
         */
-        private static $cache = NULL;
+        private static $cache = [];
 
         /*
          * Get cached object
          *
          * Returns the value of the cached object, or false if the cache key doesn’t exist
         */
-        public static function get($key) {
-            return self::$cache[ self::key($key) ] ?? NULL;
+        public static function get($key, $default = NULL) {
+			$key = self::key($key);
+			
+			if (array_key_exists($key, self::$cache)) {
+				return self::$cache[ $key ];
+			}
+			
+			return $default;
         }
 
         /*
@@ -34,7 +40,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
         */
         public static function add($key, $value) {
 			$key = self::key($key);
-			if(!isset(self::$cache[ $key ])) {
+			if (!array_key_exists($key, self::$cache)) {
 				self::garbage_cleaner();
 				self::$cache[ $key ] = $value;
 			}
@@ -61,7 +67,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
         */
         public static function replace($key, $value, $expire=0) {
 			$key = self::key($key);
-			if(isset(self::$cache[ $key ])) {
+			if (array_key_exists($key, self::$cache)) {
 				self::$cache[ $key ] = $value;
 			}
 			return self::$cache[ $key ];
@@ -73,7 +79,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
          * Clears data from the cache for the given key.
         */
         public static function delete($key) {
-            if (isset(self::$cache[ self::key($key) ])) {
+            if (array_key_exists($key, self::$cache)) {
                 unset(self::$cache[ self::key($key) ]);
             }
         }

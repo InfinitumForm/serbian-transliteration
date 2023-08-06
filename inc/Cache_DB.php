@@ -38,7 +38,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 		
 		$key = self::key($key);
 		
-		if( self::$cache[$key] ?? NULL ) {
+		if (array_key_exists($key, self::$cache)) {
 			return self::$cache[$key];
 		}
 
