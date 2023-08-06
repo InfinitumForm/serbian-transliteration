@@ -9,10 +9,10 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
 
-Universal transliterator for permalinks, posts, pages, tags, categories, media & files, search and more...
+Universal transliterator for permalinks, posts, tags, categories, media, files, search and more, rendering them universally readable.
 
 == Description ==
-This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.
+This plugin provides a streamlined and straightforward solution for transliterating your WordPress content between Cyrillic and Latin scripts. It is designed to be lightweight and user-friendly, requiring just a few clicks to carry out the conversion. An additional feature of this plugin is its ability to support special shortcodes, allowing selective transliteration of content sections, thereby offering increased flexibility in content presentation.
 
 = FEATURES =
 
@@ -72,7 +72,7 @@ We also do special compatible functions with:
  &#9989; [Themify](https://themify.me/)
  &#9989; [Divi](https://www.elegantthemes.com/gallery/divi/) (Theme & Builder)
 
-**YOU NEED TO KNOW** that even if there is compatibility for most plugins, the combination of multiple plugins still has a slight chance of some conflict. There are over a couple thousand plugins and a couple of few million individual WordPress installations. We cannot 100% guarantee that everything will work properly in all possible cases. Sometimes it happens that other plugins are not compatible with this plugin, so it is important that you contact us or other plugin authors in case of any problem so that you can solve the problem. The most common fix for most issues is if you keep all the plugins and WordPress installation up to date.
+** It's crucial to understand ** that while our plugin is compatible with most others, the sheer diversity of WordPress installations and the thousands of available plugins mean there's a small chance of encountering conflicts. We strive to ensure maximum compatibility, but given the vast number of variables, we can't guarantee flawless operation in all instances. If you experience issues, they may stem from incompatibility with other plugins. We encourage you to reach out to us or the respective plugin authors for resolution. Regularly updating all your plugins and your WordPress installation is the most common solution for most problems.
 
 This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
 
