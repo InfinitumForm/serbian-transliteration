@@ -139,7 +139,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 		}
 
 		static function rss_output_buffer_end() {
-			$output = ob_get_clean();
+			$output = ob_end_flush();
 
 			$output = self::run()->transliterate_text($output);
 

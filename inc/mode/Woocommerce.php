@@ -128,7 +128,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 		}
 
 		public static function rss_output_buffer_end() {
-			$output = ob_get_clean();
+			$output = ob_end_flush();
 
 			$output = self::get()->transliterate_text($output);
 

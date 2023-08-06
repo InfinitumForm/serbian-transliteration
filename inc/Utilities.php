@@ -75,7 +75,7 @@ class Serbian_Transliteration_Utilities{
 				return $modes[$mode];
 			}
 
-			return false;
+			return [];
 		}
 
 		return $modes;
@@ -287,7 +287,6 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function is_editor()
 	{
-
 		$is_editor = Serbian_Transliteration_Cache::get('is_editor');
 
 		if(NULL === $is_editor) {
@@ -302,17 +301,21 @@ class Serbian_Transliteration_Utilities{
 			} else {
 				$is_editor = Serbian_Transliteration_Cache::set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
 			}
-			
-			if( self::is_elementor_editor() ) {
-				$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
-			}
+		}
+		
+		if( self::is_elementor_editor() ) {
+			$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
+		}
+		
+		if( self::is_oxygen_editor() ) {
+			$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
 		}
 
 		return $is_editor;
 	}
 	
 	/* 
-	 * Check is in the editor mode
+	 * Check is in the Elementor editor mode
 	 * @verson    1.0.0
 	 */
 	public static function is_elementor_editor(){
@@ -331,7 +334,7 @@ class Serbian_Transliteration_Utilities{
 	}
 	
 	/* 
-	 * Check is in the preview mode
+	 * Check is in the Elementor preview mode
 	 * @verson    1.0.0
 	 */
 	public static function is_elementor_preview(){
@@ -347,6 +350,21 @@ class Serbian_Transliteration_Utilities{
 			
 			// Deprecated
 			//	return \Elementor\Plugin::$instance->preview->is_preview_mode();
+		}
+		
+		return false;
+	}
+	
+	/* 
+	 * Check is in the Oxygen editor mode
+	 * @verson    1.0.0
+	 */
+	public static function is_oxygen_editor(){
+		if(
+			self::is_plugin_active('oxygen/functions.php') 
+			&& ($_GET['ct_builder'] ?? NULL) == 'true'
+		) {
+			return true;
 		}
 		
 		return false;

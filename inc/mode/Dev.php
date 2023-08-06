@@ -79,7 +79,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 		}
 
 		public static function output_buffer_end() {
-			ob_get_clean();
+			ob_end_flush();
 		}
 
 		public static function output_callback ($buffer='') {

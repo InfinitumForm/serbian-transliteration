@@ -391,7 +391,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		},(PHP_INT_MAX-1));
 
 		add_action('shutdown', function () {
-			ob_get_clean();
+			ob_end_flush();
 		},(PHP_INT_MAX-1));
 
 	}
