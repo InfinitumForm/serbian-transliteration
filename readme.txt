@@ -2,9 +2,9 @@
 Contributors: ivijanstefan, creativform
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 5.4
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 1.9.9
+Stable tag: 1.9.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,8 +154,17 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
-= 1.9.9 =
+= 1.9.11 =
 * Added suport for Oxygen builder
+
+= 1.9.10 =
+* Removed obsolete codes
+
+= 1.9.9 =
+* Improved caching
+* Support for WP version 6.3.x
+* Added support for ACF and ACF PRO
+* Fixed custom post type arguments
 
 = 1.9.8 =
 * Fixed a problem with the Elementor blank screen
@@ -298,8 +307,17 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.9.9 =
+= 1.9.11 =
 * Added suport for Oxygen builder
+
+= 1.9.10 =
+* Removed obsolete codes
+
+= 1.9.9 =
+* Improved caching
+* Support for WP version 6.3.x
+* Added support for ACF and ACF PRO
+* Fixed custom post type arguments
 
 = 1.9.8 =
 * Fixed a problem with the Elementor blank screen

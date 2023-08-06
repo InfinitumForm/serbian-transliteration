@@ -11,9 +11,9 @@
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           1.9.9
+ * Version:           1.9.11
  * Requires at least: 5.4
- * Tested up to:      6.2
+ * Tested up to:      6.3
  * Requires PHP:      7.0
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
@@ -130,13 +130,6 @@ if($Serbian_Transliteration_Activate->passes()) :
 	 * @verson    1.0.0
 	 */
 	include_once RSTR_INC . '/Utilities.php';
-	
-	/*
-	 * Serbian transliteration statistic
-	 * @since     1.5.7
-	 * @verson    1.0.0
-	 */
-	include_once RSTR_INC . '/Statistic.php';
 
 	/*
 	 * Serbian transliteration requirements
@@ -345,9 +338,6 @@ if($Serbian_Transliteration_Activate->passes()) :
 
 			// Reset permalinks
 			flush_rewrite_rules();
-			
-			// Send plugin statistic
-			Serbian_Transliteration_Statistic::activation(array('settings' => $options));
 
 			return $success;
 		});
@@ -409,9 +399,6 @@ if($Serbian_Transliteration_Activate->passes()) :
 
 			// Reset permalinks
 			flush_rewrite_rules();
-			
-			// Send plugin statistic
-			Serbian_Transliteration_Statistic::deactivation();
 		});
 		
 		/* Clear cache on the post update

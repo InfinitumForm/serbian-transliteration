@@ -1,5 +1,14 @@
-= 1.9.9 =
+= 1.9.11 =
 * Added suport for Oxygen builder
+
+= 1.9.10 =
+* Removed obsolete codes
+
+= 1.9.9 =
+* Improved caching
+* Support for WP version 6.3.x
+* Added support for ACF and ACF PRO
+* Fixed custom post type arguments
 
 = 1.9.8 =
 * Fixed a problem with the Elementor blank screen

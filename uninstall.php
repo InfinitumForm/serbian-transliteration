@@ -17,12 +17,6 @@ global $wpdb;
 if (!defined('RSTR_NAME')) define('RSTR_NAME', 'serbian-transliteration');
 $RSTR_NAME = RSTR_NAME;
 
-// Remove statistic data
-if(file_exists(__DIR__ . '/inc/Statistic.php')) {
-	include_once __DIR__ . '/inc/Statistic.php';
-	Serbian_Transliteration_Statistic::uninstall();
-}
-
 // Delete options
 if(get_option(RSTR_NAME)) {
 	delete_option(RSTR_NAME);
