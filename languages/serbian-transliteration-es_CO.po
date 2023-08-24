@@ -4,16 +4,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Transliteration &#8211; WordPress "
 "Transliteration - Stable (latest release)\n"
-"POT-Creation-Date: 2022-05-23 12:23+0200\n"
-"PO-Revision-Date: 2022-05-23 12:24+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2023-08-24 13:47+0200\n"
+"PO-Revision-Date: 2023-08-24 13:47+0200\n"
+"Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: es_CO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: serbian-transliteration.php\n"
@@ -24,14 +24,14 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: inc/Functions.php:283 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:642
-#: inc/Settings.php:1059 inc/Shortcodes.php:38
+#: inc/Functions.php:283 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:643
+#: inc/Settings.php:1060 inc/Shortcodes.php:38
 #: inc/settings/content/php-functions.php:113
 msgid "Cyrillic"
 msgstr "Cirílico"
 
-#: inc/Functions.php:284 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:643
-#: inc/Settings.php:1058 inc/Shortcodes.php:39
+#: inc/Functions.php:284 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:644
+#: inc/Settings.php:1059 inc/Shortcodes.php:39
 #: inc/settings/content/php-functions.php:118
 msgid "Latin"
 msgstr "Latíno"
@@ -43,7 +43,7 @@ msgid ""
 "\"%5$s\" or \"%6$s\""
 msgstr ""
 
-#: inc/Init.php:332 inc/Menu.php:22 inc/Settings.php:215 inc/Settings.php:235
+#: inc/Init.php:332 inc/Menu.php:22 inc/Settings.php:216 inc/Settings.php:236
 msgid "Transliteration"
 msgstr "Transliteración"
 
@@ -88,27 +88,53 @@ msgstr ""
 msgid "Note that the white space around them will be cleared."
 msgstr ""
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 #, php-format
 msgid ""
 "You have been using <b> %1$s </b> plugin for a while. We hope you liked it!"
 msgstr ""
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 msgid ""
 "Please give us a quick rating, it works as a boost for us to keep working on "
 "the plugin!"
 msgstr ""
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 msgid "Rate Now!"
 msgstr ""
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 msgid "I've already done that!"
 msgstr ""
 
-#: inc/OS.php:368
+#: inc/Notice.php:141
+#, php-format
+msgid "Hey! It's been a while since you used the plugin for <b> %1$s </b>"
+msgstr ""
+
+#: inc/Notice.php:144
+#, php-format
+msgid ""
+"Hey there! I'm so glad to hear you like the plugin. I poured a lot of time "
+"and love into it to ensure your site runs smoothly. If you're feeling "
+"generous, how about %s for the effort? 😊"
+msgstr ""
+
+#: inc/Notice.php:148
+msgid "buying me a coffee"
+msgstr ""
+
+#: inc/Notice.php:152
+#, php-format
+msgid "Or just %s forever."
+msgstr ""
+
+#: inc/Notice.php:156
+msgid "hide this message"
+msgstr ""
+
+#: inc/OS.php:367
 msgid "undefined"
 msgstr ""
 
@@ -207,90 +233,90 @@ msgstr ""
 "%1$s no se puede ejecutar en versiones de WordPress anteriores a %2$s. Por "
 "favor, actualiza tu instalación de WordPress."
 
-#: inc/Settings.php:103
+#: inc/Settings.php:104
 msgid "PLEASE UPDATE PLUGIN SETTINGS"
 msgstr ""
 
-#: inc/Settings.php:104
+#: inc/Settings.php:105
 msgid ""
 "Carefully review the transliteration plugin settings and adjust how it fits "
 "your WordPress installation. It is important that every time you change the "
 "settings, you test the parts of the site that are affected by this plugin."
 msgstr ""
 
-#: inc/Settings.php:114
+#: inc/Settings.php:115
 msgid "Settings saved."
 msgstr "Configuración Salvada."
 
-#: inc/Settings.php:153
+#: inc/Settings.php:154
 msgid "Settings"
 msgstr "Ajustes"
 
-#: inc/Settings.php:154 inc/settings/content.php:95
+#: inc/Settings.php:155 inc/settings/content.php:95
 msgid "Permalink Tool"
 msgstr ""
 
-#: inc/Settings.php:164
+#: inc/Settings.php:165
 msgid "Shortcodes"
 msgstr "Shortcodes"
 
-#: inc/Settings.php:165
+#: inc/Settings.php:166
 msgid "PHP Functions"
 msgstr ""
 
-#: inc/Settings.php:166
+#: inc/Settings.php:167
 msgid "5 stars?"
 msgstr ""
 
-#: inc/Settings.php:193 inc/settings/content/permalink-tool.php:48
+#: inc/Settings.php:194 inc/settings/content/permalink-tool.php:48
 msgid ""
 "Please wait! Do not close the window or leave the page until this operation "
 "is completed!"
 msgstr ""
 
-#: inc/Settings.php:194
+#: inc/Settings.php:195
 msgid "DONE!!!"
 msgstr ""
 
-#: inc/Settings.php:195
+#: inc/Settings.php:196
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: inc/Settings.php:214
+#: inc/Settings.php:215
 msgid "Transliteration Settings"
 msgstr "Ajustes de transliteración"
 
-#: inc/Settings.php:258
+#: inc/Settings.php:259
 msgid "Global Settings"
 msgstr "Ajustes globales"
 
-#: inc/Settings.php:265
+#: inc/Settings.php:266
 msgid "My site is"
 msgstr ""
 
-#: inc/Settings.php:273
+#: inc/Settings.php:274
 msgid "Transliteration Mode"
 msgstr "Modo de transliteración"
 
-#: inc/Settings.php:281
+#: inc/Settings.php:282
 msgid "First visit mode"
 msgstr ""
 
-#: inc/Settings.php:289
+#: inc/Settings.php:290
 msgid "Language scheme"
 msgstr ""
 
-#: inc/Settings.php:297
+#: inc/Settings.php:298
 msgid "Plugin Mode"
 msgstr "Modo plugin"
 
-#: inc/Settings.php:306
+#: inc/Settings.php:307
 #, fuzzy
 #| msgid "Transliteration disabled"
 msgid "Transliteration Filters"
 msgstr "Transliteración desactivada"
 
-#: inc/Settings.php:315
+#: inc/Settings.php:316
 msgid ""
 "Exclude Latin words that you do not want to be transliterated to the "
 "Cyrillic."
@@ -298,7 +324,7 @@ msgstr ""
 "Excluir las palabras del alfabeto latino que no quieras que se transliteren "
 "al cirílico."
 
-#: inc/Settings.php:323
+#: inc/Settings.php:324
 msgid ""
 "Exclude Cyrillic words that you do not want to be transliterated to the "
 "Latin."
@@ -306,117 +332,117 @@ msgstr ""
 "Excluir las palabras del alfabeto cirílico que no quieras que se "
 "transliteren al alfabeto latino."
 
-#: inc/Settings.php:335
+#: inc/Settings.php:336
 #, fuzzy
 #| msgid "General Settings"
 msgid "Special Settings"
 msgstr "Ajustes Generales"
 
-#: inc/Settings.php:342
+#: inc/Settings.php:343
 msgid "Enable cache support"
 msgstr ""
 
-#: inc/Settings.php:350
+#: inc/Settings.php:351
 #, fuzzy
 #| msgid "Forced transliteration (everything)"
 msgid "Force widget transliteration"
 msgstr "Transliteración forzada (todo)"
 
-#: inc/Settings.php:358
+#: inc/Settings.php:359
 #, fuzzy
 #| msgid "Enable search transliteration"
 msgid "Force e-mail transliteration"
 msgstr "Activar la transliteración de la búsqueda"
 
-#: inc/Settings.php:366
+#: inc/Settings.php:367
 #, fuzzy
 #| msgid "Force transliteration permalinks to latin"
 msgid "Force transliteration for AJAX calls"
 msgstr "Forzar la transliteración de enlaces permanentes al alfabeto latino"
 
-#: inc/Settings.php:366
+#: inc/Settings.php:367
 msgid "EXPERIMENTAL"
 msgstr ""
 
-#: inc/Settings.php:378
+#: inc/Settings.php:379
 msgid "WP Admin"
 msgstr "WP admin"
 
-#: inc/Settings.php:385
+#: inc/Settings.php:386
 #, fuzzy
 #| msgid "Disabled inside wp-admin"
 msgid "Disable transliteration inside wp-admin"
 msgstr "Desactivar dentro de wp-admin"
 
-#: inc/Settings.php:393
+#: inc/Settings.php:394
 msgid "Allow Cyrillic Usernames"
 msgstr "Permitir nombre de usuario cirílicos"
 
-#: inc/Settings.php:401
+#: inc/Settings.php:402
 msgid "Force transliteration permalinks to latin"
 msgstr "Forzar la transliteración de enlaces permanentes al alfabeto latino"
 
-#: inc/Settings.php:413
+#: inc/Settings.php:414
 #, fuzzy
 #| msgid "General Settings"
 msgid "Media Settings"
 msgstr "Ajustes Generales"
 
-#: inc/Settings.php:420
+#: inc/Settings.php:421
 msgid "Transliterate filenames to latin"
 msgstr "Transliterar los nombres de archivos al alfabeto latino"
 
-#: inc/Settings.php:428
+#: inc/Settings.php:429
 msgid "Filename delimiter"
 msgstr ""
 
-#: inc/Settings.php:448
+#: inc/Settings.php:449
 msgid "WordPress search"
 msgstr "Búsqueda de WordPress"
 
-#: inc/Settings.php:455
+#: inc/Settings.php:456
 msgid "Enable search transliteration"
 msgstr "Activar la transliteración de la búsqueda"
 
-#: inc/Settings.php:464
+#: inc/Settings.php:465
 msgid "Fix Diacritics"
 msgstr ""
 
-#: inc/Settings.php:473
+#: inc/Settings.php:474
 #, fuzzy
 #| msgid "Search mode"
 msgid "Search Mode"
 msgstr "Modo de búsqueda"
 
-#: inc/Settings.php:485
+#: inc/Settings.php:486
 msgid "SEO Settings"
 msgstr "configuración SEO"
 
-#: inc/Settings.php:492
+#: inc/Settings.php:493
 #, fuzzy
 #| msgid "Enable search transliteration"
 msgid "Enable alternet links"
 msgstr "Activar la transliteración de la búsqueda"
 
-#: inc/Settings.php:500
+#: inc/Settings.php:501
 msgid "Parameter URL selector"
 msgstr ""
 
-#: inc/Settings.php:508
+#: inc/Settings.php:509
 #, fuzzy
 #| msgid "Transliteration"
 msgid "RSS transliteration"
 msgstr "Transliteración"
 
-#: inc/Settings.php:518
+#: inc/Settings.php:519
 msgid "Misc."
 msgstr ""
 
-#: inc/Settings.php:525
+#: inc/Settings.php:526
 msgid "Enable body class"
 msgstr ""
 
-#: inc/Settings.php:574
+#: inc/Settings.php:575
 msgid ""
 "This setting determines the mode of operation for the Serbian "
 "Transliteration plugin."
@@ -424,7 +450,7 @@ msgstr ""
 "Este ajuste determina el modo de funcionamiento del plugin de "
 "transliteración serbio."
 
-#: inc/Settings.php:575
+#: inc/Settings.php:576
 msgid ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
@@ -432,7 +458,7 @@ msgstr ""
 "Elige cuidadosamente la opción que sea mejor para tu sitio y el plugin "
 "establecerá automáticamente todo lo que necesitas para un rendimiento óptimo."
 
-#: inc/Settings.php:580
+#: inc/Settings.php:581
 msgid ""
 "This setting determines the search mode within the WordPress core depending "
 "on the type of language located in the database."
@@ -440,7 +466,7 @@ msgstr ""
 "Este ajuste determina el modo de búsqueda dentro del núcleo de WordPress "
 "según el tipo de idioma ubicado en la base de datos."
 
-#: inc/Settings.php:581
+#: inc/Settings.php:582
 msgid ""
 "The search type setting is mostly experimental and you need to test each "
 "variant so you can get the best result you need."
@@ -448,33 +474,33 @@ msgstr ""
 "Los ajustes del tipo de búsqueda son principalmente experimentales y debes "
 "probar cada variante para obtener el mejor resultado que necesitas."
 
-#: inc/Settings.php:586
+#: inc/Settings.php:587
 msgid ""
 "Our plugin also has special SEO options that are very important for your "
 "project."
 msgstr ""
 
-#: inc/Settings.php:591
+#: inc/Settings.php:592
 msgid "These settings apply to the administrative part."
 msgstr ""
 
-#: inc/Settings.php:596
+#: inc/Settings.php:597
 msgid ""
 "These are special settings that can enhance transliteration and are used "
 "only if you need them."
 msgstr ""
 
-#: inc/Settings.php:601
+#: inc/Settings.php:602
 msgid "Upload, view and control media and files."
 msgstr ""
 
-#: inc/Settings.php:606
+#: inc/Settings.php:607
 msgid ""
 "Various interesting settings that can be used in the development of your "
 "project."
 msgstr ""
 
-#: inc/Settings.php:632
+#: inc/Settings.php:633
 msgid ""
 "Forced transliteration can sometimes cause problems if Latin is translated "
 "into Cyrillic in pages and posts. To this combination must be approached "
@@ -484,22 +510,22 @@ msgstr ""
 "alfabeto latino al cirílico en páginas y entradas. A esta combinación hay "
 "que abordarla experimentalmente."
 
-#: inc/Settings.php:647 inc/Transliteration.php:32
+#: inc/Settings.php:648 inc/Transliteration.php:32
 msgid "Arabic"
 msgstr "Árabe"
 
-#: inc/Settings.php:649 inc/Transliteration.php:31
+#: inc/Settings.php:650 inc/Transliteration.php:31
 msgid "Armenian"
 msgstr "Armenio"
 
-#: inc/Settings.php:664
+#: inc/Settings.php:665
 msgid ""
 "Define whether your primary alphabet on the site is Latin or Cyrillic. If "
 "the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then "
 "choose Latin. This option is crucial for the plugin to work properly."
 msgstr ""
 
-#: inc/Settings.php:687
+#: inc/Settings.php:688
 msgid ""
 "This option determines the global transliteration of your web site. If you "
 "do not want to transliterate the entire website and use this plugin for "
@@ -507,11 +533,11 @@ msgid ""
 "functionality of short codes and tags."
 msgstr ""
 
-#: inc/Settings.php:695 inc/Settings.php:1017
+#: inc/Settings.php:696 inc/Settings.php:1018
 msgid "Automatical (recommended)"
 msgstr ""
 
-#: inc/Settings.php:717
+#: inc/Settings.php:718
 msgid ""
 "This option defines the language script. Automatic script detection is the "
 "best way but if you are using a WordPress installation in a language that "
@@ -519,96 +545,96 @@ msgid ""
 "script you want the transliteration to be performed."
 msgstr ""
 
-#: inc/Settings.php:728
+#: inc/Settings.php:729
 msgid "Exclude filters you don't need (optional)"
 msgstr ""
 
-#: inc/Settings.php:734
+#: inc/Settings.php:735
 msgid "Select the transliteration filters you want to exclude."
 msgstr ""
 
-#: inc/Settings.php:735
+#: inc/Settings.php:736
 msgid ""
 "The filters you select here will not be transliterated (these filters do not "
 "work on forced transliteration)."
 msgstr ""
 
-#: inc/Settings.php:747
+#: inc/Settings.php:748
 msgid "TIPS & TRICKS:"
 msgstr ""
 
-#: inc/Settings.php:748
+#: inc/Settings.php:749
 msgid "You can find details about some of the listed filters in this article:"
 msgstr ""
 
-#: inc/Settings.php:757
+#: inc/Settings.php:758
 #, php-format
 msgid ""
 "Since you are already a WooCommerce user, you also can see the following "
 "documentation: %s"
 msgstr ""
 
-#: inc/Settings.php:777 inc/Settings.php:801 inc/Settings.php:851
-#: inc/Settings.php:875 inc/Settings.php:895 inc/Settings.php:915
-#: inc/Settings.php:956 inc/Settings.php:976 inc/Settings.php:997
-#: inc/Settings.php:1037 inc/Settings.php:1102 inc/Settings.php:1121
-#: inc/Settings.php:1140
-msgid "Yes"
-msgstr "Sí"
-
 #: inc/Settings.php:778 inc/Settings.php:802 inc/Settings.php:852
 #: inc/Settings.php:876 inc/Settings.php:896 inc/Settings.php:916
 #: inc/Settings.php:957 inc/Settings.php:977 inc/Settings.php:998
 #: inc/Settings.php:1038 inc/Settings.php:1103 inc/Settings.php:1122
 #: inc/Settings.php:1141
+msgid "Yes"
+msgstr "Sí"
+
+#: inc/Settings.php:779 inc/Settings.php:803 inc/Settings.php:853
+#: inc/Settings.php:877 inc/Settings.php:897 inc/Settings.php:917
+#: inc/Settings.php:958 inc/Settings.php:978 inc/Settings.php:999
+#: inc/Settings.php:1039 inc/Settings.php:1104 inc/Settings.php:1123
+#: inc/Settings.php:1142
 msgid "No"
 msgstr "No"
 
-#: inc/Settings.php:813
+#: inc/Settings.php:814
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr ""
 "Actívalo si quieres convertir los nombres de archivos del alfabeto cirílico "
 "al latino."
 
-#: inc/Settings.php:823
+#: inc/Settings.php:824
 msgid "hyphen (default)"
 msgstr ""
 
-#: inc/Settings.php:824
+#: inc/Settings.php:825
 msgid "underscore"
 msgstr ""
 
-#: inc/Settings.php:825
+#: inc/Settings.php:826
 msgid "dot"
 msgstr ""
 
-#: inc/Settings.php:826
+#: inc/Settings.php:827
 msgid "tilde"
 msgstr ""
 
-#: inc/Settings.php:827
+#: inc/Settings.php:828
 msgid "vartical bar"
 msgstr ""
 
-#: inc/Settings.php:828
+#: inc/Settings.php:829
 msgid "asterisk"
 msgstr ""
 
-#: inc/Settings.php:840
+#: inc/Settings.php:841
 msgid "Filename delimiter, example:"
 msgstr ""
 
-#: inc/Settings.php:840
+#: inc/Settings.php:841
 msgid "my-upload-file.jpg"
 msgstr ""
 
-#: inc/Settings.php:864
+#: inc/Settings.php:865
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr ""
 "Actívalo si quieres forzar los enlaces permanentes del alfabeto cirílico al "
 "latino."
 
-#: inc/Settings.php:866
+#: inc/Settings.php:867
 #, php-format
 msgid ""
 "You don't need to force transliteration permalinks to latin because your "
@@ -618,23 +644,23 @@ msgstr ""
 "alfabeto latino porque tu idioma local actual está establecido en %s, lo que "
 "cambiará automáticamente los enlaces permanentes."
 
-#: inc/Settings.php:888
+#: inc/Settings.php:889
 msgid ""
 "This option forces the widget to transliterate. There may be some unusual "
 "behaviour in the rare cases."
 msgstr ""
 
-#: inc/Settings.php:908
+#: inc/Settings.php:909
 msgid "This option transliterate the RSS feed."
 msgstr ""
 
-#: inc/Settings.php:928
+#: inc/Settings.php:929
 msgid ""
 "If you have a problem caching your pages, our plugin solves this problem by "
 "clearing the cache when changing the language script."
 msgstr ""
 
-#: inc/Settings.php:938 inc/Settings.php:948
+#: inc/Settings.php:939 inc/Settings.php:949
 #, php-format
 msgid ""
 "Separate words, phrases, names and expressions with the sign %s or put it in "
@@ -643,73 +669,73 @@ msgstr ""
 "Separar palabras, frases, nombres y expresiones con el signo %s o colócalos "
 "en una nueva fila. HTML no está permitido."
 
-#: inc/Settings.php:968
+#: inc/Settings.php:969
 msgid "Allows to create users with usernames containing Cyrillic characters."
 msgstr ""
 "Permite crear usuarios con nombres de usuario que contengan caracteres "
 "cirílicos."
 
-#: inc/Settings.php:988
+#: inc/Settings.php:989
 msgid "Approve if you want transliteration for the search field."
 msgstr "Apruébalo si quieres la transliteración para el campo de búsqueda."
 
-#: inc/Settings.php:1009
+#: inc/Settings.php:1010
 msgid "Try to fix the diacritics in the search field."
 msgstr ""
 
-#: inc/Settings.php:1018
+#: inc/Settings.php:1019
 msgid "Based on the plugin mode"
 msgstr ""
 
-#: inc/Settings.php:1029
+#: inc/Settings.php:1030
 msgid ""
 "The search has two working modes. Choose the one that works best with your "
 "search."
 msgstr ""
 
-#: inc/Settings.php:1049
+#: inc/Settings.php:1050
 msgid ""
 "Tell Google, Bing, Yandex and other search engines about transliterated "
 "versions of your page."
 msgstr ""
 
-#: inc/Settings.php:1057
+#: inc/Settings.php:1058
 #, fuzzy
 #| msgid "Transliteration Mode"
 msgid "Auto (Based on Transliteration Mode)"
 msgstr "Modo de transliteración"
 
-#: inc/Settings.php:1070
+#: inc/Settings.php:1071
 msgid ""
 "This option determines the type of language script that the visitors sees "
 "when they first time come to your site."
 msgstr ""
 
-#: inc/Settings.php:1078
+#: inc/Settings.php:1079
 msgid "(safe)"
 msgstr ""
 
-#: inc/Settings.php:1079
+#: inc/Settings.php:1080
 msgid "(standard)"
 msgstr ""
 
-#: inc/Settings.php:1080 inc/Settings.php:1081 inc/Settings.php:1082
-#: inc/Settings.php:1083 inc/Settings.php:1084
+#: inc/Settings.php:1081 inc/Settings.php:1082 inc/Settings.php:1083
+#: inc/Settings.php:1084 inc/Settings.php:1085
 msgid "(optional)"
 msgstr "(opcional)"
 
-#: inc/Settings.php:1095
+#: inc/Settings.php:1096
 msgid ""
 "This option dictates which URL parameter will be used to change the language."
 msgstr ""
 
-#: inc/Settings.php:1114
+#: inc/Settings.php:1115
 msgid ""
 "This option adds CSS classes to your body HTML tag. These CSS classes vary "
 "depending on the language script."
 msgstr ""
 
-#: inc/Settings.php:1133
+#: inc/Settings.php:1134
 #, fuzzy
 #| msgid "Enable if you want to force cyrillic permalinks to latin."
 msgid ""
@@ -718,7 +744,7 @@ msgstr ""
 "Actívalo si quieres forzar los enlaces permanentes del alfabeto cirílico al "
 "latino."
 
-#: inc/Settings.php:1152
+#: inc/Settings.php:1153
 #, php-format
 msgid ""
 "Enable this feature if you want to force transliteration of AJAX calls. If "
@@ -807,198 +833,212 @@ msgid ""
 "WooCommerce)"
 msgstr ""
 
-#: inc/Utilities.php:85
+#: inc/Utilities.php:67
+msgid "Dev Mode (Only for developers and testers)"
+msgstr ""
+
+#: inc/Utilities.php:91
 msgid "Transliteration disabled"
 msgstr "Transliteración desactivada"
 
-#: inc/Utilities.php:86 inc/settings/content/shortcodes.php:27
+#: inc/Utilities.php:92 inc/settings/content/shortcodes.php:27
 #: inc/settings/content/tags.php:25
 msgid "Cyrillic to Latin"
 msgstr "Del alfabeto cirílico al latino"
 
-#: inc/Utilities.php:87 inc/settings/content/shortcodes.php:30
+#: inc/Utilities.php:93 inc/settings/content/shortcodes.php:30
 #: inc/settings/content/tags.php:28
 msgid "Latin to Cyrillic"
 msgstr "Del alfabeto latino al cirílico"
 
-#: inc/Utilities.php:93
+#: inc/Utilities.php:99
 #, fuzzy
 #| msgid "Cyrillic to Latin"
 msgid "Arabic to Latin"
 msgstr "Del alfabeto cirílico al latino"
 
-#: inc/Utilities.php:94
+#: inc/Utilities.php:100
 #, fuzzy
 #| msgid "Latin to Cyrillic"
 msgid "Latin to Arabic"
 msgstr "Del alfabeto latino al cirílico"
 
-#: inc/Utilities.php:96
+#: inc/Utilities.php:102
 #, fuzzy
 #| msgid "Cyrillic to Latin"
 msgid "Armenian to Latin"
 msgstr "Del alfabeto cirílico al latino"
 
-#: inc/Utilities.php:97
+#: inc/Utilities.php:103
 #, fuzzy
 #| msgid "Latin to Cyrillic"
 msgid "Latin to Armenian"
 msgstr "Del alfabeto latino al cirílico"
 
-#: inc/Utilities.php:777 inc/Utilities.php:778
+#: inc/Utilities.php:874 inc/Utilities.php:875
 msgctxt "Language script"
 msgid "Script"
 msgstr ""
 
-#: inc/Utilities.php:779
+#: inc/Utilities.php:876
 msgid "Search by Script"
 msgstr ""
 
-#: inc/Utilities.php:780
+#: inc/Utilities.php:877
 msgid "All Scripts"
 msgstr ""
 
-#: inc/Utilities.php:781
+#: inc/Utilities.php:878
 msgid "Parent Script"
 msgstr ""
 
-#: inc/Utilities.php:782
+#: inc/Utilities.php:879
 msgid "Parent Script:"
 msgstr ""
 
-#: inc/Utilities.php:783
+#: inc/Utilities.php:880
 msgid "Edit Script"
 msgstr ""
 
-#: inc/Utilities.php:784
+#: inc/Utilities.php:881
 msgid "Update Script"
 msgstr ""
 
-#: inc/Utilities.php:785
+#: inc/Utilities.php:882
 msgid "Add New Script"
 msgstr ""
 
-#: inc/Utilities.php:786
+#: inc/Utilities.php:883
 msgid "New Script Name"
 msgstr ""
 
-#: inc/Utilities.php:787
+#: inc/Utilities.php:884
 msgid "Script"
 msgstr ""
 
-#: inc/Utilities.php:880
+#: inc/Utilities.php:977
 msgid " degrees "
 msgstr ""
 
-#: inc/Utilities.php:882
+#: inc/Utilities.php:979
 msgid " divided by "
 msgstr ""
 
-#: inc/Utilities.php:882
+#: inc/Utilities.php:979
 msgid " times "
 msgstr ""
 
-#: inc/Utilities.php:882
+#: inc/Utilities.php:979
 msgid " plus-minus "
 msgstr ""
 
-#: inc/Utilities.php:882
+#: inc/Utilities.php:979
 msgid " square root "
 msgstr ""
 
-#: inc/Utilities.php:883
+#: inc/Utilities.php:980
 msgid " infinity "
 msgstr ""
 
-#: inc/Utilities.php:883
+#: inc/Utilities.php:980
 msgid " almost equal to "
 msgstr ""
 
-#: inc/Utilities.php:883
+#: inc/Utilities.php:980
 msgid " not equal to "
 msgstr ""
 
-#: inc/Utilities.php:884
+#: inc/Utilities.php:981
 msgid " identical to "
 msgstr ""
 
-#: inc/Utilities.php:884
+#: inc/Utilities.php:981
 msgid " less than or equal to "
 msgstr ""
 
-#: inc/Utilities.php:884
+#: inc/Utilities.php:981
 msgid " greater than or equal to "
 msgstr ""
 
-#: inc/Utilities.php:885
+#: inc/Utilities.php:982
 msgid " left "
 msgstr ""
 
-#: inc/Utilities.php:885
+#: inc/Utilities.php:982
 msgid " right "
 msgstr ""
 
-#: inc/Utilities.php:885
+#: inc/Utilities.php:982
 msgid " up "
 msgstr ""
 
-#: inc/Utilities.php:885
+#: inc/Utilities.php:982
 msgid " down "
 msgstr ""
 
-#: inc/Utilities.php:886
+#: inc/Utilities.php:983
 msgid " left and right "
 msgstr ""
 
-#: inc/Utilities.php:886
+#: inc/Utilities.php:983
 msgid " up and down "
 msgstr ""
 
-#: inc/Utilities.php:886
+#: inc/Utilities.php:983
 msgid " care of "
 msgstr ""
 
-#: inc/Utilities.php:887
+#: inc/Utilities.php:984
 msgid " estimated "
 msgstr ""
 
-#: inc/Utilities.php:887
+#: inc/Utilities.php:984
 msgid " ohm "
 msgstr ""
 
-#: inc/Utilities.php:887
+#: inc/Utilities.php:984
 msgid " female "
 msgstr ""
 
-#: inc/Utilities.php:887
+#: inc/Utilities.php:984
 msgid " male "
 msgstr ""
 
-#: inc/Utilities.php:888
+#: inc/Utilities.php:985
 msgid " Copyright "
 msgstr ""
 
-#: inc/Utilities.php:888
+#: inc/Utilities.php:985
 msgid " Registered "
 msgstr ""
 
-#: inc/Utilities.php:888
+#: inc/Utilities.php:985
 msgid " Trademark "
 msgstr ""
 
-#: inc/WP_CLI.php:87
+#: inc/WP_CLI.php:52
+msgid ""
+"Please wait! Do not close the terminal or terminate the script until this "
+"operation is completed!"
+msgstr ""
+
+#: inc/WP_CLI.php:53
+msgid "Progress:"
+msgstr "En progreso:"
+
+#: inc/WP_CLI.php:91
 #, php-format
 msgid "Updated page ID %1$d, (%2$s) at URL: %3$s"
 msgstr ""
 
-#: inc/WP_CLI.php:97
+#: inc/WP_CLI.php:104
 #, php-format
 msgid "%d permalink was successfully transliterated."
 msgid_plural "%d permalinks were successfully transliterated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/WP_CLI.php:99
+#: inc/WP_CLI.php:106
 msgid "No changes to the permalink have been made."
 msgstr ""
 
@@ -1042,16 +1082,16 @@ msgstr "Depurar"
 msgid "Credits & Info"
 msgstr ""
 
-#: inc/settings/content/credits.php:45
+#: inc/settings/content/credits.php:47
 msgid "Credits"
 msgstr "Créditos"
 
-#: inc/settings/content/credits.php:49
+#: inc/settings/content/credits.php:51
 #, php-format
 msgid "This plugin is made by %1$s"
 msgstr ""
 
-#: inc/settings/content/credits.php:53
+#: inc/settings/content/credits.php:55
 msgid ""
 "This is a light weight, simple and easy plugin with which you can "
 "transliterate your WordPress installation from Cyrillic to Latin and vice "
@@ -1059,37 +1099,37 @@ msgid ""
 "shortcodes that you can use to partially transliterate parts of the content."
 msgstr ""
 
-#: inc/settings/content/credits.php:68
+#: inc/settings/content/credits.php:70
 msgid "Sponsors of this plugin:"
 msgstr ""
 
-#: inc/settings/content/credits.php:72
+#: inc/settings/content/credits.php:74
 #, php-format
 msgid ""
 "If you want to help develop this plugin and be one of the sponsors, please "
 "contact us at: %s"
 msgstr ""
 
-#: inc/settings/content/credits.php:96
+#: inc/settings/content/credits.php:98
 msgid "Special thanks to the contributors in the development of this plugin:"
 msgstr ""
 
-#: inc/settings/content/credits.php:102
+#: inc/settings/content/credits.php:104
 msgid "Copyright"
 msgstr "Copyright"
 
-#: inc/settings/content/credits.php:106
+#: inc/settings/content/credits.php:108
 #, php-format
 msgid "Copyright &copy; 2020 - %1$d %2$s by %3$s. All Right Reserved."
 msgstr ""
 
-#: inc/settings/content/credits.php:108
+#: inc/settings/content/credits.php:110
 #, fuzzy
 #| msgid "Transliteration - WordPress Transliteration"
 msgid "Transliterator – WordPress Transliteration"
 msgstr "Transliteration - WordPress Transliteration"
 
-#: inc/settings/content/credits.php:113
+#: inc/settings/content/credits.php:115
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -1097,45 +1137,45 @@ msgid ""
 "any later version."
 msgstr ""
 
-#: inc/settings/content/credits.php:114
+#: inc/settings/content/credits.php:116
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE."
 msgstr ""
 
-#: inc/settings/content/credits.php:115
+#: inc/settings/content/credits.php:117
 msgid "See the GNU General Public License for more details."
 msgstr ""
 
-#: inc/settings/content/credits.php:116
+#: inc/settings/content/credits.php:118
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
 msgstr ""
 
-#: inc/settings/content/credits.php:118 inc/settings/sidebar.php:61
+#: inc/settings/content/credits.php:120 inc/settings/sidebar.php:61
 msgid "Donations"
 msgstr "Donaciones"
 
-#: inc/settings/content/credits.php:119 inc/settings/sidebar.php:63
-#, php-format
+#: inc/settings/content/credits.php:121 inc/settings/sidebar.php:63
+#, no-php-format
 msgid ""
 "This plugin is 100% free. If you want to buy us one coffee, beer or in "
 "general help the development of this plugin through a monetary donation, you "
 "can do it in the following ways:"
 msgstr ""
 
-#: inc/settings/content/credits.php:121 inc/settings/sidebar.php:65
+#: inc/settings/content/credits.php:123 inc/settings/sidebar.php:65
 msgid "PayPal"
 msgstr "PayPal"
 
-#: inc/settings/content/credits.php:122 inc/settings/sidebar.php:66
+#: inc/settings/content/credits.php:124 inc/settings/sidebar.php:66
 msgid "From Serbia"
 msgstr ""
 
-#: inc/settings/content/credits.php:122 inc/settings/sidebar.php:66
+#: inc/settings/content/credits.php:124 inc/settings/sidebar.php:66
 msgid "Mobi Bank"
 msgstr ""
 
@@ -1623,11 +1663,20 @@ msgstr ""
 msgid "join our team"
 msgstr "unete a nuestro equipo"
 
+#: inc/settings/sidebar.php:112
+#, php-format
+msgid "If you want to help further plugin development, you can also %s."
+msgstr "Si quieres ayudar en el desarrollo del plugin, también puedes %s."
+
+#: inc/settings/sidebar.php:112
+msgid "donate something for effort"
+msgstr "dona algo por el esfuerzo"
+
 #. Plugin Name of the plugin/theme
 #, fuzzy
-#| msgid "Transliteration - WordPress Transliteration"
-msgid "Transliterator - WordPress Transliteration"
-msgstr "Transliteration - WordPress Transliteration"
+#| msgid "Transliteration"
+msgid "Transliterator"
+msgstr "Transliteración"
 
 #. Plugin URI of the plugin/theme
 msgid "https://wordpress.org/plugins/serbian-transliteration/"
@@ -1649,6 +1698,11 @@ msgstr ""
 msgid "https://profiles.wordpress.org/ivijanstefan/"
 msgstr ""
 
+#, fuzzy
+#~| msgid "Transliteration - WordPress Transliteration"
+#~ msgid "Transliterator - WordPress Transliteration"
+#~ msgstr "Transliteration - WordPress Transliteration"
+
 #~ msgid "Select the search mode according to your WordPress setup."
 #~ msgstr ""
 #~ "Selecciona el modo de búsqueda de acuerdo a tus ajustes de WordPress."
@@ -1658,12 +1712,6 @@ msgstr ""
 
 #~ msgid "Enable Latin search on the Cyrillic site"
 #~ msgstr "Activar la búsqueda en alfabeto latino en el sitio en cirílico"
-
-#~ msgid "donate something for effort"
-#~ msgstr "dona algo por el esfuerzo"
-
-#~ msgid "If you want to help further plugin development, you can also %s."
-#~ msgstr "Si quieres ayudar en el desarrollo del plugin, también puedes %s."
 
 #~ msgid "https://infinitumform.com/"
 #~ msgstr "https://infinitumform.com/"

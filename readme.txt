@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 1.9.11
+Stable tag: 1.10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -36,7 +36,7 @@ This plugin provides a streamlined and straightforward solution for transliterat
  &#9989; Transcription mode selection
  &#9989; Diacritical support (currently for the Serbian language)
  &#9989; Support for special characters
- &#9989; Support [PHP version 7.4.8](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+ &#9989; Support [PHP version 8.1](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
  &#9989; Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 
 = LANGUAGE SUPPORT =
@@ -72,7 +72,7 @@ We also do special compatible functions with:
  &#9989; [Themify](https://themify.me/)
  &#9989; [Divi](https://www.elegantthemes.com/gallery/divi/) (Theme & Builder)
 
-** It's crucial to understand ** that while our plugin is compatible with most others, the sheer diversity of WordPress installations and the thousands of available plugins mean there's a small chance of encountering conflicts. We strive to ensure maximum compatibility, but given the vast number of variables, we can't guarantee flawless operation in all instances. If you experience issues, they may stem from incompatibility with other plugins. We encourage you to reach out to us or the respective plugin authors for resolution. Regularly updating all your plugins and your WordPress installation is the most common solution for most problems.
+**It's crucial to understand** that while our plugin is compatible with most others, the sheer diversity of WordPress installations and the thousands of available plugins mean there's a small chance of encountering conflicts. We strive to ensure maximum compatibility, but given the vast number of variables, we can't guarantee flawless operation in all instances. If you experience issues, they may stem from incompatibility with other plugins. We encourage you to reach out to us or the respective plugin authors for resolution. Regularly updating all your plugins and your WordPress installation is the most common solution for most problems.
 
 This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
 
@@ -153,6 +153,14 @@ We also thought of PHP developers where we have enabled several useful functions
 9. Automated test
 
 == Changelog ==
+
+= 1.10.0 =
+* Improvement for Elementor builder
+* Improvement for Oxygen builder
+* Enhanced security
+* Improved textdomain for translations
+* Fixed bugs inside AJAX calls
+* Fixed UX
 
 = 1.9.11 =
 * Added suport for Oxygen builder
@@ -307,24 +315,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.9.11 =
-* Added suport for Oxygen builder
-
-= 1.9.10 =
-* Removed obsolete codes
-
-= 1.9.9 =
-* Improved caching
-* Support for WP version 6.3.x
-* Added support for ACF and ACF PRO
-* Fixed custom post type arguments
-
-= 1.9.8 =
-* Fixed a problem with the Elementor blank screen
-
-= 1.9.7 =
-* Fixed a problem with the Cyrillic version of the transliteration
-* Fixed issue with JSON transliteration
+= 1.10.0 =
+* Improvement for Elementor builder
+* Improvement for Oxygen builder
+* Enhanced security
+* Improved textdomain for translations
+* Fixed bugs inside AJAX calls
+* Fixed UX
 
 == Frequently Asked Questions ==
 
@@ -380,7 +377,7 @@ Inside your theme's `functions.php` you can define your own substitutions for ea
 
 Here's an example.
 
-`/**
+`/*
  * Modify conversion table for Serbian language.
  *
  * @param array $map Conversion map.

@@ -101,8 +101,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		if ( $pagenow == 'options-general.php' ) {
 			 printf(
 			 	'<div class="notice notice-warning is-dismissible">%s%s</div>',
-				sprintf('<h3>%s</h3>', __('PLEASE UPDATE PLUGIN SETTINGS', RSTR_NAME)),
-				sprintf('<p>%s</p>', __('Carefully review the transliteration plugin settings and adjust how it fits your WordPress installation. It is important that every time you change the settings, you test the parts of the site that are affected by this plugin.', RSTR_NAME))
+				sprintf('<h3>%s</h3>', __('PLEASE UPDATE PLUGIN SETTINGS', 'serbian-transliteration')),
+				sprintf('<p>%s</p>', __('Carefully review the transliteration plugin settings and adjust how it fits your WordPress installation. It is important that every time you change the settings, you test the parts of the site that are affected by this plugin.', 'serbian-transliteration'))
 			 );
 		}
 	}
@@ -112,7 +112,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		if ( $pagenow == 'options-general.php' ) {
 			 printf(
 			 	'<div class="notice notice-success is-dismissible">%s</div>',
-				sprintf('<p>%s</p>', __('Settings saved.', RSTR_NAME))
+				sprintf('<p>%s</p>', __('Settings saved.', 'serbian-transliteration'))
 			 );
 			 Serbian_Transliteration_DB_Cache::delete(RSTR_BASENAME . '_nonce_save');
 		}
@@ -151,8 +151,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	public function action_links( $links ) {
 
 		$links = array_merge( array(
-			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration' ) ) . '">' . __( 'Settings', RSTR_NAME ) . '</a>',
-			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=tools&action=permalink_tool' ) ) . '">' . __( 'Permalink Tool', RSTR_NAME ) . '</a>'
+			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration' ) ) . '">' . __( 'Settings', 'serbian-transliteration' ) . '</a>',
+			'<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=tools&action=permalink_tool' ) ) . '">' . __( 'Permalink Tool', 'serbian-transliteration' ) . '</a>'
 		), $links );
 
 		return $links;
@@ -162,9 +162,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	public function row_meta_links( $links, $file ) {
 		if ( RSTR_BASENAME == $file ) {
 			return array_merge( $links, array(
-				'rstr-shortcodes' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=documentation&action=shortcodes' ) ) . '">' . __( 'Shortcodes', RSTR_NAME ) . '</a>',
-				'rstr-functions' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=documentation&action=functions' ) ) . '">' . __( 'PHP Functions', RSTR_NAME ) . '</a>',
-				'rstr-review' => '<a href="https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post" target="_blank">' . __( '5 stars?', RSTR_NAME ) . '</a>'
+				'rstr-shortcodes' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=documentation&action=shortcodes' ) ) . '">' . __( 'Shortcodes', 'serbian-transliteration' ) . '</a>',
+				'rstr-functions' => '<a href="' . esc_url( admin_url( '/options-general.php?page=serbian-transliteration&tab=documentation&action=functions' ) ) . '">' . __( 'PHP Functions', 'serbian-transliteration' ) . '</a>',
+				'rstr-review' => '<a href="https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post" target="_blank">' . __( '5 stars?', 'serbian-transliteration' ) . '</a>'
 			));
 		}
 		return $links;
@@ -191,9 +191,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				'ajax' => admin_url( '/admin-ajax.php' ),
 				'prefix' => RSTR_PREFIX,
 				'label' => array(
-					'progress_loading' => __('Please wait! Do not close the window or leave the page until this operation is completed!', RSTR_NAME),
-					'done' => __('DONE!!!', RSTR_NAME),
-					'loading' => __('Loading...', RSTR_NAME)
+					'progress_loading' => __('Please wait! Do not close the window or leave the page until this operation is completed!', 'serbian-transliteration'),
+					'done' => __('DONE!!!', 'serbian-transliteration'),
+					'loading' => __('Loading...', 'serbian-transliteration')
 				)
 			)
 		);
@@ -212,8 +212,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
     {
         // This page will be under "Settings"
         $this->add_options_page(
-            __('Transliteration Settings', RSTR_NAME),
-            __('Transliteration', RSTR_NAME),
+            __('Transliteration Settings', 'serbian-transliteration'),
+            __('Transliteration', 'serbian-transliteration'),
             'manage_options',
             RSTR_NAME,
             'create_admin_page'
@@ -233,7 +233,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
         ?>
         <div class="wrap" id="<?php echo RSTR_NAME; ?>-settings">
-            <h1><img src="<?php echo RSTR_ASSETS . '/img/icon-animated-24x24.gif'; ?>" /> <?php _e('Transliteration', RSTR_NAME); ?></h1>
+            <h1><img src="<?php echo RSTR_ASSETS . '/img/icon-animated-24x24.gif'; ?>" /> <?php _e('Transliteration', 'serbian-transliteration'); ?></h1>
 			<?php do_action('rstr/settings/content', $this); ?>
         </div>
         <?php
@@ -256,14 +256,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 			$this->add_settings_section(
 				RSTR_NAME . '-global', // ID
-				__('Global Settings', RSTR_NAME), // Title
+				__('Global Settings', 'serbian-transliteration'), // Title
 				'print_global_settings_callback', // Callback
 				RSTR_NAME // Page
 			);
 	
 			$this->add_settings_field(
 				'site-script', // ID
-				__('My site is', RSTR_NAME), // Title
+				__('My site is', 'serbian-transliteration'), // Title
 				'site_script_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
@@ -271,7 +271,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'transliteration-mode', // ID
-				__('Transliteration Mode', RSTR_NAME), // Title
+				__('Transliteration Mode', 'serbian-transliteration'), // Title
 				'transliteration_mode_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
@@ -279,7 +279,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			
 			$this->add_settings_field(
 				'first-visit-mode', // ID
-				__('First visit mode', RSTR_NAME), // Title
+				__('First visit mode', 'serbian-transliteration'), // Title
 				'first_visit_mode_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
@@ -287,7 +287,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			
 			$this->add_settings_field(
 				'language-scheme', // ID
-				__('Language scheme', RSTR_NAME), // Title
+				__('Language scheme', 'serbian-transliteration'), // Title
 				'language_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
@@ -295,7 +295,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'mode', // ID
-				__('Plugin Mode', RSTR_NAME), // Title
+				__('Plugin Mode', 'serbian-transliteration'), // Title
 				'mode_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
@@ -304,7 +304,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			if(Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters')) {
 				$this->add_settings_field(
 					'transliteration-filter', // ID
-					__('Transliteration Filters', RSTR_NAME), // Title
+					__('Transliteration Filters', 'serbian-transliteration'), // Title
 					'transliteration_filter_callback', // Callback
 					RSTR_NAME, // Page
 					RSTR_NAME . '-global' // Section
@@ -313,7 +313,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'exclude-latin-words', // ID
-				__('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', RSTR_NAME), // Title
+				__('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', 'serbian-transliteration'), // Title
 				'exclude_latin_words_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
@@ -321,7 +321,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'exclude-cyrillic-words', // ID
-				__('Exclude Cyrillic words that you do not want to be transliterated to the Latin.', RSTR_NAME), // Title
+				__('Exclude Cyrillic words that you do not want to be transliterated to the Latin.', 'serbian-transliteration'), // Title
 				'exclude_cyrillic_words_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-global' // Section
@@ -333,14 +333,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 		$this->add_settings_section(
 			RSTR_NAME . '-special-settings', // ID
-			__('Special Settings', RSTR_NAME), // Title
+			__('Special Settings', 'serbian-transliteration'), // Title
 			'print_special_settings_callback', // Callback
 			RSTR_NAME // Page
 		);
 
 			$this->add_settings_field(
 				'cache-support', // ID
-				__('Enable cache support', RSTR_NAME), // Title
+				__('Enable cache support', 'serbian-transliteration'), // Title
 				'cache_support_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-special-settings' // Section
@@ -348,7 +348,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 			$this->add_settings_field(
 				'force-widgets', // ID
-				__('Force widget transliteration', RSTR_NAME), // Title
+				__('Force widget transliteration', 'serbian-transliteration'), // Title
 				'force_widgets_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-special-settings' // Section
@@ -356,7 +356,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 			$this->add_settings_field(
 				'force-email-transliteration', // ID
-				__('Force e-mail transliteration', RSTR_NAME), // Title
+				__('Force e-mail transliteration', 'serbian-transliteration'), // Title
 				'force_email_transliteration_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-special-settings' // Section
@@ -364,7 +364,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			
 			$this->add_settings_field(
 				'force-ajax-calls', // ID
-				__('Force transliteration for AJAX calls', RSTR_NAME) . ' (' . __('EXPERIMENTAL', RSTR_NAME) . ')', // Title
+				__('Force transliteration for AJAX calls', 'serbian-transliteration') . ' (' . __('EXPERIMENTAL', 'serbian-transliteration') . ')', // Title
 				'force_ajax_calls_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-special-settings' // Section
@@ -376,14 +376,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 		$this->add_settings_section(
 			RSTR_NAME . '-admin', // ID
-			__('WP Admin', RSTR_NAME), // Title
+			__('WP Admin', 'serbian-transliteration'), // Title
 			'print_wp_admin_callback', // Callback
 			RSTR_NAME // Page
 		);
 
 			$this->add_settings_field(
 				'avoid-admin', // ID
-				__('Disable transliteration inside wp-admin', RSTR_NAME), // Title
+				__('Disable transliteration inside wp-admin', 'serbian-transliteration'), // Title
 				'avoid_admin_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-admin' // Section
@@ -391,7 +391,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'allow-cyrillic-usernames', // ID
-				__('Allow Cyrillic Usernames', RSTR_NAME), // Title
+				__('Allow Cyrillic Usernames', 'serbian-transliteration'), // Title
 				'allow_cyrillic_usernames_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-admin' // Section
@@ -399,7 +399,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'permalink-transliteration', // ID
-				__('Force transliteration permalinks to latin', RSTR_NAME), // Title
+				__('Force transliteration permalinks to latin', 'serbian-transliteration'), // Title
 				'permalink_transliteration_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-admin' // Section
@@ -411,14 +411,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 		$this->add_settings_section(
 			RSTR_NAME . '-media', // ID
-			__('Media Settings', RSTR_NAME), // Title
+			__('Media Settings', 'serbian-transliteration'), // Title
 			'print_media_callback', // Callback
 			RSTR_NAME // Page
 		);
 
 			$this->add_settings_field(
 				'media-transliteration', // ID
-				__('Transliterate filenames to latin', RSTR_NAME), // Title
+				__('Transliterate filenames to latin', 'serbian-transliteration'), // Title
 				'media_transliteration_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-media' // Section
@@ -426,7 +426,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'media-delimiter', // ID
-				__('Filename delimiter', RSTR_NAME), // Title
+				__('Filename delimiter', 'serbian-transliteration'), // Title
 				'media_delimiter_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-media' // Section
@@ -446,14 +446,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		
 			$this->add_settings_section(
 				RSTR_NAME . '-search', // ID
-				__('WordPress search', RSTR_NAME), // Title
+				__('WordPress search', 'serbian-transliteration'), // Title
 				'print_search_settings_callback', // Callback
 				RSTR_NAME // Page
 			);
 	
 			$this->add_settings_field(
 				'enable-search', // ID
-				__('Enable search transliteration', RSTR_NAME), // Title
+				__('Enable search transliteration', 'serbian-transliteration'), // Title
 				'enable_search_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-search' // Section
@@ -462,7 +462,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			if(Serbian_Transliteration::__instance()->get_locale() == 'sr_RS'){
 				$this->add_settings_field(
 					'fix-diacritics', // ID
-					__('Fix Diacritics', RSTR_NAME), // Title
+					__('Fix Diacritics', 'serbian-transliteration'), // Title
 					'fix_diacritics_callback', // Callback
 					RSTR_NAME, // Page
 					RSTR_NAME . '-search' // Section
@@ -471,7 +471,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'search-mode', // ID
-				__('Search Mode', RSTR_NAME), // Title
+				__('Search Mode', 'serbian-transliteration'), // Title
 				'search_mode_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-search' // Section
@@ -483,14 +483,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 		$this->add_settings_section(
 			RSTR_NAME . '-seo', // ID
-			__('SEO Settings', RSTR_NAME), // Title
+			__('SEO Settings', 'serbian-transliteration'), // Title
 			'print_seo_settings_callback', // Callback
 			RSTR_NAME // Page
 		);
 	
 			$this->add_settings_field(
 				'enable-alternate-links', // ID
-				__('Enable alternet links', RSTR_NAME), // Title
+				__('Enable alternet links', 'serbian-transliteration'), // Title
 				'enable_alternate_links_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-seo' // Section
@@ -498,7 +498,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'parameter-url-selector', // ID
-				__('Parameter URL selector', RSTR_NAME), // Title
+				__('Parameter URL selector', 'serbian-transliteration'), // Title
 				'parameter_url_selector_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-seo' // Section
@@ -506,7 +506,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	
 			$this->add_settings_field(
 				'enable-rss', // ID
-				__('RSS transliteration', RSTR_NAME), // Title
+				__('RSS transliteration', 'serbian-transliteration'), // Title
 				'enable_rss_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-seo' // Section
@@ -516,14 +516,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 		$this->add_settings_section(
 			RSTR_NAME . '-misc', // ID
-			__('Misc.', RSTR_NAME), // Title
+			__('Misc.', 'serbian-transliteration'), // Title
 			'print_misc_settings_callback', // Callback
 			RSTR_NAME // Page
 		);
 
 			$this->add_settings_field(
 				'enable-body-class', // ID
-				__('Enable body class', RSTR_NAME), // Title
+				__('Enable body class', 'serbian-transliteration'), // Title
 				'enable_body_class_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-misc' // Section
@@ -572,39 +572,39 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     public function print_global_settings_callback()
     {
-        printf('<p>%s</p>', __('This setting determines the mode of operation for the Serbian Transliteration plugin.', RSTR_NAME));
-		printf('<p>%s</p>', __('Carefully choose the option that is best for your site and the plugin will automatically set everything you need for optimal performance.', RSTR_NAME));
+        printf('<p>%s</p>', __('This setting determines the mode of operation for the Serbian Transliteration plugin.', 'serbian-transliteration'));
+		printf('<p>%s</p>', __('Carefully choose the option that is best for your site and the plugin will automatically set everything you need for optimal performance.', 'serbian-transliteration'));
     }
 
 	public function print_search_settings_callback()
 	{
-		printf('<p>%s</p>', __('This setting determines the search mode within the WordPress core depending on the type of language located in the database.', RSTR_NAME));
-		printf('<p>%s</p>', __('The search type setting is mostly experimental and you need to test each variant so you can get the best result you need.', RSTR_NAME));
+		printf('<p>%s</p>', __('This setting determines the search mode within the WordPress core depending on the type of language located in the database.', 'serbian-transliteration'));
+		printf('<p>%s</p>', __('The search type setting is mostly experimental and you need to test each variant so you can get the best result you need.', 'serbian-transliteration'));
 	}
 
 	public function print_seo_settings_callback()
 	{
-		printf('<p>%s</p>', __('Our plugin also has special SEO options that are very important for your project.', RSTR_NAME));
+		printf('<p>%s</p>', __('Our plugin also has special SEO options that are very important for your project.', 'serbian-transliteration'));
 	}
 
 	public function print_wp_admin_callback()
 	{
-		printf('<p>%s</p>', __('These settings apply to the administrative part.', RSTR_NAME));
+		printf('<p>%s</p>', __('These settings apply to the administrative part.', 'serbian-transliteration'));
 	}
 
 	public function print_special_settings_callback()
 	{
-		printf('<p>%s</p>', __('These are special settings that can enhance transliteration and are used only if you need them.', RSTR_NAME));
+		printf('<p>%s</p>', __('These are special settings that can enhance transliteration and are used only if you need them.', 'serbian-transliteration'));
 	}
 
 	public function print_media_callback()
 	{
-		printf('<p>%s</p>', __('Upload, view and control media and files.', RSTR_NAME));
+		printf('<p>%s</p>', __('Upload, view and control media and files.', 'serbian-transliteration'));
 	}
 
 	public function print_misc_settings_callback()
 	{
-		printf('<p>%s</p>', __('Various interesting settings that can be used in the development of your project.', RSTR_NAME));
+		printf('<p>%s</p>', __('Various interesting settings that can be used in the development of your project.', 'serbian-transliteration'));
 	}
 
 
@@ -630,7 +630,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		printf(
 			'<div%3$s id="rstr-mode-list">%1$s<br><p class="description info" id="forced-transliteration" style="display:none; ">%2$s</p></div>',
 			join('<br>', $inputs),
-			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', RSTR_NAME),
+			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', 'serbian-transliteration'),
 			(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false ? ' class="required-box"' : '')
 		);
 	}
@@ -640,14 +640,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$locale = Serbian_Transliteration_Utilities::get_locale();
 
 		$checkbox = array(
-			'cyr' => __('Cyrillic', RSTR_NAME),
-			'lat' => __('Latin', RSTR_NAME)
+			'cyr' => __('Cyrillic', 'serbian-transliteration'),
+			'lat' => __('Latin', 'serbian-transliteration')
 		);
 
 		if($locale == 'ar'){
-			$checkbox['cyr']= __('Arabic', RSTR_NAME);
+			$checkbox['cyr']= __('Arabic', 'serbian-transliteration');
 		} else if($locale == 'hy'){
-			$checkbox['cyr']= __('Armenian', RSTR_NAME);
+			$checkbox['cyr']= __('Armenian', 'serbian-transliteration');
 		}
 
 		foreach($checkbox as $key=>$label)
@@ -662,7 +662,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 
         echo join('<br>', $inputs);
-		printf('<br><p class="description">%1$s</p>', __('Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly.', RSTR_NAME));
+		printf('<br><p class="description">%1$s</p>', __('Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly.', 'serbian-transliteration'));
 	}
 
 	/**
@@ -685,7 +685,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
 
         echo join('<br>', $inputs);
-		printf('<br><p class="description">%1$s</p>', __('This option determines the global transliteration of your web site. If you do not want to transliterate the entire website and use this plugin for other purposes, disable this option. This option does not affect to the functionality of short codes and tags.', RSTR_NAME));
+		printf('<br><p class="description">%1$s</p>', __('This option determines the global transliteration of your web site. If you do not want to transliterate the entire website and use this plugin for other purposes, disable this option. This option does not affect to the functionality of short codes and tags.', 'serbian-transliteration'));
 	}
 
 	/**
@@ -693,7 +693,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
 	public function language_callback(){
 		$inputs = array();
-		$languages = array_merge(array('auto' => __('Automatical (recommended)', RSTR_NAME)), Serbian_Transliteration_Transliterating::registered_languages());
+		$languages = array_merge(array('auto' => __('Automatical (recommended)', 'serbian-transliteration')), Serbian_Transliteration_Transliterating::registered_languages());
 		
 		if( !isset($this->options['language-scheme']) ) {
 			$this->options['language-scheme'] = ( 
@@ -715,7 +715,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
         echo '<select name="'.RSTR_NAME.'[language-scheme]" id="'.RSTR_NAME.'-language-scheme" data-nonce="'.$this->nonce.'" style="margin-bottom:5px;">' . join('<br>', $inputs) . '</select>';
 
-		printf('<br><p class="description">%1$s</p>', __('This option defines the language script. Automatic script detection is the best way but if you are using a WordPress installation in a language that does not match the scripts supported by this plugin, then choose on which script you want the transliteration to be performed.', RSTR_NAME));
+		printf('<br><p class="description">%1$s</p>', __('This option defines the language script. Automatic script detection is the best way but if you are using a WordPress installation in a language that does not match the scripts supported by this plugin, then choose on which script you want the transliteration to be performed.', 'serbian-transliteration'));
 	}
 
 	/**
@@ -726,14 +726,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		if(!Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters')) return;
 ?>
 <div class="accordion-container">
-	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', RSTR_NAME); ?></button>
+	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', 'serbian-transliteration'); ?></button>
 	<div class="accordion-panel">
 		<?php
 
 		printf(
 			'<p>%s<br><b>%s</b></p><br>',
-			__('Select the transliteration filters you want to exclude.', RSTR_NAME),
-			__('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', RSTR_NAME)
+			__('Select the transliteration filters you want to exclude.', 'serbian-transliteration'),
+			__('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', 'serbian-transliteration')
 		);
 
 		$list = Serbian_Transliteration_Cache::get('Serbian_Transliteration_Settings__active_filters');
@@ -745,8 +745,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		<?php
 		printf(
 			'<br><p><b>%s</b><br>%s %s</p>',
-			__('TIPS & TRICKS:', RSTR_NAME),
-			__('You can find details about some of the listed filters in this article:', RSTR_NAME),
+			__('TIPS & TRICKS:', 'serbian-transliteration'),
+			__('You can find details about some of the listed filters in this article:', 'serbian-transliteration'),
 			'<a href="https://codex.wordpress.org/Plugin_API/Filter_Reference" target="_blank">Plugin_API/Filter_Reference</a>'
 		);
 
@@ -755,7 +755,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			printf(
 				'<p>%s</p>',
 				sprintf(
-					__('Since you are already a WooCommerce user, you also can see the following documentation: %s', RSTR_NAME),
+					__('Since you are already a WooCommerce user, you also can see the following documentation: %s', 'serbian-transliteration'),
 					'<a href="https://docs.woocommerce.com/documentation/plugins/woocommerce/woocommerce-codex/snippets/" target="_blank">WooCommerce/Codex Snippets</a>'
 				)
 			);
@@ -775,8 +775,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -799,8 +799,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -811,7 +811,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['media-transliteration'] ) ? ($this->options['media-transliteration'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to convert cyrillic filenames to latin.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to convert cyrillic filenames to latin.', 'serbian-transliteration'));
 	}
 
 	/**
@@ -821,12 +821,12 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'-' => '- (' . __('hyphen (default)', RSTR_NAME) . ')',
-			'_' => '_  (' . __('underscore', RSTR_NAME) . ')',
-			'.' => '. (' . __('dot', RSTR_NAME) . ')',
-			'~' => '~ (' . __('tilde', RSTR_NAME) . ')',
-			'|' => '| (' . __('vartical bar', RSTR_NAME) . ')',
-			'*' => '* (' . __('asterisk', RSTR_NAME) . ')'
+			'-' => '- (' . __('hyphen (default)', 'serbian-transliteration') . ')',
+			'_' => '_  (' . __('underscore', 'serbian-transliteration') . ')',
+			'.' => '. (' . __('dot', 'serbian-transliteration') . ')',
+			'~' => '~ (' . __('tilde', 'serbian-transliteration') . ')',
+			'|' => '| (' . __('vartical bar', 'serbian-transliteration') . ')',
+			'*' => '* (' . __('asterisk', 'serbian-transliteration') . ')'
 		) as $label => $name)
 		{
 			$inputs[]=sprintf(
@@ -838,7 +838,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		}
         echo '<select name="'.RSTR_NAME.'[media-delimiter]" id="'.RSTR_NAME.'-media-delimiter" data-nonce="'.$this->nonce.'" style="margin-bottom:5px;">' . join('<br>', $inputs) . '</select>';
 
-		printf('<br><p class="description">%1$s <code>%2$s</code></p>', __('Filename delimiter, example:', RSTR_NAME), __('my-upload-file.jpg', RSTR_NAME));
+		printf('<br><p class="description">%1$s <code>%2$s</code></p>', __('Filename delimiter, example:', 'serbian-transliteration'), __('my-upload-file.jpg', 'serbian-transliteration'));
 	}
 
 	/**
@@ -849,8 +849,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -862,9 +862,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? ' disabled' : '')
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to force cyrillic permalinks to latin.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to force cyrillic permalinks to latin.', 'serbian-transliteration'));
 		if($this->get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
-			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', RSTR_NAME), '<code>'.$this->get_locale().'</code>'));
+			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', 'serbian-transliteration'), '<code>'.$this->get_locale().'</code>'));
 		}
 	}
 
@@ -873,8 +873,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -886,15 +886,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				''
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option forces the widget to transliterate. There may be some unusual behaviour in the rare cases.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option forces the widget to transliterate. There may be some unusual behaviour in the rare cases.', 'serbian-transliteration'));
 	}
 
 	public function enable_rss_callback(){
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -906,15 +906,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				''
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option transliterate the RSS feed.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option transliterate the RSS feed.', 'serbian-transliteration'));
 	}
 
 	public function cache_support_callback(){
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -926,7 +926,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				''
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('If you have a problem caching your pages, our plugin solves this problem by clearing the cache when changing the language script.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('If you have a problem caching your pages, our plugin solves this problem by clearing the cache when changing the language script.', 'serbian-transliteration'));
 	}
 
 	public function exclude_latin_words_callback()
@@ -936,7 +936,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			RSTR_NAME,
 			(isset( $this->options['exclude-latin-words'] ) ? esc_html($this->options['exclude-latin-words']) : '')
 		);
-		printf('<p class="description">%1$s</p>', sprintf(__('Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed.', RSTR_NAME), '<code>|</code>'));
+		printf('<p class="description">%1$s</p>', sprintf(__('Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed.', 'serbian-transliteration'), '<code>|</code>'));
 	}
 
 	public function exclude_cyrillic_words_callback()
@@ -946,7 +946,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			RSTR_NAME,
 			(isset( $this->options['exclude-cyrillic-words'] ) ? esc_html($this->options['exclude-cyrillic-words']) : '')
 		);
-		printf('<p class="description">%1$s</p>', sprintf(__('Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed.', RSTR_NAME), '<code>|</code>'));
+		printf('<p class="description">%1$s</p>', sprintf(__('Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed.', 'serbian-transliteration'), '<code>|</code>'));
 	}
 
 	public function allow_cyrillic_usernames_callback()
@@ -954,8 +954,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -966,7 +966,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['allow-cyrillic-usernames'] ) ? ($this->options['allow-cyrillic-usernames'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Allows to create users with usernames containing Cyrillic characters.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Allows to create users with usernames containing Cyrillic characters.', 'serbian-transliteration'));
 	}
 
 	public function enable_search_callback()
@@ -974,8 +974,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -986,7 +986,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['enable-search'] ) ? ($this->options['enable-search'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Approve if you want transliteration for the search field.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Approve if you want transliteration for the search field.', 'serbian-transliteration'));
 	}
 
 
@@ -995,8 +995,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1007,7 +1007,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['fix-diacritics'] ) ? ($this->options['fix-diacritics'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Try to fix the diacritics in the search field.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Try to fix the diacritics in the search field.', 'serbian-transliteration'));
 	}
 
 	public function search_mode_callback()
@@ -1015,8 +1015,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'auto' => __('Automatical (recommended)', RSTR_NAME),
-			'plugin-mode' => __('Based on the plugin mode', RSTR_NAME)
+			'auto' => __('Automatical (recommended)', 'serbian-transliteration'),
+			'plugin-mode' => __('Based on the plugin mode', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1027,7 +1027,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['search-mode'] ) ? ($this->options['search-mode'] == $key ? ' checked' : '') : ($key == 'auto' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('The search has two working modes. Choose the one that works best with your search.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('The search has two working modes. Choose the one that works best with your search.', 'serbian-transliteration'));
 	}
 
 	public function enable_alternate_links_callback()
@@ -1035,8 +1035,8 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1047,7 +1047,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['enable-alternate-links'] ) ? ($this->options['enable-alternate-links'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Tell Google, Bing, Yandex and other search engines about transliterated versions of your page.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Tell Google, Bing, Yandex and other search engines about transliterated versions of your page.', 'serbian-transliteration'));
 	}
 
 	public function first_visit_mode_callback()
@@ -1055,9 +1055,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'auto' => __('Auto (Based on Transliteration Mode)', RSTR_NAME),
-			'lat' => __('Latin', RSTR_NAME),
-			'cyr' => __('Cyrillic', RSTR_NAME)
+			'auto' => __('Auto (Based on Transliteration Mode)', 'serbian-transliteration'),
+			'lat' => __('Latin', 'serbian-transliteration'),
+			'cyr' => __('Cyrillic', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1068,7 +1068,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['first-visit-mode'] ) ? ($this->options['first-visit-mode'] == $key ? ' checked' : '') : ($key == 'auto' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first time come to your site.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first time come to your site.', 'serbian-transliteration'));
 	}
 
 	public function parameter_url_selector_callback()
@@ -1076,13 +1076,13 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'rstr'			=> '?<b>rstr</b>=lat ' . __('(safe)', RSTR_NAME),
-			'script'		=> '?<b>script</b>=lat ' . __('(standard)', RSTR_NAME),
-			'lang_script'	=> '?<b>lang_script</b>=lat ' . __('(optional)', RSTR_NAME),
-			'letter'		=> '?<b>letter</b>=lat ' . __('(optional)', RSTR_NAME),
-			'translt'		=> '?<b>translt</b>=lat ' . __('(optional)', RSTR_NAME),
-			'skripta'		=> '?<b>skripta</b>=lat ' . __('(optional)', RSTR_NAME),
-			'pismo'			=> '?<b>pismo</b>=lat ' . __('(optional)', RSTR_NAME)
+			'rstr'			=> '?<b>rstr</b>=lat ' . __('(safe)', 'serbian-transliteration'),
+			'script'		=> '?<b>script</b>=lat ' . __('(standard)', 'serbian-transliteration'),
+			'lang_script'	=> '?<b>lang_script</b>=lat ' . __('(optional)', 'serbian-transliteration'),
+			'letter'		=> '?<b>letter</b>=lat ' . __('(optional)', 'serbian-transliteration'),
+			'translt'		=> '?<b>translt</b>=lat ' . __('(optional)', 'serbian-transliteration'),
+			'skripta'		=> '?<b>skripta</b>=lat ' . __('(optional)', 'serbian-transliteration'),
+			'pismo'			=> '?<b>pismo</b>=lat ' . __('(optional)', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1093,15 +1093,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['url-selector'] ) ? ($this->options['url-selector'] == $key ? ' checked' : '') : ($key == 'rstr' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option dictates which URL parameter will be used to change the language.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option dictates which URL parameter will be used to change the language.', 'serbian-transliteration'));
 	}
 
 	public function enable_body_class_callback(){
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1112,15 +1112,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['enable-body-class'] ) ? ($this->options['enable-body-class'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', 'serbian-transliteration'));
 	}
 
 	public function force_email_transliteration_callback () {
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1131,15 +1131,15 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['force-email-transliteration'] ) ? ($this->options['force-email-transliteration'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of email content.', RSTR_NAME));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of email content.', 'serbian-transliteration'));
 	}
 	
 	public function force_ajax_calls_callback () {
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', RSTR_NAME),
-			'no' => __('No', RSTR_NAME)
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -1150,7 +1150,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				(isset( $this->options['force-ajax-calls'] ) ? ($this->options['force-ajax-calls'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), sprintf(__('Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s', RSTR_NAME), '<code>rstr_skip=true</code>'));
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), sprintf(__('Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s', 'serbian-transliteration'), '<code>rstr_skip=true</code>'));
 	}
 
 

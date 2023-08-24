@@ -280,8 +280,8 @@ if(!function_exists('script_selector')) :
 			'display_type' 	=> 'inline',
 			'echo' 			=> false,
 			'separator'     => ' | ',
-			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
-			'lat_caption'   => __('Latin', RSTR_NAME)
+			'cyr_caption'   => __('Cyrillic', 'serbian-transliteration'),
+			'lat_caption'   => __('Latin', 'serbian-transliteration')
 		));
 
 		$options = (object)array(
@@ -299,7 +299,7 @@ if(!function_exists('script_selector')) :
 		switch($args->display_type)
 		{
 			default:
-				$return = sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s", "%5$s" or "%6$s"', RSTR_NAME), 'inline', 'select', 'list', 'list_items', 'array', 'object');
+				$return = sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s", "%5$s" or "%6$s"', 'serbian-transliteration'), 'inline', 'select', 'list', 'list_items', 'array', 'object');
 				break;
 			case 'inline':
 				$return = sprintf(

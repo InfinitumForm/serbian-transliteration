@@ -49,8 +49,8 @@ if(class_exists('WP_CLI_Command', false) && !class_exists('Serbian_Transliterati
 				$inst = Serbian_Transliteration::__instance();
 				// Fix  problematic
 				WP_CLI::log( PHP_EOL.PHP_EOL );
-				WP_CLI::log( __('Please wait! Do not close the terminal or terminate the script until this operation is completed!', RSTR_NAME) );
-				$progress = \WP_CLI\Utils\make_progress_bar( __('Progress:', RSTR_NAME), count($get_results) );
+				WP_CLI::log( __('Please wait! Do not close the terminal or terminate the script until this operation is completed!', 'serbian-transliteration') );
+				$progress = \WP_CLI\Utils\make_progress_bar( __('Progress:', 'serbian-transliteration'), count($get_results) );
 				$get_results = array_map(function($match) use (&$wpdb, &$inst, &$updated, &$type, &$progress){
 					$progress->tick();
 					
@@ -88,7 +88,7 @@ if(class_exists('WP_CLI_Command', false) && !class_exists('Serbian_Transliterati
 						}
 						++$updated;
 						WP_CLI::success( sprintf(
-							__('Updated page ID %1$d, (%2$s) at URL: %3$s', RSTR_NAME),
+							__('Updated page ID %1$d, (%2$s) at URL: %3$s', 'serbian-transliteration'),
 							$match->ID,
 							$match->post_title,
 							get_the_permalink($match->ID)
@@ -101,9 +101,9 @@ if(class_exists('WP_CLI_Command', false) && !class_exists('Serbian_Transliterati
 			}
 
 			if($updated > 0){
-				WP_CLI::success( sprintf(_n('%d permalink was successfully transliterated.', '%d permalinks were successfully transliterated.', $updated, RSTR_NAME), $updated ));
+				WP_CLI::success( sprintf(_n('%d permalink was successfully transliterated.', '%d permalinks were successfully transliterated.', $updated, 'serbian-transliteration'), $updated ));
 			} else {
-				WP_CLI::error( __('No changes to the permalink have been made.', RSTR_NAME), false );
+				WP_CLI::error( __('No changes to the permalink have been made.', 'serbian-transliteration'), false );
 			}
 		}
 	}

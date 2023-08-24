@@ -35,8 +35,8 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 		$args = (object)shortcode_atts(array(
 			'type' 	=> 'inline',
 			'separator'     => ' | ',
-			'cyr_caption'   => __('Cyrillic', RSTR_NAME),
-			'lat_caption'   => __('Latin', RSTR_NAME)
+			'cyr_caption'   => __('Cyrillic', 'serbian-transliteration'),
+			'lat_caption'   => __('Latin', 'serbian-transliteration')
 		), $attr, 'rstr_selector');
 
 		return script_selector(array(
@@ -161,7 +161,7 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 		), $attr, 'transliteration' );
 
 		if(in_array($attr->from, array('lat', 'cyr')) === false || in_array($attr->to, array('lat', 'cyr')) === false){
-			return sprintf('<pre>%s</pre>', __('Transliteration shortcode does not have adequate parameters and translation is not possible. Please check the documentation.', RSTR_NAME));
+			return sprintf('<pre>%s</pre>', __('Transliteration shortcode does not have adequate parameters and translation is not possible. Please check the documentation.', 'serbian-transliteration'));
 		}
 
 		switch(strtolower("{$attr->from}_to_{$attr->to}"))

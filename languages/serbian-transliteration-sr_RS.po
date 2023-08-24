@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2023-06-24 18:10+0200\n"
-"PO-Revision-Date: 2023-06-24 18:11+0200\n"
+"POT-Creation-Date: 2023-08-24 13:31+0200\n"
+"PO-Revision-Date: 2023-08-24 13:41+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: serbian-transliteration.php\n"
@@ -92,13 +92,13 @@ msgstr "Пример: Latinica | Ћирилица"
 msgid "Note that the white space around them will be cleared."
 msgstr "Имајте на уму да ће се размак око њих очистити."
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 #, php-format
 msgid ""
 "You have been using <b> %1$s </b> plugin for a while. We hope you liked it!"
 msgstr "Већ неко време користите <b>%1$s</b>. Надамо се да вам се допада!"
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 msgid ""
 "Please give us a quick rating, it works as a boost for us to keep working on "
 "the plugin!"
@@ -106,13 +106,42 @@ msgstr ""
 "Молимо вас за једну брзу оцену, то нам делује као подстицај да наставимо да "
 "радимо на додатку!"
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 msgid "Rate Now!"
 msgstr "Оцените нас!"
 
-#: inc/Notice.php:77
+#: inc/Notice.php:122
 msgid "I've already done that!"
 msgstr "То сам већ учинио!"
+
+#: inc/Notice.php:141
+#, php-format
+msgid "Hey! It's been a while since you used the plugin for <b> %1$s </b>"
+msgstr "Хеј! Прошло је доста времена од како користиш додатак за <b> %1$s </b>"
+
+#: inc/Notice.php:144
+#, php-format
+msgid ""
+"Hey there! I'm so glad to hear you like the plugin. I poured a lot of time "
+"and love into it to ensure your site runs smoothly. If you're feeling "
+"generous, how about %s for the effort? 😊"
+msgstr ""
+"Хеј тамо! Тако ми је драго да чујем да ти се свиђа додатак. Уложио сам много "
+"времена и љубави у то како бих осигурао да твоја веб локација ради "
+"несметано. Ако се осећаш великодушно, шта кажеш %s за труд? 😊"
+
+#: inc/Notice.php:148
+msgid "buying me a coffee"
+msgstr "да ме ме частиш једном кафом"
+
+#: inc/Notice.php:152
+#, php-format
+msgid "Or just %s forever."
+msgstr "Или само %s заувек."
+
+#: inc/Notice.php:156
+msgid "hide this message"
+msgstr "сакриј ову поруку"
 
 #: inc/OS.php:367
 msgid "undefined"
@@ -871,144 +900,144 @@ msgstr "Арменијски у латиницу"
 msgid "Latin to Armenian"
 msgstr "Латиница у арменијски"
 
-#: inc/Utilities.php:794 inc/Utilities.php:795
+#: inc/Utilities.php:874 inc/Utilities.php:875
 msgctxt "Language script"
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:796
+#: inc/Utilities.php:876
 msgid "Search by Script"
 msgstr "Претражи по скрипти"
 
-#: inc/Utilities.php:797
+#: inc/Utilities.php:877
 msgid "All Scripts"
 msgstr "Све скрипте"
 
-#: inc/Utilities.php:798
+#: inc/Utilities.php:878
 msgid "Parent Script"
 msgstr "Родитељска скрипта"
 
-#: inc/Utilities.php:799
+#: inc/Utilities.php:879
 msgid "Parent Script:"
 msgstr "Родитељска скрипта:"
 
-#: inc/Utilities.php:800
+#: inc/Utilities.php:880
 msgid "Edit Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:801
+#: inc/Utilities.php:881
 msgid "Update Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:802
+#: inc/Utilities.php:882
 msgid "Add New Script"
 msgstr "Додај нову скрипту"
 
-#: inc/Utilities.php:803
+#: inc/Utilities.php:883
 msgid "New Script Name"
 msgstr "Нови назив скрипте"
 
-#: inc/Utilities.php:804
+#: inc/Utilities.php:884
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:897
+#: inc/Utilities.php:977
 msgid " degrees "
 msgstr " степени "
 
-#: inc/Utilities.php:899
+#: inc/Utilities.php:979
 msgid " divided by "
 msgstr " подељено са "
 
-#: inc/Utilities.php:899
+#: inc/Utilities.php:979
 msgid " times "
 msgstr " пута "
 
-#: inc/Utilities.php:899
+#: inc/Utilities.php:979
 msgid " plus-minus "
 msgstr " плус-минус "
 
-#: inc/Utilities.php:899
+#: inc/Utilities.php:979
 msgid " square root "
 msgstr " квадратни корен "
 
-#: inc/Utilities.php:900
+#: inc/Utilities.php:980
 msgid " infinity "
 msgstr " бесконачност "
 
-#: inc/Utilities.php:900
+#: inc/Utilities.php:980
 msgid " almost equal to "
 msgstr " скоро једнако са "
 
-#: inc/Utilities.php:900
+#: inc/Utilities.php:980
 msgid " not equal to "
 msgstr " није једнако са "
 
-#: inc/Utilities.php:901
+#: inc/Utilities.php:981
 msgid " identical to "
 msgstr " индентично са "
 
-#: inc/Utilities.php:901
+#: inc/Utilities.php:981
 msgid " less than or equal to "
 msgstr " мање или једнако "
 
-#: inc/Utilities.php:901
+#: inc/Utilities.php:981
 msgid " greater than or equal to "
 msgstr " веће или једнако са "
 
-#: inc/Utilities.php:902
+#: inc/Utilities.php:982
 msgid " left "
 msgstr " лево "
 
-#: inc/Utilities.php:902
+#: inc/Utilities.php:982
 msgid " right "
 msgstr " десно "
 
-#: inc/Utilities.php:902
+#: inc/Utilities.php:982
 msgid " up "
 msgstr " горе "
 
-#: inc/Utilities.php:902
+#: inc/Utilities.php:982
 msgid " down "
 msgstr " доле "
 
-#: inc/Utilities.php:903
+#: inc/Utilities.php:983
 msgid " left and right "
 msgstr " лево и десно "
 
-#: inc/Utilities.php:903
+#: inc/Utilities.php:983
 msgid " up and down "
 msgstr " горе и доле "
 
-#: inc/Utilities.php:903
+#: inc/Utilities.php:983
 msgid " care of "
 msgstr " брига о "
 
-#: inc/Utilities.php:904
+#: inc/Utilities.php:984
 msgid " estimated "
 msgstr " процењено "
 
-#: inc/Utilities.php:904
+#: inc/Utilities.php:984
 msgid " ohm "
 msgstr " ом "
 
-#: inc/Utilities.php:904
+#: inc/Utilities.php:984
 msgid " female "
 msgstr " женско "
 
-#: inc/Utilities.php:904
+#: inc/Utilities.php:984
 msgid " male "
 msgstr " мушко "
 
-#: inc/Utilities.php:905
+#: inc/Utilities.php:985
 msgid " Copyright "
 msgstr " Ауторско право "
 
-#: inc/Utilities.php:905
+#: inc/Utilities.php:985
 msgid " Registered "
 msgstr " Регистровано "
 
-#: inc/Utilities.php:905
+#: inc/Utilities.php:985
 msgid " Trademark "
 msgstr " Заштитни знак "
 
@@ -1699,8 +1728,6 @@ msgid "donate something for effort"
 msgstr "донирати нешто за наш труд"
 
 #. Plugin Name of the plugin/theme
-#, fuzzy
-#| msgid "Transliteration"
 msgid "Transliterator"
 msgstr "Пресловљавање"
 

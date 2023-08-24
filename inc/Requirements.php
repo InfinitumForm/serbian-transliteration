@@ -39,17 +39,17 @@ class Serbian_Transliteration_Requirements
 			return;
 		}
 		$content = '';
-		$content.= sprintf( '<p class="privacy-policy-tutorial">%s</p>', __( 'This plugin uses cookies and should be listed in your Privacy Policy page to prevent privacy issues.', RSTR_NAME )
+		$content.= sprintf( '<p class="privacy-policy-tutorial">%s</p>', __( 'This plugin uses cookies and should be listed in your Privacy Policy page to prevent privacy issues.', 'serbian-transliteration' )
 		);
-		$content.= sprintf( '<p><b>%s</b></p>', __( 'Suggested text:', RSTR_NAME )
+		$content.= sprintf( '<p><b>%s</b></p>', __( 'Suggested text:', 'serbian-transliteration' )
 		);
 		$content.= sprintf( '<p>%s</p>', sprintf(
-			__( 'This website uses the %1$s plugin to transliterate content.', RSTR_NAME ), $this->title
+			__( 'This website uses the %1$s plugin to transliterate content.', 'serbian-transliteration' ), $this->title
 		));
-		$content.= sprintf( '<p>%s</p>', __( 'This is a simple and easy add-on with which this website translates content from Cyrillic to Latin and vice versa. This transliteration plugin also supports special shortcodes and functions that use cookies to specify the language script.', RSTR_NAME )
+		$content.= sprintf( '<p>%s</p>', __( 'This is a simple and easy add-on with which this website translates content from Cyrillic to Latin and vice versa. This transliteration plugin also supports special shortcodes and functions that use cookies to specify the language script.', 'serbian-transliteration' )
 		);
 		$content.= sprintf( '<p>%s</p>', sprintf(
-			__( 'These cookies do not affect your privacy because they are not intended for tracking and analytics. These cookies can have only two values: "%1$s" or "%2$s".', RSTR_NAME ),
+			__( 'These cookies do not affect your privacy because they are not intended for tracking and analytics. These cookies can have only two values: "%1$s" or "%2$s".', 'serbian-transliteration' ),
 			'lat', 'cyr'
 		));
 	 
@@ -82,7 +82,7 @@ font-weight:600;
 }
 </style>
 <div class="serbian-transliteration-upgrade-notice">
-<h3><?php printf(__('Important upgrade notice for the version %s:', RSTR_NAME), $response->new_version); ?></h3>
+<h3><?php printf(__('Important upgrade notice for the version %s:', 'serbian-transliteration'), $response->new_version); ?></h3>
 <div class="serbian-transliteration-upgrade-notice-list">
 	<?php echo str_replace(
 		array(
@@ -96,7 +96,7 @@ font-weight:600;
 	); ?>
 </div>
 <div class="serbian-transliteration-upgrade-notice-info">
-	<?php _e('NOTE: Before doing the update, it would be a good idea to backup your WordPress installations and settings.', RSTR_NAME); ?>
+	<?php _e('NOTE: Before doing the update, it would be a good idea to backup your WordPress installations and settings.', 'serbian-transliteration'); ?>
 </div>
 </div> 
 		<?php endif;
@@ -131,7 +131,7 @@ font-weight:600;
 	
 	public function php_version_notice() {
 		echo '<div class="notice notice-error">';
-		echo '<p>'.sprintf(__('The %1$s cannot run on PHP versions older than PHP %2$s. Please contact your host and ask them to upgrade.', RSTR_NAME), esc_html( $this->title ), $this->php).'</p>';
+		echo '<p>'.sprintf(__('The %1$s cannot run on PHP versions older than PHP %2$s. Please contact your host and ask them to upgrade.', 'serbian-transliteration'), esc_html( $this->title ), $this->php).'</p>';
 		echo '</div>';
 	}
 	
@@ -139,10 +139,10 @@ font-weight:600;
 		echo '<div class="notice notice-error">';
 		echo '<p>' . sprintf(
 			'<strong>%1$s</strong> %2$s',
-			__('Transliteration plugin requires attention:', RSTR_NAME),
+			__('Transliteration plugin requires attention:', 'serbian-transliteration'),
 			sprintf(
-				__('Your plugin works under Only WooCoomerce mode and you need to %s because WooCommerce is no longer active.', RSTR_NAME),
-				'<a href="'.admin_url('/options-general.php?page=serbian-transliteration&tab=settings').'">' . __('update your settings', RSTR_NAME) . '</a>'
+				__('Your plugin works under Only WooCoomerce mode and you need to %s because WooCommerce is no longer active.', 'serbian-transliteration'),
+				'<a href="'.admin_url('/options-general.php?page=serbian-transliteration&tab=settings').'">' . __('update your settings', 'serbian-transliteration') . '</a>'
 			)
 		) . '</p>';
 		echo '</div>';
@@ -152,10 +152,10 @@ font-weight:600;
 		echo '<div class="notice notice-error">';
 		echo '<p>' . sprintf(
 			'<strong>%1$s</strong> %2$s',
-			__('Transliteration plugin requires a Multibyte String PHP extension (mbstring).', RSTR_NAME),
+			__('Transliteration plugin requires a Multibyte String PHP extension (mbstring).', 'serbian-transliteration'),
 			sprintf(
-				__('Without %s you will not be able to use this plugin.', RSTR_NAME),
-				'<a href="https://www.php.net/manual/en/mbstring.installation.php" target="_blank" title="' . __('Multibyte String Installation', RSTR_NAME) . '">' . __('this PHP extension', RSTR_NAME) . '</a>'
+				__('Without %s you will not be able to use this plugin.', 'serbian-transliteration'),
+				'<a href="https://www.php.net/manual/en/mbstring.installation.php" target="_blank" title="' . __('Multibyte String Installation', 'serbian-transliteration') . '">' . __('this PHP extension', 'serbian-transliteration') . '</a>'
 			)
 		) . '</p>';
 		echo '</div>';
@@ -176,7 +176,7 @@ font-weight:600;
 
 	public function wp_version_notice() {
 		echo '<div class="notice notice-error">';
-		echo '<p>'.sprintf(__('The %1$s cannot run on WordPress versions older than %2$s. Please update your WordPress installation.', RSTR_NAME), esc_html( $this->title ), $this->wp).'</p>';
+		echo '<p>'.sprintf(__('The %1$s cannot run on WordPress versions older than %2$s. Please update your WordPress installation.', 'serbian-transliteration'), esc_html( $this->title ), $this->wp).'</p>';
 		echo '</div>';
 	}
 }

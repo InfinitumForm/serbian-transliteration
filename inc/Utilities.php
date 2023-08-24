@@ -51,20 +51,20 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function plugin_mode($mode=NULL){
 		$modes = array(
-			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', RSTR_NAME),
-			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', RSTR_NAME),
-			'forced'	=> __('Forced transliteration (everything)', RSTR_NAME)
+			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
+			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', 'serbian-transliteration'),
+			'forced'	=> __('Forced transliteration (everything)', 'serbian-transliteration')
 		);
 
 		if(RSTR_WOOCOMMERCE) {
 			$modes = array_merge($modes, array(
-				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', RSTR_NAME)
+				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', 'serbian-transliteration')
 			));
 		}
 		
 		if( defined('RSTR_DEBUG') && RSTR_DEBUG ) {
 			$modes = array_merge($modes, array(
-				'dev'	=> __('Dev Mode (Only for developers and testers)', RSTR_NAME)
+				'dev'	=> __('Dev Mode (Only for developers and testers)', 'serbian-transliteration')
 			));
 		}
 
@@ -88,19 +88,19 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function transliteration_mode($mode=NULL){
 		$modes = array(
-			'none'			=> __('Transliteration disabled', RSTR_NAME),
-			'cyr_to_lat'	=> __('Cyrillic to Latin', RSTR_NAME),
-			'lat_to_cyr'	=> __('Latin to Cyrillic', RSTR_NAME)
+			'none'			=> __('Transliteration disabled', 'serbian-transliteration'),
+			'cyr_to_lat'	=> __('Cyrillic to Latin', 'serbian-transliteration'),
+			'lat_to_cyr'	=> __('Latin to Cyrillic', 'serbian-transliteration')
 		);
 
 		$locale = self::get_locale();
 
 		if($locale == 'ar'){
-			$modes['cyr_to_lat']= __('Arabic to Latin', RSTR_NAME);
-			$modes['lat_to_cyr']= __('Latin to Arabic', RSTR_NAME);
+			$modes['cyr_to_lat']= __('Arabic to Latin', 'serbian-transliteration');
+			$modes['lat_to_cyr']= __('Latin to Arabic', 'serbian-transliteration');
 		} else if($locale == 'hy'){
-			$modes['cyr_to_lat']= __('Armenian to Latin', RSTR_NAME);
-			$modes['lat_to_cyr']= __('Latin to Armenian', RSTR_NAME);
+			$modes['cyr_to_lat']= __('Armenian to Latin', 'serbian-transliteration');
+			$modes['lat_to_cyr']= __('Latin to Armenian', 'serbian-transliteration');
 		}
 
 		$modes = apply_filters('rstr_transliteration_mode', $modes);
@@ -289,6 +289,14 @@ class Serbian_Transliteration_Utilities{
 	{
 		$is_editor = Serbian_Transliteration_Cache::get('is_editor');
 
+		if( self::is_elementor_editor() ) {
+			$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
+		}
+		
+		if( self::is_oxygen_editor() ) {
+			$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
+		}
+
 		if(NULL === $is_editor) {
 			if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
 				if(!function_exists('get_current_screen')){
@@ -301,14 +309,6 @@ class Serbian_Transliteration_Utilities{
 			} else {
 				$is_editor = Serbian_Transliteration_Cache::set('is_editor', ( isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']) ) );
 			}
-		}
-		
-		if( self::is_elementor_editor() ) {
-			$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
-		}
-		
-		if( self::is_oxygen_editor() ) {
-			$is_editor = Serbian_Transliteration_Cache::set('is_editor', true);
 		}
 
 		return $is_editor;
@@ -340,11 +340,13 @@ class Serbian_Transliteration_Utilities{
 	public static function is_elementor_preview(){
 		if(
 			!is_admin()
-			&& self::is_plugin_active('elementor/elementor.php') 
-			&& ($_GET['preview'] ?? NULL) == 'true'
-			&& is_numeric($_GET['page_id'] ?? NULL)
-			&& is_numeric($_GET['preview_id'] ?? NULL)
-			&& !empty($_GET['preview_nonce'] ?? NULL)
+			&& (
+				self::is_plugin_active('elementor/elementor.php') 
+				&& ($_REQUEST['preview'] ?? NULL) == 'true'
+				&& is_numeric($_REQUEST['page_id'] ?? NULL)
+				&& is_numeric($_REQUEST['preview_id'] ?? NULL)
+				&& !empty($_REQUEST['preview_nonce'] ?? NULL)
+			) || preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? NULL))
 		) {
 			return true;
 			
@@ -362,7 +364,11 @@ class Serbian_Transliteration_Utilities{
 	public static function is_oxygen_editor(){
 		if(
 			self::is_plugin_active('oxygen/functions.php') 
-			&& ($_GET['ct_builder'] ?? NULL) == 'true'
+			&& (
+				($_REQUEST['ct_builder'] ?? NULL) == 'true'
+				|| ($_REQUEST['ct_inner'] ?? NULL) == 'true'
+				|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? NULL))
+			)
 		) {
 			return true;
 		}
@@ -871,17 +877,17 @@ class Serbian_Transliteration_Utilities{
 			register_taxonomy( 'rstr-script', array( 'attachment' ), array(
 				'hierarchical'      => true,
 				'labels'            => array(
-					'name'              => _x( 'Script', 'Language script', RSTR_NAME ),
-					'singular_name'     => _x( 'Script', 'Language script', RSTR_NAME ),
-					'search_items'      => __( 'Search by Script', RSTR_NAME ),
-					'all_items'         => __( 'All Scripts', RSTR_NAME ),
-					'parent_item'       => __( 'Parent Script', RSTR_NAME ),
-					'parent_item_colon' => __( 'Parent Script:', RSTR_NAME ),
-					'edit_item'         => __( 'Edit Script', RSTR_NAME ),
-					'update_item'       => __( 'Update Script', RSTR_NAME ),
-					'add_new_item'      => __( 'Add New Script', RSTR_NAME ),
-					'new_item_name'     => __( 'New Script Name', RSTR_NAME ),
-					'menu_name'         => __( 'Script', RSTR_NAME ),
+					'name'              => _x( 'Script', 'Language script', 'serbian-transliteration' ),
+					'singular_name'     => _x( 'Script', 'Language script', 'serbian-transliteration' ),
+					'search_items'      => __( 'Search by Script', 'serbian-transliteration' ),
+					'all_items'         => __( 'All Scripts', 'serbian-transliteration' ),
+					'parent_item'       => __( 'Parent Script', 'serbian-transliteration' ),
+					'parent_item_colon' => __( 'Parent Script:', 'serbian-transliteration' ),
+					'edit_item'         => __( 'Edit Script', 'serbian-transliteration' ),
+					'update_item'       => __( 'Update Script', 'serbian-transliteration' ),
+					'add_new_item'      => __( 'Add New Script', 'serbian-transliteration' ),
+					'new_item_name'     => __( 'New Script Name', 'serbian-transliteration' ),
+					'menu_name'         => __( 'Script', 'serbian-transliteration' ),
 				),
 				'show_ui'           => true,
 				'show_admin_column' => true,
@@ -974,15 +980,15 @@ class Serbian_Transliteration_Utilities{
 			'Ž'=>'Z', 'Ź'=>'Z', 'Ż'=>'Z',
 			'ž'=>'z', 'ź'=>'z', 'ż'=>'z',
 
-			'“'=>'"', '”'=>'"', '‘'=>"'", '’'=>"'", '•'=>'-', '…'=>'...', '—'=>'-', '–'=>'-', '¿'=>'?', '¡'=>'!', '°'=>__(' degrees ', RSTR_NAME),
+			'“'=>'"', '”'=>'"', '‘'=>"'", '’'=>"'", '•'=>'-', '…'=>'...', '—'=>'-', '–'=>'-', '¿'=>'?', '¡'=>'!', '°'=>__(' degrees ', 'serbian-transliteration'),
 			'¼'=>' 1/4 ', '½'=>' 1/2 ', '¾'=>' 3/4 ', '⅓'=>' 1/3 ', '⅔'=>' 2/3 ', '⅛'=>' 1/8 ', '⅜'=>' 3/8 ', '⅝'=>' 5/8 ', '⅞'=>' 7/8 ',
-			'÷'=>__(' divided by ', RSTR_NAME), '×'=>__(' times ', RSTR_NAME), '±'=>__(' plus-minus ', RSTR_NAME), '√'=>__(' square root ', RSTR_NAME),
-			'∞'=>__(' infinity ', RSTR_NAME), '≈'=>__(' almost equal to ', RSTR_NAME), '≠'=>__(' not equal to ', RSTR_NAME), 
-			'≡'=>__(' identical to ', RSTR_NAME), '≤'=>__(' less than or equal to ', RSTR_NAME), '≥'=>__(' greater than or equal to ', RSTR_NAME),
-			'←'=>__(' left ', RSTR_NAME), '→'=>__(' right ', RSTR_NAME), '↑'=>__(' up ', RSTR_NAME), '↓'=>__(' down ', RSTR_NAME),
-			'↔'=>__(' left and right ', RSTR_NAME), '↕'=>__(' up and down ', RSTR_NAME), '℅'=>__(' care of ', RSTR_NAME), 
-			'℮' => __(' estimated ', RSTR_NAME), 'Ω'=>__(' ohm ', RSTR_NAME), '♀'=>__(' female ', RSTR_NAME), '♂'=>__(' male ', RSTR_NAME),
-			'©'=>__(' Copyright ', RSTR_NAME), '®'=>__(' Registered ', RSTR_NAME), '™' =>__(' Trademark ', RSTR_NAME),
+			'÷'=>__(' divided by ', 'serbian-transliteration'), '×'=>__(' times ', 'serbian-transliteration'), '±'=>__(' plus-minus ', 'serbian-transliteration'), '√'=>__(' square root ', 'serbian-transliteration'),
+			'∞'=>__(' infinity ', 'serbian-transliteration'), '≈'=>__(' almost equal to ', 'serbian-transliteration'), '≠'=>__(' not equal to ', 'serbian-transliteration'), 
+			'≡'=>__(' identical to ', 'serbian-transliteration'), '≤'=>__(' less than or equal to ', 'serbian-transliteration'), '≥'=>__(' greater than or equal to ', 'serbian-transliteration'),
+			'←'=>__(' left ', 'serbian-transliteration'), '→'=>__(' right ', 'serbian-transliteration'), '↑'=>__(' up ', 'serbian-transliteration'), '↓'=>__(' down ', 'serbian-transliteration'),
+			'↔'=>__(' left and right ', 'serbian-transliteration'), '↕'=>__(' up and down ', 'serbian-transliteration'), '℅'=>__(' care of ', 'serbian-transliteration'), 
+			'℮' => __(' estimated ', 'serbian-transliteration'), 'Ω'=>__(' ohm ', 'serbian-transliteration'), '♀'=>__(' female ', 'serbian-transliteration'), '♂'=>__(' male ', 'serbian-transliteration'),
+			'©'=>__(' Copyright ', 'serbian-transliteration'), '®'=>__(' Registered ', 'serbian-transliteration'), '™' =>__(' Trademark ', 'serbian-transliteration'),
 		), $str);
 
 		return strtr($str, $map);

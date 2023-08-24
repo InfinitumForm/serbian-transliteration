@@ -1,3 +1,11 @@
+= 1.10.0 =
+* Improvement for Elementor builder
+* Improvement for Oxygen builder
+* Enhanced security
+* Improved textdomain for translations
+* Fixed bugs inside AJAX calls
+* Fixed UX
+
 = 1.9.11 =
 * Added suport for Oxygen builder
 

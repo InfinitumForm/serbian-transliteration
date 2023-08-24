@@ -18,18 +18,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		<div id="post-body">
 			<div id="post-body-content">
             	<?php do_action('rstr/settings/tab/content/tools/documentation'); ?>
-				<h1><span><?php _e('Available Tags', RSTR_NAME); ?></span></h1>
-                <p class="description"><?php _e('These tags have a special purpose and work separately from short codes and can be used in fields where short codes cannot be used.', RSTR_NAME); ?><br><?php _e('These tags have no additional settings and can be applied in plugins, themes, widgets and within other short codes.', RSTR_NAME); ?></p>
+				<h1><span><?php _e('Available Tags', 'serbian-transliteration'); ?></span></h1>
+                <p class="description"><?php _e('These tags have a special purpose and work separately from short codes and can be used in fields where short codes cannot be used.', 'serbian-transliteration'); ?><br><?php _e('These tags have no additional settings and can be applied in plugins, themes, widgets and within other short codes.', 'serbian-transliteration'); ?></p>
 				<div class="inside">
 					<br>
-                    <h2 style="margin:0;"><?php _e('Cyrillic to Latin', RSTR_NAME); ?>:</h2>
+                    <h2 style="margin:0;"><?php _e('Cyrillic to Latin', 'serbian-transliteration'); ?>:</h2>
 					<p><code class="lang-txt">{<span class="hljs-title">cyr_to_lat</span>}Ћирилица у латиницу{/<span class="hljs-title">cyr_to_lat</span>}</code></p>
 					<br>
-					<h2 style="margin:0;"><?php _e('Latin to Cyrillic', RSTR_NAME); ?>:</h2>
+					<h2 style="margin:0;"><?php _e('Latin to Cyrillic', 'serbian-transliteration'); ?>:</h2>
 					<p><code class="lang-txt">{<span class="hljs-title">lat_to_cyr</span>}Latinica u ćirilicu{/<span class="hljs-title">lat_to_cyr</span>}</code></p>
                     <br>
-					<h2 style="margin:0;"><?php _e('Skip transliteration', RSTR_NAME); ?>:</h2>
-					<p><code class="lang-txt">{<span class="hljs-title">rstr_skip</span>}<?php _e('Keep this original', RSTR_NAME); ?>{/<span class="hljs-title">rstr_skip</span>}</code></p>
+					<h2 style="margin:0;"><?php _e('Skip transliteration', 'serbian-transliteration'); ?>:</h2>
+					<p><code class="lang-txt">{<span class="hljs-title">rstr_skip</span>}<?php _e('Keep this original', 'serbian-transliteration'); ?>{/<span class="hljs-title">rstr_skip</span>}</code></p>
 				</div>
 			</div>
 		</div>

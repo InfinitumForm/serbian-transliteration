@@ -19,7 +19,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 
 	/* Registers Login/Logout/Register Links Metabox */
 	public function admin_nav_menu() {
-		add_meta_box( 'transliteration_menu', __( 'Transliteration', RSTR_NAME ), array( $this, 'admin_nav_menu_callback' ), 'nav-menus', 'side', 'default' );
+		add_meta_box( 'transliteration_menu', __( 'Transliteration', 'serbian-transliteration' ), array( $this, 'admin_nav_menu_callback' ), 'nav-menus', 'side', 'default' );
 	}
 
 	/* Displays Login/Logout/Register Links Metabox */
@@ -28,9 +28,9 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		global $nav_menu_selected_id;
 
 		$elems = array(
-			'#transliteration-lat#'		=> __( 'Latin', RSTR_NAME ),
-			'#transliteration-cyr#'		=> __( 'Cyrillic', RSTR_NAME ),
-			'#transliteration-latcyr#'	=> __( 'Latin', RSTR_NAME ) . ' | ' . __( 'Cyrillic', RSTR_NAME )
+			'#transliteration-lat#'		=> __( 'Latin', 'serbian-transliteration' ),
+			'#transliteration-cyr#'		=> __( 'Cyrillic', 'serbian-transliteration' ),
+			'#transliteration-latcyr#'	=> __( 'Latin', 'serbian-transliteration' ) . ' | ' . __( 'Cyrillic', 'serbian-transliteration' )
 		);
 		$logitems = array(
 			'db_id' => 0,
@@ -66,17 +66,17 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 
             <p class="button-controls">
               <span class="list-controls hide-if-no-js">
-                <a href="javascript:void(0);" class="help" onclick="jQuery( '#transliteration-menu-help' ).toggle();"><?php _e( 'Help', RSTR_NAME ); ?></a>
+                <a href="javascript:void(0);" class="help" onclick="jQuery( '#transliteration-menu-help' ).toggle();"><?php _e( 'Help', 'serbian-transliteration' ); ?></a>
                 <span class="hide-if-js" id="transliteration-menu-help"><br /><a name="transliteration-menu-help"></a>
                   <?php
-                  echo '•' . esc_html__( 'To insert language script selector just add a relative link after the link\'s keyword, example :', RSTR_NAME ) . ' <br /><code>#transliteration-latcyr#</code>.';
-                  echo '<br /><br />•' . esc_html__( 'You can also use', RSTR_NAME ) . ' <code>#transliteration-lat#</code> ' . esc_html__( 'for change to Latin or use', RSTR_NAME ) . ' <code>#transliteration-cyr#</code>' . esc_html__( 'for change to Cyrillic', RSTR_NAME ) . '.';
+                  echo '•' . esc_html__( 'To insert language script selector just add a relative link after the link\'s keyword, example :', 'serbian-transliteration' ) . ' <br /><code>#transliteration-latcyr#</code>.';
+                  echo '<br /><br />•' . esc_html__( 'You can also use', 'serbian-transliteration' ) . ' <code>#transliteration-lat#</code> ' . esc_html__( 'for change to Latin or use', 'serbian-transliteration' ) . ' <code>#transliteration-cyr#</code>' . esc_html__( 'for change to Cyrillic', 'serbian-transliteration' ) . '.';
                     ?>
                   </span>
                 </span>
 
                 <span class="add-to-menu">
-                  <input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', RSTR_NAME ); ?>" name="add-transliteration-links-menu-item" id="submit-transliteration-links" />
+                  <input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'serbian-transliteration' ); ?>" name="add-transliteration-links-menu-item" id="submit-transliteration-links" />
                   <span class="spinner"></span>
                 </span>
               </p>
@@ -91,9 +91,9 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 		if($item->url == '#transliteration-latcyr#'){
 			printf(
 				'<p style="padding:10px; background:cornsilk; float:left; margin-right: 10px; font-size:1.1em;"><strong>%s<br><br>%s<br><br>%s</strong></p>',
-				sprintf(__('The name of this navigation is written by always putting the Latin name first, then the Cyrillic one second, separated by the sign %s', RSTR_NAME), '<code>|</code>'),
-				__('Example: Latinica | Ћирилица', RSTR_NAME),
-				__('Note that the white space around them will be cleared.', RSTR_NAME)
+				sprintf(__('The name of this navigation is written by always putting the Latin name first, then the Cyrillic one second, separated by the sign %s', 'serbian-transliteration'), '<code>|</code>'),
+				__('Example: Latinica | Ћирилица', 'serbian-transliteration'),
+				__('Note that the white space around them will be cleared.', 'serbian-transliteration')
 			);
 		}
 

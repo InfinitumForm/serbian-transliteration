@@ -18,18 +18,18 @@ class Serbian_Transliteration_Transliterating {
 	 */
 	public static function registered_languages(){
 		return apply_filters('rstr_registered_languages', array(
-			'sr_RS'  => __('Serbian', RSTR_NAME),
-			'bs_BA'  => __('Bosnian', RSTR_NAME),
-			'cnr'    => __('Montenegrin', RSTR_NAME),
-			'ru_RU'  => __('Russian', RSTR_NAME),
-			'bel'    => __('Belarusian', RSTR_NAME),
-			'bg_BG'  => __('Bulgarian', RSTR_NAME),
-			'mk_MK'  => __('Macedoanian', RSTR_NAME),
-			'kk'     => __('Kazakh', RSTR_NAME),
-			'uk'     => __('Ukrainian', RSTR_NAME),
-			'el'     => __('Greek', RSTR_NAME),
-			'hy'     => __('Armenian', RSTR_NAME) . ' - BETA',
-			'ar'     => __('Arabic', RSTR_NAME) . ' - BETA'
+			'sr_RS'  => __('Serbian', 'serbian-transliteration'),
+			'bs_BA'  => __('Bosnian', 'serbian-transliteration'),
+			'cnr'    => __('Montenegrin', 'serbian-transliteration'),
+			'ru_RU'  => __('Russian', 'serbian-transliteration'),
+			'bel'    => __('Belarusian', 'serbian-transliteration'),
+			'bg_BG'  => __('Bulgarian', 'serbian-transliteration'),
+			'mk_MK'  => __('Macedoanian', 'serbian-transliteration'),
+			'kk'     => __('Kazakh', 'serbian-transliteration'),
+			'uk'     => __('Ukrainian', 'serbian-transliteration'),
+			'el'     => __('Greek', 'serbian-transliteration'),
+			'hy'     => __('Armenian', 'serbian-transliteration') . ' - BETA',
+			'ar'     => __('Arabic', 'serbian-transliteration') . ' - BETA'
 		));
 	}
 	

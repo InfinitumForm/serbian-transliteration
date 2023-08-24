@@ -35,7 +35,7 @@ class Serbian_Transliteration_Tools extends Serbian_Transliteration
 			exit;
 		}
 		
-		echo __('An error occurred while converting. Please refresh the page and try again.', RSTR_NAME);
+		echo __('An error occurred while converting. Please refresh the page and try again.', 'serbian-transliteration');
 		exit;
 	}
 	
@@ -48,7 +48,7 @@ class Serbian_Transliteration_Tools extends Serbian_Transliteration
 		$data = array(
 			'error' => true,
 			'done'   => false,
-			'message' => __('There was a communication problem. Please refresh the page and try again. If this does not solve the problem, contact the author of the plugin.', RSTR_NAME),
+			'message' => __('There was a communication problem. Please refresh the page and try again. If this does not solve the problem, contact the author of the plugin.', 'serbian-transliteration'),
 			'loading' => false
 		);
 		

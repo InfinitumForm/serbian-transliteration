@@ -56,7 +56,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	/*
 	 * Run all dependency in the background
 	 */
-	public static function run_dependency(){
+	public static function run_dependency(){		
 		$inst = self::get_instance();
 
 		/* Transliterate wp-admin
@@ -128,7 +128,6 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	 * Run plugin on the frontend
 	 */
 	public static function run () {
-
 		// Load instance
 		$inst = self::get_instance();
 
@@ -329,7 +328,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'site-name',
 					'id' => 'serbian_transliteration',
-					'title' => __('Transliteration', RSTR_NAME),
+					'title' => __('Transliteration', 'serbian-transliteration'),
 					'href' => admin_url( '/options-general.php?page=serbian-transliteration' ),
 				));
 			}
@@ -372,15 +371,19 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				// Force AJAX transliteration
 				if(get_rstr_option('force-ajax-calls', 'no') == 'yes'){
 					if(wp_doing_ajax() && !Serbian_Transliteration_Utilities::skip_transliteration()) {
-						if(isset($_REQUEST['action']) && in_array(
-							$_REQUEST['action'],
-							array(
-								'find_posts',
-								'heartbeat',
-								'query-attachments',
-								'wp_block'
-							)
-						) !== false) {} else {
+						if(isset($_REQUEST['action']) && (
+							in_array(
+								$_REQUEST['action'],
+								array(
+									'find_posts',
+									'heartbeat',
+									'query-attachments',
+									'wp_block'
+								)
+							) !== false
+							|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? NULL))
+							|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? NULL))
+						)) {} else {
 							$buffer = Serbian_Transliteration::__instance()->cyr_to_lat($buffer);
 						}
 					}
