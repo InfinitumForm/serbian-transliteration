@@ -143,7 +143,9 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		}
 
 		public static function output_buffer_end() {
-			ob_end_flush();
+			if (ob_get_level()) {
+				ob_end_flush();
+			}
 		}
 
 		public static function output_callback ($buffer='') {
@@ -230,7 +232,11 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		}
 
 		public static function rss_output_buffer_end() {
-			$output = ob_end_flush();
+			$output = '';
+			if (ob_get_level()) {
+				$output = ob_get_contents();
+				ob_end_clean();
+			}
 
 			$output = self::run()->transliterate_text($output);
 
