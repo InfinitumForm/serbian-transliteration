@@ -72,6 +72,10 @@ if(!class_exists('Serbian_Transliteration_Themes', false)) :
 			
 			foreach($this->themes as $file_name=>$theme_name)
 			{
+				if( !$this->theme ) {
+					continue;
+				}
+				
 				if ( strpos($this->theme, $theme_name) !== false || strpos($this->theme, $theme_name) !== false ) {
 					$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
 					if(class_exists($theme_class, false)) {

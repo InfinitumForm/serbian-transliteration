@@ -381,8 +381,8 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 									'wp_block'
 								)
 							) !== false
-							|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? NULL))
-							|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? NULL))
+							|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))
+							|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
 						)) {} else {
 							$buffer = Serbian_Transliteration::__instance()->cyr_to_lat($buffer);
 						}

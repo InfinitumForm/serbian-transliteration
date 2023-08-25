@@ -39,7 +39,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 		$key = self::key($key);
 		
 		if (array_key_exists($key, self::$cache)) {
-			return self::$cache[$key];
+			return maybe_unserialize(self::$cache[$key]);
 		}
 
 		if( !self::table_exists() ) {
@@ -49,7 +49,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 				self::$cache[$key] = $default;
 			}
 			
-			return self::$cache[$key];
+			return maybe_unserialize(self::$cache[$key]);
 		}
 		
 		global $wpdb;
@@ -59,9 +59,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 			FROM `{$wpdb->rstr_cache}` 
 			WHERE `{$wpdb->rstr_cache}`.`key` = %s
 		", $key ))) ) {
-			if(is_serialized($result) || self::is_serialized($result)){
-				$result = unserialize($result);
-			}
+			$result = maybe_unserialize($result);
 			self::$cache[$key] = $result;
 			
 			return self::$cache[$key];
@@ -90,9 +88,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 					$expire = (time()+$expire);
 				}
 				
-				if(is_array($value) || is_object($value) || is_bool($value)){
-					$value = serialize($value);
-				}
+				$value = maybe_serialize($value);
 				
 				global $wpdb;
 				
@@ -159,9 +155,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 				$expire = (time()+$expire);
 			}
 			
-			if(is_array($value) || is_object($value) || is_bool($value)){
-				$value = serialize($value);
-			}
+			$value = maybe_serialize($value);
 			
 			global $wpdb;
 			
@@ -306,68 +300,6 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 		} else if( RSTR_DATABASE_VERSION === '1.0.1' ) {
 			$wpdb->query("ALTER TABLE `wp_rstr_cache` CHANGE `value` `value` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;");
 		}
-	}
-	
-	/*
-	 * Check is value is serialized
-	 * @verson    1.0.0
-	 */
-	private static function is_serialized( $data, $strict = true ) {
-		// If it isn't a string, it isn't serialized.
-		if ( ! is_string( $data ) ) {
-			return false;
-		}
-		$data = trim( $data );
-		if ( 'N;' === $data ) {
-			return true;
-		}
-		if ( strlen( $data ) < 4 ) {
-			return false;
-		}
-		if ( ':' !== $data[1] ) {
-			return false;
-		}
-		if ( $strict ) {
-			$lastc = substr( $data, -1 );
-			if ( ';' !== $lastc && '}' !== $lastc ) {
-				return false;
-			}
-		} else {
-			$semicolon = strpos( $data, ';' );
-			$brace     = strpos( $data, '}' );
-			// Either ; or } must exist.
-			if ( false === $semicolon && false === $brace ) {
-				return false;
-			}
-			// But neither must be in the first X characters.
-			if ( false !== $semicolon && $semicolon < 3 ) {
-				return false;
-			}
-			if ( false !== $brace && $brace < 4 ) {
-				return false;
-			}
-		}
-		$token = $data[0];
-		switch ( $token ) {
-			case 's':
-				if ( $strict ) {
-					if ( '"' !== substr( $data, -2, 1 ) ) {
-						return false;
-					}
-				} elseif ( false === strpos( $data, '"' ) ) {
-					return false;
-				}
-				// Or else fall through.
-			case 'a':
-			case 'O':
-				return (bool) preg_match( "/^{$token}:[0-9]+:/s", $data );
-			case 'b':
-			case 'i':
-			case 'd':
-				$end = $strict ? '$' : '';
-				return (bool) preg_match( "/^{$token}:[0-9.E+-]+;{$end}/", $data );
-		}
-		return false;
 	}
 	
 	/*

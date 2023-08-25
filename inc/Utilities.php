@@ -320,9 +320,12 @@ class Serbian_Transliteration_Utilities{
 	 */
 	public static function is_elementor_editor(){
 		if(
-			self::is_plugin_active('elementor/elementor.php') 
-			&& ($_GET['action'] ?? NULL) === 'elementor'
-			&& is_numeric($_GET['post'] ?? NULL)
+			(
+				self::is_plugin_active('elementor/elementor.php') 
+				&& ($_REQUEST['action'] ?? NULL) === 'elementor'
+				&& is_numeric($_REQUEST['post'] ?? NULL)
+			)
+			|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
 		) {
 			return true;
 			
@@ -346,7 +349,7 @@ class Serbian_Transliteration_Utilities{
 				&& is_numeric($_REQUEST['page_id'] ?? NULL)
 				&& is_numeric($_REQUEST['preview_id'] ?? NULL)
 				&& !empty($_REQUEST['preview_nonce'] ?? NULL)
-			) || preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? NULL))
+			) || preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
 		) {
 			return true;
 			
@@ -367,7 +370,7 @@ class Serbian_Transliteration_Utilities{
 			&& (
 				($_REQUEST['ct_builder'] ?? NULL) == 'true'
 				|| ($_REQUEST['ct_inner'] ?? NULL) == 'true'
-				|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? NULL))
+				|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))
 			)
 		) {
 			return true;

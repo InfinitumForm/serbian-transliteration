@@ -1,3 +1,8 @@
+= 1.10.1 =
+* Fixed problem with serialized data
+* Fixed problems with PHP8.1 and above
+* Optimized PHP code
+
 = 1.10.0 =
 * Improvement for Elementor builder
 * Improvement for Oxygen builder

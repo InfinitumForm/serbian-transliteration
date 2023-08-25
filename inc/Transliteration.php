@@ -214,6 +214,7 @@ class Serbian_Transliteration_Transliterating {
 		{
 			$file_name=apply_filters('rstr/init/libraries/file/locale', 'locale.lib');
 			$cache = self::parse_library($file_name);
+			
 			if(!empty($cache)) {
 				Serbian_Transliteration_DB_Cache::set(RSTR_NAME . '-locales', $cache, apply_filters('rstr/init/libraries/file/locale/transient', YEAR_IN_SECONDS));
 			}
