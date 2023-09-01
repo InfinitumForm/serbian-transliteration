@@ -38,17 +38,19 @@ class Serbian_Transliteration_Transliterating {
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public static function can_trasliterate($content){
+	public static function can_trasliterate($content) {
 		return (
 			empty($content) 
 			|| is_array($content) 
 			|| is_object($content) 
 			|| is_numeric($content) 
 			|| is_bool($content)
-			|| is_file($content)
-			|| is_link($content)
-			|| filter_var($content, FILTER_VALIDATE_URL)
-			|| filter_var($content, FILTER_VALIDATE_EMAIL)
+			// Provera da li sadržaj sadrži email
+			|| preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/', $content)
+			// Provera da li sadržaj sadrži URL
+			|| preg_match('/(http|https|ftp):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,4}(\/\S*)?/', $content)
+			// Provera da li sadržaj izgleda kao putanja fajla
+			|| preg_match('/^[\/\\\\]?([a-zA-Z0-9._-]+[\/\\\\])*[a-zA-Z0-9._-]+\.[a-zA-Z]{1,10}$/', $content)
 		);
 	}
 
@@ -291,7 +293,7 @@ class Serbian_Transliteration_Transliterating {
 				// starting from $position to $last_lf_pos
 				$buffer = mb_substr($chunk,0,$last_lf_pos);
 
-				$words = Serbian_Transliteration_Utilities::explode("\n", $buffer);
+				$words = Serbian_Transliteration_Utilities::explode("\n", ($buffer??''));
 				$words = array_unique($words);
 
 				$save = array();
@@ -386,7 +388,7 @@ class Serbian_Transliteration_Transliterating {
 
 				if(!empty($contents))
 				{
-					$words = Serbian_Transliteration_Utilities::explode("\n", $contents);
+					$words = Serbian_Transliteration_Utilities::explode("\n", ($contents??''));
 					$words = array_unique($words);
 				} else return false;
 		} else return false;

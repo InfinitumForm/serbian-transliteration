@@ -70,8 +70,8 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 		}
 		
 		public static function execute_buffer() {
-			add_action('wp_loaded', array(__CLASS__, 'output_buffer_start'), (PHP_INT_MAX-10));
-			add_action('shutdown', array(__CLASS__, 'output_buffer_end'), (PHP_INT_MAX-10));
+			add_action('wp_loaded', array(__CLASS__, 'output_buffer_start'), PHP_INT_MAX-10);
+			add_action('shutdown', array(__CLASS__, 'output_buffer_end'), 0);
 		}
 		
 		public static function output_buffer_start() {

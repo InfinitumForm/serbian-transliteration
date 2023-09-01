@@ -104,13 +104,17 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Admin' ) ) :
 
 		public function content( $content = '' ) {
 			if ( empty( $content ) ) {
-				return $content;
+				return '';
 			}
 
 			if ( is_array( $content ) ) {
 				$content = $this->title_parts( $content );
 			} else if ( is_string( $content ) && ! is_numeric( $content ) ) {
 				$content = $this->cyr_to_lat( $content );
+			}
+			
+			if(NULL === $content) {
+				$content = '';
 			}
 
 			return $content;

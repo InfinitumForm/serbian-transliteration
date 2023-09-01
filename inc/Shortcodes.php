@@ -21,8 +21,8 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 			$this->add_shortcode('rstr_skip', 'skip_shortcode');
 			$this->add_shortcode('transliteration', 'transliteration_shortcode');
 			// Buffer
-			$this->add_action('wp_loaded', 'output_buffer_start', (PHP_INT_MAX-1));
-			$this->add_action('shutdown', 'output_buffer_end', (PHP_INT_MAX-1));
+			$this->add_action('wp_loaded', 'output_buffer_start', PHP_INT_MAX);
+			$this->add_action('shutdown', 'output_buffer_end', 0);
 		}
 	}
 
@@ -255,7 +255,9 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 	}
 
 	function output_buffer_end() {
-		ob_get_clean();
+		if (ob_get_level() > 0) {
+			ob_end_flush();
+		}
 	}
 
 }

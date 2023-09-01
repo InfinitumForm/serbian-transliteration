@@ -836,7 +836,7 @@ class Serbian_Transliteration_Utilities{
 		
 		global $wpdb;
 		$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
-		$parts = self::explode('/', $actual_link);
+		$parts = self::explode('/', ($actual_link??''));
 		if(!empty($parts))
 		{
 			$slug = end($parts);
@@ -912,7 +912,7 @@ class Serbian_Transliteration_Utilities{
 	* @url       https://www.php.net/manual/en/function.explode.php
 	*/
 	public static function explode($separator , $string , $limit = PHP_INT_MAX ){
-		$string = explode($separator, $string, $limit);
+		$string = explode($separator, ($string??''), $limit);
 		$string = array_map('trim', $string);
 		$string = array_filter($string);
 		return $string;

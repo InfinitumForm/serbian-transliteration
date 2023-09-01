@@ -70,7 +70,14 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 					'woocommerce_variable_price_html' => array($classname, 'content'),
 					'woocommerce_variable_empty_price_html' => array($classname, 'content'),
 					'woocommerce_currency_symbol' => array($classname, 'content'),
-					'woocommerce_currencies' => array($classname, 'content')
+					'woocommerce_currencies' => array($classname, 'content'),
+					'woocommerce_countries' => array($classname, 'content'),
+					'woocommerce_countries_shipping_countries' => array($classname, 'content'),
+					'woocommerce_countries_allowed_countries' => array($classname, 'content'),
+					'woocommerce_get_country_name' => array($classname, 'content'),
+					'woocommerce_country_locale' => array($classname, 'content'),
+					'woocommerce_get_shipping_countries' => array($classname, 'content'),
+					'woocommerce_get_allowed_countries' => array($classname, 'content')
 			));
 			asort($filters);
 			return $filters;

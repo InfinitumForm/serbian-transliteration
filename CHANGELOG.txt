@@ -1,3 +1,10 @@
+= 1.10.2 =
+* Improved PHP transliteration buffer
+* Improved transliteration for Woocommerce
+* Fixed transliteration for files
+* Fixed PHP errors of the previous version
+* Fixed PHP errors for Windows operating system
+
 = 1.10.1 =
 * Fixed problem with serialized data
 * Fixed problems with PHP8.1 and above

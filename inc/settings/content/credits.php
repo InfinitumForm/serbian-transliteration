@@ -13,6 +13,7 @@ $special_thanks = array(
 	'Slobodan Mirić' => 'https://www.facebook.com/websitesworkshop',
 	'Slobodan Pantović' => '',
 	'Ivan Stanojević' => '',
+	'Ognjen Odobašić' => ''
 );
 
 ?>

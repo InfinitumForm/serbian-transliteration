@@ -105,6 +105,10 @@ if(!class_exists('Serbian_Transliteration_SEO', false)) :
 				wp_title();
 			$title = ob_get_clean();
 			
+			if(empty($title)) {
+				$title = '';
+			}
+			
 			if(strpos($locale, '_') !== false){
 				$locale = strtolower($locale);
 				$hreflang_lat = strtr($locale, array('_'=>'-Latn-'));
@@ -193,7 +197,7 @@ if(!class_exists('Serbian_Transliteration_SEO', false)) :
 				if(!empty($ip) && preg_match('/([,;]+)/', $ip))
 				{
 					$ips=str_replace(';',',',$ip);
-					$ips=explode(',',$ips);
+					$ips=explode(',',($ips??''));
 					$ips=array_map('trim',$ips);
 					
 					$ipf=array();
@@ -242,7 +246,7 @@ if(!class_exists('Serbian_Transliteration_SEO', false)) :
 					
 					// Well Somethimes can be tricky to find IP if have more then one
 					$ips=str_replace(';',',',$headers['X-Forwarded-For']);
-					$ips=explode(',',$ips);
+					$ips=explode(',',($ips??''));
 					$ips=array_map('trim',$ips);
 					
 					$ipf=array();

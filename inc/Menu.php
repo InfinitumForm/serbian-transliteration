@@ -107,7 +107,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	*/
 	public function transliteration_setup_title( $title, $options ) {
 
-		$titles = explode( '|', $title );
+		$titles = explode( '|', ($title??'') );
 
 		if(is_array($titles)) {
 			$titles = array_map('trim', $titles);
@@ -148,7 +148,7 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 			}
 
 			if($item_url == '#transliteration-latcyr#'){
-				$item_redirect = explode( '|', $item_redirect );
+				$item_redirect = explode( '|', ($item_redirect??'') );
 
 				if ( count( $item_redirect ) != 2 ) {
 					$item_redirect = array_map('trim', $item_redirect);

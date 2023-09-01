@@ -101,9 +101,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 			$search = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $search);
 
-			$arr = Serbian_Transliteration_Utilities::explode(' ', $new_string);
+			$arr = Serbian_Transliteration_Utilities::explode(' ', ($new_string??''));
 
-			$arr_origin = Serbian_Transliteration_Utilities::explode(' ', $content);
+			$arr_origin = Serbian_Transliteration_Utilities::explode(' ', ($content??''));
 
 			if(!empty($arr))
 			{
@@ -283,11 +283,11 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		{
 			$tags = apply_filters('rstr/html/tags',  '!DOCTYPE,a,abbr,acronym,address,applet,area,article,aside,audio,b,base,basefont,bdi,bdo,big,blockquote,body,br,button,canvas,caption,center,cite,code,col,colgroup,data,details,dd,del,details,dfn,dialog,dir,div,dl,dt,em,embed,fieldset,figcaption,figure,font,footer,form,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,meta,master,nav,noframes,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,small,source,span,strike,strong,style,sub,summary,sup,svg,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,tt,u,ul,var,video,wbr');
 
-			$tags_latin = Serbian_Transliteration_Utilities::explode(',', $tags);
+			$tags_latin = Serbian_Transliteration_Utilities::explode(',', ($tags??''));
 			$tags_latin = apply_filters('rstr_html_tags_lat', $tags_latin);
 
 			$tags_cyr = self::__instance()->lat_to_cyr($tags, false);
-			$tags_cyr = Serbian_Transliteration_Utilities::explode(',', $tags_cyr);
+			$tags_cyr = Serbian_Transliteration_Utilities::explode(',', ($tags_cyr??''));
 			$tags_cyr = apply_filters('rstr_html_tags_cyr', $tags_cyr);
 
 			$html_tags = (object)array(

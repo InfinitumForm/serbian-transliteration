@@ -107,21 +107,21 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			{
 				if(get_rstr_option('enable-rss', 'no') == 'yes')
 				{
-					add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 
-					add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 
-					add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 
-					add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 				}
 
-				add_action('wp_loaded', array(__CLASS__, 'output_buffer_start'), (PHP_INT_MAX-10));
-				add_action('shutdown', array(__CLASS__, 'output_buffer_end'), (PHP_INT_MAX-10));
+				add_action('wp_loaded', array(__CLASS__, 'output_buffer_start'), PHP_INT_MAX-10);
+				add_action('shutdown', array(__CLASS__, 'output_buffer_end'), 0);
 			}
 		}
 		
@@ -274,7 +274,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 		}
 
 		public function no_html_content ($content='') {
-			if(empty($content)) return $content;
+			if(empty($content)) return '';
 
 			if(is_array($content))
 			{
@@ -284,11 +284,15 @@ if(!class_exists('Serbian_Transliteration_Mode_Forced')) :
 			}
 			else if(is_string($content))
 			{
-
 				if(method_exists($this, 'transliterate_text')) {
 					$content = $this->transliterate_text($content, NULL, false);
 				}
 			}
+			
+			if( NULL === $content ) {
+				$content = '';
+			}
+			
 			return $content;
 		}
 	}

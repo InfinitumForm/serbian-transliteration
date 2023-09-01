@@ -100,23 +100,23 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 			{
 				if(get_rstr_option('enable-rss', 'no') == 'yes')
 				{
-					add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 
-					add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 
-					add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 
-					add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), 0);
 				}
 
 				if(get_rstr_option('force-widgets', 'no') == 'yes')
 				{
-					add_action('dynamic_sidebar_before', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-					add_action('dynamic_sidebar_after', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+					add_action('dynamic_sidebar_before', array(__CLASS__, 'rss_output_buffer_start'), PHP_INT_MAX-1);
+					add_action('dynamic_sidebar_after', array(__CLASS__, 'rss_output_buffer_end'), 0);
 				}
 			}
 		}
@@ -239,7 +239,7 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 		}
 
 		public function no_html_content ($content='') {
-			if(empty($content)) return $content;
+			if(empty($content)) return '';
 
 			if(is_array($content))
 			{
@@ -254,6 +254,11 @@ if(!class_exists('Serbian_Transliteration_Mode_Advanced')) :
 					$content = $this->transliterate_text($content, NULL, false);
 				}
 			}
+			
+			if( NULL === $content ) {
+				$content = '';
+			}
+			
 			return $content;
 		}
 
