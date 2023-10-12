@@ -21,6 +21,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 				<h1><span><?php _e('Available PHP Functions', 'serbian-transliteration'); ?></span></h1>
 				<div class="inside">
 					<br>
+					<h2 style="margin:0;">get_latin_url</h2>
+					<p><code class="lang-php">function get_latin_url(string $url = NULL) : string</code></p>
+					<br>
+					<h2 style="margin:0;">get_cyrillic_url</h2>
+					<p><code class="lang-php">function get_cyrillic_url(string $url = NULL) : string</code></p>
+					<br>
+					<h2 style="margin:0;">get_active_transliteration</h2>
+					<p><code class="lang-php">function get_active_transliteration() : string</code></p>
+					<br>
 					<h2 style="margin:0;">is_cyrillic_text</h2>
 					<p><code class="lang-php">function is_cyrillic_text(string $content) : bool</code></p>
 					<br>

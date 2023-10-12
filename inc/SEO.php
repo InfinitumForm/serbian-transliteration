@@ -101,9 +101,7 @@ if(!class_exists('Serbian_Transliteration_SEO', false)) :
 			$parse_url = Serbian_Transliteration_Utilities::parse_url();
 			$url = $parse_url['url'];
 			
-			ob_start();
-				wp_title();
-			$title = ob_get_clean();
+			$title = wp_get_document_title();
 			
 			if(empty($title)) {
 				$title = '';
@@ -196,9 +194,14 @@ if(!class_exists('Serbian_Transliteration_SEO', false)) :
 				// Check if here is multiple IP's
 				if(!empty($ip) && preg_match('/([,;]+)/', $ip))
 				{
-					$ips=str_replace(';',',',$ip);
-					$ips=explode(',',($ips??''));
-					$ips=array_map('trim',$ips);
+					$ips=str_replace(';', ',', ($ip??'') );
+					
+					if( !empty($ips) ) {
+						$ips=explode(',',($ips??''));
+						$ips=array_map('trim',$ips);
+					} else {
+						$ips=[];
+					}
 					
 					$ipf=array();
 					foreach($ips as $ipx)
@@ -245,9 +248,14 @@ if(!class_exists('Serbian_Transliteration_SEO', false)) :
 				){
 					
 					// Well Somethimes can be tricky to find IP if have more then one
-					$ips=str_replace(';',',',$headers['X-Forwarded-For']);
-					$ips=explode(',',($ips??''));
-					$ips=array_map('trim',$ips);
+					$ips=str_replace(';',',',$headers['X-Forwarded-For']??'');
+					if( !empty($ips) ) {
+						$ips=explode(',',($ips??''));
+						$ips=array_map('trim',$ips);
+					} else {
+						$ips=[];
+					}
+					
 					
 					$ipf=array();
 					foreach($ips as $ipx)

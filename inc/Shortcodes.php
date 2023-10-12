@@ -125,26 +125,26 @@ class Serbian_Transliteration_Shortcodes extends Serbian_Transliteration
 		//	case 'lat':
 			case 'cyr_to_lat':
 				if($attr->lat_caption) {
-					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->lat, $attr->lat_title, $attr->lat_caption);
+					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', esc_attr($attr->lat), esc_attr($attr->lat_title), wp_kses_post($attr->lat_caption));
 				} else {
-					return sprintf('<img src="%1$s" alt="%2$s">', $attr->lat, $attr->lat_title);
+					return sprintf('<img src="%1$s" alt="%2$s">', esc_attr($attr->lat), esc_attr($attr->lat_title));
 				}
 			break;
 
 		//	case 'cyr':
 			case 'lat_to_cyr':
 				if($attr->cyr_caption) {
-					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->cyr, $attr->cyr_title, $attr->cyr_caption);
+					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', esc_attr($attr->cyr), esc_attr($attr->cyr_title), wp_kses_post($attr->cyr_caption));
 				} else {
-					return sprintf('<img src="%1$s" alt="%2$s">', $attr->cyr, $attr->cyr_title);
+					return sprintf('<img src="%1$s" alt="%2$s">', esc_attr($attr->cyr), esc_attr($attr->cyr_title));
 				}
 			break;
 
 			default:
 				if($attr->default_caption) {
-					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', $attr->default, $attr->default_title, $attr->default_caption);
+					return sprintf('<figure><img src="%1$s" alt="%2$s"><figcaption>%3$s</figcaption></figure>', esc_attr($attr->default), esc_attr($attr->default_title), wp_kses_post($attr->default_caption));
 				} else {
-					return sprintf('<img src="%1$s" alt="%2$s">', $attr->default, $attr->default_title);
+					return sprintf('<img src="%1$s" alt="%2$s">', esc_attr($attr->default), esc_attr($attr->default_title));
 				}
 			break;
 		}

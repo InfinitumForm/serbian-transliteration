@@ -1,3 +1,17 @@
+= 1.10.5 =
+* Fixed problem with the themes that not support menus
+* Fixed problems with wp title
+* Removed support for the older WP versions below 5.4
+* Removed PHP errors from previous versions
+
+= 1.10.4 =
+* Fixed Block Editor transliteration
+* Fixed Elementor transliteration
+* Fixed URL rendering
+
+= 1.10.3 =
+* Improved WP Mail transliteration
+
 = 1.10.2 =
 * Improved PHP transliteration buffer
 * Improved transliteration for Woocommerce
@@ -476,7 +490,7 @@
 
 = 1.1.3 =
 * Improved UTF-8 characters
-* Improved Elementor and Gutemberg editor support
+* Improved Elementor and Gutenberg editor support
 * Improved HTML parsing
 * Added transliteration filters
 * Added only WooCommerce transliteration (separated mode)

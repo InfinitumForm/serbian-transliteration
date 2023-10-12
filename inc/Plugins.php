@@ -17,7 +17,9 @@ if(!class_exists('Serbian_Transliteration_Plugins', false)) :
 			'data-tables-generator-by-supsystic' => 'index',
 			'contact-form-7' => 'wp-contact-form-7',
 			'advanced-custom-fields' => 'acf',
-			'advanced-custom-fields-pro' => 'acf'
+			'advanced-custom-fields-pro' => 'acf',
+			'elementor' => 'elementor',
+			'elementor-pro' => 'elementor'
 		);
 		
 		/* Run this script */

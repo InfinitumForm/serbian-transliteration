@@ -43,7 +43,8 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 				'gettext' 				=> 'content',
 				'ngettext' 				=> 'content',
 				'gettext_with_context' 	=> 'content',
-				'ngettext_with_context' => 'content'
+				'ngettext_with_context' => 'content',
+				'render_block'			=> 'content'
 			);
 			
 			asort($filters);

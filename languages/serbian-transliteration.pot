@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliterator\n"
-"POT-Creation-Date: 2023-08-24 13:48+0200\n"
+"POT-Creation-Date: 2023-10-12 23:36+0200\n"
 "PO-Revision-Date: 2023-08-24 13:48+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: serbian-transliteration.php\n"
@@ -21,67 +21,73 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: inc/Functions.php:283 inc/Menu.php:32 inc/Menu.php:33 inc/Settings.php:643
+#: inc/Functions.php:91
+msgid ""
+"This function is deprecated and will be removed. Replace it with the "
+"`get_script()` function"
+msgstr ""
+
+#: inc/Functions.php:337 inc/Menu.php:37 inc/Menu.php:38 inc/Settings.php:643
 #: inc/Settings.php:1060 inc/Shortcodes.php:38
-#: inc/settings/content/php-functions.php:113
+#: inc/settings/content/php-functions.php:122
 msgid "Cyrillic"
 msgstr ""
 
-#: inc/Functions.php:284 inc/Menu.php:31 inc/Menu.php:33 inc/Settings.php:644
+#: inc/Functions.php:338 inc/Menu.php:36 inc/Menu.php:38 inc/Settings.php:644
 #: inc/Settings.php:1059 inc/Shortcodes.php:39
-#: inc/settings/content/php-functions.php:118
+#: inc/settings/content/php-functions.php:127
 msgid "Latin"
 msgstr ""
 
-#: inc/Functions.php:302
+#: inc/Functions.php:356
 #, php-format
 msgid ""
 "Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
 "\"%5$s\" or \"%6$s\""
 msgstr ""
 
-#: inc/Init.php:332 inc/Menu.php:22 inc/Settings.php:216 inc/Settings.php:236
+#: inc/Init.php:331 inc/Menu.php:27 inc/Settings.php:216 inc/Settings.php:236
 msgid "Transliteration"
 msgstr ""
 
-#: inc/Menu.php:69
+#: inc/Menu.php:74
 msgid "Help"
 msgstr ""
 
-#: inc/Menu.php:72
+#: inc/Menu.php:77
 msgid ""
 "To insert language script selector just add a relative link after the link's "
 "keyword, example :"
 msgstr ""
 
-#: inc/Menu.php:73
+#: inc/Menu.php:78
 msgid "You can also use"
 msgstr ""
 
-#: inc/Menu.php:73
+#: inc/Menu.php:78
 msgid "for change to Latin or use"
 msgstr ""
 
-#: inc/Menu.php:73
+#: inc/Menu.php:78
 msgid "for change to Cyrillic"
 msgstr ""
 
-#: inc/Menu.php:79
+#: inc/Menu.php:84
 msgid "Add to Menu"
 msgstr ""
 
-#: inc/Menu.php:94
+#: inc/Menu.php:104
 #, php-format
 msgid ""
 "The name of this navigation is written by always putting the Latin name "
 "first, then the Cyrillic one second, separated by the sign %s"
 msgstr ""
 
-#: inc/Menu.php:95
+#: inc/Menu.php:105
 msgid "Example: Latinica | Ћирилица"
 msgstr ""
 
-#: inc/Menu.php:96
+#: inc/Menu.php:106
 msgid "Note that the white space around them will be cleared."
 msgstr ""
 
@@ -802,144 +808,144 @@ msgstr ""
 msgid "Latin to Armenian"
 msgstr ""
 
-#: inc/Utilities.php:874 inc/Utilities.php:875
+#: inc/Utilities.php:883 inc/Utilities.php:884
 msgctxt "Language script"
 msgid "Script"
 msgstr ""
 
-#: inc/Utilities.php:876
+#: inc/Utilities.php:885
 msgid "Search by Script"
 msgstr ""
 
-#: inc/Utilities.php:877
+#: inc/Utilities.php:886
 msgid "All Scripts"
 msgstr ""
 
-#: inc/Utilities.php:878
+#: inc/Utilities.php:887
 msgid "Parent Script"
 msgstr ""
 
-#: inc/Utilities.php:879
+#: inc/Utilities.php:888
 msgid "Parent Script:"
 msgstr ""
 
-#: inc/Utilities.php:880
+#: inc/Utilities.php:889
 msgid "Edit Script"
 msgstr ""
 
-#: inc/Utilities.php:881
+#: inc/Utilities.php:890
 msgid "Update Script"
 msgstr ""
 
-#: inc/Utilities.php:882
+#: inc/Utilities.php:891
 msgid "Add New Script"
 msgstr ""
 
-#: inc/Utilities.php:883
+#: inc/Utilities.php:892
 msgid "New Script Name"
 msgstr ""
 
-#: inc/Utilities.php:884
+#: inc/Utilities.php:893
 msgid "Script"
 msgstr ""
 
-#: inc/Utilities.php:977
+#: inc/Utilities.php:986
 msgid " degrees "
 msgstr ""
 
-#: inc/Utilities.php:979
+#: inc/Utilities.php:988
 msgid " divided by "
 msgstr ""
 
-#: inc/Utilities.php:979
+#: inc/Utilities.php:988
 msgid " times "
 msgstr ""
 
-#: inc/Utilities.php:979
+#: inc/Utilities.php:988
 msgid " plus-minus "
 msgstr ""
 
-#: inc/Utilities.php:979
+#: inc/Utilities.php:988
 msgid " square root "
 msgstr ""
 
-#: inc/Utilities.php:980
+#: inc/Utilities.php:989
 msgid " infinity "
 msgstr ""
 
-#: inc/Utilities.php:980
+#: inc/Utilities.php:989
 msgid " almost equal to "
 msgstr ""
 
-#: inc/Utilities.php:980
+#: inc/Utilities.php:989
 msgid " not equal to "
 msgstr ""
 
-#: inc/Utilities.php:981
+#: inc/Utilities.php:990
 msgid " identical to "
 msgstr ""
 
-#: inc/Utilities.php:981
+#: inc/Utilities.php:990
 msgid " less than or equal to "
 msgstr ""
 
-#: inc/Utilities.php:981
+#: inc/Utilities.php:990
 msgid " greater than or equal to "
 msgstr ""
 
-#: inc/Utilities.php:982
+#: inc/Utilities.php:991
 msgid " left "
 msgstr ""
 
-#: inc/Utilities.php:982
+#: inc/Utilities.php:991
 msgid " right "
 msgstr ""
 
-#: inc/Utilities.php:982
+#: inc/Utilities.php:991
 msgid " up "
 msgstr ""
 
-#: inc/Utilities.php:982
+#: inc/Utilities.php:991
 msgid " down "
 msgstr ""
 
-#: inc/Utilities.php:983
+#: inc/Utilities.php:992
 msgid " left and right "
 msgstr ""
 
-#: inc/Utilities.php:983
+#: inc/Utilities.php:992
 msgid " up and down "
 msgstr ""
 
-#: inc/Utilities.php:983
+#: inc/Utilities.php:992
 msgid " care of "
 msgstr ""
 
-#: inc/Utilities.php:984
+#: inc/Utilities.php:993
 msgid " estimated "
 msgstr ""
 
-#: inc/Utilities.php:984
+#: inc/Utilities.php:993
 msgid " ohm "
 msgstr ""
 
-#: inc/Utilities.php:984
+#: inc/Utilities.php:993
 msgid " female "
 msgstr ""
 
-#: inc/Utilities.php:984
+#: inc/Utilities.php:993
 msgid " male "
 msgstr ""
 
-#: inc/Utilities.php:985
+#: inc/Utilities.php:994
 msgid " Copyright "
 msgstr ""
 
-#: inc/Utilities.php:985
+#: inc/Utilities.php:994
 msgid " Registered "
 msgstr ""
 
-#: inc/Utilities.php:985
+#: inc/Utilities.php:994
 msgid " Trademark "
 msgstr ""
 
@@ -1005,16 +1011,16 @@ msgstr ""
 msgid "Credits & Info"
 msgstr ""
 
-#: inc/settings/content/credits.php:47
+#: inc/settings/content/credits.php:48
 msgid "Credits"
 msgstr ""
 
-#: inc/settings/content/credits.php:51
+#: inc/settings/content/credits.php:52
 #, php-format
 msgid "This plugin is made by %1$s"
 msgstr ""
 
-#: inc/settings/content/credits.php:55
+#: inc/settings/content/credits.php:56
 msgid ""
 "This is a light weight, simple and easy plugin with which you can "
 "transliterate your WordPress installation from Cyrillic to Latin and vice "
@@ -1022,35 +1028,35 @@ msgid ""
 "shortcodes that you can use to partially transliterate parts of the content."
 msgstr ""
 
-#: inc/settings/content/credits.php:70
+#: inc/settings/content/credits.php:71
 msgid "Sponsors of this plugin:"
 msgstr ""
 
-#: inc/settings/content/credits.php:74
+#: inc/settings/content/credits.php:75
 #, php-format
 msgid ""
 "If you want to help develop this plugin and be one of the sponsors, please "
 "contact us at: %s"
 msgstr ""
 
-#: inc/settings/content/credits.php:98
+#: inc/settings/content/credits.php:99
 msgid "Special thanks to the contributors in the development of this plugin:"
 msgstr ""
 
-#: inc/settings/content/credits.php:104
+#: inc/settings/content/credits.php:105
 msgid "Copyright"
 msgstr ""
 
-#: inc/settings/content/credits.php:108
+#: inc/settings/content/credits.php:109
 #, php-format
 msgid "Copyright &copy; 2020 - %1$d %2$s by %3$s. All Right Reserved."
 msgstr ""
 
-#: inc/settings/content/credits.php:110
+#: inc/settings/content/credits.php:111
 msgid "Transliterator – WordPress Transliteration"
 msgstr ""
 
-#: inc/settings/content/credits.php:115
+#: inc/settings/content/credits.php:116
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -1058,29 +1064,29 @@ msgid ""
 "any later version."
 msgstr ""
 
-#: inc/settings/content/credits.php:116
+#: inc/settings/content/credits.php:117
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE."
 msgstr ""
 
-#: inc/settings/content/credits.php:117
+#: inc/settings/content/credits.php:118
 msgid "See the GNU General Public License for more details."
 msgstr ""
 
-#: inc/settings/content/credits.php:118
+#: inc/settings/content/credits.php:119
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
 msgstr ""
 
-#: inc/settings/content/credits.php:120 inc/settings/sidebar.php:61
+#: inc/settings/content/credits.php:121 inc/settings/sidebar.php:61
 msgid "Donations"
 msgstr ""
 
-#: inc/settings/content/credits.php:121 inc/settings/sidebar.php:63
+#: inc/settings/content/credits.php:122 inc/settings/sidebar.php:63
 #, no-php-format
 msgid ""
 "This plugin is 100% free. If you want to buy us one coffee, beer or in "
@@ -1088,15 +1094,15 @@ msgid ""
 "can do it in the following ways:"
 msgstr ""
 
-#: inc/settings/content/credits.php:123 inc/settings/sidebar.php:65
+#: inc/settings/content/credits.php:124 inc/settings/sidebar.php:65
 msgid "PayPal"
 msgstr ""
 
-#: inc/settings/content/credits.php:124 inc/settings/sidebar.php:66
+#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:66
 msgid "From Serbia"
 msgstr ""
 
-#: inc/settings/content/credits.php:124 inc/settings/sidebar.php:66
+#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:66
 msgid "Mobi Bank"
 msgstr ""
 
@@ -1291,76 +1297,76 @@ msgstr ""
 msgid "Available PHP Functions"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:31
+#: inc/settings/content/php-functions.php:40
 msgid "Determines whether the site is already in Cyrillic."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:61
+#: inc/settings/content/php-functions.php:70
 #, php-format
 msgid "alias of function %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:65
+#: inc/settings/content/php-functions.php:74
 msgid "Transliteration of some text or content into the desired script."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:67
+#: inc/settings/content/php-functions.php:76
 msgid ""
 "The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> "
 "(Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:70
+#: inc/settings/content/php-functions.php:79
 msgid "Transliteration only from Cyrillic to Latin."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:74
+#: inc/settings/content/php-functions.php:83
 msgid "Transliteration only from Latin to Cyrillic."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:78
+#: inc/settings/content/php-functions.php:87
 msgid "Get active script."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:82
+#: inc/settings/content/php-functions.php:91
 msgid "This function displays a selector for the transliteration script."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:84
+#: inc/settings/content/php-functions.php:93
 msgid "Parameters"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:85
+#: inc/settings/content/php-functions.php:94
 msgid ""
 "This attribute contains an associative set of parameters for this function:"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:91
+#: inc/settings/content/php-functions.php:100
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
 "%1$s, %2$s, %3$s, %4$s, %5$s or %6$s. Default: %1$s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:103
+#: inc/settings/content/php-functions.php:112
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
 "string. Default: %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:108
+#: inc/settings/content/php-functions.php:117
 #: inc/settings/content/shortcodes.php:68
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:113
+#: inc/settings/content/php-functions.php:122
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:118
+#: inc/settings/content/php-functions.php:127
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr ""

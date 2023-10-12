@@ -19,6 +19,11 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 
 	/* Registers Login/Logout/Register Links Metabox */
 	public function admin_nav_menu() {
+		
+		if( !current_theme_supports('menus') ) {
+			return;
+		}
+		
 		add_meta_box( 'transliteration_menu', __( 'Transliteration', 'serbian-transliteration' ), array( $this, 'admin_nav_menu_callback' ), 'nav-menus', 'side', 'default' );
 	}
 
@@ -88,6 +93,11 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 
 	/* Add custom fields to the menu item */
 	public function menu_item_custom_fields($item_id, $item, $depth = 0, $args = NULL, $id = 0) {
+		
+		if( !current_theme_supports('menus') ) {
+			return;
+		}
+		
 		if($item->url == '#transliteration-latcyr#'){
 			printf(
 				'<p style="padding:10px; background:cornsilk; float:left; margin-right: 10px; font-size:1.1em;"><strong>%s<br><br>%s<br><br>%s</strong></p>',
@@ -100,12 +110,17 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	}
 
 	/**
-	* Show Login || Logout Menu item for front end.
+	* Set title
 	*
 	* @since 1.0.0
-	* @param object $menu_item The menu item object.
+	* @param object $title The menu item object.
+	* @param object $options The menu options.
 	*/
 	public function transliteration_setup_title( $title, $options ) {
+		
+		if( !current_theme_supports('menus') ) {
+			return $title;
+		}
 
 		$titles = explode( '|', ($title??'') );
 
@@ -127,6 +142,10 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 	* @param object $menu_item The menu item object.
 	*/
 	public function menu_setup( $item ) {
+		
+		if( !current_theme_supports('menus') ) {
+			return $item;
+		}
 
 		global $pagenow;
 

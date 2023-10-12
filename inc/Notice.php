@@ -86,7 +86,7 @@ if(!class_exists('Serbian_Transliteration_Notice', false)) :
 		}
 		
 		// dimiss vote notices
-		public function display_donation() {			
+		public function display_donation() {
 			if( !get_option(RSTR_NAME . '-reviewed') ) {
 				return;
 			}
@@ -135,8 +135,8 @@ if(!class_exists('Serbian_Transliteration_Notice', false)) :
 			$dont_disturb = esc_url( add_query_arg('rstr_dimiss_donation', '1', $parse_url['url']) );
 			$plugin_info = get_plugin_data( RSTR_FILE , true, true );       
 			$donationurl = 'https://www.buymeacoffee.com/ivijanstefan';
-		 
-			printf(
+
+			$message = sprintf(
 				'<div class="notice notice-info">
 					<h3>'.__('Hey! It\'s been a while since you used the plugin for <b> %1$s </b>', 'serbian-transliteration').'</h3>
 					
@@ -157,10 +157,10 @@ if(!class_exists('Serbian_Transliteration_Notice', false)) :
 						)
 					).'</p>
 				</div>',
-				$plugin_info['Name'],
-				$reviewurl,
-				$dont_disturb
+				$plugin_info['Name']
 			);
+
+			echo $message;
 		}
 
 	}

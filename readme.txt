@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 1.10.2
+Stable tag: 1.10.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -12,7 +12,7 @@ Donate link: https://www.buymeacoffee.com/ivijanstefan
 Universal transliterator for permalinks, posts, tags, categories, media, files, search and more, rendering them universally readable.
 
 == Description ==
-This plugin provides a streamlined and straightforward solution for transliterating your WordPress content between Cyrillic and Latin scripts. It is designed to be lightweight and user-friendly, requiring just a few clicks to carry out the conversion. An additional feature of this plugin is its ability to support special shortcodes, allowing selective transliteration of content sections, thereby offering increased flexibility in content presentation.
+This plugin provides a seamless solution for converting WordPress content between Cyrillic and Latin scripts. Crafted to be user-friendly and lightweight, it facilitates the conversion process with minimal clicks. It also incorporates support for unique shortcodes, enabling selective transliteration of designated content sections and delivering superior flexibility in how content is presented. Make your site latin now!
 
 = FEATURES =
 
@@ -74,7 +74,7 @@ We also do special compatible functions with:
 
 **It's crucial to understand** that while our plugin is compatible with most others, the sheer diversity of WordPress installations and the thousands of available plugins mean there's a small chance of encountering conflicts. We strive to ensure maximum compatibility, but given the vast number of variables, we can't guarantee flawless operation in all instances. If you experience issues, they may stem from incompatibility with other plugins. We encourage you to reach out to us or the respective plugin authors for resolution. Regularly updating all your plugins and your WordPress installation is the most common solution for most problems.
 
-This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
+This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/), [Latin Now!](https://wordpress.org/plugins/latin-now/), [Cyr to Lat enhanced](https://wordpress.org/plugins/cyr3lat/), [Cyrlitera](https://wordpress.org/plugins/cyrlitera/) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
 
 It is important for you to know that any functionality in our plugin can be turned off if you do not need it, as well as the ability to filter certain hooks and filters. We have tried to provide maximum flexibility and compatibility to everyone.
 
@@ -154,6 +154,20 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.10.5 =
+* Fixed problem with the themes that not support menus
+* Fixed problems with wp title
+* Removed support for the older WP versions below 5.4
+* Removed PHP errors from previous versions
+
+= 1.10.4 =
+* Fixed Block Editor transliteration
+* Fixed Elementor transliteration
+* Fixed URL rendering
+
+= 1.10.3 =
+* Improved WP Mail transliteration
+
 = 1.10.2 =
 * Improved PHP transliteration buffer
 * Improved transliteration for Woocommerce
@@ -173,179 +187,14 @@ We also thought of PHP developers where we have enabled several useful functions
 * Improved textdomain for translations
 * Fixed bugs inside AJAX calls
 * Fixed UX
-
-= 1.9.11 =
-* Added suport for Oxygen builder
-
-= 1.9.10 =
-* Removed obsolete codes
-
-= 1.9.9 =
-* Improved caching
-* Support for WP version 6.3.x
-* Added support for ACF and ACF PRO
-* Fixed custom post type arguments
-
-= 1.9.8 =
-* Fixed a problem with the Elementor blank screen
-
-= 1.9.7 =
-* Fixed a problem with the Cyrillic version of the transliteration
-* Fixed issue with JSON transliteration
-
-= 1.9.6 =
-* Fixed transliteration objects
-* Introduced cached algorithms
-* Removed unnecessary calling of PHP classes
-
-= 1.9.5 =
-* Fix WooCommerce transliteration problems
-* Improved AJAX call transliteration
-
-= 1.9.4 =
-* Fix browser cache
-
-= 1.9.3 =
-* Added W3 Total Cache support
-
-= 1.9.2 =
-* Fixed memory leaking in WP admin
-* Fixed wp admin login issue for non standard language settings
-
-= 1.9.1 =
-* Fixed fatal error on deprecated constants
-
-= 1.9.0 =
-* Added support for user locales
-* Fixed languages detection
-
-= 1.8.12 =
-* Added support for the [Geo Controller](https://wordpress.org/plugins/cf-geoplugin/) plugin
-
-= 1.8.11 =
-* Fixed alternate links for SEO
-* Security updates
-
-= 1.8.10 =
-* Fixed Polylang transliteration error 
-
-= 1.8.9 =
-* Improved Macedonian language
-* Improved UX
-
-= 1.8.8 =
-* Fixed memory leaking in WP admin
-
-= 1.8.7 =
-* Added new skipped words for the Serbian language
-* Fixed Macedonian transliteration
-* Fixed locale recognation
-* Improved database cache
-* Optimized PHP code
-
-= 1.8.6 =
-* Fixed memory leaking on the admin pages
-
-= 1.8.5 =
-* Improved encoding
-
-= 1.8.4 =
-* Improving optimization
-* Preventing memory leaks
-
-= 1.8.3 =
-* Fixed encoding
-* Fixed operating system mode
-* Fixed memory leaking
-
-= 1.8.2 =
-* Updated Ukrainian transliteration
-* Updated Serbian transliteration
-* Updated libraries
-* Fixed cache algorithm
-
-= 1.8.1 =
-* Added advanced cache functionality
-* Updated Ukrainian transliteration
-* Optimized PHP code
-
-= 1.8.0 =
-* Added support for the WordPress version 6.0
-* Update transliterations
-* Update translations
-
-= 1.7.9 =
-* Fixing activation code
-* Fixing translations
-* Improving settings
-
-= 1.7.8 =
-* Fixing missing constants
-
-= 1.7.7 =
-* Fixed critical errors on the multisite installations
-
-= 1.7.6 =
-* Fixed iconv() PHP error
-* Fixed block editor bugs
-
-= 1.7.5 =
-* Fixed mail transliterations
-* Fixed file transliterations
-* Improved redirection links
-* Improved cache
-* Improved admin settings
-
-= 1.7.4 =
-* Fixing WordPress memory leaking
-* Improved cache functionality
-
-= 1.7.3 =
-* **MAJOR UPDATE:** You need to review and edit your settings
-* Fixed transliteration filters
-* Improved Contact Form 7 transliteration
-
-= 1.7.2 =
-* Improved cache
-* Fixed object transliteration
-* Adding support for the CF7
-
-= 1.7.1 =
-* Improved transliterations for the Serbian, Bosnian and montenegrin
-* Improved current URL recognation
-* Improved plugin cache
-* Tested up to WordPress version 5.8
-
-= 1.7.0 =
-* Fixed blank screen on the Cyrillic transliteration
-* Improved WP Cache object
-* Removed regular expression error
-* Moved to the static cache objects
-* Improved AJAX calls
-* Added algorithm for faster language recognition
-* Removed scripts that slow down the site
 
 == Upgrade Notice ==
 
-= 1.10.2 =
-* Improved PHP transliteration buffer
-* Improved transliteration for Woocommerce
-* Fixed transliteration for files
-* Fixed PHP errors of the previous version
-* Fixed PHP errors for Windows operating system
-
-= 1.10.1 =
-* Fixed problem with serialized data
-* Fixed problems with PHP8.1 and above
-* Optimized PHP code
-
-= 1.10.0 =
-* Improvement for Elementor builder
-* Improvement for Oxygen builder
-* Enhanced security
-* Improved textdomain for translations
-* Fixed bugs inside AJAX calls
-* Fixed UX
+= 1.10.5 =
+* Fixed problem with the themes that not support menus
+* Fixed problems with wp title
+* Removed support for the older WP versions below 5.4
+* Removed PHP errors from previous versions
 
 == Frequently Asked Questions ==
 

@@ -55,7 +55,8 @@ if(!class_exists('Serbian_Transliteration_Mode_Standard')) :
 				'sanitize_title'		=> 'force_permalink_to_latin',
 				'the_permalink'			=> 'force_permalink_to_latin',
 				'wp_unique_post_slug'	=> 'force_permalink_to_latin',
-				'wp_mail'				=> 'wp_mail'
+				'wp_mail'				=> 'wp_mail',
+				'render_block'			=> 'content'
 			);
 			asort($filters);
 

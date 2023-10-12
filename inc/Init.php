@@ -313,7 +313,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 					}
 					// Return values
 					return $atts;
-				}, 10, 1);
+				}, PHP_INT_MAX, 1);
 			}
 		}
 

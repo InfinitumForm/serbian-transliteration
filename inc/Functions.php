@@ -10,6 +10,58 @@
 // Indicate functions file for the extended plugins
 if(!defined('RSTR_FUNCTIONS')) define('RSTR_FUNCTIONS', true);
 
+
+/*
+ * Get the latin URL
+ * @param         $url (optional)
+ * @return        string
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('get_latin_url')) :
+	function get_latin_url($url = NULL)
+	{
+		
+		if( $url ) {
+			return add_query_arg( get_rstr_option('url-selector', 'rstr'), 'lat', $url );
+		}
+		
+		return add_query_arg( get_rstr_option('url-selector', 'rstr'), 'lat' );
+	}
+endif;
+
+
+/*
+ * Get the cyrillic URL
+ * @param         $url (optional)
+ * @return        string
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('get_cyrillic_url')) :
+	function get_cyrillic_url($url = NULL)
+	{
+		if( $url ) {
+			return add_query_arg( get_rstr_option('url-selector', 'rstr'), 'cyr', $url );
+		}
+		
+		return add_query_arg( get_rstr_option('url-selector', 'rstr'), 'cyr' );
+	}
+endif;
+
+
+
+/*
+ * Get the active transliteration
+ * @return        string
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('get_active_transliteration')) :
+	function get_active_transliteration()
+	{
+		return (function_exists('rstr_get_script') ? rstr_get_script() : get_script());
+	}
+endif;
+
+
 /*
  * Get current URL
  * @return        string
@@ -36,6 +88,7 @@ if(!function_exists('get_script')) :
 elseif(!function_exists('rstr_get_script')):
 	function rstr_get_script()
 	{
+		_doing_it_wrong( 'rstr_get_script', __('This function is deprecated and will be removed. Replace it with the `get_script()` function', 'serbian-transliteration'), '1.10.5' );
 		return Serbian_Transliteration_Utilities::get_current_script();
 	}
 endif;
@@ -266,13 +319,14 @@ if(!function_exists('lat_to_cyr')) :
 	}
 endif;
 
+
 /*
  * Script selector
  * @return        HTML string/echo/object/array
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('script_selector')) :
-	function script_selector ($args) {
+	function script_selector ($args = []) {
 		$ID = uniqid('script_selector_');
 
 		$args = (object)wp_parse_args($args, array(
@@ -285,9 +339,9 @@ if(!function_exists('script_selector')) :
 		));
 
 		$options = (object)array(
-			'active'	=> (function_exists('rstr_get_script') ? rstr_get_script() : get_script()),
-			'cyr'		=> add_query_arg( get_rstr_option('url-selector', 'rstr'), 'cyr' ),
-			'lat'		=> add_query_arg( get_rstr_option('url-selector', 'rstr'), 'lat' )
+			'active'	=> get_active_transliteration(),
+			'cyr'		=> get_cyrillic_url(),
+			'lat'		=> get_latin_url()
 		);
 
 		if(in_array($args->display_type, array('object', 'array'))) {
@@ -309,28 +363,28 @@ if(!function_exists('script_selector')) :
 						$args,
 						$options
 					),
-					$options->lat,
-					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
+					esc_url($options->lat),
+					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
 					$args->separator,
-					$options->cyr,
-					$args->cyr_caption,
+					esc_url($options->cyr),
+					esc_html($args->cyr_caption),
 					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
 					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
 				);
 				break;
 			case 'select':
-				$return = '<script type="text/javascript">/*<![CDATA[*/function rstr_' . $ID . '(redirect) {document.location.href = redirect.value;}/*]]>*/</script>';
+				$return = '<script type="text/javascript">/*<![CDATA[*/function rstr_' . esc_attr($ID) . '(redirect) {document.location.href = redirect.value;}/*]]>*/</script>';
 				$return.= sprintf(
 					apply_filters(
 						'rstr/inc/functions/script_selector/select',
-						'<select class="rstr-script-selector" onchange="rstr_' . $ID . '(this);" id="rstr_' . $ID . '"><option value="%1$s"%5$s>%2$s</option><option value="%3$s"%6$s>%4$s</option></select>',
+						'<select class="rstr-script-selector" onchange="rstr_' . esc_attr($ID) . '(this);" id="rstr_' . esc_attr($ID) . '"><option value="%1$s"%5$s>%2$s</option><option value="%3$s"%6$s>%4$s</option></select>',
 						$args,
 						$options
 					),
-					$options->lat,
-					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
-					$options->cyr,
-					$args->cyr_caption,
+					esc_url($options->lat),
+					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
+					esc_url($options->cyr),
+					esc_html($args->cyr_caption),
 					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' selected' : ''),
 					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' selected' : '')
 				);
@@ -338,14 +392,14 @@ if(!function_exists('script_selector')) :
 			case 'list':
 				$return = sprintf(
 					apply_filters(
-						'rstr/inc/functions/script_selector/list', '<ul class="rstr-script-selector" id="rstr_' . $ID . '"><li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li></ul>',
+						'rstr/inc/functions/script_selector/list', '<ul class="rstr-script-selector" id="rstr_' . esc_attr($ID) . '"><li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li></ul>',
 						$args,
 						$options
 					),
-					$options->lat,
-					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
-					$options->cyr,
-					$args->cyr_caption,
+					esc_url($options->lat),
+					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
+					esc_url($options->cyr),
+					esc_html($args->cyr_caption),
 					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
 					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
 				);
@@ -358,10 +412,10 @@ if(!function_exists('script_selector')) :
 						$args,
 						$options
 					),
-					$options->lat,
-					'{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
-					$options->cyr,
-					$args->cyr_caption,
+					esc_url($options->lat),
+					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
+					esc_url($options->cyr),
+					esc_html($args->cyr_caption),
 					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
 					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
 				);
@@ -370,11 +424,11 @@ if(!function_exists('script_selector')) :
 				$return = apply_filters('rstr/inc/functions/script_selector/array', array(
 					'cyr' => array(
 						'caption' => $args->cyr_caption,
-						'url' => $options->cyr,
+						'url' => esc_url($options->cyr),
 					),
 					'lat' => array(
 						'caption' => '{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
-						'url' => $options->lat,
+						'url' => esc_url($options->lat),
 					)
 				), $args, $options);
 				break;
@@ -382,11 +436,11 @@ if(!function_exists('script_selector')) :
 				$return = $return = apply_filters('rstr/inc/functions/script_selector/object', (object)array(
 					'cyr' => (object)array(
 						'caption' => $args->cyr_caption,
-						'url' => $options->cyr,
+						'url' => esc_url($options->cyr),
 					),
 					'lat' => (object)array(
 						'caption' => '{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
-						'url' => $options->lat,
+						'url' => esc_url($options->lat),
 					)
 				), $args, $options);
 				break;
