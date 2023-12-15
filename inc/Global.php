@@ -73,9 +73,9 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 		$content = $this->transliteration($content, 'lat_to_cyr');
 
-		if($fix_html){
-			$content = self::fix_cyr_html($content);
-			$content = self::fix_attributes($content);
+		if($fix_html && strip_tags($content) != $content){
+		//	$content = self::fix_cyr_html($content);
+		//	$content = self::fix_attributes($content);
 		}
 
 		return $content;
@@ -199,9 +199,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 
 		$content = Serbian_Transliteration_Utilities::decode($content);
+		
 		$content = $this->transliteration($content, $type);
 
-		if(($type == 'lat_to_cyr') && $fix_html){
+		if(($type == 'lat_to_cyr') && $fix_html && strip_tags($content) != $content){
 			$content = self::fix_cyr_html($content);
 			$content = self::fix_attributes($content);
 		}

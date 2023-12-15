@@ -45,6 +45,9 @@ if(get_option(RSTR_NAME . '-version')) {
 if(get_option(RSTR_NAME . '-db-version')) {
 	delete_option(RSTR_NAME . '-db-version');
 }
+if(get_option(RSTR_NAME . '-activated')) {
+	delete_option(RSTR_NAME . '-activated');
+}
 // Delete terms
 if(term_exists('lat', 'rstr-script')) {
 	wp_delete_term(get_term_by('slug','lat','rstr-script')->term_id, 'rstr-script');

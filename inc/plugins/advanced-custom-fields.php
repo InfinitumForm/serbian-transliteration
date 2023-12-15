@@ -30,48 +30,19 @@ if(!class_exists('Serbian_Transliteration__Plugin__advanced_custom_fields')) :
 			
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
-				'acf/translate_field' => array($classname, 'content'),
-			//	'acf/render_fields' => array($classname, 'content'),
-			//	'acf/load_fields' => array($classname, 'content'),
-			//	'acf/translate_field_group' => array($classname, 'content'),
-			//	'acf/load_meta' => array($classname, 'content'),
-			//	'acf/load_reference' => array($classname, 'content'),
-			//	'acf/load_value' => array($classname, 'content'),
-				'acf/format_value' => array($classname, 'content'),
-			//	'acf/field_group/admin_l10n' => array($classname, 'content'),
-				'acf/input/admin_l10n' => array($classname, 'content'),
-			//	'acf_the_editor_content' => array($classname, 'content'),
-				'acf/prepare_field' => array($classname, 'labels')
+				'acf/translate_field' => 'content',
+				'acf/format_value' => 'content',
+				'acf/input/admin_l10n' => 'content',
+				'acf/taxonomy/admin_l10n' => 'content',
+				'acf/post_type/admin_l10n' => 'content',
+				'acf/fields/taxonomy/result' => 'content',
+				'acf/fields/post_object/result' => 'content',
+				'acf_the_content' => 'content',
+				'acf/prepare_field' => 'label_attr',
+				'acf/acf_get_posts/results' => 'get_posts'
 			));
 			
 			return $filters;
-		}
-		
-		public function labels ($field) {
-
-			$field['label'] = $this->transliterate_text( $field['label'] );
-			
-			return $field;
-		}
-		
-		public function content ($content='') {
-			if(empty($content) && !is_string($content)) return $content;
-			
-			
-			if(is_array($content))
-			{
-				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content);
-				}
-			}
-			else if(is_string($content))
-			{
-					
-				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content);
-				}
-			}
-			return $content;
 		}
 	}
 endif;

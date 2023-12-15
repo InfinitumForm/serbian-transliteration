@@ -70,6 +70,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<h2 style="margin:0;">is_elinika - <?php printf(__('alias of function %s', 'serbian-transliteration'), '<code>is_greece()</code>'); ?></h2>
 					<p><code class="lang-php">function is_elinika() : bool</code></p>
 					<br>
+					<h2 style="margin:0;">transliteration_excluded</h2>
+					<?php printf('<p>%s</p>', __('This function provides information on whether the currently active language is excluded from transliteration.', 'serbian-transliteration')); ?>
+					<p><code class="lang-php">function transliteration_excluded() : bool</code></p>
+					<br>
 					<h2 style="margin:0;">transliterate</h2>
 					<?php printf('<p>%s</p>', __('Transliteration of some text or content into the desired script.', 'serbian-transliteration')); ?>
 					<p><code class="lang-php">function transliterate(string $content, string $type='cyr_to_lat', bool $fix_html = true) : string</code></p>

@@ -30,36 +30,16 @@ if(!class_exists('Serbian_Transliteration__Theme__divi')) :
 
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
-				'et_before_main_content' => array($classname, 'content'),
-				'et_after_main_content' => array($classname, 'content'),
-				'et_before_content' => array($classname, 'content'),
-				'et_html_top_header' => array($classname, 'content'),
-				'et_html_slide_header' => array($classname, 'content'),
-				'et_header_top' => array($classname, 'content'),
-				'et_html_main_header' => array($classname, 'content')
+				'et_before_main_content' => 'content',
+				'et_after_main_content' => 'content',
+				'et_before_content' => 'content',
+				'et_html_top_header' => 'content',
+				'et_html_slide_header' => 'content',
+				'et_header_top' => 'content',
+				'et_html_main_header' => 'content'
 			));
 			
 			return $filters;
-		}
-		
-		public function content ($content='') {
-			if(empty($content)) return $content;
-			
-			
-			if(is_array($content))
-			{
-				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content);
-				}
-			}
-			else if(is_string($content))
-			{
-					
-				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content);
-				}
-			}
-			return $content;
 		}
 	}
 endif;

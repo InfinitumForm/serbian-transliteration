@@ -2,9 +2,9 @@
 Contributors: ivijanstefan, creativform
 Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
 Requires at least: 5.4
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.10.5
+Stable tag: 1.11.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,6 +154,40 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.11.6 =
+* Fixed UX bugs
+* Fixed translations
+
+= 1.11.5 =
+* Fixed warnings in PHP
+
+= 1.11.4 =
+* Added language exclusion
+* Fixed bugs from previous version
+
+= 1.11.3 =
+* Fixed plugin and theme transliteration
+* Fixed problem with duplicated percentages
+
+= 1.11.2 =
+* Fixed Avada theme support
+* Fixed "print formatted" text support
+* Fixed lat to cyr transliteration
+
+= 1.11.1 =
+* Fixed transliteration bug on certain themes
+* Fixed WooCommerce integration
+
+= 1.11.0 =
+* ATTENTION: IMPORTANT UPDATE, PLEASE BE CAUTIOUS.
+* Transliteration mode modified
+* DOM component added
+* HTML content check added
+* Read and write buffer mode changed
+* PHP code optimized
+* Deprecated codes removed
+* Transliteration added for emails through PHP mailer
+
 = 1.10.5 =
 * Fixed problem with the themes that not support menus
 * Fixed problems with wp title
@@ -190,11 +224,25 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.10.5 =
-* Fixed problem with the themes that not support menus
-* Fixed problems with wp title
-* Removed support for the older WP versions below 5.4
-* Removed PHP errors from previous versions
+= 1.11.6 =
+* Fixed UX bugs
+* Fixed translations
+
+= 1.11.5 =
+* Fixed warnings in PHP
+
+= 1.11.4 =
+* Added language exclusion
+* Fixed bugs from previous version
+
+= 1.11.3 =
+* Fixed plugin and theme transliteration
+* Fixed problem with duplicated percentages
+
+= 1.11.2 =
+* Fixed Avada theme support
+* Fixed "print formatted" text support
+* Fixed lat to cyr transliteration
 
 == Frequently Asked Questions ==
 

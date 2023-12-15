@@ -30,40 +30,19 @@ if(!class_exists('Serbian_Transliteration__Plugin__wordpress_seo')) :
 
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
-				'wpseo_breadcrumb_links' => array($classname, 'content'),
-				'wpseo_title' => array($classname, 'content'),
-				'wpseo_robots' => array($classname, 'content'),
-				'wpseo_metakey' => array($classname, 'content'),
-				'wpseo_metadesc' => array($classname, 'content'),
-				'wpseo_metakeywords' => array($classname, 'content'),
-				'wpseo_twitter_description' => array($classname, 'content'),
-				'wpseo_twitter_title' => array($classname, 'content'),
-				'wpseo_opengraph_title' => array($classname, 'content'),
-				'wpseo_html_namespaces' => array($classname, 'content')
+				'wpseo_breadcrumb_links' => 'content',
+				'wpseo_title' => 'content',
+				'wpseo_robots' => 'content',
+				'wpseo_metakey' => 'content',
+				'wpseo_metadesc' => 'content',
+				'wpseo_metakeywords' => 'content',
+				'wpseo_twitter_description' => 'content',
+				'wpseo_twitter_title' => 'content',
+				'wpseo_opengraph_title' => 'content',
+				'wpseo_html_namespaces' => 'content'
 			));
 			asort($filters);
 			return $filters;
 		}
-
-		public function content ($content='') {
-			if(empty($content)) return $content;
-
-
-			if(is_array($content))
-			{
-				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content, false);
-				}
-			}
-			else if(is_string($content))
-			{
-
-				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content, false);
-				}
-			}
-			return $content;
-		}
-
 	}
 endif;

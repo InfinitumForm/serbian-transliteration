@@ -30,32 +30,12 @@ if(!class_exists('Serbian_Transliteration__Plugin__revslider')) :
 			
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
-				'revslider_add_static_layer_html' => array($classname, 'content'),
-				'revslider_mod_stream_meta' => array($classname, 'content'),
-				'revslider_add_layer_html' => array($classname, 'content')
+				'revslider_add_static_layer_html' => 'content',
+				'revslider_mod_stream_meta' => 'content',
+				'revslider_add_layer_html' => 'content'
 			));
 			
 			return $filters;
-		}
-		
-		public function content ($content='') {
-			if(empty($content)) return $content;
-			
-			
-			if(is_array($content))
-			{
-				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content);
-				}
-			}
-			else if(is_string($content))
-			{
-					
-				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content);
-				}
-			}
-			return $content;
 		}
 	}
 endif;

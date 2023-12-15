@@ -12,13 +12,25 @@ if(!defined('RSTR_FUNCTIONS')) define('RSTR_FUNCTIONS', true);
 
 
 /*
+ * Is transliteration excluded
+ * @return        bool
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('transliteration_excluded')) :
+	function transliteration_excluded() : bool
+	{
+		return Serbian_Transliteration_Utilities::exclude_transliteration();
+	}
+endif;
+
+/*
  * Get the latin URL
  * @param         $url (optional)
  * @return        string
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('get_latin_url')) :
-	function get_latin_url($url = NULL)
+	function get_latin_url(string $url = NULL)
 	{
 		
 		if( $url ) {
@@ -37,7 +49,7 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('get_cyrillic_url')) :
-	function get_cyrillic_url($url = NULL)
+	function get_cyrillic_url(string $url = NULL)
 	{
 		if( $url ) {
 			return add_query_arg( get_rstr_option('url-selector', 'rstr'), 'cyr', $url );
@@ -289,7 +301,7 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('transliterate')) :
-	function transliterate($content, $type='cyr_to_lat', $fix_html = true)
+	function transliterate($content, string $type='cyr_to_lat', bool $fix_html = true)
 	{
 		return Serbian_Transliteration::__instance()->transliterate_text($content, $type, $fix_html);
 	}
@@ -313,7 +325,7 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('lat_to_cyr')) :
-	function lat_to_cyr($content, $fix_html = true)
+	function lat_to_cyr($content, bool $fix_html = true)
 	{
 		return Serbian_Transliteration::__instance()->lat_to_cyr($content, $fix_html);
 	}
@@ -326,7 +338,7 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('script_selector')) :
-	function script_selector ($args = []) {
+	function script_selector (array $args = []) {
 		$ID = uniqid('script_selector_');
 
 		$args = (object)wp_parse_args($args, array(

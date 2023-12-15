@@ -56,7 +56,8 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	/*
 	 * Run all dependency in the background
 	 */
-	public static function run_dependency(){		
+	public static function run_dependency(){
+		
 		$inst = self::get_instance();
 
 		/* Transliterate wp-admin
@@ -106,16 +107,11 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		if(!class_exists('Serbian_Transliteration_Menu', false) && file_exists(RSTR_INC . '/Menu.php')) {
 			include_once RSTR_INC . '/Menu.php';
 		}
+
 		if(class_exists('Serbian_Transliteration_Menu', false)){
 			new Serbian_Transliteration_Menu();
 		}
 
-		/* Load plugins support
-		====================================*/
-		Serbian_Transliteration_Plugins::includes();
-		/* Load themes support
-		====================================*/
-		Serbian_Transliteration_Themes::includes();
 		/* Load SEO support
 		====================================*/
 		Serbian_Transliteration_SEO::init();
@@ -127,18 +123,18 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 	/*
 	 * Run plugin on the frontend
 	 */
-	public static function run () {
+	public static function run () {		
 		// Load instance
 		$inst = self::get_instance();
 
 		add_action('wp_head', array($inst, 'wp_head'));
 
 		// Register taxonomy
-		Serbian_Transliteration_Utilities::attachment_taxonomies();
+		add_action('init', array('Serbian_Transliteration_Utilities', 'attachment_taxonomies'), PHP_INT_MAX-1);
 
 		if( !is_admin() )
 		{
-			Serbian_Transliteration_Utilities::set_current_script();
+			add_action('init', array('Serbian_Transliteration_Utilities', 'set_current_script'), 1);
 		}
 		else
 		{
@@ -150,11 +146,13 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			if(!class_exists('Serbian_Transliteration_Settings', false) && file_exists(RSTR_INC . '/Settings.php')) {
 				include_once RSTR_INC . '/Settings.php';
 			}
-			if(class_exists('Serbian_Transliteration_Settings', false)){
-				$Serbian_Transliteration_Settings = new Serbian_Transliteration_Settings();
-				new Serbian_Transliteration_Settings_Sidebar( $Serbian_Transliteration_Settings );
-				new Serbian_Transliteration_Settings_Content( $Serbian_Transliteration_Settings );
-			}
+			add_action('init', function(){
+				if(class_exists('Serbian_Transliteration_Settings', false)){
+					$Serbian_Transliteration_Settings = new Serbian_Transliteration_Settings();
+					new Serbian_Transliteration_Settings_Sidebar( $Serbian_Transliteration_Settings );
+					new Serbian_Transliteration_Settings_Content( $Serbian_Transliteration_Settings );
+				}
+			});
 		}
 
 		// Load shortcodes
@@ -300,6 +298,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			=========================================*/
 			if(get_rstr_option('force-email-transliteration', 'no') == 'yes')
 			{
+/*
 				add_filter('wp_mail', function ($atts){
 					// Get class
 					$inst = Serbian_Transliteration::__instance();
@@ -313,7 +312,19 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 					}
 					// Return values
 					return $atts;
-				}, PHP_INT_MAX, 1);
+				}, 10, 1);
+*/				
+				add_action('phpmailer_init', function($phpmailer) {
+					// Preuzmite trenutnu verziju Body i Subject
+					$message_body = $phpmailer->Body;
+					$message_subject = $phpmailer->Subject;
+
+					$inst = Serbian_Transliteration::__instance();
+
+					// Primena transliteracije na Body i Subject
+					$phpmailer->Body = $inst->cyr_to_lat($message_body);
+					$phpmailer->Subject = $inst->cyr_to_lat($message_subject);
+				},10,1);
 			}
 		}
 
@@ -397,7 +408,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 			if (ob_get_level()) {
 				ob_end_flush();
 			}
-		},0);
+		},PHP_INT_MAX);
 
 	}
 

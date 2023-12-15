@@ -30,30 +30,10 @@ if(!class_exists('Serbian_Transliteration__Plugin__elementor')) :
 			
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
-				'elementor/frontend/the_content' => array($classname, 'content')
+				'elementor/frontend/the_content' => 'content'
 			));
 			
 			return $filters;
-		}
-		
-		public function content ($content='') {
-			if(empty($content)) return $content;
-			
-			
-			if(is_array($content))
-			{
-				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content);
-				}
-			}
-			else if(is_string($content))
-			{
-					
-				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content);
-				}
-			}
-			return $content;
 		}
 	}
 endif;

@@ -22,7 +22,7 @@ class Serbian_Transliteration_Utilities{
 			'exclude-cyrillic-words'	=>	'',
 			'enable-search'				=>	'yes',
 			'search-mode'       		=>	'auto',
-			'enable-alternate-links'	=>	'yes',
+			'enable-alternate-links'	=>	'no',
 			'first-visit-mode'			=>	'auto',
 			'enable-rss'				=>	'yes',
 			'fix-diacritics'			=>	'yes',
@@ -36,7 +36,8 @@ class Serbian_Transliteration_Utilities{
 			'enable-body-class'			=>	'yes',
 			'force-widgets'				=>	'no',
 			'force-email-transliteration' => 'no',
-			'force-ajax-calls' 			=> 'no'
+			'force-ajax-calls' 			=> 'no',
+			'disable-by-language'		=> ['en_US'=>'yes']
 		));
 	}
 	
@@ -110,6 +111,36 @@ class Serbian_Transliteration_Utilities{
 		}
 
 		return $modes;
+	}
+	
+	
+	/*
+	 * Exclude transliteration
+	 * @return        bool
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function exclude_transliteration() : bool {
+		static $exclude_transliteration;
+		
+		if( NULL !== $exclude_transliteration ) {
+			return $exclude_transliteration;
+		}
+		
+		$locale = self::get_locale();
+		
+		$exclude = get_rstr_option('disable-by-language', []);
+		
+		if( is_array($exclude) ) {
+			foreach($exclude as $ex_locale => $confirm) {
+				if( $locale === $ex_locale && $confirm == 'yes' ) {
+					$exclude_transliteration = true;
+					return true;
+				}
+			}
+		}
+		
+		$exclude_transliteration = false;
+		return false;
 	}
 
 	/*
@@ -190,7 +221,22 @@ class Serbian_Transliteration_Utilities{
 		{
 			if(file_exists($path . "/{$path_require}.php"))
 			{
+				if( !class_exists('Serbian_Transliteration_Mode', false) ) {
+					include_once RSTR_INC . '/Mode.php';
+				}
+				
+				/* Load plugin mode
+				====================================*/
 				include_once $path . "/{$path_require}.php";
+				
+				/* Load plugins support
+				====================================*/
+				Serbian_Transliteration_Plugins::includes();
+				
+				/* Load themes support
+				====================================*/
+				Serbian_Transliteration_Themes::includes();
+				
 				if(class_exists($class_require, false)){
 					return $class_require;
 				} else {

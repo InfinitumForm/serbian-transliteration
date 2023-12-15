@@ -515,6 +515,46 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 
 
 		$this->add_settings_section(
+			RSTR_NAME . '-exclusion', // ID
+			__('Exclusion', 'serbian-transliteration'), // Title
+			'print_exclusion_settings_callback', // Callback
+			RSTR_NAME // Page
+		);
+		
+		$installed_languages = get_available_languages();
+		
+		$language = 'en';
+		if( $language_arr = explode( '_', Serbian_Transliteration_Utilities::get_locale() ) ) {
+			$language = array_pop( $language_arr );
+			$language = strtolower( $language );
+		}
+		
+		foreach($installed_languages as $locale) {
+			
+			$language_name = sprintf(
+				__('Language: %s', 'serbian-transliteration'),
+				$locale
+			);
+			if( class_exists('Locale') ) {
+				$language_name = Locale::getDisplayName($locale, $language);
+			}
+			
+			$this->add_settings_field(
+				'enable-body-class-'.$locale, // ID
+				$language_name, // Title
+				'exclude_language_callback', // Callback
+				RSTR_NAME, // Page
+				RSTR_NAME . '-exclusion', // Section
+				array(
+					'locale' => $locale,
+					'name' => $language_name,
+					'language' => $language
+				)
+			);
+		}
+
+
+		$this->add_settings_section(
 			RSTR_NAME . '-misc', // ID
 			__('Misc.', 'serbian-transliteration'), // Title
 			'print_misc_settings_callback', // Callback
@@ -601,6 +641,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	{
 		printf('<p>%s</p>', __('Upload, view and control media and files.', 'serbian-transliteration'));
 	}
+	
+	public function print_exclusion_settings_callback()
+	{
+		printf('<p>%s</p>', __('Within this configuration section, you have the opportunity to customize your experience by selecting the particular languages for which you wish to turn off the transliteration function. This feature is designed to give you greater control and adaptability over how the system handles transliteration, allowing you to disable it for specific languages based on your individual needs or preferences.', 'serbian-transliteration'));
+	}
 
 	public function print_misc_settings_callback()
 	{
@@ -661,8 +706,13 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 
-        echo join('<br>', $inputs);
-		printf('<br><p class="description">%1$s</p>', __('Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly.', 'serbian-transliteration'));
+		echo join('<br>', $inputs);
+
+		if( count($checkbox) > 1 ) {
+			printf('<br><p class="description">%1$s</p>', __('Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly.', 'serbian-transliteration'));
+		} else {
+			__('Define whether your primary alphabet on the site.', 'serbian-transliteration');
+		}
 	}
 
 	/**
@@ -1151,6 +1201,26 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), sprintf(__('Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s', 'serbian-transliteration'), '<code>rstr_skip=true</code>'));
+	}
+	
+	
+	public function exclude_language_callback ($attr) {		
+		foreach(array(
+			'no' => __('Transliterate', 'serbian-transliteration'),
+			'yes' => __('Omit the transliteration', 'serbian-transliteration')
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="disable-by-language-%1$s-%5$s"><input type="radio" id="disable-by-language-%1$s-%5$s" name="%3$s[disable-by-language][%5$s]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['disable-by-language'][$attr['locale']] ) ? ($this->options['disable-by-language'][$attr['locale']] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : '')),
+				$attr['locale']
+			);
+		}
+		
+		echo join(' ', $inputs);
 	}
 
 

@@ -31,45 +31,24 @@ if(!class_exists('Serbian_Transliteration__Plugin__data_tables_generator_by_sups
 			$classname = self::run(true);
 			$pfx = 'supsystic_tbl';
 			$filters = array_merge($filters, array(
-				"{$pfx}_after_contactform_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_core_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_diagram_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_migrationfree_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_overview_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_promo_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_settings_loaded" => array($classname, 'content'),
-				"{$pfx}_after_tables_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_exporter_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_importer_loaded" => array($classname, 'content'),
-				// "{$pfx}_after_migration_loaded" => array($classname, 'content'),
-				"{$pfx}_after_modules_loaded" => array($classname, 'content'),
-				"{$pfx}_tables_get" => array($classname, 'content'),
-				"{$pfx}_before_table_render" => array($classname, 'content'),
-				"{$pfx}_before_table_render_from_cache" => array($classname, 'content'),
+				"{$pfx}_after_contactform_loaded" => 'content',
+				// "{$pfx}_after_core_loaded" => 'content',
+				// "{$pfx}_after_diagram_loaded" => 'content',
+				// "{$pfx}_after_migrationfree_loaded" => 'content',
+				// "{$pfx}_after_overview_loaded" => 'content',
+				// "{$pfx}_after_promo_loaded" => 'content',
+				// "{$pfx}_after_settings_loaded" => 'content',
+				"{$pfx}_after_tables_loaded" => 'content',
+				// "{$pfx}_after_exporter_loaded" => 'content',
+				// "{$pfx}_after_importer_loaded" => 'content',
+				// "{$pfx}_after_migration_loaded" => 'content',
+				"{$pfx}_after_modules_loaded" => 'content',
+				"{$pfx}_tables_get" => 'content',
+				"{$pfx}_before_table_render" => 'content',
+				"{$pfx}_before_table_render_from_cache" => 'content',
 			));
 			asort($filters);
 			return $filters;
 		}
-		
-		public function content ($content='') {
-			if(empty($content)) return $content;
-			
-			
-			if(is_array($content))
-			{
-				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content);
-				}
-			}
-			else if(is_string($content))
-			{
-					
-				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content);
-				}
-			}
-			return $content;
-		}
-		
 	}
 endif;

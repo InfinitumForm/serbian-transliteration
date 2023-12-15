@@ -38,20 +38,18 @@ class Serbian_Transliteration_Transliterating {
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public static function can_trasliterate($content) {
-		return (
+	public static function can_trasliterate($content){
+		return apply_filters( 'rstr_can_trasliterate', (
 			empty($content) 
 			|| is_array($content) 
 			|| is_object($content) 
 			|| is_numeric($content) 
 			|| is_bool($content)
-			// Provera da li sadržaj sadrži email
-			|| preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/', $content)
-			// Provera da li sadržaj sadrži URL
-			|| preg_match('/(http|https|ftp):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,4}(\/\S*)?/', $content)
-			// Provera da li sadržaj izgleda kao putanja fajla
-			|| preg_match('/^[\/\\\\]?([a-zA-Z0-9._-]+[\/\\\\])*[a-zA-Z0-9._-]+\.[a-zA-Z]{1,10}$/', $content)
-		);
+			|| ( is_string($content) && trim($content) != '' && @is_file($content) )
+			|| ( is_string($content) && trim($content) != '' && @is_link($content) )
+			|| filter_var($content, FILTER_VALIDATE_URL)
+			|| filter_var($content, FILTER_VALIDATE_EMAIL)
+		), $content );
 	}
 
 	/*
@@ -60,9 +58,13 @@ class Serbian_Transliteration_Transliterating {
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public function transliteration($content, $translation = 'cyr_to_lat'){
+		
+		if( Serbian_Transliteration_Utilities::exclude_transliteration() ) {
+			return $content;
+		}
 
 		$locale = $this->get_locale();
-
+		
 		// Avoid transliteration for the some cases
 		if( self::can_trasliterate($content) || !in_array($translation, array('lat_to_cyr', 'cyr_to_lat')) ){
 			return $content;
@@ -101,7 +103,7 @@ class Serbian_Transliteration_Transliterating {
 				foreach($this->lat_exclude_list() as $item){
 					$content = str_replace($class_name::transliterate($item, 'cyr_to_lat'), $item, $content);
 				}
-			} if($translation === 'lat_to_cyr') {
+			} else if($translation === 'lat_to_cyr') {
 				foreach($this->cyr_exclude_list() as $item){
 					$content = str_replace($class_name::transliterate($item, 'lat_to_cyr'), $item, $content);
 				}
@@ -115,7 +117,7 @@ class Serbian_Transliteration_Transliterating {
 				$content = str_replace(array(
 					'ь', 'ъ', 'Ъ', 'Ь'
 				), '', $content);
-			} if($translation === 'lat_to_cyr') {
+			} else if($translation === 'lat_to_cyr') {
 				$content = str_replace(self::lat(), self::cyr(), $content);
 			}
 
@@ -124,12 +126,58 @@ class Serbian_Transliteration_Transliterating {
 				foreach($this->lat_exclude_list() as $item){
 					$content = str_replace(str_replace(self::cyr(), self::lat(), $item), $item, $content);
 				}
-			} if($translation === 'lat_to_cyr') {
+			} else if($translation === 'lat_to_cyr') {
 				foreach($this->cyr_exclude_list() as $item){
 					$content = str_replace(str_replace(self::lat(), self::cyr(), $item), $item, $content);
 				}
 			}
 		}
+		
+		if($translation === 'lat_to_cyr') {		
+			$content = str_replace(
+				[
+					'%д',
+					'&#37;с',
+					'&#37;д',
+					'%с',
+					'$д',
+					'$с'
+				],
+				[
+					'%d',
+					'%s',
+					'%d',
+					'%s',
+					'$d',
+					'$s'
+				],
+				$content
+			);
+			
+			$content = preg_replace(['/(\%[0-9]+\$)д/i', '/(\%[0-9]+\$)с/i'], ['$1d', '$1s'], $content);
+		}
+		
+		$content = str_replace(
+			[
+				'%',
+				'&#37;s',
+				'&#37;d'
+			],
+			[
+				'&#37;',
+				'%s',
+				'%d'
+			],
+			$content
+		);
+		
+		$content = preg_replace([
+			'/(&#37;([0-9]+)(\$[ds]))/i',
+			'/(([0-9]+)%{2,})/i'
+		], [
+			'%$2$3',
+			'$2%'
+		], $content);
 
 		return $content;
 	}
@@ -293,7 +341,7 @@ class Serbian_Transliteration_Transliterating {
 				// starting from $position to $last_lf_pos
 				$buffer = mb_substr($chunk,0,$last_lf_pos);
 
-				$words = Serbian_Transliteration_Utilities::explode("\n", ($buffer??''));
+				$words = Serbian_Transliteration_Utilities::explode("\n", $buffer);
 				$words = array_unique($words);
 
 				$save = array();
@@ -388,7 +436,7 @@ class Serbian_Transliteration_Transliterating {
 
 				if(!empty($contents))
 				{
-					$words = Serbian_Transliteration_Utilities::explode("\n", ($contents??''));
+					$words = Serbian_Transliteration_Utilities::explode("\n", $contents);
 					$words = array_unique($words);
 				} else return false;
 		} else return false;

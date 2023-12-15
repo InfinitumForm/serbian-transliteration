@@ -30,73 +30,54 @@ if(!class_exists('Serbian_Transliteration__Theme__avada')) :
 
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
-				'avada_before_body_content' => array($classname, 'content'),
-				'avada_after_content' => array($classname, 'content'),
-				'avada_after_header_wrapper' => array($classname, 'content'),
-				'avada_after_main_container' => array($classname, 'content'),
-				'avada_after_main_content' => array($classname, 'content'),
-				'avada_author_info' => array($classname, 'content'),
-				'avada_before_additional_page_content' => array($classname, 'content'),
-				'avada_before_additional_post_content' => array($classname, 'content'),
-				'avada_before_comments' => array($classname, 'content'),
-				'avada_before_header_wrapper' => array($classname, 'content'),
-				'avada_before_main_container' => array($classname, 'content'),
-				'avada_blog_post_content' => array($classname, 'content'),
-				'avada_blog_post_date_and_format' => array($classname, 'content'),
-				'avada_footer_copyright_content' => array($classname, 'content'),
-				'avada_header_inner_after' => array($classname, 'content'),
-				'fusion_before_additional_portfolio_content' => array($classname, 'content'),
-				'fusion_after_additional_portfolio_content' => array($classname, 'content'),
-				'fusion_before_portfolio_side_content' => array($classname, 'content'),
-				'fusion_after_portfolio_side_content' => array($classname, 'content'),
-				'avada_render_footer' => array($classname, 'content'),
-				'fusion_quick_view_summary_content' => array($classname, 'content'),
-				'avada_admin_welcome_screen_content' => array($classname, 'content'),
-				'fusion_portfolio_post_project_description_label' => array($classname, 'content'),
-				'fusion_portfolio_post_project_details_label' => array($classname, 'content'),
-				'fusion_portfolio_post_skills_label' => array($classname, 'content'),
-				'fusion_portfolio_post_categories_label' => array($classname, 'content'),
-				'fusion_portfolio_post_tags_label' => array($classname, 'content'),
-				'fusion_portfolio_post_project_url_label' => array($classname, 'content'),
-				'fusion_portfolio_post_copyright_label' => array($classname, 'content'),
-				'fusion_portfolio_post_author_label' => array($classname, 'content'),
-				'fusion_breadcrumbs_defaults' => array($classname, 'content'),
-				'avada_embeds_consent_text' => array($classname, 'content'),
-				'avada_h1_typography_elements' => array($classname, 'content'),
-				'avada_h2_typography_elements' => array($classname, 'content'),
-				'avada_h3_typography_elements' => array($classname, 'content'),
-				'avada_h4_typography_elements' => array($classname, 'content'),
-				'avada_h5_typography_elements' => array($classname, 'content'),
-				'avada_h6_typography_elements' => array($classname, 'content'),
-				'avada_post_title_typography_elements' => array($classname, 'content'),
-				'avada_post_title_extras_typography_elements' => array($classname, 'content'),
-				'avada_load_more_posts_name' => array($classname, 'content'),
-				'avada_logo_alt_tag' => array($classname, 'content'),
-				'fusion_faq_all_filter_name' => array($classname, 'content'),
-				'fusion_sharing_box_tagline' => array($classname, 'content')
+				'avada_before_body_content' => 'content',
+				'avada_after_content' => 'content',
+				'avada_after_header_wrapper' => 'content',
+				'avada_after_main_container' => 'content',
+				'avada_after_main_content' => 'content',
+				'avada_author_info' => 'content',
+				'avada_before_additional_page_content' => 'content',
+				'avada_before_additional_post_content' => 'content',
+				'avada_before_comments' => 'content',
+				'avada_before_header_wrapper' => 'content',
+				'avada_before_main_container' => 'content',
+				'avada_blog_post_content' => 'content',
+				'avada_blog_post_date_and_format' => 'content',
+				'avada_footer_copyright_content' => 'content',
+				'avada_header_inner_after' => 'content',
+				'fusion_before_additional_portfolio_content' => 'content',
+				'fusion_after_additional_portfolio_content' => 'content',
+				'fusion_before_portfolio_side_content' => 'content',
+				'fusion_after_portfolio_side_content' => 'content',
+				'avada_render_footer' => 'content',
+				'fusion_quick_view_summary_content' => 'content',
+				'avada_admin_welcome_screen_content' => 'content',
+				'fusion_portfolio_post_project_description_label' => 'content',
+				'fusion_portfolio_post_project_details_label' => 'content',
+				'fusion_portfolio_post_skills_label' => 'content',
+				'fusion_portfolio_post_categories_label' => 'content',
+				'fusion_portfolio_post_tags_label' => 'content',
+				'fusion_portfolio_post_project_url_label' => 'content',
+				'fusion_portfolio_post_copyright_label' => 'content',
+				'fusion_portfolio_post_author_label' => 'content',
+				'fusion_breadcrumbs_defaults' => 'content',
+				'avada_embeds_consent_text' => 'content',
+				'avada_h1_typography_elements' => 'content',
+				'avada_h2_typography_elements' => 'content',
+				'avada_h3_typography_elements' => 'content',
+				'avada_h4_typography_elements' => 'content',
+				'avada_h5_typography_elements' => 'content',
+				'avada_h6_typography_elements' => 'content',
+				'avada_post_title_typography_elements' => 'content',
+				'avada_post_title_extras_typography_elements' => 'content',
+				'avada_load_more_posts_name' => 'content',
+				'avada_logo_alt_tag' => 'content',
+				'fusion_faq_all_filter_name' => 'content',
+				'fusion_sharing_box_tagline' => 'content'
 			));
 			
 			return $filters;
 		}
 		
-		public function content ($content='') {
-			if(empty($content)) return $content;
-			
-			
-			if(is_array($content))
-			{
-				if(method_exists($this, 'transliterate_objects')) {
-					$content = $this->transliterate_objects($content);
-				}
-			}
-			else if(is_string($content))
-			{
-					
-				if(method_exists($this, 'transliterate_text')) {
-					$content = $this->transliterate_text($content);
-				}
-			}
-			return $content;
-		}
 	}
 endif;

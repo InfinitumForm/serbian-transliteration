@@ -58,13 +58,22 @@ class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration
 	
 	public function postbox_donations(){ ?>
 <div class="postbox">
-	<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;"><span class="dashicons dashicons-heart"></span> <span><?php _e('Donations', 'serbian-transliteration'); ?></span></h3><hr>
+	<h3 class="hndle" style="margin-bottom:0;padding-bottom:0;">🌟 <span><?php _e('Brighten my day as my plugin brightens yours!', 'serbian-transliteration'); ?></span> 🌟</h3><hr>
 	<div class="inside">
-	<?php printf('<p>%s</p>', __('This plugin is 100% free. If you want to buy us one coffee, beer or in general help the development of this plugin through a monetary donation, you can do it in the following ways:', 'serbian-transliteration')); ?>
+	<?php printf('<p>%s</p>', __('You know that feeling when you find something perfectly free? Well, that\'s my plugin - absolutely free, but created with lots of love and effort. To keep it all great (and to allow me to occasionally enjoy a coffee or beer while coding), your support means the world to me!', 'serbian-transliteration')); ?>
+	<?php printf('<p>%s</p>', __('If you like my work and want to contribute to my coffee/beer/future development fund, here\'s how you can do it:', 'serbian-transliteration'));?>
+	<p><a href="https://www.buymeacoffee.com/ivijanstefan" target="_blank"><img src="<?php
+		if(get_locale() == 'sr_RS') {
+			echo esc_url(RSTR_ASSETS.'/img/buymeacoffee-rs.png');
+		} else {
+			echo esc_url(RSTR_ASSETS.'/img/buymeacoffee-en.png');
+		}
+	?>" style="display:block; width:auto; max-width:100%"></a></p>
 	<ul>
-		<?php printf('<li><b>%s</b>: %s</li>', __('PayPal', 'serbian-transliteration'), 'creativform@gmail.com'); ?>
-		<?php printf('<li><b>%s</b>: %s (%s)</li>', __('From Serbia', 'serbian-transliteration'), '115-0000000138835-77', __('Mobi Bank', 'serbian-transliteration')); ?>
+		<?php printf('<li><b>%s</b>: %s</li>', __('Mobi Bank', 'serbian-transliteration'), '115-0000000138835-77'); ?>
 	</ul>
+	<?php printf('<p>%s</p>', __('Every donation, no matter the size, helps me continue my work and makes me happier than caffeine ever could. Thank you for being a part of my WordPress family!', 'serbian-transliteration')); ?>
+	<?php printf('<p>%s<br><a href="https://www.linkedin.com/in/ivijanstefanstipic/" target="_blank">Ivijan-Stefan Stipić</a></p>', __('With love,', 'serbian-transliteration')); ?>
 	</div>
 </div>
 	<?php }

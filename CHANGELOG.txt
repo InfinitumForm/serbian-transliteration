@@ -1,3 +1,37 @@
+= 1.11.6 =
+* Fixed UX bugs
+* Fixed translations
+
+= 1.11.5 =
+* Fixed warnings in PHP
+
+= 1.11.4 =
+* Added language exclusion
+* Fixed bugs from previous version
+
+= 1.11.3 =
+* Fixed plugin and theme transliteration
+* Fixed problem with duplicated percentages
+
+= 1.11.2 =
+* Fixed Avada theme support
+* Fixed "print formatted" text support
+* Fixed lat to cyr transliteration
+
+= 1.11.1 =
+* Fixed transliteration bug on certain themes
+* Fixed WooCommerce integration
+
+= 1.11.0 =
+* ATTENTION: IMPORTANT UPDATE, PLEASE BE CAUTIOUS.
+* Transliteration mode modified
+* DOM component added
+* HTML content check added
+* Read and write buffer mode changed
+* PHP code optimized
+* Deprecated codes removed
+* Transliteration added for emails through PHP mailer
+
 = 1.10.5 =
 * Fixed problem with the themes that not support menus
 * Fixed problems with wp title
