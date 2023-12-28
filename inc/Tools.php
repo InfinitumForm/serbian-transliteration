@@ -31,7 +31,12 @@ class Serbian_Transliteration_Tools extends Serbian_Transliteration
 		if(isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-transliteration-letters') !== false){
 			$value = sanitize_textarea_field($_REQUEST['value']);
 			$value = parent::fix_diacritics($value);
-			echo esc_html( $this->transliterate_text($value, sanitize_text_field($_REQUEST['mode']), true) );
+			
+			if( sanitize_text_field($_REQUEST['mode']) === 'lat_to_cyr' ) {
+				echo esc_html( html_entity_decode($this->lat_to_cyr( $value, false, true ), ENT_QUOTES, 'UTF-8') );
+			} else {
+				echo esc_html( html_entity_decode($this->cyr_to_lat( $value ), ENT_QUOTES, 'UTF-8') );
+			}
 			exit;
 		}
 		

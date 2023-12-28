@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2023-12-15 07:41+0100\n"
-"PO-Revision-Date: 2023-12-15 07:42+0100\n"
+"POT-Creation-Date: 2023-12-16 00:44+0100\n"
+"PO-Revision-Date: 2023-12-16 00:44+0100\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -288,7 +288,7 @@ msgstr "Postavke spremljene."
 msgid "Settings"
 msgstr "Postavke"
 
-#: inc/Settings.php:155 inc/settings/content.php:95
+#: inc/Settings.php:155 inc/settings/content.php:94
 msgid "Permalink Tool"
 msgstr "Alat za trajnu vezu (permalink)"
 
@@ -1120,39 +1120,39 @@ msgstr[2] "Uspješno su izvršene %d promjena stalne veze."
 msgid "No changes to the permalink have been made."
 msgstr "Nema promjena na stalnim vezama."
 
-#: inc/settings/content.php:63
+#: inc/settings/content.php:62
 msgid "General Settings"
 msgstr "Opće postavke"
 
-#: inc/settings/content.php:79
+#: inc/settings/content.php:78
 msgid "Tools"
 msgstr "Alati"
 
-#: inc/settings/content.php:94
+#: inc/settings/content.php:93
 msgid "Transliteration Tool"
 msgstr "Alat za transliteraciju"
 
-#: inc/settings/content.php:128
+#: inc/settings/content.php:127
 msgid "Documentation"
 msgstr "Dokumentacija"
 
-#: inc/settings/content.php:136 inc/settings/content/shortcodes.php:21
+#: inc/settings/content.php:135 inc/settings/content/shortcodes.php:21
 msgid "Available shortcodes"
 msgstr "Dostupni kratki kodovi"
 
-#: inc/settings/content.php:137
+#: inc/settings/content.php:136
 msgid "Available PHP functions"
 msgstr "Dostupne PHP funkcije"
 
-#: inc/settings/content.php:138 inc/settings/content/tags.php:21
+#: inc/settings/content.php:137 inc/settings/content/tags.php:21
 msgid "Available Tags"
 msgstr "Dostupni tagovi"
 
-#: inc/settings/content.php:173
+#: inc/settings/content.php:172
 msgid "Debug"
 msgstr "Otkloniti neispravnost"
 
-#: inc/settings/content.php:189
+#: inc/settings/content.php:188
 msgid "Credits & Info"
 msgstr "Zasluge i informacije"
 
@@ -1262,11 +1262,11 @@ msgstr ""
 msgid "PayPal"
 msgstr "PayPal"
 
-#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:73
+#: inc/settings/content/credits.php:125
 msgid "From Serbia"
 msgstr "Iz Srbije"
 
-#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:73
+#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:68
 msgid "Mobi Bank"
 msgstr "Mobi Banka (Srbija)"
 
@@ -1731,11 +1731,11 @@ msgstr "Pretvori u ćirilicu"
 msgid "Reset"
 msgstr "Očisti sve"
 
-#: inc/settings/sidebar.php:61
+#: inc/settings/sidebar.php:62
 msgid "Brighten my day as my plugin brightens yours!"
 msgstr "Razveselite me kao što vas razveseljava moj dodatak!"
 
-#: inc/settings/sidebar.php:63
+#: inc/settings/sidebar.php:64
 msgid ""
 "You know that feeling when you find something perfectly free? Well, that's "
 "my plugin - absolutely free, but created with lots of love and effort. To "
@@ -1747,7 +1747,7 @@ msgstr ""
 "sve to ostalo sjajno (i da bih mogao povremeno uživati u kavi ili pivu dok "
 "kodiram), vaša podrška mi znači svijet!"
 
-#: inc/settings/sidebar.php:64
+#: inc/settings/sidebar.php:65
 msgid ""
 "If you like my work and want to contribute to my coffee/beer/future "
 "development fund, here's how you can do it:"
@@ -1755,7 +1755,11 @@ msgstr ""
 "Ako vam se sviđa moj rad i želite doprinijeti mojoj kavi/pivu/fondaciji za "
 "daljnji razvoj, evo kako to možete učiniti:"
 
-#: inc/settings/sidebar.php:75
+#: inc/settings/sidebar.php:66
+msgid "Buy me a coffee"
+msgstr "Uzmi mi kavu"
+
+#: inc/settings/sidebar.php:70
 msgid ""
 "Every donation, no matter the size, helps me continue my work and makes me "
 "happier than caffeine ever could. Thank you for being a part of my WordPress "
@@ -1765,11 +1769,11 @@ msgstr ""
 "me sretnijim nego što kofein to može. Hvala vam što ste dio moje WordPress "
 "obitelji!"
 
-#: inc/settings/sidebar.php:76
+#: inc/settings/sidebar.php:71
 msgid "With love,"
 msgstr "S ljubavlju,"
 
-#: inc/settings/sidebar.php:86
+#: inc/settings/sidebar.php:81
 msgid ""
 "Hire professional developers, designers, SEO masters and marketing ninjas in "
 "one place."
@@ -1777,15 +1781,23 @@ msgstr ""
 "Unajmite profesionalne programere, dizajnere, SEO majstore i marketinške "
 "nindže na jednom mjestu."
 
-#: inc/settings/sidebar.php:87 inc/settings/sidebar.php:99
+#: inc/settings/sidebar.php:82 inc/settings/sidebar.php:98
 msgid "Read more..."
 msgstr "Detaljnije..."
 
-#: inc/settings/sidebar.php:95
+#: inc/settings/sidebar.php:89
+msgid "Support my work by buying me a coffee!"
+msgstr "Podržite moj rad tako što ćete me počastiti kavom!"
+
+#: inc/settings/sidebar.php:89
+msgid "Thank you for using Transliterator. Could you buy me a coffee?"
+msgstr "Hvala što koristite Transliterator. Možete li me počastiti kavom?"
+
+#: inc/settings/sidebar.php:94
 msgid "Need CLOUD HOSTING ???"
 msgstr "Trebate CLOUD HOSTING ???"
 
-#: inc/settings/sidebar.php:98
+#: inc/settings/sidebar.php:97
 msgid ""
 "If you need hosting for your personal needs, for business, any web "
 "applications, cloud or dedicated servers, we have the ideal solution for you!"
@@ -1793,11 +1805,11 @@ msgstr ""
 "Ako vam treba hosting za vaše osobne potrebe, za poslovanje, bilo koje web "
 "aplikacije, cloud ili namjenske servere, imamo idealno rješenje za vas!"
 
-#: inc/settings/sidebar.php:108
+#: inc/settings/sidebar.php:107
 msgid "Contributors & Developers"
 msgstr "Suradnici i programeri"
 
-#: inc/settings/sidebar.php:120
+#: inc/settings/sidebar.php:119
 #, php-format
 msgid ""
 "If you want to support our work and effort, if you have new ideas or want to "
@@ -1806,16 +1818,16 @@ msgstr ""
 "Ako želite podržati naš rad i trud, ako imate nove ideje ili želite "
 "poboljšati postojeći kôd, %s."
 
-#: inc/settings/sidebar.php:120
+#: inc/settings/sidebar.php:119
 msgid "join our team"
 msgstr "pridružite se našem timu"
 
-#: inc/settings/sidebar.php:121
+#: inc/settings/sidebar.php:120
 #, php-format
 msgid "If you want to help further plugin development, you can also %s."
 msgstr "Ako želite pomoći u daljnjem razvoju dodatka, također možete %s."
 
-#: inc/settings/sidebar.php:121
+#: inc/settings/sidebar.php:120
 msgid "donate something for effort"
 msgstr "donirati nešto za naš trud"
 

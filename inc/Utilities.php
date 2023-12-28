@@ -362,7 +362,7 @@ class Serbian_Transliteration_Utilities{
 	
 	/* 
 	 * Check is in the Elementor editor mode
-	 * @verson    1.0.0
+	 * @verson    1.0.0
 	 */
 	public static function is_elementor_editor(){
 		if(
@@ -408,7 +408,7 @@ class Serbian_Transliteration_Utilities{
 	
 	/* 
 	 * Check is in the Oxygen editor mode
-	 * @verson    1.0.0
+	 * @verson    1.0.0
 	 */
 	public static function is_oxygen_editor(){
 		if(
@@ -427,7 +427,7 @@ class Serbian_Transliteration_Utilities{
 
 	/*
 	 * Generate unique token
-	 * @author        Ivijan-Stefan Stipic
+	 * @author    Ivijan-Stefan Stipic
 	*/
 	public static function generate_token($length=16){
 		if(function_exists('openssl_random_pseudo_bytes') || function_exists('random_bytes'))
@@ -442,6 +442,31 @@ class Serbian_Transliteration_Utilities{
 		{
 			return substr(str_replace(array('.',' ','_'),mt_rand(1000,9999),uniqid('t'.microtime())), 0, $length);
 		}
+	}
+
+	/*
+	 * Delete all plugin translations
+	 * @return        bool
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function clear_plugin_translations(){
+		$domain_path = [
+			path_join( WP_LANG_DIR, 'plugins' ) . '/' . RSTR_NAME . '-*.{po,mo}',
+			WP_LANG_DIR . '/' . RSTR_NAME . '-*.{po,mo}'
+		];
+		
+		$i = 0;
+		
+		foreach ($domain_path as $pattern) {
+			foreach (glob($pattern, GLOB_BRACE) as $file) {
+				if (file_exists($file)) {
+					unlink($file);
+					++$i;
+				}
+			}
+		}
+		
+		return ($i > 0) ? true : false;
 	}
 
 	/*

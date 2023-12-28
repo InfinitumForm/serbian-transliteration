@@ -58,7 +58,7 @@ if(class_exists('WP_CLI_Command', false) && !class_exists('Serbian_Transliterati
 					
 					$match->post_name = Serbian_Transliteration_Utilities::decode( $match->post_name );
 					if('lat_to_cyr' === $type) {
-						$match->post_name = $inst->lat_to_cyr( $match->post_name, false, false );
+						$match->post_name = $inst->lat_to_cyr( $match->post_name, false, true );
 					} else {
 						$match->post_name = $inst->cyr_to_lat_sanitize( $match->post_name );
 					}

@@ -24,9 +24,8 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 		$this->add_action('rstr/settings/content', 'tab_content');
 		
 		$this->add_action('rstr/settings/tab', 'nav_tab_settings');
-		$this->add_action('rstr/settings/tab', 'nav_tab_tools');
-		
 		$this->add_action('rstr/settings/tab', 'nav_tab_documentation');
+		$this->add_action('rstr/settings/tab', 'nav_tab_tools');
 		$this->add_action('rstr/settings/tab', 'nav_tab_debug');
 		$this->add_action('rstr/settings/tab', 'nav_tab_credits');
 		

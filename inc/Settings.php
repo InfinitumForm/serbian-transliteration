@@ -523,11 +523,11 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		
 		$installed_languages = get_available_languages();
 		
-		$language = 'en';
+		/*$language = 'en';
 		if( $language_arr = explode( '_', Serbian_Transliteration_Utilities::get_locale() ) ) {
 			$language = array_pop( $language_arr );
 			$language = strtolower( $language );
-		}
+		}*/
 		
 		foreach($installed_languages as $locale) {
 			
@@ -535,9 +535,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				__('Language: %s', 'serbian-transliteration'),
 				$locale
 			);
-			if( class_exists('Locale') ) {
+			/*if( class_exists('Locale') ) {
 				$language_name = Locale::getDisplayName($locale, $language);
-			}
+			}*/
 			
 			$this->add_settings_field(
 				'enable-body-class-'.$locale, // ID
@@ -548,7 +548,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				array(
 					'locale' => $locale,
 					'name' => $language_name,
-					'language' => $language
+				//	'language' => $language
 				)
 			);
 		}

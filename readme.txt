@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.11.6
+Stable tag: 1.11.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -154,6 +154,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.11.8 =
+* Fixed problems with translations
+
+= 1.11.7 =
+* Fixed percentage problems
+* Fixed Elementor bugs
+
 = 1.11.6 =
 * Fixed UX bugs
 * Fixed translations
@@ -223,6 +230,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Fixed UX
 
 == Upgrade Notice ==
+
+= 1.11.8 =
+* Fixed problems with translations
+
+= 1.11.7 =
+* Fixed percentage problems
+* Fixed Elementor bugs
 
 = 1.11.6 =
 * Fixed UX bugs

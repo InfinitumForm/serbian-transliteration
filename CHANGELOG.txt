@@ -1,3 +1,10 @@
+= 1.11.8 =
+* Fixed problems with translations
+
+= 1.11.7 =
+* Fixed percentage problems
+* Fixed Elementor bugs
+
 = 1.11.6 =
 * Fixed UX bugs
 * Fixed translations

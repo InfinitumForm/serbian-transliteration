@@ -5,7 +5,7 @@
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           1.11.6
+ * Version:           1.11.8
  * Requires at least: 5.4
  * Tested up to:      6.4
  * Requires PHP:      7.0
@@ -193,6 +193,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 		/* Do translations
 		====================================*/
 		add_action('plugins_loaded', function () {
+			
 			if ( is_textdomain_loaded( RSTR_NAME ) ) {
 				return;
 			}
@@ -202,6 +203,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 			}
 		
 			$locale = get_locale();
+			
 			if( is_user_logged_in() ) {
 				if( $user_locale = get_user_locale( get_current_user_id() ) ) {
 					$locale = $user_locale;
@@ -212,6 +214,8 @@ if($Serbian_Transliteration_Activate->passes()) :
 			$mofile = sprintf( '%s-%s.mo', 'serbian-transliteration', $locale );
 			// Check first inside `/wp-content/languages/plugins`
 			$domain_path = path_join( WP_LANG_DIR, 'plugins' );
+			
+			
 			$loaded = load_textdomain( RSTR_NAME, path_join( $domain_path, $mofile ) );
 			// Or inside `/wp-content/languages`
 			if ( ! $loaded ) {
@@ -351,7 +355,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 
 
 		/* Run script on the plugin upgrade
-		 ====================================*/
+		====================================*/
 		add_action( 'plugins_loaded', function () {
 			if( is_admin() && (RSTR_VERSION !== get_option(RSTR_NAME . '-version', RSTR_VERSION)) ) {
 				if ( ! current_user_can( 'activate_plugins' ) ) {
@@ -369,6 +373,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 				
 				// Unload textdomain
 				unload_textdomain(RSTR_NAME);
+				
+				// Delete old translations
+				Serbian_Transliteration_Utilities::clear_plugin_translations();
 
 				// Reset permalinks
 				flush_rewrite_rules();
@@ -398,6 +405,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 			
 			// Unload textdomain
 			unload_textdomain(RSTR_NAME);
+			
+			// Delete old translations
+			Serbian_Transliteration_Utilities::clear_plugin_translations();
 
 			// Reset permalinks
 			flush_rewrite_rules();
@@ -414,12 +424,11 @@ if($Serbian_Transliteration_Activate->passes()) :
 		/* Load tools
 		====================================*/
 		Serbian_Transliteration_Tools::instance();
+		
 		/* Run plugin
 		====================================*/
-		// Run in frontend		
-		Serbian_Transliteration_Init::run();
+		Serbian_Transliteration_Init::run(); // Run in frontend
 		
-		// Run dependency
-		Serbian_Transliteration_Init::run_dependency();
+		Serbian_Transliteration_Init::run_dependency(); // Run dependency
 	endif;
 endif;

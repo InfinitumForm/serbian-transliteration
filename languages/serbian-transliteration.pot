@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliterator\n"
-"POT-Creation-Date: 2023-12-15 07:43+0100\n"
+"POT-Creation-Date: 2023-12-16 00:43+0100\n"
 "PO-Revision-Date: 2023-08-24 13:48+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
@@ -249,7 +249,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: inc/Settings.php:155 inc/settings/content.php:95
+#: inc/Settings.php:155 inc/settings/content.php:94
 msgid "Permalink Tool"
 msgstr ""
 
@@ -1006,39 +1006,39 @@ msgstr[1] ""
 msgid "No changes to the permalink have been made."
 msgstr ""
 
-#: inc/settings/content.php:63
+#: inc/settings/content.php:62
 msgid "General Settings"
 msgstr ""
 
-#: inc/settings/content.php:79
+#: inc/settings/content.php:78
 msgid "Tools"
 msgstr ""
 
-#: inc/settings/content.php:94
+#: inc/settings/content.php:93
 msgid "Transliteration Tool"
 msgstr ""
 
-#: inc/settings/content.php:128
+#: inc/settings/content.php:127
 msgid "Documentation"
 msgstr ""
 
-#: inc/settings/content.php:136 inc/settings/content/shortcodes.php:21
+#: inc/settings/content.php:135 inc/settings/content/shortcodes.php:21
 msgid "Available shortcodes"
 msgstr ""
 
-#: inc/settings/content.php:137
+#: inc/settings/content.php:136
 msgid "Available PHP functions"
 msgstr ""
 
-#: inc/settings/content.php:138 inc/settings/content/tags.php:21
+#: inc/settings/content.php:137 inc/settings/content/tags.php:21
 msgid "Available Tags"
 msgstr ""
 
-#: inc/settings/content.php:173
+#: inc/settings/content.php:172
 msgid "Debug"
 msgstr ""
 
-#: inc/settings/content.php:189
+#: inc/settings/content.php:188
 msgid "Credits & Info"
 msgstr ""
 
@@ -1129,11 +1129,11 @@ msgstr ""
 msgid "PayPal"
 msgstr ""
 
-#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:73
+#: inc/settings/content/credits.php:125
 msgid "From Serbia"
 msgstr ""
 
-#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:73
+#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:68
 msgid "Mobi Bank"
 msgstr ""
 
@@ -1562,11 +1562,11 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: inc/settings/sidebar.php:61
+#: inc/settings/sidebar.php:62
 msgid "Brighten my day as my plugin brightens yours!"
 msgstr ""
 
-#: inc/settings/sidebar.php:63
+#: inc/settings/sidebar.php:64
 msgid ""
 "You know that feeling when you find something perfectly free? Well, that's "
 "my plugin - absolutely free, but created with lots of love and effort. To "
@@ -1574,64 +1574,76 @@ msgid ""
 "while coding), your support means the world to me!"
 msgstr ""
 
-#: inc/settings/sidebar.php:64
+#: inc/settings/sidebar.php:65
 msgid ""
 "If you like my work and want to contribute to my coffee/beer/future "
 "development fund, here's how you can do it:"
 msgstr ""
 
-#: inc/settings/sidebar.php:75
+#: inc/settings/sidebar.php:66
+msgid "Buy me a coffee"
+msgstr ""
+
+#: inc/settings/sidebar.php:70
 msgid ""
 "Every donation, no matter the size, helps me continue my work and makes me "
 "happier than caffeine ever could. Thank you for being a part of my WordPress "
 "family!"
 msgstr ""
 
-#: inc/settings/sidebar.php:76
+#: inc/settings/sidebar.php:71
 msgid "With love,"
 msgstr ""
 
-#: inc/settings/sidebar.php:86
+#: inc/settings/sidebar.php:81
 msgid ""
 "Hire professional developers, designers, SEO masters and marketing ninjas in "
 "one place."
 msgstr ""
 
-#: inc/settings/sidebar.php:87 inc/settings/sidebar.php:99
+#: inc/settings/sidebar.php:82 inc/settings/sidebar.php:98
 msgid "Read more..."
 msgstr ""
 
-#: inc/settings/sidebar.php:95
+#: inc/settings/sidebar.php:89
+msgid "Support my work by buying me a coffee!"
+msgstr ""
+
+#: inc/settings/sidebar.php:89
+msgid "Thank you for using Transliterator. Could you buy me a coffee?"
+msgstr ""
+
+#: inc/settings/sidebar.php:94
 msgid "Need CLOUD HOSTING ???"
 msgstr ""
 
-#: inc/settings/sidebar.php:98
+#: inc/settings/sidebar.php:97
 msgid ""
 "If you need hosting for your personal needs, for business, any web "
 "applications, cloud or dedicated servers, we have the ideal solution for you!"
 msgstr ""
 
-#: inc/settings/sidebar.php:108
+#: inc/settings/sidebar.php:107
 msgid "Contributors & Developers"
 msgstr ""
 
-#: inc/settings/sidebar.php:120
+#: inc/settings/sidebar.php:119
 #, php-format
 msgid ""
 "If you want to support our work and effort, if you have new ideas or want to "
 "improve the existing code, %s."
 msgstr ""
 
-#: inc/settings/sidebar.php:120
+#: inc/settings/sidebar.php:119
 msgid "join our team"
 msgstr ""
 
-#: inc/settings/sidebar.php:121
+#: inc/settings/sidebar.php:120
 #, php-format
 msgid "If you want to help further plugin development, you can also %s."
 msgstr ""
 
-#: inc/settings/sidebar.php:121
+#: inc/settings/sidebar.php:120
 msgid "donate something for effort"
 msgstr ""
 

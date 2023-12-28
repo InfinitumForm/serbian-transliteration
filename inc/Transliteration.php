@@ -176,8 +176,10 @@ class Serbian_Transliteration_Transliterating {
 			'/(([0-9]+)%{2,})/i'
 		], [
 			'%$2$3',
-			'$2%'
+			'$2%'			
 		], $content);
+		
+		$content = str_replace('&#037', '%', $content);
 
 		return $content;
 	}

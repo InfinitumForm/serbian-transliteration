@@ -365,6 +365,13 @@
 	display:block;
 }
 
+#serbian-transliteration-settings #serbian-transliteration-settings-sidebar #donations img {
+	display:block;
+	width:100%;
+	max-width:100%;
+	height:auto;
+}
+
 #serbian-transliteration-settings #serbian-transliteration-settings-sidebar #contributors .inside.flex{
 	display: -ms-flexbox;
     display: flex;
