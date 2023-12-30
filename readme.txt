@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.11.8
+Stable tag: 1.12.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -50,10 +50,11 @@ This plugin provides a seamless solution for converting WordPress content betwee
  &#9989; **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
  &#9989; **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
  &#9989; **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
+ &#9989; **Georgian latinisation** - Georgian Language (by locale:**ka_GE**)
  &#9989; **Greek (Elini'ka) latinisation** - Greek Language (by locale:**el**)
- &#128312; **Arabic latinisation** - Arabic Language (EXPERIMENTAL) (by locale:**ar**)
- &#128312; **Armenian latinisation** - Armenian Language (EXPERIMENTAL) (by locale:**hy**)
- &#9989; more languages are coming soon...
+ &#9989; **Arabic latinisation** - Arabic Language (by locale:**ar**)
+ &#9989; **Armenian latinisation** - Armenian Language (by locale:**hy**)
+ &#128312; more languages are coming soon...
 
 = PLUGINS SUPPORT =
 
@@ -154,6 +155,14 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.12.0 =
+* Fixed problems with Avada theme
+* Fixed problems in WooCommerce plugin
+* Fixed bugs in cyrillic encodings
+* Added Georgian language
+* Improvement of the Arabic language
+* Improvement of the Armenian language
+
 = 1.11.8 =
 * Fixed problems with translations
 
@@ -231,32 +240,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.11.8 =
-* Fixed problems with translations
-
-= 1.11.7 =
-* Fixed percentage problems
-* Fixed Elementor bugs
-
-= 1.11.6 =
-* Fixed UX bugs
-* Fixed translations
-
-= 1.11.5 =
-* Fixed warnings in PHP
-
-= 1.11.4 =
-* Added language exclusion
-* Fixed bugs from previous version
-
-= 1.11.3 =
-* Fixed plugin and theme transliteration
-* Fixed problem with duplicated percentages
-
-= 1.11.2 =
-* Fixed Avada theme support
-* Fixed "print formatted" text support
-* Fixed lat to cyr transliteration
+= 1.12.0 =
+* Fixed problems with Avada theme
+* Fixed problems in WooCommerce plugin
+* Fixed bugs in cyrillic encodings
+* Added Georgian language
+* Improvement of the Arabic language
+* Improvement of the Armenian language
 
 == Frequently Asked Questions ==
 

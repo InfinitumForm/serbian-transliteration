@@ -38,16 +38,47 @@ class Serbian_Transliteration_ar {
 		switch($translation)
 		{
 			case 'cyr_to_lat' :
-				return strtr($content, $transliteration);
+				$content = strtr($content, $transliteration);
+				
+				 // Additional rules for customization
+				// Normalization of Hamza characters
+				$content = str_replace(array("أ", "إ", "آ", "ؤ", "ئ"), "a", $content);
+
+				// Adaptation of Ta' Marbut
+				$content = preg_replace('/ة\b/', 'h', $content); // at the end of the word
+				$content = str_replace('ة', 't', $content);      // in all other cases
+
+				// Simplifying long vowels
+				$content = str_replace(array("وو", "يي"), array('w', 'y'), $content);
+
+				// Contextual adaptation of diacritical marks
+				$content = str_replace(array("َ", "ُ", "ِ", "ً", "ٌ", "ٍ"), '', $content);
+
+				// Simplifying the initial Alif lam (ال)
+				$content = preg_replace('/\bال/', 'al', $content);
+
+				// Special characters
+				$content = str_replace(array("ﻟﺎ", "ﻻ"), 'la', $content); // Ligatura Lam-Alif
+
+				return $content;
+				
 				break;
 
 			case 'lat_to_cyr' :
 				$transliteration = array_filter($transliteration, function($t){
 					return $t != '';
 				});
+				
+				// Processing of special cases or combinations
+				$content = preg_replace('/aa/', 'آ', $content); // Long vocal "aa"
+				$content = preg_replace('/uu/', 'وو', $content); // Long vocal "uu"
+				$content = preg_replace('/ii/', 'يي', $content); // Long vocal "ii"
+				
 				$transliteration = array_flip($transliteration);
 				$transliteration = apply_filters('rstr/inc/transliteration/ar/lat_to_cyr', $transliteration);
-				return strtr($content, $transliteration);
+				$content = strtr($content, $transliteration);
+				
+				return $content;
 				break;
 		}
 

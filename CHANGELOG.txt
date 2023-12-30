@@ -1,3 +1,11 @@
+= 1.12.0 =
+* Fixed problems with Avada theme
+* Fixed problems in WooCommerce plugin
+* Fixed bugs in cyrillic encodings
+* Added Georgian language
+* Improvement of the Arabic language
+* Improvement of the Armenian language
+
 = 1.11.8 =
 * Fixed problems with translations
 

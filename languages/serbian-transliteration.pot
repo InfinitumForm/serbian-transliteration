@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliterator\n"
-"POT-Creation-Date: 2023-12-16 00:43+0100\n"
+"POT-Creation-Date: 2023-12-30 20:13+0100\n"
 "PO-Revision-Date: 2023-08-24 13:48+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
@@ -27,19 +27,19 @@ msgid ""
 "`get_script()` function"
 msgstr ""
 
-#: inc/Functions.php:349 inc/Menu.php:37 inc/Menu.php:38 inc/Settings.php:688
+#: inc/Functions.php:361 inc/Menu.php:37 inc/Menu.php:38 inc/Settings.php:688
 #: inc/Settings.php:1110 inc/Shortcodes.php:38
-#: inc/settings/content/php-functions.php:126
+#: inc/settings/content/php-functions.php:129
 msgid "Cyrillic"
 msgstr ""
 
-#: inc/Functions.php:350 inc/Menu.php:36 inc/Menu.php:38 inc/Settings.php:689
+#: inc/Functions.php:362 inc/Menu.php:36 inc/Menu.php:38 inc/Settings.php:689
 #: inc/Settings.php:1109 inc/Shortcodes.php:39
-#: inc/settings/content/php-functions.php:131
+#: inc/settings/content/php-functions.php:134
 msgid "Latin"
 msgstr ""
 
-#: inc/Functions.php:368
+#: inc/Functions.php:380
 #, php-format
 msgid ""
 "Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
@@ -491,11 +491,11 @@ msgid ""
 "experimentally."
 msgstr ""
 
-#: inc/Settings.php:693 inc/Transliteration.php:32
+#: inc/Settings.php:693 inc/Transliteration.php:33
 msgid "Arabic"
 msgstr ""
 
-#: inc/Settings.php:695 inc/Transliteration.php:31
+#: inc/Settings.php:695 inc/Transliteration.php:32
 msgid "Armenian"
 msgstr ""
 
@@ -518,8 +518,8 @@ msgid ""
 "functionality of short codes and tags."
 msgstr ""
 
-#: inc/Settings.php:746 inc/Settings.php:1068
-msgid "Automatical (recommended)"
+#: inc/Settings.php:746
+msgid "Automatical"
 msgstr ""
 
 #: inc/Settings.php:768
@@ -657,6 +657,10 @@ msgstr ""
 msgid "Try to fix the diacritics in the search field."
 msgstr ""
 
+#: inc/Settings.php:1068
+msgid "Automatical (recommended)"
+msgstr ""
+
 #: inc/Settings.php:1069
 msgid "Based on the plugin mode"
 msgstr ""
@@ -734,12 +738,12 @@ msgid ""
 "is not possible. Please check the documentation."
 msgstr ""
 
-#: inc/Tools.php:38
+#: inc/Tools.php:43
 msgid ""
 "An error occurred while converting. Please refresh the page and try again."
 msgstr ""
 
-#: inc/Tools.php:51
+#: inc/Tools.php:56
 msgid ""
 "There was a communication problem. Please refresh the page and try again. If "
 "this does not solve the problem, contact the author of the plugin."
@@ -782,6 +786,10 @@ msgid "Ukrainian"
 msgstr ""
 
 #: inc/Transliteration.php:30
+msgid "Georgian"
+msgstr ""
+
+#: inc/Transliteration.php:31
 msgid "Greek"
 msgstr ""
 
@@ -839,144 +847,144 @@ msgstr ""
 msgid "Latin to Armenian"
 msgstr ""
 
-#: inc/Utilities.php:929 inc/Utilities.php:930
+#: inc/Utilities.php:954 inc/Utilities.php:955
 msgctxt "Language script"
 msgid "Script"
 msgstr ""
 
-#: inc/Utilities.php:931
+#: inc/Utilities.php:956
 msgid "Search by Script"
 msgstr ""
 
-#: inc/Utilities.php:932
+#: inc/Utilities.php:957
 msgid "All Scripts"
 msgstr ""
 
-#: inc/Utilities.php:933
+#: inc/Utilities.php:958
 msgid "Parent Script"
 msgstr ""
 
-#: inc/Utilities.php:934
+#: inc/Utilities.php:959
 msgid "Parent Script:"
 msgstr ""
 
-#: inc/Utilities.php:935
+#: inc/Utilities.php:960
 msgid "Edit Script"
 msgstr ""
 
-#: inc/Utilities.php:936
+#: inc/Utilities.php:961
 msgid "Update Script"
 msgstr ""
 
-#: inc/Utilities.php:937
+#: inc/Utilities.php:962
 msgid "Add New Script"
 msgstr ""
 
-#: inc/Utilities.php:938
+#: inc/Utilities.php:963
 msgid "New Script Name"
 msgstr ""
 
-#: inc/Utilities.php:939
+#: inc/Utilities.php:964
 msgid "Script"
 msgstr ""
 
-#: inc/Utilities.php:1032
+#: inc/Utilities.php:1069
 msgid " degrees "
 msgstr ""
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " divided by "
 msgstr ""
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " times "
 msgstr ""
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " plus-minus "
 msgstr ""
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " square root "
 msgstr ""
 
-#: inc/Utilities.php:1035
+#: inc/Utilities.php:1072
 msgid " infinity "
 msgstr ""
 
-#: inc/Utilities.php:1035
+#: inc/Utilities.php:1072
 msgid " almost equal to "
 msgstr ""
 
-#: inc/Utilities.php:1035
+#: inc/Utilities.php:1072
 msgid " not equal to "
 msgstr ""
 
-#: inc/Utilities.php:1036
+#: inc/Utilities.php:1073
 msgid " identical to "
 msgstr ""
 
-#: inc/Utilities.php:1036
+#: inc/Utilities.php:1073
 msgid " less than or equal to "
 msgstr ""
 
-#: inc/Utilities.php:1036
+#: inc/Utilities.php:1073
 msgid " greater than or equal to "
 msgstr ""
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " left "
 msgstr ""
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " right "
 msgstr ""
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " up "
 msgstr ""
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " down "
 msgstr ""
 
-#: inc/Utilities.php:1038
+#: inc/Utilities.php:1075
 msgid " left and right "
 msgstr ""
 
-#: inc/Utilities.php:1038
+#: inc/Utilities.php:1075
 msgid " up and down "
 msgstr ""
 
-#: inc/Utilities.php:1038
+#: inc/Utilities.php:1075
 msgid " care of "
 msgstr ""
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " estimated "
 msgstr ""
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " ohm "
 msgstr ""
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " female "
 msgstr ""
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " male "
 msgstr ""
 
-#: inc/Utilities.php:1040
+#: inc/Utilities.php:1077
 msgid " Copyright "
 msgstr ""
 
-#: inc/Utilities.php:1040
+#: inc/Utilities.php:1077
 msgid " Registered "
 msgstr ""
 
-#: inc/Utilities.php:1040
+#: inc/Utilities.php:1077
 msgid " Trademark "
 msgstr ""
 
@@ -1133,7 +1141,7 @@ msgstr ""
 msgid "From Serbia"
 msgstr ""
 
-#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:68
+#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:69
 msgid "Mobi Bank"
 msgstr ""
 
@@ -1332,78 +1340,78 @@ msgstr ""
 msgid "Determines whether the site is already in Cyrillic."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:70
+#: inc/settings/content/php-functions.php:73
 #, php-format
 msgid "alias of function %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:74
+#: inc/settings/content/php-functions.php:77
 msgid ""
 "This function provides information on whether the currently active language "
 "is excluded from transliteration."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:78
+#: inc/settings/content/php-functions.php:81
 msgid "Transliteration of some text or content into the desired script."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:80
+#: inc/settings/content/php-functions.php:83
 msgid ""
 "The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> "
 "(Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:83
+#: inc/settings/content/php-functions.php:86
 msgid "Transliteration only from Cyrillic to Latin."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:87
+#: inc/settings/content/php-functions.php:90
 msgid "Transliteration only from Latin to Cyrillic."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:91
+#: inc/settings/content/php-functions.php:94
 msgid "Get active script."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:95
+#: inc/settings/content/php-functions.php:98
 msgid "This function displays a selector for the transliteration script."
 msgstr ""
 
-#: inc/settings/content/php-functions.php:97
+#: inc/settings/content/php-functions.php:100
 msgid "Parameters"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:98
+#: inc/settings/content/php-functions.php:101
 msgid ""
 "This attribute contains an associative set of parameters for this function:"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:104
+#: inc/settings/content/php-functions.php:107
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
 "%1$s, %2$s, %3$s, %4$s, %5$s or %6$s. Default: %1$s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:116
+#: inc/settings/content/php-functions.php:119
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
 "string. Default: %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:121
+#: inc/settings/content/php-functions.php:124
 #: inc/settings/content/shortcodes.php:68
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:126
+#: inc/settings/content/php-functions.php:129
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr ""
 
-#: inc/settings/content/php-functions.php:131
+#: inc/settings/content/php-functions.php:134
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr ""
@@ -1566,7 +1574,7 @@ msgstr ""
 msgid "Brighten my day as my plugin brightens yours!"
 msgstr ""
 
-#: inc/settings/sidebar.php:64
+#: inc/settings/sidebar.php:65
 msgid ""
 "You know that feeling when you find something perfectly free? Well, that's "
 "my plugin - absolutely free, but created with lots of love and effort. To "
@@ -1574,77 +1582,68 @@ msgid ""
 "while coding), your support means the world to me!"
 msgstr ""
 
-#: inc/settings/sidebar.php:65
+#: inc/settings/sidebar.php:66
 msgid ""
 "If you like my work and want to contribute to my coffee/beer/future "
 "development fund, here's how you can do it:"
 msgstr ""
 
-#: inc/settings/sidebar.php:66
+#: inc/settings/sidebar.php:67 inc/settings/sidebar.php:80
 msgid "Buy me a coffee"
 msgstr ""
 
-#: inc/settings/sidebar.php:70
+#: inc/settings/sidebar.php:71
 msgid ""
 "Every donation, no matter the size, helps me continue my work and makes me "
 "happier than caffeine ever could. Thank you for being a part of my WordPress "
 "family!"
 msgstr ""
 
-#: inc/settings/sidebar.php:71
+#: inc/settings/sidebar.php:72
 msgid "With love,"
 msgstr ""
 
-#: inc/settings/sidebar.php:81
+#: inc/settings/sidebar.php:89
 msgid ""
 "Hire professional developers, designers, SEO masters and marketing ninjas in "
 "one place."
 msgstr ""
 
-#: inc/settings/sidebar.php:82 inc/settings/sidebar.php:98
+#: inc/settings/sidebar.php:90 inc/settings/sidebar.php:106
 msgid "Read more..."
 msgstr ""
 
-#: inc/settings/sidebar.php:89
+#: inc/settings/sidebar.php:97
 msgid "Support my work by buying me a coffee!"
 msgstr ""
 
-#: inc/settings/sidebar.php:89
+#: inc/settings/sidebar.php:97
 msgid "Thank you for using Transliterator. Could you buy me a coffee?"
 msgstr ""
 
-#: inc/settings/sidebar.php:94
+#: inc/settings/sidebar.php:102
 msgid "Need CLOUD HOSTING ???"
 msgstr ""
 
-#: inc/settings/sidebar.php:97
+#: inc/settings/sidebar.php:105
 msgid ""
 "If you need hosting for your personal needs, for business, any web "
 "applications, cloud or dedicated servers, we have the ideal solution for you!"
 msgstr ""
 
-#: inc/settings/sidebar.php:107
+#: inc/settings/sidebar.php:115
 msgid "Contributors & Developers"
 msgstr ""
 
-#: inc/settings/sidebar.php:119
+#: inc/settings/sidebar.php:127
 #, php-format
 msgid ""
 "If you want to support our work and effort, if you have new ideas or want to "
 "improve the existing code, %s."
 msgstr ""
 
-#: inc/settings/sidebar.php:119
+#: inc/settings/sidebar.php:127
 msgid "join our team"
-msgstr ""
-
-#: inc/settings/sidebar.php:120
-#, php-format
-msgid "If you want to help further plugin development, you can also %s."
-msgstr ""
-
-#: inc/settings/sidebar.php:120
-msgid "donate something for effort"
 msgstr ""
 
 #. Plugin Name of the plugin/theme

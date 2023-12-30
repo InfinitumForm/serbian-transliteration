@@ -200,6 +200,18 @@ if(!function_exists('is_russian')) :
 endif;
 
 /*
+ * Check is Georgian language
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_georgian')) :
+	function is_georgian()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('ka_GE');
+	}
+endif;
+
+/*
  * Check is Belarusian language
  * @return        boolean
  * @author        Ivijan-Stefan Stipic

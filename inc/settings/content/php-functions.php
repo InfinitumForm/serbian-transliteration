@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<h2 style="margin:0;">is_belarusian</h2>
 					<p><code class="lang-php">function is_belarusian() : bool</code></p>
 					<br>
+					<h2 style="margin:0;">is_georgian</h2>
+					<p><code class="lang-php">function is_georgian() : bool</code></p>
+					<br>
 					<h2 style="margin:0;">is_bulgarian</h2>
 					<p><code class="lang-php">function is_bulgarian() : bool</code></p>
 					<br>

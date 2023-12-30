@@ -743,7 +743,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
 	public function language_callback(){
 		$inputs = array();
-		$languages = array_merge(array('auto' => __('Automatical (recommended)', 'serbian-transliteration')), Serbian_Transliteration_Transliterating::registered_languages());
+		$languages = array_merge(array('auto' => __('Automatical', 'serbian-transliteration')), Serbian_Transliteration_Transliterating::registered_languages());
 		
 		if( !isset($this->options['language-scheme']) ) {
 			$this->options['language-scheme'] = ( 

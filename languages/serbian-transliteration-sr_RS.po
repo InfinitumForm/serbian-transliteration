@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2023-12-16 00:42+0100\n"
-"PO-Revision-Date: 2023-12-16 00:43+0100\n"
+"POT-Creation-Date: 2023-12-30 20:11+0100\n"
+"PO-Revision-Date: 2023-12-30 20:12+0100\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -30,19 +30,19 @@ msgstr ""
 "Ова функција је застарела и биће уклоњена. Замените је са get_script() "
 "функцијом."
 
-#: inc/Functions.php:349 inc/Menu.php:37 inc/Menu.php:38 inc/Settings.php:688
+#: inc/Functions.php:361 inc/Menu.php:37 inc/Menu.php:38 inc/Settings.php:688
 #: inc/Settings.php:1110 inc/Shortcodes.php:38
-#: inc/settings/content/php-functions.php:126
+#: inc/settings/content/php-functions.php:129
 msgid "Cyrillic"
 msgstr "Ћирилица"
 
-#: inc/Functions.php:350 inc/Menu.php:36 inc/Menu.php:38 inc/Settings.php:689
+#: inc/Functions.php:362 inc/Menu.php:36 inc/Menu.php:38 inc/Settings.php:689
 #: inc/Settings.php:1109 inc/Shortcodes.php:39
-#: inc/settings/content/php-functions.php:131
+#: inc/settings/content/php-functions.php:134
 msgid "Latin"
 msgstr "Латиница"
 
-#: inc/Functions.php:368
+#: inc/Functions.php:380
 #, php-format
 msgid ""
 "Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
@@ -548,11 +548,11 @@ msgstr ""
 "страницама и у порукама преведе на ћирилицу. Овој комбинацији се мора "
 "приступити експериментално."
 
-#: inc/Settings.php:693 inc/Transliteration.php:32
+#: inc/Settings.php:693 inc/Transliteration.php:33
 msgid "Arabic"
 msgstr "Арапски"
 
-#: inc/Settings.php:695 inc/Transliteration.php:31
+#: inc/Settings.php:695 inc/Transliteration.php:32
 msgid "Armenian"
 msgstr "Арменијски"
 
@@ -582,9 +582,9 @@ msgstr ""
 "онемогућите ову опцију. Ова опција не утиче на функционалност кратких кодова "
 "и ознака."
 
-#: inc/Settings.php:746 inc/Settings.php:1068
-msgid "Automatical (recommended)"
-msgstr "Аутоматски (препоручено)"
+#: inc/Settings.php:746
+msgid "Automatical"
+msgstr "Аутоматски"
 
 #: inc/Settings.php:768
 msgid ""
@@ -740,6 +740,10 @@ msgstr "Одобрите ако желите пресловљавање поља
 msgid "Try to fix the diacritics in the search field."
 msgstr "Покушајте да поправите дијакритике у пољу за претрагу."
 
+#: inc/Settings.php:1068
+msgid "Automatical (recommended)"
+msgstr "Аутоматски (препоручено)"
+
 #: inc/Settings.php:1069
 msgid "Based on the plugin mode"
 msgstr "Базирано на режиму пресловљавања"
@@ -833,13 +837,13 @@ msgstr ""
 "Кратки код за пресловљавање нема адекватне параметре и превођење није "
 "могуће. Молимо погледајте документацију."
 
-#: inc/Tools.php:38
+#: inc/Tools.php:43
 msgid ""
 "An error occurred while converting. Please refresh the page and try again."
 msgstr ""
 "Дошло је до грешке приликом конверзије. Освежите страницу и покушајте поново."
 
-#: inc/Tools.php:51
+#: inc/Tools.php:56
 msgid ""
 "There was a communication problem. Please refresh the page and try again. If "
 "this does not solve the problem, contact the author of the plugin."
@@ -884,6 +888,10 @@ msgid "Ukrainian"
 msgstr "Украјински"
 
 #: inc/Transliteration.php:30
+msgid "Georgian"
+msgstr "Грузијски"
+
+#: inc/Transliteration.php:31
 msgid "Greek"
 msgstr "Грчки"
 
@@ -945,144 +953,144 @@ msgstr "Арменијски у латиницу"
 msgid "Latin to Armenian"
 msgstr "Латиница у арменијски"
 
-#: inc/Utilities.php:929 inc/Utilities.php:930
+#: inc/Utilities.php:954 inc/Utilities.php:955
 msgctxt "Language script"
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:931
+#: inc/Utilities.php:956
 msgid "Search by Script"
 msgstr "Претражи по скрипти"
 
-#: inc/Utilities.php:932
+#: inc/Utilities.php:957
 msgid "All Scripts"
 msgstr "Све скрипте"
 
-#: inc/Utilities.php:933
+#: inc/Utilities.php:958
 msgid "Parent Script"
 msgstr "Родитељска скрипта"
 
-#: inc/Utilities.php:934
+#: inc/Utilities.php:959
 msgid "Parent Script:"
 msgstr "Родитељска скрипта:"
 
-#: inc/Utilities.php:935
+#: inc/Utilities.php:960
 msgid "Edit Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:936
+#: inc/Utilities.php:961
 msgid "Update Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:937
+#: inc/Utilities.php:962
 msgid "Add New Script"
 msgstr "Додај нову скрипту"
 
-#: inc/Utilities.php:938
+#: inc/Utilities.php:963
 msgid "New Script Name"
 msgstr "Нови назив скрипте"
 
-#: inc/Utilities.php:939
+#: inc/Utilities.php:964
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:1032
+#: inc/Utilities.php:1069
 msgid " degrees "
 msgstr " степени "
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " divided by "
 msgstr " подељено са "
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " times "
 msgstr " пута "
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " plus-minus "
 msgstr " плус-минус "
 
-#: inc/Utilities.php:1034
+#: inc/Utilities.php:1071
 msgid " square root "
 msgstr " квадратни корен "
 
-#: inc/Utilities.php:1035
+#: inc/Utilities.php:1072
 msgid " infinity "
 msgstr " бесконачност "
 
-#: inc/Utilities.php:1035
+#: inc/Utilities.php:1072
 msgid " almost equal to "
 msgstr " скоро једнако са "
 
-#: inc/Utilities.php:1035
+#: inc/Utilities.php:1072
 msgid " not equal to "
 msgstr " није једнако са "
 
-#: inc/Utilities.php:1036
+#: inc/Utilities.php:1073
 msgid " identical to "
 msgstr " индентично са "
 
-#: inc/Utilities.php:1036
+#: inc/Utilities.php:1073
 msgid " less than or equal to "
 msgstr " мање или једнако "
 
-#: inc/Utilities.php:1036
+#: inc/Utilities.php:1073
 msgid " greater than or equal to "
 msgstr " веће или једнако са "
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " left "
 msgstr " лево "
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " right "
 msgstr " десно "
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " up "
 msgstr " горе "
 
-#: inc/Utilities.php:1037
+#: inc/Utilities.php:1074
 msgid " down "
 msgstr " доле "
 
-#: inc/Utilities.php:1038
+#: inc/Utilities.php:1075
 msgid " left and right "
 msgstr " лево и десно "
 
-#: inc/Utilities.php:1038
+#: inc/Utilities.php:1075
 msgid " up and down "
 msgstr " горе и доле "
 
-#: inc/Utilities.php:1038
+#: inc/Utilities.php:1075
 msgid " care of "
 msgstr " брига о "
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " estimated "
 msgstr " процењено "
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " ohm "
 msgstr " ом "
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " female "
 msgstr " женско "
 
-#: inc/Utilities.php:1039
+#: inc/Utilities.php:1076
 msgid " male "
 msgstr " мушко "
 
-#: inc/Utilities.php:1040
+#: inc/Utilities.php:1077
 msgid " Copyright "
 msgstr " Ауторско право "
 
-#: inc/Utilities.php:1040
+#: inc/Utilities.php:1077
 msgid " Registered "
 msgstr " Регистровано "
 
-#: inc/Utilities.php:1040
+#: inc/Utilities.php:1077
 msgid " Trademark "
 msgstr " Заштитни знак "
 
@@ -1262,7 +1270,7 @@ msgstr "PayPal"
 msgid "From Serbia"
 msgstr "Из Србије"
 
-#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:68
+#: inc/settings/content/credits.php:125 inc/settings/sidebar.php:69
 msgid "Mobi Bank"
 msgstr "Моби Банка"
 
@@ -1475,12 +1483,12 @@ msgstr "Доступне PHP функције"
 msgid "Determines whether the site is already in Cyrillic."
 msgstr "Утврђује да ли је веб локација већ на ћирилици."
 
-#: inc/settings/content/php-functions.php:70
+#: inc/settings/content/php-functions.php:73
 #, php-format
 msgid "alias of function %s"
 msgstr "исто као функција %s"
 
-#: inc/settings/content/php-functions.php:74
+#: inc/settings/content/php-functions.php:77
 msgid ""
 "This function provides information on whether the currently active language "
 "is excluded from transliteration."
@@ -1488,11 +1496,11 @@ msgstr ""
 "Ова функција пружа информације о томе да ли је тренутно активан језик "
 "искључен из транслитерације."
 
-#: inc/settings/content/php-functions.php:78
+#: inc/settings/content/php-functions.php:81
 msgid "Transliteration of some text or content into the desired script."
 msgstr "Пресловљавање одређеног текста или садржаја у жељену скрипту."
 
-#: inc/settings/content/php-functions.php:80
+#: inc/settings/content/php-functions.php:83
 msgid ""
 "The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> "
 "(Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)"
@@ -1500,32 +1508,32 @@ msgstr ""
 "Параметар <b><i>$type</i></b> има две вредности: <code>cyr_to_lat</code> "
 "(ћирилица у латиницу) and <code>lat_to_cyr</code> (латиница у ћирилицу)"
 
-#: inc/settings/content/php-functions.php:83
+#: inc/settings/content/php-functions.php:86
 msgid "Transliteration only from Cyrillic to Latin."
 msgstr "Пресловљавање само са ћирилице на латиницу."
 
-#: inc/settings/content/php-functions.php:87
+#: inc/settings/content/php-functions.php:90
 msgid "Transliteration only from Latin to Cyrillic."
 msgstr "Пресловљавање само са латинице на ћирилицу."
 
-#: inc/settings/content/php-functions.php:91
+#: inc/settings/content/php-functions.php:94
 msgid "Get active script."
 msgstr "Враћа активну скрипту."
 
-#: inc/settings/content/php-functions.php:95
+#: inc/settings/content/php-functions.php:98
 msgid "This function displays a selector for the transliteration script."
 msgstr "Ова функција приказује навигацију скрипте за транслитерацију."
 
-#: inc/settings/content/php-functions.php:97
+#: inc/settings/content/php-functions.php:100
 msgid "Parameters"
 msgstr "Параметри"
 
-#: inc/settings/content/php-functions.php:98
+#: inc/settings/content/php-functions.php:101
 msgid ""
 "This attribute contains an associative set of parameters for this function:"
 msgstr "Овај атрибут садржи асоцијативни скуп параметара за ову функцију:"
 
-#: inc/settings/content/php-functions.php:104
+#: inc/settings/content/php-functions.php:107
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
@@ -1534,7 +1542,7 @@ msgstr ""
 "(стринг) Тип селектора који ће бити приказан на сајту. Може бити: %1$s, "
 "%2$s, %3$s, %4$s, %5$s or %6$s. Подразумевано: \"%1$s\""
 
-#: inc/settings/content/php-functions.php:116
+#: inc/settings/content/php-functions.php:119
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
@@ -1543,7 +1551,7 @@ msgstr ""
 "(bool) одређује да ли ће се приказивати кроз ехо или као низ. Подразумевано: "
 "%s"
 
-#: inc/settings/content/php-functions.php:121
+#: inc/settings/content/php-functions.php:124
 #: inc/settings/content/shortcodes.php:68
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
@@ -1551,12 +1559,12 @@ msgstr ""
 "(стринг) Сепаратор који се користи када је тип селектора %s. Подразумевано: "
 "%s"
 
-#: inc/settings/content/php-functions.php:126
+#: inc/settings/content/php-functions.php:129
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr "(стринг) Текст за ћирилични линк. Подразумевано: %s"
 
-#: inc/settings/content/php-functions.php:131
+#: inc/settings/content/php-functions.php:134
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr "(стринг) Текст за латинични линк. Подразумевано: %s"
@@ -1734,7 +1742,7 @@ msgstr "Очисти све"
 msgid "Brighten my day as my plugin brightens yours!"
 msgstr "Развеселите ме као што вас развесељава мој додатак!"
 
-#: inc/settings/sidebar.php:64
+#: inc/settings/sidebar.php:65
 msgid ""
 "You know that feeling when you find something perfectly free? Well, that's "
 "my plugin - absolutely free, but created with lots of love and effort. To "
@@ -1746,7 +1754,7 @@ msgstr ""
 "то остало сјајно (и да бих могао повремено да уживам у кафи или пиву док "
 "кодирам), ваша подршка ми значи много!"
 
-#: inc/settings/sidebar.php:65
+#: inc/settings/sidebar.php:66
 msgid ""
 "If you like my work and want to contribute to my coffee/beer/future "
 "development fund, here's how you can do it:"
@@ -1754,11 +1762,11 @@ msgstr ""
 "Ако вам се допада мој рад и желите да допринесете мојој кафи/пиви/фондацији "
 "за даљи развој, ево како то можете учинити:"
 
-#: inc/settings/sidebar.php:66
+#: inc/settings/sidebar.php:67 inc/settings/sidebar.php:80
 msgid "Buy me a coffee"
 msgstr "Časti me kafom"
 
-#: inc/settings/sidebar.php:70
+#: inc/settings/sidebar.php:71
 msgid ""
 "Every donation, no matter the size, helps me continue my work and makes me "
 "happier than caffeine ever could. Thank you for being a part of my WordPress "
@@ -1768,11 +1776,11 @@ msgstr ""
 "чини ме срећнијим него што кофеин то може. Хвала вам што сте део моје "
 "WordPress породице!"
 
-#: inc/settings/sidebar.php:71
+#: inc/settings/sidebar.php:72
 msgid "With love,"
 msgstr "С љубављу,"
 
-#: inc/settings/sidebar.php:81
+#: inc/settings/sidebar.php:89
 msgid ""
 "Hire professional developers, designers, SEO masters and marketing ninjas in "
 "one place."
@@ -1780,23 +1788,23 @@ msgstr ""
 "Ангажирајте професионалне програмере, дизајнере, СЕО мајсторе и маркетиншке "
 "нинџе на једном месту."
 
-#: inc/settings/sidebar.php:82 inc/settings/sidebar.php:98
+#: inc/settings/sidebar.php:90 inc/settings/sidebar.php:106
 msgid "Read more..."
 msgstr "Прочитајте више овде ..."
 
-#: inc/settings/sidebar.php:89
+#: inc/settings/sidebar.php:97
 msgid "Support my work by buying me a coffee!"
 msgstr "Подржите мој рад шољицом кафе!"
 
-#: inc/settings/sidebar.php:89
+#: inc/settings/sidebar.php:97
 msgid "Thank you for using Transliterator. Could you buy me a coffee?"
 msgstr "Хвала вам што користите Транслитератор. Можеш ли да ме частиш кафом?"
 
-#: inc/settings/sidebar.php:94
+#: inc/settings/sidebar.php:102
 msgid "Need CLOUD HOSTING ???"
 msgstr "Требате ХОСТИНГ ???"
 
-#: inc/settings/sidebar.php:97
+#: inc/settings/sidebar.php:105
 msgid ""
 "If you need hosting for your personal needs, for business, any web "
 "applications, cloud or dedicated servers, we have the ideal solution for you!"
@@ -1804,11 +1812,11 @@ msgstr ""
 "Ако вам треба хостинг за ваше личне потребе, за пословање, било које веб "
 "апликације, \"cloud\" или наменске сервере, имамо идеално решење за вас!"
 
-#: inc/settings/sidebar.php:107
+#: inc/settings/sidebar.php:115
 msgid "Contributors & Developers"
 msgstr "Сарадници и програмери"
 
-#: inc/settings/sidebar.php:119
+#: inc/settings/sidebar.php:127
 #, php-format
 msgid ""
 "If you want to support our work and effort, if you have new ideas or want to "
@@ -1817,18 +1825,9 @@ msgstr ""
 "Ако желите да подржите наш рад и труд, ако имате нове идеје или желите да "
 "побољшате постојећи код, %s."
 
-#: inc/settings/sidebar.php:119
+#: inc/settings/sidebar.php:127
 msgid "join our team"
 msgstr "придружите се нашем тиму"
-
-#: inc/settings/sidebar.php:120
-#, php-format
-msgid "If you want to help further plugin development, you can also %s."
-msgstr "Ако желите да помогнете даљем развоју додатака, такође можете %s."
-
-#: inc/settings/sidebar.php:120
-msgid "donate something for effort"
-msgstr "донирати нешто за наш труд"
 
 #. Plugin Name of the plugin/theme
 msgid "Transliterator"
@@ -1853,6 +1852,13 @@ msgstr "Ivijan-Stefan Stipić"
 #. Author URI of the plugin/theme
 msgid "https://profiles.wordpress.org/ivijanstefan/"
 msgstr "https://profiles.wordpress.org/ivijanstefan/"
+
+#, php-format
+#~ msgid "If you want to help further plugin development, you can also %s."
+#~ msgstr "Ако желите да помогнете даљем развоју додатака, такође можете %s."
+
+#~ msgid "donate something for effort"
+#~ msgstr "донирати нешто за наш труд"
 
 #~ msgid "Transliterator - WordPress Transliteration"
 #~ msgstr "Транслитерација - WordPress транслитерација"

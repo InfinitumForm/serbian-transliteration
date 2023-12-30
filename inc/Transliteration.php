@@ -27,9 +27,10 @@ class Serbian_Transliteration_Transliterating {
 			'mk_MK'  => __('Macedoanian', 'serbian-transliteration'),
 			'kk'     => __('Kazakh', 'serbian-transliteration'),
 			'uk'     => __('Ukrainian', 'serbian-transliteration'),
+			'ka_GE'  => __('Georgian', 'serbian-transliteration'),
 			'el'     => __('Greek', 'serbian-transliteration'),
-			'hy'     => __('Armenian', 'serbian-transliteration') . ' - BETA',
-			'ar'     => __('Arabic', 'serbian-transliteration') . ' - BETA'
+			'hy'     => __('Armenian', 'serbian-transliteration'),
+			'ar'     => __('Arabic', 'serbian-transliteration')
 		));
 	}
 	
@@ -201,6 +202,10 @@ class Serbian_Transliteration_Transliterating {
 			// Small letters
 			'a', 'b', 'v', 'g', 'd', 'đ', 'e', 'ž', 'z', 'i', 'j', 'k', 'l', 'lj', 'm',
 			'n', 'o', 'p', 'r', 's', 't', 'ć', 'u', 'f', 'h', 'c', 'č', 'dž', 'š',
+			// Specials
+			'a', 'b', 'g', 'd', 'e', 'v', 'z', 'th', 'i', 'k', 'l', 'm', 'n', 'o', 'p',
+			'zh', 'r', 's', 't', 'u', 'ph', 'q', 'gh', 'qh', 'sh', 'ch', 'ts', 'dz', 'ts',
+			'tch', 'kh', 'j', 'h'
 		));
 	}
 
@@ -220,7 +225,11 @@ class Serbian_Transliteration_Transliterating {
 			'Н', 'О', 'П', 'Р', 'С', 'Т', 'Ћ', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Џ', 'Ш',
 			// Small letters
 			'а', 'б', 'в', 'г', 'д', 'ђ', 'е', 'ж', 'з', 'и', 'ј', 'к', 'л', 'љ', 'м',
-			'н', 'о', 'п', 'р', 'с', 'т', 'ћ', 'у', 'ф', 'х', 'ц', 'ч', 'џ', 'ш'
+			'н', 'о', 'п', 'р', 'с', 'т', 'ћ', 'у', 'ф', 'х', 'ц', 'ч', 'џ', 'ш',
+			// Specials
+			'ა', 'ბ', 'გ', 'დ', 'ე', 'ვ', 'ზ', 'თ', 'ი', 'კ', 'ლ', 'მ', 'ნ', 'ო', 'პ',
+			'ჟ', 'რ', 'ს', 'ტ', 'უ', 'ფ', 'ქ', 'ღ', 'ყ', 'შ', 'ჩ', 'ც',
+			'ძ', 'წ', 'ჭ', 'ხ', 'ჯ', 'ჰ'
 		));
 	}
 
