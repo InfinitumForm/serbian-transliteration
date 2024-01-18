@@ -8,7 +8,7 @@ Hello developers and linguists! Thank you for your interest in contributing to t
 
 ### Reporting Bugs and Suggesting Enhancements
 
-- If you spot a bug or want to suggest an enhancement, please use the [Issues section](https://github.com/[YourRepo]/issues) on our GitHub repository.
+- If you spot a bug or want to suggest an enhancement, please use the [Issues section](https://github.com/InfinitumForm/serbian-transliteration/issues) on our GitHub repository.
 - Before creating a new issue, check if it already exists or has been resolved.
 - Use clear, concise titles and provide as much information as possible in the description.
 
