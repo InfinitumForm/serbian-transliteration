@@ -568,6 +568,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				RSTR_NAME, // Page
 				RSTR_NAME . '-misc' // Section
 			);
+			
+			$this->add_settings_field(
+				'disable-theme-support', // ID
+				__('Disable Theme Support', 'serbian-transliteration'), // Title
+				'disable_theme_support_callback', // Callback
+				RSTR_NAME, // Page
+				RSTR_NAME . '-misc' // Section
+			);
     }
 
     /**
@@ -1163,6 +1171,25 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', 'serbian-transliteration'));
+	}
+	
+	public function disable_theme_support_callback(){
+		$inputs = array();
+
+		foreach(array(
+			'no' => __('Enable Theme Support', 'serbian-transliteration'),
+			'yes' => __('Disable Theme Support', 'serbian-transliteration')
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="disable-theme-support-%1$s"><input type="radio" id="disable-theme-support-%1$s" name="%3$s[disable-theme-support]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['disable-theme-support'] ) ? ($this->options['disable-theme-support'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('If you don\'t require transliteration support for your theme, you can disable it for your current theme here.', 'serbian-transliteration'));
 	}
 
 	public function force_email_transliteration_callback () {

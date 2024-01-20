@@ -25,8 +25,13 @@ class Serbian_Transliteration_Transliterating {
 			'bel'    => __('Belarusian', 'serbian-transliteration'),
 			'bg_BG'  => __('Bulgarian', 'serbian-transliteration'),
 			'mk_MK'  => __('Macedoanian', 'serbian-transliteration'),
-			'kk'     => __('Kazakh', 'serbian-transliteration'),
 			'uk'     => __('Ukrainian', 'serbian-transliteration'),
+			'kk'     => __('Kazakh', 'serbian-transliteration'),
+			'tg'     => __('Tajik', 'serbian-transliteration'),
+			'kir'    => __('Kyrgyz', 'serbian-transliteration'),
+			'mn'     => __('Mongolian', 'serbian-transliteration'),
+			'ba'     => __('Bashkir', 'serbian-transliteration'),
+			'uz_UZ'  => __('Uzbek', 'serbian-transliteration'),
 			'ka_GE'  => __('Georgian', 'serbian-transliteration'),
 			'el'     => __('Greek', 'serbian-transliteration'),
 			'hy'     => __('Armenian', 'serbian-transliteration'),
@@ -63,6 +68,19 @@ class Serbian_Transliteration_Transliterating {
 		if( Serbian_Transliteration_Utilities::exclude_transliteration() ) {
 			return $content;
 		}
+		
+		$formatSpecifiers = [];
+		$content = preg_replace_callback('/%[0-9]*\$(?:d|s)/', function($matches) use (&$formatSpecifiers) {
+			$placeholder = '@=[' . count($formatSpecifiers) . ']=@';
+			$formatSpecifiers[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
+		
+		$content = preg_replace_callback('/%(?:d|s)/', function($matches) use (&$formatSpecifiers) {
+			$placeholder = '@=[' . count($formatSpecifiers) . ']=@';
+			$formatSpecifiers[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		$locale = $this->get_locale();
 		
@@ -134,53 +152,11 @@ class Serbian_Transliteration_Transliterating {
 			}
 		}
 		
-		if($translation === 'lat_to_cyr') {		
-			$content = str_replace(
-				[
-					'%д',
-					'&#37;с',
-					'&#37;д',
-					'%с',
-					'$д',
-					'$с'
-				],
-				[
-					'%d',
-					'%s',
-					'%d',
-					'%s',
-					'$d',
-					'$s'
-				],
-				$content
-			);
-			
-			$content = preg_replace(['/(\%[0-9]+\$)д/i', '/(\%[0-9]+\$)с/i'], ['$1d', '$1s'], $content);
+		// Post-transliteracija: Vraćanje format specifikatora
+		if($formatSpecifiers) {
+			$content = strtr($content, $formatSpecifiers);
+			unset($formatSpecifiers);
 		}
-		
-		$content = str_replace(
-			[
-				'%',
-				'&#37;s',
-				'&#37;d'
-			],
-			[
-				'&#37;',
-				'%s',
-				'%d'
-			],
-			$content
-		);
-		
-		$content = preg_replace([
-			'/(&#37;([0-9]+)(\$[ds]))/i',
-			'/(([0-9]+)%{2,})/i'
-		], [
-			'%$2$3',
-			'$2%'			
-		], $content);
-		
-		$content = str_replace('&#037', '%', $content);
 
 		return $content;
 	}

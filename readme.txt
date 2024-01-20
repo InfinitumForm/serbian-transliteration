@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, serbian, latinizacija, pre
 Requires at least: 5.4
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.12.0
+Stable tag: 1.12.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -155,6 +155,12 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.12.1 =
+* Fixed problems with specifiers
+* Optimized transliterations
+* Added new languages
+* Fixed HTML transliterations
+
 = 1.12.0 =
 * Fixed problems with Avada theme
 * Fixed problems in WooCommerce plugin
@@ -204,41 +210,13 @@ We also thought of PHP developers where we have enabled several useful functions
 * Deprecated codes removed
 * Transliteration added for emails through PHP mailer
 
-= 1.10.5 =
-* Fixed problem with the themes that not support menus
-* Fixed problems with wp title
-* Removed support for the older WP versions below 5.4
-* Removed PHP errors from previous versions
-
-= 1.10.4 =
-* Fixed Block Editor transliteration
-* Fixed Elementor transliteration
-* Fixed URL rendering
-
-= 1.10.3 =
-* Improved WP Mail transliteration
-
-= 1.10.2 =
-* Improved PHP transliteration buffer
-* Improved transliteration for Woocommerce
-* Fixed transliteration for files
-* Fixed PHP errors of the previous version
-* Fixed PHP errors for Windows operating system
-
-= 1.10.1 =
-* Fixed problem with serialized data
-* Fixed problems with PHP8.1 and above
-* Optimized PHP code
-
-= 1.10.0 =
-* Improvement for Elementor builder
-* Improvement for Oxygen builder
-* Enhanced security
-* Improved textdomain for translations
-* Fixed bugs inside AJAX calls
-* Fixed UX
-
 == Upgrade Notice ==
+
+= 1.12.1 =
+* Fixed problems with specifiers
+* Optimized transliterations
+* Added new languages
+* Fixed HTML transliterations
 
 = 1.12.0 =
 * Fixed problems with Avada theme

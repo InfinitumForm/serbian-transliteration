@@ -5,7 +5,7 @@
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           1.12.0
+ * Version:           1.12.1
  * Requires at least: 5.4
  * Tested up to:      6.4
  * Requires PHP:      7.0
@@ -308,6 +308,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 
 			// Clear plugin cache
 			Serbian_Transliteration_Utilities::clear_plugin_cache();
+			
+			// Delete old translations
+			Serbian_Transliteration_Utilities::clear_plugin_translations();
 
 			// Add custom script languages
 			if(!term_exists('lat', 'rstr-script'))
@@ -362,6 +365,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 					return;
 				}
 				
+				// Delete old translations
+				Serbian_Transliteration_Utilities::clear_plugin_translations();
+				
 				// Install database tables
 				if( RSTR_DATABASE_VERSION !== get_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION) ) {
 					Serbian_Transliteration_DB_Cache::table_install();
@@ -373,9 +379,6 @@ if($Serbian_Transliteration_Activate->passes()) :
 				
 				// Unload textdomain
 				unload_textdomain(RSTR_NAME);
-				
-				// Delete old translations
-				Serbian_Transliteration_Utilities::clear_plugin_translations();
 
 				// Reset permalinks
 				flush_rewrite_rules();
@@ -392,6 +395,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 			if ( ! current_user_can( 'activate_plugins' ) ) {
 				return;
 			}
+			
+			// Delete old translations
+			Serbian_Transliteration_Utilities::clear_plugin_translations();
 
 			// Add deactivation date
 			if($deactivation = get_option(RSTR_NAME . '-deactivation')) {
@@ -405,9 +411,6 @@ if($Serbian_Transliteration_Activate->passes()) :
 			
 			// Unload textdomain
 			unload_textdomain(RSTR_NAME);
-			
-			// Delete old translations
-			Serbian_Transliteration_Utilities::clear_plugin_translations();
 
 			// Reset permalinks
 			flush_rewrite_rules();

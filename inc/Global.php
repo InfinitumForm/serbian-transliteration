@@ -81,15 +81,18 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		return $content;
 	}
 
-	public static function fix_diacritics($content){
-		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
+	public static function fix_diacritics($content) {
+		if (parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
 
-		if(self::__instance()->get_locale() != 'sr_RS') return $content;
+		if ( !in_array( self::__instance()->get_locale(), [
+			'sr_RS',
+			'bs_BA',
+			'cnr'
+		] ) ) return $content;
 
-		if($search = parent::get_diacritical())
-		{
+		if ($search = parent::get_diacritical()) {
 			$new_string = str_replace(
 				array('dj', 'Dj', 'DJ', 'sh', 'Sh', 'SH', 'ch', 'Ch', 'CH', 'cs', 'Cs', 'CS', 'dz', 'Dz', 'DZ'),
 				array('đ', 'Đ', 'Đ', 'š', 'Š', 'Š', 'č', 'Č', 'Č', 'ć', 'Ć', 'Ć', 'dž', 'Dž', 'DŽ'),
@@ -98,82 +101,49 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 
 			$skip_words = parent::get_skip_words();
 			$skip_words = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $skip_words);
-
 			$search = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $search);
 
-			$arr = Serbian_Transliteration_Utilities::explode(' ', ($new_string??''));
+			$arr = Serbian_Transliteration_Utilities::explode(' ', ($new_string ?? ''));
+			$arr_origin = Serbian_Transliteration_Utilities::explode(' ', ($content ?? ''));
 
-			$arr_origin = Serbian_Transliteration_Utilities::explode(' ', ($content??''));
+			$result = '';
+			$count = count($arr);
 
-			if(!empty($arr))
-			{
-				// Proccess via buffer to made it a bit faster
-				ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
-				$count = count($arr);
-				foreach($arr as $i=>$word)
-				{
-					$word_search = (function_exists('mb_strtolower') ? mb_strtolower($word, 'UTF-8') : strtolower($word));
-					$word_search = preg_replace('/[.,?!-*_#$]+/i','',$word_search);
+			for ($i = 0; $i < $count; $i++) {
+				$word = $arr[$i];
+				$word_origin = $arr_origin[$i];
+				$word_search = function_exists('mb_strtolower') ? mb_strtolower($word, 'UTF-8') : strtolower($word);
+				$word_search = preg_replace('/[.,?!-*_#$]+/i', '', $word_search);
 
-					$word_search_origin = (function_exists('mb_strtolower') ? mb_strtolower($arr_origin[$i]) : strtolower($arr_origin[$i]));
-					$word_search_origin = preg_replace('/[.,?!-*_#$]+/i','',$word_search_origin);
+				$word_search_origin = function_exists('mb_strtolower') ? mb_strtolower($word_origin) : strtolower($word_origin);
+				$word_search_origin = preg_replace('/[.,?!-*_#$]+/i', '', $word_search_origin);
 
-					if(in_array($word_search_origin, $skip_words)){
-						echo $arr_origin[$i];
-						
-						if($count > $i+1) {
-							echo ' ';
-						} else {
-							continue;
-						}
-						
-						continue;
-					}
-
-					if(in_array($word_search, $search)) {
-						if(ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)){
-							echo (
-								function_exists('mb_strtoupper') 
-								? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8') 
-								: strtoupper($search[array_search($word_search, $search)])
-							);
-						} else if( preg_match('~^\p{Lu}~u', $word) ) {
-							$ucfirst = $search[array_search($word_search, $search)];
-							$firstChar = (
-								function_exists('mb_substr') 
-								? mb_substr($ucfirst, 0, 1, 'UTF-8') 
-								: substr($ucfirst, 0, 1)
-							);
-							$then = (
-								function_exists('mb_substr') 
-								? mb_substr($ucfirst, 1, NULL, 'UTF-8') 
-								: substr($ucfirst, 1, NULL)
-							);
-							echo (
-								function_exists('mb_strtoupper') ? 
-								mb_strtoupper($firstChar, 'UTF-8') 
-								: strtoupper($firstChar)
-							) . $then;
-						} else {
-							echo $word;
-						}
-					} else {
-						echo $word;
-					}
-					
-					if($count > $i+1) {
-						echo ' ';
-					} else {
-						continue;
-					}
+				if (in_array($word_search_origin, $skip_words)) {
+					$result .= $word_origin . ' ';
+					continue;
 				}
-				$new_string = $skip_words = $search = $arr = $arr_origin = NULL;
-				
-				$words = ob_get_contents();
-				ob_end_clean();
 
-				if(!empty($words)) return $words;
+				if (in_array($word_search, $search)) {
+					if (ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)) {
+						$result .= function_exists('mb_strtoupper')
+							? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8')
+							: strtoupper($search[array_search($word_search, $search)]);
+					} else if (preg_match('~^\p{Lu}~u', $word)) {
+						$ucfirst = $search[array_search($word_search, $search)];
+						$firstChar = function_exists('mb_substr') ? mb_substr($ucfirst, 0, 1, 'UTF-8') : substr($ucfirst, 0, 1);
+						$then = function_exists('mb_substr') ? mb_substr($ucfirst, 1, NULL, 'UTF-8') : substr($ucfirst, 1);
+						$result .= (function_exists('mb_strtoupper') ? mb_strtoupper($firstChar, 'UTF-8') : strtoupper($firstChar)) . $then;
+					} else {
+						$result .= $word;
+					}
+				} else {
+					$result .= $word;
+				}
+
+				$result .= ($i < $count - 1) ? ' ' : '';
 			}
+
+			return !empty($result) ? $result : $content;
 		}
 
 		return $content;
@@ -276,7 +246,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * All available HTML tags
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
-	*/
+	 */
 	public static function html_tags() {
 		$html_tags = get_option(RSTR_NAME . '-html-tags');
 
@@ -309,112 +279,41 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string/html
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public static function fix_cyr_html($content){
-		
+	public static function fix_cyr_html($content) {
+		// Dekodirajte HTML entitete
 		$content = htmlspecialchars_decode($content);
 
-		// Fix HTML entities
-		$content = preg_replace_callback ('/\&([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω]+)\;/iu', function($m){
-			return '&' . self::__instance()->cyr_to_lat($m[1]) . ';';
-		}, $content);
+		// Popravite HTML entitete
+		$content = self::fix_html_entities($content);
 
-		$tag_replace = Serbian_Transliteration_Cache::get('fix_cyr_html');
+		// Dohvatite zamenu za HTML tagove
+		$tag_replace = self::get_tag_replacements();
 
-		if(empty($tag_replace))
-		{
-			// Fix HTML tags
-			$tags = self::html_tags();
-
-			foreach($tags->lat as $i=>$tag_lat){
-				$tag_cyr = $tags->cyr[$i];
-				$tag_replace['<' . $tag_cyr] = '<' . $tag_lat;
-				$tag_replace['</' . $tag_cyr . '>'] = '</' . $tag_lat . '>';
-			}
-			$tags = NULL;
-			
-			$tag_replace = apply_filters('rstr/html/tags/replace', array_merge($tag_replace, array(
-				self::__instance()->lat_to_cyr('href', false) => 'href',
-				self::__instance()->lat_to_cyr('src', false) => 'src',
-				'&'.self::__instance()->lat_to_cyr('scaron', false).';' => 'ш',
-				'&'.self::__instance()->lat_to_cyr('Scaron', false).';' => 'Ш'
-			)), $tag_replace);
-			
-			Serbian_Transliteration_Cache::set('fix_cyr_html', $tag_replace);
-		}
-	
-		// Fix some characters
+		// Izvršite zamenu tagova
 		$content = strtr($content, $tag_replace);
 
-		$tag_replace = NULL;
-
-		$lastPos = 0;
-		$positions = array();
-
-		/* Fix HTML attributes */
-		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\-]+)(=["\'])/iu', function($m){
-			return ' ' . self::__instance()->cyr_to_lat($m[1]) . $m[2];
-		}, $content);
-		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf(' %1$s="%2$s"', $m[1], self::__instance()->cyr_to_lat($m[2]));
-		}, $content);
-		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name)\s?=\s?\'(.*?)\'/iu', function($m){
-			return sprintf(' %1$s=\'%2$s\'', $m[1], self::__instance()->cyr_to_lat($m[2]));
-		}, $content);
-
-		// Fix attributes with doublequote
-		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/iu', function($m){
-			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
-		}, $content);
-		// Fix attributes with singlequote
-		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/iu', function($m){
-			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
-		}, $content);
-
-		// Fix data attributes
-		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/iu', function($m){
-			if($m[1] == 'data-nectar-animated-gradient-settings'){
-		//		echo '<pre>', var_dump($m[2], self::__instance()->cyr_to_lat($m[2])), '</pre>';
-			}
-			return sprintf('%1$s="%2$s"', $m[1], self::__instance()->cyr_to_lat($m[2]));
-		}, $content);
-
+		// Popravite HTML atribute
+		$content = self::fix_html_attributes($content);
+		
 		// Fix open tags
-		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', function($m){
-			return self::__instance()->cyr_to_lat($m[1]);
-		}, $content);
+		$content = preg_replace_callback ('/(<[\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+>)/iu', 'self::preserve_regex_content', $content);
 
 		// Fix closed tags
-		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω]+>)/iu', function($m){
-			return self::__instance()->cyr_to_lat($m[1]);
-		}, $content);
+		$content = preg_replace_callback ('/(<\/[\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω]+>)/iu', 'self::preserve_regex_content', $content);
 
-		// Fix JavaScript
-		$content = preg_replace_callback('/(?=<script(.*?)>)(.*?)(?<=<\/script>)/s', function($m) {
-			return self::__instance()->cyr_to_lat($m[2]);
-		}, $content);
-
-		// Fix CSS
-		$content = preg_replace_callback('/(?=<style(.*?)>)(.*?)(?<=<\/style>)/s', function($m) {
-			return self::__instance()->cyr_to_lat($m[2]);
-		}, $content);
-
+		// Specifična logika za script i style tagove
+		$content = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', 'self::preserve_script_style_content', $content);
+		$content = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', 'self::preserve_script_style_content', $content);
+		
 		// Fix email
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\_\-\.]+)@([\x{0400}-\x{04FF}0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}0-9α-ωΑ-Ω]{3,10}))/iu', function($m){
-			return self::__instance()->cyr_to_lat($m[1]);
-		}, $content);
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\_\-\.]+)@([\x{0400}-\x{04FF}0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}0-9α-ωΑ-Ω]{3,10}))/iu', 'self::preserve_regex_content', $content);
 
 		// Fix URL
-		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}α-ωΑ-Ω]{4,5}):\/{2}([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', function($m){
-			return self::__instance()->cyr_to_lat($m[1]);
-		}, $content);
-		$content = preg_replace_callback ('/"('.self::__instance()->lat_to_cyr('https', false).'?:\/\/.*?)"/iu', function($m){
-			return self::__instance()->cyr_to_lat($m[1]);
-		}, $content);
+		$content = preg_replace_callback ('/(([\x{0400}-\x{04FF}α-ωΑ-Ω]{4,5}):\/{2}([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\_\-\.]+)\.([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω]{3,10})(.*?)($|\n|\s|\r|\"\'\.\;\,\:\)\]\>))/iu', 'self::preserve_regex_content', $content);
+		$content = preg_replace_callback ('/"('.self::__instance()->lat_to_cyr('https', false).'?:\/\/.*?)"/iu', 'self::preserve_regex_content', $content);
 
 		// Fix mailto link
-		$content = preg_replace_callback ('/"('.self::__instance()->lat_to_cyr('mailto', false).':\/\/.*?)"/iu', function($m){
-			return self::__instance()->cyr_to_lat($m[1]);
-		}, $content);
+		$content = preg_replace_callback ('/"('.self::__instance()->lat_to_cyr('mailto', false).':\/\/.*?)"/iu', 'self::preserve_regex_content', $content);
 
 		// Fix attributes with doublequote
 		$content = preg_replace_callback ('/(title|alt|data-(title|alt))\s?=\s?"(.*?)"/iu', function($m){
@@ -437,6 +336,75 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}, $content);
 
 		return $content;
+	}
+
+	private static function fix_html_entities($content) {
+		return preg_replace_callback('/\&([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω]+)\;/iu', function($m) {
+			return '&' . self::__instance()->cyr_to_lat($m[1]) . ';';
+		}, $content);
+	}
+
+	private static function get_tag_replacements() {
+		$tag_replace = Serbian_Transliteration_Cache::get('fix_cyr_html');
+		if(empty($tag_replace)) {
+			$tags = self::html_tags();
+
+			foreach($tags->lat as $i=>$tag_lat){
+				$tag_cyr = $tags->cyr[$i];
+				$tag_replace['<' . $tag_cyr] = '<' . $tag_lat;
+				$tag_replace['</' . $tag_cyr . '>'] = '</' . $tag_lat . '>';
+			}
+			$tags = NULL;
+			
+			$tag_replace = apply_filters('rstr/html/tags/replace', array_merge($tag_replace, array(
+				self::__instance()->lat_to_cyr('href', false) => 'href',
+				self::__instance()->lat_to_cyr('src', false) => 'src',
+				'&'.self::__instance()->lat_to_cyr('scaron', false).';' => 'ш',
+				'&'.self::__instance()->lat_to_cyr('Scaron', false).';' => 'Ш'
+			)), $tag_replace);
+			
+			Serbian_Transliteration_Cache::set('fix_cyr_html', $tag_replace);
+		}
+		return $tag_replace;
+	}
+
+	private static function fix_html_attributes($content) {
+		$content = preg_replace_callback ('/\s([\x{0400}-\x{04FF}qwyx0-9α-ωΑ-Ω\-]+)(=["\'])/siu', function($m){
+			return ' ' . self::__instance()->cyr_to_lat($m[1]) . $m[2];
+		}, $content);
+		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name|href)\s?=\s?"(.*?)"/siu', function($m){
+			return sprintf(' %1$s="%2$s"', $m[1], self::__instance()->cyr_to_lat($m[2]));
+		}, $content);
+		$content = preg_replace_callback ('/\s(class|id|rel|selected|type|style|loading|srcset|sizes|lang|name|href)\s?=\s?\'(.*?)\'/siu', function($m){
+			return sprintf(' %1$s=\'%2$s\'', $m[1], self::__instance()->cyr_to_lat($m[2]));
+		}, $content);
+
+		// Fix attributes with doublequote
+		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?"(.*?)"/siu', function($m){
+			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
+		}, $content);
+		// Fix attributes with singlequote
+		$content = preg_replace_callback ('/('.self::__instance()->lat_to_cyr('title|alt|src|data', false).'-([\x{0400}-\x{04FF}qwyx0-9a-zA-Zα-ωΑ-Ω\/\=\"\'\_\-\s\.\;\,\!\?\*\:\#\$\%\&\(\)\[\]\+\@\€]+))\s?=\s?\'(.*?)\'/siu', function($m){
+			return sprintf('%1$s="%2$s"', self::__instance()->cyr_to_lat($m[1]), esc_attr(self::__instance()->lat_to_cyr($m[3], false)));
+		}, $content);
+
+		// Fix data attributes
+		$content = preg_replace_callback ('/(data-[a-z0-9\_\-]+)\s?=\s?"(.*?)"/siu', function($m){
+			if($m[1] == 'data-nectar-animated-gradient-settings'){
+		//		echo '<pre>', var_dump($m[2], self::__instance()->cyr_to_lat($m[2])), '</pre>';
+			}
+			return sprintf('%1$s="%2$s"', $m[1], self::__instance()->cyr_to_lat($m[2]));
+		}, $content);
+
+		return $content;
+	}
+
+	private static function preserve_script_style_content($matches) {
+		return self::__instance()->cyr_to_lat($matches[2]);
+	}
+	
+	private static function preserve_regex_content($matches) {
+		return self::__instance()->cyr_to_lat($matches[1]);
 	}
 
 	/*

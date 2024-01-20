@@ -74,4 +74,15 @@ if($wpdb) {
 	$wpdb->query("DELETE FROM `{$wpdb->options}` WHERE `{$wpdb->options}`.`option_name` REGEXP '^_transient_(.*)?{$RSTR_NAME}(.*|$)'");
 	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}rstr_cache");
 }
+// Delete translations
+foreach ([
+	path_join( WP_LANG_DIR, 'plugins' ) . '/' . RSTR_NAME . '-*.{po,mo}',
+	WP_LANG_DIR . '/' . RSTR_NAME . '-*.{po,mo}'
+] as $pattern) {
+	foreach (glob($pattern, GLOB_BRACE) as $file) {
+		if (file_exists($file)) {
+			unlink($file);
+		}
+	}
+}
 //-END

@@ -37,7 +37,8 @@ class Serbian_Transliteration_Utilities{
 			'force-widgets'				=>	'no',
 			'force-email-transliteration' => 'no',
 			'force-ajax-calls' 			=> 'no',
-			'disable-by-language'		=> ['en_US'=>'yes']
+			'disable-by-language'		=> ['en_US'=>'yes'],
+			'disable-theme-support'		=> 'no'
 		));
 	}
 	
