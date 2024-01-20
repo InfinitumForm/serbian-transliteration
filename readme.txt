@@ -41,20 +41,25 @@ This plugin provides a seamless solution for converting WordPress content betwee
 
 = LANGUAGE SUPPORT =
 
- &#9989; **Serbian latinisation** - Serbian language (by locale:**sr_RS**)
- &#9989; **Bosnian latinisation** - Bosnian language (follows the rules of the Serbian language with additional special characters)
- &#9989; **Montenegrin latinisation** - Montenegrin language (follows the rules of the Serbian language with additional special characters)
- &#9989; **Russian latinisation** - Russian language (by locale:**ru_RU**)
- &#9989; **Belarusian latinisation** - Belarusian language (by locale:**bel**)
- &#9989; **Bulgarian latinisation** - Bulgarian language (by locale:**bg_BG**)
- &#9989; **Macedonian latinisation** - Macedonian language (by locale:**mk_MK**)
- &#9989; **Kazakh latinisation** - Kazakh Language (by locale:**kk**)
- &#9989; **Ukrainian latinisation** - Ukrainian Language (by locale:**uk**)
- &#9989; **Georgian latinisation** - Georgian Language (by locale:**ka_GE**)
- &#9989; **Greek (Elini'ka) latinisation** - Greek Language (by locale:**el**)
- &#9989; **Arabic latinisation** - Arabic Language (by locale:**ar**)
- &#9989; **Armenian latinisation** - Armenian Language (by locale:**hy**)
- &#128312; more languages are coming soon...
+ &#9989; **Serbian Latinisation** - Serbian language (locale: **sr_RS**). Adheres to the Serbian language rules with the addition of specific characters unique to Serbian.
+ &#9989; **Bosnian Latinisation** - Bosnian language. Follows the Serbian language rules with the inclusion of additional special characters unique to Bosnian.
+ &#9989; **Montenegrin Latinisation** - Montenegrin language. Incorporates the rules of the Serbian language with additional special characters unique to Montenegrin.
+ &#9989; **Russian Latinisation** - Russian language (locale: **ru_RU**). Implements Russian language transliteration rules.
+ &#9989; **Belarusian Latinisation** - Belarusian language (locale: **bel**). Adopts Belarusian language transliteration rules.
+ &#9989; **Bulgarian Latinisation** - Bulgarian language (locale: **bg_BG**). Follows Bulgarian language transliteration standards.
+ &#9989; **Macedonian Latinisation** - Macedonian language (locale: **mk_MK**). Utilizes Macedonian language transliteration guidelines.
+ &#9989; **Kazakh Latinisation** - Kazakh language (locale: **kk**). Applies Kazakh language transliteration methods.
+ &#9989; **Ukrainian Latinisation** - Ukrainian language (locale: **uk**). Implements Ukrainian language transliteration practices.
+ &#9989; **Georgian Latinisation** - Georgian language (locale: **ka_GE**). Follows Georgian language transliteration standards.
+ &#9989; **Greek (Elinika) Latinisation** - Greek language (locale: **el**). Utilizes Greek language transliteration methods.
+ &#9989; **Arabic Latinisation** - Arabic language (locale: **ar**). Adopts Arabic language transliteration rules.
+ &#9989; **Armenian Latinisation** - Armenian language (locale: **hy**). Follows Armenian language transliteration practices.
+ &#9989; **Uzbek Latinisation** - Uzbek language (locale: **uz_UZ**). Implements Uzbek language transliteration guidelines, accommodating both Cyrillic and Latin scripts.
+ &#9989; **Tajik Latinisation** - Tajik (Tajikistan) language (locale: **tg**). Utilizes Tajik language transliteration methods, focusing on Cyrillic to Latin script.
+ &#9989; **Kyrgyz Latinisation** - Kyrgyz (Kyrgyzstan) language (locale: **kir**). Follows Kyrgyz language transliteration standards, primarily from Cyrillic to Latin script.
+ &#9989; **Mongolian Latinisation** - Mongolian language (in Cyrillic script) (locale: **mn**). Adopts Mongolian language transliteration rules for Cyrillic script.
+ &#9989; **Bashkir Latinisation** - Bashkir language (locale: **ba**). Implements Bashkir language transliteration practices.
+ &#128312; More languages are coming soon...
 
 = PLUGINS SUPPORT =
 
