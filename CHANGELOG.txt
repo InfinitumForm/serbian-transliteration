@@ -1,3 +1,9 @@
+= 1.12.2 =
+* Fixed transliteration of AJAX calls
+* Fixed Woocommerce mini cart transliterations
+* Fixed Template Switcher
+* Improved translations
+
 = 1.12.1 =
 * Fixed problems with specifiers
 * Optimized transliterations

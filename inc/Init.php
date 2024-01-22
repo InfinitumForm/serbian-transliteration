@@ -395,7 +395,13 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 							|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))
 							|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
 						)) {} else {
-							$buffer = Serbian_Transliteration::__instance()->cyr_to_lat($buffer);
+							$json = json_decode( $buffer, true );
+							if( NULL !== $json && is_array($json) ) {
+								$buffer = Serbian_Transliteration::__instance()->transliterate_objects($buffer, 'cyr_to_lat');
+								$buffer = json_encode($buffer);
+							} else {
+								$buffer = Serbian_Transliteration::__instance()->cyr_to_lat($buffer);
+							}
 						}
 					}
 				}

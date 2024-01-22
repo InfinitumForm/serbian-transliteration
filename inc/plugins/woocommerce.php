@@ -78,7 +78,8 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 					'woocommerce_country_locale' => 'content',
 					'woocommerce_get_shipping_countries' => 'content',
 					'woocommerce_get_allowed_countries' => 'content',
-					'woocommerce_template_single_excerpt' => 'content'
+					'woocommerce_template_single_excerpt' => 'content',
+					'woocommerce_cart_item_name' => 'content'
 			));
 			asort($filters);			
 			return $filters;

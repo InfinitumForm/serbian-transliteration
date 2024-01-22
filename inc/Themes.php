@@ -29,6 +29,10 @@ if(!class_exists('Serbian_Transliteration_Themes', false)) :
 		
 		function __construct( $options=array(), $only_object = false ) {
 			
+			if(get_rstr_option('disable-theme-support', 'no') == 'yes') {
+				return;
+			}
+			
 			$wp_get_theme = wp_get_theme(get_template());
 			
 			if(empty($wp_get_theme) || !$wp_get_theme->exists()) return $this;

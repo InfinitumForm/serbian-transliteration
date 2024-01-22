@@ -571,7 +571,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			
 			$this->add_settings_field(
 				'disable-theme-support', // ID
-				__('Disable Theme Support', 'serbian-transliteration'), // Title
+				__('Theme Support', 'serbian-transliteration'), // Title
 				'disable_theme_support_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-misc' // Section
