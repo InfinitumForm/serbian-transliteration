@@ -44,18 +44,31 @@ class Serbian_Transliteration_Transliterating {
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public static function can_trasliterate($content){
-		return apply_filters( 'rstr_can_trasliterate', (
-			empty($content) 
-			|| is_array($content) 
-			|| is_object($content) 
-			|| is_numeric($content) 
-			|| is_bool($content)
-			|| ( is_string($content) && trim($content) != '' && @is_file($content) )
-			|| ( is_string($content) && trim($content) != '' && @is_link($content) )
-			|| filter_var($content, FILTER_VALIDATE_URL)
-			|| filter_var($content, FILTER_VALIDATE_EMAIL)
-		), $content );
+	public static function can_trasliterate($content) {
+		// Brzi izlazak za prazan sadržaj
+		if (empty($content)) {
+			return apply_filters('rstr_can_trasliterate', true, $content);
+		}
+
+		// Proveravamo da li je sadržaj tipa koji ne podržava transliteraciju
+		if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {
+			return apply_filters('rstr_can_trasliterate', true, $content);
+		}
+
+		// Provera za stringove koji su fajlovi ili linkovi
+		if (is_string($content) && trim($content) != '') {
+			if (preg_match('/^(https?:\/\/[^ "]+)|([\/\\]?[\w\s-]+(\.[\w-]+)+)$/', $content)) {
+				return apply_filters('rstr_can_trasliterate', true, $content);
+			}
+		}
+
+		// Provera za URL i Email
+		if (filter_var($content, FILTER_VALIDATE_URL) || filter_var($content, FILTER_VALIDATE_EMAIL)) {
+			return apply_filters('rstr_can_trasliterate', true, $content);
+		}
+
+		// Ako nijedan uslov nije ispunjen, vraćamo true
+		return apply_filters('rstr_can_trasliterate', false, $content);
 	}
 
 	/*
@@ -68,27 +81,21 @@ class Serbian_Transliteration_Transliterating {
 		if( Serbian_Transliteration_Utilities::exclude_transliteration() ) {
 			return $content;
 		}
-		
+
+		// Kombinovanje dva preg_replace_callback poziva u jedan
 		$formatSpecifiers = [];
-		$content = preg_replace_callback('/%[0-9]*\$(?:d|s)/', function($matches) use (&$formatSpecifiers) {
-			$placeholder = '@=[' . count($formatSpecifiers) . ']=@';
-			$formatSpecifiers[$placeholder] = $matches[0];
-			return $placeholder;
-		}, $content);
-		
-		$content = preg_replace_callback('/%(?:d|s)/', function($matches) use (&$formatSpecifiers) {
+		$content = preg_replace_callback('/%[0-9]*\$(?:d|s)|%(?:d|s)/', function($matches) use (&$formatSpecifiers) {
 			$placeholder = '@=[' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
 
 		$locale = $this->get_locale();
-		
-		// Avoid transliteration for the some cases
+
 		if( self::can_trasliterate($content) || !in_array($translation, array('lat_to_cyr', 'cyr_to_lat')) ){
 			return $content;
 		}
-		
+
 		$site_script = get_rstr_option('site-script', 'lat');
 		$mode = get_rstr_option('transliteration-mode', 'none') == 'cyr_to_lat' ? 'cyr' : 'lat';
 		$current = Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr' ? 'cyr' : 'lat';
@@ -97,67 +104,57 @@ class Serbian_Transliteration_Transliterating {
 			return $content;
 		}
 
-		// Set variables
 		$path = RSTR_INC . "/transliteration/{$locale}.php";
 		$class_name = "Serbian_Transliteration_{$locale}";
 		$transliterated = false;
 
-		// Include class
 		if(!class_exists($class_name, false) && file_exists($path))
 		{
 			include_once $path;
 		}
 
-		// Load class
 		if(class_exists($class_name, false))
 		{
 			$content = $class_name::transliterate($content, $translation);
 			$transliterated = true;
 		}
-		// If no locale than old fashion way
-		if($transliterated)
-		{
-			// Filter special names from the list
-			if($translation === 'cyr_to_lat') {
-				foreach($this->lat_exclude_list() as $item){
-					$content = str_replace($class_name::transliterate($item, 'cyr_to_lat'), $item, $content);
-				}
-			} else if($translation === 'lat_to_cyr') {
-				foreach($this->cyr_exclude_list() as $item){
-					$content = str_replace($class_name::transliterate($item, 'lat_to_cyr'), $item, $content);
-				}
-			}
-		}
-		else
-		{
-			// Let's do basic transliteration
-			if($translation === 'cyr_to_lat') {
-				$content = str_replace(self::cyr(), self::lat(), $content);
-				$content = str_replace(array(
-					'ь', 'ъ', 'Ъ', 'Ь'
-				), '', $content);
-			} else if($translation === 'lat_to_cyr') {
-				$content = str_replace(self::lat(), self::cyr(), $content);
-			}
 
-			// Filter special names from the list
-			if($translation === 'cyr_to_lat') {
-				foreach($this->lat_exclude_list() as $item){
-					$content = str_replace(str_replace(self::cyr(), self::lat(), $item), $item, $content);
-				}
-			} else if($translation === 'lat_to_cyr') {
-				foreach($this->cyr_exclude_list() as $item){
-					$content = str_replace(str_replace(self::lat(), self::cyr(), $item), $item, $content);
-				}
+		// Smanjivanje duplikata u kodu
+		$excludeFunction = $translation === 'cyr_to_lat' ? 'lat_exclude_list' : 'cyr_exclude_list';
+		$transliterateFunction = $transliterated ? [$class_name, 'transliterate'] : [$this, 'basicTransliterate'];
+
+		foreach($this->$excludeFunction() as $item){
+			$content = str_replace(call_user_func($transliterateFunction, $item, $translation), $item, $content);
+		}
+
+		if($formatSpecifiers) {
+			$content = strtr($content, $formatSpecifiers);
+		}
+
+		return $content;
+	}
+	
+	private function basicTransliterate($content, $translation){
+		if($translation === 'cyr_to_lat') {
+			$content = str_replace(self::cyr(), self::lat(), $content);
+			$content = str_replace(array(
+				'ь', 'ъ', 'Ъ', 'Ь'
+			), '', $content);
+		} else if($translation === 'lat_to_cyr') {
+			$content = str_replace(self::lat(), self::cyr(), $content);
+		}
+
+		// Filter special names from the list
+		if($translation === 'cyr_to_lat') {
+			foreach($this->lat_exclude_list() as $item){
+				$content = str_replace(str_replace(self::cyr(), self::lat(), $item), $item, $content);
+			}
+		} else if($translation === 'lat_to_cyr') {
+			foreach($this->cyr_exclude_list() as $item){
+				$content = str_replace(str_replace(self::lat(), self::cyr(), $item), $item, $content);
 			}
 		}
 		
-		// Post-transliteracija: Vraćanje format specifikatora
-		if($formatSpecifiers) {
-			$content = strtr($content, $formatSpecifiers);
-			unset($formatSpecifiers);
-		}
-
 		return $content;
 	}
 

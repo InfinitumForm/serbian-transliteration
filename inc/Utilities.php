@@ -122,26 +122,17 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function exclude_transliteration() : bool {
 		static $exclude_transliteration;
-		
-		if( NULL !== $exclude_transliteration ) {
+
+		if ($exclude_transliteration !== NULL) {
 			return $exclude_transliteration;
 		}
-		
+
 		$locale = self::get_locale();
-		
 		$exclude = get_rstr_option('disable-by-language', []);
-		
-		if( is_array($exclude) ) {
-			foreach($exclude as $ex_locale => $confirm) {
-				if( $locale === $ex_locale && $confirm == 'yes' ) {
-					$exclude_transliteration = true;
-					return true;
-				}
-			}
-		}
-		
-		$exclude_transliteration = false;
-		return false;
+
+		$exclude_transliteration = isset($exclude[$locale]) && $exclude[$locale] === 'yes';
+
+		return $exclude_transliteration;
 	}
 
 	/*
@@ -315,16 +306,16 @@ class Serbian_Transliteration_Utilities{
 	 */
 	public static function is_plugin_active($plugin)
 	{
-		static $active_plugins = [];
-		
-		if( !isset($active_plugins[$plugin]) ) {
-			if(!function_exists('is_plugin_active')) {
-				self::include_once( WP_ADMIN_DIR . '/includes/plugin.php' );
+		static $active_plugins = null;
+
+		if ($active_plugins === null) {
+			if (!function_exists('is_plugin_active')) {
+				include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 			}
-			$active_plugins[$plugin] = is_plugin_active($plugin);
+			$active_plugins = get_option('active_plugins', []);
 		}
 
-		return $active_plugins[$plugin];
+		return in_array($plugin, $active_plugins);
 	}
 
 	/*

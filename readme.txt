@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat, serbian, latiniza
 Requires at least: 5.4
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.12.2
+Stable tag: 1.12.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -160,6 +160,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.12.3 =
+* Plugin optimization
+* Improved translations
+* Fixed bugs in plugin detection
+
 = 1.12.2 =
 * Fixed transliteration of AJAX calls
 * Fixed Woocommerce mini cart transliterations
@@ -222,6 +227,11 @@ We also thought of PHP developers where we have enabled several useful functions
 * Transliteration added for emails through PHP mailer
 
 == Upgrade Notice ==
+
+= 1.12.3 =
+* Plugin optimization
+* Improved translations
+* Fixed bugs in plugin detection
 
 = 1.12.2 =
 * Fixed transliteration of AJAX calls

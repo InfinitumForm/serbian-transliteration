@@ -154,25 +154,21 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function transliterate_text($content, $type = NULL, $fix_html = true){
-		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
+	public function transliterate_text($content, $type = NULL, $fix_html = true) {
+		if (parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
 
-		if(empty($type) || is_bool($type)){
-			$type = Serbian_Transliteration_Utilities::get_current_script();
-		}
+		$type = (empty($type) || is_bool($type)) ? Serbian_Transliteration_Utilities::get_current_script() : $type;
 
-		// If site script is cyr and transliteration from latin to cyr, stop execution
-		if( get_rstr_option('site-script') === 'cyr' && $type === 'lat_to_cyr' ) {
+		if (get_rstr_option('site-script') === 'cyr' && $type === 'lat_to_cyr') {
 			return $content;
 		}
 
 		$content = Serbian_Transliteration_Utilities::decode($content);
-		
 		$content = $this->transliteration($content, $type);
 
-		if(($type == 'lat_to_cyr') && $fix_html && strip_tags($content) != $content){
+		if ($type === 'lat_to_cyr' && $fix_html && strip_tags($content) !== $content) {
 			$content = self::fix_cyr_html($content);
 			$content = self::fix_attributes($content);
 		}
