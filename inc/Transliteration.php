@@ -121,7 +121,7 @@ class Serbian_Transliteration_Transliterating {
 
 		// Smanjivanje duplikata u kodu
 		$excludeFunction = $translation === 'cyr_to_lat' ? 'lat_exclude_list' : 'cyr_exclude_list';
-		$transliterateFunction = $transliterated ? [$class_name, 'transliterate'] : [$this, 'basicTransliterate'];
+		$transliterateFunction = $transliterated ? [$class_name, 'transliterate'] : [$this, '_basic_transliterate'];
 
 		foreach($this->$excludeFunction() as $item){
 			$content = str_replace(call_user_func($transliterateFunction, $item, $translation), $item, $content);
@@ -134,7 +134,12 @@ class Serbian_Transliteration_Transliterating {
 		return $content;
 	}
 	
-	private function basicTransliterate($content, $translation){
+	/*
+	 * PRIVATE Basic transliteration
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	private function _basic_transliterate($content, $translation){
 		if($translation === 'cyr_to_lat') {
 			$content = str_replace(self::cyr(), self::lat(), $content);
 			$content = str_replace(array(
@@ -212,29 +217,26 @@ class Serbian_Transliteration_Transliterating {
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function get_locale(){
-
-		if('auto' != ($language_scheme = get_rstr_option('language-scheme', 'auto'))) {
+	public function get_locale() {
+		$language_scheme = get_rstr_option('language-scheme', 'auto');
+		if ($language_scheme !== 'auto') {
 			return $language_scheme;
 		}
 
 		$get_locale = Serbian_Transliteration_Cache::get('get_locale');
+		if (empty($get_locale)) {
+			$get_locale = function_exists('pll_current_language') ? pll_current_language('locale') : get_locale();
+			
+			if (empty($get_locale)) {
+				$get_locale = get_user_locale(wp_get_current_user());
+			}
 
-		if(empty($get_locale)){
-			$get_locale = get_locale();
-			if(function_exists('pll_current_language')) {
-				$get_locale = pll_current_language('locale');
-			}
-			
-			if(empty($get_locale)){
-				$get_locale = get_user_locale( wp_get_current_user() );
-			}
-			
-			$get_locale = Serbian_Transliteration_Cache::set('get_locale', $get_locale);
+			Serbian_Transliteration_Cache::set('get_locale', $get_locale);
 		}
 
 		return $get_locale;
 	}
+
 
 	/*
 	 * Get list of available locales

@@ -33,19 +33,17 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 **/
-	public function content ($content='') {
-		if(empty($content)) return $content;
+	public function content($content = '') {
+		if (empty($content)) {
+			return $content;
+		}
 
-		if(is_array($content))
-		{
-			$content = $this->objects($content);
+		if (is_array($content)) {
+			return $this->objects($content);
+		} elseif (is_string($content) && method_exists($this, 'transliterate_text')) {
+			return $this->transliterate_text($content);
 		}
-		else if(is_string($content))
-		{
-			if(method_exists($this, 'transliterate_text')) {
-				$content = $this->transliterate_text($content);
-			}
-		}
+
 		return $content;
 	}
 	
@@ -54,20 +52,17 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 **/
-	public function gettext_content ($content, $text='', $domain='') {
-		if(empty($content)) return $content;
+	public function gettext_content($content, $text = '', $domain = '') {
+		if (empty($content)) {
+			return $content;
+		}
 
-		if(is_array($content))
-		{
-			$content = $this->objects($content);
+		if (is_array($content)) {
+			return $this->objects($content);
+		} elseif (is_string($content) && method_exists($this, 'transliterate_text')) {
+			return $this->transliterate_text($content);
 		}
-		else if(is_string($content))
-		{
-			if(method_exists($this, 'transliterate_text')) {
-				$content = $this->transliterate_text($content);
-			}
-		}
-		
+
 		return $content;
 	}
 	
@@ -76,21 +71,20 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 **/
-	public function content__force_lat ($content='') {
-		if(empty($content)) return $content;
+	public function content__force_lat($content = '') {
+		if (empty($content)) {
+			return $content;
+		}
 
-		if(is_array($content))
-		{
-			$content = $this->objects($content);
+		if (is_array($content)) {
+			return $this->objects($content);
+		} elseif (is_string($content) && method_exists($this, 'transliterate_text')) {
+			return $this->transliterate_text($content, 'cyr_to_lat');
 		}
-		else if(is_string($content))
-		{
-			if(method_exists($this, 'transliterate_text')) {
-				$content = $this->transliterate_text($content, 'cyr_to_lat');
-			}
-		}
+
 		return $content;
 	}
+
 	
 	
 	/*
@@ -98,63 +92,42 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 **/
-	public function no_html_content ($content='') {
-		if(empty($content)) return '';
+	public function no_html_content($content = '') {
+		if (empty($content)) {
+			return '';
+		}
 
-		if(is_array($content))
-		{
-			if(method_exists($this, 'transliterate_objects')) {
-				$content = $this->transliterate_objects($content, NULL, false);
-			}
+		if (is_array($content) && method_exists($this, 'transliterate_objects')) {
+			$content = $this->transliterate_objects($content, NULL, false);
+		} elseif (is_string($content) && method_exists($this, 'transliterate_text')) {
+			$content = $this->transliterate_text($content, NULL, false);
 		}
-		else if(is_string($content))
-		{
-			if(method_exists($this, 'transliterate_text')) {
-				$content = $this->transliterate_text($content, NULL, false);
-			}
-		}
-		
-		if( NULL === $content ) {
-			$content = '';
-		}
-		
-		return $content;
+
+		return $content === NULL ? '' : $content;
 	}
+
 	
 	/*
 	 * Transliterate WP terms
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        2.0.0
 	 **/
-	public function transliteration_wp_terms($wp_terms)
-	{
-		if (!empty($wp_terms))
-		{
-			if(is_array($wp_terms))
-			{
-				foreach($wp_terms as $i => $term)
-				{
-					if(is_object($term) && ((isset($term->name) && !empty($term->name)) || (isset($term->description) && !empty($term->description))))
-					{
-						switch(Serbian_Transliteration_Utilities::get_current_script())
-						{
-							case 'cyr_to_lat' :
-								if(isset($term->name) && !empty($term->name)){
-									$wp_terms[$i]->name = $this->cyr_to_lat($term->name);
-								}
-								if(isset($term->description) && !empty($term->description)){
-									$wp_terms[$i]->description = $this->cyr_to_lat($term->description);
-								}
-								break;
-							case 'lat_to_cyr' :
-								if(isset($term->name) && !empty($term->name)){
-									$wp_terms[$i]->name = $this->lat_to_cyr($term->name);
-								}
-								if(isset($term->description) && !empty($term->description)){
-									$wp_terms[$i]->description = $this->lat_to_cyr($term->description);
-								}
-								break;
-						}
+	public function transliteration_wp_terms($wp_terms) {
+		if (empty($wp_terms) || !is_array($wp_terms)) {
+			return $wp_terms;
+		}
+
+		$current_script = Serbian_Transliteration_Utilities::get_current_script();
+		$transliterate_function = $current_script === 'cyr_to_lat' ? 'cyr_to_lat' : ($current_script === 'lat_to_cyr' ? 'lat_to_cyr' : null);
+
+		if ($transliterate_function) {
+			foreach ($wp_terms as $i => $term) {
+				if (is_object($term)) {
+					if (isset($term->name) && !empty($term->name)) {
+						$wp_terms[$i]->name = $this->$transliterate_function($term->name);
+					}
+					if (isset($term->description) && !empty($term->description)) {
+						$wp_terms[$i]->description = $this->$transliterate_function($term->description);
 					}
 				}
 			}
@@ -162,6 +135,7 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 
 		return $wp_terms;
 	}
+
 	
 	/*
 	 * Transliterate WP Mails
@@ -208,15 +182,13 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 **/
-	public function bloginfo($output, $show=''){
-		if(method_exists($this, 'transliterate_text')) {
-			if(!empty($show) && in_array($show, array('name','description')))
-			{
-				$output = $this->transliterate_text($output);
-			}
+	public function bloginfo($output, $show = '') {
+		if (method_exists($this, 'transliterate_text') && !empty($show) && in_array($show, ['name', 'description'])) {
+			$output = $this->transliterate_text($output);
 		}
 		return $output;
 	}
+
 	
 	/*
 	 * Transliterate only objects
@@ -263,31 +235,30 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 **/
-	public function transliteration_json_content( $json_content ) {
-			
-		if( empty($json_content) ) {
-			return $json_content;
-		}
-		
-		$content = json_decode( $json_content, true );
-		if ( json_last_error() !== JSON_ERROR_NONE ) {
+	public function transliteration_json_content($json_content) {
+		if (empty($json_content)) {
 			return $json_content;
 		}
 
-		if ( is_array( $content ) && isset( $content['locale_data']['messages'] ) && is_array( $content['locale_data']['messages'] ) ) {
-			foreach ( $content['locale_data']['messages'] as $key => $messages ) {
-				if ( ! $key || ! is_array( $messages ) ) {
+		$content = json_decode($json_content, true);
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			return $json_content;
+		}
+
+		if (isset($content['locale_data']['messages']) && is_array($content['locale_data']['messages'])) {
+			foreach ($content['locale_data']['messages'] as $key => $messages) {
+				if (!is_array($messages)) {
 					continue;
 				}
 
-				foreach ( $messages as $key2 => $message ) {
-					$message = $this->cyr_to_lat( $message );
-					$content['locale_data']['messages'][ $key ][ $key2 ] = $message;
+				foreach ($messages as $key2 => $message) {
+					$content['locale_data']['messages'][$key][$key2] = $this->cyr_to_lat($message);
 				}
 			}
 		}
 
-		return wp_json_encode( $content );
+		return wp_json_encode($content);
 	}
+
 	
 } endif;

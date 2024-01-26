@@ -30,30 +30,29 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function cyr_to_lat_sanitize($content){
-		if(parent::can_trasliterate($content)){
+	public function cyr_to_lat_sanitize($content) {
+		if (parent::can_trasliterate($content)) {
 			return $content;
 		}
 
 		$content = $this->cyr_to_lat($content);
-
 		$content = Serbian_Transliteration_Utilities::normalize_latin_string($content);
 
-		if(function_exists('iconv'))
-		{
-			if($this->get_locale() && ( $locale = parent::get_locales( $this->get_locale() ) ) ) {
-				if( preg_match('/([a-zA-Z]{2})(_[a-zA-Z]{2})?/', $locale) ) {
-					setlocale(LC_CTYPE, $locale);
-				}
+		if (function_exists('iconv')) {
+			$locale = parent::get_locales($this->get_locale());
+			if ($locale && preg_match('/([a-zA-Z]{2})(_[a-zA-Z]{2})?/', $locale)) {
+				setlocale(LC_CTYPE, $locale);
 			}
 
-			if($converted = iconv('UTF-8','ASCII//TRANSLIT//IGNORE', $content)) {
-				$content = str_replace(array("\"","'","`","^","~"), '', $converted);
+			$converted = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $content);
+			if ($converted) {
+				$content = str_replace(array("\"", "'", "`", "^", "~"), '', $converted);
 			}
 		}
 
 		return $content;
 	}
+
 
 	/*
 	 * Translate from lat to cyr
@@ -82,71 +81,64 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	}
 
 	public static function fix_diacritics($content) {
-		if (parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()) {
+		if (parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor() || 
+			!in_array(self::__instance()->get_locale(), ['sr_RS', 'bs_BA', 'cnr'])) {
 			return $content;
 		}
 
-		if ( !in_array( self::__instance()->get_locale(), [
-			'sr_RS',
-			'bs_BA',
-			'cnr'
-		] ) ) return $content;
-
-		if ($search = parent::get_diacritical()) {
-			$new_string = str_replace(
-				array('dj', 'Dj', 'DJ', 'sh', 'Sh', 'SH', 'ch', 'Ch', 'CH', 'cs', 'Cs', 'CS', 'dz', 'Dz', 'DZ'),
-				array('đ', 'Đ', 'Đ', 'š', 'Š', 'Š', 'č', 'Č', 'Č', 'ć', 'Ć', 'Ć', 'dž', 'Dž', 'DŽ'),
-				$content
-			);
-
-			$skip_words = parent::get_skip_words();
-			$skip_words = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $skip_words);
-			$search = array_map((function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower'), $search);
-
-			$arr = Serbian_Transliteration_Utilities::explode(' ', ($new_string ?? ''));
-			$arr_origin = Serbian_Transliteration_Utilities::explode(' ', ($content ?? ''));
-
-			$result = '';
-			$count = count($arr);
-
-			for ($i = 0; $i < $count; $i++) {
-				$word = $arr[$i];
-				$word_origin = $arr_origin[$i];
-				$word_search = function_exists('mb_strtolower') ? mb_strtolower($word, 'UTF-8') : strtolower($word);
-				$word_search = preg_replace('/[.,?!-*_#$]+/i', '', $word_search);
-
-				$word_search_origin = function_exists('mb_strtolower') ? mb_strtolower($word_origin) : strtolower($word_origin);
-				$word_search_origin = preg_replace('/[.,?!-*_#$]+/i', '', $word_search_origin);
-
-				if (in_array($word_search_origin, $skip_words)) {
-					$result .= $word_origin . ' ';
-					continue;
-				}
-
-				if (in_array($word_search, $search)) {
-					if (ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)) {
-						$result .= function_exists('mb_strtoupper')
-							? mb_strtoupper($search[array_search($word_search, $search)], 'UTF-8')
-							: strtoupper($search[array_search($word_search, $search)]);
-					} else if (preg_match('~^\p{Lu}~u', $word)) {
-						$ucfirst = $search[array_search($word_search, $search)];
-						$firstChar = function_exists('mb_substr') ? mb_substr($ucfirst, 0, 1, 'UTF-8') : substr($ucfirst, 0, 1);
-						$then = function_exists('mb_substr') ? mb_substr($ucfirst, 1, NULL, 'UTF-8') : substr($ucfirst, 1);
-						$result .= (function_exists('mb_strtoupper') ? mb_strtoupper($firstChar, 'UTF-8') : strtoupper($firstChar)) . $then;
-					} else {
-						$result .= $word;
-					}
-				} else {
-					$result .= $word;
-				}
-
-				$result .= ($i < $count - 1) ? ' ' : '';
-			}
-
-			return !empty($result) ? $result : $content;
+		$search = parent::get_diacritical();
+		if (!$search) {
+			return $content;
 		}
 
-		return $content;
+		$new_string = strtr($content, [
+			'dj' => 'đ', 'Dj' => 'Đ', 'DJ' => 'Đ',
+			'sh' => 'š', 'Sh' => 'Š', 'SH' => 'Š',
+			'ch' => 'č', 'Ch' => 'Č', 'CH' => 'Č',
+			'cs' => 'ć', 'Cs' => 'Ć', 'CS' => 'Ć',
+			'dz' => 'dž', 'Dz' => 'Dž', 'DZ' => 'DŽ'
+		]);
+
+		$skip_words = array_map('strtolower', parent::get_skip_words());
+		$search = array_map('strtolower', $search);
+
+		$arr = Serbian_Transliteration_Utilities::explode(' ', $new_string);
+		$arr_origin = Serbian_Transliteration_Utilities::explode(' ', $content);
+
+		$result = '';
+		foreach ($arr as $i => $word) {
+			$word_origin = $arr_origin[$i];
+			$word_search = strtolower(preg_replace('/[.,?!-*_#$]+/i', '', $word));
+			$word_search_origin = strtolower(preg_replace('/[.,?!-*_#$]+/i', '', $word_origin));
+
+			if (in_array($word_search_origin, $skip_words)) {
+				$result .= $word_origin . ' ';
+				continue;
+			}
+
+			if (in_array($word_search, $search)) {
+				$result .= self::apply_case($word, $search, $word_search);
+			} else {
+				$result .= $word;
+			}
+
+			$result .= ($i < count($arr) - 1) ? ' ' : '';
+		}
+
+		return $result ?: $content;
+	}
+
+	/*
+	 * PRIVATE: Apply Case
+	 */
+	private static function apply_case($word, $search, $word_search) {
+		if (ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)) {
+			return strtoupper($search[array_search($word_search, $search)]);
+		} elseif (preg_match('~^\p{Lu}~u', $word)) {
+			$ucfirst = $search[array_search($word_search, $search)];
+			return strtoupper(substr($ucfirst, 0, 1)) . substr($ucfirst, 1);
+		}
+		return $word;
 	}
 
 	/*
@@ -181,61 +173,56 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        array
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function transliterate_objects($array, $type = NULL, $fix_html = true, $object=false)
-	{
-		// First setup all properly
-		if(empty($array) || Serbian_Transliteration_Utilities::is_editor()) {
+	public function transliterate_objects($array, $type = NULL, $fix_html = true, $isObject = false) {
+		if (empty($array) || Serbian_Transliteration_Utilities::is_editor()) {
 			return $array;
 		}
 
-		if(empty($type) || is_bool($type)) {
-			$type = Serbian_Transliteration_Utilities::get_current_script();
+		$type = (empty($type) || is_bool($type)) ? Serbian_Transliteration_Utilities::get_current_script() : $type;
+
+		if (is_object($array)) {
+			$array = (array) $array;
+			$isObject = true;
 		}
 
-		$return = '';
-		// Infinity loop... Until end.
-		
-		if(is_object($array)){
-			$array = (array)$array;
-			$object = true;
-		}
-		
-		if( is_array($array) )
-		{
-			$data = array();
+		if (is_array($array)) {
+			$data = array_map(function ($item) use ($type, $fix_html, $isObject) {
+				return $this->transliterate_objects($item, $type, $fix_html, $isObject);
+			}, $array);
 
-			foreach($array as $key => $val)
-			{
-				$data[$key] = $this->transliterate_objects($val, $type, $fix_html, $object);
-			}
-
-			$return = $data;
+			return $isObject ? (object) $data : $data;
 		}
-		// transliterate string
-		else
-		{
-			if(
-				is_object($array)
-				|| is_int($array)
-				|| is_float($array)
-				|| is_numeric($array)
-				|| is_file($array)
-				|| is_bool($array)
-				|| is_link($array)
-				|| filter_var($array, FILTER_VALIDATE_URL)
-				|| filter_var($array, FILTER_VALIDATE_EMAIL)
-			) {
-				$return = $array;
-			} else {
-				$return = $this->transliterate_text($array, $type, $fix_html);
+
+		if (is_scalar($array) && !$this->_is_special_type($array)) {
+			return $this->transliterate_text($array, $type, $fix_html);
+		}
+
+		return $array;
+	}
+
+	/*
+	 * PRIVATE: Is special type
+	 */
+	private function _is_special_type($content) {
+		if (empty($content)) {
+			return true;
+		}
+
+		if (is_numeric($content) || is_bool($content)) {
+			return true;
+		}
+
+		if (is_string($content) && trim($content) != '') {
+			if (preg_match('/^(https?:\/\/[^ "]+)|([\/\\]?[\w\s-]+(\.[\w-]+)+)$/', $content)) {
+				return true;
 			}
 		}
-		
-		if($object){
-			return (object)$return;
-		} else {
-			return $return;
+
+		if (filter_var($content, FILTER_VALIDATE_URL) || filter_var($content, FILTER_VALIDATE_EMAIL)) {
+			return true;
 		}
+
+		return false;
 	}
 
 	/*

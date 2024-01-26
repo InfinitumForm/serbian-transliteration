@@ -27,73 +27,58 @@ if(!class_exists('Serbian_Transliteration_Themes', false)) :
 			return $instance;
 		}
 		
-		function __construct( $options=array(), $only_object = false ) {
-			
-			if(get_rstr_option('disable-theme-support', 'no') == 'yes') {
+		function __construct($options = array(), $only_object = false) {
+			if (get_rstr_option('disable-theme-support', 'no') === 'yes') {
 				return;
 			}
-			
+
 			$wp_get_theme = wp_get_theme(get_template());
-			
-			if(empty($wp_get_theme) || !$wp_get_theme->exists()) return $this;
-			
-			if(RSTR_WOOCOMMERCE && get_rstr_option('mode') == 'woocommerce') return $this;
-			
-			$this->theme = strtolower($wp_get_theme->get('Name')); // gets the current theme
-			if($only_object === false)
-			{								
+			if (empty($wp_get_theme) || !$wp_get_theme->exists() || (RSTR_WOOCOMMERCE && get_rstr_option('mode') === 'woocommerce')) {
+				return $this;
+			}
+
+			$this->theme = strtolower($wp_get_theme->get('Name'));
+
+			if ($only_object === false) {
 				$this->themes = apply_filters('rstr/themes', $this->themes);
-				
-				foreach($this->themes as $file_name=>$theme_name)
-				{
-					if ( strpos($this->theme, $theme_name) !== false || strpos($this->theme, $theme_name) !== false ) {
+
+				foreach ($this->themes as $file_name => $theme_name) {
+					if (strpos($this->theme, $theme_name) !== false) {
 						$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
-						if(class_exists($theme_class, false)) {
+						include_once RSTR_INC . "/themes/{$file_name}.php";
+
+						if (class_exists($theme_class, false)) {
 							$theme_class::run();
-						} else {
-							include_once RSTR_INC . "/themes/{$file_name}.php";
-							if(class_exists($theme_class, false)) {
-								$theme_class::run();
-							}
 						}
 					}
 				}
 			}
 		}
 		
-		public function active_filters () {
-			
-			if(RSTR_WOOCOMMERCE && get_rstr_option('mode') == 'woocommerce') return array();
-			
-			// Include important function
-			if(!function_exists('is_plugin_active')) {
-				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		public function active_filters() {
+			if (RSTR_WOOCOMMERCE && get_rstr_option('mode') === 'woocommerce') {
+				return [];
 			}
-			
+
 			$this->themes = apply_filters('rstr/themes', $this->themes);
-			
-			$return = array();
-			
-			foreach($this->themes as $file_name=>$theme_name)
-			{
-				if( !$this->theme ) {
+
+			$return = [];
+
+			foreach ($this->themes as $file_name => $theme_name) {
+				if (!$this->theme || strpos($this->theme, $theme_name) === false) {
 					continue;
 				}
-				
-				if ( strpos($this->theme, $theme_name) !== false || strpos($this->theme, $theme_name) !== false ) {
-					$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
-					if(class_exists($theme_class, false)) {
-						$return = array_merge($return, $theme_class::filters());
-					} else {
-						include_once RSTR_INC . "/themes/{$file_name}.php";
-						if(class_exists($theme_class, false)) {
-							$return = array_merge($return, $theme_class::filters());
-						}
-					}
+
+				$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
+				include_once RSTR_INC . "/themes/{$file_name}.php";
+
+				if (class_exists($theme_class, false) && method_exists($theme_class, 'filters')) {
+					$return = array_merge($return, $theme_class::filters());
 				}
 			}
-			
+
 			return $return;
 		}
+
 	}
 endif;

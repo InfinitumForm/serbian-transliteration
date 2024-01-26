@@ -87,43 +87,34 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 		return $this->transliterate_objects($obj);
 	}
 
-	public function __construct(){
+	public function __construct() {
 		$filters = self::filters($this->get_options());
 		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->get_options());
 		$filters = apply_filters('rstr/transliteration/exclude/filters/forced', $filters, $this->get_options());
 
 		$mode = new Serbian_Transliteration_Mode();
 
-		if(!is_admin())
-		{				
-			$args = 1;
-			foreach($filters as $key=>$method){
-				
-				if( 'gettext' == $key ) {
-					$args = 3;
-				}
-				
+		if (!is_admin()) {
+			foreach ($filters as $key => $method) {
+				$args = ($key === 'gettext') ? 3 : 1;
+
 				do_action('rstr/transliteration/filter/arguments/forced/before', $key, $method);
-				
-				if( is_string($method) ) {
-					if( method_exists($mode, $method) ) {
-						$this->add_filter($key, [$mode, $method], (PHP_INT_MAX-1), $args);
-					} else if( method_exists($this, $method) ) {
-						$this->add_filter($key, [$this, $method], (PHP_INT_MAX-1), $args);
+
+				if (is_string($method)) {
+					$target_method = method_exists($mode, $method) ? [$mode, $method] : (method_exists($this, $method) ? [$this, $method] : null);
+					if ($target_method) {
+						$this->add_filter($key, $target_method, (PHP_INT_MAX - 1), $args);
 					}
 				}
-				
-				if( 'gettext' == $key ) {
-					$args = 1;
-				}
-				
+
 				do_action('rstr/transliteration/filter/arguments/forced/after', $key, $method);
 			}
 		}
 
-		$this->add_filter('bloginfo', [$mode, 'bloginfo'], (PHP_INT_MAX-1), 2);
-		$this->add_filter('bloginfo_url', [$mode, 'bloginfo'], (PHP_INT_MAX-1), 2);
+		$this->add_filter('bloginfo', [$mode, 'bloginfo'], (PHP_INT_MAX - 1), 2);
+		$this->add_filter('bloginfo_url', [$mode, 'bloginfo'], (PHP_INT_MAX - 1), 2);
 	}
+
 	
 	public static function execute_buffer() {
 		if(!is_admin())
@@ -159,39 +150,31 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 	}
 
 	public static function output_buffer_end() {
-		$buffer = '';
-		if (ob_get_level()) {
-			$buffer = ob_get_contents();
+		$buffer = ob_get_level() ? ob_get_contents() : '';
+		if ($buffer) {
 			ob_end_clean();
-		}
 
-		if(empty($buffer)) return $buffer;
+			if (!defined('DOING_AJAX') || !DOING_AJAX) {
+				$sufix = '_' . strlen($buffer);
+				$forced_cache = Serbian_Transliteration_DB_Cache::get($this->transient . $sufix);
 
-		if(!(defined('DOING_AJAX') && DOING_AJAX))
-		{
-			$sufix = '_' . strlen($buffer);
+				if (!is_admin() && empty($forced_cache)) {
+					$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
+						return $this->transliterate_text($matches[2]);
+					}, $buffer);
 
-			$forced_cache = Serbian_Transliteration_DB_Cache::get( $this->transient.$sufix );
-
-			if (!is_admin() && empty($forced_cache) )
-			{
-				$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
-					$matches[2] = $this->transliterate_text($matches[2]);
-					return $matches[2];
-				}, $buffer);
-
-				if(!empty($buffer)) {
-					Serbian_Transliteration_DB_Cache::set( $this->transient.$sufix, $buffer, MINUTE_IN_SECONDS*3 );
+					if (!empty($buffer)) {
+						Serbian_Transliteration_DB_Cache::set($this->transient . $sufix, $buffer, MINUTE_IN_SECONDS * 3);
+					}
+				} else {
+					$buffer = $forced_cache;
 				}
-			}
-			else
-			{
-				$buffer = $forced_cache;
 			}
 		}
 
 		echo $buffer;
 	}
+
 
 	public static function rss_output_buffer_start() {
 		ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);

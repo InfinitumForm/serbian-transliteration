@@ -349,66 +349,45 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		 * Fix plugins tags
 		 */
 		add_action('wp_loaded', function () {
-			ob_start(function($buffer){
-//				if( Serbian_Transliteration_Utilities::is_cyr($buffer) ) {
-					// Fix internal tags
-					$cyr_to_lat = Serbian_Transliteration::__instance()->lat_to_cyr('cyr_to_lat', false);
-					$lat_to_cyr = Serbian_Transliteration::__instance()->lat_to_cyr('lat_to_cyr', false);
-					$rstr_skip = Serbian_Transliteration::__instance()->lat_to_cyr('rstr_skip', false);
+			ob_start(function ($buffer) {
+				$serbianTranslitInstance = Serbian_Transliteration::__instance();
 
-					$buffer = strtr($buffer, array(
-						'{'.$cyr_to_lat.'}' => '{cyr_to_lat}',
-						'{/'.$cyr_to_lat.'}' => '{/cyr_to_lat}',
-						'{'.$lat_to_cyr.'}' => '{lat_to_cyr}',
-						'{/'.$lat_to_cyr.'}' => '{/lat_to_cyr}',
-						'{'.$rstr_skip.'}' => '{rstr_skip}',
-						'{/'.$rstr_skip.'}' => '{/rstr_skip}',
-						'['.$cyr_to_lat.']' => '[cyr_to_lat]',
-						'[/'.$cyr_to_lat.']' => '[/cyr_to_lat]',
-						'['.$lat_to_cyr.']' => '[lat_to_cyr]',
-						'[/'.$lat_to_cyr.']' => '[/lat_to_cyr]',
-						'['.$rstr_skip.']' => '[rstr_skip]',
-						'[/'.$rstr_skip.']' => '[/rstr_skip]'
-					));
-//				}
+				// Fix internal tags
+				$tags = ['cyr_to_lat', 'lat_to_cyr', 'rstr_skip'];
+				foreach ($tags as $tag) {
+					$tagValue = $serbianTranslitInstance->lat_to_cyr($tag, false);
+					$buffer = strtr($buffer, [
+						'{'.$tagValue.'}' => '{'.$tag.'}',
+						'{/'.$tagValue.'}' => '{/'.$tag.'}',
+						'['.$tagValue.']' => '['.$tag.']',
+						'[/'.$tagValue.']' => '[/'.$tag.']'
+					]);
+				}
 
 				// Fix emails
-				if(Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr' && !empty($buffer) && is_string($buffer)) {
-					/*$buffer = preg_replace_callback('/([a-z0-9\p{Cyrillic}_\-\.]+@[a-z0-9\p{Cyrillic}_\-\.]+\.[wqyx0-9\p{Cyrillic}_\-\.]+)/iu', function ($m) {
-						return Serbian_Transliteration::__instance()->cyr_to_lat($m[1]);
-					}, $buffer);*/
+				if (Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr' && !empty($buffer) && is_string($buffer)) {
+					// Email regex commented out
 				}
 				
 				// Force AJAX transliteration
-				if(get_rstr_option('force-ajax-calls', 'no') == 'yes'){
-					if(wp_doing_ajax() && !Serbian_Transliteration_Utilities::skip_transliteration()) {
-						if(isset($_REQUEST['action']) && (
-							in_array(
-								$_REQUEST['action'],
-								array(
-									'find_posts',
-									'heartbeat',
-									'query-attachments',
-									'wp_block'
-								)
-							) !== false
-							|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))
-							|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
-						)) {} else {
-							$json = json_decode( $buffer, true );
-							if( NULL !== $json && is_array($json) ) {
-								$buffer = Serbian_Transliteration::__instance()->transliterate_objects($buffer, 'cyr_to_lat');
-								$buffer = json_encode($buffer);
-							} else {
-								$buffer = Serbian_Transliteration::__instance()->cyr_to_lat($buffer);
-							}
+				if (get_rstr_option('force-ajax-calls', 'no') == 'yes' && wp_doing_ajax() && !Serbian_Transliteration_Utilities::skip_transliteration()) {
+					if (!isset($_REQUEST['action']) || 
+						(!in_array($_REQUEST['action'], ['find_posts', 'heartbeat', 'query-attachments', 'wp_block']) &&
+						 !preg_match('/^((ct_|oxy_)(.*?))$/i', $_REQUEST['action']) &&
+						 !preg_match('/^(elementor_(.*?))$/i', $_REQUEST['action']))) {
+						$json = json_decode($buffer, true);
+						if ($json !== null && is_array($json)) {
+							$buffer = json_encode($serbianTranslitInstance->transliterate_objects($json, 'cyr_to_lat'));
+						} else {
+							$buffer = $serbianTranslitInstance->cyr_to_lat($buffer);
 						}
 					}
 				}
 
 				return $buffer;
 			}, 0, PHP_OUTPUT_HANDLER_REMOVABLE);
-		},PHP_INT_MAX);
+		}, PHP_INT_MAX);
+
 
 		add_action('shutdown', function () {
 			if (ob_get_level()) {

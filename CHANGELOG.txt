@@ -1,3 +1,10 @@
+= 1.12.4 =
+* Enhanced plugin optimization for better performance
+* Code refactoring for improved readability and maintenance
+* Corrected search functionality for more accurate results
+* Advanced database caching for faster data access
+* Upgraded Memcache implementation for more efficient cache management
+
 = 1.12.3 =
 * Plugin optimization
 * Improved translations

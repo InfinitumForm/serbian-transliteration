@@ -33,26 +33,25 @@ class Serbian_Transliteration_Mode_Woocommerce extends Serbian_Transliteration
 		return $filters;
 	}
 
-	public function __construct(){
+	public function __construct() {
 		$filters = self::filters($this->get_options());
 		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->get_options());
 		$filters = apply_filters('rstr/transliteration/exclude/filters/woocommerce', $filters, $this->get_options());
 
 		$mode = new Serbian_Transliteration_Mode();
 
-		if(!is_admin())
-		{				
-			foreach($filters as $key=>$method){
-				if( is_string($method) ) {
-					if( method_exists($mode, $method) ) {
-						$this->add_filter($key, [$mode, $method], (PHP_INT_MAX-1), 1);
-					} else if( method_exists($this, $method) ) {
-						$this->add_filter($key, [$this, $method], (PHP_INT_MAX-1), 1);
+		if (!is_admin()) {
+			foreach ($filters as $key => $method) {
+				if (is_string($method)) {
+					$target_method = method_exists($mode, $method) ? [$mode, $method] : (method_exists($this, $method) ? [$this, $method] : null);
+					if ($target_method) {
+						$this->add_filter($key, $target_method, (PHP_INT_MAX - 1), 1);
 					}
 				}
 			}
 		}
 	}
+
 	
 	public static function execute_buffer() {
 		if(!is_admin())

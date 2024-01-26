@@ -113,50 +113,30 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
 			static $suffix = null;
 
 			if ($suffix === null) {
-				$suffix = str_replace('.', '', (string)microtime(true));
+				$suffix = strtr((string)microtime(true), '.', '');
 			}
 
-			return "{$key}__{$suffix}";
+			return "{$key}_{$suffix}";
 		}
 
         /*
          * PRIVATE: Clean up the accumulated garbage
         */
         private static function garbage_cleaner() {
-            if (!function_exists('mt_getrandmax') || !is_array(self::$cache)) {
-                return;
-            }
+			if (!is_array(self::$cache)) {
+				return;
+			}
 
-            if (function_exists('mt_rand')) {
-                $getrandmax = mt_getrandmax();
-                $rand = mt_rand();
-            }
-            else {
-                $getrandmax = getrandmax();
-                $rand = rand();
-            }
+			$capability = defined('RSTR_CACHE_CAPABILITY') ? RSTR_CACHE_CAPABILITY : apply_filters('rstr/cache/capability', 100);
+			$gc_probability = defined('RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY') ? RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY : apply_filters('rstr/cache/gc_probability', 1);
+			$gc_divisor = defined('RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR') ? RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR : apply_filters('rstr/cache/gc_divisor', 100);
 
-            $capability = apply_filters('rstr/cache/capability', 100);
-            $gc_probability = apply_filters('rstr/cache/gc_probability', 1);
-            $gc_divisor = apply_filters('rstr/cache/gc_divisor', 100);
-
-            if (defined('RSTR_CACHE_CAPABILITY')) {
-                $capability = RSTR_CACHE_CAPABILITY;
-            }
-            if (defined('RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY')) {
-                $gc_probability = RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY;
-            }
-            if (defined('RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR')) {
-                $gc_divisor = RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR;
-            }
-
-            if (($rand / $getrandmax) && ($gc_probability / $gc_divisor)) {
-                while (count(self::$cache) > $capability) {
-                    reset(self::$cache);
-                    $key = key(self::$cache);
-                    self::delete($key);
-                }
-            }
-        }
+			if ((mt_rand(1, $gc_divisor) <= $gc_probability) && (count(self::$cache) > $capability) ) {
+				uasort(self::$cache, function ($a, $b) {
+					return $a['last_access_time'] <=> $b['last_access_time'];
+				});
+				self::$cache = array_slice(self::$cache, 0, $capability, true);
+			}
+		}
     }
 endif;

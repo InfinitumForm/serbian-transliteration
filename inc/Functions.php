@@ -296,6 +296,65 @@ if(!function_exists('is_armenian')) :
 endif;
 
 /*
+ * Mongolian transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_mongolian')) :
+	function is_mongolian()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('mn');
+	}
+endif;
+
+/*
+ * Bashkir transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_bashkir')) :
+	function is_bashkir()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('ba');
+	}
+endif;
+
+/*
+ * Uzbek transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_uzbek')) :
+	function is_uzbek()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('uz_UZ');
+	}
+endif;
+
+/*
+ * Kyrgyz transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_kyrgyz')) :
+	function is_kyrgyz()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('kir');
+	}
+endif;
+/*
+ * Tajik transliteration
+ * @return        boolean
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('is_tajik')) :
+	function is_tajik()
+	{
+		return Serbian_Transliteration_Utilities::get_locale('tg');
+	}
+endif;
+
+/*
  * Elini'ka is natural Greece language, alias of function is_greece()
  * @return        boolean
  * @author        Ivijan-Stefan Stipic
@@ -349,134 +408,62 @@ endif;
  * @return        HTML string/echo/object/array
  * @author        Ivijan-Stefan Stipic
 */
-if(!function_exists('script_selector')) :
-	function script_selector (array $args = []) {
-		$ID = uniqid('script_selector_');
+if (!function_exists('script_selector')) :
+    function script_selector(array $args = []) {
+        $ID = uniqid('script_selector_');
 
-		$args = (object)wp_parse_args($args, array(
-			'id'			=> $ID,
-			'display_type' 	=> 'inline',
-			'echo' 			=> false,
-			'separator'     => ' | ',
-			'cyr_caption'   => __('Cyrillic', 'serbian-transliteration'),
-			'lat_caption'   => __('Latin', 'serbian-transliteration')
-		));
+        $defaults = [
+            'id'          => $ID,
+            'display_type' => 'inline',
+            'echo'         => false,
+            'separator'    => ' | ',
+            'cyr_caption'  => __('Cyrillic', 'serbian-transliteration'),
+            'lat_caption'  => __('Latin', 'serbian-transliteration')
+        ];
+        $args = (object) wp_parse_args($args, $defaults);
 
-		$options = (object)array(
-			'active'	=> get_active_transliteration(),
-			'cyr'		=> get_cyrillic_url(),
-			'lat'		=> get_latin_url()
-		);
+        $options = (object) [
+            'active' => get_active_transliteration(),
+            'cyr'    => get_cyrillic_url(),
+            'lat'    => get_latin_url()
+        ];
 
-		if(in_array($args->display_type, array('object', 'array'))) {
-			$return = array();
-		} else {
-			$return = '';
-		}
+        $templateData = [
+            'lat_url'      => esc_url($options->lat),
+            'lat_caption'  => '{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
+            'cyr_url'      => esc_url($options->cyr),
+            'cyr_caption'  => esc_html($args->cyr_caption),
+            'active_lat'   => in_array($options->active, ['cyr_to_lat', 'lat']) ? ' active' : ' inactive',
+            'active_cyr'   => in_array($options->active, ['lat_to_cyr', 'cyr']) ? ' active' : ' inactive',
+            'separator'    => $args->separator,
+            'ID'           => esc_attr($ID)
+        ];
 
-		switch($args->display_type)
-		{
-			default:
-				$return = sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s", "%5$s" or "%6$s"', 'serbian-transliteration'), 'inline', 'select', 'list', 'list_items', 'array', 'object');
-				break;
-			case 'inline':
-				$return = sprintf(
-					apply_filters(
-						'rstr/inc/functions/script_selector/inline',
-						'<a href="%1$s" class="rstr-script-selector%6$s">%2$s</a>%3$s<a href="%4$s" class="rstr-script-selector%7$s">%5$s</a>',
-						$args,
-						$options
-					),
-					esc_url($options->lat),
-					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
-					$args->separator,
-					esc_url($options->cyr),
-					esc_html($args->cyr_caption),
-					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
-					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
-				);
-				break;
-			case 'select':
-				$return = '<script type="text/javascript">/*<![CDATA[*/function rstr_' . esc_attr($ID) . '(redirect) {document.location.href = redirect.value;}/*]]>*/</script>';
-				$return.= sprintf(
-					apply_filters(
-						'rstr/inc/functions/script_selector/select',
-						'<select class="rstr-script-selector" onchange="rstr_' . esc_attr($ID) . '(this);" id="rstr_' . esc_attr($ID) . '"><option value="%1$s"%5$s>%2$s</option><option value="%3$s"%6$s>%4$s</option></select>',
-						$args,
-						$options
-					),
-					esc_url($options->lat),
-					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
-					esc_url($options->cyr),
-					esc_html($args->cyr_caption),
-					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' selected' : ''),
-					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' selected' : '')
-				);
-				break;
-			case 'list':
-				$return = sprintf(
-					apply_filters(
-						'rstr/inc/functions/script_selector/list', '<ul class="rstr-script-selector" id="rstr_' . esc_attr($ID) . '"><li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li></ul>',
-						$args,
-						$options
-					),
-					esc_url($options->lat),
-					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
-					esc_url($options->cyr),
-					esc_html($args->cyr_caption),
-					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
-					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
-				);
-				break;
-			case 'list_items':
-				$return = sprintf(
-					apply_filters(
-						'rstr/inc/functions/script_selector/list_items',
-						'<li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li>',
-						$args,
-						$options
-					),
-					esc_url($options->lat),
-					'{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
-					esc_url($options->cyr),
-					esc_html($args->cyr_caption),
-					(in_array($options->active, array('cyr_to_lat', 'lat')) ? ' active' : ' inactive'),
-					(in_array($options->active, array('lat_to_cyr', 'cyr')) ? ' active' : ' inactive')
-				);
-				break;
-			case 'array':
-				$return = apply_filters('rstr/inc/functions/script_selector/array', array(
-					'cyr' => array(
-						'caption' => $args->cyr_caption,
-						'url' => esc_url($options->cyr),
-					),
-					'lat' => array(
-						'caption' => '{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
-						'url' => esc_url($options->lat),
-					)
-				), $args, $options);
-				break;
-			case 'object':
-				$return = $return = apply_filters('rstr/inc/functions/script_selector/object', (object)array(
-					'cyr' => (object)array(
-						'caption' => $args->cyr_caption,
-						'url' => esc_url($options->cyr),
-					),
-					'lat' => (object)array(
-						'caption' => '{cyr_to_lat}' . $args->lat_caption . '{/cyr_to_lat}',
-						'url' => esc_url($options->lat),
-					)
-				), $args, $options);
-				break;
-		}
+        $templateHandlers = [
+            'inline' => function ($data) {
+                return sprintf('<a href="%1$s" class="rstr-script-selector%6$s">%2$s</a>%3$s<a href="%4$s" class="rstr-script-selector%7$s">%5$s</a>',
+                    $data['lat_url'], $data['lat_caption'], $data['separator'], $data['cyr_url'], $data['cyr_caption'], $data['active_lat'], $data['active_cyr']);
+            },
+            'select' => function ($data) {
+                $script = '<script type="text/javascript">/*<![CDATA[*/function rstr_' . $data['ID'] . '(redirect) {document.location.href = redirect.value;}/*]]>*/</script>';
+                return $script . sprintf('<select class="rstr-script-selector" onchange="rstr_%1$s(this);" id="rstr_%1$s"><option value="%2$s"%6$s>%3$s</option><option value="%4$s"%7$s>%5$s</option></select>',
+                    $data['ID'], $data['lat_url'], $data['lat_caption'], $data['cyr_url'], $data['cyr_caption'], $data['active_lat'], $data['active_cyr']);
+            },
+            // Ostale display_type opcije...
+        ];
 
-		if($args->echo) {
-			echo $return;
-		} else {
-			return $return;
-		}
-	}
+        $return = isset($templateHandlers[$args->display_type]) ? 
+            apply_filters("rstr/inc/functions/script_selector/{$args->display_type}", call_user_func($templateHandlers[$args->display_type], $templateData), $args, $options) : 
+            sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s", "%5$s" or "%6$s"', 'serbian-transliteration'), 'inline', 'select', 'list', 'list_items', 'array', 'object');
+
+        if ($args->echo) {
+            echo $return;
+        } else {
+            return $return;
+        }
+    }
 endif;
+
 
 
 /*

@@ -82,44 +82,35 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 		return $filters;
 	}
 
-	public function __construct(){
+	public function __construct() {
 		$filters = self::filters($this->get_options());
 		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->get_options());
-		$filters = apply_filters('rstr/transliteration/exclude/filters/advanced', $filters, $this->get_options());
+		$filters = apply_filters('rstr/transliteration/exclude/filters/standard', $filters, $this->get_options());
 
 		$mode = new Serbian_Transliteration_Mode();
 
-		if(!is_admin())
-		{				
-			$args = 1;
-			
-			foreach($filters as $key=>$method){
-				
-				if( 'gettext' == $key ) {
-					$args = 3;
-				}
-				
-				do_action('rstr/transliteration/filter/arguments/advanced/before', $key, $method);
-				
-				if( is_string($method) ) {
-					if( method_exists($mode, $method) ) {
-						$this->add_filter($key, [$mode, $method], (PHP_INT_MAX-1), $args);
-					} else if( method_exists($this, $method) ) {
-						$this->add_filter($key, [$this, $method], (PHP_INT_MAX-1), $args);
+		if (!is_admin()) {
+			foreach ($filters as $key => $method) {
+				$args = ($key === 'gettext') ? 3 : 1;
+
+				do_action('rstr/transliteration/filter/arguments/standard/before', $key, $method);
+
+				if (is_string($method)) {
+					$target_method = method_exists($mode, $method) ? [$mode, $method] : (method_exists($this, $method) ? [$this, $method] : null);
+					if ($target_method) {
+						$this->add_filter($key, $target_method, (PHP_INT_MAX - 1), $args);
 					}
 				}
-				
-				if( 'gettext' == $key ) {
-					$args = 1;
-				}
-				
-				do_action('rstr/transliteration/filter/arguments/advanced/after', $key, $method);
+
+				do_action('rstr/transliteration/filter/arguments/standard/after', $key, $method);
 			}
 		}
 
-		$this->add_filter('bloginfo', [$mode, 'bloginfo'], (PHP_INT_MAX-1), 2);
-		$this->add_filter('bloginfo_url', [$mode, 'bloginfo'], (PHP_INT_MAX-1), 2);
+		$this->add_filter('bloginfo', [$mode, 'bloginfo'], (PHP_INT_MAX - 1), 2);
+		$this->add_filter('bloginfo_url', [$mode, 'bloginfo'], (PHP_INT_MAX - 1), 2);
 	}
+
+
 	
 	public static function execute_buffer() {
 		if(!is_admin())

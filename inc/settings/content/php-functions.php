@@ -49,30 +49,75 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<h2 style="margin:0;">is_serbian</h2>
 					<p><code class="lang-php">function is_serbian() : bool</code></p>
 					<br>
+
+					<h2 style="margin:0;">is_bosnian</h2>
+					<p><code class="lang-php">function is_bosnian() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_montenegrin</h2>
+					<p><code class="lang-php">function is_montenegrin() : bool</code></p>
+					<br>
+
 					<h2 style="margin:0;">is_russian</h2>
 					<p><code class="lang-php">function is_russian() : bool</code></p>
 					<br>
+
 					<h2 style="margin:0;">is_belarusian</h2>
 					<p><code class="lang-php">function is_belarusian() : bool</code></p>
 					<br>
-					<h2 style="margin:0;">is_georgian</h2>
-					<p><code class="lang-php">function is_georgian() : bool</code></p>
-					<br>
+
 					<h2 style="margin:0;">is_bulgarian</h2>
 					<p><code class="lang-php">function is_bulgarian() : bool</code></p>
 					<br>
+
 					<h2 style="margin:0;">is_macedonian</h2>
 					<p><code class="lang-php">function is_macedonian() : bool</code></p>
 					<br>
+
+					<h2 style="margin:0;">is_ukrainian</h2>
+					<p><code class="lang-php">function is_ukrainian() : bool</code></p>
+					<br>
+
 					<h2 style="margin:0;">is_kazakh</h2>
 					<p><code class="lang-php">function is_kazakh() : bool</code></p>
-                    <br>
-					<h2 style="margin:0;">is_greece</h2>
-					<p><code class="lang-php">function is_greece() : bool</code></p>
-                    <br>
-					<h2 style="margin:0;">is_elinika - <?php printf(__('alias of function %s', 'serbian-transliteration'), '<code>is_greece()</code>'); ?></h2>
-					<p><code class="lang-php">function is_elinika() : bool</code></p>
 					<br>
+
+					<h2 style="margin:0;">is_tajik</h2>
+					<p><code class="lang-php">function is_tajik() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_kyrgyz</h2>
+					<p><code class="lang-php">function is_kyrgyz() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_mongolian</h2>
+					<p><code class="lang-php">function is_mongolian() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_bashkir</h2>
+					<p><code class="lang-php">function is_bashkir() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_uzbek</h2>
+					<p><code class="lang-php">function is_uzbek() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_georgian</h2>
+					<p><code class="lang-php">function is_georgian() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_greek</h2>
+					<p><code class="lang-php">function is_greek() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_armenian</h2>
+					<p><code class="lang-php">function is_armenian() : bool</code></p>
+					<br>
+
+					<h2 style="margin:0;">is_arabic</h2>
+					<p><code class="lang-php">function is_arabic() : bool</code></p>
+					<br>
+
 					<h2 style="margin:0;">transliteration_excluded</h2>
 					<?php printf('<p>%s</p>', __('This function provides information on whether the currently active language is excluded from transliteration.', 'serbian-transliteration')); ?>
 					<p><code class="lang-php">function transliteration_excluded() : bool</code></p>
