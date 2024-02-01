@@ -240,7 +240,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 		====================================*/
 		add_action('init', function () {
 			add_action('activated_plugin', function ($plugin) {
-				if( $plugin === RSTR_BASENAME && !get_option(RSTR_NAME.'-activated', false)) {
+				if( $plugin == RSTR_BASENAME && !get_option(RSTR_NAME.'-activated', true)) {
 					set_option(RSTR_NAME.'-activated', true);
 					if( wp_safe_redirect( admin_url( 'options-general.php?page=serbian-transliteration&rstr-activation=true' ) ) ) {
 						exit;
@@ -252,19 +252,16 @@ if($Serbian_Transliteration_Activate->passes()) :
 
 		/* Run script on the plugin upgrade
 		====================================*/
-		add_action( 'plugins_loaded', function () {
-			if( is_admin() && (RSTR_VERSION !== get_option(RSTR_NAME . '-version', RSTR_VERSION)) ) {
-				if ( ! current_user_can( 'activate_plugins' ) ) {
-					return;
-				}
+		add_action( 'admin_init', function () {
+			if( current_user_can( 'activate_plugins' ) && (RSTR_VERSION != get_option(RSTR_NAME . '-version', RSTR_VERSION)) ) {
 				
 				// Delete old translations
 				Serbian_Transliteration_Utilities::clear_plugin_translations();
 				
 				// Install database tables
-				if( RSTR_DATABASE_VERSION !== get_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION) ) {
+				if( RSTR_DATABASE_VERSION != get_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION) ) {
 					Serbian_Transliteration_DB_Cache::table_install();
-					update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, false);
+					update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, true);
 				}
 				
 				// Clear plugin cache
@@ -277,7 +274,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 				flush_rewrite_rules();
 				
 				// Save version
-				update_option(RSTR_NAME . '-version', RSTR_VERSION, false);
+				update_option(RSTR_NAME . '-version', RSTR_VERSION, true);
 			}
 		}, 1 );
 		
