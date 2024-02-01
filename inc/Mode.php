@@ -97,8 +97,8 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 			return '';
 		}
 
-		if (is_array($content) && method_exists($this, 'transliterate_objects')) {
-			$content = $this->transliterate_objects($content, NULL, false);
+		if (is_array($content)) {
+			$content = $this->objects($content, NULL, false);
 		} elseif (is_string($content) && method_exists($this, 'transliterate_text')) {
 			$content = $this->transliterate_text($content, NULL, false);
 		}
@@ -162,17 +162,19 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @version        1.0.0
 	 **/
 	public function image_attributes($attributes) {
-		if(!method_exists($this, 'transliterate_text')) return $attributes;
-		
-		foreach([
-			'alt',
-			'title'
-		] as $attr) {
-			if (isset($attributes[$attr])) {
-				$attributes[$attr] = esc_attr( $this->transliterate_text($attributes[$attr]) );
-			}
+		if (!method_exists($this, 'transliterate_text')) {
+			return $attributes;
 		}
 		
+		return $this->transliterateAttributes($attributes, ['alt', 'title']);
+	}
+
+	private function transliterateAttributes($attributes, $attrsToTransliterate) {
+		foreach ($attrsToTransliterate as $attr) {
+			if (isset($attributes[$attr])) {
+				$attributes[$attr] = esc_attr($this->transliterate_text($attributes[$attr]));
+			}
+		}
 		return $attributes;
 	}
 	
@@ -196,7 +198,7 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 	 * @version        1.0.0
 	 **/
 	public function objects ($obj) {
-		if(method_exists($this, 'transliterate_objects')) {
+		if(is_array($obj)) {
 			$obj = $this->transliterate_objects($obj);
 		}
 		
@@ -245,20 +247,31 @@ if(!class_exists('Serbian_Transliteration_Mode')) : class Serbian_Transliteratio
 			return $json_content;
 		}
 
-		if (isset($content['locale_data']['messages']) && is_array($content['locale_data']['messages'])) {
-			foreach ($content['locale_data']['messages'] as $key => $messages) {
-				if (!is_array($messages)) {
-					continue;
-				}
-
-				foreach ($messages as $key2 => $message) {
-					$content['locale_data']['messages'][$key][$key2] = $this->cyr_to_lat($message);
-				}
-			}
-		}
+		$content = $this->processMessages($content);
 
 		return wp_json_encode($content);
 	}
+
+	private function processMessages($content) {
+		if (isset($content['locale_data']['messages']) && is_array($content['locale_data']['messages'])) {
+			foreach ($content['locale_data']['messages'] as $key => $messages) {
+				$content['locale_data']['messages'][$key] = $this->transliterateMessages($messages);
+			}
+		}
+		return $content;
+	}
+
+	private function transliterateMessages($messages) {
+		if (!is_array($messages)) {
+			return $messages;
+		}
+		
+		foreach ($messages as $key => $message) {
+			$messages[$key] = $this->cyr_to_lat($message);
+		}
+		return $messages;
+	}
+
 
 	
 } endif;

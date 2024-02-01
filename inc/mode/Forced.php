@@ -117,33 +117,28 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 
 	
 	public static function execute_buffer() {
-		if(!is_admin())
-		{
-			if(get_rstr_option('enable-rss', 'no') == 'yes')
-			{
-				add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+		if (!is_admin()) {
+			$priority = PHP_INT_MAX - 1;
+			$class = __CLASS__;
 
-				add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
-
-				add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
-
-				add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+			if (get_rstr_option('enable-rss', 'no') === 'yes') {
+				$rssTypes = ['rss', 'rss2', 'rdf', 'atom'];
+				foreach ($rssTypes as $type) {
+					add_action("{$type}_head", [$class, 'rss_output_buffer_start'], $priority);
+					add_action("{$type}_footer", [$class, 'rss_output_buffer_end'], $priority);
+				}
 			}
 
-			if(get_rstr_option('force-widgets', 'no') == 'yes')
-			{
-				add_action('dynamic_sidebar_before', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('dynamic_sidebar_after', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+			if (get_rstr_option('force-widgets', 'no') === 'yes') {
+				add_action('dynamic_sidebar_before', [$class, 'rss_output_buffer_start'], $priority);
+				add_action('dynamic_sidebar_after', [$class, 'rss_output_buffer_end'], $priority);
 			}
 
-			add_action('wp_loaded', array(__CLASS__, 'output_buffer_start'), (PHP_INT_MAX-1));
-			add_action('shutdown', array(__CLASS__, 'output_buffer_end'), (PHP_INT_MAX-1));
+			add_action('wp_loaded', [$class, 'output_buffer_start'], $priority);
+			add_action('shutdown', [$class, 'output_buffer_end'], $priority);
 		}
 	}
+
 
 	public static function output_buffer_start() {
 		ob_start(NULL, 0, PHP_OUTPUT_HANDLER_REMOVABLE);

@@ -59,78 +59,65 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			'render_block'			=> 'content',
 			'wp_get_attachment_image_attributes' => 'image_attributes'
 		);
-		asort($filters);
 
 		if (!current_theme_supports( 'title-tag' )){
-			unset($filters['document_title_parts']);
-			unset($filters['pre_get_document_title']);
+			unset($filters['document_title_parts'], $filters['pre_get_document_title']);
 		} else {
 			unset($filters['wp_title']);
 		}
+		
+		asort($filters);
 
 		return $filters;
 	}
 
-	public function __construct(){
+	public function __construct() {
 		$filters = self::filters($this->get_options());
 		$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->get_options());
 		$filters = apply_filters('rstr/transliteration/exclude/filters/standard', $filters, $this->get_options());
 
 		$mode = new Serbian_Transliteration_Mode();
+		$args = 1;
 
-		if(!is_admin())
-		{
-			$args = 1;
-			foreach($filters as $key=>$method){
-				
-				if( 'gettext' == $key ) {
-					$args = 3;
-				}
+		if (!is_admin()) {
+			foreach ($filters as $key => $method) {
+				$args = $key === 'gettext' ? 3 : 1;
 				
 				do_action('rstr/transliteration/filter/arguments/standard/before', $key, $method);
-				
-				if( is_string($method) ) {
-					if( method_exists($mode, $method) ) {
-						$this->add_filter($key, [$mode, $method], (PHP_INT_MAX-1), $args);
-					} else if( method_exists($this, $method) ) {
-						$this->add_filter($key, [$this, $method], (PHP_INT_MAX-1), $args);
-					}
+
+				$target = method_exists($mode, $method) ? $mode : (method_exists($this, $method) ? $this : null);
+				if ($target) {
+					$this->add_filter($key, [$target, $method], (PHP_INT_MAX - 1), $args);
 				}
-				
-				if( 'gettext' == $key ) {
-					$args = 1;
-				}
-				
+
 				do_action('rstr/transliteration/filter/arguments/standard/after', $key, $method);
 			}
 		}
 
-		$this->add_filter('bloginfo', [$mode, 'bloginfo'], (PHP_INT_MAX-1), 2);
-		$this->add_filter('bloginfo_url', [$mode, 'bloginfo'], (PHP_INT_MAX-1), 2);
+		$this->add_filter('bloginfo', [$mode, 'bloginfo'], (PHP_INT_MAX - 1), 2);
+		$this->add_filter('bloginfo_url', [$mode, 'bloginfo'], (PHP_INT_MAX - 1), 2);
 	}
+
 	
 	public static function execute_buffer() {
-		if(!is_admin())
-		{
-			if(get_rstr_option('enable-rss', 'no') == 'yes')
-			{
-				add_action('rss_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('rss_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+		if (!is_admin()) {
+			$priority = PHP_INT_MAX - 1;
+			$actions = [
+				'rss_head', 'rss_footer',
+				'rss2_head', 'rss2_footer',
+				'rdf_head', 'rdf_footer',
+				'atom_head', 'atom_footer',
+			];
 
-				add_action('rss2_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('rss2_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
-
-				add_action('rdf_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('rdf_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
-
-				add_action('atom_head', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('atom_footer', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+			if (get_rstr_option('enable-rss', 'no') === 'yes') {
+				foreach ($actions as $action) {
+					add_action($action, [__CLASS__, 'rss_output_buffer_' . (strpos($action, '_head') ? 'start' : 'end')], $priority);
+				}
 			}
 
-			if(get_rstr_option('force-widgets', 'no') == 'yes')
-			{
-				add_action('dynamic_sidebar_before', array(__CLASS__, 'rss_output_buffer_start'), (PHP_INT_MAX-1));
-				add_action('dynamic_sidebar_after', array(__CLASS__, 'rss_output_buffer_end'), (PHP_INT_MAX-1));
+			if (get_rstr_option('force-widgets', 'no') === 'yes') {
+				add_action('dynamic_sidebar_before', [__CLASS__, 'rss_output_buffer_start'], $priority);
+				add_action('dynamic_sidebar_after', [__CLASS__, 'rss_output_buffer_end'], $priority);
 			}
 		}
 	}

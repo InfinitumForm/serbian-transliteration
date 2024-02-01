@@ -409,52 +409,36 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if (!function_exists('script_selector')) :
-    function script_selector(array $args = []) {
+    function script_selector($args) {
         $ID = uniqid('script_selector_');
-
-        $defaults = [
-            'id'          => $ID,
+        $args = (object) wp_parse_args($args, [
+            'id' => $ID,
             'display_type' => 'inline',
-            'echo'         => false,
-            'separator'    => ' | ',
-            'cyr_caption'  => __('Cyrillic', 'serbian-transliteration'),
-            'lat_caption'  => __('Latin', 'serbian-transliteration')
-        ];
-        $args = (object) wp_parse_args($args, $defaults);
+            'echo' => false,
+            'separator' => ' | ',
+            'cyr_caption' => __('Cyrillic', RSTR_NAME),
+            'lat_caption' => __('Latin', RSTR_NAME)
+        ]);
 
         $options = (object) [
-            'active' => get_active_transliteration(),
-            'cyr'    => get_cyrillic_url(),
-            'lat'    => get_latin_url()
+            'active' => function_exists('rstr_get_script') ? rstr_get_script() : get_script(),
+            'cyr' => add_query_arg(get_rstr_option('url-selector', 'rstr'), 'cyr'),
+            'lat' => add_query_arg(get_rstr_option('url-selector', 'rstr'), 'lat')
         ];
 
-        $templateData = [
-            'lat_url'      => esc_url($options->lat),
-            'lat_caption'  => '{cyr_to_lat}' . esc_html($args->lat_caption) . '{/cyr_to_lat}',
-            'cyr_url'      => esc_url($options->cyr),
-            'cyr_caption'  => esc_html($args->cyr_caption),
-            'active_lat'   => in_array($options->active, ['cyr_to_lat', 'lat']) ? ' active' : ' inactive',
-            'active_cyr'   => in_array($options->active, ['lat_to_cyr', 'cyr']) ? ' active' : ' inactive',
-            'separator'    => $args->separator,
-            'ID'           => esc_attr($ID)
+        $activeClasses = [
+            'cyr' => in_array($options->active, ['lat_to_cyr', 'cyr']) ? ' active' : ' inactive',
+            'lat' => in_array($options->active, ['cyr_to_lat', 'lat']) ? ' active' : ' inactive'
         ];
 
-        $templateHandlers = [
-            'inline' => function ($data) {
-                return sprintf('<a href="%1$s" class="rstr-script-selector%6$s">%2$s</a>%3$s<a href="%4$s" class="rstr-script-selector%7$s">%5$s</a>',
-                    $data['lat_url'], $data['lat_caption'], $data['separator'], $data['cyr_url'], $data['cyr_caption'], $data['active_lat'], $data['active_cyr']);
-            },
-            'select' => function ($data) {
-                $script = '<script type="text/javascript">/*<![CDATA[*/function rstr_' . $data['ID'] . '(redirect) {document.location.href = redirect.value;}/*]]>*/</script>';
-                return $script . sprintf('<select class="rstr-script-selector" onchange="rstr_%1$s(this);" id="rstr_%1$s"><option value="%2$s"%6$s>%3$s</option><option value="%4$s"%7$s>%5$s</option></select>',
-                    $data['ID'], $data['lat_url'], $data['lat_caption'], $data['cyr_url'], $data['cyr_caption'], $data['active_lat'], $data['active_cyr']);
-            },
-            // Ostale display_type opcije...
-        ];
-
-        $return = isset($templateHandlers[$args->display_type]) ? 
-            apply_filters("rstr/inc/functions/script_selector/{$args->display_type}", call_user_func($templateHandlers[$args->display_type], $templateData), $args, $options) : 
-            sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s", "%5$s" or "%6$s"', 'serbian-transliteration'), 'inline', 'select', 'list', 'list_items', 'array', 'object');
+        $return = '';
+        $templateHandlers = get_script_selector_template_handlers($options, $args, $ID, $activeClasses);
+        
+        if (isset($templateHandlers[$args->display_type])) {
+            $return = call_user_func($templateHandlers[$args->display_type]);
+        } else {
+            $return = sprintf(__('Choose one of the display types: "%1$s", "%2$s", "%3$s", "%4$s", "%5$s" or "%6$s"', RSTR_NAME), 'inline', 'select', 'list', 'list_items', 'array', 'object');
+        }
 
         if ($args->echo) {
             echo $return;
@@ -462,6 +446,83 @@ if (!function_exists('script_selector')) :
             return $return;
         }
     }
+	
+	function get_script_selector_template_handlers($options, $args, $ID, $activeClasses) {
+        return [
+            'inline' => function () use ($options, $args, $activeClasses) {
+                return sprintf(
+                    '<a href="%1$s" class="rstr-script-selector%5$s">%2$s</a>%3$s<a href="%4$s" class="rstr-script-selector%6$s">%7$s</a>',
+                    esc_url($options->lat),
+                    esc_html($args->lat_caption),
+                    esc_html($args->separator),
+                    esc_url($options->cyr),
+                    $activeClasses['lat'],
+                    $activeClasses['cyr'],
+                    esc_html($args->cyr_caption)
+                );
+            },
+            'select' => function () use ($options, $args, $ID, $activeClasses) {
+                return sprintf(
+                    '<script type="text/javascript">/*<![CDATA[*/function rstr_%1$s(redirect) {document.location.href = redirect.value;}/*]]>*/</script><select class="rstr-script-selector" onchange="rstr_%1$s(this);" id="rstr_%1$s"><option value="%2$s"%6$s>%3$s</option><option value="%4$s"%7$s>%5$s</option></select>',
+                    $ID,
+                    esc_url($options->lat),
+                    esc_html($args->lat_caption),
+                    esc_url($options->cyr),
+                    esc_html($args->cyr_caption),
+                    $activeClasses['lat'],
+                    $activeClasses['cyr']
+                );
+            },
+            'list' => function () use ($options, $args, $ID, $activeClasses) {
+                return sprintf(
+                    '<ul class="rstr-script-selector" id="rstr_%1$s"><li class="rstr-script-selector-item%5$s"><a href="%2$s" class="rstr-script-selector-item-link%5$s">%3$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%4$s" class="rstr-script-selector-item-link%6$s">%7$s</a></li></ul>',
+                    $ID,
+                    esc_url($options->lat),
+                    esc_html($args->lat_caption),
+                    esc_url($options->cyr),
+                    esc_html($args->cyr_caption),
+                    $activeClasses['lat'],
+                    $activeClasses['cyr']
+                );
+            },
+            'list_items' => function () use ($options, $args, $ID, $activeClasses) {
+                return sprintf(
+                    '<li class="rstr-script-selector-item%5$s"><a href="%1$s" class="rstr-script-selector-item-link%5$s">%2$s</a></li><li class="rstr-script-selector-item%6$s"><a href="%3$s" class="rstr-script-selector-item-link%6$s">%4$s</a></li>',
+                    esc_url($options->lat),
+                    esc_html($args->lat_caption),
+                    esc_url($options->cyr),
+                    esc_html($args->cyr_caption),
+                    $activeClasses['lat'],
+                    $activeClasses['cyr']
+                );
+            },
+            'array' => function () use ($options, $args) {
+                return [
+                    'cyr' => [
+                        'caption' => $args->cyr_caption,
+                        'url' => $options->cyr,
+                    ],
+                    'lat' => [
+                        'caption' => $args->lat_caption,
+                        'url' => $options->lat,
+                    ]
+                ];
+            },
+            'object' => function () use ($options, $args) {
+                return (object) [
+                    'cyr' => (object) [
+                        'caption' => $args->cyr_caption,
+                        'url' => $options->cyr,
+                    ],
+                    'lat' => (object) [
+                        'caption' => $args->lat_caption,
+                        'url' => $options->lat,
+                    ]
+                ];
+            }
+            // Add other display types here if needed.
+        ];
+    }	
 endif;
 
 

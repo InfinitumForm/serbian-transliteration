@@ -8,7 +8,7 @@ if(!class_exists('Serbian_Transliteration_Utilities', false)) :
 class Serbian_Transliteration_Utilities{
 
 	public static function plugin_default_options () {
-		return apply_filters('rstr_plugin_default_options', array(
+		return apply_filters('rstr_plugin_default_options', [
 			'site-script'				=>	'cyr',
 			'transliteration-mode'		=>	'cyr_to_lat',
 			'mode'						=>	'advanced',
@@ -39,7 +39,7 @@ class Serbian_Transliteration_Utilities{
 			'force-ajax-calls' 			=> 'no',
 			'disable-by-language'		=> ['en_US'=>'yes'],
 			'disable-theme-support'		=> 'no'
-		));
+		]);
 	}
 	
 	public static function skip_transliteration(){
@@ -565,115 +565,66 @@ class Serbian_Transliteration_Utilities{
 	public static function get_current_url()
 	{
 		global $wp;
-		
+
 		$current_page = Serbian_Transliteration_Cache::get('get_current_url');
-		
-		// Get page by path
-		if(!$current_page) {
-			$current_page =  get_page_by_path($wp->request);
-			// Get post by ID
-			if(!$current_page) {
-				$current_page = get_post(isset($wp->query_vars['p']) ? absint($wp->query_vars['p']) : NULL);
-				// Get page by ID
-				if(!$current_page) {
-					$current_page = get_post(isset($wp->query_vars['page_id']) ? absint($wp->query_vars['page_id']) : NULL);
-					// Get post by date/time
-					if(
-						!$current_page
-						&& (
-							isset($wp->query_vars['name'])
-							|| isset($wp->query_vars['year'])
-							|| isset($wp->query_vars['monthnum'])
-							|| isset($wp->query_vars['day'])
-							|| isset($wp->query_vars['hour'])
-							|| isset($wp->query_vars['minute'])
-							|| isset($wp->query_vars['second'])
-						)
-					) {
-						
-						$attr = array();
-						if(isset($wp->query_vars['name'])) {
-							$attr['name'] = $wp->query_vars['name'];
-						}
-						
-						if(
-							isset($wp->query_vars['year'])
-							|| isset($wp->query_vars['monthnum'])
-							|| isset($wp->query_vars['day'])
-							|| isset($wp->query_vars['hour'])
-							|| isset($wp->query_vars['minute'])
-							|| isset($wp->query_vars['second'])
-						){
-							$attr['date_query'] = array();
-							
-							if(isset($wp->query_vars['year'])){
-								$attr['date_query']['year']= $wp->query_vars['year'];
-							}
-							
-							if(isset($wp->query_vars['monthnum'])){
-								$attr['date_query']['month']= $wp->query_vars['monthnum'];
-							}
-							
-							if(isset($wp->query_vars['day'])){
-								$attr['date_query']['day']= $wp->query_vars['day'];
-							}
-							
-							if(isset($wp->query_vars['hour'])){
-								$attr['date_query']['hour']= $wp->query_vars['hour'];
-							}
-							
-							if(isset($wp->query_vars['minute'])){
-								$attr['date_query']['minute']= $wp->query_vars['minute'];
-							}
-							
-							if(isset($wp->query_vars['second'])){
-								$attr['date_query']['second']= $wp->query_vars['second'];
-							}
-						}
-						
-						$page = get_posts($attr);
-						if($page) {
-							$current_page = $page[0];
-						}
+		if (!$current_page) {
+			$current_page = get_page_by_path($wp->request)
+				?: get_post(absint($wp->query_vars['p'] ?? $wp->query_vars['page_id'] ?? $_GET['page_id'] ?? $_GET['p'] ?? null));
 
-						// Get page by GET pharam
-						if(!$current_page) {
-							$current_page = get_post(isset($_GET['page_id']) ? absint($_GET['page_id']) : NULL);
-							// Get post by GET pharam
-							if(!$current_page) {
-								$current_page = get_post(isset($_GET['p']) ? absint($_GET['p']) : NULL);
-							}
-						}
-					}
-				}
-			}			
+			if (!$current_page && self::isQueryVarsSet($wp->query_vars)) {
+				$attr = self::getQueryAttr($wp->query_vars);
+				$page = get_posts($attr);
+				$current_page = $page ? $page[0] : null;
+			}
 		}
-
+		
 		return Serbian_Transliteration_Cache::set('get_current_url', $current_page);
 	}
+
+	private static function isQueryVarsSet($query_vars) {
+		$keys = ['name', 'year', 'monthnum', 'day', 'hour', 'minute', 'second'];
+		return array_some($keys, fn($key) => isset($query_vars[$key]));
+	}
+
+	private static function getQueryAttr($query_vars) {
+		$attr = array_filter(
+			$query_vars,
+			fn($key) => in_array($key, ['name', 'year', 'monthnum', 'day', 'hour', 'minute', 'second']),
+			ARRAY_FILTER_USE_KEY
+		);
+
+		if (isset($attr['year'], $attr['monthnum'], $attr['day'], $attr['hour'], $attr['minute'], $attr['second'])) {
+			$attr['date_query'] = array_intersect_key($attr, array_flip(['year', 'monthnum', 'day', 'hour', 'minute', 'second']));
+			$attr = array_diff_key($attr, $attr['date_query']);
+		}
+
+		return $attr;
+	}
+
 
 	/**
 	 * Parse URL
 	 * @since     1.2.2
 	 * @verson    1.0.0
 	 */
-	public static function parse_url(){
-		if(!Serbian_Transliteration_Cache::get('url_parsed')) {
-			$http = 'http'.( self::is_ssl() ?'s':'');
-			$domain = preg_replace('%:/{3,}%i','://',rtrim($http,'/').'://'.$_SERVER['HTTP_HOST']);
-			$domain = rtrim($domain,'/');
-			$url = preg_replace('%:/{3,}%i','://',$domain.'/'.(isset($_SERVER['REQUEST_URI']) && !empty( $_SERVER['REQUEST_URI'] ) ? ltrim($_SERVER['REQUEST_URI'], '/'): ''));
+	public static function parse_url() {
+		$cachedUrl = Serbian_Transliteration_Cache::get('url_parsed');
+		if (!$cachedUrl) {
+			$http = 'http' . (self::is_ssl() ? 's' : '');
+			$domain = rtrim(preg_replace('%:/{3,}%i', '://', $http . '://' . $_SERVER['HTTP_HOST']), '/');
+			$url = preg_replace('%:/{3,}%i', '://', $domain . '/' . (isset($_SERVER['REQUEST_URI']) ? ltrim($_SERVER['REQUEST_URI'], '/') : ''));
 
-			Serbian_Transliteration_Cache::set('url_parsed', array(
-				'method'	=>	$http,
-				'home_fold'	=>	str_replace($domain,'',home_url()),
-				'url'		=>	$url,
-				'domain'	=>	$domain,
-			));
+			$cachedUrl = [
+				'method' => $http,
+				'home_fold' => str_replace($domain, '', home_url()),
+				'url' => $url,
+				'domain' => $domain,
+			];
+			Serbian_Transliteration_Cache::set('url_parsed', $cachedUrl);
 		}
-
-		return Serbian_Transliteration_Cache::get('url_parsed');
+		return $cachedUrl;
 	}
+
 
 	/*
 	 * CHECK IS SSL
@@ -681,26 +632,29 @@ class Serbian_Transliteration_Utilities{
 	 */
 	public static function is_ssl($url = false)
 	{
-
+		if ($url !== false && preg_match('/^(https|ftps):/i', $url) === 1) {
+			return true;
+		}
+		
 		$ssl = Serbian_Transliteration_Cache::get('is_ssl');
 
-		if($url !== false && is_string($url)) {
-			return (preg_match('/(https|ftps)/Ui', $url) !== false);
-		} else if(empty($ssl)) {
-			if(
-				( is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN ===true )
-				|| (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
-				|| (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-				|| (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
-				|| (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
-				|| (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
-				|| (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https')
-			) {
-				$ssl = Serbian_Transliteration_Cache::set('is_ssl', true);
-			}
+		if ($ssl === null) {
+			$conditions = [
+				is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN,
+				($_SERVER['HTTPS'] ?? '') === 'on',
+				($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https',
+				($_SERVER['HTTP_X_FORWARDED_SSL'] ?? '') === 'on',
+				($_SERVER['SERVER_PORT'] ?? 0) == 443,
+				($_SERVER['HTTP_X_FORWARDED_PORT'] ?? 0) == 443,
+				($_SERVER['REQUEST_SCHEME'] ?? '') === 'https'
+			];
+
+			$ssl = Serbian_Transliteration_Cache::set('is_ssl', in_array(true, $conditions, true));
 		}
+
 		return $ssl;
 	}
+
 
 	/*
 	* Set current transliteration script

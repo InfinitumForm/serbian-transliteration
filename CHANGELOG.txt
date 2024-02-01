@@ -1,3 +1,8 @@
+= 1.12.5 =
+* Fixed script_selector() function
+* Refactored code
+* Improved plugin optimization for better performance
+
 = 1.12.4 =
 * Enhanced plugin optimization for better performance
 * Code refactoring for improved readability and maintenance

@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 					<button class="accordion-link" type="button"><?php _e('Plugin settings', 'serbian-transliteration'); ?></button>
 					<div class="accordion-panel" style="padding:0;">
 						<pre class="lang-php" style="margin: 0;">
-["<?php echo RSTR_NAME; ?>"] => <?php var_dump($options); ?>
+["<?php echo RSTR_NAME; ?>"] => <?php print_r($options); ?>
 						</pre>
 					</div>
 				</div>
