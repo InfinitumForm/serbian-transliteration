@@ -17,10 +17,21 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
 			return $content;
 		}
+		
+		$formatSpecifiers = [];
+		$content = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function($matches) use (&$formatSpecifiers) {
+			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
+			$formatSpecifiers[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		$content = Serbian_Transliteration_Utilities::decode($content);
 		$content = $this->transliteration($content, 'cyr_to_lat');
 		$content = self::fix_attributes($content);
+		
+		if($formatSpecifiers) {
+			$content = strtr($content, $formatSpecifiers);
+		}
 
 		return $content;
 	}
@@ -59,10 +70,17 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public function lat_to_cyr($content, $fix_html = true, $fix_diacritics = false){
+	public function lat_to_cyr($content, $fix_html = true, $fix_diacritics = false) {
 		if(parent::can_trasliterate($content) || Serbian_Transliteration_Utilities::is_editor()){
 			return $content;
 		}
+		
+		$formatSpecifiers = [];
+		$content = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function($matches) use (&$formatSpecifiers, $content) {
+			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
+			$formatSpecifiers[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		$content = Serbian_Transliteration_Utilities::decode($content);
 
@@ -75,6 +93,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if($fix_html && strip_tags($content) != $content){
 		//	$content = self::fix_cyr_html($content);
 		//	$content = self::fix_attributes($content);
+		}
+		
+		if($formatSpecifiers) {
+			$content = strtr($content, $formatSpecifiers);
 		}
 
 		return $content;
@@ -151,11 +173,19 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return $content;
 		}
 
+
 		$type = (empty($type) || is_bool($type)) ? Serbian_Transliteration_Utilities::get_current_script() : $type;
 
 		if (get_rstr_option('site-script') === 'cyr' && $type === 'lat_to_cyr') {
 			return $content;
 		}
+		
+		$formatSpecifiers = [];
+		$content = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function($matches) use (&$formatSpecifiers) {
+			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
+			$formatSpecifiers[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		$content = Serbian_Transliteration_Utilities::decode($content);
 		$content = $this->transliteration($content, $type);
@@ -163,6 +193,10 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		if ($type === 'lat_to_cyr' && $fix_html && strip_tags($content) !== $content) {
 			$content = self::fix_cyr_html($content);
 			$content = self::fix_attributes($content);
+		}
+		
+		if($formatSpecifiers) {
+			$content = strtr($content, $formatSpecifiers);
 		}
 
 		return $content;

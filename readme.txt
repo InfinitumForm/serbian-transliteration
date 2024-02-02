@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat, serbian, latiniza
 Requires at least: 5.4
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.12.5
+Stable tag: 1.12.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -160,6 +160,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.12.6 =
+* Fixing WooCommerce minicart
+* Fixing problem with percentages in textdomains
+* Optimized PHP code
+
 = 1.12.5 =
 * Fixed script_selector() function
 * Refactored code
@@ -240,42 +245,15 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.12.6 =
+* Fixing WooCommerce minicart
+* Fixing problem with percentages in textdomains
+* Optimized PHP code
+
 = 1.12.5 =
 * Fixed script_selector() function
 * Refactored code
 * Improved plugin optimization for better performance
-
-= 1.12.4 =
-* Enhanced plugin optimization for better performance
-* Code refactoring for improved readability and maintenance
-* Corrected search functionality for more accurate results
-* Advanced database caching for faster data access
-* Upgraded Memcache implementation for more efficient cache management
-
-= 1.12.3 =
-* Plugin optimization
-* Improved translations
-* Fixed bugs in plugin detection
-
-= 1.12.2 =
-* Fixed transliteration of AJAX calls
-* Fixed Woocommerce mini cart transliterations
-* Fixed Template Switcher
-* Improved translations
-
-= 1.12.1 =
-* Fixed problems with specifiers
-* Optimized transliterations
-* Added new languages
-* Fixed HTML transliterations
-
-= 1.12.0 =
-* Fixed problems with Avada theme
-* Fixed problems in WooCommerce plugin
-* Fixed bugs in cyrillic encodings
-* Added Georgian language
-* Improvement of the Arabic language
-* Improvement of the Armenian language
 
 == Frequently Asked Questions ==
 

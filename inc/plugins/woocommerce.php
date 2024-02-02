@@ -23,13 +23,60 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 
 		function __construct($dry = false){
 			if($dry) return;
-			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
+			$this->add_filter('rstr/transliteration/exclude/filters', array(__CLASS__, 'filters'));
+			
+		//	$this->add_action('woocommerce_before_main_content', array(__CLASS__, 'before'), 10, 0);
+		//	$this->add_action('woocommerce_after_main_content', array(__CLASS__, 'after'), 10, 0);
+			
+		//	$this->add_action('woocommerce_before_template_part', array(__CLASS__, 'before'), 10, 0);
+		//	$this->add_action('woocommerce_after_template_part', array(__CLASS__, 'after'), 10, 0);
+			
+			$this->add_action('woocommerce_before_mini_cart', array(__CLASS__, 'before'), 10, 0);
+			$this->add_action('woocommerce_after_mini_cart', array(__CLASS__, 'after'), 10, 0);
+			
+			$this->add_action('woocommerce_before_cart_totals', array(__CLASS__, 'before'), 10, 0);
+			$this->add_action('woocommerce_after_cart_totals', array(__CLASS__, 'after'), 10, 0);
+			
+			$this->add_action('woocommerce_before_cart', array(__CLASS__, 'before'), 10, 0);
+			$this->add_action('woocommerce_after_cart', array(__CLASS__, 'after'), 10, 0);
+			
+		//	$this->add_action('woocommerce_before_shipping_calculator', array(__CLASS__, 'before'), 10, 0);
+		//	$this->add_action('woocommerce_after_shipping_calculator', array(__CLASS__, 'after'), 10, 0);
+			
+			$this->add_action('woocommerce_before_checkout_form', array(__CLASS__, 'before'), 10, 0);
+			$this->add_action('woocommerce_after_checkout_form', array(__CLASS__, 'after'), 10, 0);
+			
+			$this->add_action('woocommerce_before_thankyou', array(__CLASS__, 'before'), 10, 0);
+			$this->add_action('woocommerce_after_thankyou', array(__CLASS__, 'after'), 10, 0);
 		}
 
 		public static function filters ($filters=array()) {
 
 			$classname = self::run(true);
 			$filters = array_merge($filters, array(
+				'woocommerce_shipping_not_enabled_on_cart_html' => 'content',
+				'woocommerce_shipping_may_be_available_html' => 'content',
+				'woocommerce_cart_item_remove_link' => 'content',
+				'woocommerce_cart_item_backorder_notification' => 'content',
+				'woocommerce_product_cross_sells_products_heading' => 'content',
+				'woocommerce_widget_cart_item_quantity' => 'content',
+				'woocommerce_checkout_must_be_logged_in_message' => 'content',
+				'woocommerce_checkout_coupon_message' => 'content',
+				'woocommerce_checkout_login_message' => 'content',
+				'woocommerce_no_available_payment_methods_message' => 'content',
+				
+				'woocommerce_order_item_name' => 'content',
+				'woocommerce_sale_flash' => 'content',
+				'woocommerce_my_account_edit_address_title' => 'content',
+				'woocommerce_lost_password_message' => 'content',
+				'woocommerce_reset_password_message' => 'content',
+				'woocommerce_lost_password_confirmation_message' => 'content',
+				'woocommerce_my_account_my_address_description' => 'content',
+				
+				'woocommerce_my_account_my_downloads_title' => 'content',
+				'woocommerce_available_download_count' => 'content',
+				
+				'woocommerce_return_to_shop_text' => 'content',
 				'woocommerce_product_single_add_to_cart_text' => 'content',
 				'woocommerce_email_footer_text' => 'content',
 				'woocommerce_get_availability_text' => 'no_html_content',
@@ -80,12 +127,38 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 				'woocommerce_get_allowed_countries' => 'content',
 				'woocommerce_template_single_excerpt' => 'content',
 				'woocommerce_cart_item_name' => 'content',
+				'woocommerce_cart_item_quantity' => [__CLASS__, 'fix_quantity'],
 		//		'woocommerce_cart_item_product' => 'objects',
 		//		'woocommerce_cart_item_price' => 'content',
 		//		'woocommerce_cart_item_subtotal' => 'content'
 			));
 			asort($filters);			
 			return $filters;
+		}
+		
+		public static function fix_quantity ($data) {
+			
+			if(isset($data['product_name'])) {
+				$data['product_name'] = $this->transliterate_text($data['product_name']);
+			}
+			
+			return $data;
+		}
+		
+		public static function before () {
+			ob_start();
+		}
+		
+		public static function after () {
+			$output = '';
+			if (ob_get_level()) {
+				$output = ob_get_clean();
+			}
+			
+			$mode = new Serbian_Transliteration_Mode();
+			$output = $mode->content($output);
+			
+			echo $output; // Prikazite modifikovani sadrzaj
 		}
 	}
 endif;

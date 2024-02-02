@@ -83,6 +83,7 @@ if(!class_exists('Serbian_Transliteration__Theme__avada')) :
 				'fusion_post_content_is_excerpted' => 'content',
 				'fusion_related_posts_heading_text' => 'content',
 				'avada_secondary_header_content' => 'content',
+				'tribe_events_get_the_excerpt' => 'content'
 			));
 			
 			return $filters;

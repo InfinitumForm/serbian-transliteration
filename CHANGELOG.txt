@@ -1,3 +1,8 @@
+= 1.12.6 =
+* Fixing WooCommerce minicart
+* Fixing problem with percentages in textdomains
+* Optimized PHP code
+
 = 1.12.5 =
 * Fixed script_selector() function
 * Refactored code

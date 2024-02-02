@@ -84,12 +84,12 @@ class Serbian_Transliteration_Transliterating {
 
 		// Kombinovanje dva preg_replace_callback poziva u jedan
 		$formatSpecifiers = [];
-		$content = preg_replace_callback('/%[0-9]*\$(?:d|s)|%(?:d|s)/', function($matches) use (&$formatSpecifiers) {
+		$content = preg_replace_callback('/%[0-9]*\$(?:d|s)|%(?:d|s)/', function($matches) use (&$formatSpecifiers, $content) {
 			$placeholder = '@=[' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
-
+		
 		$locale = $this->get_locale();
 
 		if( self::can_trasliterate($content) || !in_array($translation, array('lat_to_cyr', 'cyr_to_lat')) ){
