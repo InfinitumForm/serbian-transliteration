@@ -65,14 +65,23 @@ class Serbian_Transliteration_Mode_Admin extends Serbian_Transliteration {
 		if (is_admin() && $this->get_option('avoid-admin') === 'no') {
 			$filters = apply_filters('rstr/transliteration/exclude/filters/admin', self::filters($this->get_options()), $this->get_options());
 			$mode = new Serbian_Transliteration_Mode();
-
+			$args = 1;
+			
 			foreach ($filters as $key => $method) {
-				if (is_string($method)) {
-					$target = method_exists($mode, $method) ? [$mode, $method] : (method_exists($this, $method) ? [$this, $method] : null);
+				
+				do_action('rstr/transliteration/filter/arguments/admin/before', $key, $method);
+				
+				if( is_array($method) ) {
+					$this->add_filter($key, $method, (PHP_INT_MAX - 1), $args);
+				} else if (is_string($method)) {
+					$target = method_exists($mode, $method) ? $mode : (method_exists($this, $method) ? $this : null);
 					if ($target) {
-						$this->add_filter($key, $target, (PHP_INT_MAX - 1), 1);
+						$this->add_filter($key, [$target, $method], (PHP_INT_MAX - 1), $args);
 					}
 				}
+				
+				do_action('rstr/transliteration/filter/arguments/admin/after', $key, $method);
+				
 			}
 		}
 	}

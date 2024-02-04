@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat, serbian, latiniza
 Requires at least: 5.4
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.12.6
+Stable tag: 1.12.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -160,6 +160,9 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.12.7 =
+* PHP bugfix in Standard mode
+
 = 1.12.6 =
 * Fixing WooCommerce minicart
 * Fixing problem with percentages in textdomains
@@ -244,6 +247,9 @@ We also thought of PHP developers where we have enabled several useful functions
 * Transliteration added for emails through PHP mailer
 
 == Upgrade Notice ==
+
+= 1.12.7 =
+* PHP bugfix in Standard mode
 
 = 1.12.6 =
 * Fixing WooCommerce minicart

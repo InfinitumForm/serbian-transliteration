@@ -100,14 +100,17 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 
 				do_action('rstr/transliteration/filter/arguments/forced/before', $key, $method);
 
-				if (is_string($method)) {
-					$target_method = method_exists($mode, $method) ? [$mode, $method] : (method_exists($this, $method) ? [$this, $method] : null);
-					if ($target_method) {
-						$this->add_filter($key, $target_method, (PHP_INT_MAX - 1), $args);
+				if( is_array($method) ) {
+					$this->add_filter($key, $method, (PHP_INT_MAX - 1), $args);
+				} else if (is_string($method)) {
+					$target = method_exists($mode, $method) ? $mode : (method_exists($this, $method) ? $this : null);
+					if ($target) {
+						$this->add_filter($key, [$target, $method], (PHP_INT_MAX - 1), $args);
 					}
 				}
 
 				do_action('rstr/transliteration/filter/arguments/forced/after', $key, $method);
+				
 			}
 		}
 

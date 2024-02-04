@@ -25,29 +25,29 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			if($dry) return;
 			$this->add_filter('rstr/transliteration/exclude/filters', array(__CLASS__, 'filters'));
 			
-		//	$this->add_action('woocommerce_before_main_content', array(__CLASS__, 'before'), 10, 0);
-		//	$this->add_action('woocommerce_after_main_content', array(__CLASS__, 'after'), 10, 0);
+		//	$this->add_action('woocommerce_before_main_content', 'before', 10, 0);
+		//	$this->add_action('woocommerce_after_main_content', 'after', 10, 0);
 			
-		//	$this->add_action('woocommerce_before_template_part', array(__CLASS__, 'before'), 10, 0);
-		//	$this->add_action('woocommerce_after_template_part', array(__CLASS__, 'after'), 10, 0);
+		//	$this->add_action('woocommerce_before_template_part', 'before', 10, 0);
+		//	$this->add_action('woocommerce_after_template_part', 'after', 10, 0);
 			
-			$this->add_action('woocommerce_before_mini_cart', array(__CLASS__, 'before'), 10, 0);
-			$this->add_action('woocommerce_after_mini_cart', array(__CLASS__, 'after'), 10, 0);
+			$this->add_action('woocommerce_before_mini_cart', 'before', 10, 0);
+			$this->add_action('woocommerce_after_mini_cart', 'after', 10, 0);
 			
-			$this->add_action('woocommerce_before_cart_totals', array(__CLASS__, 'before'), 10, 0);
-			$this->add_action('woocommerce_after_cart_totals', array(__CLASS__, 'after'), 10, 0);
+			$this->add_action('woocommerce_before_cart_totals', 'before', 10, 0);
+			$this->add_action('woocommerce_after_cart_totals', 'after', 10, 0);
 			
-			$this->add_action('woocommerce_before_cart', array(__CLASS__, 'before'), 10, 0);
-			$this->add_action('woocommerce_after_cart', array(__CLASS__, 'after'), 10, 0);
+			$this->add_action('woocommerce_before_cart', 'before', 10, 0);
+			$this->add_action('woocommerce_after_cart', 'after', 10, 0);
 			
-		//	$this->add_action('woocommerce_before_shipping_calculator', array(__CLASS__, 'before'), 10, 0);
-		//	$this->add_action('woocommerce_after_shipping_calculator', array(__CLASS__, 'after'), 10, 0);
+		//	$this->add_action('woocommerce_before_shipping_calculator', 'before', 10, 0);
+		//	$this->add_action('woocommerce_after_shipping_calculator', 'after', 10, 0);
 			
-			$this->add_action('woocommerce_before_checkout_form', array(__CLASS__, 'before'), 10, 0);
-			$this->add_action('woocommerce_after_checkout_form', array(__CLASS__, 'after'), 10, 0);
+			$this->add_action('woocommerce_before_checkout_form', 'before', 10, 0);
+			$this->add_action('woocommerce_after_checkout_form', 'after', 10, 0);
 			
-			$this->add_action('woocommerce_before_thankyou', array(__CLASS__, 'before'), 10, 0);
-			$this->add_action('woocommerce_after_thankyou', array(__CLASS__, 'after'), 10, 0);
+			$this->add_action('woocommerce_before_thankyou', 'before', 10, 0);
+			$this->add_action('woocommerce_after_thankyou', 'after', 10, 0);
 		}
 
 		public static function filters ($filters=array()) {
@@ -145,11 +145,11 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			return $data;
 		}
 		
-		public static function before () {
+		public function before () {
 			ob_start();
 		}
 		
-		public static function after () {
+		public function after () {
 			$output = '';
 			if (ob_get_level()) {
 				$output = ob_get_clean();
