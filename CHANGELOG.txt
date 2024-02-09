@@ -1,3 +1,7 @@
+= 1.12.8 =
+* Added new experimental "Light mode"
+* Additional optimization of output buffers
+
 = 1.12.7 =
 * PHP bugfix in Standard mode
 

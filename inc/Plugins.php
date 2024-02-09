@@ -37,6 +37,10 @@ if(!class_exists('Serbian_Transliteration_Plugins', false)) :
 			if ($only_object === false) {
 
 				$this->plugins = apply_filters('rstr/plugins', $this->plugins);
+				
+				if( get_rstr_option('mode', 'advanced') == 'light' ) {
+					unset($this->plugins['woocommerce']);
+				}
 
 				foreach ($this->plugins as $dir_name => $file_name) {
 					$addon = RSTR_INC . "/plugins/{$dir_name}.php";
@@ -56,6 +60,10 @@ if(!class_exists('Serbian_Transliteration_Plugins', false)) :
 		
 		public function active_filters() {
 			$this->plugins = apply_filters('rstr/plugins', $this->plugins);
+			
+			if( get_rstr_option('mode', 'advanced') == 'light' ) {
+				unset($this->plugins['woocommerce']);
+			}
 
 			$return = [];
 

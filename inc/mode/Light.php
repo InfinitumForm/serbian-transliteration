@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'WPINC' ) )	die( "Don't mess with us." );
 /**
- * Dev Mode
+ * Light Mode
  *
  * @link              http://infinitumform.com/
  * @since             1.0.0
@@ -8,8 +8,8 @@
  * @author            Ivijan-Stefan Stipic
  * @contributor       Slobodan Pantovic
  */
-if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
-	class Serbian_Transliteration_Mode_Dev extends Serbian_Transliteration {
+if ( ! class_exists( 'Serbian_Transliteration_Mode_Light' ) ) :
+	class Serbian_Transliteration_Mode_Light extends Serbian_Transliteration {
 
 		/* Run this script */
 		public static function run() {
@@ -31,6 +31,9 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 			$filters = [
 				'gettext' 				=> 'gettext_content',
 				'ngettext' 				=> 'content',
+				'gettext_with_context' 	=> 'content',
+				'ngettext_with_context' => 'content',
+				'wp_mail'				=> 'wp_mail'
 			];
 			
 			asort($filters);
@@ -48,7 +51,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 		public function __construct() {
 			$filters = self::filters($this->get_options());
 			$filters = apply_filters('rstr/transliteration/exclude/filters', $filters, $this->get_options());
-			$filters = apply_filters('rstr/transliteration/exclude/filters/development', $filters, $this->get_options());
+			$filters = apply_filters('rstr/transliteration/exclude/filters/light', $filters, $this->get_options());
 
 			$mode = new Serbian_Transliteration_Mode();
 			$args = 1;
@@ -57,7 +60,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 				foreach ($filters as $key => $method) {
 					$args = $key === 'gettext' ? 3 : 1;
 					
-					do_action('rstr/transliteration/filter/arguments/development/before', $key, $method);
+					do_action('rstr/transliteration/filter/arguments/light/before', $key, $method);
 
 					if( is_array($method) ) {
 						$this->add_filter($key, $method, (PHP_INT_MAX - 1), $args);
@@ -68,12 +71,12 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 						}
 					}
 
-					do_action('rstr/transliteration/filter/arguments/development/after', $key, $method);
+					do_action('rstr/transliteration/filter/arguments/light/after', $key, $method);
 				}
 				
 				
-				add_action('wp_head', [&$this, 'buffer_start'], PHP_INT_MAX-10);
-				add_action('wp_print_footer_scripts', [&$this, 'buffer_end'], PHP_INT_MAX-10);
+				$this->add_action('wp_head', [&$this, 'buffer_start'], PHP_INT_MAX-10);
+				$this->add_action('wp_print_footer_scripts', [&$this, 'buffer_end'], PHP_INT_MAX-10);
 				
 				$this->add_action('woocommerce_before_main_content', 'buffer_start', PHP_INT_MAX-10, 0);
 				$this->add_action('woocommerce_after_main_content', 'buffer_end', PHP_INT_MAX-10, 0);
@@ -113,7 +116,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 			
 		}
 		
-		function buffer_start() { ob_start([&$this, 'callback_function']); }
+		function buffer_start() { ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE); }
 		function buffer_end() {
 			if (ob_get_level()) {
 				ob_end_flush();

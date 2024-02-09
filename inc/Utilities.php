@@ -53,6 +53,7 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function plugin_mode($mode=NULL){
 		$modes = array(
+			'light'	=> __('Light mode (light on memory and performance - experimental)', 'serbian-transliteration'),
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
 			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', 'serbian-transliteration'),
 			'forced'	=> __('Forced transliteration (everything)', 'serbian-transliteration')
