@@ -64,7 +64,7 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 			'widget_title' 					=> 'no_html_content',
 			'widget_text_content' 			=> 'content',
 			'widget_custom_html_content' 	=> 'content',
-			'sanitize_title' 				=> 'no_html_content',
+		//	'sanitize_title' 				=> 'no_html_content',
 			'wp_unique_post_slug' 			=> 'no_html_content',
 			'option_blogdescription'		=> 'no_html_content',
 			'option_blogname' 				=> 'no_html_content',
@@ -122,13 +122,13 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 			if (get_rstr_option('enable-rss', 'no') === 'yes') {
 				$rssActions = ['rss', 'rss2', 'rdf', 'atom'];
 				foreach ($rssActions as $action) {
-					add_action("{$action}_head", [$class, 'rss_output_buffer_start'], $priority);
+					add_action("{$action}_head", [$class, 'rss_output_buffer_start'], 1);
 					add_action("{$action}_footer", [$class, 'rss_output_buffer_end'], $priority);
 				}
 			}
 
 			if (get_rstr_option('force-widgets', 'no') === 'yes') {
-				add_action('dynamic_sidebar_before', [$class, 'rss_output_buffer_start'], $priority);
+				add_action('dynamic_sidebar_before', [$class, 'rss_output_buffer_start'], 1);
 				add_action('dynamic_sidebar_after', [$class, 'rss_output_buffer_end'], $priority);
 			}
 		}

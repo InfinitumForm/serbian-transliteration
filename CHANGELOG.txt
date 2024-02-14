@@ -1,3 +1,11 @@
+= 1.12.10 =
+* Added support for the LSCache, Hyper Cache,Simple Cache, Autoptimize and WP-Optimize
+* Improved "Light mode"
+
+= 1.12.9 =
+* Added support for PHP versions below 7.4.
+* Fixed a PHP error related to the T_DOUBLE_ARROW syntax.
+
 = 1.12.8 =
 * Added new experimental "Light mode"
 * Additional optimization of output buffers

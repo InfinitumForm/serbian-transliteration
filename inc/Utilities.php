@@ -53,7 +53,7 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function plugin_mode($mode=NULL){
 		$modes = array(
-			'light'	=> __('Light mode (light on memory and performance - experimental)', 'serbian-transliteration'),
+			'light'		=> __('Light mode (light on memory and performance - experimental)', 'serbian-transliteration'),
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
 			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', 'serbian-transliteration'),
 			'forced'	=> __('Forced transliteration (everything)', 'serbian-transliteration')
@@ -584,13 +584,17 @@ class Serbian_Transliteration_Utilities{
 
 	private static function isQueryVarsSet($query_vars) {
 		$keys = ['name', 'year', 'monthnum', 'day', 'hour', 'minute', 'second'];
-		return array_some($keys, fn($key) => isset($query_vars[$key]));
+		return array_reduce($keys, function($carry, $key) use ($query_vars) {
+			return $carry || isset($query_vars[$key]);
+		}, false);
 	}
 
 	private static function getQueryAttr($query_vars) {
 		$attr = array_filter(
 			$query_vars,
-			fn($key) => in_array($key, ['name', 'year', 'monthnum', 'day', 'hour', 'minute', 'second']),
+			function($key) {
+				return in_array($key, ['name', 'year', 'monthnum', 'day', 'hour', 'minute', 'second']);
+			},
 			ARRAY_FILTER_USE_KEY
 		);
 
@@ -732,6 +736,15 @@ class Serbian_Transliteration_Utilities{
 		if (function_exists('wp_cache_flush')) {
 			wp_cache_flush();
 		}
+		
+		// Flush LS Cache
+		if ( class_exists('\LiteSpeed\Purge', false) ) {
+			\LiteSpeed\Purge::purge_all();
+		} else if (has_action('litespeed_purge_all')) {
+			do_action( 'litespeed_purge_all' );
+		} else if (function_exists('liteSpeed_purge_all')) {
+			litespeed_purge_all();
+		}
 
 		// W3 Total Cache
 		if (function_exists('w3tc_flush_all')) {
@@ -773,6 +786,31 @@ class Serbian_Transliteration_Utilities{
 		// Clean user cache
 		if($user && function_exists('clean_user_cache')) {
 			clean_user_cache( $user );
+		}
+		
+		// Clean Pagely cache
+		if ( class_exists( 'PagelyCachePurge', false ) ) {
+			(new PagelyCachePurge())->purgeAll();
+		}
+		
+		// Clean Hyper Cache
+		if (function_exists('hyper_cache_clear')) {
+			hyper_cache_clear();
+		}
+			
+		// Clean Simple Cache
+		if (function_exists('simple_cache_flush')) {
+			simple_cache_flush();
+		}
+		
+		// Clean Autoptimize
+		if (class_exists('autoptimizeCache') && method_exists('autoptimizeCache', 'clearall')) {
+			autoptimizeCache::clearall();
+		}
+		
+		// Clean WP-Optimize
+		if (class_exists('WP_Optimize_Cache_Commands', false)) {
+			( new WP_Optimize_Cache_Commands() )->purge_page_cache();
 		}
 	}
 

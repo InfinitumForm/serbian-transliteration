@@ -57,11 +57,12 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			'wp_unique_post_slug'	=> 'force_permalink_to_latin',
 			'wp_mail'				=> 'wp_mail',
 			'render_block'			=> 'content',
-			'wp_get_attachment_image_attributes' => 'image_attributes'
+			'wp_get_attachment_image_attributes' => 'image_attributes',
+			'oceanwp_excerpt'				=> 'content',//Oceanwp
 		);
 
 		if (!current_theme_supports( 'title-tag' )){
-			unset($filters['document_title_parts'], $filters['pre_get_document_title']);
+			unset($filters['pre_get_document_title']);
 		} else {
 			unset($filters['wp_title']);
 		}
@@ -120,7 +121,7 @@ class Serbian_Transliteration_Mode_Standard extends Serbian_Transliteration
 			}
 
 			if (get_rstr_option('force-widgets', 'no') === 'yes') {
-				add_action('dynamic_sidebar_before', [__CLASS__, 'rss_output_buffer_start'], $priority);
+				add_action('dynamic_sidebar_before', [__CLASS__, 'rss_output_buffer_start'], 1);
 				add_action('dynamic_sidebar_after', [__CLASS__, 'rss_output_buffer_end'], $priority);
 			}
 		}

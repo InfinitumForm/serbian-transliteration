@@ -33,13 +33,25 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Light' ) ) :
 				'ngettext' 				=> 'content',
 				'gettext_with_context' 	=> 'content',
 				'ngettext_with_context' => 'content',
-				'wp_mail'				=> 'wp_mail'
+				'wp_mail'				=> 'wp_mail',
+				'wp_title' 				=> 'no_html_content',
+				'pre_get_document_title'=> 'no_html_content',
+				'default_post_metadata'	=> 'content',
+				'option_blogdescription'=> 'no_html_content',
+				'option_blogname' 		=> 'no_html_content',
+				'the_title' 			=> 'no_html_content',
+				'get_the_terms'			=> 'transliteration_wp_terms', //Sydney, Blocksy, Colormag
+				'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
+				'oceanwp_excerpt'		=> 'content', //Oceanwp
+				'sanitize_title'		=> 'force_permalink_to_latin',
+				'the_permalink'			=> 'force_permalink_to_latin',
+				'wp_unique_post_slug'	=> 'force_permalink_to_latin',
+				'document_title_parts' 	=> 'transliterate_objects'
 			];
 			
 			asort($filters);
 
 			if (!current_theme_supports( 'title-tag' )){
-				unset($filters['document_title_parts']);
 				unset($filters['pre_get_document_title']);
 			} else {
 				unset($filters['wp_title']);
@@ -75,40 +87,40 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Light' ) ) :
 				}
 				
 				
-				$this->add_action('wp_head', [&$this, 'buffer_start'], PHP_INT_MAX-10);
+				$this->add_action('wp_head', [&$this, 'buffer_start'], 1);
 				$this->add_action('wp_print_footer_scripts', [&$this, 'buffer_end'], PHP_INT_MAX-10);
 				
-				$this->add_action('woocommerce_before_main_content', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_main_content', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_main_content', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_template_part', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_template_part', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_template_part', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_mini_cart', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_mini_cart', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_mini_cart', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_cart_totals', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_cart_totals', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_cart_totals', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_cart', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_cart', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_cart', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_shipping_calculator', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_shipping_calculator', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_shipping_calculator', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_checkout_form', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_checkout_form', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_checkout_form', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_thankyou', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_thankyou', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_thankyou', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_before_cart', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_before_cart', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_after_cart', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_review_order_before_cart_contents', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_review_order_before_cart_contents', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_review_order_after_cart_contents', 'buffer_end', PHP_INT_MAX-10, 0);
 				
-				$this->add_action('woocommerce_order_details_before_order_table', 'buffer_start', PHP_INT_MAX-10, 0);
+				$this->add_action('woocommerce_order_details_before_order_table', 'buffer_start', 1, 0);
 				$this->add_action('woocommerce_order_details_after_order_table', 'buffer_end', PHP_INT_MAX-10, 0);
 				
 			}
