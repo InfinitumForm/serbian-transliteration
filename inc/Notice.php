@@ -80,7 +80,7 @@ if(!class_exists('Serbian_Transliteration_Notice', false)) :
 			
 			$past_date = strtotime( '-5 days' );
 		 
-			if ( $past_date >= $install_date) {
+			if ( $past_date >= $install_date ) {
 				$this->add_action( 'admin_notices', 'notice__give_us_vote', 1 );
 			}
 		}
@@ -104,7 +104,7 @@ if(!class_exists('Serbian_Transliteration_Notice', false)) :
 			
 			$past_date = strtotime( '-3 weeks' );
 
-			if ( $past_date >= $install_date) {
+			if ( $past_date >= $install_date ) {
 				$this->add_action( 'admin_notices', 'notice__buy_me_a_coffee', 1 );
 			}
 		}
@@ -136,31 +136,22 @@ if(!class_exists('Serbian_Transliteration_Notice', false)) :
 			$plugin_info = get_plugin_data( RSTR_FILE , true, true );       
 			$donationurl = 'https://www.buymeacoffee.com/ivijanstefan';
 
-			$message = sprintf(
-				'<div class="notice notice-info">
-					<h3>'.__('Hey! It\'s been a while since you used the plugin for <b> %1$s </b>', 'serbian-transliteration').'</h3>
+			echo '<div class="notice notice-info">
+				<h3>'. sprintf(
+					__('Hey there! It\'s been a while since you\'ve been using the <b> %1$s </b> plugin', 'serbian-transliteration'),
+					$plugin_info['Name']
+				).'</h3>
+				
+				<p>'.sprintf(
+					__('I\'m glad to hear you\'re enjoying the plugin. I\'ve put a lot of time and effort into ensuring that your website runs smoothly. If you\'re feeling generous, how about %s for my hard work? 😊', 'serbian-transliteration'),
 					
-					<p>'.sprintf(
-						__('Hey there! I\'m so glad to hear you like the plugin. I poured a lot of time and love into it to ensure your site runs smoothly. If you\'re feeling generous, how about %s for the effort? 😊', 'serbian-transliteration'),
-						sprintf(
-							'<big><strong><a href="%s" target="_blank">%s</a></strong></big>',
-							esc_url($donationurl),
-							__('buying me a coffee', 'serbian-transliteration')
-						)
-					).'</p>
-					<p>'.sprintf(
-						__('Or just %s forever.', 'serbian-transliteration'),
-						sprintf(
-							'<a href="%s">%s</a>',
-							esc_url($dont_disturb),
-							__('hide this message', 'serbian-transliteration')
-						)
-					).'</p>
-				</div>',
-				$plugin_info['Name']
-			);
-
-			echo $message;
+					'<big><strong><a href="'.esc_url($donationurl).'" target="_blank">'.__('treating me to a coffee', 'serbian-transliteration').'</a></strong></big>'
+				).'</p>
+				<p>'.sprintf(
+					__('Or simply %s forever.', 'serbian-transliteration'),
+					'<a href="'.esc_url($dont_disturb).'">'.__('hide this message', 'serbian-transliteration').'</a>'
+				).'</p>
+			</div>';
 		}
 
 	}

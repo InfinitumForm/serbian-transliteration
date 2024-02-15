@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2024-01-22 09:35+0100\n"
-"PO-Revision-Date: 2024-01-22 09:35+0100\n"
+"POT-Creation-Date: 2024-02-15 20:18+0100\n"
+"PO-Revision-Date: 2024-02-15 20:18+0100\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -30,19 +30,19 @@ msgstr ""
 "Ова функција је застарела и биће уклоњена. Замените је са get_script() "
 "функцијом."
 
-#: inc/Functions.php:361 inc/Menu.php:37 inc/Menu.php:38 inc/Settings.php:696
+#: inc/Functions.php:419 inc/Menu.php:37 inc/Menu.php:38 inc/Settings.php:696
 #: inc/Settings.php:1118 inc/Shortcodes.php:38
-#: inc/settings/content/php-functions.php:129
+#: inc/settings/content/php-functions.php:174
 msgid "Cyrillic"
 msgstr "Ћирилица"
 
-#: inc/Functions.php:362 inc/Menu.php:36 inc/Menu.php:38 inc/Settings.php:697
+#: inc/Functions.php:420 inc/Menu.php:36 inc/Menu.php:38 inc/Settings.php:697
 #: inc/Settings.php:1117 inc/Shortcodes.php:39
-#: inc/settings/content/php-functions.php:134
+#: inc/settings/content/php-functions.php:179
 msgid "Latin"
 msgstr "Латиница"
 
-#: inc/Functions.php:380
+#: inc/Functions.php:440
 #, php-format
 msgid ""
 "Choose one of the display types: \"%1$s\", \"%2$s\", \"%3$s\", \"%4$s\", "
@@ -122,32 +122,35 @@ msgstr "Оцените нас!"
 msgid "I've already done that!"
 msgstr "То сам већ учинио!"
 
-#: inc/Notice.php:141
-#, php-format
-msgid "Hey! It's been a while since you used the plugin for <b> %1$s </b>"
-msgstr "Хеј! Прошло је доста времена од како користиш додатак за <b> %1$s </b>"
-
-#: inc/Notice.php:144
+#: inc/Notice.php:142
 #, php-format
 msgid ""
-"Hey there! I'm so glad to hear you like the plugin. I poured a lot of time "
-"and love into it to ensure your site runs smoothly. If you're feeling "
-"generous, how about %s for the effort? 😊"
+"Hey there! It's been a while since you've been using the <b> %1$s </b> plugin"
 msgstr ""
-"Хеј тамо! Тако ми је драго да чујем да ти се свиђа додатак. Уложио сам много "
-"времена и љубави у то како бих осигурао да твоја веб локација ради "
-"несметано. Ако се осећаш великодушно, шта кажеш %s за труд? 😊"
+"Хеј тамо! Прошло је доста времена од када си инсталирао додатак за <b> %1$s "
+"</b>"
 
-#: inc/Notice.php:148
-msgid "buying me a coffee"
-msgstr "да ме ме частиш једном кафом"
+#: inc/Notice.php:147
+#, php-format
+msgid ""
+"I'm glad to hear you're enjoying the plugin. I've put a lot of time and "
+"effort into ensuring that your website runs smoothly. If you're feeling "
+"generous, how about %s for my hard work? 😊"
+msgstr ""
+"Тако ми је драго да ти се допада додатак. Уложио сам много времена и љубави "
+"како бих осигурао да твоја веб локација ради несметано. Ако се осећаш "
+"великодушно, шта кажеш %s за труд? 😊"
+
+#: inc/Notice.php:149
+msgid "treating me to a coffee"
+msgstr "да ме почастиш једном кафом"
 
 #: inc/Notice.php:152
 #, php-format
-msgid "Or just %s forever."
-msgstr "Или само %s заувек."
+msgid "Or simply %s forever."
+msgstr "Или једноставно %s заувек."
 
-#: inc/Notice.php:156
+#: inc/Notice.php:153
 msgid "hide this message"
 msgstr "сакриј ову поруку"
 
@@ -936,10 +939,14 @@ msgid "Greek"
 msgstr "Грчки"
 
 #: inc/Utilities.php:56
+msgid "Light mode (light on memory and performance - experimental)"
+msgstr "Супербрзи режим (лак за меморију и перформансе - експериментално)"
+
+#: inc/Utilities.php:57
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr "Стандардни режим (садржај, теме, додаци, преводи, мени)"
 
-#: inc/Utilities.php:57
+#: inc/Utilities.php:58
 msgid ""
 "Advanced mode (content, widgets, themes, plugins, translations, "
 "menu‚ permalinks, media)"
@@ -947,11 +954,11 @@ msgstr ""
 "Напредни режим (садржај, виџети, теме, додаци, преводи, мени трајне везе, "
 "медији)"
 
-#: inc/Utilities.php:58
+#: inc/Utilities.php:59
 msgid "Forced transliteration (everything)"
 msgstr "Присилно пресловљавање (све)"
 
-#: inc/Utilities.php:63
+#: inc/Utilities.php:64
 msgid ""
 "Only WooCommerce (It bypasses all other transliterations and focuses only on "
 "WooCommerce)"
@@ -959,178 +966,178 @@ msgstr ""
 "Само WooCommerce (заобилази све остале транслитерације и фокусира се само на "
 "WooCommerce)"
 
-#: inc/Utilities.php:69
+#: inc/Utilities.php:70
 msgid "Dev Mode (Only for developers and testers)"
 msgstr "Програмерски мод (само за програмере)"
 
-#: inc/Utilities.php:93
+#: inc/Utilities.php:94
 msgid "Transliteration disabled"
 msgstr "Угаси пресловљавање"
 
-#: inc/Utilities.php:94 inc/settings/content/shortcodes.php:27
+#: inc/Utilities.php:95 inc/settings/content/shortcodes.php:27
 #: inc/settings/content/tags.php:25
 msgid "Cyrillic to Latin"
 msgstr "Ћирилица у латиницу"
 
-#: inc/Utilities.php:95 inc/settings/content/shortcodes.php:30
+#: inc/Utilities.php:96 inc/settings/content/shortcodes.php:30
 #: inc/settings/content/tags.php:28
 msgid "Latin to Cyrillic"
 msgstr "Латиница у ћирилицу"
 
-#: inc/Utilities.php:101
+#: inc/Utilities.php:102
 msgid "Arabic to Latin"
 msgstr "Арапски у латиницу"
 
-#: inc/Utilities.php:102
+#: inc/Utilities.php:103
 msgid "Latin to Arabic"
 msgstr "Латиница у арапски"
 
-#: inc/Utilities.php:104
+#: inc/Utilities.php:105
 msgid "Armenian to Latin"
 msgstr "Арменијски у латиницу"
 
-#: inc/Utilities.php:105
+#: inc/Utilities.php:106
 msgid "Latin to Armenian"
 msgstr "Латиница у арменијски"
 
-#: inc/Utilities.php:955 inc/Utilities.php:956
+#: inc/Utilities.php:939 inc/Utilities.php:940
 msgctxt "Language script"
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:957
+#: inc/Utilities.php:941
 msgid "Search by Script"
 msgstr "Претражи по скрипти"
 
-#: inc/Utilities.php:958
+#: inc/Utilities.php:942
 msgid "All Scripts"
 msgstr "Све скрипте"
 
-#: inc/Utilities.php:959
+#: inc/Utilities.php:943
 msgid "Parent Script"
 msgstr "Родитељска скрипта"
 
-#: inc/Utilities.php:960
+#: inc/Utilities.php:944
 msgid "Parent Script:"
 msgstr "Родитељска скрипта:"
 
-#: inc/Utilities.php:961
+#: inc/Utilities.php:945
 msgid "Edit Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:962
+#: inc/Utilities.php:946
 msgid "Update Script"
 msgstr "Уреди скрипту"
 
-#: inc/Utilities.php:963
+#: inc/Utilities.php:947
 msgid "Add New Script"
 msgstr "Додај нову скрипту"
 
-#: inc/Utilities.php:964
+#: inc/Utilities.php:948
 msgid "New Script Name"
 msgstr "Нови назив скрипте"
 
-#: inc/Utilities.php:965
+#: inc/Utilities.php:949
 msgid "Script"
 msgstr "Скрипта"
 
-#: inc/Utilities.php:1070
+#: inc/Utilities.php:1054
 msgid " degrees "
 msgstr " степени "
 
-#: inc/Utilities.php:1072
+#: inc/Utilities.php:1056
 msgid " divided by "
 msgstr " подељено са "
 
-#: inc/Utilities.php:1072
+#: inc/Utilities.php:1056
 msgid " times "
 msgstr " пута "
 
-#: inc/Utilities.php:1072
+#: inc/Utilities.php:1056
 msgid " plus-minus "
 msgstr " плус-минус "
 
-#: inc/Utilities.php:1072
+#: inc/Utilities.php:1056
 msgid " square root "
 msgstr " квадратни корен "
 
-#: inc/Utilities.php:1073
+#: inc/Utilities.php:1057
 msgid " infinity "
 msgstr " бесконачност "
 
-#: inc/Utilities.php:1073
+#: inc/Utilities.php:1057
 msgid " almost equal to "
 msgstr " скоро једнако са "
 
-#: inc/Utilities.php:1073
+#: inc/Utilities.php:1057
 msgid " not equal to "
 msgstr " није једнако са "
 
-#: inc/Utilities.php:1074
+#: inc/Utilities.php:1058
 msgid " identical to "
 msgstr " индентично са "
 
-#: inc/Utilities.php:1074
+#: inc/Utilities.php:1058
 msgid " less than or equal to "
 msgstr " мање или једнако "
 
-#: inc/Utilities.php:1074
+#: inc/Utilities.php:1058
 msgid " greater than or equal to "
 msgstr " веће или једнако са "
 
-#: inc/Utilities.php:1075
+#: inc/Utilities.php:1059
 msgid " left "
 msgstr " лево "
 
-#: inc/Utilities.php:1075
+#: inc/Utilities.php:1059
 msgid " right "
 msgstr " десно "
 
-#: inc/Utilities.php:1075
+#: inc/Utilities.php:1059
 msgid " up "
 msgstr " горе "
 
-#: inc/Utilities.php:1075
+#: inc/Utilities.php:1059
 msgid " down "
 msgstr " доле "
 
-#: inc/Utilities.php:1076
+#: inc/Utilities.php:1060
 msgid " left and right "
 msgstr " лево и десно "
 
-#: inc/Utilities.php:1076
+#: inc/Utilities.php:1060
 msgid " up and down "
 msgstr " горе и доле "
 
-#: inc/Utilities.php:1076
+#: inc/Utilities.php:1060
 msgid " care of "
 msgstr " брига о "
 
-#: inc/Utilities.php:1077
+#: inc/Utilities.php:1061
 msgid " estimated "
 msgstr " процењено "
 
-#: inc/Utilities.php:1077
+#: inc/Utilities.php:1061
 msgid " ohm "
 msgstr " ом "
 
-#: inc/Utilities.php:1077
+#: inc/Utilities.php:1061
 msgid " female "
 msgstr " женско "
 
-#: inc/Utilities.php:1077
+#: inc/Utilities.php:1061
 msgid " male "
 msgstr " мушко "
 
-#: inc/Utilities.php:1078
+#: inc/Utilities.php:1062
 msgid " Copyright "
 msgstr " Ауторско право "
 
-#: inc/Utilities.php:1078
+#: inc/Utilities.php:1062
 msgid " Registered "
 msgstr " Регистровано "
 
-#: inc/Utilities.php:1078
+#: inc/Utilities.php:1062
 msgid " Trademark "
 msgstr " Заштитни знак "
 
@@ -1523,12 +1530,7 @@ msgstr "Доступне PHP функције"
 msgid "Determines whether the site is already in Cyrillic."
 msgstr "Утврђује да ли је веб локација већ на ћирилици."
 
-#: inc/settings/content/php-functions.php:73
-#, php-format
-msgid "alias of function %s"
-msgstr "исто као функција %s"
-
-#: inc/settings/content/php-functions.php:77
+#: inc/settings/content/php-functions.php:122
 msgid ""
 "This function provides information on whether the currently active language "
 "is excluded from transliteration."
@@ -1536,11 +1538,11 @@ msgstr ""
 "Ова функција пружа информације о томе да ли је тренутно активан језик "
 "искључен из транслитерације."
 
-#: inc/settings/content/php-functions.php:81
+#: inc/settings/content/php-functions.php:126
 msgid "Transliteration of some text or content into the desired script."
 msgstr "Пресловљавање одређеног текста или садржаја у жељену скрипту."
 
-#: inc/settings/content/php-functions.php:83
+#: inc/settings/content/php-functions.php:128
 msgid ""
 "The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> "
 "(Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)"
@@ -1548,32 +1550,32 @@ msgstr ""
 "Параметар <b><i>$type</i></b> има две вредности: <code>cyr_to_lat</code> "
 "(ћирилица у латиницу) and <code>lat_to_cyr</code> (латиница у ћирилицу)"
 
-#: inc/settings/content/php-functions.php:86
+#: inc/settings/content/php-functions.php:131
 msgid "Transliteration only from Cyrillic to Latin."
 msgstr "Пресловљавање само са ћирилице на латиницу."
 
-#: inc/settings/content/php-functions.php:90
+#: inc/settings/content/php-functions.php:135
 msgid "Transliteration only from Latin to Cyrillic."
 msgstr "Пресловљавање само са латинице на ћирилицу."
 
-#: inc/settings/content/php-functions.php:94
+#: inc/settings/content/php-functions.php:139
 msgid "Get active script."
 msgstr "Враћа активну скрипту."
 
-#: inc/settings/content/php-functions.php:98
+#: inc/settings/content/php-functions.php:143
 msgid "This function displays a selector for the transliteration script."
 msgstr "Ова функција приказује навигацију скрипте за транслитерацију."
 
-#: inc/settings/content/php-functions.php:100
+#: inc/settings/content/php-functions.php:145
 msgid "Parameters"
 msgstr "Параметри"
 
-#: inc/settings/content/php-functions.php:101
+#: inc/settings/content/php-functions.php:146
 msgid ""
 "This attribute contains an associative set of parameters for this function:"
 msgstr "Овај атрибут садржи асоцијативни скуп параметара за ову функцију:"
 
-#: inc/settings/content/php-functions.php:107
+#: inc/settings/content/php-functions.php:152
 #, php-format
 msgid ""
 "(string) The type of selector that will be displayed on the site. It can be: "
@@ -1582,7 +1584,7 @@ msgstr ""
 "(стринг) Тип селектора који ће бити приказан на сајту. Може бити: %1$s, "
 "%2$s, %3$s, %4$s, %5$s or %6$s. Подразумевано: \"%1$s\""
 
-#: inc/settings/content/php-functions.php:119
+#: inc/settings/content/php-functions.php:164
 #, php-format
 msgid ""
 "(bool) determines whether it will be displayed through an echo or as a "
@@ -1591,7 +1593,7 @@ msgstr ""
 "(bool) одређује да ли ће се приказивати кроз ехо или као низ. Подразумевано: "
 "%s"
 
-#: inc/settings/content/php-functions.php:124
+#: inc/settings/content/php-functions.php:169
 #: inc/settings/content/shortcodes.php:68
 #, php-format
 msgid "(string) Separator to be used when the selector type is %s. Default: %s"
@@ -1599,12 +1601,12 @@ msgstr ""
 "(стринг) Сепаратор који се користи када је тип селектора %s. Подразумевано: "
 "%s"
 
-#: inc/settings/content/php-functions.php:129
+#: inc/settings/content/php-functions.php:174
 #, php-format
 msgid "(string) Text for Cyrillic link. Default: %s"
 msgstr "(стринг) Текст за ћирилични линк. Подразумевано: %s"
 
-#: inc/settings/content/php-functions.php:134
+#: inc/settings/content/php-functions.php:179
 #, php-format
 msgid "(string) Text for Latin link. Default: %s"
 msgstr "(стринг) Текст за латинични линк. Подразумевано: %s"
@@ -1892,6 +1894,10 @@ msgstr "Ivijan-Stefan Stipić"
 #. Author URI of the plugin/theme
 msgid "https://profiles.wordpress.org/ivijanstefan/"
 msgstr "https://profiles.wordpress.org/ivijanstefan/"
+
+#, php-format
+#~ msgid "alias of function %s"
+#~ msgstr "исто као функција %s"
 
 #, php-format
 #~ msgid "If you want to help further plugin development, you can also %s."

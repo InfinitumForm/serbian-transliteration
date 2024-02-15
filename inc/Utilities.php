@@ -23,7 +23,7 @@ class Serbian_Transliteration_Utilities{
 			'enable-search'				=>	'yes',
 			'search-mode'       		=>	'auto',
 			'enable-alternate-links'	=>	'no',
-			'first-visit-mode'			=>	'auto',
+			'first-visit-mode'			=>	'lat',
 			'enable-rss'				=>	'yes',
 			'fix-diacritics'			=>	'yes',
 			'url-selector'				=>	'rstr',
@@ -444,8 +444,8 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function clear_plugin_translations(){
 		$domain_path = [
-			path_join( WP_LANG_DIR, 'plugins' ) . '/' . RSTR_NAME . '-*.{po,mo}',
-			WP_LANG_DIR . '/' . RSTR_NAME . '-*.{po,mo}'
+			path_join( WP_LANG_DIR, 'plugins' ) . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}',
+			WP_LANG_DIR . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}'
 		];
 		
 		$i = 0;

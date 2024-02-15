@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat, serbian, latiniza
 Requires at least: 5.4
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.12.10
+Stable tag: 1.12.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -160,6 +160,11 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.12.11 =
+* Removed first visit auto mode, forced to latin
+* Fixed PHP bugs in admin notices
+* Improved translations
+
 = 1.12.10 =
 * Added support for the LSCache, Hyper Cache,Simple Cache, Autoptimize and WP-Optimize
 * Improved "Light mode"
@@ -260,30 +265,14 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
+= 1.12.11 =
+* Removed first visit auto mode, forced to latin
+* Fixed PHP bugs in admin notices
+* Improved translations
+
 = 1.12.10 =
 * Added support for the LSCache, Hyper Cache,Simple Cache, Autoptimize and WP-Optimize
 * Improved "Light mode"
-
-= 1.12.9 =
-* Added support for PHP versions below 7.4.
-* Fixed a PHP error related to the T_DOUBLE_ARROW syntax.
-
-= 1.12.8 =
-* Added new experimental "Light mode"
-* Additional optimization of output buffers
-
-= 1.12.7 =
-* PHP bugfix in Standard mode
-
-= 1.12.6 =
-* Fixing WooCommerce minicart
-* Fixing problem with percentages in textdomains
-* Optimized PHP code
-
-= 1.12.5 =
-* Fixed script_selector() function
-* Refactored code
-* Improved plugin optimization for better performance
 
 == Frequently Asked Questions ==
 

@@ -1,3 +1,8 @@
+= 1.12.11 =
+* Removed first visit auto mode, forced to latin
+* Fixed PHP bugs in admin notices
+* Improved translations
+
 = 1.12.10 =
 * Added support for the LSCache, Hyper Cache,Simple Cache, Autoptimize and WP-Optimize
 * Improved "Light mode"

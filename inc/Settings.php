@@ -1113,7 +1113,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		$inputs = array();
 
 		foreach(array(
-			'auto' => __('Auto (Based on Transliteration Mode)', 'serbian-transliteration'),
+		//	'auto' => __('Auto (Based on Transliteration Mode)', 'serbian-transliteration'),
 			'lat' => __('Latin', 'serbian-transliteration'),
 			'cyr' => __('Cyrillic', 'serbian-transliteration')
 		) as $key=>$label)
@@ -1123,7 +1123,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
-				(isset( $this->options['first-visit-mode'] ) ? ($this->options['first-visit-mode'] == $key ? ' checked' : '') : ($key == 'auto' ? ' checked' : ''))
+				(isset( $this->options['first-visit-mode'] ) ? ($this->options['first-visit-mode'] == $key ? ' checked' : '') : ($key == 'lat' ? ' checked' : ''))
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first time come to your site.', 'serbian-transliteration'));
