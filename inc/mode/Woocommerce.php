@@ -42,7 +42,7 @@ class Serbian_Transliteration_Mode_Woocommerce extends Serbian_Transliteration
 		
 		$args = 1;
 
-		if (!is_admin()) {
+		if (!is_admin() || wp_doing_ajax() ) {
 			foreach ($filters as $key => $method) {
 				
 				do_action('rstr/transliteration/filter/arguments/woocommerce/before', $key, $method);

@@ -263,7 +263,7 @@ class Serbian_Transliteration_Utilities{
 		{
 			$script = $mode = get_rstr_option('transliteration-mode', 'none');
 			$site_script = get_rstr_option('site-script', 'lat');
-			$first_visit = get_rstr_option('first-visit-mode', 'auto');
+			$first_visit = get_rstr_option('first-visit-mode', 'lat');
 			
 			if(isset($_COOKIE['rstr_script']) && !empty($_COOKIE['rstr_script']))
 			{

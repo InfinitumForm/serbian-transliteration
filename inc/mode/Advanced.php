@@ -89,7 +89,7 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 
 		$mode = new Serbian_Transliteration_Mode();
 
-		if (!is_admin()) {
+		if (!is_admin() || wp_doing_ajax()) {
 			foreach ($filters as $key => $method) {
 				$args = ($key === 'gettext') ? 3 : 1;
 

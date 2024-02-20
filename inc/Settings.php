@@ -363,6 +363,14 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 			
 			$this->add_settings_field(
+				'force-rest-api', // ID
+				__('Force transliteration for WordPress REST API', 'serbian-transliteration'), // Title
+				'force_rest_api_callback', // Callback
+				RSTR_NAME, // Page
+				RSTR_NAME . '-special-settings' // Section
+			);
+			
+			$this->add_settings_field(
 				'force-ajax-calls', // ID
 				__('Force transliteration for AJAX calls', 'serbian-transliteration') . ' (' . __('EXPERIMENTAL', 'serbian-transliteration') . ')', // Title
 				'force_ajax_calls_callback', // Callback
@@ -1228,6 +1236,25 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			);
 		}
 		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), sprintf(__('Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s', 'serbian-transliteration'), '<code>rstr_skip=true</code>'));
+	}
+	
+	public function force_rest_api_callback () {
+		$inputs = array();
+
+		foreach(array(
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="force-ajax-calls-%1$s"><input type="radio" id="force-rest-api-%1$s" name="%3$s[force-rest-api]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				RSTR_NAME,
+				(isset( $this->options['force-rest-api'] ) ? ($this->options['force-rest-api'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of WordPress REST API calls. The WordPress REST API is also used in many AJAX calls, WooCommerce, and page builders. It is recommended to be enabled by default.', 'serbian-transliteration'));
 	}
 	
 	

@@ -172,6 +172,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				if($mode_class = Serbian_Transliteration_Utilities::mode(get_rstr_option())) {
 					if(method_exists($mode_class,'run')) {
 						$mode_class::run(get_rstr_option());
+						add_action('woocommerce_init', [$mode_class, 'run']);
 					} else {
 						throw new Exception(sprintf('The static method "$1%s::$2%s" does not exist or is not correctly defined on the line %3%d', $mode_class, 'run', (__LINE__-2)));
 					}
@@ -365,7 +366,7 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				}
 
 				// Fix emails
-				if (Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr' && !empty($buffer) && is_string($buffer)) {
+				if (Serbian_Transliteration_Utilities::get_current_script() == 'lat_to_cyr' && !empty($buffer) && is_string($buffer) && !is_admin()) {
 					// Email regex commented out
 				}
 				
@@ -394,6 +395,16 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 				ob_end_flush();
 			}
 		},PHP_INT_MAX);
+		
+		
+		
+		add_filter('rest_pre_echo_response', function ($response) {
+			if( get_rstr_option('force-rest-api', 'yes') == 'yes' ) {
+				$serbianTranslitInstance = Serbian_Transliteration::__instance();
+				$response = $serbianTranslitInstance->transliterate_objects($response, 'cyr_to_lat');
+			}
+			return $response;
+		}, PHP_INT_MAX-1, 1);
 
 	}
 

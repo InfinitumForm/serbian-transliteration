@@ -1,3 +1,8 @@
+= 1.12.12 =
+* Added WordPress REST API support
+* Fixed WooCommerce REST API transliteration
+* Fixed filter loading priorities
+
 = 1.12.11 =
 * Removed first visit auto mode, forced to latin
 * Fixed PHP bugs in admin notices

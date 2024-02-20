@@ -53,7 +53,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Dev' ) ) :
 			$mode = new Serbian_Transliteration_Mode();
 			$args = 1;
 
-			if (!is_admin()) {
+			if (!is_admin() || wp_doing_ajax()) {
 				foreach ($filters as $key => $method) {
 					$args = $key === 'gettext' ? 3 : 1;
 					

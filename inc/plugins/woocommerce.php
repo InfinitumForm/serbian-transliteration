@@ -25,29 +25,35 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			if($dry) return;
 			$this->add_filter('rstr/transliteration/exclude/filters', array(__CLASS__, 'filters'));
 			
-		//	$this->add_action('woocommerce_before_main_content', 'before', 10, 0);
-		//	$this->add_action('woocommerce_after_main_content', 'after', 10, 0);
+			$this->add_action('woocommerce_before_main_content', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_main_content', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-		//	$this->add_action('woocommerce_before_template_part', 'before', 10, 0);
-		//	$this->add_action('woocommerce_after_template_part', 'after', 10, 0);
+			$this->add_action('woocommerce_before_template_part', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_template_part', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_mini_cart', 'before', 10, 0);
-			$this->add_action('woocommerce_after_mini_cart', 'after', 10, 0);
+			$this->add_action('woocommerce_before_mini_cart', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_mini_cart', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_cart_totals', 'before', 10, 0);
-			$this->add_action('woocommerce_after_cart_totals', 'after', 10, 0);
+			$this->add_action('woocommerce_before_cart_totals', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_cart_totals', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_cart', 'before', 10, 0);
-			$this->add_action('woocommerce_after_cart', 'after', 10, 0);
+			$this->add_action('woocommerce_before_shipping_calculator', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_shipping_calculator', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-		//	$this->add_action('woocommerce_before_shipping_calculator', 'before', 10, 0);
-		//	$this->add_action('woocommerce_after_shipping_calculator', 'after', 10, 0);
+			$this->add_action('woocommerce_before_checkout_form', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_checkout_form', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_checkout_form', 'before', 10, 0);
-			$this->add_action('woocommerce_after_checkout_form', 'after', 10, 0);
+			$this->add_action('woocommerce_before_thankyou', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_thankyou', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_thankyou', 'before', 10, 0);
-			$this->add_action('woocommerce_after_thankyou', 'after', 10, 0);
+			$this->add_action('woocommerce_before_cart', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_cart', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_review_order_before_cart_contents', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_review_order_after_cart_contents', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_order_details_before_order_table', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_order_details_after_order_table', 'buffer_end', PHP_INT_MAX-10, 0);
 		}
 
 		public static function filters ($filters=array()) {
@@ -127,6 +133,7 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 				'woocommerce_get_allowed_countries' => 'content',
 				'woocommerce_template_single_excerpt' => 'content',
 				'woocommerce_cart_item_name' => 'content',
+				'gettext_woocommerce' => 'content',
 				'woocommerce_cart_item_quantity' => [__CLASS__, 'fix_quantity'],
 		//		'woocommerce_cart_item_product' => 'objects',
 		//		'woocommerce_cart_item_price' => 'content',
@@ -145,20 +152,16 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			return $data;
 		}
 		
-		public function before () {
-			ob_start();
-		}
-		
-		public function after () {
-			$output = '';
+		function buffer_start() { ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE); }
+		function buffer_end() {
 			if (ob_get_level()) {
-				$output = ob_get_clean();
+				ob_end_flush();
 			}
-			
-			$mode = new Serbian_Transliteration_Mode();
-			$output = $mode->content($output);
-			
-			echo $output; // Prikazite modifikovani sadrzaj
+		}
+
+		function callback_function($buffer) {
+			$buffer = $this->transliterate_text($buffer);
+			return $buffer;
 		}
 	}
 endif;
