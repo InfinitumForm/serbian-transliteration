@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); } ?>
+<?php if ( !defined('WPINC') ) die(); ?>
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {
 	document.querySelectorAll('code.lang-php').forEach((block) => {

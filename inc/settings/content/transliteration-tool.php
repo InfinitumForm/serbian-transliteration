@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 $nonce = esc_attr(wp_create_nonce('rstr-transliteration-letters')); ?>
 <div class="rstr-tab-wrapper" id="transliteration-letters">
 

@@ -1,8 +1,9 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); };
+<?php if ( !defined('WPINC') ) die();;
 
 $special_thanks_sponsors = array(
 	'INFINITUM FORM' => 'https://infinitumform.com/',
 	'UG PREOBRAŽENJE' => 'https://preobrazenje.rs/',
+	'ContraTeam' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
 	'CNZD' => 'https://cnzd.rs/'
 );
 
@@ -11,9 +12,12 @@ $special_thanks = array(
 	'tihi' => 'https://profiles.wordpress.org/tihi',
 	'Yaroslav Ingulskyi' => 'https://wordpress.org/support/users/ingyaroslav/',
 	'Slobodan Mirić' => 'https://www.facebook.com/websitesworkshop',
+	'Branislav Mitić' => 'https://profiles.wordpress.org/xlr84xs/',
+	'Dušan Filiferović' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
 	'Slobodan Pantović' => '',
 	'Ivan Stanojević' => '',
-	'Ognjen Odobašić' => ''
+	'Ognjen Odobašić' => '',
+	'Miloš Maksimović' => '',
 );
 
 ?>
@@ -59,6 +63,11 @@ $special_thanks = array(
 					$special_thanks_sponsors_render = array();
         
 		        	foreach($special_thanks_sponsors as $name => $thanks_url){
+						
+						if( in_array($name, ['INFINITUM FORM', 'ContraTeam']) ) {
+							$name = '<b>'.$name.'</b>';
+						}
+						
 						if(!empty($thanks_url)) {
 							$special_thanks_sponsors_render[sanitize_title($name)]= '<a href="' . esc_url($thanks_url) . '" target="_blank">' . $name . '</a>';
 						} else {

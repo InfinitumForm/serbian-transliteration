@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 
 if(!class_exists('Serbian_Transliteration_Settings')) :
 class Serbian_Transliteration_Settings_Sidebar extends Serbian_Transliteration

@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 /**
  * Init class
  *
@@ -397,14 +397,17 @@ final class Serbian_Transliteration_Init extends Serbian_Transliteration {
 		},PHP_INT_MAX);
 		
 		
-		
-		add_filter('rest_pre_echo_response', function ($response) {
-			if( get_rstr_option('force-rest-api', 'yes') == 'yes' ) {
-				$serbianTranslitInstance = Serbian_Transliteration::__instance();
-				$response = $serbianTranslitInstance->transliterate_objects($response, 'cyr_to_lat');
+		add_action('plugins_loaded', function () {
+			if( !Serbian_Transliteration_Utilities::is_editor() ) {
+				add_filter('rest_pre_echo_response', function ($response) {
+					if( get_rstr_option('force-rest-api', 'yes') == 'yes' && !Serbian_Transliteration_Utilities::skip_transliteration() ) {
+						$serbianTranslitInstance = Serbian_Transliteration::__instance();
+						$response = $serbianTranslitInstance->transliterate_objects($response, 'cyr_to_lat');
+					}
+					return $response;
+				}, PHP_INT_MAX-1, 1);
 			}
-			return $response;
-		}, PHP_INT_MAX-1, 1);
+		}, 1, 0);
 
 	}
 

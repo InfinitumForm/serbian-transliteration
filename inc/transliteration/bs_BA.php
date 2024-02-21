@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 /**
  * Bosnian transliteration (alias of Serbian language)
  *

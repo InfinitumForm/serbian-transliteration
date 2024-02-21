@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 /**
  * Include plugins support if they are available
  *

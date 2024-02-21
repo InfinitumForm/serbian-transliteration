@@ -1,6 +1,4 @@
-<?php if (!defined('WPINC')) {
-    die("Don't mess with us.");
-}
+<?php if ( !defined('WPINC') ) die();
 
 // Global class
 global $RSTR_USERS, $RSTR_USERS_ARRAY, $WP_ADMIN_URL, $WP_ADMIN_DIR;

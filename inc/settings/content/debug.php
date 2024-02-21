@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 	include_once RSTR_INC . '/OS.php';
 	$activations = get_option( RSTR_NAME . '-activation' );
 	$options = get_rstr_option();

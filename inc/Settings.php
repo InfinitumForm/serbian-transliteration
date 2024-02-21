@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 /**
  * WP Admin Settings Page
  *
@@ -7,15 +7,25 @@
  * @package           RSTR
  */
 
-// Include codes
+/*
+ * Include dependency
+ */
 if(file_exists(RSTR_INC . '/settings/sidebar.php')) {
 	include_once RSTR_INC . '/settings/sidebar.php';
 }
+
 if(file_exists(RSTR_INC . '/settings/content.php')) {
 	include_once RSTR_INC . '/settings/content.php';
 }
 
+/*
+ * Settings Class test if exists
+ */
 if(!class_exists('Serbian_Transliteration_Settings', false)) :
+
+/*
+ * Settings Class initialization
+ */
 class Serbian_Transliteration_Settings extends Serbian_Transliteration
 {
     /**

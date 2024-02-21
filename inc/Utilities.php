@@ -1,10 +1,19 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 /*
  * Main global classes with active hooks
+ *
  * @since     1.0.0
  * @verson    1.0.0
  */
+ 
+/*
+ * Utilities Class test if exists
+ */
 if(!class_exists('Serbian_Transliteration_Utilities', false)) :
+
+/*
+ * Utilities Class initialization
+ */
 class Serbian_Transliteration_Utilities{
 
 	public static function plugin_default_options () {

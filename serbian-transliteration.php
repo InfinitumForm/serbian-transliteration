@@ -33,15 +33,20 @@
  */
 
 // If someone try to called this file directly via URL, abort.
-if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'WPINC' ) ) {
+	die( "Don't mess with us." );
+}
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // Database version
 if ( ! defined( 'RSTR_DATABASE_VERSION' ) ){
 	define( 'RSTR_DATABASE_VERSION', '1.0.1');
 }
 
-/*
+/**
  * Main plugin constants
  * @since     1.1.0
  * @verson    1.0.0
@@ -235,7 +240,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 			add_option(RSTR_NAME . '-term-script', $termScript);
 
 			// Install database tables
-			if (RSTR_DATABASE_VERSION !== get_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION)) {
+			if (RSTR_DATABASE_VERSION !== get_option(RSTR_NAME . '-db-version')) {
 				Serbian_Transliteration_DB_Cache::table_install();
 				update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, false);
 			}
@@ -250,7 +255,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 		====================================*/
 		add_action('init', function () {
 			add_action('activated_plugin', function ($plugin) {
-				if( $plugin == RSTR_BASENAME && !get_option(RSTR_NAME.'-activated', true)) {
+				if( $plugin == RSTR_BASENAME && !get_option(RSTR_NAME.'-activated')) {
 					set_option(RSTR_NAME.'-activated', true);
 					if( wp_safe_redirect( admin_url( 'options-general.php?page=serbian-transliteration&rstr-activation=true' ) ) ) {
 						exit;
@@ -263,22 +268,19 @@ if($Serbian_Transliteration_Activate->passes()) :
 		/* Run script on the plugin upgrade
 		====================================*/
 		add_action( 'admin_init', function () {
-			if( current_user_can( 'activate_plugins' ) && (RSTR_VERSION != get_option(RSTR_NAME . '-version', RSTR_VERSION)) ) {
+			if( current_user_can( 'activate_plugins' ) && (RSTR_VERSION != get_option(RSTR_NAME . '-version')) ) {
 				
 				// Delete old translations
 				Serbian_Transliteration_Utilities::clear_plugin_translations();
 				
 				// Install database tables
-				if( RSTR_DATABASE_VERSION != get_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION) ) {
+				if( RSTR_DATABASE_VERSION != get_option(RSTR_NAME . '-db-version') ) {
 					Serbian_Transliteration_DB_Cache::table_install();
 					update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, true);
 				}
 				
 				// Clear plugin cache
 				Serbian_Transliteration_Utilities::clear_plugin_cache();
-				
-				// Unload textdomain
-				unload_textdomain(RSTR_NAME);
 
 				// Reset permalinks
 				flush_rewrite_rules();

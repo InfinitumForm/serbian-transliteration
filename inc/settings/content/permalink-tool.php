@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); } ?>
+<?php if ( !defined('WPINC') ) die(); ?>
 <div class="rstr-tab-wrapper">
 
 	<div id="poststuff" class="metabox-holder has-right-sidebar">

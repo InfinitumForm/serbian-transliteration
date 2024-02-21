@@ -1,4 +1,4 @@
-<?php if ( ! defined( 'WPINC' ) ) { die( "Don't mess with us." ); }
+<?php if ( !defined('WPINC') ) die();
 /**
  * Database Cache Control
  *
@@ -298,7 +298,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 			) {$charset_collate}
 			");
 		} else if( RSTR_DATABASE_VERSION === '1.0.1' ) {
-			$wpdb->query("ALTER TABLE `wp_rstr_cache` CHANGE `value` `value` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;");
+			$wpdb->query("ALTER TABLE `{$wpdb->rstr_cache}` CHANGE `value` `value` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;");
 		}
 	}
 	
