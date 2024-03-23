@@ -25,34 +25,34 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			if($dry) return;
 			$this->add_filter('rstr/transliteration/exclude/filters', array(__CLASS__, 'filters'));
 			
-			$this->add_action('woocommerce_before_main_content', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_main_content', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_main_content', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_template_part', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_template_part', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_template_part', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_mini_cart', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_mini_cart', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_mini_cart', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_cart_totals', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_cart_totals', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_cart_totals', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_shipping_calculator', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_shipping_calculator', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_shipping_calculator', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_checkout_form', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_checkout_form', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_checkout_form', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_thankyou', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_thankyou', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_thankyou', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_before_cart', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_before_cart', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_after_cart', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_review_order_before_cart_contents', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_review_order_before_cart_contents', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_review_order_after_cart_contents', 'buffer_end', PHP_INT_MAX-10, 0);
 			
-			$this->add_action('woocommerce_order_details_before_order_table', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_order_details_before_order_table', 'buffer_start', PHP_INT_MAX-10, 0);
 			$this->add_action('woocommerce_order_details_after_order_table', 'buffer_end', PHP_INT_MAX-10, 0);
 		}
 
@@ -152,9 +152,14 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 			return $data;
 		}
 		
-		function buffer_start() { ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE); }
+		function buffer_start() {
+			if (ob_get_level() == 0) {
+				ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE);
+			}
+		}
+		
 		function buffer_end() {
-			if (ob_get_level()) {
+			if (ob_get_level() > 0) {
 				ob_end_flush();
 			}
 		}

@@ -361,5 +361,5 @@
 	}("accordion-link"))
 	
 	
-	console.log("%c\n\nHey, are you are developer? Cool!!!\n\nJoin our team:\n\n%chttps://github.com/CreativForm/serbian-transliteration\n\n", "color: #cc0000; font-size: x-large;", "color: #cc0000; font-size: 18px");
+	console.log("%c\n\nHey, are you are developer? Cool!!!\n\nJoin our team:\n\n%chttps://github.com/InfinitumForm/serbian-transliteration\n\n", "color: #cc0000; font-size: x-large;", "color: #cc0000; font-size: 18px");
 }());

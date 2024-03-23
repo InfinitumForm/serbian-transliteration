@@ -1,10 +1,10 @@
 ﻿=== Transliterator ===
 Contributors: ivijanstefan, creativform
-Tags: cyrillic, latin, transliteration, latinisation, cyr2lat, serbian, latinizacija, preslovljavanje, letter, script, multilanguage, gutenberg, elementor
+Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 1.12.12
+Stable tag: 1.12.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -160,6 +160,17 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.12.14 =
+* Fix memory leak on WooComerce
+* Improved cache support
+
+= 1.12.13 =
+* Fixed problems with editors that using the REST-API
+* Fixed MySQL bugs
+* Fixed translation bugs
+* Optimized PHP code
+* Getting ready for version 1.13.0
+
 = 1.12.12 =
 * Added WordPress REST API support
 * Fixed WooCommerce REST API transliteration
@@ -269,6 +280,17 @@ We also thought of PHP developers where we have enabled several useful functions
 * Transliteration added for emails through PHP mailer
 
 == Upgrade Notice ==
+
+= 1.12.14 =
+* Fix memory leak on WooComerce
+* Improved cache support
+
+= 1.12.13 =
+* Fixed problems with editors that using the REST-API
+* Fixed MySQL bugs
+* Fixed translation bugs
+* Optimized PHP code
+* Getting ready for version 1.13.0
 
 = 1.12.12 =
 * Added WordPress REST API support

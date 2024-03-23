@@ -1,3 +1,14 @@
+= 1.12.14 =
+* Fix memory leak on WooComerce
+* Improved cache support
+
+= 1.12.13 =
+* Fixed problems with editors that using the REST-API
+* Fixed MySQL bugs
+* Fixed translation bugs
+* Optimized PHP code
+* Getting ready for version 1.13.0
+
 = 1.12.12 =
 * Added WordPress REST API support
 * Fixed WooCommerce REST API transliteration

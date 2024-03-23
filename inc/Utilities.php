@@ -264,50 +264,26 @@ class Serbian_Transliteration_Utilities{
 	* @since     1.0.9
 	* @verson    1.0.0
 	*/
-	public static function get_current_script(){
+	
+	public static function get_current_script() {
+		
+		// $mode = get_rstr_option('transliteration-mode', 'none');
+		// $site_script = get_rstr_option('site-script', 'lat');
 
-		$script = Serbian_Transliteration_Cache::get('get_current_script');
-
-		if(empty($script))
-		{
-			$script = $mode = get_rstr_option('transliteration-mode', 'none');
-			$site_script = get_rstr_option('site-script', 'lat');
-			$first_visit = get_rstr_option('first-visit-mode', 'lat');
-			
-			if(isset($_COOKIE['rstr_script']) && !empty($_COOKIE['rstr_script']))
-			{
-				if($_COOKIE['rstr_script'] == 'lat') {
-					$script = 'cyr_to_lat';
-					/*if($mode == 'cyr_to_lat'){
-						$script =  'cyr_to_lat';
-					}*/
-				} else if($_COOKIE['rstr_script'] == 'cyr') {
-					$script = 'lat_to_cyr';
-					/*if($mode == 'lat_to_cyr'){
-						$script =  'lat_to_cyr';
-					}*/
-				}
-			}
-			else
-			{
-				if($first_visit == 'lat') {
-					$script = 'cyr_to_lat';
-					self::setcookie('lat');
-					/*if($mode == 'cyr_to_lat'){
-						$script =  'cyr_to_lat';
-					}*/
-				} else if($first_visit == 'cyr') {
-					$script = 'lat_to_cyr';
-					self::setcookie('cyr');
-					/*if($mode == 'lat_to_cyr'){
-						$script =  'lat_to_cyr';
-					}*/
-				}
-			}
-
-			Serbian_Transliteration_Cache::set('get_current_script', $script);
+		if ( $script = Serbian_Transliteration_Cache::get('get_current_script') ) {
+			return $script;
 		}
 
+		if ( isset($_COOKIE['rstr_script']) && in_array($_COOKIE['rstr_script'], ['lat', 'cyr']) ) {
+			$script = ($_COOKIE['rstr_script'] == 'lat') ? 'cyr_to_lat' : 'lat_to_cyr';
+			Serbian_Transliteration_Cache::set('get_current_script', $script);
+			return $script;
+		}
+
+		$first_visit = get_rstr_option('first-visit-mode', 'lat');
+		$script = ($first_visit == 'lat') ? 'cyr_to_lat' : 'lat_to_cyr';
+		self::setcookie($first_visit);
+		Serbian_Transliteration_Cache::set('get_current_script', $script);
 		return $script;
 	}
 	
@@ -686,13 +662,17 @@ class Serbian_Transliteration_Utilities{
 				$parse_url = self::parse_url();
 				$url = remove_query_arg($url_selector, $parse_url['url']);
 
-				if(get_rstr_option('cache-support', 'yes') == 'yes') {
+				if( get_rstr_option('cache-support', 'yes') == 'yes' ) {
 					$url = add_query_arg('_rstr_nocache', uniqid($url_selector . mt_rand(100,999)), $url);
-					if(function_exists('nocache_headers')) nocache_headers();
+					self::cache_flush();
 				}
 
-				if(wp_safe_redirect($url)) {
-					if(function_exists('nocache_headers')) nocache_headers();
+				if( wp_safe_redirect($url) ) {
+					
+					if(function_exists('nocache_headers')) {
+						nocache_headers();
+					}
+					
 					exit;
 				}
 			}
@@ -758,7 +738,7 @@ class Serbian_Transliteration_Utilities{
 		// W3 Total Cache
 		if (function_exists('w3tc_flush_all')) {
 			w3tc_flush_all();
-		} else if( $w3_plugin_totalcache ) {
+		} else if( is_object( $w3_plugin_totalcache ) ) {
 			$w3_plugin_totalcache->flush_all();
 		}
 
