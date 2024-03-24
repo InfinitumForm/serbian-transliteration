@@ -66,8 +66,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Tab settings form
 	**/
 	public function tab_content_settings_form(){
-		wp_enqueue_style( RSTR_NAME );
-		wp_enqueue_script( RSTR_NAME );	
 		include_once RSTR_INC . '/settings/content/global-settings.php';
 	}
 	
@@ -99,8 +97,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Tab transliteration tool form
 	**/
 	public function tab_content_transliteration(){
-		wp_enqueue_style( RSTR_NAME );
-		wp_enqueue_script( RSTR_NAME );	
 		include_once RSTR_INC . '/settings/content/transliteration-tool.php';
 	}
 	
@@ -115,8 +111,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Documentation section
 	**/
 	public function tab_content_documentation(){
-		wp_enqueue_style( 'highlight');
-		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/documentation.php';
 	}
 	
@@ -142,8 +136,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Available shortcode section
 	**/
 	public function tab_content_available_shortcodes(){
-		wp_enqueue_style( 'highlight');
-		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/shortcodes.php';
 	}
 	
@@ -151,8 +143,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Available functions section
 	**/
 	public function tab_content_available_functions(){
-		wp_enqueue_style( 'highlight');
-		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/php-functions.php';
 	}
 	
@@ -160,8 +150,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Available tags section
 	**/
 	public function tab_content_available_tags(){
-		wp_enqueue_style( 'highlight');
-		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/tags.php';
 	}
 	
@@ -176,8 +164,6 @@ class Serbian_Transliteration_Settings_Content extends Serbian_Transliteration
 	 * Tab Debug
 	**/
 	public function tab_content_debug(){
-		wp_enqueue_style( 'highlight');
-		wp_enqueue_script('highlight');
 		include_once RSTR_INC . '/settings/content/debug.php';
 	}
 	

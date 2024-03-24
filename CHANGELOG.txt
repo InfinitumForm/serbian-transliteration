@@ -1,3 +1,7 @@
+= 1.12.15 =
+* Fixed issue with WooCommerce memory buffer
+* Fixed activation issue
+
 = 1.12.14 =
 * Fix memory leak on WooComerce
 * Improved cache support

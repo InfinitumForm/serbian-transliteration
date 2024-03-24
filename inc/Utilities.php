@@ -738,7 +738,7 @@ class Serbian_Transliteration_Utilities{
 		// W3 Total Cache
 		if (function_exists('w3tc_flush_all')) {
 			w3tc_flush_all();
-		} else if( is_object( $w3_plugin_totalcache ) ) {
+		} else if( $w3_plugin_totalcache && is_object( $w3_plugin_totalcache ) ) {
 			$w3_plugin_totalcache->flush_all();
 		}
 

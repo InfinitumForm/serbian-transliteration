@@ -44,6 +44,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		{
 			$this->add_action( 'admin_menu', 'add_plugin_page' );
 			$this->add_action( 'admin_init', 'page_init' );
+			$this->add_action( 'wp_loaded', 'register_scripts' );
 			$this->add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
 			$this->add_action( 'plugin_action_links_' . RSTR_BASENAME, 'action_links' );
 			$this->add_action( 'plugin_row_meta', 'row_meta_links', 10, 2);
@@ -181,9 +182,9 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 	}
 
 	/**
-     * Enqueue scripts
+     * Register scripts
      */
-	public function enqueue_scripts () {
+	public function register_scripts () {
 
 		if(defined( 'RSTR_DEBUG' ) && RSTR_DEBUG) {
 			wp_register_style( RSTR_NAME, RSTR_ASSETS . '/css/serbian-transliteration.css', array('common'), (string)RSTR_VERSION );
@@ -214,6 +215,20 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		wp_register_style( 'highlight', RSTR_ASSETS . '/css/highlight.min.css', array('common'), (string)RSTR_VERSION );
 		wp_register_script( 'highlight', RSTR_ASSETS . '/js/highlight.min.js', 1, (string)RSTR_VERSION, true );
 	}
+	
+	
+	/**
+     * Enqueue scripts
+     */
+	public function enqueue_scripts ($page) {	
+		if( $page == 'settings_page_serbian-transliteration' ) {
+			wp_enqueue_style('serbian-transliteration');
+			wp_enqueue_script('serbian-transliteration');
+			
+			wp_enqueue_style('highlight');
+			wp_enqueue_script('highlight');
+		}
+	}
 
     /**
      * Add options page
@@ -235,9 +250,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
      */
     public function create_admin_page()
     {
-		wp_enqueue_style( 'serbian-transliteration');
-		wp_enqueue_script('serbian-transliteration');
-        // Set class property
+		// Set class property
         if(empty($this->options)){
 			$this->options = get_rstr_option();
 		}

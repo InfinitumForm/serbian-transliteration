@@ -153,9 +153,7 @@ if(!class_exists('Serbian_Transliteration__Plugin__woocommerce')) :
 		}
 		
 		function buffer_start() {
-			if (ob_get_level() == 0) {
-				ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE);
-			}
+			ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE);
 		}
 		
 		function buffer_end() {
