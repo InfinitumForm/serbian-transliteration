@@ -5,7 +5,7 @@
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           1.12.15
+ * Version:           1.12.17
  * Requires at least: 5.4
  * Tested up to:      6.5
  * Requires PHP:      7.0
@@ -220,9 +220,6 @@ if($Serbian_Transliteration_Activate->passes()) :
 				}
 			}
 
-			Serbian_Transliteration_Utilities::clear_plugin_cache();
-			Serbian_Transliteration_Utilities::clear_plugin_translations();
-
 			// Add custom script languages
 			foreach (['lat' => 'Latin', 'cyr' => 'Cyrillic'] as $slug => $name) {
 				if (!term_exists($slug, 'rstr-script')) {
@@ -245,7 +242,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 				update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, false);
 			}
 
-			flush_rewrite_rules();
+			if( function_exists('flush_rewrite_rules') ) {
+				flush_rewrite_rules();
+			}
 
 			return true;
 		});
@@ -283,7 +282,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 				Serbian_Transliteration_Utilities::clear_plugin_cache();
 
 				// Reset permalinks
-				flush_rewrite_rules();
+				if( function_exists('flush_rewrite_rules') ) {
+					flush_rewrite_rules();
+				}
 				
 				// Save version
 				update_option(RSTR_NAME . '-version', RSTR_VERSION, true);
@@ -319,7 +320,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 			unload_textdomain(RSTR_NAME);
 
 			// Reset permalinks
-			flush_rewrite_rules();
+			if( function_exists('flush_rewrite_rules') ) {
+				flush_rewrite_rules();
+			}
 		});
 		
 		/* Clear cache on the post update
@@ -327,7 +330,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 		add_action('transition_post_status', function(){
 			// Clear plugin cache
 			Serbian_Transliteration_Utilities::clear_plugin_cache();
-			Serbian_Transliteration_DB_Cache::flush();
+		//	Serbian_Transliteration_DB_Cache::flush();
 		});
 
 		/* Load tools

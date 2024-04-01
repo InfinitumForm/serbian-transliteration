@@ -94,9 +94,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Light' ) ) :
 			
 		}
 		
-		function buffer_start() {
-			ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE);
-		}
+		function buffer_start() { ob_start([&$this, 'callback_function'], 0, PHP_OUTPUT_HANDLER_REMOVABLE); }
 		function buffer_end() {
 			if (ob_get_level()) {
 				ob_end_flush();

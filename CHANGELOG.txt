@@ -1,3 +1,11 @@
+= 1.12.17 =
+* Fixing problems with cache plugins
+* Fixing a memory leak bug
+* Removing support for some PHP5.6 versions
+
+= 1.12.16 =
+* Fixed activation error
+
 = 1.12.15 =
 * Fixed issue with WooCommerce memory buffer
 * Fixed activation issue

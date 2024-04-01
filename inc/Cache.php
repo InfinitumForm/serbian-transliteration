@@ -79,8 +79,9 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
          * Clears data from the cache for the given key.
         */
         public static function delete($key) {
-            if (isset(self::$cache[$key])) {
-                unset(self::$cache[ self::key($key) ]);
+			$key = self::key($key);
+            if (isset(self::$cache[ $key ])) {
+                unset(self::$cache[ $key ]);
             }
         }
 
@@ -127,16 +128,31 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
 				return;
 			}
 
-			$capability = defined('RSTR_CACHE_CAPABILITY') ? RSTR_CACHE_CAPABILITY : apply_filters('rstr/cache/capability', 100);
-			$gc_probability = defined('RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY') ? RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY : apply_filters('rstr/cache/gc_probability', 1);
-			$gc_divisor = defined('RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR') ? RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR : apply_filters('rstr/cache/gc_divisor', 100);
-
-			if ((mt_rand(1, $gc_divisor) <= $gc_probability) && (count(self::$cache) > $capability) ) {
-				uasort(self::$cache, function ($a, $b) {
-					return $a['last_access_time'] <=> $b['last_access_time'];
-				});
-				self::$cache = array_slice(self::$cache, 0, $capability, true);
+			$capability = apply_filters('rstr/cache/capability', (defined('RSTR_CACHE_CAPABILITY') 
+							? RSTR_CACHE_CAPABILITY 
+								: 100), self::$cache );
+								
+			$gc_probability = apply_filters('rstr/cache/gc_probability', (defined('RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY') 
+								? RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY 
+									: 1), self::$cache );
+									
+			$gc_divisor = apply_filters('rstr/cache/gc_divisor', (defined('RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR') 
+							? RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR 
+								: 100), self::$cache);
+			
+			$fn_rand = function_exists('random_int') ? 'random_int' : 'mt_rand';
+			
+			if ($fn_rand(1, $gc_divisor) && ($gc_probability / $gc_divisor)) {
+				while (count(self::$cache) > $capability) {
+					reset(self::$cache);
+					$key = key(self::$cache);
+					
+					if( !in_array($key, $exclude) ) {
+						self::delete($key);
+					}
+				}
 			}
+			
 		}
     }
 endif;

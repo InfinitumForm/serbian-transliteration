@@ -94,8 +94,8 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 				
 				$save = $wpdb->query( $wpdb->prepare("
 					INSERT INTO `{$wpdb->rstr_cache}` (`key`, `value`, `expire`)
-					VALUES (%s, %s, %d)
-				", $key, $value, $expire ));
+					VALUES (%s, %s, %d) ON DUPLICATE KEY UPDATE `value` = %s, `expire` = %d
+				", $key, $value, $expire, $value, $expire ));
 			}
 			
 			if($save && !is_wp_error($save)){

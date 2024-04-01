@@ -24,7 +24,14 @@ class Serbian_Transliteration_Menu extends Serbian_Transliteration {
 			return;
 		}
 		
-		add_meta_box( 'transliteration_menu', __( 'Transliteration', 'serbian-transliteration' ), array( $this, 'admin_nav_menu_callback' ), 'nav-menus', 'side', 'default' );
+		add_meta_box(
+			'transliteration_menu',
+			__( 'Transliteration', 'serbian-transliteration' ),
+			array( $this, 'admin_nav_menu_callback' ),
+			'nav-menus',
+			'side',
+			'default'
+		);
 	}
 
 	/* Displays Login/Logout/Register Links Metabox */
