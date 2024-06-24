@@ -5,7 +5,7 @@
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           1.12.17
+ * Version:           1.12.18
  * Requires at least: 5.4
  * Tested up to:      6.5
  * Requires PHP:      7.0
@@ -54,14 +54,14 @@ if ( ! defined( 'RSTR_DATABASE_VERSION' ) ){
 // Main plugin file
 if ( ! defined( 'RSTR_FILE' ) ) define( 'RSTR_FILE', __FILE__ );
 // Set of constants
-include_once __DIR__ . '/constants.php';
+include_once __DIR__ . DIRECTORY_SEPARATOR . 'constants.php';
 
 /*
  * Serbian transliteration cache
  * @since     1.0.0
  * @verson    1.0.0
  */
-include_once RSTR_INC . '/Cache.php';
+include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Cache.php';
 if ( defined( 'RSTR_DEBUG_CACHE' ) && RSTR_DEBUG_CACHE === true ) {
 	add_action('wp_footer', function(){
 		if(is_user_logged_in() && current_user_can('administrator')) {
@@ -100,7 +100,7 @@ if(!function_exists('get_rstr_option'))
  * @since     1.0.0
  * @verson    1.0.0
  */
-include_once RSTR_INC . '/Requirements.php';
+include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Requirements.php';
 $Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(array('file' => RSTR_FILE));
 
 if($Serbian_Transliteration_Activate->passes()) :
@@ -117,22 +117,22 @@ if($Serbian_Transliteration_Activate->passes()) :
 	 * @since     1.5.7
 	 * @verson    1.0.0
 	 */
-	include_once RSTR_INC . '/Cache_DB.php';
+	include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Cache_DB.php';
 	Serbian_Transliteration_DB_Cache::instance();
 	
 	$includes = [
-		'/Cache_DB.php',          // Serbian transliteration database cache
-		'/Utilities.php',         // Serbian transliteration utilities
-		'/Transliteration.php',   // Serbian transliteration requirements
-		'/Global.php',            // Main global classes with active hooks
-		'/Functions.php',         // Include functions
-		'/SEO.php',               // Include SEO
-		'/Tools.php',             // Include Tools
-		'/Plugins.php',           // Include Plugins Support
-		'/Themes.php',            // Include Themes Support
-		'/WP_CLI.php',            // WP-CLI
-		'/Notice.php',            // Notice
-		'/Init.php'               // Initialize active plugin
+		DIRECTORY_SEPARATOR . 'Cache_DB.php',          // Serbian transliteration database cache
+		DIRECTORY_SEPARATOR . 'Utilities.php',         // Serbian transliteration utilities
+		DIRECTORY_SEPARATOR . 'Transliteration.php',   // Serbian transliteration requirements
+		DIRECTORY_SEPARATOR . 'Global.php',            // Main global classes with active hooks
+		DIRECTORY_SEPARATOR . 'Functions.php',         // Include functions
+		DIRECTORY_SEPARATOR . 'SEO.php',               // Include SEO
+		DIRECTORY_SEPARATOR . 'Tools.php',             // Include Tools
+		DIRECTORY_SEPARATOR . 'Plugins.php',           // Include Plugins Support
+		DIRECTORY_SEPARATOR . 'Themes.php',            // Include Themes Support
+		DIRECTORY_SEPARATOR . 'WP_CLI.php',            // WP-CLI
+		DIRECTORY_SEPARATOR . 'Notice.php',            // Notice
+		DIRECTORY_SEPARATOR . 'Init.php'               // Initialize active plugin
 	];
 
 	foreach ($includes as $file) {
@@ -179,7 +179,7 @@ if($Serbian_Transliteration_Activate->passes()) :
 			}
 			
 			if( !class_exists('Serbian_Transliteration_Utilities', false) ) {
-				include_once RSTR_INC . '/Utilities.php';
+				include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Utilities.php';
 			}
 			
 			// Delete old translations
@@ -269,6 +269,9 @@ if($Serbian_Transliteration_Activate->passes()) :
 		add_action( 'admin_init', function () {
 			if( current_user_can( 'activate_plugins' ) && (RSTR_VERSION != get_option(RSTR_NAME . '-version')) ) {
 				
+				// Reset table check
+				delete_option(RSTR_NAME . '-db-cache-table-exists');
+				
 				// Delete old translations
 				Serbian_Transliteration_Utilities::clear_plugin_translations();
 				
@@ -300,8 +303,11 @@ if($Serbian_Transliteration_Activate->passes()) :
 			}
 			
 			if( !class_exists('Serbian_Transliteration_Utilities', false) ) {
-				include_once RSTR_INC . '/Utilities.php';
+				include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Utilities.php';
 			}
+			
+			// Reset table check
+			delete_option(RSTR_NAME . '-db-cache-table-exists');
 			
 			// Delete old translations
 			Serbian_Transliteration_Utilities::clear_plugin_translations();

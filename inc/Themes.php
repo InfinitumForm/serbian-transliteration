@@ -36,6 +36,8 @@ if(!class_exists('Serbian_Transliteration_Themes', false)) :
 			if (empty($wp_get_theme) || !$wp_get_theme->exists() || (RSTR_WOOCOMMERCE && get_rstr_option('mode') === 'woocommerce')) {
 				return $this;
 			}
+			
+			$sep = DIRECTORY_SEPARATOR;
 
 			$this->theme = strtolower($wp_get_theme->get('Name'));
 
@@ -45,7 +47,7 @@ if(!class_exists('Serbian_Transliteration_Themes', false)) :
 				foreach ($this->themes as $file_name => $theme_name) {
 					if (strpos($this->theme, $theme_name) !== false) {
 						$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
-						include_once RSTR_INC . "/themes/{$file_name}.php";
+						include_once RSTR_INC . "{$sep}themes{$sep}{$file_name}.php";
 
 						if (class_exists($theme_class, false)) {
 							$theme_class::run();
@@ -63,6 +65,8 @@ if(!class_exists('Serbian_Transliteration_Themes', false)) :
 			$this->themes = apply_filters('rstr/themes', $this->themes);
 
 			$return = [];
+			
+			$sep = DIRECTORY_SEPARATOR;
 
 			foreach ($this->themes as $file_name => $theme_name) {
 				if (!$this->theme || strpos($this->theme, $theme_name) === false) {
@@ -70,7 +74,7 @@ if(!class_exists('Serbian_Transliteration_Themes', false)) :
 				}
 
 				$theme_class = "Serbian_Transliteration__Theme__{$file_name}";
-				include_once RSTR_INC . "/themes/{$file_name}.php";
+				include_once RSTR_INC . "{$sep}themes{$sep}{$file_name}.php";
 
 				if (class_exists($theme_class, false) && method_exists($theme_class, 'filters')) {
 					$return = array_merge($return, $theme_class::filters());

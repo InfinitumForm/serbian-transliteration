@@ -25,7 +25,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
         public static function get($key, $default = NULL) {
 			$key = self::key($key);
 			
-			if (isset(self::$cache[ $key ])) {
+			if (array_key_exists($key, self::$cache)) {
 				return self::$cache[ $key ];
 			}
 			
@@ -40,7 +40,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
         */
         public static function add($key, $value) {
 			$key = self::key($key);
-			if (!isset(self::$cache[$key])) {
+			if (!array_key_exists($key, self::$cache)) {
 				self::garbage_cleaner();
 				self::$cache[ $key ] = $value;
 			}
@@ -67,7 +67,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
         */
         public static function replace($key, $value, $expire=0) {
 			$key = self::key($key);
-			if (isset(self::$cache[$key])) {
+			if (array_key_exists($key, self::$cache)) {
 				self::$cache[ $key ] = $value;
 			}
 			return self::$cache[ $key ];
@@ -80,7 +80,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
         */
         public static function delete($key) {
 			$key = self::key($key);
-            if (isset(self::$cache[ $key ])) {
+            if (array_key_exists($key, self::$cache)) {
                 unset(self::$cache[ $key ]);
             }
         }

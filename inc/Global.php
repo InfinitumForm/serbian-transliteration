@@ -246,13 +246,7 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 			return true;
 		}
 
-		if (is_string($content) && trim($content) != '') {
-			if (preg_match('/^(https?:\/\/[^ "]+)|([\/\\]?[\w\s-]+(\.[\w-]+)+)$/', $content)) {
-				return true;
-			}
-		}
-
-		if (filter_var($content, FILTER_VALIDATE_URL) || filter_var($content, FILTER_VALIDATE_EMAIL)) {
+		if (parent::is_url_or_email($content)) {
 			return true;
 		}
 

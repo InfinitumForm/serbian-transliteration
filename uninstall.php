@@ -25,6 +25,7 @@ delete_option($RSTR_NAME . '-reviewed');
 delete_option($RSTR_NAME . '-version');
 delete_option($RSTR_NAME . '-db-version');
 delete_option($RSTR_NAME . '-activated');
+delete_option($RSTR_NAME . '-db-cache-table-exists');
 
 if (term_exists('lat', 'rstr-script')) {
 	wp_delete_term(get_term_by('slug', 'lat', 'rstr-script')->term_id, 'rstr-script');

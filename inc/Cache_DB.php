@@ -190,7 +190,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 		global $wpdb;
 		
 		
-		if(isset(self::$cache[$key])) {
+		if(array_key_exists($key, self::$cache)) {
 			unset(self::$cache[$key]);
 		}
 		
@@ -254,7 +254,11 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 		static $table_exists = NULL;
 		global $wpdb;
 		
-		if(NULL === $table_exists || $dry) {
+		if( !$dry && !$table_exists && get_option(RSTR_NAME . '-db-cache-table-exists') ) {
+			$table_exists = true;
+		}
+		
+		if(!$table_exists || $dry) {
 			if($wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->rstr_cache}'" ) != $wpdb->rstr_cache) {
 				if( $dry ) {
 					return false;
@@ -267,6 +271,10 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
 				}
 				
 				$table_exists = true;
+			}
+			
+			if( $table_exists ) {
+				update_option(RSTR_NAME . '-db-cache-table-exists', $table_exists);
 			}
 		}
 		

@@ -1162,7 +1162,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="first-visit-mode-%1$s"><input type="radio" id="first-visit-mode-%1$s" name="%3$s[url-selector]" value="%1$s"%4$s> <span>%2$s</span></label><br>',
+				'<label for="url-selector-%1$s"><input type="radio" id="url-selector-%1$s" name="%3$s[url-selector]" value="%1$s"%4$s> <span>%2$s</span></label><br>',
 				esc_attr($key),
 				$label,
 				RSTR_NAME,
@@ -1257,7 +1257,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="force-ajax-calls-%1$s"><input type="radio" id="force-rest-api-%1$s" name="%3$s[force-rest-api]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				'<label for="force-rest-api-%1$s"><input type="radio" id="force-rest-api-%1$s" name="%3$s[force-rest-api]" value="%1$s"%4$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,

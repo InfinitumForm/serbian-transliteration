@@ -18,36 +18,37 @@ class Serbian_Transliteration_Utilities{
 
 	public static function plugin_default_options () {
 		return apply_filters('rstr_plugin_default_options', [
-			'site-script'				=>	'cyr',
-			'transliteration-mode'		=>	'cyr_to_lat',
-			'mode'						=>	'advanced',
-			'avoid-admin'				=>	'no',
-			'allow-cyrillic-usernames'	=>	'no',
-			'media-transliteration'		=>	'yes',
-			'media-delimiter'			=>	'-',
-			'permalink-transliteration'	=>	'yes',
-			'cache-support'				=>  self::has_cache_plugin() ? 'yes' : 'no',
-			'exclude-latin-words'		=>	'WordPress',
-			'exclude-cyrillic-words'	=>	'',
-			'enable-search'				=>	'yes',
-			'search-mode'       		=>	'auto',
-			'enable-alternate-links'	=>	'no',
-			'first-visit-mode'			=>	'lat',
-			'enable-rss'				=>	'yes',
-			'fix-diacritics'			=>	'yes',
-			'url-selector'				=>	'rstr',
-			'language-scheme'			=>	( 
+			'site-script'					=> 'cyr',
+			'transliteration-mode'			=> 'cyr_to_lat',
+			'mode'							=> 'advanced',
+			'avoid-admin'					=> 'no',
+			'allow-cyrillic-usernames'		=> 'no',
+			'media-transliteration'			=> 'yes',
+			'media-delimiter'				=> '-',
+			'permalink-transliteration'		=> 'yes',
+			'cache-support'					=> self::has_cache_plugin() ? 'yes' : 'no',
+			'exclude-latin-words'			=> 'WordPress',
+			'exclude-cyrillic-words'		=> '',
+			'enable-search'					=> 'yes',
+			'search-mode'       			=> 'auto',
+			'enable-alternate-links'		=> 'no',
+			'first-visit-mode'				=> 'lat',
+			'enable-rss'					=> 'yes',
+			'fix-diacritics'				=> 'yes',
+			'url-selector'					=> 'rstr',
+			'language-scheme'				=> ( 
 				in_array(
 					self::get_locale(),
 					array_keys(Serbian_Transliteration_Transliterating::registered_languages())
 				) ? self::get_locale() : 'auto'
 			),
-			'enable-body-class'			=>	'yes',
-			'force-widgets'				=>	'no',
-			'force-email-transliteration' => 'no',
-			'force-ajax-calls' 			=> 'no',
-			'disable-by-language'		=> ['en_US'=>'yes'],
-			'disable-theme-support'		=> 'no'
+			'enable-body-class'				=> 'yes',
+			'force-widgets'					=> 'no',
+			'force-email-transliteration' 	=> 'no',
+			'force-ajax-calls' 				=> 'no',
+			'force-rest-api'				=> 'yes',
+			'disable-by-language'			=> ['en_US'=>'yes'],
+			'disable-theme-support'			=> 'no'
 		]);
 	}
 	
@@ -221,15 +222,15 @@ class Serbian_Transliteration_Utilities{
 
 		if(!class_exists($class_require, false))
 		{
-			if(file_exists($path . "/{$path_require}.php"))
+			if(file_exists($path . DIRECTORY_SEPARATOR . "{$path_require}.php"))
 			{
 				if( !class_exists('Serbian_Transliteration_Mode', false) ) {
-					include_once RSTR_INC . '/Mode.php';
+					include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Mode.php';
 				}
 				
 				/* Load plugin mode
 				====================================*/
-				include_once $path . "/{$path_require}.php";
+				include_once $path . DIRECTORY_SEPARATOR . "{$path_require}.php";
 				
 				/* Load plugins support
 				====================================*/
@@ -320,7 +321,8 @@ class Serbian_Transliteration_Utilities{
 
 		if ($active_plugins === null) {
 			if (!function_exists('is_plugin_active')) {
-				include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+				$sep = DIRECTORY_SEPARATOR;
+				include_once(ABSPATH . "wp-admin{$sep}includes{$sep}plugin.php");
 			}
 			$active_plugins = get_option('active_plugins', []);
 		}
@@ -348,7 +350,8 @@ class Serbian_Transliteration_Utilities{
 		if(NULL === $is_editor) {
 			if (version_compare(get_bloginfo( 'version' ), '5.0', '>=')) {
 				if(!function_exists('get_current_screen')){
-					include_once ABSPATH  . '/wp-admin/includes/screen.php';
+					$sep = DIRECTORY_SEPARATOR;
+					include_once ABSPATH  . "wp-admin{$sep}includes{$sep}screen.php";
 				}
 				$get_current_screen = get_current_screen();
 				if(is_callable(array($get_current_screen, 'is_block_editor')) && method_exists($get_current_screen, 'is_block_editor')) {
@@ -512,14 +515,15 @@ class Serbian_Transliteration_Utilities{
 	public static function plugin_info($fields = array()) {
         if ( is_admin() ) {
 			
-			$hash = md5(serialize($fields));
+			$hash = hash('sha256', serialize($fields));
 			
 			if($plugin_data = Serbian_Transliteration_Cache::get("plugin_info_{$hash}")){
 				return $plugin_data;
 			}
 			
 			if ( ! function_exists( 'plugins_api' ) ) {
-				include_once( WP_ADMIN_DIR . '/includes/plugin-install.php' );
+				$sep = DIRECTORY_SEPARATOR;
+				include_once( WP_ADMIN_DIR . "{$sep}includes{$sep}plugin-install.php" );
 			}
 			/** Prepare our query */
 			//donate_link
@@ -723,8 +727,17 @@ class Serbian_Transliteration_Utilities{
 	/*
 	 * Flush Cache
 	 * @verson    1.0.1
-	*/
+	 */
+	protected static $cache_flush = false;
 	public static function cache_flush () {
+		
+		// Flush must be fired only once
+		if( self::$cache_flush ) {
+			return true;
+		}
+		self::$cache_flush = true;
+		
+		// Let's enable all caches
 		global $post, $user, $w3_plugin_totalcache;
 
 		// Standard cache
@@ -839,83 +852,90 @@ class Serbian_Transliteration_Utilities{
 			( new WP_Optimize_Cache_Commands() )->purge_page_cache();
 			return true;
 		}
+		
+		return false;
 	}
 	
 	
 	/*
 	 * Has cache plugin active
 	 * @verson    1.0.0
-	*/
+	 */
 	public static function has_cache_plugin() {
+		
+		if( NULL !== ( $cache = Serbian_Transliteration_Cache::get('has_cache_plugin') ) ) {
+			return $cache;
+		}
+		
 		global $w3_plugin_totalcache;
 		
 		// Flush LS Cache
 		if ( class_exists('\LiteSpeed\Purge', false) ) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		} else if (has_action('litespeed_purge_all')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		} else if (function_exists('liteSpeed_purge_all')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 
 		// W3 Total Cache
 		if (function_exists('w3tc_flush_all')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		} else if( $w3_plugin_totalcache ) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 
 		// WP Fastest Cache
 		if (function_exists('wpfc_clear_all_cache')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 
 		// WP Rocket
 		if ( function_exists( 'rocket_clean_domain' ) ) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 
 		// WP Super Cache
 		if(function_exists( 'prune_super_cache' ) && function_exists( 'get_supercache_dir' )) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 
 		// Cache Enabler
 		if (function_exists( 'clear_site_cache' )) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 
 		// Comet Cache
 		if(class_exists('comet_cache', false) && method_exists('comet_cache', 'clear')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 		
 		// Clean Pagely cache
 		if ( class_exists( 'PagelyCachePurge', false ) ) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 		
 		// Clean Hyper Cache
 		if (function_exists('hyper_cache_clear')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 			
 		// Clean Simple Cache
 		if (function_exists('simple_cache_flush')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 		
 		// Clean Autoptimize
 		if (class_exists('autoptimizeCache') && method_exists('autoptimizeCache', 'clearall')) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 		
 		// Clean WP-Optimize
 		if (class_exists('WP_Optimize_Cache_Commands', false)) {
-			return true;
+			return Serbian_Transliteration_Cache::set(true);
 		}
 		
-		return false;
+		return Serbian_Transliteration_Cache::set(false);
 	}
 
 	/**

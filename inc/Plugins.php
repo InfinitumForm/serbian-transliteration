@@ -37,9 +37,11 @@ if(!class_exists('Serbian_Transliteration_Plugins', false)) :
 			if ($only_object === false) {
 
 				$this->plugins = apply_filters('rstr/plugins', $this->plugins);
+				
+				$sep = DIRECTORY_SEPARATOR;
 
 				foreach ($this->plugins as $dir_name => $file_name) {
-					$addon = RSTR_INC . "/plugins/{$dir_name}.php";
+					$addon = RSTR_INC . "{$sep}plugins{$sep}{$dir_name}.php";
 					if (Serbian_Transliteration_Utilities::is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists($addon)) {
 						$class_name = str_replace(['-', '.'], '_', $dir_name);
 						$plugin_class = "Serbian_Transliteration__Plugin__{$class_name}";
@@ -58,9 +60,11 @@ if(!class_exists('Serbian_Transliteration_Plugins', false)) :
 			$this->plugins = apply_filters('rstr/plugins', $this->plugins);
 
 			$return = [];
+			
+			$sep = DIRECTORY_SEPARATOR;
 
 			foreach ($this->plugins as $dir_name => $file_name) {
-				$addon = RSTR_INC . "/plugins/{$dir_name}.php";
+				$addon = RSTR_INC . "{$sep}plugins{$sep}{$dir_name}.php";
 				if (Serbian_Transliteration_Utilities::is_plugin_active("{$dir_name}/{$file_name}.php") && file_exists($addon)) {
 					include_once $addon;
 

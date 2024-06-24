@@ -55,20 +55,26 @@ class Serbian_Transliteration_Transliterating {
 			return apply_filters('rstr_can_trasliterate', true, $content);
 		}
 
-		// Provera za stringove koji su fajlovi ili linkovi
-		if (is_string($content) && trim($content) != '') {
-			if (preg_match('/^(https?:\/\/[^ "]+)|([\/\\]?[\w\s-]+(\.[\w-]+)+)$/', $content)) {
-				return apply_filters('rstr_can_trasliterate', true, $content);
-			}
-		}
-
 		// Provera za URL i Email
-		if (filter_var($content, FILTER_VALIDATE_URL) || filter_var($content, FILTER_VALIDATE_EMAIL)) {
+		if (self::is_url_or_email($content)) {
 			return apply_filters('rstr_can_trasliterate', true, $content);
 		}
 
 		// Ako nijedan uslov nije ispunjen, vraćamo true
 		return apply_filters('rstr_can_trasliterate', false, $content);
+	}
+	
+	/*
+	 * Check if string is URL or email
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function is_url_or_email($content) {
+		$urlRegex = '/^((https?|s?ftp):)?\/\/([a-zA-Z0-9\-\._\+]+(:[a-zA-Z0-9\-\._]+)?@)?([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,})(:[0-9]+)?(\/[a-zA-Z0-9\-\._\%\&=\?\+\$\[\]\(\)\*\'\,\.\,\:]+)*\/?#?$/i';
+		
+		$emailRegex = '/^[a-zA-Z0-9\-\._\p{L}]+@[a-zA-Z0-9\-\._\p{L}]+\.[a-zA-Z]{2,}$/i';
+
+		return !empty($content) && is_string($content) && strlen($content) > 10 && (preg_match($urlRegex, $content) || preg_match($emailRegex, $content));
 	}
 
 	/*

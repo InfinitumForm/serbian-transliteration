@@ -1,3 +1,8 @@
+= 1.12.18 =
+* Fix flush cache bug
+* Fixed PHP errors
+* Additional optimizations
+
 = 1.12.17 =
 * Fixing problems with cache plugins
 * Fixing a memory leak bug
