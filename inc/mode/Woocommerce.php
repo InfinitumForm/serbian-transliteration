@@ -94,7 +94,7 @@ class Serbian_Transliteration_Mode_Woocommerce extends Serbian_Transliteration
 			ob_end_clean();
 		}
 
-		$output = self::get()->transliterate_text($output);
+		$output = parent::get()->transliterate_text($output);
 
 		echo $output;
 	}

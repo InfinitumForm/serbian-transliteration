@@ -146,7 +146,7 @@ class Serbian_Transliteration_Mode_Advanced extends Serbian_Transliteration
 			ob_end_clean();
 		}
 
-		$output = self::run()->transliterate_text($output);
+		$output = parent::get()->transliterate_text($output);
 
 		echo $output;
 	}

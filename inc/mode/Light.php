@@ -140,7 +140,7 @@ if ( ! class_exists( 'Serbian_Transliteration_Mode_Light' ) ) :
 				ob_end_clean();
 			}
 
-			$output = self::get()->transliterate_text($output);
+			$output = parent::get()->transliterate_text($output);
 
 			echo $output;
 		}

@@ -1,3 +1,12 @@
+= 1.12.20 =
+* Fixed caching support
+* Fixed transliteration modes
+* Fixed method errors
+* Added "Light mode" as default
+
+= 1.12.19 =
+* Fix Fatal error on page builders
+
 = 1.12.18 =
 * Fix flush cache bug
 * Fixed PHP errors

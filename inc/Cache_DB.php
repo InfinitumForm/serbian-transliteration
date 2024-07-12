@@ -142,7 +142,7 @@ if(!class_exists('Serbian_Transliteration_DB_Cache', false)) : class Serbian_Tra
     public static function replace(string $key, $value, int $expire=0) {
 		
 		if( empty($value) ) {
-			sef::delete($key);
+			self::delete($key);
 			return NULL;
 		}
 		

@@ -20,7 +20,7 @@ class Serbian_Transliteration_Utilities{
 		return apply_filters('rstr_plugin_default_options', [
 			'site-script'					=> 'cyr',
 			'transliteration-mode'			=> 'cyr_to_lat',
-			'mode'							=> 'advanced',
+			'mode'							=> 'light',
 			'avoid-admin'					=> 'no',
 			'allow-cyrillic-usernames'		=> 'no',
 			'media-transliteration'			=> 'yes',
@@ -63,7 +63,7 @@ class Serbian_Transliteration_Utilities{
 	*/
 	public static function plugin_mode($mode=NULL){
 		$modes = array(
-			'light'		=> __('Light mode (light on memory and performance - experimental)', 'serbian-transliteration'),
+			'light'		=> __('Light mode (light on memory and performance)', 'serbian-transliteration'),
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
 			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', 'serbian-transliteration'),
 			'forced'	=> __('Forced transliteration (everything)', 'serbian-transliteration')
@@ -871,71 +871,71 @@ class Serbian_Transliteration_Utilities{
 		
 		// Flush LS Cache
 		if ( class_exists('\LiteSpeed\Purge', false) ) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		} else if (has_action('litespeed_purge_all')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		} else if (function_exists('liteSpeed_purge_all')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 
 		// W3 Total Cache
 		if (function_exists('w3tc_flush_all')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		} else if( $w3_plugin_totalcache ) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 
 		// WP Fastest Cache
 		if (function_exists('wpfc_clear_all_cache')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 
 		// WP Rocket
 		if ( function_exists( 'rocket_clean_domain' ) ) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 
 		// WP Super Cache
 		if(function_exists( 'prune_super_cache' ) && function_exists( 'get_supercache_dir' )) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 
 		// Cache Enabler
 		if (function_exists( 'clear_site_cache' )) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 
 		// Comet Cache
 		if(class_exists('comet_cache', false) && method_exists('comet_cache', 'clear')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 		
 		// Clean Pagely cache
 		if ( class_exists( 'PagelyCachePurge', false ) ) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 		
 		// Clean Hyper Cache
 		if (function_exists('hyper_cache_clear')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 			
 		// Clean Simple Cache
 		if (function_exists('simple_cache_flush')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 		
 		// Clean Autoptimize
 		if (class_exists('autoptimizeCache') && method_exists('autoptimizeCache', 'clearall')) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 		
 		// Clean WP-Optimize
 		if (class_exists('WP_Optimize_Cache_Commands', false)) {
-			return Serbian_Transliteration_Cache::set(true);
+			return Serbian_Transliteration_Cache::set('has_cache_plugin', true);
 		}
 		
-		return Serbian_Transliteration_Cache::set(false);
+		return Serbian_Transliteration_Cache::set('has_cache_plugin', false);
 	}
 
 	/**

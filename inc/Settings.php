@@ -694,7 +694,7 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 				esc_html($label),
 				RSTR_NAME,
 				$this->nonce,
-				(isset( $this->options['mode'] ) ? ($this->options['mode'] == $key ? ' checked' : '') : ($key == 'standard' ? ' checked' : ''))
+				(isset( $this->options['mode'] ) ? ($this->options['mode'] == $key ? ' checked' : '') : ($key == 'light' ? ' checked' : ''))
 			);
 		}
 

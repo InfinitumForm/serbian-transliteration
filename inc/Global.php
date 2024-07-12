@@ -672,5 +672,14 @@ class Serbian_Transliteration extends Serbian_Transliteration_Transliterating{
 		}
 		return $instance;
 	}
+	
+	/*
+	* Instance - Helper
+	* @since     1.0.9
+	* @verson    1.0.0
+	*/
+	public static function get() {
+		return self::__instance();
+	}
 }
 endif;

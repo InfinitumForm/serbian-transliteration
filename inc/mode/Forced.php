@@ -154,15 +154,18 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 
 			if (!defined('DOING_AJAX') || !DOING_AJAX) {
 				$sufix = '_' . strlen($buffer);
-				$forced_cache = Serbian_Transliteration_DB_Cache::get($this->transient . $sufix);
+				$hash = hash('sha256', $buffer); // ili sha256($buffer)
+				$transient_key = 'Serbian_Transliteration_Mode_Forced_' . $hash . $sufix;
+
+				$forced_cache = Serbian_Transliteration_DB_Cache::get($transient_key);
 
 				if (!is_admin() && empty($forced_cache)) {
 					$buffer = preg_replace_callback('/(?=<div(.*?)>)(.*?)(?<=<\/div>)/s', function($matches) {
-						return $this->transliterate_text($matches[2]);
+						return parent::get()->transliterate_text($matches[2]);
 					}, $buffer);
 
 					if (!empty($buffer)) {
-						Serbian_Transliteration_DB_Cache::set($this->transient . $sufix, $buffer, MINUTE_IN_SECONDS * 3);
+						Serbian_Transliteration_DB_Cache::set($transient_key, $buffer, MINUTE_IN_SECONDS * 3);
 					}
 				} else {
 					$buffer = $forced_cache;
@@ -185,7 +188,7 @@ class Serbian_Transliteration_Mode_Forced extends Serbian_Transliteration
 			ob_end_clean();
 		}
 
-		$output = self::run()->transliterate_text($output);
+		$output = parent::get()->transliterate_text($output);
 
 		echo $output;
 	}

@@ -147,7 +147,7 @@ if (!class_exists('Serbian_Transliteration_Cache', false)):
 					reset(self::$cache);
 					$key = key(self::$cache);
 					
-					if( !in_array($key, $exclude) ) {
+					if( !in_array($key, self::$cache) ) {
 						self::delete($key);
 					}
 				}
