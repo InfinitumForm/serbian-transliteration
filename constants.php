@@ -53,8 +53,8 @@ if (!defined('RSTR_ASSETS')) {
     define('RSTR_ASSETS', RSTR_URL . '/assets');
 }
 // Classes
-if (!defined('RSTR_INC')) {
-    define('RSTR_INC', RSTR_ROOT . '/inc');
+if (!defined('RSTR_CLASSES')) {
+    define('RSTR_CLASSES', RSTR_ROOT . '/classes');
 }
 // Plugin name
 if (!defined('RSTR_NAME')) {
