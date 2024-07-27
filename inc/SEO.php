@@ -12,9 +12,9 @@ if(!class_exists('Serbian_Transliteration_SEO', false)) :
 	{	
 		public function __construct(){
 			// Display alternate links
-			if(defined('RSTR_ALTERNATE_LINKS') && RSTR_ALTERNATE_LINKS) {
+			/*if(defined('RSTR_ALTERNATE_LINKS') && RSTR_ALTERNATE_LINKS) {
 				$this->add_action('wp_head', 'alternate_links', 1);
-			}
+			}*/
 			// Add generator
 			$this->add_filter('the_generator', 'the_generator', 10, 2);
 		}

@@ -506,13 +506,13 @@ class Serbian_Transliteration_Settings extends Serbian_Transliteration
 			RSTR_NAME // Page
 		);
 	
-			$this->add_settings_field(
+		/*	$this->add_settings_field(
 				'enable-alternate-links', // ID
 				__('Enable alternet links', 'serbian-transliteration'), // Title
 				'enable_alternate_links_callback', // Callback
 				RSTR_NAME, // Page
 				RSTR_NAME . '-seo' // Section
-			);
+			); */
 	
 			$this->add_settings_field(
 				'parameter-url-selector', // ID

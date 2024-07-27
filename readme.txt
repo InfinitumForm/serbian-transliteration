@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 1.12.20
+Stable tag: 1.13.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -160,6 +160,13 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Changelog ==
 
+= 1.13.0 =
+* Removed Alternate Links support
+* Fixed problems with First Visit mode
+* Fixed SEO problems with `_rstr_nocache` URL pharams
+* Fixed SEO rewrite problems
+* Preparing transition code for version 2.0.0
+
 = 1.12.20 =
 * Fixed caching support
 * Fixed transliteration modes
@@ -307,56 +314,12 @@ We also thought of PHP developers where we have enabled several useful functions
 
 == Upgrade Notice ==
 
-= 1.12.20 =
-* Fixed caching support
-* Fixed transliteration modes
-* Fixed method errors
-* Added "Light mode" as default
-
-= 1.12.19 =
-* Fix Fatal error on page builders
-
-= 1.12.18 =
-* Fix flush cache bug
-* Fixed PHP errors
-* Additional optimizations
-
-= 1.12.17 =
-* Fixing problems with cache plugins
-* Fixing a memory leak bug
-* Removing support for some PHP5.6 versions
-
-= 1.12.16 =
-* Fixed activation error
-
-= 1.12.15 =
-* Fixed issue with WooCommerce memory buffer
-* Fixed activation issue
-
-= 1.12.14 =
-* Fix memory leak on WooComerce
-* Improved cache support
-
-= 1.12.13 =
-* Fixed problems with editors that using the REST-API
-* Fixed MySQL bugs
-* Fixed translation bugs
-* Optimized PHP code
-* Getting ready for version 1.13.0
-
-= 1.12.12 =
-* Added WordPress REST API support
-* Fixed WooCommerce REST API transliteration
-* Fixed filter loading priorities
-
-= 1.12.11 =
-* Removed first visit auto mode, forced to latin
-* Fixed PHP bugs in admin notices
-* Improved translations
-
-= 1.12.10 =
-* Added support for the LSCache, Hyper Cache,Simple Cache, Autoptimize and WP-Optimize
-* Improved "Light mode"
+= 1.13.0 =
+* Removed Alternate Links support
+* Fixed problems with First Visit mode
+* Fixed SEO problems with `_rstr_nocache` URL pharams
+* Fixed SEO rewrite problems
+* Preparing transition code for version 2.0.0
 
 == Frequently Asked Questions ==
 
