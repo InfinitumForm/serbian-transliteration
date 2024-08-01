@@ -15,6 +15,8 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		if(empty($this->options)){
 			$this->options = get_rstr_option();
 		}
+		
+		add_action( 'wp_ajax_rstr_filter_mode_options', [$this, 'ajax__rstr_filter_mode_options']);
 	}
 	
 	/**
@@ -28,6 +30,13 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 
 		foreach($input as $key=>$value)
 		{
+			if( in_array($key, ['exclude-latin-words', 'exclude-cyrillic-words']) && preg_match('/\n/', $value) ) {
+				$value = explode("\n", $value);
+				$value = array_map('trim', $value);
+				$value = array_filter($value);
+				$value = join('|', $value);
+			}
+			
 			if(is_array($value)) {
 				$new_input[$key] = array_map('sanitize_text_field', $value);
 			} else {
@@ -116,6 +125,14 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			);
 			
 			add_settings_field(
+				'transliteration-filter', // ID
+				__('Transliteration Filters', 'serbian-transliteration'), // Title
+				[$this, 'transliteration_filter_callback'], // Callback
+				RSTR_NAME,
+				'transliteration_global'
+			);
+			
+			add_settings_field(
 				'exclude-latin-words', // ID
 				__('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', 'serbian-transliteration'), // Title
 				[$this, 'exclude_latin_words_callback'], // Callback
@@ -197,7 +214,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		
 			add_settings_field(
 				'avoid-admin', // ID
-				__('Disable transliteration inside wp-admin', 'serbian-transliteration'), // Title
+				__('WP-Admin transliteration', 'serbian-transliteration'), // Title
 				[$this, 'avoid_admin_callback'], // Callback
 				RSTR_NAME,
 				'transliteration_wp_admin_settings'
@@ -467,7 +484,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		foreach($checkbox as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="site-script-%1$s"><input type="radio" id="site-script-%1$s" name="%3$s[site-script]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				'<label for="site-script-%1$s" class="label-block"><input type="radio" id="site-script-%1$s" name="%3$s[site-script]" value="%1$s"%4$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
@@ -475,10 +492,10 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			);
 		}
 
-		echo join('<br>', $inputs);
+		echo join(' ', $inputs);
 
 		if( count($checkbox) > 1 ) {
-			printf('<br><p class="description">%1$s</p>', __('Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly.', 'serbian-transliteration'));
+			printf('<p class="description">%1$s</p>', __('Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly.', 'serbian-transliteration'));
 		} else {
 			__('Define whether your primary alphabet on the site.', 'serbian-transliteration');
 		}
@@ -517,7 +534,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		foreach($transliteration_mode() as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="transliteration-mode-%1$s"><input type="radio" id="transliteration-mode-%1$s" name="%3$s[transliteration-mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
+				'<label for="transliteration-mode-%1$s" class="label-block"><input type="radio" id="transliteration-mode-%1$s" name="%3$s[transliteration-mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
@@ -526,8 +543,8 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			);
 		}
 
-        echo join('<br>', $inputs);
-		printf('<br><p class="description">%1$s</p>', __('This option determines the global transliteration of your web site. If you do not want to transliterate the entire website and use this plugin for other purposes, disable this option. This option does not affect to the functionality of short codes and tags.', 'serbian-transliteration'));
+        echo join(' ', $inputs);
+		printf('<p class="description">%1$s</p>', __('This option determines the global transliteration of your web site. If you do not want to transliterate the entire website and use this plugin for other purposes, disable this option. This option does not affect to the functionality of short codes and tags.', 'serbian-transliteration'));
 	}
 	
 	
@@ -542,14 +559,14 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="first-visit-mode-%1$s"><input type="radio" id="first-visit-mode-%1$s" name="%3$s[first-visit-mode]" value="%1$s"%4$s> <span>%2$s</span></label><br>',
+				'<label for="first-visit-mode-%1$s" class="label-block"><input type="radio" id="first-visit-mode-%1$s" name="%3$s[first-visit-mode]" value="%1$s"%4$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
 				(isset( $this->options['first-visit-mode'] ) ? ($this->options['first-visit-mode'] == $key ? ' checked' : '') : ($key == 'lat' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first time come to your site.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('This option determines the type of language script that the visitors sees when they first time come to your site.', 'serbian-transliteration'));
 	}
 	
 	
@@ -578,9 +595,9 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['language-scheme'] ) ? ($this->options['language-scheme'] == $locale ? ' selected' : '') : ($locale == 'auto' ? ' selected' : ''))
 			);
 		}
-        echo '<select name="serbian-transliteration[language-scheme]" id="serbian-transliteration-language-scheme" data-nonce="' . esc_attr($this->nonce) . '" style="margin-bottom:5px;">' . join('<br>', $inputs) . '</select>';
+        echo '<select name="serbian-transliteration[language-scheme]" id="serbian-transliteration-language-scheme" data-nonce="' . esc_attr($this->nonce) . '" style="margin-bottom:5px;">' . join(' ', $inputs) . '</select>';
 
-		printf('<br><p class="description">%1$s</p>', __('This option defines the language script. Automatic script detection is the best way but if you are using a WordPress installation in a language that does not match the scripts supported by this plugin, then choose on which script you want the transliteration to be performed.', 'serbian-transliteration'));
+		printf('<p class="description">%1$s</p>', __('This option defines the language script. Automatic script detection is the best way but if you are using a WordPress installation in a language that does not match the scripts supported by this plugin, then choose on which script you want the transliteration to be performed.', 'serbian-transliteration'));
 	}
 	
 	
@@ -594,7 +611,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		foreach(parent::plugin_mode() as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="mode-%1$s"><input type="radio" id="mode-%1$s" name="%3$s[mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
+				'<label for="mode-%1$s" class="label-block"><input type="radio" id="mode-%1$s" name="%3$s[mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				RSTR_NAME,
@@ -605,11 +622,64 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 
 		printf(
 			'<div%3$s id="rstr-mode-list">%1$s<br><p class="description info" id="forced-transliteration" style="display:none; ">%2$s</p></div>',
-			join('<br>', $inputs),
+			join(' ', $inputs),
 			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', 'serbian-transliteration'),
 			(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false ? ' class="required-box"' : '')
 		);
 	}
+	
+	
+	
+	/**
+     * Transliteration filter
+     */
+    public function transliteration_filter_callback()
+    {
+?>
+<div class="accordion-container">
+	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', 'serbian-transliteration'); ?></button>
+	<div class="accordion-panel">
+		<?php
+
+		printf(
+			'<p>%s<br><b>%s</b></p><br>',
+			__('Select the transliteration filters you want to exclude.', 'serbian-transliteration'),
+			__('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', 'serbian-transliteration')
+		);
+
+		$modeInstance = Transliteration_Mode::get()->mode();
+		$list = array_keys( $modeInstance::get()->filters() );
+		sort($list);
+		
+		?>
+        <div class="row" id="rstr-filter-mode-options">
+			<?php $this->private___list_filter_mode_options($list); ?>
+        </div>
+		<?php
+		printf(
+			'<br><p><b>%s</b><br>%s %s</p>',
+			__('TIPS & TRICKS:', 'serbian-transliteration'),
+			__('You can find details about some of the listed filters in this article:', 'serbian-transliteration'),
+			'<a href="https://codex.wordpress.org/Plugin_API/Filter_Reference" target="_blank">Plugin_API/Filter_Reference</a>'
+		);
+
+		if(RSTR_WOOCOMMERCE)
+		{
+			printf(
+				'<p>%s</p>',
+				sprintf(
+					__('Since you are already a WooCommerce user, you also can see the following documentation: %s', 'serbian-transliteration'),
+					'<a href="https://docs.woocommerce.com/documentation/plugins/woocommerce/woocommerce-codex/snippets/" target="_blank">WooCommerce/Codex Snippets</a>'
+				)
+			);
+		}
+
+		?>
+	</div>
+</div>
+<?php
+	}
+	
 	
 	
 	public function exclude_latin_words_callback()
@@ -651,7 +721,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				''
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('If you have a problem caching your pages, our plugin solves this problem by clearing the cache when changing the language script.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('If you have a problem caching your pages, our plugin solves this problem by clearing the cache when changing the language script.', 'serbian-transliteration'));
 	}
 
 	
@@ -672,7 +742,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				''
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option forces the widget to transliterate. There may be some unusual behaviour in the rare cases.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('This option forces the widget to transliterate. There may be some unusual behaviour in the rare cases.', 'serbian-transliteration'));
 	}
 	
 	
@@ -692,7 +762,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['force-email-transliteration'] ) ? ($this->options['force-email-transliteration'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of email content.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of email content.', 'serbian-transliteration'));
 	}
 	
 	
@@ -712,7 +782,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['force-rest-api'] ) ? ($this->options['force-rest-api'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of WordPress REST API calls. The WordPress REST API is also used in many AJAX calls, WooCommerce, and page builders. It is recommended to be enabled by default.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Enable this feature if you want to force transliteration of WordPress REST API calls. The WordPress REST API is also used in many AJAX calls, WooCommerce, and page builders. It is recommended to be enabled by default.', 'serbian-transliteration'));
 	}
 	
 	
@@ -732,7 +802,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['force-ajax-calls'] ) ? ($this->options['force-ajax-calls'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), sprintf(__('Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s', 'serbian-transliteration'), '<code>rstr_skip=true</code>'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), sprintf(__('Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s', 'serbian-transliteration'), '<code>rstr_skip=true</code>'));
 	}
 	
 	
@@ -744,8 +814,8 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		$inputs = array();
 
 		foreach(array(
-			'yes' => __('Yes', 'serbian-transliteration'),
-			'no' => __('No', 'serbian-transliteration')
+			'no' => __('Yes', 'serbian-transliteration'),
+			'yes' => __('No', 'serbian-transliteration')
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
@@ -757,7 +827,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			);
 		}
 
-        echo join(' ', $inputs);
+        printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want the WP-Admin area to be transliterated.', 'serbian-transliteration'));
 	}
 	
 	
@@ -778,7 +848,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['allow-cyrillic-usernames'] ) ? ($this->options['allow-cyrillic-usernames'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Allows to create users with usernames containing Cyrillic characters.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Allows to create users with usernames containing Cyrillic characters.', 'serbian-transliteration'));
 	}
 	
 	
@@ -803,7 +873,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(parent::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? ' disabled' : '')
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to force cyrillic permalinks to latin.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to force cyrillic permalinks to latin.', 'serbian-transliteration'));
 		if(parent::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
 			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', 'serbian-transliteration'), '<code>'.parent::get_locale().'</code>'));
 		}
@@ -830,7 +900,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['media-transliteration'] ) ? ($this->options['media-transliteration'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to convert cyrillic filenames to latin.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to convert cyrillic filenames to latin.', 'serbian-transliteration'));
 	}
 	
 	
@@ -856,9 +926,9 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['media-delimiter'] ) ? ($this->options['media-delimiter'] == $label ? ' selected' : '') : ($label == '-' ? ' selected' : ''))
 			);
 		}
-        echo '<select name="serbian-transliteration[media-delimiter]" id="serbian-transliteration-media-delimiter" data-nonce="' . esc_attr($this->nonce) . '" style="margin-bottom:5px;">' . join('<br>', $inputs) . '</select>';
+        echo '<select name="serbian-transliteration[media-delimiter]" id="serbian-transliteration-media-delimiter" data-nonce="' . esc_attr($this->nonce) . '" style="margin-bottom:5px;">' . join(' ', $inputs) . '</select>';
 
-		printf('<br><p class="description">%1$s <code>%2$s</code></p>', __('Filename delimiter, example:', 'serbian-transliteration'), __('my-upload-file.jpg', 'serbian-transliteration'));
+		printf('<p class="description">%1$s <code>%2$s</code></p>', __('Filename delimiter, example:', 'serbian-transliteration'), __('my-upload-file.jpg', 'serbian-transliteration'));
 	}
 	
 	
@@ -879,7 +949,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['enable-search'] ) ? ($this->options['enable-search'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Approve if you want transliteration for the search field.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Approve if you want transliteration for the search field.', 'serbian-transliteration'));
 	}
 
 
@@ -900,7 +970,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['fix-diacritics'] ) ? ($this->options['fix-diacritics'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('Try to fix the diacritics in the search field.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Try to fix the diacritics in the search field.', 'serbian-transliteration'));
 	}
 
 
@@ -914,14 +984,14 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="search-mode-%1$s"><input type="radio" id="search-mode-%1$s" name="%3$s[search-mode]" value="%1$s"%4$s> <span>%2$s</span></label><br>',
+				'<label for="search-mode-%1$s" class="label-block"><input type="radio" id="search-mode-%1$s" name="%3$s[search-mode]" value="%1$s"%4$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
 				 RSTR_NAME,
 				(isset( $this->options['search-mode'] ) ? ($this->options['search-mode'] == $key ? ' checked' : '') : ($key == 'auto' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('The search has two working modes. Choose the one that works best with your search.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('The search has two working modes. Choose the one that works best with your search.', 'serbian-transliteration'));
 	}
 	
 	
@@ -940,14 +1010,14 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="url-selector-%1$s"><input type="radio" id="url-selector-%1$s" name="%3$s[url-selector]" value="%1$s"%4$s> <span>%2$s</span></label><br>',
+				'<label for="url-selector-%1$s" class="label-block"><input type="radio" id="url-selector-%1$s" name="%3$s[url-selector]" value="%1$s"%4$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				$label,
 				 RSTR_NAME,
 				(isset( $this->options['url-selector'] ) ? ($this->options['url-selector'] == $key ? ' checked' : '') : ($key == 'rstr' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option dictates which URL parameter will be used to change the language.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('This option dictates which URL parameter will be used to change the language.', 'serbian-transliteration'));
 	}
 	
 	
@@ -968,7 +1038,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				''
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option transliterate the RSS feed.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('This option transliterate the RSS feed.', 'serbian-transliteration'));
 	}
 	
 	
@@ -1008,7 +1078,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['enable-body-class'] ) ? ($this->options['enable-body-class'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script.', 'serbian-transliteration'));
 	}
 	
 	
@@ -1028,7 +1098,58 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				(isset( $this->options['disable-theme-support'] ) ? ($this->options['disable-theme-support'] == $key ? ' checked' : '') : ($key == 'no' ? ' checked' : ''))
 			);
 		}
-		printf('%1$s<br><p class="description">%2$s</p>', join(' ', $inputs), __('If you don\'t require transliteration support for your theme, you can disable it for your current theme here.', 'serbian-transliteration'));
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('If you don\'t require transliteration support for your theme, you can disable it for your current theme here.', 'serbian-transliteration'));
+	}
+	
+	
+	public function ajax__rstr_filter_mode_options() {
+		$mode = sanitize_text_field($_POST['mode']);
+
+		if($mode && isset($_REQUEST['nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'rstr-options') !== false)
+		{
+			$this->options['mode'] = $mode;
+			
+			$modeInstance = Transliteration_Mode::get()->mode($mode);			
+			$list = array_keys( $modeInstance::get()->filters() );
+			sort($list);
+
+			$this->private___list_filter_mode_options($list, $this->options);
+		}
+		exit;
+	}
+	
+	
+	/* PRIVATE - List filter mode options in the AJAX and admin */
+	private function private___list_filter_mode_options($list, $options=array()) {
+		$inputs = array();
+		$i = 0;
+
+		if(empty($options)) $options = $this->options;
+
+		$only_woo = false;
+		if(RSTR_WOOCOMMERCE && $options['mode'] == 'woocommerce') {
+			$only_woo = true;
+		}
+
+		foreach($list as $k=>$hook)
+		{
+			if($only_woo && strpos($hook, 'woo') === false) continue;
+
+			$inputs[$i][]=sprintf(
+				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',
+				esc_attr($hook),
+				esc_html($hook),
+				RSTR_NAME,
+				$this->nonce,
+				(isset( $options['transliteration-filter']) ? (is_array($options['transliteration-filter']) && in_array($hook, $options['transliteration-filter']) ? ' checked' : '') : '')
+			);
+
+			if($i === 2) $i=0; else ++$i;
+		}
+		
+		foreach($inputs as $x => $options){
+			printf('<div class="col">%s</div>', join(PHP_EOL, $options));
+		}
 	}
 	
 } endif;

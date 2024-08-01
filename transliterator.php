@@ -55,7 +55,7 @@ if ( ! defined( 'RSTR_DATABASE_VERSION' ) ){
 if ( ! defined( 'RSTR_FILE' ) ) define( 'RSTR_FILE', __FILE__ );
 
 // Set of constants
-include_once __DIR__ . DIRECTORY_SEPARATOR . 'constants.php';
+include_once __DIR__ . '/constants.php';
 
 // Set database tables
 global $wpdb;
@@ -69,9 +69,9 @@ $wpdb->rstr_cache = $wpdb->get_blog_prefix() . 'rstr_cache';
 if(!function_exists('get_rstr_option'))
 {
 	function get_rstr_option($name = false, $default = NULL) {
-		static $get_rstr_options = null;
+		static $get_rstr_options = NULL;
 
-		if ($get_rstr_options === null) {
+		if ($get_rstr_options === NULL) {
 			if (!$get_rstr_options) {
 				$get_rstr_options = get_option('serbian-transliteration');
 			}
@@ -87,16 +87,26 @@ if(!function_exists('get_rstr_option'))
 
 // Register the autoload function
 spl_autoload_register(function ($class_name) {
-    // Check if the class name starts with the prefix "Transliteration_"
-    if (strpos($class_name, 'Transliteration_') === 0) {
-        // Remove the prefix from the class name
-        $class_file = str_replace(['Transliteration_', '_'], ['', '-'], $class_name);
-        // Define the file path
-        $file = RSTR_CLASSES . '/' . strtolower($class_file) . '.php';
-   
-        // Check if the file exists
-        if (file_exists($file)) {
-            require_once $file;
+    // Define the prefix to directory mapping
+    $prefixes = [
+        'Transliteration_Map_' => RSTR_CLASSES . '/maps/',
+		'Transliteration_Mode_' => RSTR_CLASSES . '/modes/',
+        'Transliteration_'      => RSTR_CLASSES . '/'
+    ];
+    
+    // Iterate over the prefix mappings
+    foreach ($prefixes as $prefix => $directory) {
+        // Check if the class name starts with the prefix and if the class does not already exist
+        if (strpos($class_name, $prefix) === 0 && !class_exists($class_name, false)) {
+            // Remove the prefix from the class name and convert underscores to hyphens
+            $class_file = str_replace([$prefix, '_'], ['', '-'], $class_name);
+            // Define the file path
+            $file = $directory . strtolower($class_file) . '.php';
+            // Check if the file exists and require it
+            if (strpos($file, '/index.php') === false && file_exists($file)) {
+                require_once $file;
+                return;
+            }
         }
     }
 });

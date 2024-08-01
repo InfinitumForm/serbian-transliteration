@@ -1,0 +1,183 @@
+/* Form */
+#wp-transliteration-settings #post-body-content form {
+	border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    background: #fff;
+	padding: 0 12px 12px;
+}
+
+#wp-transliteration-settings #post-body-content form h2 {
+	font-size: 16px;
+    padding: 15px 12px 0px 0;
+    margin: 0;
+    line-height: 1.6;
+}
+
+#wp-transliteration-settings #post-body-content form table+h2 {
+	border-top: 1px solid #c3c4c7;
+    margin-top: 20px;
+	padding-top: 20px
+}
+
+#wp-transliteration-settings #post-body-content form table .description {
+	display: block;
+	background: #f1f1f1;
+    padding: 5px 15px 5px 20px;
+	margin: 8px 0 0 0;
+    position: relative;
+	color:#343434;
+}
+
+#wp-transliteration-settings #post-body-content form table .description.inline{
+	display:inline-block;
+	margin-left:20px;
+}
+
+#wp-transliteration-settings #post-body-content form table .description:before {
+	content: '';
+	position:absolute;
+	top:50%;
+	left:0;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+	-moz-transform:translateY(-50%);
+	width: 0;
+	height: 0; 
+	border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #ffffff;
+}
+
+#wp-transliteration-settings #post-body-content form table .description.info {
+	background: aliceblue;
+    color: #000;
+}
+
+#wp-transliteration-settings #post-body-content form label + label	{
+	margin-left: 10px !important;
+}
+
+#wp-transliteration-settings #post-body-content form label.label-block{
+	display: block !important;
+	margin-left: 0 !important;
+}
+
+#wp-transliteration-settings #post-body-content form label.label-block + label.label-block{
+	margin-top: 5px;
+}
+
+#wp-transliteration-settings #post-body-content form label > input[type^="radio"]{
+	margin-right: 1px;
+}
+
+
+
+/* Sidebar */
+#wp-transliteration-settings .postbox .postbox-header .handle-actions{
+	display: none !important;
+}
+
+#wp-transliteration-settings .postbox .postbox-header .hndle{
+	display: block !important;
+}
+
+#wp-transliteration-settings .postbox .inside .rstr-inside-metabox.flex {
+	display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+#wp-transliteration-settings .postbox .inside .rstr-inside-metabox.flex .contributor {
+	flex: 0 0 50%;
+    max-width: 50%;
+	margin:24px 0 0 0;
+}
+
+#wp-transliteration-settings .postbox .inside .rstr-inside-metabox.flex .contributor h3{
+	padding:0;
+	margin:0;
+	font-size: 0.9em;
+	text-decoration: none;
+}
+
+#wp-transliteration-settings .postbox .inside .rstr-inside-metabox.flex .contributor a{
+	text-decoration: none;
+}
+
+#wp-transliteration-settings .postbox .inside .rstr-inside-metabox.flex .contributor img{
+	dsplay:block;
+	margin:0 auto;
+	max-width:100%;
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, .14);
+}
+
+
+
+/* Accordion Container */
+#wp-transliteration-settings .accordion-container {
+	display:block;
+	width:100%;
+	border:1px solid #efefef;
+}
+
+#wp-transliteration-settings .accordion-container .accordion-link {
+	background-color: #23282d;
+	color: #eee;
+	cursor: pointer;
+	padding: 10px 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	transition: 0.4s;
+}
+
+#wp-transliteration-settings .accordion-container .accordion-link:hover {
+	background-color: #333; 
+}
+
+#wp-transliteration-settings .accordion-container .accordion-link.active{
+	background-color: #555; 
+}
+
+#wp-transliteration-settings .accordion-container .accordion-link:before {
+	content: '+'; /* Unicode character for "plus" sign (+) */
+	font-size: 13px;
+	color: #fefefe;
+	float: left;
+	margin-left: 0;
+	margin-top: 1px;
+	margin-right: 10px;
+}
+
+#wp-transliteration-settings .accordion-container .accordion-link.active:before {
+	content: "-"; /* Unicode character for "minus" sign (-) */
+	margin-right: 14px;
+}
+
+#wp-transliteration-settings .accordion-container .accordion-panel {
+	padding: 5px 15px 10px 15px;
+	display: none;
+	background-color: #ffffff;
+	overflow: hidden;
+}
+
+
+
+
+/* Mobile fix */
+@media (max-width: 960px){
+	#wp-transliteration-settings .has-right-sidebar #post-body-content {
+		margin-right: 0;
+	}
+	
+	#wp-transliteration-settings .has-right-sidebar .inner-sidebar {
+		display: none !important;
+	}
+	
+	#wp-transliteration-settings #post-body-content form label.label-block + label.label-block{
+		margin-top: 8px !important;
+	}
+}

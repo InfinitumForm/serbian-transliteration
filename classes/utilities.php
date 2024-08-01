@@ -77,6 +77,12 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public static function plugin_mode($mode=NULL){
+		static $modes = [];
+		
+		if( !empty($modes) ) {
+			return $modes;
+		}
+		
 		$modes = [
 			'light'		=> __('Light mode (light on memory and performance)', 'serbian-transliteration'),
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
@@ -433,6 +439,179 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		}
 		
 		return false;
+	}
+	
+	/*
+	 * Decode content
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function decode($content, $flag=ENT_NOQUOTES){
+		if ( !empty($content) && is_string($content) && !is_numeric($content) && !is_array($content) && !is_object($content) ) {
+			if (filter_var($content, FILTER_VALIDATE_URL)) {
+				$content = rawurldecode($content);
+			} else {
+				$content = htmlspecialchars_decode($content, $flag);
+				$content = html_entity_decode($content, $flag);
+			//	$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
+			}
+		}
+		return $content;
+	}
+
+	/*
+	 * Check is already cyrillic
+	 * @return        string
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function already_cyrillic(){
+        return in_array(self::get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el', 'ar', 'hy'))) !== false;
+	}
+
+	/*
+	 * Check is latin letters
+	 * @return        boolean
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function is_lat($c){
+		return (preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, '')) !== false);
+	}
+
+	/*
+	 * Check is cyrillic letters
+	 * @return        boolean
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function is_cyr($c){
+		return (preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, '')) !== false);
+	}
+	
+	/*
+	 * Check is plugin active
+	 */
+	public static function is_plugin_active($plugin)
+	{
+		static $active_plugins = null;
+
+		if ($active_plugins === null) {
+			if (!function_exists('is_plugin_active')) {
+				$sep = DIRECTORY_SEPARATOR;
+				include_once(ABSPATH . "wp-admin{$sep}includes{$sep}plugin.php");
+			}
+			$active_plugins = get_option('active_plugins', []);
+		}
+
+		return in_array($plugin, $active_plugins);
+	}
+	
+	/* 
+	 * Check is in the Elementor editor mode
+	 * @verson    1.0.0
+	 */
+	public static function is_elementor_editor(){
+		if(
+			(
+				self::is_plugin_active('elementor/elementor.php') 
+				&& ($_REQUEST['action'] ?? NULL) === 'elementor'
+				&& is_numeric($_REQUEST['post'] ?? NULL)
+			)
+			|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
+		) {
+			return true;
+			
+			// Deprecated
+			//	return \Elementor\Plugin::$instance->editor->is_edit_mode();
+		}
+		
+		return false;
+	}
+	
+	/* 
+	 * Check is in the Elementor preview mode
+	 * @verson    1.0.0
+	 */
+	public static function is_elementor_preview(){
+		if(
+			!is_admin()
+			&& (
+				self::is_plugin_active('elementor/elementor.php') 
+				&& ($_REQUEST['preview'] ?? NULL) == 'true'
+				&& is_numeric($_REQUEST['page_id'] ?? NULL)
+				&& is_numeric($_REQUEST['preview_id'] ?? NULL)
+				&& !empty($_REQUEST['preview_nonce'] ?? NULL)
+			) || preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
+		) {
+			return true;
+			
+			// Deprecated
+			//	return \Elementor\Plugin::$instance->preview->is_preview_mode();
+		}
+		
+		return false;
+	}
+	
+	/* 
+	 * Check is in the Oxygen editor mode
+	 * @verson    1.0.0
+	 */
+	public static function is_oxygen_editor(){
+		if(
+			self::is_plugin_active('oxygen/functions.php') 
+			&& (
+				($_REQUEST['ct_builder'] ?? NULL) == 'true'
+				|| ($_REQUEST['ct_inner'] ?? NULL) == 'true'
+				|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))
+			)
+		) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	/*
+	 * Generate unique token
+	 * @author    Ivijan-Stefan Stipic
+	 */
+	public static function generate_token($length=16){
+		if(function_exists('openssl_random_pseudo_bytes') || function_exists('random_bytes'))
+		{
+			if (version_compare(PHP_VERSION, '7.0.0', '>=')) {
+				return substr(str_rot13(bin2hex(random_bytes(ceil($length * 2)))), 0, $length);
+			} else {
+				return substr(str_rot13(bin2hex(openssl_random_pseudo_bytes(ceil($length * 2)))), 0, $length);
+			}
+		}
+		else
+		{
+			return substr(str_replace(array('.',' ','_'),random_int(1000,9999),uniqid('t'.microtime())), 0, $length);
+		}
+	}
+
+	/*
+	 * Delete all plugin translations
+	 * @return        bool
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function clear_plugin_translations(){
+		$domain_path = [
+			path_join( WP_LANG_DIR, 'plugins' ) . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}',
+			dirname(RSTR_ROOT) . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}',
+			WP_LANG_DIR . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}'
+		];
+		
+		$i = 0;
+		
+		foreach ($domain_path as $pattern) {
+			foreach (glob($pattern, GLOB_BRACE) as $file) {
+				if (file_exists($file)) {
+					unlink($file);
+					++$i;
+				}
+			}
+		}
+		
+		return ($i > 0) ? true : false;
 	}
 
 } endif;

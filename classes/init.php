@@ -8,6 +8,7 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
         
         new Transliteration_Settings();
         new Transliteration_Controller();
+        new Transliteration_Mode();
     }
 	
 	
@@ -28,7 +29,7 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 		$mofile = sprintf('%s-%s.mo', 'serbian-transliteration', $locale);
 
 		// Prvo proveravamo prevode unutar direktorijuma plugina
-		$domain_path = RSTR_ROOT . DIRECTORY_SEPARATOR . 'languages';
+		$domain_path = RSTR_ROOT . '/languages';
 		$loaded = load_textdomain('serbian-transliteration', path_join($domain_path, $mofile));
 
 		// Ako prevod nije pronađen, proveravamo globalni direktorijum
