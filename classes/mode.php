@@ -8,10 +8,15 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 	 * The main constructor
 	 */
 	public function __construct() {
+		// Disable transliteration
+		if(get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none') {
+			return;
+		}
+		// Load transliteration
 		$this->load_mode();
-		
+		// Add exclusion filter
 		$this->add_filter('transliteration_exclude_filters', 'exclude_filters', 10);
-		
+		// Apply transliteration filters
 		$this->apply_filters();
     }
 	
@@ -91,9 +96,20 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 		if ( $filters && ( !is_admin() || wp_doing_ajax() ) ) {
 			foreach ($filters as $key => $method) {
 				$args = $key === 'gettext' ? 3 : 1;
-				/// TODO
+
+				if( method_exists($this, $method) ) {
+					$this->add_filter($key, $method, $args);
+				}
 			}
 		}
+	}
+	
+	public function content( $content ) {
+		return Transliteration_Controller::get()->transliterate($content);
+	}
+	
+	public function no_html_content( $content ) {
+		return Transliteration_Controller::get()->transliterate($content);
 	}
 	
 } endif;

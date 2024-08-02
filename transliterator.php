@@ -101,7 +101,9 @@ spl_autoload_register(function ($class_name) {
             // Remove the prefix from the class name and convert underscores to hyphens
             $class_file = str_replace([$prefix, '_'], ['', '-'], $class_name);
             // Define the file path
-            $file = $directory . strtolower($class_file) . '.php';
+			$class_file = ( $prefix == 'Transliteration_Map_' ? str_replace(['-'], ['_'], $class_file) : strtolower($class_file) );
+            $file = $directory . $class_file . '.php';
+			
             // Check if the file exists and require it
             if (strpos($file, '/index.php') === false && file_exists($file)) {
                 require_once $file;

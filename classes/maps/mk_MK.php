@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  *
  */
-if(!class_exists('Transliteration_Map_mk_MK')) :
+if(!class_exists('Transliteration_Map_mk_MK', false)) :
 class Transliteration_Map_mk_MK {
 
 	public static $map = array (
@@ -33,7 +33,8 @@ class Transliteration_Map_mk_MK {
 	{
 		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 
-		$transliteration = apply_filters('rstr/inc/transliteration/mk_MK', self::$map);
+		$transliteration = apply_filters('transliteration_map_mk_MK', self::$map);
+		$transliteration = apply_filters_deprecated('rstr/inc/transliteration/mk_MK', [$transliteration], '2.0.0', 'transliteration_map_mk_MK');
 
 		switch($translation)
 		{

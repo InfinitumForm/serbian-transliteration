@@ -140,6 +140,86 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	}
 	
 	/*
+	 * Exclude transliteration
+	 * @return        bool
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function exclude_transliteration() : bool {
+		static $exclude_transliteration;
+
+		if ($exclude_transliteration !== NULL) {
+			return $exclude_transliteration;
+		}
+
+		$locale = self::get_locale();
+		$exclude = get_rstr_option('disable-by-language', []);
+
+		$exclude_transliteration = isset($exclude[$locale]) && $exclude[$locale] === 'yes';
+
+		return $exclude_transliteration;
+	}
+	
+	/*
+	 * Check if it can be transliterated
+	 * @param         string $content The content to check for transliteration
+	 * @return        bool
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function can_transliterate($content) {
+		// Quick exit for empty content
+		if (empty($content)) {
+			return apply_filters('rstr_can_transliterate', true, $content);
+		}
+
+		// Check if the content is of a type that does not support transliteration
+		if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {
+			return apply_filters('rstr_can_transliterate', true, $content);
+		}
+
+		// Check for URL and Email
+		if (self::is_url_or_email($content)) {
+			return apply_filters('rstr_can_transliterate', true, $content);
+		}
+
+		// If none of the conditions are met, return true
+		return apply_filters('rstr_can_transliterate', false, $content);
+	}
+	
+	/*
+	 * Is special type
+	 */
+	private function is_special_type($content) {
+		if (empty($content)) {
+			return true;
+		}
+
+		if (is_numeric($content) || is_bool($content)) {
+			return true;
+		}
+
+		if (self::is_url_or_email($content)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/*
+	 * Check if string is URL or email
+	 * @param         string $content The content to check if it's a URL or email
+	 * @return        bool
+	 * @uthor        Ivijan-Stefan Stipic
+	 */
+	public static function is_url_or_email($content) {
+		$urlRegex = '/^((https?|s?ftp):)?\/\/([a-zA-Z0-9\-\._\+]+(:[a-zA-Z0-9\-\._]+)?@)?([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,})(:[0-9]+)?(\/[a-zA-Z0-9\-\._\%\&=\?\+\$\[\]\(\)\*\'\,\.\,\:]+)*\/?#?$/i';
+		
+		$emailRegex = '/^[a-zA-Z0-9\-\._\p{L}]+@[a-zA-Z0-9\-\._\p{L}]+\.[a-zA-Z]{2,}$/i';
+
+		return !empty($content) && is_string($content) && strlen($content) > 10 && (preg_match($urlRegex, $content) || preg_match($emailRegex, $content));
+	}
+
+	
+	/*
 	 * Has cache plugin active
 	 * @version    1.0.0
 	 */
@@ -504,6 +584,44 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		return in_array($plugin, $active_plugins);
 	}
 	
+	/*
+	 * Check if it is a block editor screen
+	 * @since     1.0.9
+	 * @version   1.0.0
+	 */
+	public static function is_editor() {
+		// Static variable for caching the result
+		static $is_editor = null;
+
+		// If the result is already cached, return it
+		if ($is_editor !== null) {
+			return $is_editor;
+		}
+
+		// Check for specific editors and set the cache if true
+		if (self::is_elementor_editor() || self::is_oxygen_editor()) {
+			$is_editor = true;
+			return $is_editor;
+		}
+
+		// Determine if the current screen is the block editor
+		if (version_compare(get_bloginfo('version'), '5.0', '>=')) {
+			if (!function_exists('get_current_screen')) {
+				$sep = DIRECTORY_SEPARATOR;
+				include_once ABSPATH . "wp-admin{$sep}includes{$sep}screen.php";
+			}
+			$current_screen = get_current_screen();
+			if (is_callable([$current_screen, 'is_block_editor']) && method_exists($current_screen, 'is_block_editor')) {
+				$is_editor = $current_screen->is_block_editor();
+			}
+		} else {
+			$is_editor = (isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']));
+		}
+
+		// Return the cached result
+		return $is_editor;
+	}
+	
 	/* 
 	 * Check is in the Elementor editor mode
 	 * @verson    1.0.0
@@ -613,5 +731,133 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		
 		return ($i > 0) ? true : false;
 	}
+	
+	/*
+	* PHP Wrapper for explode — Split a string by a string
+	* @since     1.0.9
+	* @verson    1.0.0
+	* @url       https://www.php.net/manual/en/function.explode.php
+	*/
+	public static function explode($separator , $string , $limit = PHP_INT_MAX ){
+		$string = explode($separator, ($string??''), $limit);
+		$string = array_map('trim', $string);
+		$string = array_filter($string);
+		return $string;
+	}
+	
+	/**
+	 * Get current page ID
+	 * @autor    Ivijan-Stefan Stipic
+	 * @since    1.0.7
+	 * @version  2.0.1
+	 ******************************************************************/
+	public static function get_page_ID() {
+		global $post;
+
+		// Static variable for caching the result
+		static $current_page_id = null;
+
+		// If the result is already cached, return it
+		if ($current_page_id !== null) {
+			return $current_page_id;
+		}
+
+		// Check different methods to get the page ID and cache the result
+		if ($id = self::get_page_ID__private__wp_query()) {
+			$current_page_id = $id;
+		} else if ($id = self::get_page_ID__private__get_the_id()) {
+			$current_page_id = $id;
+		} else if (!is_null($post) && isset($post->ID) && !empty($post->ID)) {
+			$current_page_id = $post->ID;
+		} else if ($post = self::get_page_ID__private__GET_post()) {
+			$current_page_id = $post;
+		} else if ($p = self::get_page_ID__private__GET_p()) {
+			$current_page_id = $p;
+		} else if ($page_id = self::get_page_ID__private__GET_page_id()) {
+			$current_page_id = $page_id;
+		} else if ($id = self::get_page_ID__private__query()) {
+			$current_page_id = $id;
+		} else if ($id = self::get_page_ID__private__page_for_posts()) {
+			$current_page_id = get_option('page_for_posts');
+		} else {
+			$current_page_id = false;
+		}
+
+		return $current_page_id;
+	}
+
+	// Get page ID by using get_the_id() function
+	protected static function get_page_ID__private__get_the_id() {
+		if (function_exists('get_the_id')) {
+			if ($id = get_the_id()) return $id;
+		}
+		return false;
+	}
+
+	// Get page ID by wp_query
+	protected static function get_page_ID__private__wp_query() {
+		global $wp_query;
+		return ((!is_null($wp_query) && isset($wp_query->post) && isset($wp_query->post->ID) && !empty($wp_query->post->ID)) ? $wp_query->post->ID : false);
+	}
+
+	// Get page ID by GET[post] in edit mode
+	protected static function get_page_ID__private__GET_post() {
+		return ((isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'edit') && (isset($_GET['post']) && is_numeric($_GET['post'])) ? absint($_GET['post']) : false);
+	}
+
+	// Get page ID by GET[page_id]
+	protected static function get_page_ID__private__GET_page_id() {
+		return ((isset($_GET['page_id']) && is_numeric($_GET['page_id'])) ? absint($_GET['page_id']) : false);
+	}
+
+	// Get page ID by GET[p]
+	protected static function get_page_ID__private__GET_p() {
+		return ((isset($_GET['p']) && is_numeric($_GET['p'])) ? absint($_GET['p']) : false);
+	}
+
+	// Get page ID by OPTION[page_for_posts]
+	protected static function get_page_ID__private__page_for_posts() {
+		$page_for_posts = get_option('page_for_posts');
+		return (!is_admin() && 'page' == get_option('show_on_front') && $page_for_posts ? absint($page_for_posts) : false);
+	}
+
+	// Get page ID by mySQL query
+	protected static function get_page_ID__private__query() {
+		if (is_admin()) {
+			return false;
+		}
+
+		global $wpdb;
+		$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
+		
+		// Parse the URL to get the path
+		$parsed_url = parse_url($actual_link);
+		$path = $parsed_url['path'];
+
+		// Explode the path into parts and get the last part
+		$parts = explode('/', trim($path, '/'));
+		$slug = end($parts);
+
+		if (!empty($slug)) {
+			if ($post_id = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT `ID` 
+					FROM `{$wpdb->posts}`
+					WHERE `post_status` = 'publish'
+					AND `post_name` = %s
+					AND TRIM(`post_name`) <> ''
+					LIMIT 1",
+					sanitize_title($slug)
+				)
+			)) {
+				return absint($post_id);
+			}
+		}
+
+		return false;
+	}
+	/**
+	 * END Get current page ID
+	 *****************************************************************/
 
 } endif;

@@ -7,8 +7,7 @@
  * @package           Serbian_Transliteration
  *
  */
-if(!class_exists('Transliteration_Map_sr_RS')) :
-class Transliteration_Map_sr_RS {
+if(!class_exists('Transliteration_Map_sr_RS', false)) : class Transliteration_Map_sr_RS {
 
 	public static $map = array(
 		// Variations and special characters
@@ -45,7 +44,8 @@ class Transliteration_Map_sr_RS {
 			return $content;
 		}
 
-		$transliteration = apply_filters('rstr/inc/transliteration/sr_RS', self::$map);
+		$transliteration = apply_filters('transliteration_map_sr_RS', self::$map);
+		$transliteration = apply_filters_deprecated('rstr/inc/transliteration/sr_RS', [$transliteration], '2.0.0', 'transliteration_map_sr_RS');
 
 		switch($translation)
 		{

@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  *
  */
-if(!class_exists('Transliteration_Map_uz_UZ')) :
+if(!class_exists('Transliteration_Map_uz_UZ', false)) :
 class Transliteration_Map_uz_UZ {
 
 	public static $map = array(
@@ -52,7 +52,8 @@ class Transliteration_Map_uz_UZ {
 	{
 		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 
-		$transliteration = apply_filters('rstr/inc/transliteration/uz_UZ', self::$map);
+		$transliteration = apply_filters('transliteration_map_uz_UZ', self::$map);
+		$transliteration = apply_filters_deprecated('rstr/inc/transliteration/uz_UZ', [$transliteration], '2.0.0', 'transliteration_map_uz_UZ');
 
 		switch($translation)
 		{

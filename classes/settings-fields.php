@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliteration_Settings_Fields extends Transliteration_Utilities {
+if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliteration_Settings_Fields {
 	
 	private $options;
 	private $nonce;
@@ -31,9 +31,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		foreach($input as $key=>$value)
 		{
 			if( in_array($key, ['exclude-latin-words', 'exclude-cyrillic-words']) && preg_match('/\n/', $value) ) {
-				$value = explode("\n", $value);
-				$value = array_map('trim', $value);
-				$value = array_filter($value);
+				$value = Transliteration_Utilities::explode("\n", $value);
 				$value = join('|', $value);
 			}
 			
@@ -49,16 +47,16 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			switch($new_input[RSTR_NAME]['transliteration-mode'])
 			{
 				case 'cyr_to_lat':
-					parent::setcookie('lat');
+					Transliteration_Utilities::setcookie('lat');
 					break;
 
 				case 'lat_to_cyr':
-					parent::setcookie('cyr');
+					Transliteration_Utilities::setcookie('cyr');
 					break;
 			}
 		}
 
-		parent::clear_plugin_cache();
+		Transliteration_Utilities::clear_plugin_cache();
 
         return $new_input;
     }
@@ -284,7 +282,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				'transliteration_search_settings'
 			);
 			
-			if(parent::get_locale() == 'sr_RS'){
+			if(Transliteration_Utilities::get_locale() == 'sr_RS'){
 				add_settings_field(
 					'fix-diacritics', // ID
 					__('Fix Diacritics', 'serbian-transliteration'), // Title
@@ -468,7 +466,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 	
 	public function site_script_callback(){
 		$inputs = [];
-		$locale = parent::get_locale();
+		$locale = Transliteration_Utilities::get_locale();
 
 		$checkbox = [
 			'cyr' => __('Cyrillic', 'serbian-transliteration'),
@@ -516,7 +514,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				'lat_to_cyr'	=> __('Latin to Cyrillic', 'serbian-transliteration')
 			];
 
-			$locale = parent::get_locale();
+			$locale = Transliteration_Utilities::get_locale();
 
 			if($locale == 'ar'){
 				$modes['cyr_to_lat']= __('Arabic to Latin', 'serbian-transliteration');
@@ -575,14 +573,14 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
      */
 	public function language_callback(){
 		$inputs = array();
-		$languages = array_merge(array('auto' => __('Automatical', 'serbian-transliteration')), parent::registered_languages());
+		$languages = array_merge(array('auto' => __('Automatical', 'serbian-transliteration')), Transliteration_Utilities::registered_languages());
 		
 		if( !isset($this->options['language-scheme']) ) {
 			$this->options['language-scheme'] = ( 
 				in_array(
-					parent::get_locale(),
-					array_keys(parent::registered_languages())
-				) ? parent::get_locale() : 'auto'
+					Transliteration_Utilities::get_locale(),
+					array_keys(Transliteration_Utilities::registered_languages())
+				) ? Transliteration_Utilities::get_locale() : 'auto'
 			);
 		}
 
@@ -608,7 +606,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
     {
 		$inputs = array();
 
-		foreach(parent::plugin_mode() as $key=>$label)
+		foreach(Transliteration_Utilities::plugin_mode() as $key=>$label)
 		{
 			$inputs[]=sprintf(
 				'<label for="mode-%1$s" class="label-block"><input type="radio" id="mode-%1$s" name="%3$s[mode]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label>',
@@ -869,13 +867,13 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				esc_attr($key),
 				esc_html($label),
 				 RSTR_NAME,
-				(isset( $this->options['permalink-transliteration'] ) && $this->options['permalink-transliteration'] == $key ? ' checked' : ((parent::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? $key == 'no' : $key == 'yes') ? ' checked' : '')),
-				(parent::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? ' disabled' : '')
+				(isset( $this->options['permalink-transliteration'] ) && $this->options['permalink-transliteration'] == $key ? ' checked' : ((Transliteration_Utilities::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? $key == 'no' : $key == 'yes') ? ' checked' : '')),
+				(Transliteration_Utilities::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? ' disabled' : '')
 			);
 		}
 		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to force cyrillic permalinks to latin.', 'serbian-transliteration'));
-		if(parent::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
-			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', 'serbian-transliteration'), '<code>'.parent::get_locale().'</code>'));
+		if(Transliteration_Utilities::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
+			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', 'serbian-transliteration'), '<code>'.Transliteration_Utilities::get_locale().'</code>'));
 		}
 	}
 	

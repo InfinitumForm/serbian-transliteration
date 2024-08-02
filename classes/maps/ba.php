@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  *
  */
-if(!class_exists('Transliteration_Map_ba')) :
+if(!class_exists('Transliteration_Map_ba', false)) :
 class Transliteration_Map_ba {
 
 	public static $map = array(

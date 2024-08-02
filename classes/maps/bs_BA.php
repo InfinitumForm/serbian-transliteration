@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  *
  */
-if(!class_exists('Transliteration_Map_bs_BA')) :
+if(!class_exists('Transliteration_Map_bs_BA', false)) :
 class Transliteration_Map_bs_BA {
 
 	public static $map = array(
@@ -43,7 +43,8 @@ class Transliteration_Map_bs_BA {
 	{
 		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
 
-		$transliteration = apply_filters('rstr/inc/transliteration/bs_BA', self::$map);
+		$transliteration = apply_filters('transliteration_map_bs_BA', self::$map);
+		$transliteration = apply_filters_deprecated('rstr/inc/transliteration/bs_BA', [$transliteration], '2.0.0', 'transliteration_map_bs_BA');
 
 		switch($translation)
 		{
