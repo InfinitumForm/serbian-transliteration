@@ -67,7 +67,12 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		]);
 	}
 	
-	public static function skip_transliteration(){
+	/*
+	 * Skip transliteration
+	 * @return        bool
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function skip_transliteration() : bool {
 		return (isset($_REQUEST['rstr_skip']) && in_array($_REQUEST['rstr_skip'], ['true', true, 1, '1', 'yes']) !== false);
 	}
 	
@@ -461,12 +466,43 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 				$expire = ( time() + YEAR_IN_SECONDS );
 			}
 			setcookie( 'rstr_script', $val, $expire, COOKIEPATH, COOKIE_DOMAIN );
-			Transliteration_Cache::delete('get_current_script');
 			if(function_exists('nocache_headers')) nocache_headers();
 			return true;
 		}
 
 		return false;
+	}
+	
+	/*
+	 * Get current script
+	 * @since     1.0.10
+	 * @verson    1.0.0
+	 */
+	public static function get_current_script() {
+		
+		// Get cached script
+		static $script = NULL;
+		if( $script ) {
+			return $script;
+		}
+		
+		// Cookie mode
+		if( !empty( $_COOKIE['rstr_script'] ?? NULL ) ){
+			switch( sanitize_text_field($_COOKIE['rstr_script']) ) {
+				case 'lat':
+					$script = 'lat';
+					break;
+				
+				case 'cyr':
+					$script = 'cyr';
+					break;
+			}
+		}
+		
+		// Set new script
+		$script = get_rstr_option('first-visit-mode', 'lat');
+		
+		return $script;
 	}
 
 	/*

@@ -9,7 +9,11 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 	 */
 	public function __construct() {
 		// Disable transliteration
-		if(get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none' || Transliteration_Controller::get()->disable_transliteration()) {
+		if(
+			get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none'
+			|| Transliteration_Controller::get()->disable_transliteration()
+			|| Transliteration_Utilities::skip_transliteration()
+		) {
 			return;
 		}
 		// Load transliteration
@@ -127,23 +131,23 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 */
-	public function transliterate_objects($data) {
+	public function transliterate_objects($data, $mode = 'auto') {
 		if (is_array($data)) {
 			// Ako je data niz, rekurzivno prolazimo kroz sve elemente niza
 			foreach ($data as &$value) {
 				if (is_array($value) || is_object($value)) {
-					$value = $this->transliterate_objects($value);
+					$value = $this->transliterate_objects($value, $mode);
 				} elseif (is_string($value)) {
-					$value = Transliteration_Controller::get()->transliterate($value);
+					$value = Transliteration_Controller::get()->transliterate($value, $mode);
 				}
 			}
 		} elseif (is_object($data)) {
 			// Ako je data objekat, prolazimo kroz sve njegove javne varijable
 			foreach ($data as $key => $value) {
 				if (is_array($value) || is_object($value)) {
-					$data->$key = $this->transliterate_objects($value);
+					$data->$key = $this->transliterate_objects($value, $mode);
 				} elseif (is_string($value)) {
-					$data->$key = Transliteration_Controller::get()->transliterate($value);
+					$data->$key = Transliteration_Controller::get()->transliterate($value, $mode);
 				}
 			}
 		}
@@ -201,10 +205,6 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 	 * @version        1.0.0
 	 */
 	public function wp_mail ($args) {
-		
-		if( get_rstr_option('force-email-transliteration', 'yes') === 'no' ) {
-			return $args;
-		}
 		
 		if( $args['message'] ?? false ) {
 			$args['message'] = Transliteration_Controller::get()->transliterate($args['message']);

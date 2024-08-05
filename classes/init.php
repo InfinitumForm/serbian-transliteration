@@ -9,8 +9,13 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
         
         $classes = apply_filters('transliteration_classes_init', [
 			'Transliteration_Settings',
-			'Transliteration_Controller',
+			'Transliteration_Filters',
 			'Transliteration_Mode',
+			'Transliteration_Controller',
+			'Transliteration_Rest',
+			'Transliteration_Ajax',
+			'Transliteration_Email',
+			'Transliteration_Wordpress',
 			'Transliteration_Menus'
 		]);
 		

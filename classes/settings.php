@@ -5,6 +5,7 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 	public function __construct() {
 		$this->add_action('admin_menu', 'add_settings_page');
 		$this->add_action('admin_init', 'register_settings');
+		$this->add_action('wp_before_admin_bar_render', 'admin_bar_link');
 		$this->add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
 	}
 
@@ -16,6 +17,18 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
             'transliteration-settings',
             array($this, 'create_admin_page')
         );
+	}
+	
+	public function admin_bar_link() {
+		if(current_user_can('administrator')) {
+			global $wp_admin_bar;
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'site-name',
+				'id' => 'transliteration-settings',
+				'title' => __('Transliteration', 'serbian-transliteration'),
+				'href' => admin_url( '/options-general.php?page=transliteration-settings' ),
+			));
+		}
 	}
 	
 	public function enqueue_admin_scripts($hook) {

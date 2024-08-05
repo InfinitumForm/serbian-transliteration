@@ -6,7 +6,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * The main constructor
 	 */
 	public function __construct() {
-		$this->add_action('template_redirect', 'transliteration_tags_start');	
+		$this->add_action('template_redirect', 'transliteration_tags_start', 1);
     }
 	
 	/*
@@ -63,6 +63,24 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		}
 		
 		return $mode;
+	}
+	
+	/**
+	 * Exclude words or sentences for Latin
+	 * @return        array
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public function lat_exclude_list(){
+		return apply_filters('rstr/init/exclude/lat', array());
+	}
+	
+	/**
+	 * Exclude words or sentences for Cyrillic
+	 * @return        array
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public function cyr_exclude_list(){
+		return apply_filters('rstr/init/exclude/cyr', array());
 	}
 	
 	/*
@@ -154,7 +172,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		}
 		
 		if($sanitize_html) {
-			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
+			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
 				$transliteratedValue = $class_map::transliterate($matches[3], 'cyr_to_lat');
 				$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
 				return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
@@ -235,7 +253,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		}
 		
 		if($sanitize_html) {
-			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
+			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
 				$transliteratedValue = $class_map::transliterate($matches[3], 'lat_to_cyr');
 				$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
 				return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
