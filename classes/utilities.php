@@ -123,6 +123,10 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	public static function get_locale($locale = NULL) {
 		static $get_locale = NULL;
 		
+		if( !function_exists('is_user_logged_in') ) {
+			include_once WPINC.'/pluggable.php';
+		}
+		
 		$language_scheme = get_rstr_option('language-scheme', 'auto');
 		if ($language_scheme !== 'auto') {
 			return $language_scheme;

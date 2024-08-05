@@ -25,10 +25,6 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 */
 	public function mode() {
 		
-		if( $this->disable_transliteration() ) {
-			return 'disabled';
-		}
-		
 		// Get cached mode
 		static $mode = NULL;
 		if( $mode ) {
