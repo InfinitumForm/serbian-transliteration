@@ -5,11 +5,59 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
     public function __construct() {
         // Register the textdomain for the plugin
         $this->add_action('plugins_loaded', 'load_textdomain');
+		$this->add_action('template_redirect', 'set_transliteration');
         
-        new Transliteration_Settings();
-        new Transliteration_Controller();
-        new Transliteration_Mode();
+        $classes = apply_filters('transliteration_classes_init', [
+			'Transliteration_Settings',
+			'Transliteration_Controller',
+			'Transliteration_Mode',
+			'Transliteration_Menus'
+		]);
+		
+		foreach ($classes as $class_name) {
+			new $class_name();
+		}
     }
+	
+	/*
+	 * Set transliteration & redirections
+	 */
+	public function set_transliteration () {
+		// URL Selector
+		$url_selector = get_rstr_option('url-selector', 'rstr');
+		
+		// Set REQUEST param
+		$request = $_REQUEST[$url_selector] ?? NULL;
+		if( in_array($request, apply_filters('rstr/allowed_script', ['cyr', 'lat']), true) !== false ) {
+			// Set cookie
+			Transliteration_Utilities::setcookie($request);
+			// Get current URL
+			$url = remove_query_arg($url_selector);
+			// Set no-cache headers
+			if(get_rstr_option('cache-support', 'no') == 'yes') {
+				$url = add_query_arg('_rstr_nocache', uniqid($url_selector . random_int(1000,9999)), $url);
+				Transliteration_Utilities::cache_flush();
+			} else if(function_exists('nocache_headers')) {
+				nocache_headers();
+			}
+			
+			if(wp_safe_redirect($url, 301)) {
+				exit;
+			}
+		}
+		
+		// Cache control
+		if( isset($_REQUEST['_rstr_nocache']) ) {
+			// Clear cache
+			if(function_exists('nocache_headers')) {
+				nocache_headers();
+			}
+			// Remove cache param
+			if(wp_safe_redirect( remove_query_arg('_rstr_nocache'), 301 )) {
+				exit;
+			}
+		}
+	}
 	
 	
 	/*

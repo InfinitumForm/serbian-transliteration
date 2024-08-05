@@ -23,14 +23,14 @@ if( !class_exists('Transliteration_Sanitization', false) ) : class Transliterati
 	/*
 	 * Fix the Latin content
 	 */
-	public function lat($content) {
+	public function lat($content, $sanitize_html = false) {
 		return $content;
 	}
 	
 	/*
 	 * Fix the Cyrillic content
 	 */
-	public function cyr($content) {
+	public function cyr($content, $sanitize_html = false) {
 		return $content;
 	}
 	

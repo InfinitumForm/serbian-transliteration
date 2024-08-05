@@ -140,6 +140,80 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	}
 	
 	/*
+	 * Get list of available locales
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function get_locales( $needle = NULL ){
+		$cache = Transliteration_Cache_DB::get('get_locales');
+
+		if(empty($cache))
+		{
+			$file_name=apply_filters('rstr/init/libraries/file/locale', 'locale.lib');
+			$cache = self::parse_library($file_name);
+			
+			if(!empty($cache)) {
+				Transliteration_Cache_DB::set('get_locales', $cache, apply_filters('rstr/init/libraries/file/locale/transient', YEAR_IN_SECONDS));
+			}
+		}
+
+		if($needle && is_array($cache)) {
+			return (in_array($needle, $cache, true) !== false ? $needle : false);
+		}
+
+		return $cache;
+	}
+	
+	/*
+	 * Parse library
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function parse_library($file_name, $needle = NULL) {
+
+		$words = array();
+		$words_file=apply_filters('rstr/init/libraries/file', RSTR_ROOT . '/libraries/' . $file_name);
+
+		if(file_exists($words_file))
+		{
+				$contents = '';
+				if($read_file_chunks = self::read_file_chunks($words_file))
+				{
+					foreach ($read_file_chunks as $chunk) {
+						$contents.=$chunk;
+					}
+				}
+
+				if(!empty($contents))
+				{
+					$words = self::explode("\n", $contents);
+					$words = array_unique($words);
+				} else return false;
+		} else return false;
+
+		if($needle) {
+			return (in_array($needle, $words, true) !== false ? $needle : false);
+		} else {
+			return $words;
+		}
+	}
+	
+	/*
+	* Read file with chunks with memory free
+	* @since     1.6.7
+	*/
+	private static function read_file_chunks($path) {
+		if($handle = fopen($path, 'r')) {
+			while(!feof($handle)) {
+				yield fgets($handle);
+			}
+			fclose($handle);
+		} else {
+			return false;
+		}
+	}
+	
+	/*
 	 * Exclude transliteration
 	 * @return        bool
 	 * @author        Ivijan-Stefan Stipic
@@ -377,10 +451,12 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @since     1.0.10
 	 * @verson    1.0.0
 	*/
-	public static function setcookie ($val) {
+	public static function setcookie (string $val, int $expire = NULL) {
 		if( !headers_sent() ) {
-
-			setcookie( 'rstr_script', $val, (time()+YEAR_IN_SECONDS), COOKIEPATH, COOKIE_DOMAIN );
+			if( !$expire ) {
+				$expire = ( time() + YEAR_IN_SECONDS );
+			}
+			setcookie( 'rstr_script', $val, $expire, COOKIEPATH, COOKIE_DOMAIN );
 			Transliteration_Cache::delete('get_current_script');
 			if(function_exists('nocache_headers')) nocache_headers();
 			return true;
@@ -859,5 +935,96 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	/**
 	 * END Get current page ID
 	 *****************************************************************/
+
+	/*
+	* Normalize latin string and remove special characters
+	* @since     1.6.7
+	*/
+	public static function normalize_latin_string($str){
+		$map = apply_filters('rstr/utilities/normalize_latin_string', array(
+			'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Ă'=>'A', 'Ā'=>'A', 'Ą'=>'A', 'Æ'=>'A', 'Ǽ'=>'A',
+			'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'ă'=>'a', 'ā'=>'a', 'ą'=>'a', 'æ'=>'a', 'ǽ'=>'a',
+
+			'Þ'=>'B', 'þ'=>'b', 'ß'=>'Ss',
+
+			'Ç'=>'C', 'Č'=>'C', 'Ć'=>'C', 'Ĉ'=>'C', 'Ċ'=>'C',
+			'ç'=>'c', 'č'=>'c', 'ć'=>'c', 'ĉ'=>'c', 'ċ'=>'c',
+
+			'Đ'=>'Dj', 'Ď'=>'D',
+			'đ'=>'dj', 'ď'=>'d',
+
+			'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ĕ'=>'E', 'Ē'=>'E', 'Ę'=>'E', 'Ė'=>'E',
+			'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ĕ'=>'e', 'ē'=>'e', 'ę'=>'e', 'ė'=>'e',
+
+			'Ĝ'=>'G', 'Ğ'=>'G', 'Ġ'=>'G', 'Ģ'=>'G',
+			'ĝ'=>'g', 'ğ'=>'g', 'ġ'=>'g', 'ģ'=>'g',
+
+			'Ĥ'=>'H', 'Ħ'=>'H',
+			'ĥ'=>'h', 'ħ'=>'h',
+
+			'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'İ'=>'I', 'Ĩ'=>'I', 'Ī'=>'I', 'Ĭ'=>'I', 'Į'=>'I',
+			'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'į'=>'i', 'ĩ'=>'i', 'ī'=>'i', 'ĭ'=>'i', 'ı'=>'i',
+
+			'Ĵ'=>'J',
+			'ĵ'=>'j',
+
+			'Ķ'=>'K', 'Ƙ'=>'K',
+			'ķ'=>'k', 'ĸ'=>'k',
+
+			'Ĺ'=>'L', 'Ļ'=>'L', 'Ľ'=>'L', 'Ŀ'=>'L', 'Ł'=>'L',
+			'ĺ'=>'l', 'ļ'=>'l', 'ľ'=>'l', 'ŀ'=>'l', 'ł'=>'l',
+
+			'Ñ'=>'N', 'Ń'=>'N', 'Ň'=>'N', 'Ņ'=>'N', 'Ŋ'=>'N',
+			'ñ'=>'n', 'ń'=>'n', 'ň'=>'n', 'ņ'=>'n', 'ŋ'=>'n', 'ŉ'=>'n',
+
+			'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ō'=>'O', 'Ŏ'=>'O', 'Ő'=>'O', 'Œ'=>'O',
+			'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ō'=>'o', 'ŏ'=>'o', 'ő'=>'o', 'œ'=>'o', 'ð'=>'o',
+
+			'Ŕ'=>'R', 'Ř'=>'R',
+			'ŕ'=>'r', 'ř'=>'r', 'ŗ'=>'r',
+
+			'Š'=>'S', 'Ŝ'=>'S', 'Ś'=>'S', 'Ş'=>'S',
+			'š'=>'s', 'ŝ'=>'s', 'ś'=>'s', 'ş'=>'s',
+
+			'Ŧ'=>'T', 'Ţ'=>'T', 'Ť'=>'T',
+			'ŧ'=>'t', 'ţ'=>'t', 'ť'=>'t',
+
+			'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ũ'=>'U', 'Ū'=>'U', 'Ŭ'=>'U', 'Ů'=>'U', 'Ű'=>'U', 'Ų'=>'U',
+			'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ũ'=>'u', 'ū'=>'u', 'ŭ'=>'u', 'ů'=>'u', 'ű'=>'u', 'ų'=>'u',
+
+			'Ŵ'=>'W', 'Ẁ'=>'W', 'Ẃ'=>'W', 'Ẅ'=>'W',
+			'ŵ'=>'w', 'ẁ'=>'w', 'ẃ'=>'w', 'ẅ'=>'w',
+
+			'Ý'=>'Y', 'Ÿ'=>'Y', 'Ŷ'=>'Y',
+			'ý'=>'y', 'ÿ'=>'y', 'ŷ'=>'y',
+
+			'Ž'=>'Z', 'Ź'=>'Z', 'Ż'=>'Z',
+			'ž'=>'z', 'ź'=>'z', 'ż'=>'z',
+			
+			'ა' => 'a', 'Ა' => 'A', 'ბ' => 'b', 'Ბ' => 'B', 'გ' => 'g', 'Გ' => 'G',
+			'დ' => 'd', 'Დ' => 'D', 'ე' => 'e', 'Ე' => 'E', 'ვ' => 'v', 'Ვ' => 'V',
+			'ზ' => 'z', 'Ზ' => 'Z', 'თ' => 'th', 'Თ' => 'Th', 'ი' => 'i', 'Ი' => 'I',
+			'კ' => 'k', 'Კ' => 'K', 'ლ' => 'l', 'Ლ' => 'L', 'მ' => 'm', 'Მ' => 'M',
+			'ნ' => 'n', 'Ნ' => 'N', 'ო' => 'o', 'Ო' => 'O', 'პ' => 'p', 'Პ' => 'P',
+			'ჟ' => 'zh', 'Ჟ' => 'Zh', 'რ' => 'r', 'Რ' => 'R', 'ს' => 's', 'Ს' => 'S',
+			'ტ' => 't', 'Ტ' => 'T', 'უ' => 'u', 'Უ' => 'U', 'ფ' => 'ph', 'Ფ' => 'Ph',
+			'ქ' => 'q', 'Ქ' => 'Q', 'ღ' => 'gh', 'Ღ' => 'Gh', 'ყ' => 'qh', 'Ყ' => 'Qh',
+			'შ' => 'sh', 'Შ' => 'Sh', 'ჩ' => 'ch', 'Ჩ' => 'Ch', 'ც' => 'ts', 'Ც' => 'Ts',
+			'ძ' => 'dz', 'Ძ' => 'Dz', 'წ' => 'ts', 'Წ' => 'Ts', 'ჭ' => 'tch', 'Ჭ' => 'Tch',
+			'ხ' => 'kh', 'Ხ' => 'Kh', 'ჯ' => 'j', 'Ჯ' => 'J', 'ჰ' => 'h', 'Ჰ' => 'H',
+
+			'“'=>'"', '”'=>'"', '‘'=>"'", '’'=>"'", '•'=>'-', '…'=>'...', '—'=>'-', '–'=>'-', '¿'=>'?', '¡'=>'!', '°'=>__(' degrees ', 'serbian-transliteration'),
+			'¼'=>' 1/4 ', '½'=>' 1/2 ', '¾'=>' 3/4 ', '⅓'=>' 1/3 ', '⅔'=>' 2/3 ', '⅛'=>' 1/8 ', '⅜'=>' 3/8 ', '⅝'=>' 5/8 ', '⅞'=>' 7/8 ',
+			'÷'=>__(' divided by ', 'serbian-transliteration'), '×'=>__(' times ', 'serbian-transliteration'), '±'=>__(' plus-minus ', 'serbian-transliteration'), '√'=>__(' square root ', 'serbian-transliteration'),
+			'∞'=>__(' infinity ', 'serbian-transliteration'), '≈'=>__(' almost equal to ', 'serbian-transliteration'), '≠'=>__(' not equal to ', 'serbian-transliteration'), 
+			'≡'=>__(' identical to ', 'serbian-transliteration'), '≤'=>__(' less than or equal to ', 'serbian-transliteration'), '≥'=>__(' greater than or equal to ', 'serbian-transliteration'),
+			'←'=>__(' left ', 'serbian-transliteration'), '→'=>__(' right ', 'serbian-transliteration'), '↑'=>__(' up ', 'serbian-transliteration'), '↓'=>__(' down ', 'serbian-transliteration'),
+			'↔'=>__(' left and right ', 'serbian-transliteration'), '↕'=>__(' up and down ', 'serbian-transliteration'), '℅'=>__(' care of ', 'serbian-transliteration'), 
+			'℮' => __(' estimated ', 'serbian-transliteration'), 'Ω'=>__(' ohm ', 'serbian-transliteration'), '♀'=>__(' female ', 'serbian-transliteration'), '♂'=>__(' male ', 'serbian-transliteration'),
+			'©'=>__(' Copyright ', 'serbian-transliteration'), '®'=>__(' Registered ', 'serbian-transliteration'), '™' =>__(' Trademark ', 'serbian-transliteration'),
+		), $str);
+
+		return strtr($str, $map);
+	}
 
 } endif;

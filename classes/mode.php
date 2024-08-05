@@ -104,12 +104,136 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 		}
 	}
 	
+	/**
+	 * Transliterate any content
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 */
 	public function content( $content ) {
 		return Transliteration_Controller::get()->transliterate($content);
 	}
 	
+	/**
+	 * Transliterate text
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 */
 	public function no_html_content( $content ) {
-		return Transliteration_Controller::get()->transliterate($content);
+		return Transliteration_Controller::get()->transliterate_no_html($content);
+	}
+	
+	/**
+	 * Transliterate Objects
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 */
+	public function transliterate_objects($data) {
+		if (is_array($data)) {
+			// Ako je data niz, rekurzivno prolazimo kroz sve elemente niza
+			foreach ($data as &$value) {
+				if (is_array($value) || is_object($value)) {
+					$value = $this->transliterate_objects($value);
+				} elseif (is_string($value)) {
+					$value = Transliteration_Controller::get()->transliterate($value);
+				}
+			}
+		} elseif (is_object($data)) {
+			// Ako je data objekat, prolazimo kroz sve njegove javne varijable
+			foreach ($data as $key => $value) {
+				if (is_array($value) || is_object($value)) {
+					$data->$key = $this->transliterate_objects($value);
+				} elseif (is_string($value)) {
+					$data->$key = Transliteration_Controller::get()->transliterate($value);
+				}
+			}
+		}
+
+		return $data;
+	}
+	
+	/**
+	 * Transliterate WP Terms
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 */
+	public function transliteration_wp_terms($wp_terms) {
+		if (empty($wp_terms) || !is_array($wp_terms)) {
+			return $wp_terms;
+		}
+
+		foreach ($wp_terms as $i => $term) {
+			if (is_object($term)) {
+				if (isset($term->name) && !empty($term->name)) {
+					$wp_terms[$i]->name = Transliteration_Controller::get()->transliterate($term->name);
+				}
+				if (isset($term->description) && !empty($term->description)) {
+					$wp_terms[$i]->description = Transliteration_Controller::get()->transliterate($term->description);
+				}
+			}
+		}
+
+		return $wp_terms;
+	}
+	
+	/**
+	 * Force all permalinks to latin
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 */
+	public function force_permalink_to_latin ($permalink) {
+		$permalink = rawurldecode($permalink);
+		$permalink= Transliteration_Controller::get()->cyr_to_lat_sanitize($permalink);
+		return $permalink;
+	}
+	
+	/**
+	 * Transliterate Image attributes
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 */
+	public function image_attributes($attributes) {		
+		return Transliteration_Controller::get()->transliterate_attributes($attributes, ['alt', 'title']);
+	}
+	
+	/**
+	 * Transliterate WP Mails
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 */
+	public function wp_mail ($args) {
+		
+		if( get_rstr_option('force-email-transliteration', 'yes') === 'no' ) {
+			return $args;
+		}
+		
+		if( $args['message'] ?? false ) {
+			$args['message'] = Transliteration_Controller::get()->transliterate($args['message']);
+		}
+		
+		if( $args['subject'] ?? false ) {
+			$args['subject'] = Transliteration_Controller::get()->transliterate($args['subject']);
+		}
+		
+		return $args;
+	}
+	
+	/*
+	 * Transliterate gettext (HTML & Text)
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 **/
+	public function gettext_content($content, $text = '', $domain = '') {
+		if (empty($content)) {
+			return $content;
+		}
+
+		if ( is_array($content) ) {
+			return $this->transliterate_objects($content);
+		} else if ( is_string($content) ) {
+			return Transliteration_Controller::get()->transliterate($content);
+		}
+
+		return $content;
 	}
 	
 } endif;

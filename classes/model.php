@@ -79,7 +79,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
      * @return mixed
 	 * @throws Exception if the property does not exist.
      */
-    public function get_property($property) {
+    public function get_property(string $property) {
         if (property_exists($this, $property)) {
             return $this->$property;
         }
@@ -96,7 +96,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
      * @return $this
 	 * @throws Exception if the property does not exist.
      */
-    public function set_property($property, $value) {
+    public function set_property(string $property, $value) {
         if (property_exists($this, $property)) {
             $this->$property = $this->sanitize($value);
             return $this;
@@ -106,10 +106,21 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
     }
 	
 	/*
-	 * Hook for add_action()
+	 * Helper for add_action()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1){
+	public function ob_start(string|array|callable $callback = null, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_STDFLAGS){
+		if(!is_array($callback) && !is_callable($callback)){
+			$callback = array(&$this, $callback);
+		}
+		ob_start($callback, $chunk_size, $flags);
+	}
+	
+	/*
+	 * Helper for add_action()
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public function add_action(string $tag, string|array $function_to_add, int $priority = 10, int $accepted_args = 1){
 		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
 		}
@@ -117,10 +128,10 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	}
 
 	/*
-	 * Hook for remove_action()
+	 * Helper for remove_action()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function remove_action($tag, $function_to_remove, $priority = 10){
+	public function remove_action(string $tag, string|array $function_to_remove, int $priority = 10){
 		if(!is_array($function_to_remove)){
 			$function_to_remove = array(&$this, $function_to_remove);
 		}
@@ -128,10 +139,10 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	}
 
 	/*
-	 * Hook for add_filter()
+	 * Helper for add_filter()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1){
+	public function add_filter(string $tag, string|array $function_to_add, int $priority = 10, int $accepted_args = 1){
 		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
 		}
@@ -139,10 +150,10 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	}
 
 	/*
-	 * Hook for remove_filter()
+	 * Helper for remove_filter()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function remove_filter($tag, $function_to_remove, $priority = 10){
+	public function remove_filter(string $tag, string|array $function_to_remove, int $priority = 10){
 		if(!is_array($function_to_remove)){
 			$function_to_remove = array(&$this, $function_to_remove);
 		}
@@ -150,10 +161,10 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	}
 
 	/*
-	 * Hook for add_shortcode()
+	 * Helper for add_shortcode()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function add_shortcode($tag, $function_to_add){
+	public function add_shortcode(string $tag, string|array $function_to_add){
 		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
 		}
