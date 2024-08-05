@@ -6,8 +6,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * The main constructor
 	 */
 	public function __construct() {
-		$this->add_action('template_redirect', 'transliteration_tags_start');
-		
+		$this->add_action('template_redirect', 'transliteration_tags_start');	
     }
 	
 	/*
@@ -96,7 +95,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	/*
 	 * Transliteration of attributes
 	 */
-	private function transliterate_attributes(array $attr, array $keys, $mode = 'auto') {
+	public function transliterate_attributes(array $attr, array $keys, $mode = 'auto') {
 		
 		foreach ($keys as $key) {
 			if (isset($attr[$key])) {

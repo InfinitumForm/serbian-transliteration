@@ -91,6 +91,8 @@ spl_autoload_register(function ($class_name) {
     $prefixes = [
         'Transliteration_Map_' => RSTR_CLASSES . '/maps/',
 		'Transliteration_Mode_' => RSTR_CLASSES . '/modes/',
+		'Transliteration_Plugin_' => RSTR_CLASSES . '/plugins/',
+		'Transliteration_Theme_' => RSTR_CLASSES . '/themes/',
         'Transliteration_'      => RSTR_CLASSES . '/'
     ];
     
