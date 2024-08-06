@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Mode_Dev', false) ) : class Transliteration_Mode_Dev extends Transliteration {
+if( !class_exists('Transliteration_Mode_Dev', false) ) : class Transliteration_Mode_Dev {
     
 	// Mode ID
 	const MODE = 'dev';

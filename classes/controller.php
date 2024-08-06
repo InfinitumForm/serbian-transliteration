@@ -68,19 +68,27 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	/**
 	 * Exclude words or sentences for Latin
 	 * @return        array
-	 * @author        Ivijan-Stefan Stipic
+	 * @autor        Ivijan-Stefan Stipic
 	 */
-	public function lat_exclude_list(){
-		return apply_filters('rstr/init/exclude/lat', array());
+	public function lat_exclude_list() {
+		static $lat_exclude_list = null;
+		if ($lat_exclude_list === null) {
+			$lat_exclude_list = apply_filters('rstr/init/exclude/lat', []);
+		}
+		return $lat_exclude_list;
 	}
-	
+
 	/**
 	 * Exclude words or sentences for Cyrillic
 	 * @return        array
-	 * @author        Ivijan-Stefan Stipic
+	 * @autor        Ivijan-Stefan Stipic
 	 */
-	public function cyr_exclude_list(){
-		return apply_filters('rstr/init/exclude/cyr', array());
+	public function cyr_exclude_list() {
+		static $cyr_exclude_list = null;
+		if ($cyr_exclude_list === null) {
+			$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', []);
+		}
+		return $cyr_exclude_list;
 	}
 	
 	/*
@@ -148,12 +156,13 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	/*
 	 * Cyrillic to Latin
 	 */
-	public function cyr_to_lat($content, $sanitize_html = true){
-
-		if(Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()){
+	public function cyr_to_lat($content, $sanitize_html = true) {
+		// If the content should not be transliterated or the user is an editor, return the original content
+		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
-		
+
+		// Handle percentage format specifiers by replacing them with placeholders
 		$formatSpecifiers = [];
 		$content = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function($matches) use (&$formatSpecifiers) {
 			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
@@ -161,17 +170,33 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			return $placeholder;
 		}, $content);
 
+		// Retrieve the list of Cyrillic words to exclude from transliteration
+		$exclude_list = $this->cyr_exclude_list();
+		$exclude_placeholders = [];
+
+		// Check if the exclusion list is not empty
+		if (!empty($exclude_list)) {
+			foreach ($exclude_list as $key => $word) {
+				$placeholder = '@#=' . $key . '=#@';
+				$content = str_replace($word, $placeholder, $content);
+				$exclude_placeholders[$placeholder] = $word;
+			}
+		}
+
+		// Perform the transliteration using the class map
 		$class_map = Transliteration_Map::get()->map();
-		if( class_exists($class_map) ) {
+		if (class_exists($class_map)) {
 			$content = $class_map::transliterate($content, 'cyr_to_lat');
 			$content = Transliteration_Sanitization::get()->lat($content, $sanitize_html);
 		}
-		
-		if($formatSpecifiers) {
+
+		// Restore percentage format specifiers back to their original form
+		if ($formatSpecifiers) {
 			$content = strtr($content, $formatSpecifiers);
 		}
-		
-		if($sanitize_html) {
+
+		// Sanitize HTML attributes and transliterate their values
+		if ($sanitize_html) {
 			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
 				$transliteratedValue = $class_map::transliterate($matches[3], 'cyr_to_lat');
 				$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
@@ -179,9 +204,15 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			}, $content);
 		}
 
+		// Restore excluded words back to their original form
+		if ($exclude_placeholders) {
+			$content = strtr($content, $exclude_placeholders);
+		}
+
 		return $content;
-		
 	}
+
+
 	
 	/*
 	 * Translate from cyr to lat
@@ -227,32 +258,48 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	/*
 	 * Latin to Cyrillic
 	 */
-	public function lat_to_cyr($content, $sanitize_html = true){
-
-		if(Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()){
+	public function lat_to_cyr($content, $sanitize_html = true) {
+		// If the content should not be transliterated or the user is an editor, return the original content
+		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
-		
+
+		// Handle various format specifiers and other patterns by replacing them with placeholders
 		$formatSpecifiers = [];
 		$regex = (
 			$sanitize_html
 			? '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|<[^>]+>|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|cyr_to_lat|lat_to_cyr)/'
-			: '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|cyr_to_lat|lat_to_cyr)/');
+			: '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|cyr_to_lat|lat_to_cyr)/'
+		);
 		$content = preg_replace_callback($regex, function($matches) use (&$formatSpecifiers) {
 			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
 
+		// Retrieve the list of Latin words to exclude from transliteration
+		$exclude_list = $this->lat_exclude_list();
+		$exclude_placeholders = [];
+		if (!empty($exclude_list)) {
+			foreach ($exclude_list as $key => $word) {
+				$placeholder = '@#=' . $key . '=#@';
+				$content = str_replace($word, $placeholder, $content);
+				$exclude_placeholders[$placeholder] = $word;
+			}
+		}
+
+		// Perform the transliteration using the class map
 		$class_map = Transliteration_Map::get()->map();
 		$content = $class_map::transliterate($content, 'lat_to_cyr');
 		$content = Transliteration_Sanitization::get()->cyr($content, $sanitize_html);
-		
-		if($formatSpecifiers) {
+
+		// Restore format specifiers back to their original form
+		if ($formatSpecifiers) {
 			$content = strtr($content, $formatSpecifiers);
 		}
-		
-		if($sanitize_html) {
+
+		// Sanitize HTML attributes and transliterate their values
+		if ($sanitize_html) {
 			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
 				$transliteratedValue = $class_map::transliterate($matches[3], 'lat_to_cyr');
 				$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
@@ -260,8 +307,14 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			}, $content);
 		}
 
+		// Restore excluded words back to their original form
+		if ($exclude_placeholders) {
+			$content = strtr($content, $exclude_placeholders);
+		}
+
 		return $content;
 	}
+
 	
 	/*
 	 * Transliteration tags buffer start

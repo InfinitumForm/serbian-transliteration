@@ -19,6 +19,14 @@
 	padding-top: 20px
 }
 
+#wp-transliteration-settings #post-body-content form table .required-box {
+	border:1px solid #cc0000;
+	padding:10px 15px;
+	box-shadow:0 0 3px #cc0000;
+	background:rgba(100,0,0, 0.02);
+	color:#cc0000;
+}
+
 #wp-transliteration-settings #post-body-content form table .description {
 	display: block;
 	background: #f1f1f1;
@@ -26,6 +34,19 @@
 	margin: 8px 0 0 0;
     position: relative;
 	color:#343434;
+}
+
+#wp-transliteration-settings #post-body-content form table .row {
+    display:block;
+}
+
+#wp-transliteration-settings #post-body-content form table .row .col+.col {
+    margin-top: 15px;
+}
+
+#wp-transliteration-settings #post-body-content form table .row .col {
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 #wp-transliteration-settings #post-body-content form table .description.inline{
@@ -164,10 +185,52 @@
 	overflow: hidden;
 }
 
+#wp-transliteration-settings .accordion-container .col p {
+	overflow: hidden;
+	position: relative;
+}
+
+#wp-transliteration-settings .accordion-container .col p > label {
+	position: relative;
+}
+
+#wp-transliteration-settings .accordion-container .col p > label > span {
+	position: absolute;
+    top: auto;
+    left: 20px;
+	top: -2px;
+}
+
+#wp-transliteration-settings .accordion-container .col p+p{
+	margin-top:15px;
+}
 
 
 
-/* Mobile fix */
+/* Media fix */
+@media (min-width: 1400px){
+	#wp-transliteration-settings #post-body-content form table .row{
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		margin-right: -15px;
+		margin-left: -15px;
+	}
+
+	#wp-transliteration-settings #post-body-content form table .row .col {
+		-ms-flex-preferred-size: 0;
+		flex-basis: 0;
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		max-width: 100%;
+	}
+	
+	#wp-transliteration-settings #post-body-content form table .row .col+.col {
+		margin-top: 0;
+	}
+}
+
 @media (max-width: 960px){
 	#wp-transliteration-settings .has-right-sidebar #post-body-content {
 		margin-right: 0;
@@ -179,5 +242,8 @@
 	
 	#wp-transliteration-settings #post-body-content form label.label-block + label.label-block{
 		margin-top: 8px !important;
+	}
+	#wp-transliteration-settings .accordion-container .col p > label > span {
+		left: 32px;
 	}
 }

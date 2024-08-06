@@ -8,13 +8,13 @@
  * @author            Ivijan-Stefan Stipic
  */
 if(!class_exists('Transliteration_Theme_Avada')) :
-	class Transliteration_Theme_Avada
+	class Transliteration_Theme_Avada extends Transliteration
 	{
 		function __construct(){
-			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
+			$this->add_filter('transliteration_mode_filters', 'filters');
 		} 
 		
-		public static function filters ($filters=array()) {
+		public function filters ($filters=array()) {
 			$filters = array_merge($filters, array(
 				'avada_blog_read_more_link' => 'content',
 				'avada_render_blog_post_content' => 'content',

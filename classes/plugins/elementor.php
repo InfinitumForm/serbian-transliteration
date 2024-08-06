@@ -7,28 +7,14 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration__Plugin__elementor')) :
-	class Serbian_Transliteration__Plugin__elementor extends Serbian_Transliteration
+if(!class_exists('Transliteration_Plugin_Elementor', false)) :
+	class Transliteration_Plugin_Elementor extends Transliteration
 	{
-		
-		/* Run this script */
-		public static function run($dry = false) {
-			$class = self::class;
-			$instance = Serbian_Transliteration_Cache::get($class);
-			if ( !$instance ) {
-				$instance = Serbian_Transliteration_Cache::set($class, new self($dry));
-			}
-			return $instance;
-		}
-		
-		function __construct($dry = false){
-			if($dry) return;
-			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
+		function __construct(){
+			$this->add_filter('transliteration_mode_filters', 'filters');
 		} 
 		
-		public static function filters ($filters=array()) {
-			
-			$classname = self::run(true);
+		public function filters ($filters=array()) {
 			$filters = array_merge($filters, array(
 				'elementor/frontend/the_content' => 'content'
 			));

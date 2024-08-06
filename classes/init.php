@@ -8,8 +8,10 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 		$this->add_action('template_redirect', 'set_transliteration');
         
         $classes = apply_filters('transliteration_classes_init', [
-			'Transliteration_Settings',
+			'Transliteration_Themes',
+			'Transliteration_Plugins',
 			'Transliteration_Filters',
+			'Transliteration_Settings',
 			'Transliteration_Mode',
 			'Transliteration_Controller',
 			'Transliteration_Rest',

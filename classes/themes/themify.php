@@ -8,13 +8,13 @@
  * @author            Ivijan-Stefan Stipic
  */
 if(!class_exists('Transliteration_Theme_Themify')) :
-	class Transliteration_Theme_Themify
+	class Transliteration_Theme_Themify extends Transliteration
 	{
 		function __construct(){
-			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
+			$this->add_filter('transliteration_mode_filters', 'filters');
 		} 
 		
-		public static function filters ($filters=array()) {
+		public function filters ($filters=array()) {
 			$filters = array_merge($filters, array(
 				'tf_hook_body_start' => 'content',
 				'tf_hook_header_before' => 'content',

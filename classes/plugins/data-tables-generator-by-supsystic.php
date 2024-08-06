@@ -7,28 +7,14 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Serbian_Transliteration__Plugin__data_tables_generator_by_supsystic')) :
-	class Serbian_Transliteration__Plugin__data_tables_generator_by_supsystic extends Serbian_Transliteration
+if(!class_exists('Transliteration_Plugin_Data_Tables_Generator_By_Supsystic', false)) :
+	class Transliteration_Plugin_Data_Tables_Generator_By_Supsystic extends Transliteration
 	{
-		
-		/* Run this script */
-		public static function run($dry = false) {
-			$class = self::class;
-			$instance = Serbian_Transliteration_Cache::get($class);
-			if ( !$instance ) {
-				$instance = Serbian_Transliteration_Cache::set($class, new self($dry));
-			}
-			return $instance;
-		}
-		
-		function __construct($dry = false){
-			if($dry) return;
-			$this->add_filter('rstr/transliteration/exclude/filters', array(get_class(), 'filters'));
+		function __construct(){
+			$this->add_filter('transliteration_mode_filters', 'filters');
 		} 
 		
-		public static function filters ($filters=array()) {
-			
-			$classname = self::run(true);
+		public function filters ($filters=array()) {
 			$pfx = 'supsystic_tbl';
 			$filters = array_merge($filters, array(
 				"{$pfx}_after_contactform_loaded" => 'content',
@@ -47,7 +33,7 @@ if(!class_exists('Serbian_Transliteration__Plugin__data_tables_generator_by_sups
 				"{$pfx}_before_table_render" => 'content',
 				"{$pfx}_before_table_render_from_cache" => 'content',
 			));
-			asort($filters);
+			
 			return $filters;
 		}
 	}

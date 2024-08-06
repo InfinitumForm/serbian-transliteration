@@ -645,8 +645,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			__('The filters you select here will not be transliterated (these filters do not work on forced transliteration).', 'serbian-transliteration')
 		);
 
-		$modeInstance = Transliteration_Mode::get()->mode();
-		$list = array_keys( $modeInstance::get()->filters() );
+		$list = array_keys(Transliteration_Mode::get()->filters());
 		sort($list);
 		
 		?>
@@ -1108,7 +1107,16 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			$this->options['mode'] = $mode;
 			
 			$modeInstance = Transliteration_Mode::get()->mode($mode);			
-			$list = array_keys( $modeInstance::get()->filters() );
+			$list = $modeInstance::get()->filters();
+			
+			$list = apply_filters('transliteration_mode_filters', $list);
+			$list = apply_filters('transliteration_mode_filters_' . $modeInstance::MODE, $list);
+			
+			$list = apply_filters_deprecated('rstr/transliteration/exclude/filters', [$list], '2.0.0', 'transliteration_mode_filters');
+			$list = apply_filters_deprecated('rstr/transliteration/exclude/filters/' . $modeInstance::MODE, [$list], '2.0.0', 'transliteration_mode_filters_' . $modeInstance::MODE);
+			
+			$list = array_keys($list);
+			
 			sort($list);
 
 			$this->private___list_filter_mode_options($list, $this->options);
