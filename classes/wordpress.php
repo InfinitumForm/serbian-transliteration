@@ -8,6 +8,12 @@ if( !class_exists('Transliteration_Wordpress', false) ) : class Transliteration_
 		$this->transliterate_rss_atom();
 		$this->transliterate_widgets();
 		$this->transliterate_permalinks();
+		
+		if(get_rstr_option('media-transliteration', 'yes') == 'yes'){
+			$this->add_filter('wp_handle_upload_prefilter', 'upload_prefilter', (PHP_INT_MAX-1), 1);
+			$this->add_filter( 'sanitize_file_name', 'sanitize_file_name', (PHP_INT_MAX-1) );
+			$this->add_filter( 'wp_unique_filename', 'sanitize_file_name', (PHP_INT_MAX-1) );
+		}
     }
 	
 	public function allow_cyrillic_usernames($username, $raw_username, $strict) {
@@ -111,10 +117,39 @@ if( !class_exists('Transliteration_Wordpress', false) ) : class Transliteration_
 	
 	public function force_permalink_to_latin_on_save ($data, $postarr) {
 		if( isset($data['post_name']) ) {
-			$data['post_name'] = Transliteration_Mode::get()->force_permalink_to_latin( $data['post_name'] );
+			$data['post_name'] = $this->force_permalink_to_latin( $data['post_name'] );
 		}
 		
 		return $data;
+	}
+	
+	/*
+	 * Prefiler for the upload
+	*/
+	public function upload_prefilter ($file) {
+		$file['name']= $this->sanitize_file_name($file['name']);
+		return $file;
+	}
+
+	/*
+	 * Sanitize file name
+	*/
+	public function sanitize_file_name($filename){
+		$delimiter = get_rstr_option('media-delimiter', 'no');
+
+		if($delimiter != 'no') {
+			$name = $this->force_permalink_to_latin($filename);
+			$name = preg_split("/[\-_~\s]+/", $name);
+			$name = array_filter($name);
+
+			if(!empty($name)) {
+				return join($delimiter, $name);
+			} else {
+				return $filename;
+			}
+		}
+		
+		return $filename;
 	}
 	
 } endif;

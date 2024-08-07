@@ -6,6 +6,7 @@ if (!class_exists('Transliteration_Themes', false)) :
         public function __construct() {
 			if(
 				get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none'
+				|| get_rstr_option('disable-theme-support', 'no') === 'yes'
 				|| Transliteration_Controller::get()->disable_transliteration()
 			) {
 				return;
