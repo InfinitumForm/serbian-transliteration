@@ -157,8 +157,10 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * Cyrillic to Latin
 	 */
 	public function cyr_to_lat($content, $sanitize_html = true) {
+		$class_map = Transliteration_Map::get()->map();
+		
 		// If the content should not be transliterated or the user is an editor, return the original content
-		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
+		if (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
 		
@@ -200,7 +202,6 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		}
 
 		// Perform the transliteration using the class map
-		$class_map = Transliteration_Map::get()->map();
 		if (class_exists($class_map)) {
 			$content = $class_map::transliterate($content, 'cyr_to_lat');
 			$content = Transliteration_Sanitization::get()->lat($content, $sanitize_html);
@@ -287,8 +288,10 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * Latin to Cyrillic
 	 */
 	public function lat_to_cyr($content, $sanitize_html = true) {
+		$class_map = Transliteration_Map::get()->map();
+		
 		// If the content should not be transliterated or the user is an editor, return the original content
-		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
+		if (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
 		
@@ -333,7 +336,6 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		}
 
 		// Perform the transliteration using the class map
-		$class_map = Transliteration_Map::get()->map();
 		$content = $class_map::transliterate($content, 'lat_to_cyr');
 		$content = Transliteration_Sanitization::get()->cyr($content, $sanitize_html);
 

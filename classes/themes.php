@@ -8,6 +8,7 @@ if (!class_exists('Transliteration_Themes', false)) :
 				get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none'
 				|| get_rstr_option('disable-theme-support', 'no') === 'yes'
 				|| Transliteration_Controller::get()->disable_transliteration()
+				|| is_null(Transliteration_Map::get()->map())
 			) {
 				return;
 			}

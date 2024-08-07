@@ -8,6 +8,7 @@ if( !class_exists('Transliteration_Rest', false) ) : class Transliteration_Rest 
 			&& get_rstr_option('force-rest-api', 'yes') == 'yes' 
 			&& !Transliteration_Utilities::skip_transliteration() 
 			&& !Transliteration_Controller::get()->disable_transliteration()
+			&& !is_null(Transliteration_Map::get()->map())
 		) {
 			$this->add_action('plugins_loaded', 'register_rest_transliteration');
 		}
