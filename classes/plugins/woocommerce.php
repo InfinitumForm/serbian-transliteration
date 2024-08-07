@@ -12,6 +12,37 @@ if(!class_exists('Transliteration_Plugin_Woocommerce', false)) :
 	{
 		function __construct(){
 			$this->add_filter('transliteration_mode_filters', 'filters');
+			
+
+			$this->add_action('woocommerce_before_main_content', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_main_content', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_before_template_part', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_template_part', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_before_mini_cart', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_mini_cart', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_before_cart_totals', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_cart_totals', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_before_shipping_calculator', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_shipping_calculator', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_before_checkout_form', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_checkout_form', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_before_thankyou', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_thankyou', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_before_cart', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_after_cart', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_review_order_before_cart_contents', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_review_order_after_cart_contents', 'buffer_end', PHP_INT_MAX-10, 0);
+			
+			$this->add_action('woocommerce_order_details_before_order_table', 'buffer_start', 1, 0);
+			$this->add_action('woocommerce_order_details_after_order_table', 'buffer_end', PHP_INT_MAX-10, 0);
 		} 
 		
 		public function filters ($filters=array()) {
@@ -78,7 +109,7 @@ if(!class_exists('Transliteration_Plugin_Woocommerce', false)) :
 				'woocommerce_single_product_image_thumbnail_html' => 'content',
 				'woocommerce_variable_price_html' => 'content',
 				'woocommerce_variable_empty_price_html' => 'content',
-				'woocommerce_currency_symbol' => 'content',
+				'woocommerce_currency_symbol' => [__CLASS__, 'currency_symbol'],
 				'woocommerce_currencies' => 'content',
 				'woocommerce_countries' => 'content',
 				'woocommerce_countries_shipping_countries' => 'content',
@@ -89,6 +120,7 @@ if(!class_exists('Transliteration_Plugin_Woocommerce', false)) :
 				'woocommerce_get_allowed_countries' => 'content',
 				'woocommerce_template_single_excerpt' => 'content',
 				'woocommerce_cart_item_name' => 'content',
+				'wc_price' => 'content',
 				'gettext_woocommerce' => 'content',
 				'woocommerce_cart_item_quantity' => [__CLASS__, 'fix_quantity'],
 		//		'woocommerce_cart_item_product' => 'objects',
@@ -99,6 +131,10 @@ if(!class_exists('Transliteration_Plugin_Woocommerce', false)) :
 			return $filters;
 		}
 		
+		public static function currency_symbol ($currency_symbol, $currency = '') {
+			return Transliteration_Controller::get()->transliterate(Transliteration_Utilities::decode($currency_symbol));
+		}
+		
 		public static function fix_quantity ($data) {
 			
 			if(isset($data['product_name'])) {
@@ -106,6 +142,20 @@ if(!class_exists('Transliteration_Plugin_Woocommerce', false)) :
 			}
 			
 			return $data;
+		}
+		
+		public function buffer_start() {
+			$this->ob_start('buffer_callback');
+		}
+		
+		public function buffer_callback( $buffer ) {
+			return Transliteration_Controller::get()->transliterate($buffer);
+		}
+	
+		public function buffer_end() {
+			if (ob_get_level() > 0) {
+				ob_end_flush();
+			}
 		}
 	}
 endif;

@@ -3,7 +3,12 @@
 if( !class_exists('Transliteration_Rest', false) ) : class Transliteration_Rest extends Transliteration {
     
     public function __construct() {
-		if( get_rstr_option('force-rest-api', 'yes') == 'yes' && !Transliteration_Utilities::skip_transliteration() ) {
+		if(
+			get_rstr_option('transliteration-mode', 'cyr_to_lat') !== 'none' 
+			&& get_rstr_option('force-rest-api', 'yes') == 'yes' 
+			&& !Transliteration_Utilities::skip_transliteration() 
+			&& !Transliteration_Controller::get()->disable_transliteration()
+		) {
 			$this->add_action('plugins_loaded', 'register_rest_transliteration');
 		}
     }

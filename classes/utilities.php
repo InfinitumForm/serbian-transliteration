@@ -73,7 +73,18 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public static function skip_transliteration() : bool {
-		return (isset($_REQUEST['rstr_skip']) && in_array($_REQUEST['rstr_skip'], ['true', true, 1, '1', 'yes']) !== false);
+		// Static variable for caching the result
+		static $result = null;
+
+		// Return cached result if already computed
+		if ($result !== null) {
+			return $result;
+		}
+
+		// Compute the result for the first time
+		$result = (isset($_REQUEST['rstr_skip']) && in_array(is_string($_REQUEST['rstr_skip']) ? strtolower($_REQUEST['rstr_skip']) : $_REQUEST['rstr_skip'], ['true', true, 1, '1', 'yes'], true) !== false);
+
+		return $result;
 	}
 	
 	/*
@@ -89,7 +100,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		}
 		
 		$modes = [
-			'light'		=> __('Light mode (light on memory and performance)', 'serbian-transliteration'),
+			'light'		=> __('Light mode (basic parts of the site)', 'serbian-transliteration'),
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
 			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', 'serbian-transliteration'),
 			'forced'	=> __('Forced transliteration (everything)', 'serbian-transliteration')
@@ -129,7 +140,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		static $get_locale = NULL;
 		
 		if( !function_exists('is_user_logged_in') ) {
-			include_once WPINC.'/pluggable.php';
+			include_once ABSPATH . WPINC . '/pluggable.php';
 		}
 		
 		$language_scheme = get_rstr_option('language-scheme', 'auto');
@@ -373,8 +384,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 			}
 			
 			if ( ! function_exists( 'plugins_api' ) ) {
-				$sep = DIRECTORY_SEPARATOR;
-				include_once( WP_ADMIN_DIR . "{$sep}includes{$sep}plugin-install.php" );
+				include_once WP_ADMIN_DIR . '/includes/plugin-install.php';
 			}
 			/** Prepare our query */
 			//donate_link
@@ -691,8 +701,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 
 		if ($active_plugins === null) {
 			if (!function_exists('is_plugin_active')) {
-				$sep = DIRECTORY_SEPARATOR;
-				include_once(ABSPATH . "wp-admin{$sep}includes{$sep}plugin.php");
+				include_once WP_ADMIN_DIR . '/includes/plugin.php';
 			}
 			$active_plugins = get_option('active_plugins', []);
 		}
@@ -723,8 +732,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		// Determine if the current screen is the block editor
 		if (version_compare(get_bloginfo('version'), '5.0', '>=')) {
 			if (!function_exists('get_current_screen')) {
-				$sep = DIRECTORY_SEPARATOR;
-				include_once ABSPATH . "wp-admin{$sep}includes{$sep}screen.php";
+				include_once WP_ADMIN_DIR . '/includes/screen.php';
 			}
 			$current_screen = get_current_screen();
 			if (is_callable([$current_screen, 'is_block_editor']) && method_exists($current_screen, 'is_block_editor')) {

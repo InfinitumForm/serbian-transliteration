@@ -6,7 +6,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * The main constructor
 	 */
 	public function __construct() {
-		$this->add_action('template_redirect', 'transliteration_tags_start', 1);
+		$this->add_action('template_redirect', 'transliteration_tags_start', PHP_INT_MAX);
     }
 	
 	/*
@@ -103,9 +103,9 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		
 		$current_script = get_rstr_option('site-script', 'cyr');
 		$current_mode = sanitize_text_field( $_COOKIE['rstr_script'] ?? '' );
-		
+
 		$disable_transliteration = false;
-		if( $current_script === $current_mode ) {
+		if( $current_script == $current_mode ) {
 			$disable_transliteration = true;
 		}
 		
@@ -161,6 +161,22 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
+		
+		// Extract <script> contents and replace them with placeholders
+		$script_placeholders = [];
+		$content = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function($matches) use (&$script_placeholders) {
+			$placeholder = '@script' . count($script_placeholders) . '@';
+			$script_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
+
+		// Extract <style> contents and replace them with placeholders
+		$style_placeholders = [];
+		$content = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function($matches) use (&$style_placeholders) {
+			$placeholder = '@style' . count($style_placeholders) . '@';
+			$style_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		// Handle percentage format specifiers by replacing them with placeholders
 		$formatSpecifiers = [];
@@ -208,6 +224,16 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if ($exclude_placeholders) {
 			$content = strtr($content, $exclude_placeholders);
 		}
+		
+		// Restore <script> contents back to their original form
+		if ($script_placeholders) {
+			$content = strtr($content, $script_placeholders);
+		}
+
+		// Restore <style> contents back to their original form
+		if ($style_placeholders) {
+			$content = strtr($content, $style_placeholders);
+		}
 
 		return $content;
 	}
@@ -223,6 +249,8 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
+		
+		$content = Transliteration_Utilities::decode($content);
 
 		// Transliterate from Cyrillic to Latin
 		$content = $this->cyr_to_lat($content, false);
@@ -263,6 +291,22 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
+		
+		// Extract <script> contents and replace them with placeholders
+		$script_placeholders = [];
+		$content = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function($matches) use (&$script_placeholders) {
+			$placeholder = '@script' . count($script_placeholders) . '@';
+			$script_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
+
+		// Extract <style> contents and replace them with placeholders
+		$style_placeholders = [];
+		$content = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function($matches) use (&$style_placeholders) {
+			$placeholder = '@style' . count($style_placeholders) . '@';
+			$style_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		// Handle various format specifiers and other patterns by replacing them with placeholders
 		$formatSpecifiers = [];
@@ -311,6 +355,16 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if ($exclude_placeholders) {
 			$content = strtr($content, $exclude_placeholders);
 		}
+		
+		// Restore <script> contents back to their original form
+		if ($script_placeholders) {
+			$content = strtr($content, $script_placeholders);
+		}
+
+		// Restore <style> contents back to their original form
+		if ($style_placeholders) {
+			$content = strtr($content, $style_placeholders);
+		}
 
 		return $content;
 	}
@@ -321,7 +375,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 */
 	function transliteration_tags_start() {
 		$this->ob_start('transliteration_tags_callback');
-		$this->add_action('shutdown', 'transliteration_tags_end', PHP_INT_MAX - 100);
+		$this->add_action('shutdown', 'transliteration_tags_end', PHP_INT_MAX);
 	}
 	
 	/*

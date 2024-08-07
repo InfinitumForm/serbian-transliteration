@@ -4,6 +4,13 @@ if (!class_exists('Transliteration_Themes', false)) :
     class Transliteration_Themes {
     
         public function __construct() {
+			if(
+				get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none'
+				|| Transliteration_Controller::get()->disable_transliteration()
+			) {
+				return;
+			}
+		
             $this->load_theme_class();
         }
 		

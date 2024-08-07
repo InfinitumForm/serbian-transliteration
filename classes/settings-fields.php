@@ -1108,6 +1108,9 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			
 			$modeInstance = Transliteration_Mode::get()->mode($mode);			
 			$list = $modeInstance::get()->filters();
+			if( empty($list) ) {
+				$list = [];
+			}
 			
 			$list = apply_filters('transliteration_mode_filters', $list);
 			$list = apply_filters('transliteration_mode_filters_' . $modeInstance::MODE, $list);
@@ -1115,9 +1118,13 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			$list = apply_filters_deprecated('rstr/transliteration/exclude/filters', [$list], '2.0.0', 'transliteration_mode_filters');
 			$list = apply_filters_deprecated('rstr/transliteration/exclude/filters/' . $modeInstance::MODE, [$list], '2.0.0', 'transliteration_mode_filters_' . $modeInstance::MODE);
 			
-			$list = array_keys($list);
 			
-			sort($list);
+			if( !empty($list) ) {
+				$list = array_keys($list);				
+				sort($list);
+			} else {
+				$list = [];
+			}
 
 			$this->private___list_filter_mode_options($list, $this->options);
 		}
@@ -1135,6 +1142,10 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		$only_woo = false;
 		if(RSTR_WOOCOMMERCE && $options['mode'] == 'woocommerce') {
 			$only_woo = true;
+		}
+		
+		if( empty($list) ) {
+			printf('<div class="col" style="color:#cc0000;">%s</div>', __('This mode has no filters.', 'serbian-transliteration'));
 		}
 
 		foreach($list as $k=>$hook)
