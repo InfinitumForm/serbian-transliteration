@@ -132,7 +132,7 @@ if($transliteration_requirements->passes()) :
 	require_once RSTR_CLASSES . '/model.php';
 	
 	// Ensure the WP_CLI class is loaaded second
-	require_once RSTR_CLASSES . '/wp_cli.php';
+	require_once RSTR_CLASSES . '/wp-cli.php';
 
 	// On the plugin activation
 	register_activation_hook(RSTR_FILE, ['Transliteration_Init', 'register_activation']);

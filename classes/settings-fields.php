@@ -406,7 +406,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		
 		add_meta_box(
             'contributors',
-            '<span class="dashicons dashicons-superhero-alt"></span> <span>' . __('Contributors & Developers', 'textdomain') . '</span>',
+            '<span class="dashicons dashicons-superhero-alt"></span> <span>' . __('Contributors & Developers', 'serbian-transliteration') . '</span>',
             [$sidebars, 'contributors'],
             ['transliteration-settings', 'transliteration-credits'],
             'side',
