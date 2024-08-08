@@ -1144,5 +1144,58 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 			return $words;
 		}
 	}
+	
+	/**
+	 * Parse URL
+	 * @since     1.2.2
+	 * @version   1.0.0
+	 */
+	public static function parse_url() {
+		static $cachedUrl = null;
+
+		if ($cachedUrl === null) {
+			$http = 'http' . (self::is_ssl() ? 's' : '');
+			$domain = rtrim(preg_replace('%:/{3,}%i', '://', $http . '://' . $_SERVER['HTTP_HOST']), '/');
+			$url = preg_replace('%:/{3,}%i', '://', $domain . '/' . (isset($_SERVER['REQUEST_URI']) ? ltrim($_SERVER['REQUEST_URI'], '/') : ''));
+
+			$cachedUrl = [
+				'method' => $http,
+				'home_fold' => str_replace($domain, '', home_url()),
+				'url' => $url,
+				'domain' => $domain,
+			];
+		}
+
+		return $cachedUrl;
+	}
+	
+	/*
+	 * CHECK IS SSL
+	 * @return  true/false
+	 */
+	public static function is_ssl($url = false)
+	{
+		if ($url !== false && preg_match('/^(https|ftps):/i', $url) === 1) {
+			return true;
+		}
+		
+		static $ssl = null;
+
+		if ($ssl === null) {
+			$conditions = [
+				is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN,
+				($_SERVER['HTTPS'] ?? '') === 'on',
+				($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https',
+				($_SERVER['HTTP_X_FORWARDED_SSL'] ?? '') === 'on',
+				($_SERVER['SERVER_PORT'] ?? 0) == 443,
+				($_SERVER['HTTP_X_FORWARDED_PORT'] ?? 0) == 443,
+				($_SERVER['REQUEST_SCHEME'] ?? '') === 'https'
+			];
+
+			$ssl = in_array(true, $conditions, true);
+		}
+
+		return $ssl;
+	}
 
 } endif;

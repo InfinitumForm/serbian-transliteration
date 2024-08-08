@@ -10,7 +10,8 @@ if( !class_exists('Transliteration_Mode_Forced', false) ) : class Transliteratio
 	 */
     public function __construct() {
 		if(!is_admin()) {
-			$this->add_action('wp_loaded', 'buffer_start', 1);
+			$this->add_action('template_redirect', 'buffer_start', 1);
+			$this->add_action('wp_footer', 'buffer_end', 100);
 		}
     }
 	
@@ -34,8 +35,7 @@ if( !class_exists('Transliteration_Mode_Forced', false) ) : class Transliteratio
 	}
 	
 	public function buffer_start() {
-		ob_start([$this, 'buffer_callback']);
-		$this->add_action('shutdown', 'buffer_end', PHP_INT_MAX - 100);
+		$this->ob_start('buffer_callback');
 	}
 	
 	public function buffer_callback( $buffer ) {

@@ -6,7 +6,8 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * The main constructor
 	 */
 	public function __construct() {
-		$this->add_action('template_redirect', 'transliteration_tags_start', PHP_INT_MAX);
+		$this->add_action('init', 'transliteration_tags_start', 1);
+		$this->add_action('shutdown', 'transliteration_tags_end', 100);
     }
 	
 	/*
@@ -156,7 +157,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	/*
 	 * Cyrillic to Latin
 	 */
-	public function cyr_to_lat($content, $sanitize_html = true, $fix_diacritics = false) {
+	public function cyr_to_lat($content, bool $sanitize_html = true) {
 		$class_map = Transliteration_Map::get()->map();
 		
 		// If the content should not be transliterated or the user is an editor, return the original content
@@ -235,11 +236,6 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if ($style_placeholders) {
 			$content = strtr($content, $style_placeholders);
 		}
-		
-		// Fix the diacritics
-		if($fix_diacritics) {
-			$content = $this->fix_diacritics($content);
-		}
 
 		return $content;
 	}
@@ -292,7 +288,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	/*
 	 * Latin to Cyrillic
 	 */
-	public function lat_to_cyr($content, $sanitize_html = true) {
+	public function lat_to_cyr($content, bool $sanitize_html = true, bool $fix_diacritics = false) {
 		$class_map = Transliteration_Map::get()->map();
 		
 		// If the content should not be transliterated or the user is an editor, return the original content
@@ -320,8 +316,8 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		$formatSpecifiers = [];
 		$regex = (
 			$sanitize_html
-			? '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|<[^>]+>|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|cyr_to_lat|lat_to_cyr)/'
-			: '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|cyr_to_lat|lat_to_cyr)/'
+			? '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|<[^>]+>|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|rstr_skip|cyr_to_lat|lat_to_cyr)/'
+			: '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|rstr_skip|cyr_to_lat|lat_to_cyr)/'
 		);
 		$content = preg_replace_callback($regex, function($matches) use (&$formatSpecifiers) {
 			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
@@ -357,6 +353,11 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 				return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
 			}, $content);
 		}
+		
+		// Fix the diacritics
+		if($fix_diacritics) {
+			$content = $this->fix_diacritics($content);
+		}
 
 		// Restore excluded words back to their original form
 		if ($exclude_placeholders) {
@@ -382,7 +383,6 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 */
 	function transliteration_tags_start() {
 		$this->ob_start('transliteration_tags_callback');
-		$this->add_action('shutdown', 'transliteration_tags_end', PHP_INT_MAX);
 	}
 	
 	/*
@@ -392,13 +392,18 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		
 		$tags = [
 			'cyr_to_lat',
-			'lat_to_cyr'
+			'lat_to_cyr',
+			'rstr_skip'
 		];
 		foreach($tags as $tag) {
 			preg_match_all('/\{'.$tag.'\}((?:[^\{\}]|(?R))*)\{\/'.$tag.'\}/s', $buffer, $match, PREG_SET_ORDER);
 			foreach ($match as $match) {
 				$original_text = $match[1];
-				$transliterated_text = $this->transliterate($original_text, $tag, true);
+				if( $tag === 'rstr_skip' ) {
+					$transliterated_text = $this->transliterate($original_text, ($this->mode() == 'cyr_to_lat' ? 'lat_to_cyr' : 'cyr_to_lat'), true);
+				} else {
+					$transliterated_text = $this->transliterate($original_text, $tag, true);
+				}
 				$buffer = str_replace($match[0], $transliterated_text, $buffer);
 			}
 		}

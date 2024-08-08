@@ -109,7 +109,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	 * Helper for add_action()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function ob_start(string|array|callable $callback = null, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_STDFLAGS){
+	public function ob_start(string|array|callable $callback = null, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_REMOVABLE){
 		if(!is_array($callback) && !is_callable($callback)){
 			$callback = array(&$this, $callback);
 		}

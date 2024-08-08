@@ -128,3 +128,6 @@ require_once RSTR_CLASSES . '/model.php';
 
 // Run the plugin
 Transliteration::run_the_plugin();
+
+// Plugin Functions
+include_once __DIR__ . '/functions.php';

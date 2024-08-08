@@ -408,7 +408,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
             'contributors',
             '<span class="dashicons dashicons-superhero-alt"></span> <span>' . __('Contributors & Developers', 'textdomain') . '</span>',
             [$sidebars, 'contributors'],
-            'transliteration-settings',
+            ['transliteration-settings', 'transliteration-credits'],
             'side',
             'default'
         );

@@ -1,16 +1,22 @@
 /* Form */
-#wp-transliteration-settings #post-body-content form {
+#wp-transliteration-settings #post-body-content form,
+#wp-transliteration-settings #post-body-content .transliteration-page {
 	border: 1px solid #c3c4c7;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     background: #fff;
 	padding: 0 12px 12px;
 }
 
-#wp-transliteration-settings #post-body-content form h2 {
+#wp-transliteration-settings #post-body-content form h2,
+#wp-transliteration-settings #post-body-content .transliteration-page h2 {
 	font-size: 16px;
     padding: 15px 12px 0px 0;
     margin: 0;
     line-height: 1.6;
+}
+
+#wp-transliteration-settings #post-body-content .transliteration-page .description{
+	color: #3c434a;
 }
 
 #wp-transliteration-settings #post-body-content form table+h2 {
@@ -203,6 +209,87 @@
 
 #wp-transliteration-settings .accordion-container .col p+p{
 	margin-top:15px;
+}
+
+
+
+/* Tabs */
+#wp-transliteration-settings .transliteration-settings-tabs {
+	position: relative;
+	display: block;
+    padding: 0;
+    margin: 15px 0 -6px 10px;
+    list-style: none;
+}
+
+#wp-transliteration-settings .transliteration-settings-tabs > li {
+	display: inline-block;
+	margin: 5px 5px 3px 0;
+}
+
+#wp-transliteration-settings .transliteration-settings-tabs > li > a {
+	border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    padding: 8px 12px;
+	background: #dcdcde;
+    color: #50575e;
+	margin:0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	text-decoration: none;
+	font-weight:600;
+}
+
+#wp-transliteration-settings .transliteration-settings-tabs > li > a > i{
+	font-size: 18px;
+	width: 18px;
+    height: 18px;
+}
+
+#wp-transliteration-settings .transliteration-settings-tabs > li:hover > a,
+#wp-transliteration-settings .transliteration-settings-tabs > li.current > a {
+	background: #fff;
+	color: #3c434a;
+}
+
+#wp-transliteration-settings .transliteration-settings-tabs > li.current > a {
+	border-bottom:2px solid #fff;
+	box-shadow: none;
+}
+
+
+/* Action links */
+#wp-transliteration-settings .transliteration-action-links{
+	display:block;
+	list-style:none;
+	padding: 5px 5px 1px 5px;
+	margin:10px 0 15px 0;
+	background-color: oldlace;
+}
+
+#wp-transliteration-settings .transliteration-action-links > li{
+	display:inline-block;
+	padding-right:5px;
+	padding-left:5px;
+}
+
+#wp-transliteration-settings .transliteration-action-links > li + li{
+	border-left:1px solid #555;
+	padding-left:9px;
+}
+
+#wp-transliteration-settings .transliteration-action-links > li > a{
+	text-decoration:none;
+}
+
+#wp-transliteration-settings .transliteration-action-links > li:hover > a{
+	text-decoration:underline;
+}
+
+#wp-transliteration-settings .transliteration-action-links > li.active > a,
+#wp-transliteration-settings .transliteration-action-links > li.active:hover > a{
+	color:#333;
+	text-decoration:none;
+	font-weight:600;
 }
 
 
