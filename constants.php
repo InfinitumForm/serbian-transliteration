@@ -6,7 +6,7 @@ global $RSTR_USERS, $RSTR_USERS_ARRAY, $WP_ADMIN_URL, $WP_ADMIN_DIR;
 // Find wp-admin file path
 $WP_ADMIN_URL = admin_url('/');
 if (!defined('WP_ADMIN_DIR')) {
-	if( strpos($WP_ADMIN_URL, 'wp-admin') !== false ) {
+	if( strpos($WP_ADMIN_URL??'', 'wp-admin') !== false ) {
 		$WP_ADMIN_DIR = rtrim(str_replace(home_url('/') , ABSPATH, $WP_ADMIN_URL) , '/\\');
 	} else {
 		$WP_ADMIN_DIR = dirname(WP_CONTENT_DIR) . '/wp-admin';

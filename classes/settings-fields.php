@@ -1150,7 +1150,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 
 		foreach($list as $k=>$hook)
 		{
-			if($only_woo && strpos($hook, 'woo') === false) continue;
+			if($only_woo && strpos($hook??'', 'woo') === false) continue;
 
 			$inputs[$i][]=sprintf(
 				'<p><label for="transliteration-filter-%1$s"><input type="checkbox" id="transliteration-filter-%1$s" name="%3$s[transliteration-filter][]" value="%1$s" data-nonce="%4$s"%5$s> <span>%2$s</span></label></p>',

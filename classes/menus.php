@@ -166,7 +166,7 @@ class Transliteration_Menus extends Transliteration {
 				'lat'		=> add_query_arg( get_rstr_option('url-selector', 'rstr'), 'lat' )
 			);
 
-			$item_url = substr( $item->url, 0, strpos( $item->url, '#', 1 ) ) . '#';
+			$item_url = substr( $item->url??'', 0, strpos( $item->url??'', '#', 1 ) ) . '#';
 			$item_redirect = str_replace( $item_url, '', $item->url );
 
 			if ( $item_redirect == '%current-page%' ) {

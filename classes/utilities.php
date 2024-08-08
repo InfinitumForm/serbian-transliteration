@@ -787,14 +787,14 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		if(function_exists('openssl_random_pseudo_bytes') || function_exists('random_bytes'))
 		{
 			if (version_compare(PHP_VERSION, '7.0.0', '>=')) {
-				return substr(str_rot13(bin2hex(random_bytes(ceil($length * 2)))), 0, $length);
+				return substr(str_rot13(bin2hex(random_bytes(ceil($length * 2))))??'', 0, $length);
 			} else {
-				return substr(str_rot13(bin2hex(openssl_random_pseudo_bytes(ceil($length * 2)))), 0, $length);
+				return substr(str_rot13(bin2hex(openssl_random_pseudo_bytes(ceil($length * 2))))??'', 0, $length);
 			}
 		}
 		else
 		{
-			return substr(str_replace(array('.',' ','_'),random_int(1000,9999),uniqid('t'.microtime())), 0, $length);
+			return substr(str_replace(array('.',' ','_'),random_int(1000,9999),uniqid('t'.microtime()))??'', 0, $length);
 		}
 	}
 

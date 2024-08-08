@@ -60,8 +60,8 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
         }
 
         // Handle dynamic setters
-        if (substr($function, 0, 3) === 'set') {
-            $property = lcfirst(substr($function, 3));
+        if (substr($function??'', 0, 3) === 'set') {
+            $property = lcfirst(substr($function??'', 3));
             if (property_exists($this, $property)) {
                 $this->$property = $this->sanitize($arguments[0]);
                 return $this;

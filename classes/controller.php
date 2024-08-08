@@ -476,7 +476,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			return strtoupper($search[array_search($word_search, $search)]);
 		} elseif (preg_match('~^\p{Lu}~u', $word)) {
 			$ucfirst = $search[array_search($word_search, $search)];
-			return strtoupper(substr($ucfirst, 0, 1)) . substr($ucfirst, 1);
+			return strtoupper(substr($ucfirst??'', 0, 1)) . substr($ucfirst??'', 1);
 		}
 		return $word;
 	}

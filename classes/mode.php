@@ -72,13 +72,18 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 		static $filters = NULL;
 		
 		if( NULL === $filters ) {
-			$filters = $this->mode->filters();
-			
-			$filters = apply_filters('transliteration_mode_filters', $filters);
-			$filters = apply_filters('transliteration_mode_filters_' . $this->mode::MODE, $filters);
-			
-			$filters = apply_filters_deprecated('rstr/transliteration/exclude/filters', [$filters], '2.0.0', 'transliteration_mode_filters');
-			$filters = apply_filters_deprecated('rstr/transliteration/exclude/filters/' . $this->mode::MODE, [$filters], '2.0.0', 'transliteration_mode_filters_' . $this->mode::MODE);
+			if( get_rstr_option('transliteration-mode', 'light') == 'none' ) {
+				$filters = [];
+				$filters = apply_filters('transliteration_mode_filters', $filters);
+				$filters = apply_filters_deprecated('rstr/transliteration/exclude/filters', [$filters], '2.0.0', 'transliteration_mode_filters');
+			} else {
+				$filters = $this->mode->filters();
+				$filters = apply_filters('transliteration_mode_filters', $filters);
+				$filters = apply_filters('transliteration_mode_filters_' . $this->mode::MODE, $filters);
+				
+				$filters = apply_filters_deprecated('rstr/transliteration/exclude/filters', [$filters], '2.0.0', 'transliteration_mode_filters');
+				$filters = apply_filters_deprecated('rstr/transliteration/exclude/filters/' . $this->mode::MODE, [$filters], '2.0.0', 'transliteration_mode_filters_' . $this->mode::MODE);
+			}
 		}
 		
 		return $filters;

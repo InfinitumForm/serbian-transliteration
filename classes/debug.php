@@ -36,7 +36,7 @@ if (!class_exists('Transliteration_Debug', false)):
         public static function is_win()
         {
             // Sandard search
-            if (in_array(strtoupper(substr(PHP_OS, 0, 3)) , array(
+            if (in_array(strtoupper(substr(PHP_OS??'', 0, 3)) , array(
                 'WIN'
             ) , true) !== false) return true;
 
@@ -90,7 +90,7 @@ if (!class_exists('Transliteration_Debug', false)):
                     $shell = shell_exec('wmic os get osarchitecture');
                     if (!empty($shell))
                     {
-                        if (strpos($shell, '64') !== false) return true;
+                        if (strpos($shell??'', '64') !== false) return true;
                     }
                 }
                 else
@@ -99,7 +99,7 @@ if (!class_exists('Transliteration_Debug', false)):
                     $shell = shell_exec('uname -m');
                     if (!empty($shell))
                     {
-                        if (strpos($shell, '64') !== false) return true;
+                        if (strpos($shell??'', '64') !== false) return true;
                     }
                 }
             }

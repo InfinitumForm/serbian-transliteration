@@ -62,12 +62,12 @@ if( !class_exists('Transliteration_Search', false) ) : class Transliteration_Sea
 
     private function prepare_term($term, $term_transliterated, $exclusion_prefix)
     {
-        $exclude = $exclusion_prefix && (substr($term, 0, 1) === $exclusion_prefix);
+        $exclude = $exclusion_prefix && (substr($term??'', 0, 1) === $exclusion_prefix);
         if ($exclude) {
             $like_op = 'NOT LIKE';
             $andor_op = 'AND';
-            $term = substr($term, 1);
-            $term_transliterated = substr($term_transliterated, 1);
+            $term = substr($term??'', 1);
+            $term_transliterated = substr($term_transliterated??'', 1);
         } else {
             $like_op = 'LIKE';
             $andor_op = 'OR';
