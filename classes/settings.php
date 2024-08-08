@@ -64,6 +64,18 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
     }
 
 	public function create_admin_page() {
+		$tab = sanitize_text_field($_GET['tab'] ?? '');
+		$action = sanitize_text_field($_GET['action'] ?? '');
+		
+		switch($tab) {
+			default:
+			case 'general':
+				$this->settings_page__general();
+				break;
+		}
+	}
+	
+	public function settings_page__general() {
 		?>
 <div class="wrap" id="wp-transliteration-settings">
 	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?></h1>

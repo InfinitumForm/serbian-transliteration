@@ -156,7 +156,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	/*
 	 * Cyrillic to Latin
 	 */
-	public function cyr_to_lat($content, $sanitize_html = true) {
+	public function cyr_to_lat($content, $sanitize_html = true, $fix_diacritics = false) {
 		$class_map = Transliteration_Map::get()->map();
 		
 		// If the content should not be transliterated or the user is an editor, return the original content
@@ -234,6 +234,11 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		// Restore <style> contents back to their original form
 		if ($style_placeholders) {
 			$content = strtr($content, $style_placeholders);
+		}
+		
+		// Fix the diacritics
+		if($fix_diacritics) {
+			$content = $this->fix_diacritics($content);
 		}
 
 		return $content;
@@ -408,6 +413,67 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if (ob_get_level() > 0) {
 			ob_end_flush();
 		}
+	}
+	
+	public static function fix_diacritics($content) {
+		if ( Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor() || 
+			!in_array(Transliteration_Utilities::get_locale(), ['sr_RS', 'bs_BA', 'cnr'])) {
+			return $content;
+		}
+
+		$search = Transliteration_Utilities::get_diacritical();
+		if (!$search) {
+			return $content;
+		}
+
+		$new_string = strtr($content, [
+			'dj' => 'đ', 'Dj' => 'Đ', 'DJ' => 'Đ',
+			'sh' => 'š', 'Sh' => 'Š', 'SH' => 'Š',
+			'ch' => 'č', 'Ch' => 'Č', 'CH' => 'Č',
+			'cs' => 'ć', 'Cs' => 'Ć', 'CS' => 'Ć',
+			'dz' => 'dž', 'Dz' => 'Dž', 'DZ' => 'DŽ'
+		]);
+
+		$skip_words = array_map('strtolower', Transliteration_Utilities::get_skip_words());
+		$search = array_map('strtolower', $search);
+
+		$arr = Transliteration_Utilities::explode(' ', $new_string);
+		$arr_origin = Transliteration_Utilities::explode(' ', $content);
+
+		$result = '';
+		foreach ($arr as $i => $word) {
+			$word_origin = $arr_origin[$i];
+			$word_search = strtolower(preg_replace('/[.,?!-*_#$]+/i', '', $word));
+			$word_search_origin = strtolower(preg_replace('/[.,?!-*_#$]+/i', '', $word_origin));
+
+			if (in_array($word_search_origin, $skip_words)) {
+				$result .= $word_origin . ' ';
+				continue;
+			}
+
+			if (in_array($word_search, $search)) {
+				$result .= self::apply_case($word, $search, $word_search);
+			} else {
+				$result .= $word;
+			}
+
+			$result .= ($i < count($arr) - 1) ? ' ' : '';
+		}
+
+		return $result ?: $content;
+	}
+
+	/*
+	 * PRIVATE: Apply Case
+	 */
+	private static function apply_case($word, $search, $word_search) {
+		if (ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)) {
+			return strtoupper($search[array_search($word_search, $search)]);
+		} elseif (preg_match('~^\p{Lu}~u', $word)) {
+			$ucfirst = $search[array_search($word_search, $search)];
+			return strtoupper(substr($ucfirst, 0, 1)) . substr($ucfirst, 1);
+		}
+		return $word;
 	}
 	
 } endif;

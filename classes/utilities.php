@@ -184,39 +184,6 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		return $cache;
 	}
 	
-	/*
-	 * Parse library
-	 * @return        bool false, array or string on needle
-	 * @author        Ivijan-Stefan Stipic
-	 */
-	public static function parse_library($file_name, $needle = NULL) {
-
-		$words = array();
-		$words_file=apply_filters('rstr/init/libraries/file', RSTR_ROOT . '/libraries/' . $file_name);
-
-		if(file_exists($words_file))
-		{
-				$contents = '';
-				if($read_file_chunks = self::read_file_chunks($words_file))
-				{
-					foreach ($read_file_chunks as $chunk) {
-						$contents.=$chunk;
-					}
-				}
-
-				if(!empty($contents))
-				{
-					$words = self::explode("\n", $contents);
-					$words = array_unique($words);
-				} else return false;
-		} else return false;
-
-		if($needle) {
-			return (in_array($needle, $words, true) !== false ? $needle : false);
-		} else {
-			return $words;
-		}
-	}
 	
 	/*
 	* Read file with chunks with memory free
@@ -673,23 +640,24 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	public static function already_cyrillic(){
         return in_array(self::get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el', 'ar', 'hy'))) !== false;
 	}
+	
+	/*
+	 * Check is cyrillic letters
+	 * @return        boolean
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function is_cyr($string) {
+		$pattern = '/[\x{0400}-\x{04FF}\x{0500}-\x{052F}\x{2DE0}-\x{2DFF}\x{A640}-\x{A69F}\x{1C80}-\x{1C8F}\x{0370}-\x{03FF}\x{1F00}-\x{1FFF}\x{0600}-\x{06FF}\x{0750}-\x{077F}\x{08A0}-\x{08FF}\x{FB50}-\x{FDFF}\x{FE70}-\x{FEFF}\x{0530}-\x{058F}]+/u';
+		return preg_match($pattern, strip_tags($string, '')) === 1;
+	}
 
 	/*
 	 * Check is latin letters
 	 * @return        boolean
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public static function is_lat($c){
-		return (preg_match_all('/[\p{Latin}]+/ui', strip_tags($c, '')) !== false);
-	}
-
-	/*
-	 * Check is cyrillic letters
-	 * @return        boolean
-	 * @author        Ivijan-Stefan Stipic
-	*/
-	public static function is_cyr($c){
-		return (preg_match_all('/[\p{Cyrillic}]+/ui', strip_tags($c, '')) !== false);
+	public static function is_lat($string){
+		return !self::is_cyr($string);
 	}
 	
 	/*
@@ -1073,6 +1041,108 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		), $str);
 
 		return strtr($str, $map);
+	}
+	
+	/*
+	 * Get skip words
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function get_skip_words( $needle = NULL ){
+		$locale = self::get_locale();
+		$transient_name = RSTR_NAME . "-skip-words-{$locale}";
+		$cache = Transliteration_Cache_DB::get($transient_name);
+		if(empty($cache))
+		{
+			$file_name=apply_filters(
+				'rstr/init/libraries/file/skip-words',
+				"{$locale}.skip.words.lib",
+				$locale,
+				$transient_name
+			);
+			$cache = self::parse_library($file_name);
+			if(!empty($cache)) {
+				Transliteration_Cache_DB::set(
+					$transient_name,
+					$cache,
+					apply_filters('rstr/init/libraries/file/skip-words/transient', (DAY_IN_SECONDS*7))
+				);
+			}
+		}
+
+		if($needle && is_array($cache)) {
+			return (in_array($needle, $cache, true) !== false ? $needle : false);
+		}
+
+		return $cache;
+	}
+	
+	/*
+	 * Get list of diacriticals
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	*/
+	public static function get_diacritical( $needle = NULL ){
+		$locale = self::get_locale();
+		$transient_name = RSTR_NAME . "-diacritical-words-{$locale}";
+		$cache = Transliteration_Cache_DB::get($transient_name);
+		if(empty($cache))
+		{
+			$file_name=apply_filters(
+				'rstr/init/libraries/file/get_diacritical',
+				"{$locale}.diacritical.words.lib",
+				$locale,
+				$transient_name
+			);
+			$cache = self::parse_library($file_name);
+			if(!empty($cache)) {
+				Transliteration_Cache_DB::set(
+					$transient_name,
+					$cache,
+					apply_filters('rstr/init/libraries/file/get_diacritical/transient', (DAY_IN_SECONDS*7))
+				);
+			}
+		}
+
+		if($needle && is_array($cache)) {
+			return (in_array($needle, $cache, true) !== false ? $needle : false);
+		}
+
+		return $cache;
+	}
+	
+	/*
+	 * Parse library
+	 * @return        bool false, array or string on needle
+	 * @author        Ivijan-Stefan Stipic
+	 */
+	public static function parse_library($file_name, $needle = NULL) {
+
+		$words = array();
+		$words_file=apply_filters('rstr/init/libraries/file', RSTR_ROOT . '/libraries/' . $file_name);
+
+		if(file_exists($words_file))
+		{
+				$contents = '';
+				if($read_file_chunks = self::read_file_chunks($words_file))
+				{
+					foreach ($read_file_chunks as $chunk) {
+						$contents.=$chunk;
+					}
+				}
+
+				if(!empty($contents))
+				{
+					$words = self::explode("\n", $contents);
+					$words = array_unique($words);
+				} else return false;
+		} else return false;
+
+		if($needle) {
+			return (in_array($needle, $words, true) !== false ? $needle : false);
+		} else {
+			return $words;
+		}
 	}
 
 } endif;
