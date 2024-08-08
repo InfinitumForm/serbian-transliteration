@@ -315,7 +315,10 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 			if (count($check) === 1 && $check[0]) {
 				$has_cache_plugin = true;
 				break;
-			} elseif (count($check) === 2 && $check[0]($check[1], false)) {
+			} elseif (count($check) === 2 && in_array($check[0], ['function_exists', 'has_action']) && $check[0]($check[1])) {
+				$has_cache_plugin = true;
+				break;
+			} elseif (count($check) === 2 && 'class_exists' === $check[0] && $check[0]($check[1], false)) {
 				$has_cache_plugin = true;
 				break;
 			} elseif (count($check) === 3 && $check[0]($check[1]) && $check[0]($check[2])) {
@@ -805,9 +808,9 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 */
 	public static function clear_plugin_translations(){
 		$domain_path = [
-			path_join( WP_LANG_DIR, 'plugins' ) . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}',
-			dirname(RSTR_ROOT) . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}',
-			WP_LANG_DIR . '/' . RSTR_NAME . '-*.{po,mo,l10n.php}'
+			path_join( WP_LANG_DIR, 'plugins' ) . '/serbian-transliteration-*.{po,mo,l10n.php}',
+			dirname(RSTR_ROOT) . '/serbian-transliteration-*.{po,mo,l10n.php}',
+			WP_LANG_DIR . '/serbian-transliteration-*.{po,mo,l10n.php}'
 		];
 		
 		$i = 0;
@@ -815,7 +818,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		foreach ($domain_path as $pattern) {
 			foreach (glob($pattern, GLOB_BRACE) as $file) {
 				if (file_exists($file)) {
-					unlink($file);
+					@unlink($file);
 					++$i;
 				}
 			}

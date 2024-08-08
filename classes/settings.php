@@ -7,6 +7,18 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 		$this->add_action('admin_init', 'register_settings');
 		$this->add_action('wp_before_admin_bar_render', 'admin_bar_link');
 		$this->add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
+		
+		if(isset($_GET['rstr-activation']) && $_GET['rstr-activation'] == 'true'){				
+			$this->add_action( 'admin_notices', 'admin_notice__activation', 10, 0);
+			if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true'){
+				Transliteration_Cache_DB::set(RSTR_BASENAME . '_nonce_save', 'true', 30);
+				$this->add_action( 'admin_init', 'updated_option__redirection', 10, 0);
+			}
+		}
+		
+		if(Transliteration_Cache_DB::get(RSTR_BASENAME . '_nonce_save') == 'true') {
+			$this->add_action( 'admin_notices', 'admin_notice__success', 10, 0);
+		}
 	}
 
 	public function add_settings_page() {
@@ -19,6 +31,13 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
         );
 	}
 	
+	public function updated_option__redirection(){
+		Transliteration_Utilities::clear_plugin_cache();
+		if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings' ) ) ) {
+			exit;
+		}
+	}
+	
 	public function admin_bar_link() {
 		if(current_user_can('administrator')) {
 			global $wp_admin_bar;
@@ -28,6 +47,17 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 				'title' => __('Transliteration', 'serbian-transliteration'),
 				'href' => admin_url( '/options-general.php?page=transliteration-settings' ),
 			));
+		}
+	}
+	
+	public function admin_notice__success(){
+		global $pagenow;
+		if ( $pagenow == 'options-general.php' ) {
+			 printf(
+			 	'<div class="notice notice-success is-dismissible">%s</div>',
+				sprintf('<p>%s</p>', __('Settings saved.', 'serbian-transliteration'))
+			 );
+			 Transliteration_Cache_DB::delete(RSTR_BASENAME . '_nonce_save');
 		}
 	}
 	
@@ -65,6 +95,17 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 			)
 		);
     }
+	
+	public function admin_notice__activation(){
+		global $pagenow;
+		if ( $pagenow == 'options-general.php' ) {
+			 printf(
+			 	'<div class="notice notice-warning is-dismissible">%s%s</div>',
+				sprintf('<h3>%s</h3>', __('PLEASE UPDATE PLUGIN SETTINGS', 'serbian-transliteration')),
+				sprintf('<p>%s</p>', __('Carefully review the transliteration plugin settings and adjust how it fits your WordPress installation. It is important that every time you change the settings, you test the parts of the site that are affected by this plugin.', 'serbian-transliteration'))
+			 );
+		}
+	}
 
 	public function create_admin_page() {
 		$tab = sanitize_text_field($_GET['tab'] ?? '');		

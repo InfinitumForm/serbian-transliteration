@@ -123,11 +123,56 @@ spl_autoload_register(function ($class_name) {
     }
 });
 
-// Ensure the main model class is loaded first
-require_once RSTR_CLASSES . '/model.php';
+// Transliteration requirements
+$transliteration_requirements = new Transliteration_Requirements(array('file' => RSTR_FILE));
 
-// Run the plugin
-Transliteration::run_the_plugin();
+// Plugin is ready for the run
+if($transliteration_requirements->passes()) :
+	// Ensure the main model class is loaded first
+	require_once RSTR_CLASSES . '/model.php';
+	
+	// Ensure the WP_CLI class is loaaded second
+	require_once RSTR_CLASSES . '/wp_cli.php';
 
-// Plugin Functions
-include_once __DIR__ . '/functions.php';
+	// On the plugin activation
+	register_activation_hook(RSTR_FILE, ['Transliteration_Init', 'register_activation']);
+
+	// On the deactivation
+	register_deactivation_hook(RSTR_FILE, ['Transliteration_Init', 'register_deactivation']);
+
+	// On the plugin update
+	add_action('upgrader_process_complete', ['Transliteration_Init', 'register_updater'], 10, 2);
+
+	// Redirect after activation
+	add_action('admin_init', ['Transliteration_Init', 'register_redirection'], 10, 2);
+
+	// Run the plugin
+	Transliteration::run_the_plugin();
+
+	// Plugin Functions
+	include_once __DIR__ . '/functions.php';
+endif;
+
+// Clear memory
+unset($transliteration_requirements);
+
+/**
+ * Hey you! Yeah, you with the impeccable taste in code and a knack for solving problems.
+ * If you're reading this, it means you're about to dive into the magical world of transliteration.
+ * But wait, there's more! How about joining our crusade to make the internet a better place for everyone
+ * who needs smooth and efficient script conversion? You know you want to. 😉
+ *
+ * Picture this: You, a keyboard warrior, typing away, turning one script into another faster than a caffeinated squirrel
+ * on a sugar high. It’s not just coding, it’s a heroic quest! And let’s face it, who doesn’t want to be a hero?
+ *
+ * We need your superpowers at: https://github.com/InfinitumForm/serbian-transliteration
+ *
+ * Join us, and together we'll vanquish the evil bugs, slay the nasty errors, and laugh in the face of compiler warnings.
+ * Plus, you'll get to work with some of the coolest developers this side of the internet. Seriously, our team is like
+ * the Avengers, but with more coffee and fewer capes.
+ *
+ * So what are you waiting for? Don’t be the developer who just watches from the sidelines. Be the legend who writes
+ * code so glorious, it’ll be sung about in future developer meetups. Also, there might be cookies. Maybe.
+ *
+ * Embrace your inner hero and join our quest. Coding has never been this epic.
+ */

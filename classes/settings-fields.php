@@ -419,7 +419,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 	 **********************/
 	public function print_global_settings_callback()
     {
-        printf('<p>%s</p>', __('This setting determines the mode of operation for the Serbian Transliteration plugin.', 'serbian-transliteration'));
+        printf('<p>%s</p>', __('This setting determines the mode of operation for the Transliteration plugin.', 'serbian-transliteration'));
 		printf('<p>%s</p>', __('Carefully choose the option that is best for your site and the plugin will automatically set everything you need for optimal performance.', 'serbian-transliteration'));
     }
 	

@@ -37,13 +37,6 @@ $special_thanks = array(
 	}
 };</script>
 <h3><span class="dashicons dashicons-info"></span> <?php _e('Credits', 'serbian-transliteration'); ?></h3>
-<?php printf(
-	'<p>%s</p>', 
-	sprintf(__(
-		'This plugin is made by %1$s', 'serbian-transliteration'),
-		'<a href="https://www.linkedin.com/in/ivijanstefanstipic/" target="_blank"><em><strong>Ivijan-Stefan Stipić</strong></em></a>'
-	)
-); ?>
 <?php printf('<p>%s</p>', __('This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.', 'serbian-transliteration')); ?>
 <p><?php
 

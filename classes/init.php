@@ -19,7 +19,8 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 			'Transliteration_Email',
 			'Transliteration_Wordpress',
 			'Transliteration_Menus',
-			'Transliteration_Search'
+			'Transliteration_Search',
+			'Transliteration_Notifications'
 		]);
 		
 		foreach ($classes as $class_name) {
@@ -99,5 +100,153 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 			$loaded = load_textdomain('serbian-transliteration', path_join(WP_LANG_DIR, $mofile));
 		}
     }
+
+
+	/*
+	 * Register Plugin Activation
+	 */
+	public static function register_activation () {
+		if (!current_user_can('activate_plugins')) {
+			return;
+		}
+		
+		// Unload textdomain before is loaded
+		if (is_textdomain_loaded('serbian-transliteration')) {
+			unload_textdomain('serbian-transliteration');
+		}
+		
+		// Save version and set activation date
+		update_option('serbian-transliteration-version', RSTR_VERSION, false);
+
+		$activation = get_option('serbian-transliteration-activation', []);
+		$activation[] = date('Y-m-d H:i:s');
+		update_option('serbian-transliteration-activation', $activation);
+
+		// Generate unique ID
+		if (!get_option('serbian-transliteration-ID')) {
+			add_option('serbian-transliteration-ID', Transliteration_Utilities::generate_token(64));
+		}
+		
+		// Set default options if not set
+		$options = get_option('serbian-transliteration', Transliteration_Utilities::plugin_default_options());
+		$options = array_merge(Transliteration_Utilities::plugin_default_options(), $options);
+		add_option('serbian-transliteration', $options);
+
+		// Set important cookie
+		$firstVisitMode = get_rstr_option('first-visit-mode');
+		$transliterationMode = get_rstr_option('transliteration-mode');
+
+		if (!isset($_COOKIE['rstr_script'])) {
+			if (in_array($firstVisitMode, ['lat', 'cyr'])) {
+				Transliteration_Utilities::setcookie($firstVisitMode);
+			} else {
+				$mode = $transliterationMode === 'cyr_to_lat' ? 'lat' : 'cyr';
+				Transliteration_Utilities::setcookie($mode);
+			}
+		}
+		
+		// Install database tables
+		if (RSTR_DATABASE_VERSION !== get_option('serbian-transliteration-db-version')) {
+			Transliteration_Cache_DB::table_install();
+			update_option('serbian-transliteration-db-version', RSTR_DATABASE_VERSION, false);
+		}
+
+		if( function_exists('flush_rewrite_rules') ) {
+			flush_rewrite_rules();
+		}
+
+		return true;
+	}
+	
+	
+	/*
+	 * Register Plugin Deactivation
+	 */
+	public static function register_deactivation () {
+		if (!current_user_can('activate_plugins')) {
+			return;
+		}
+		
+		// Unload textdomain
+		if (is_textdomain_loaded('serbian-transliteration')) {
+			unload_textdomain('serbian-transliteration');
+		}
+		
+		// Reset table check
+		delete_option('serbian-transliteration-db-cache-table-exists');
+		
+		// Delete old translations
+		Transliteration_Utilities::clear_plugin_translations();
+
+		// Add deactivation date
+		if($deactivation = get_option('serbian-transliteration-deactivation')) {
+			$deactivation[] = date('Y-m-d H:i:s');
+			update_option('serbian-transliteration-deactivation', $deactivation);
+		} else {
+			add_option('serbian-transliteration-deactivation', array(date('Y-m-d H:i:s')));
+		}
+
+		// Clear plugin cache
+		Transliteration_Utilities::clear_plugin_cache();
+		
+		// Reset permalinks
+		if( function_exists('flush_rewrite_rules') ) {
+			flush_rewrite_rules();
+		}
+	}
+	
+	
+	/*
+	 * Register Plugin Updater
+	 */
+	public static function register_updater () {
+		if (!current_user_can('activate_plugins')) {
+			return;
+		}
+		
+		if ($options['action'] == 'update' && $options['type'] == 'plugin') {
+			foreach ($options['plugins'] as $plugin) {
+				if ($plugin == plugin_basename(__FILE__)) {
+					// Reset table check
+					delete_option('serbian-transliteration-db-cache-table-exists');
+					
+					// Delete old translations
+					Transliteration_Utilities::clear_plugin_translations();
+					
+					// Install database tables
+					if (RSTR_DATABASE_VERSION !== get_option('serbian-transliteration-db-version')) {
+						Transliteration_Cache_DB::table_install();
+						update_option('serbian-transliteration-db-version', RSTR_DATABASE_VERSION, false);
+					}
+					
+					// Clear plugin cache
+					Transliteration_Utilities::clear_plugin_cache();
+					
+					// Reset permalinks
+					if( function_exists('flush_rewrite_rules') ) {
+						flush_rewrite_rules();
+					}
+					
+					// Save version
+					update_option('serbian-transliteration-version', RSTR_VERSION, true);
+				}
+			}
+		}
+	}
+	
+	
+	/*
+	 * Redirect after activation
+	 */
+	public static function register_redirection () {
+		add_action('activated_plugin', function ($plugin) {
+			if( $plugin == RSTR_BASENAME && !get_option('serbian-transliteration-activated')) {
+				update_option('serbian-transliteration-activated', true);
+				if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings&rstr-activation=true' ) ) ) {
+					exit;
+				}
+			}
+		}, 10, 1);
+	}
     
 } endif;
