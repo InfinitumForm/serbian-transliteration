@@ -109,7 +109,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	 * Helper for add_action()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function ob_start(string|array|callable $callback = null, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_REMOVABLE){
+	public function ob_start($callback = null, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_REMOVABLE){
 		if(!is_array($callback) && !is_callable($callback)){
 			$callback = array(&$this, $callback);
 		}
@@ -120,7 +120,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	 * Helper for add_action()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function add_action(string $tag, string|array $function_to_add, int $priority = 10, int $accepted_args = 1){
+	public function add_action(string $tag, $function_to_add, int $priority = 10, int $accepted_args = 1){
 		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
 		}
@@ -131,7 +131,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	 * Helper for remove_action()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function remove_action(string $tag, string|array $function_to_remove, int $priority = 10){
+	public function remove_action(string $tag, $function_to_remove, int $priority = 10){
 		if(!is_array($function_to_remove)){
 			$function_to_remove = array(&$this, $function_to_remove);
 		}
@@ -142,7 +142,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	 * Helper for add_filter()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function add_filter(string $tag, string|array $function_to_add, int $priority = 10, int $accepted_args = 1){
+	public function add_filter(string $tag, $function_to_add, int $priority = 10, int $accepted_args = 1){
 		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
 		}
@@ -153,7 +153,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	 * Helper for remove_filter()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function remove_filter(string $tag, string|array $function_to_remove, int $priority = 10){
+	public function remove_filter(string $tag, $function_to_remove, int $priority = 10){
 		if(!is_array($function_to_remove)){
 			$function_to_remove = array(&$this, $function_to_remove);
 		}
@@ -164,7 +164,7 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	 * Helper for add_shortcode()
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function add_shortcode(string $tag, string|array $function_to_add){
+	public function add_shortcode(string $tag, $function_to_add){
 		if(!is_array($function_to_add)){
 			$function_to_add = array(&$this, $function_to_add);
 		}
