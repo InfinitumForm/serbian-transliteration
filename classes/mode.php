@@ -11,7 +11,6 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 		// Disable transliteration
 		if(
 			get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none'
-			|| Transliteration_Controller::get()->disable_transliteration()
 			|| Transliteration_Utilities::skip_transliteration()
 			|| is_null(Transliteration_Map::get()->map())
 		) {

@@ -32,6 +32,11 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			return $mode;
 		}
 		
+		if( is_admin() && !wp_doing_ajax() ) {
+			$mode = 'cyr_to_lat';
+			return $mode;
+		}
+		
 		// Settings mode
 		$mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
 		
@@ -98,20 +103,24 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	public function disable_transliteration() {
 		static $disable_transliteration = NULL;
 		
-		if( NULL !== $disable_transliteration ) {
+		if (NULL !== $disable_transliteration) {
 			return $disable_transliteration;
 		}
 		
 		$current_script = get_rstr_option('site-script', 'cyr');
-		$current_mode = sanitize_text_field( $_COOKIE['rstr_script'] ?? '' );
+		$transliteration_mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
+		$current_mode = sanitize_text_field($_COOKIE['rstr_script'] ?? '');
 
 		$disable_transliteration = false;
-		if( $current_script == $current_mode ) {
+		
+		if (($current_script == 'cyr' && $transliteration_mode == 'cyr_to_lat' && $current_mode == 'cyr') ||
+			($current_script == 'lat' && $transliteration_mode == 'lat_to_cyr' && $current_mode == 'lat')) {
 			$disable_transliteration = true;
 		}
 		
 		return $disable_transliteration;
 	}
+
 	
 	/*
 	 * Transliteration
