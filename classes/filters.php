@@ -4,6 +4,7 @@ if( !class_exists('Transliteration_Filters', false) ) : class Transliteration_Fi
     
     public function __construct() {
 		$this->add_filter('transliteration_mode_filters', 'exclude_filters', PHP_INT_MAX - 100);
+		$this->add_filter('transliteration_init_classes', 'disable_classes');
 		
 		$this->add_filter('rstr/init/exclude/lat', 'exclude_lat_words');
 		$this->add_filter('rstr/init/exclude/cyr', 'exclude_cyr_words');
@@ -17,6 +18,54 @@ if( !class_exists('Transliteration_Filters', false) ) : class Transliteration_Fi
 			$filters = array_diff_key($filters, array_flip($remove_filters));
 		}
 		return $filters;
+	}
+	
+	/*
+	 * Exclude filters
+	 */
+	public function disable_classes($classes) {
+		$remove = [];
+
+		// Dodajte klase za uklanjanje na osnovu uslova
+		if (get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none') {
+			$remove = array_merge($remove, [
+				'Transliteration_Email',
+				'Transliteration_Ajax',
+				'Transliteration_Rest',
+				'Transliteration_Search'
+			]);
+		}
+
+		if (Transliteration_Controller::get()->disable_transliteration()
+			|| is_null(Transliteration_Map::get()->map())) {
+			$remove = array_merge($remove, [
+				'Transliteration_Email',
+				'Transliteration_Ajax',
+				'Transliteration_Rest'
+			]);
+		}
+
+		if (get_rstr_option('enable-search', 'no') == 'no') {
+			$remove[] = 'Transliteration_Search';
+		}
+
+		if (get_rstr_option('force-rest-api', 'yes') == 'no') {
+			$remove[] = 'Transliteration_Rest';
+		}
+
+		if (get_rstr_option('force-ajax-calls', 'no') == 'no' || !wp_doing_ajax()) {
+			$remove[] = 'Transliteration_Ajax';
+		}
+
+		if (get_rstr_option('force-email-transliteration', 'no') == 'no') {
+			$remove[] = 'Transliteration_Email';
+		}
+		
+		$remove = array_unique($remove);
+
+		$classes = Transliteration_Utilities::array_filter($classes, $remove);
+
+		return $classes;
 	}
 	
 	/*

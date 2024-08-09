@@ -6,22 +6,33 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
         // Register the textdomain for the plugin
         $this->add_action('plugins_loaded', 'load_textdomain');
 		$this->add_action('template_redirect', 'set_transliteration');
-        
-        $classes = apply_filters('transliteration_classes_init', [
+		
+		// Register main classes
+		$main_classes = apply_filters('transliteration_classes_init', [
 			'Transliteration_Themes',
 			'Transliteration_Plugins',
 			'Transliteration_Filters',
 			'Transliteration_Settings',
 			'Transliteration_Mode',
 			'Transliteration_Controller',
+			'Transliteration_Wordpress',
+			'Transliteration_Menus',
+			'Transliteration_Notifications'
+		]);
+		
+		foreach ($main_classes as $main_class_name) {
+			new $main_class_name();
+		}
+		
+		// Register plugin classes
+        $classes = apply_filters('transliteration_classes_init', [
 			'Transliteration_Rest',
 			'Transliteration_Ajax',
 			'Transliteration_Email',
-			'Transliteration_Wordpress',
-			'Transliteration_Menus',
-			'Transliteration_Search',
-			'Transliteration_Notifications'
+			'Transliteration_Search'
 		]);
+		
+		$classes = apply_filters('transliteration_init_classes', $classes);
 		
 		foreach ($classes as $class_name) {
 			new $class_name();

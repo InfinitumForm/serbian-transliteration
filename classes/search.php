@@ -2,11 +2,7 @@
 
 if( !class_exists('Transliteration_Search', false) ) : class Transliteration_Search extends Transliteration {
     
-    public function __construct() {
-		if(get_rstr_option('enable-search', 'no') == 'no') {
-			return;
-		}
-		
+    public function __construct() {		
 		$this->add_filter('posts_search', 'posts_search', 10, 2);
     }
 	

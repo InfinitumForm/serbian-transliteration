@@ -8,14 +8,6 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 	 * The main constructor
 	 */
 	public function __construct() {
-		// Disable transliteration
-		if(
-			get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none'
-			|| Transliteration_Utilities::skip_transliteration()
-			|| is_null(Transliteration_Map::get()->map())
-		) {
-			return;
-		}
 		// Load transliteration
 		$this->load_mode();
 		// Apply transliteration filters

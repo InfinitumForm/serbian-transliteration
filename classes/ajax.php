@@ -3,15 +3,7 @@
 if( !class_exists('Transliteration_Ajax', false) ) : class Transliteration_Ajax extends Transliteration {
     
     public function __construct() {
-		if(
-			get_rstr_option('transliteration-mode', 'cyr_to_lat') !== 'none' 
-			&& get_rstr_option('force-ajax-calls', 'no') == 'yes' 
-			&& wp_doing_ajax()
-			&& !Transliteration_Controller::get()->disable_transliteration()
-			&& !is_null(Transliteration_Map::get()->map())
-		) {
-			$this->add_action('wp_loaded', 'ajax_transliteration_start', PHP_INT_MAX - 99);
-		}
+		$this->add_action('wp_loaded', 'ajax_transliteration_start', PHP_INT_MAX - 99);
     }
 	
 	public function ajax_transliteration_start() {

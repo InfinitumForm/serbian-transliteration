@@ -55,7 +55,7 @@ if( !class_exists('Transliteration_Wordpress', false) ) : class Transliteration_
 	}
 	
 	private function transliterate_rss_atom() {
-		if (get_rstr_option('enable-rss', 'no') === 'no') {
+		if (get_rstr_option('enable-rss', 'no') === 'no' || get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none') {
 			return;
 		}
 		
@@ -72,7 +72,7 @@ if( !class_exists('Transliteration_Wordpress', false) ) : class Transliteration_
 	}
 	
 	private function transliterate_widgets() {
-		if (get_rstr_option('force-widgets', 'no') === 'no') {
+		if (get_rstr_option('force-widgets', 'no') === 'no' || get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none') {
 			return;
 		}
 		

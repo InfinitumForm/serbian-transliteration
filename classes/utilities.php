@@ -72,7 +72,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @return        bool
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public static function skip_transliteration() : bool {
+	public static function skip_transliteration() {
 		// Static variable for caching the result
 		static $result = null;
 
@@ -1200,5 +1200,46 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 
 		return $ssl;
 	}
+	
+	public static function array_filter($array, $remove, $reindex = false) {
+		
+		if( empty($remove) ) {
+			if ($reindex && array_values($array) === $array) {
+				return array_values($array);
+			}
+
+			return $array;
+		}
+		
+		if( !is_array($remove) ) {
+			$remove = self::explode(',', $remove);
+		}
+		
+		$array = array_filter($array, function($value) use ($remove) {
+			if (is_array($value)) {
+				$value = self::array_filter($value, $remove);
+			}
+
+			foreach ($remove as $item) {
+				if (is_array($value) && is_array($item)) {
+					// Dubinsko poređenje nizova
+					if ($value == $item) {
+						return false;
+					}
+				} elseif ($value === $item) {
+					return false;
+				}
+			}
+
+			return true;
+		});
+
+		if ($reindex && array_values($array) === $array) {
+			return array_values($array);
+		}
+
+		return $array;
+	}
+
 
 } endif;
