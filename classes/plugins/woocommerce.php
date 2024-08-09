@@ -124,8 +124,8 @@ if(!class_exists('Transliteration_Plugin_Woocommerce', false)) :
 				'gettext_woocommerce' => 'content',
 				'woocommerce_cart_item_quantity' => [__CLASS__, 'fix_quantity'],
 		//		'woocommerce_cart_item_product' => 'objects',
-		//		'woocommerce_cart_item_price' => 'content',
-		//		'woocommerce_cart_item_subtotal' => 'content'
+				'woocommerce_cart_item_price' => 'currency_symbol',
+				'woocommerce_cart_item_subtotal' => 'currency_symbol'
 			));
 			
 			return $filters;

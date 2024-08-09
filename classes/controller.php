@@ -127,6 +127,10 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 */
 	public function transliterate($content, $mode = 'auto', $sanitize_html = true) {
 		
+		if( $this->disable_transliteration() && !is_admin() && !wp_doing_ajax() ) {
+			return $content;
+		}
+		
 		if( NULL === $mode || false === $mode ) {
 			return $content;
 		}
@@ -146,6 +150,10 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * Transliteration with no HTML
 	 */
 	public function transliterate_no_html($content, $mode = 'auto') {
+		if( $this->disable_transliteration() && !is_admin() && !wp_doing_ajax() ) {
+			return $content;
+		}
+		
 		return $this->transliterate($content, $mode, false);
 	}
 	
@@ -173,6 +181,11 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
+		
+		/*// Don't transliterate if we already have transliteration
+		if (!Transliteration_Utilities::is_lat($content)) {
+			return $content;
+		}*/
 		
 		// Extract <script> contents and replace them with placeholders
 		$script_placeholders = [];
@@ -261,6 +274,11 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			return $content;
 		}
 		
+		/*// Don't transliterate if we already have transliteration
+		if (!Transliteration_Utilities::is_lat($content)) {
+			return $content;
+		}*/
+		
 		$content = Transliteration_Utilities::decode($content);
 
 		// Transliterate from Cyrillic to Latin
@@ -304,6 +322,11 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		if (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
+		
+		/*// Don't transliterate if we already have transliteration
+		if (!Transliteration_Utilities::is_cyr($content)) {
+			return $content;
+		}*/
 		
 		// Extract <script> contents and replace them with placeholders
 		$script_placeholders = [];
@@ -356,9 +379,12 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 
 		// Sanitize HTML attributes and transliterate their values
 		if ($sanitize_html) {
-			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
+			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html, $fix_diacritics) {
 				$transliteratedValue = $class_map::transliterate($matches[3], 'lat_to_cyr');
 				$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
+				if($fix_diacritics) {
+					$transliteratedValue = $this->fix_diacritics($transliteratedValue);
+				}
 				return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
 			}, $content);
 		}
@@ -409,9 +435,10 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			foreach ($match as $match) {
 				$original_text = $match[1];
 				if( $tag === 'rstr_skip' ) {
-					$transliterated_text = $this->transliterate($original_text, ($this->mode() == 'cyr_to_lat' ? 'lat_to_cyr' : 'cyr_to_lat'), true);
+					$mode = ($this->mode() == 'cyr_to_lat' ? 'lat_to_cyr' : 'cyr_to_lat');
+					$transliterated_text = $this->$mode($original_text, true);
 				} else {
-					$transliterated_text = $this->transliterate($original_text, $tag, true);
+					$transliterated_text = $this->$tag($original_text, true);
 				}
 				$buffer = str_replace($match[0], $transliterated_text, $buffer);
 			}

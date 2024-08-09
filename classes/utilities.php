@@ -650,8 +650,19 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function is_cyr($string) {
+		if( !is_string($string) || is_numeric($string) ) {
+			return false;
+		}
+		
+		$string = strip_tags($string, '');
+		
+		if (strlen($string) > 10) {
+			$string = substr($string, 0, 10);
+		}
+	
 		$pattern = '/[\x{0400}-\x{04FF}\x{0500}-\x{052F}\x{2DE0}-\x{2DFF}\x{A640}-\x{A69F}\x{1C80}-\x{1C8F}\x{0370}-\x{03FF}\x{1F00}-\x{1FFF}\x{0600}-\x{06FF}\x{0750}-\x{077F}\x{08A0}-\x{08FF}\x{FB50}-\x{FDFF}\x{FE70}-\x{FEFF}\x{0530}-\x{058F}]+/u';
-		return preg_match($pattern, strip_tags($string, '')) === 1;
+		
+		return preg_match($pattern, $string) === 1;
 	}
 
 	/*

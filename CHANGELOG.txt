@@ -1,3 +1,20 @@
+= 2.0.0 =
+* Complete redesign and refactoring of the PHP code
+* Full support for WordPress 6.6 and higher
+* Compatibility with PHP 8.x versions
+* Fixed issues with Cyrillic transliteration
+* Enhanced optimization and better content control
+* Added support for visual editors
+* Bug fixes and improved system stability
+* Ready for future extensions and new functionalities
+
+= 1.13.0 =
+* Removed Alternate Links support
+* Fixed problems with First Visit mode
+* Fixed SEO problems with `_rstr_nocache` URL pharams
+* Fixed SEO rewrite problems
+* Preparing transition code for version 2.0.0
+
 = 1.12.20 =
 * Fixed caching support
 * Fixed transliteration modes

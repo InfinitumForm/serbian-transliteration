@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliterator\n"
-"POT-Creation-Date: 2024-08-08 22:08+0200\n"
+"POT-Creation-Date: 2024-08-09 12:05+0200\n"
 "PO-Revision-Date: 2023-08-24 13:48+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
@@ -1368,129 +1368,129 @@ msgstr ""
 msgid "Dev Mode (Only for developers and testers)"
 msgstr ""
 
-#: classes/utilities.php:1035
+#: classes/utilities.php:1046
 msgid " degrees "
 msgstr ""
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1048
 msgid " divided by "
 msgstr ""
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1048
 msgid " times "
 msgstr ""
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1048
 msgid " plus-minus "
 msgstr ""
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1048
 msgid " square root "
 msgstr ""
 
-#: classes/utilities.php:1038
+#: classes/utilities.php:1049
 msgid " infinity "
 msgstr ""
 
-#: classes/utilities.php:1038
+#: classes/utilities.php:1049
 msgid " almost equal to "
 msgstr ""
 
-#: classes/utilities.php:1038
+#: classes/utilities.php:1049
 msgid " not equal to "
 msgstr ""
 
-#: classes/utilities.php:1039
+#: classes/utilities.php:1050
 msgid " identical to "
 msgstr ""
 
-#: classes/utilities.php:1039
+#: classes/utilities.php:1050
 msgid " less than or equal to "
 msgstr ""
 
-#: classes/utilities.php:1039
+#: classes/utilities.php:1050
 msgid " greater than or equal to "
 msgstr ""
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1051
 msgid " left "
 msgstr ""
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1051
 msgid " right "
 msgstr ""
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1051
 msgid " up "
 msgstr ""
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1051
 msgid " down "
 msgstr ""
 
-#: classes/utilities.php:1041
+#: classes/utilities.php:1052
 msgid " left and right "
 msgstr ""
 
-#: classes/utilities.php:1041
+#: classes/utilities.php:1052
 msgid " up and down "
 msgstr ""
 
-#: classes/utilities.php:1041
+#: classes/utilities.php:1052
 msgid " care of "
 msgstr ""
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1053
 msgid " estimated "
 msgstr ""
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1053
 msgid " ohm "
 msgstr ""
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1053
 msgid " female "
 msgstr ""
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1053
 msgid " male "
 msgstr ""
 
-#: classes/utilities.php:1043
+#: classes/utilities.php:1054
 msgid " Copyright "
 msgstr ""
 
-#: classes/utilities.php:1043
+#: classes/utilities.php:1054
 msgid " Registered "
 msgstr ""
 
-#: classes/utilities.php:1043
+#: classes/utilities.php:1054
 msgid " Trademark "
 msgstr ""
 
-#: classes/wp_cli.php:55
+#: classes/wp-cli.php:55
 msgid ""
 "Please wait! Do not close the terminal or terminate the script until this "
 "operation is completed!"
 msgstr ""
 
-#: classes/wp_cli.php:57
+#: classes/wp-cli.php:57
 msgid "Progress:"
 msgstr ""
 
-#: classes/wp_cli.php:102
+#: classes/wp-cli.php:102
 #, php-format
 msgid "Updated page ID %1$d, (%2$s) at URL: %3$s"
 msgstr ""
 
-#: classes/wp_cli.php:117
+#: classes/wp-cli.php:117
 #, php-format
 msgid "%d permalink was successfully transliterated."
 msgid_plural "%d permalinks were successfully transliterated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: classes/wp_cli.php:119
+#: classes/wp-cli.php:119
 msgid "No changes to the permalink have been made."
 msgstr ""
 
