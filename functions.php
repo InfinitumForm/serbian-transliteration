@@ -415,8 +415,8 @@ if (!function_exists('script_selector')) :
             'display_type' => 'inline',
             'echo' => false,
             'separator' => ' | ',
-            'cyr_caption' => __('Cyrillic', 'serbian-transliteration'),
-            'lat_caption' => __('Latin', 'serbian-transliteration')
+            'cyr_caption' => '{lat_to_cyr}'.__('Cyrillic', 'serbian-transliteration').'{/lat_to_cyr}',
+            'lat_caption' => '{cyr_to_lat}'.__('Latin', 'serbian-transliteration').'{/cyr_to_lat}'
         ]);
 
         $options = (object) [

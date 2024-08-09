@@ -76,11 +76,17 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * @return        array
 	 * @autor        Ivijan-Stefan Stipic
 	 */
-	public function lat_exclude_list() {
+	public function lat_exclude_list() {		
 		static $lat_exclude_list = null;
+		
 		if ($lat_exclude_list === null) {
-			$lat_exclude_list = apply_filters('rstr/init/exclude/lat', []);
+			if( is_admin() && !wp_doing_ajax() ) {
+				$lat_exclude_list = [];
+			} else {
+				$lat_exclude_list = apply_filters('rstr/init/exclude/lat', []);
+			}
 		}
+		
 		return $lat_exclude_list;
 	}
 
@@ -91,9 +97,15 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 */
 	public function cyr_exclude_list() {
 		static $cyr_exclude_list = null;
+		
 		if ($cyr_exclude_list === null) {
-			$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', []);
+			if( is_admin() && !wp_doing_ajax() ) {
+				$cyr_exclude_list = [];
+			} else {
+				$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', []);
+			}
 		}
+		
 		return $cyr_exclude_list;
 	}
 	
@@ -190,7 +202,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		// Extract <script> contents and replace them with placeholders
 		$script_placeholders = [];
 		$content = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function($matches) use (&$script_placeholders) {
-			$placeholder = '@script' . count($script_placeholders) . '@';
+			$placeholder = '@=[1-' . count($script_placeholders) . ']=@';
 			$script_placeholders[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -198,7 +210,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		// Extract <style> contents and replace them with placeholders
 		$style_placeholders = [];
 		$content = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function($matches) use (&$style_placeholders) {
-			$placeholder = '@style' . count($style_placeholders) . '@';
+			$placeholder = '@=[2-' . count($style_placeholders) . ']=@';
 			$style_placeholders[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -206,7 +218,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		// Handle percentage format specifiers by replacing them with placeholders
 		$formatSpecifiers = [];
 		$content = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function($matches) use (&$formatSpecifiers) {
-			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
+			$placeholder = '@=[3-' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -328,10 +340,26 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			return $content;
 		}*/
 		
+		// Extract shortcode contents and replace them with placeholders
+		$shortcode_placeholders = [];
+		$content = preg_replace_callback('/\[([\w+_-]+)\s?([^\]]*)\](.*?)\[\/\1\]/is', function($matches) use (&$shortcode_placeholders) {
+			$placeholder = '@=[1-' . count($shortcode_placeholders) . ']=@';
+			$shortcode_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
+		
+		// Extract self-closing shortcode contents and replace them with placeholders
+		$self_closing_shortcode_placeholders = [];
+		$content = preg_replace_callback('/\[(\w+)([^\]]*)\]/is', function($matches) use (&$self_closing_shortcode_placeholders) {
+			$placeholder = '@=[2-' . count($self_closing_shortcode_placeholders) . ']=@';
+			$self_closing_shortcode_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
+		
 		// Extract <script> contents and replace them with placeholders
 		$script_placeholders = [];
 		$content = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function($matches) use (&$script_placeholders) {
-			$placeholder = '@script' . count($script_placeholders) . '@';
+			$placeholder = '@=[3-' . count($script_placeholders) . ']=@';
 			$script_placeholders[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -339,7 +367,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		// Extract <style> contents and replace them with placeholders
 		$style_placeholders = [];
 		$content = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function($matches) use (&$style_placeholders) {
-			$placeholder = '@style' . count($style_placeholders) . '@';
+			$placeholder = '@=[4-' . count($style_placeholders) . ']=@';
 			$style_placeholders[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -352,7 +380,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			: '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|rstr_skip|cyr_to_lat|lat_to_cyr)/'
 		);
 		$content = preg_replace_callback($regex, function($matches) use (&$formatSpecifiers) {
-			$placeholder = '@=[0' . count($formatSpecifiers) . ']=@';
+			$placeholder = '@=[5-' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -397,16 +425,31 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		// Restore excluded words back to their original form
 		if ($exclude_placeholders) {
 			$content = strtr($content, $exclude_placeholders);
+			unset($exclude_placeholders);
 		}
 		
 		// Restore <script> contents back to their original form
 		if ($script_placeholders) {
 			$content = strtr($content, $script_placeholders);
+			unset($script_placeholders);
 		}
 
 		// Restore <style> contents back to their original form
 		if ($style_placeholders) {
 			$content = strtr($content, $style_placeholders);
+			unset($style_placeholders);
+		}
+		
+		// Restore shortcode contents back to their original form
+		if ($shortcode_placeholders) {
+			$content = strtr($content, $shortcode_placeholders);
+			unset($shortcode_placeholders);
+		}
+		
+		// Restore self-closing shortcode contents back to their original form
+		if ($self_closing_shortcode_placeholders) {
+			$content = strtr($content, $self_closing_shortcode_placeholders);
+			unset($self_closing_shortcode_placeholders);
 		}
 
 		return $content;

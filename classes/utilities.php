@@ -272,6 +272,13 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @uthor        Ivijan-Stefan Stipic
 	 */
 	public static function is_url_or_email($content) {
+		
+		if( !is_string($content) && is_numeric($content) ) {
+			return false;
+		}
+		
+		$content = self::decode($content);
+		
 		$urlRegex = '/^((https?|s?ftp):)?\/\/([a-zA-Z0-9\-\._\+]+(:[a-zA-Z0-9\-\._]+)?@)?([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,})(:[0-9]+)?(\/[a-zA-Z0-9\-\._\%\&=\?\+\$\[\]\(\)\*\'\,\.\,\:]+)*\/?#?$/i';
 		
 		$emailRegex = '/^[a-zA-Z0-9\-\._\p{L}]+@[a-zA-Z0-9\-\._\p{L}]+\.[a-zA-Z]{2,}$/i';
