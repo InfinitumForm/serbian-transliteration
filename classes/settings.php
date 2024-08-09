@@ -3,6 +3,10 @@
 if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_Settings extends Transliteration {
 	
 	public function __construct() {
+		
+		$this->add_action( 'plugin_action_links_' . RSTR_BASENAME, 'action_links' );
+		$this->add_action( 'plugin_row_meta', 'row_meta_links', 10, 2);
+		
 		$this->add_action('admin_menu', 'add_settings_page');
 		$this->add_action('admin_init', 'register_settings');
 		$this->add_action('wp_before_admin_bar_render', 'admin_bar_link');
@@ -19,16 +23,6 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 		if(Transliteration_Cache_DB::get(RSTR_BASENAME . '_nonce_save') == 'true') {
 			$this->add_action( 'admin_notices', 'admin_notice__success', 10, 0);
 		}
-	}
-
-	public function add_settings_page() {
-		add_options_page(
-            __('Transliteration Settings', 'serbian-transliteration'),
-            __('Transliteration', 'serbian-transliteration'),
-            'manage_options',
-            'transliteration-settings',
-            array($this, 'create_admin_page')
-        );
 	}
 	
 	public function updated_option__redirection(){
@@ -59,6 +53,37 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 			 );
 			 Transliteration_Cache_DB::delete(RSTR_BASENAME . '_nonce_save');
 		}
+	}
+	
+	public function action_links( $links ) {
+
+		$links = array_merge( array(
+			'<a href="' . esc_url( admin_url( '/options-general.php?page=transliteration-settings' ) ) . '">' . __( 'Settings', 'serbian-transliteration' ) . '</a>'
+		), $links );
+
+		return $links;
+
+	}
+	
+	public function row_meta_links( $links, $file ) {
+		if ( RSTR_BASENAME == $file ) {
+			return array_merge( $links, array(
+				'rstr-shortcodes' => '<a href="' . esc_url( admin_url( '/options-general.php?page=transliteration-settings&tab=documentation&action=shortcodes' ) ) . '">' . __( 'Shortcodes', 'serbian-transliteration' ) . '</a>',
+				'rstr-functions' => '<a href="' . esc_url( admin_url( '/options-general.php?page=transliteration-settings&tab=documentation&action=functions' ) ) . '">' . __( 'PHP Functions', 'serbian-transliteration' ) . '</a>',
+				'rstr-review' => '<a href="https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post" target="_blank">' . __( '5 stars?', 'serbian-transliteration' ) . '</a>'
+			));
+		}
+		return $links;
+	}
+	
+	public function add_settings_page() {
+		add_options_page(
+            __('Transliteration Settings', 'serbian-transliteration'),
+            __('Transliteration', 'serbian-transliteration'),
+            'manage_options',
+            'transliteration-settings',
+            array($this, 'create_admin_page')
+        );
 	}
 	
 	public function enqueue_admin_scripts($hook) {
