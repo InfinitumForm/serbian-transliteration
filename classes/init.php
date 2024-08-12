@@ -210,7 +210,7 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 	/*
 	 * Register Plugin Updater
 	 */
-	public static function register_updater () {
+	public static function register_updater ($upgrader_object, $options) {
 		if (!current_user_can('activate_plugins')) {
 			return;
 		}
