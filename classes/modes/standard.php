@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Mode_Standard', false) ) : class Transliteration_Mode_Standard {
+class Transliteration_Mode_Standard {
     
 	// Mode ID
 	const MODE = 'standard';
@@ -72,4 +72,4 @@ if( !class_exists('Transliteration_Mode_Standard', false) ) : class Transliterat
 		return $filters;
 	}
     
-} endif;
+}

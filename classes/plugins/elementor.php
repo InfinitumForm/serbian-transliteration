@@ -7,19 +7,18 @@
  * @package           Serbian_Transliteration
  * @author            Ivijan-Stefan Stipic
  */
-if(!class_exists('Transliteration_Plugin_Elementor', false)) :
-	class Transliteration_Plugin_Elementor extends Transliteration
-	{
-		function __construct(){
-			$this->add_filter('transliteration_mode_filters', 'filters');
-		} 
+
+class Transliteration_Plugin_Elementor extends Transliteration
+{
+	function __construct(){
+		$this->add_filter('transliteration_mode_filters', 'filters');
+	} 
+	
+	public function filters ($filters=array()) {
+		$filters = array_merge($filters, array(
+			'elementor/frontend/the_content' => 'content'
+		));
 		
-		public function filters ($filters=array()) {
-			$filters = array_merge($filters, array(
-				'elementor/frontend/the_content' => 'content'
-			));
-			
-			return $filters;
-		}
+		return $filters;
 	}
-endif;
+}

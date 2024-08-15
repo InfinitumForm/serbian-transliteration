@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Mode_Forced', false) ) : class Transliteration_Mode_Forced extends Transliteration {
+class Transliteration_Mode_Forced extends Transliteration {
     
 	// Mode ID
 	const MODE = 'forced';
@@ -48,4 +48,4 @@ if( !class_exists('Transliteration_Mode_Forced', false) ) : class Transliteratio
 		}
 	}
     
-} endif;
+}

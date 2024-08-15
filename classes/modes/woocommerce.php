@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Mode_Woocommerce', false) ) : class Transliteration_Mode_Woocommerce {
+class Transliteration_Mode_Woocommerce {
     
 	// Mode ID
 	const MODE = 'woocommerce';
@@ -30,4 +30,4 @@ if( !class_exists('Transliteration_Mode_Woocommerce', false) ) : class Translite
 		return [];
 	}
     
-} endif;
+}

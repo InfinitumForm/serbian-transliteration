@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Mode_Admin', false) ) : class Transliteration_Mode_Admin {
+class Transliteration_Mode_Admin {
     
 	// Mode ID
 	const MODE = 'admin';
@@ -64,4 +64,4 @@ if( !class_exists('Transliteration_Mode_Admin', false) ) : class Transliteration
 		return $filters;
 	}
     
-} endif;
+}

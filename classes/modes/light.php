@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Mode_Light', false) ) : class Transliteration_Mode_Light extends Transliteration {
+class Transliteration_Mode_Light extends Transliteration {
     
 	// Mode ID
 	const MODE = 'light';
@@ -64,4 +64,4 @@ if( !class_exists('Transliteration_Mode_Light', false) ) : class Transliteration
 		return $filters;
 	}
     
-} endif;
+}

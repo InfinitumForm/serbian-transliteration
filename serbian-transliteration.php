@@ -97,31 +97,53 @@ if(!function_exists('get_rstr_option'))
 spl_autoload_register(function ($class_name) {
     // Define the prefix to directory mapping
     $prefixes = [
-        'Transliteration_Map_' => RSTR_CLASSES . '/maps/',
-		'Transliteration_Mode_' => RSTR_CLASSES . '/modes/',
-		'Transliteration_Plugin_' => RSTR_CLASSES . '/plugins/',
-		'Transliteration_Theme_' => RSTR_CLASSES . '/themes/',
-        'Transliteration_'      => RSTR_CLASSES . '/'
+        'Transliteration_Map_'    => RSTR_CLASSES . '/maps/',
+        'Transliteration_Mode_'   => RSTR_CLASSES . '/modes/',
+        'Transliteration_Plugin_' => RSTR_CLASSES . '/plugins/',
+        'Transliteration_Theme_'  => RSTR_CLASSES . '/themes/',
+        'Transliteration_'        => RSTR_CLASSES . '/'
     ];
     
+    // Static cache array to store resolved class paths
+    static $class_map_cache = [];
+
+    // Check if the class is already cached
+    if (isset($class_map_cache[$class_name])) {
+        if (!class_exists($class_name, false)) {
+            require_once $class_map_cache[$class_name];
+        }
+        return;
+    }
+
     // Iterate over the prefix mappings
     foreach ($prefixes as $prefix => $directory) {
         // Check if the class name starts with the prefix and if the class does not already exist
         if (strpos($class_name, $prefix) === 0 && !class_exists($class_name, false)) {
-            // Remove the prefix from the class name and convert underscores to hyphens
-            $class_file = str_replace([$prefix, '_'], ['', '-'], $class_name);
+            // Remove the prefix from the class name
+            $class_file = str_replace($prefix, '', $class_name);
+            
+            // Handle different naming conventions
+            if ($prefix == 'Transliteration_Map_') {
+                // For Transliteration_Map_, retain underscores
+                $class_file = str_replace('-', '_', $class_file);
+            } else {
+                // For other prefixes, convert underscores to hyphens and lowercase the file name
+                $class_file = strtolower(str_replace('_', '-', $class_file));
+            }
+            
             // Define the file path
-			$class_file = ( $prefix == 'Transliteration_Map_' ? str_replace(['-'], ['_'], $class_file) : strtolower($class_file) );
             $file = $directory . $class_file . '.php';
-			
-            // Check if the file exists and require it
-            if (strpos($file, '/index.php') === false && file_exists($file)) {
+            
+            // Check if the file exists and is not an index file, then cache and require it
+            if (strpos($file, 'index.php') === false && file_exists($file)) {
+                $class_map_cache[$class_name] = $file;
                 require_once $file;
                 return;
             }
         }
     }
 });
+
 
 // Transliteration requirements
 $transliteration_requirements = new Transliteration_Requirements(array('file' => RSTR_FILE));

@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  *
  */
-if(!class_exists('Transliteration_Map_mk_MK', false)) :
+
 class Transliteration_Map_mk_MK {
 
 	public static $map = array (
@@ -61,4 +61,3 @@ class Transliteration_Map_mk_MK {
 		return $content;
 	}
 }
-endif;
