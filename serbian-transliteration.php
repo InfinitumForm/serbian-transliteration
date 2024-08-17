@@ -66,8 +66,11 @@ if ( ! defined( 'RSTR_FILE' ) ) define( 'RSTR_FILE', __FILE__ );
 include_once __DIR__ . '/constants.php';
 
 // Set database tables
-global $wpdb;
+global $wpdb, $rstr_is_admin;
 $wpdb->rstr_cache = $wpdb->get_blog_prefix() . 'rstr_cache';
+
+// Check is in admin mode
+$rstr_is_admin = ($_COOKIE['rstr_test_' . COOKIEHASH]??'false'==='true');
 
 /*
  * Get plugin options

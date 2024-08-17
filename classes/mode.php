@@ -132,8 +132,8 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 */
-	public function content( $content ) {
-		return Transliteration_Controller::get()->transliterate($content);
+	public function content( $content, $mode = 'auto', $sanitize_html = true ) {
+		return Transliteration_Controller::get()->transliterate($content, $mode, $sanitize_html);
 	}
 	
 	/*
@@ -161,7 +161,7 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 	 * @version        1.0.0
 	 */
 	public function no_html_content( $content ) {
-		return Transliteration_Controller::get()->transliterate_no_html($content);
+		return Transliteration_Controller::get()->transliterate_no_html($content, (Transliteration_Utilities::is_admin() ? 'cyr_to_lat' : 'auto'));
 	}
 	
 	/*
@@ -222,10 +222,10 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 		foreach ($wp_terms as $i => $term) {
 			if (is_object($term)) {
 				if (isset($term->name) && !empty($term->name)) {
-					$wp_terms[$i]->name = $this->content($term->name);
+					$wp_terms[$i]->name = $this->content($term->name, (Transliteration_Utilities::is_admin() ? 'cyr_to_lat' : 'auto'));
 				}
 				if (isset($term->description) && !empty($term->description)) {
-					$wp_terms[$i]->description = $this->content($term->description);
+					$wp_terms[$i]->description = $this->content($term->description, (Transliteration_Utilities::is_admin() ? 'cyr_to_lat' : 'auto'));
 				}
 			}
 		}
@@ -355,7 +355,7 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 		}
 		
 		foreach ($messages as $key => $message) {
-			$messages[$key] = $this->no_html_content($message);
+			$messages[$key] = $this->no_html_content($message, (Transliteration_Utilities::is_admin() ? 'cyr_to_lat' : 'auto'));
 		}
 		return $messages;
 	}

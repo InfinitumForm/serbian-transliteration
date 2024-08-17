@@ -32,7 +32,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 			return $mode;
 		}
 		
-		if( is_admin() && !wp_doing_ajax() ) {
+		if( Transliteration_Utilities::is_admin() ) {
 			$mode = 'cyr_to_lat';
 			return $mode;
 		}
@@ -80,7 +80,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		static $lat_exclude_list = null;
 		
 		if ($lat_exclude_list === null) {
-			if( is_admin() && !wp_doing_ajax() ) {
+			if( Transliteration_Utilities::is_admin() ) {
 				$lat_exclude_list = [];
 			} else {
 				$lat_exclude_list = apply_filters('rstr/init/exclude/lat', []);
@@ -99,7 +99,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		static $cyr_exclude_list = null;
 		
 		if ($cyr_exclude_list === null) {
-			if( is_admin() && !wp_doing_ajax() ) {
+			if( Transliteration_Utilities::is_admin() ) {
 				$cyr_exclude_list = [];
 			} else {
 				$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', []);
@@ -139,7 +139,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 */
 	public function transliterate($content, $mode = 'auto', $sanitize_html = true) {
 		
-		if( $this->disable_transliteration() && !is_admin() && !wp_doing_ajax() ) {
+		if( $this->disable_transliteration() && !Transliteration_Utilities::is_admin() ) {
 			return $content;
 		}
 		
@@ -162,7 +162,7 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * Transliteration with no HTML
 	 */
 	public function transliterate_no_html($content, $mode = 'auto') {
-		if( $this->disable_transliteration() && !is_admin() && !wp_doing_ajax() ) {
+		if( $this->disable_transliteration() && Transliteration_Utilities::is_admin() ) {
 			return $content;
 		}
 		

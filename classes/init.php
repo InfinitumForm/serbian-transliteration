@@ -4,6 +4,7 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
     
     public function __construct() {
         // Register the textdomain for the plugin
+		$this->set_admin_cookie_based_on_url();
         $this->add_action('plugins_loaded', 'load_textdomain');
 		$this->add_action('template_redirect', 'set_transliteration');
 		
@@ -38,6 +39,32 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 			new $class_name();
 		}
     }
+	
+	function set_admin_cookie_based_on_url() {
+		global $rstr_is_admin;
+		
+		$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+
+		if( strpos($request_uri, '/admin-ajax.php') !== false || (function_exists('wp_doing_ajax') && wp_doing_ajax()) ) {
+			return;
+		}
+		
+		if (strpos($request_uri, '/wp-admin/') !== false || (function_exists('is_admin') && is_admin())) {
+			if (headers_sent()) {
+				error_log(__('Attention, Headers have already been sent!', 'serbian-transliteration'));
+			} else {
+				setcookie('rstr_test_' . COOKIEHASH, 'true', 0, COOKIEPATH, COOKIE_DOMAIN);
+			}
+			$rstr_is_admin = true;
+		} else {
+			if (headers_sent()) {
+				error_log(__('Attention, Headers have already been sent!', 'serbian-transliteration'));
+			} else {
+				setcookie('rstr_test_' . COOKIEHASH, 'false', 0, COOKIEPATH, COOKIE_DOMAIN);
+			}
+			$rstr_is_admin = false;
+		}
+	}
 	
 	/*
 	 * Set transliteration & redirections
