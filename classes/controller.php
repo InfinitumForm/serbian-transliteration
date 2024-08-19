@@ -280,17 +280,13 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 	 * Translate from cyr to lat
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
-	*/
+	 */
 	public function cyr_to_lat_sanitize($content) {
 		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
 			return $content;
 		}
-		
-		/*// Don't transliterate if we already have transliteration
-		if (!Transliteration_Utilities::is_lat($content)) {
-			return $content;
-		}*/
-		
+
+		// Decode content if necessary
 		$content = Transliteration_Utilities::decode($content);
 
 		// Transliterate from Cyrillic to Latin
@@ -299,8 +295,12 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		// Normalize the string
 		$content = Transliteration_Utilities::normalize_latin_string($content);
 
-		// If iconv is available, perform additional sanitization
-		if (function_exists('iconv')) {
+		// Perform sanitization based on available functions
+		if (function_exists('mb_convert_encoding')) {
+			// Use mb_convert_encoding if available
+			$content = mb_convert_encoding($content, 'ASCII', 'UTF-8');
+		} elseif (function_exists('iconv')) {
+			// Fallback to iconv if mb_convert_encoding is not available
 			$locale = Transliteration_Utilities::get_locales(Transliteration_Utilities::get_locale());
 			if ($locale && preg_match('/^[a-zA-Z]{2}(_[a-zA-Z]{2})?$/', $locale)) {
 				// Save the current locale to restore it later

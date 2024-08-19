@@ -633,14 +633,14 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public static function decode($content, $flag=ENT_NOQUOTES){
-		if ( !empty($content) && is_string($content) && !is_numeric($content) && !is_array($content) && !is_object($content) ) {
-			if (filter_var($content, FILTER_VALIDATE_URL)) {
+	public static function decode($content, $flag = ENT_NOQUOTES) {
+		if (!empty($content) && is_string($content) && !is_numeric($content) && !is_array($content) && !is_object($content)) {
+			if (filter_var($content, FILTER_VALIDATE_URL) && strpos($content, '%') !== false) {
+				// If content is a valid URL and contains encoded characters
 				$content = rawurldecode($content);
 			} else {
-				$content = htmlspecialchars_decode($content, $flag);
+				// Decode HTML entities
 				$content = html_entity_decode($content, $flag);
-			//	$content = strtr($content, array_flip(get_html_translation_table(HTML_ENTITIES, $flag)));
 			}
 		}
 		return $content;

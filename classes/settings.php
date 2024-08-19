@@ -91,6 +91,8 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
         if ($hook !== 'settings_page_transliteration-settings') {
             return;
         }
+		
+		$tab = sanitize_text_field($_GET['tab'] ?? 'general');
 
         // Register the CSS and JS files
         wp_register_style('transliteration-admin', RSTR_ASSETS . '/css/admin.css?m=' . filemtime(RSTR_ROOT.'/assets/css/admin.css'));
@@ -102,6 +104,12 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
         // Enqueue the CSS and JS files
         wp_enqueue_style('transliteration-admin');
         wp_enqueue_script('transliteration-admin');
+		
+		// Hilights
+		if( $tab == 'documentation' ) {
+			wp_enqueue_style('transliteration-highlight');
+			wp_enqueue_script('transliteration-highlight');
+		}
 		
 		// Localize script
 		wp_localize_script(
@@ -234,9 +242,6 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 	
 	public function settings_page__documentation($actions) {
 		$action = sanitize_text_field($_GET['action'] ?? 'shortcodes');
-		
-		wp_enqueue_style('transliteration-highlight');
-        wp_enqueue_script('transliteration-highlight');
 
 		switch($action) {
 			default:
