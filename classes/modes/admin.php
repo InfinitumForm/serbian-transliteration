@@ -37,17 +37,20 @@ class Transliteration_Mode_Admin {
 		$filters = [
 			'ngettext'              => 'content__force_lat',
 			'ngettext_with_context' => 'content__force_lat',
-			'gettext_with_context'  => 'content__force_lat',
+		//	'gettext_with_context'  => 'content__force_lat',
 			'gettext'               => 'content__force_lat',
 			'date_i18n'             => 'content__force_lat',
-			'the_title'             => 'content__force_lat',
+		//	'the_title'             => 'content__force_lat',
 			'wp_title'              => 'content__force_lat',
 			'option_blogname' 		=> 'content__force_lat',
 			'option_blogdescription'=> 'content__force_lat',
 			'document_title_parts'  => 'title_parts',
 			'wp_get_object_terms'   => 'transliteration_wp_terms',
 			'load_script_translations' => 'transliteration_json_content',
-			'pre_load_script_translations' => 'transliteration_json_content'
+			'pre_load_script_translations' => 'transliteration_json_content',
+			'admin_menu' => [__CLASS__, 'transliterate_admin_menu'],
+			'manage_pages_columns' => [__CLASS__, 'transliterate_pages_columns'],
+			'display_post_states' => [__CLASS__, 'transliterate_pages_columns'],
 		];
 
 		// WooCommerce fix
@@ -62,6 +65,22 @@ class Transliteration_Mode_Admin {
 		}
 
 		return $filters;
+	}
+	
+	public static function transliterate_admin_menu(){
+		global $menu;
+		foreach ($menu as $key => $menu_item){
+			foreach ($menu_item as $key2 => $menu_item_item){
+				$menu[$key][$key2] = Transliteration_Mode::get()->content__force_lat($menu_item_item);
+			}
+		}
+	}
+	
+	public static function transliterate_pages_columns($columns){
+		foreach ($columns as $key => $col){
+			$columns[$key] = Transliteration_Mode::get()->content__force_lat($col);
+		}
+		return $columns;
 	}
     
 }
