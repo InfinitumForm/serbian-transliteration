@@ -147,6 +147,8 @@
 	display:block;
 	width:100%;
 	border:1px solid #efefef;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
 #wp-transliteration-settings .accordion-container .accordion-link {
@@ -159,6 +161,8 @@
 	text-align: left;
 	outline: none;
 	transition: 0.4s;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
 #wp-transliteration-settings .accordion-container .accordion-link:hover {
@@ -167,6 +171,10 @@
 
 #wp-transliteration-settings .accordion-container .accordion-link.active{
 	background-color: #555; 
+	border-bottom-left-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
 }
 
 #wp-transliteration-settings .accordion-container .accordion-link:before {
@@ -189,6 +197,10 @@
 	display: none;
 	background-color: #ffffff;
 	overflow: hidden;
+	border-bottom-left-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
 }
 
 #wp-transliteration-settings .accordion-container .col p {
@@ -292,6 +304,23 @@
 	font-weight:600;
 }
 
+/* Floating submit button */
+#wp-transliteration-settings #trasnliteration_settings_submit_button_float {
+	position: fixed;
+    z-index: 1;
+    top: 31px;
+    right: 20px;
+    padding: 8px 10px 8px 10px;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #c3c4c7;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+}
 
 
 /* Media fix */
@@ -332,5 +361,19 @@
 	}
 	#wp-transliteration-settings .accordion-container .col p > label > span {
 		left: 32px;
+	}
+}
+
+@media (max-width: 768px){
+	#wp-transliteration-settings .transliteration-settings-tabs > li > a .lbl{
+		display:none;
+	}
+	
+	#wp-transliteration-settings #trasnliteration_settings_submit_button_float {
+		display:none;
+	}
+	
+	#wp-transliteration-settings #trasnliteration_settings_submit_button_1 {
+		margin-top: 10px;
 	}
 }

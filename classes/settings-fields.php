@@ -123,11 +123,29 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 			);
 			
 			add_settings_field(
+				'permalink-transliteration', // ID
+				__('Force transliteration permalinks to latin', 'serbian-transliteration'), // Title
+				[$this, 'permalink_transliteration_callback'], // Callback
+				RSTR_NAME,
+				'transliteration_global'
+			);
+			
+		/*
+		 * Filters Settings
+		 */
+		add_settings_section(
+			'transliteration_filters',
+			__('Filters', 'serbian-transliteration'),
+			[$this, 'print_filters_settings_callback'],
+			RSTR_NAME
+		);
+		
+			add_settings_field(
 				'transliteration-filter', // ID
 				__('Transliteration Filters', 'serbian-transliteration'), // Title
 				[$this, 'transliteration_filter_callback'], // Callback
 				RSTR_NAME,
-				'transliteration_global'
+				'transliteration_filters'
 			);
 			
 			add_settings_field(
@@ -135,7 +153,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				__('Exclude Latin words that you do not want to be transliterated to the Cyrillic.', 'serbian-transliteration'), // Title
 				[$this, 'exclude_latin_words_callback'], // Callback
 				RSTR_NAME,
-				'transliteration_global'
+				'transliteration_filters'
 			);
 			
 			add_settings_field(
@@ -143,7 +161,7 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				__('Exclude Cyrillic words that you do not want to be transliterated to the Latin.', 'serbian-transliteration'), // Title
 				[$this, 'exclude_cyrillic_words_callback'], // Callback
 				RSTR_NAME,
-				'transliteration_global'
+				'transliteration_filters'
 			);
 		
 		
@@ -222,14 +240,6 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 				'allow-cyrillic-usernames', // ID
 				__('Allow Cyrillic Usernames', 'serbian-transliteration'), // Title
 				[$this, 'allow_cyrillic_usernames_callback'], // Callback
-				RSTR_NAME,
-				'transliteration_wp_admin_settings'
-			);
-			
-			add_settings_field(
-				'permalink-transliteration', // ID
-				__('Force transliteration permalinks to latin', 'serbian-transliteration'), // Title
-				[$this, 'permalink_transliteration_callback'], // Callback
 				RSTR_NAME,
 				'transliteration_wp_admin_settings'
 			);
@@ -422,6 +432,10 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
         printf('<p>%s</p>', __('This setting determines the mode of operation for the Transliteration plugin.', 'serbian-transliteration'));
 		printf('<p>%s</p>', __('Carefully choose the option that is best for your site and the plugin will automatically set everything you need for optimal performance.', 'serbian-transliteration'));
     }
+	
+	public static function print_filters_settings_callback() {
+		 printf('<p>%s</p>', __('This section contains filters for exclusions, allowing you to specify content that should be excluded from transliteration, and also includes a filter to disable certain WordPress filters related to transliteration.', 'serbian-transliteration'));
+	}
 	
 	public function print_special_settings_callback()
 	{
@@ -619,8 +633,9 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		}
 
 		printf(
-			'<div%3$s id="rstr-mode-list">%1$s<br><p class="description info" id="forced-transliteration" style="display:none; ">%2$s</p></div>',
+			'<div%3$s id="rstr-mode-list">%1$s%2$s<p class="description info" id="forced-transliteration" style="display:none; ">%3$s</p></div>',
 			join(' ', $inputs),
+			sprintf('<p class="description">%1$s</p>', __('This option configures the operating mode of the entire plugin and affects all aspects of the site related to transliteration. Each mode has its own set of filters, which are activated based on your specific needs. It\'s important to take the time to review and customize these settings according to your preferences.', 'serbian-transliteration')),
 			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', 'serbian-transliteration'),
 			(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false ? ' class="required-box"' : '')
 		);

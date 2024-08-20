@@ -230,8 +230,22 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 					<?php
 					settings_fields('transliteration-group');
 					do_settings_sections('serbian-transliteration');
-					submit_button();
-					?>
+					submit_button(
+						__('Save Changes'),
+						'primary',
+						'trasnliteration_settings_save_changes_1',
+						false,
+						['id' => 'trasnliteration_settings_submit_button_1']
+					); ?>
+					<div id="trasnliteration_settings_submit_button_float">
+						<?php submit_button(
+							__('Save Changes'),
+							'primary',
+							'trasnliteration_settings_save_changes_2',
+							false,
+							['id' => 'trasnliteration_settings_submit_button_2']
+						); ?>
+					</div>
 				</form>
 			</div>
 		</div>

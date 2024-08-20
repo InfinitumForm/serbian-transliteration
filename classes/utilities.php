@@ -717,7 +717,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		}
 
 		// Check for specific editors and set the cache if true
-		if (self::is_elementor_editor() || self::is_oxygen_editor()) {
+		if (self::is_elementor_editor() || self::is_oxygen_editor() || self::is_admin()) {
 			$is_editor = true;
 			return $is_editor;
 		}
@@ -808,19 +808,20 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * Generate unique token
 	 * @author    Ivijan-Stefan Stipic
 	 */
-	public static function generate_token($length=16){
-		if(function_exists('openssl_random_pseudo_bytes') || function_exists('random_bytes'))
-		{
-			if (version_compare(PHP_VERSION, '7.0.0', '>=')) {
-				return substr(str_rot13(bin2hex(random_bytes(ceil($length * 2))))??'', 0, $length);
-			} else {
-				return substr(str_rot13(bin2hex(openssl_random_pseudo_bytes(ceil($length * 2))))??'', 0, $length);
-			}
+	public static function generate_token($length = 16) {
+		if (function_exists('random_bytes')) {
+			// Koristimo random_bytes za generisanje kriptografski sigurnog tokena
+			$bytes = random_bytes(ceil($length * 2));
+		} elseif (function_exists('openssl_random_pseudo_bytes')) {
+			// Fallback na openssl_random_pseudo_bytes ako random_bytes nije dostupan
+			$bytes = openssl_random_pseudo_bytes(ceil($length * 2));
+		} else {
+			// Fallback na uniqid ako nijedna od gore navedenih funkcija nije dostupna
+			$bytes = str_replace(array('.', ' ', '_'), random_int(1000, 9999), uniqid('t'.microtime()));
 		}
-		else
-		{
-			return substr(str_replace(array('.',' ','_'),random_int(1000,9999),uniqid('t'.microtime()))??'', 0, $length);
-		}
+
+		// Vraćanje tokena koji je rotiran i skraćen na željenu dužinu
+		return substr(str_rot13(bin2hex($bytes)), 0, $length);
 	}
 
 	/*
@@ -828,25 +829,26 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @return        bool
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public static function clear_plugin_translations(){
-		$domain_path = [
-			path_join( WP_LANG_DIR, 'plugins' ) . '/serbian-transliteration-*.{po,mo,l10n.php}',
+	public static function clear_plugin_translations() {
+		$domain_paths = [
+			path_join(WP_LANG_DIR, 'plugins') . '/serbian-transliteration-*.{po,mo,l10n.php}',
 			dirname(RSTR_ROOT) . '/serbian-transliteration-*.{po,mo,l10n.php}',
 			WP_LANG_DIR . '/serbian-transliteration-*.{po,mo,l10n.php}'
 		];
 		
-		$i = 0;
-		
-		foreach ($domain_path as $pattern) {
+		$deleted_files = 0;
+
+		foreach ($domain_paths as $pattern) {
 			foreach (glob($pattern, GLOB_BRACE) as $file) {
-				if (file_exists($file)) {
-					@unlink($file);
-					++$i;
+				if (@unlink($file)) {
+					$deleted_files++;
+				} else {
+					error_log(sprintf(__('Failed to delete plugin translation: %s', 'serbian-transliteration'), $file));
 				}
 			}
 		}
-		
-		return ($i > 0) ? true : false;
+
+		return $deleted_files > 0;
 	}
 	
 	/*
@@ -855,10 +857,30 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	* @verson    1.0.0
 	* @url       https://www.php.net/manual/en/function.explode.php
 	*/
-	public static function explode($separator , $string , $limit = PHP_INT_MAX ){
-		$string = explode($separator, ($string??''), $limit);
+	public static function explode(string $separator, string $string, ?int $limit = PHP_INT_MAX, bool $keep_empty = false) {
+		if ($separator === '') {
+			// Ako je separator prazan, vratite prazan niz ili prijavite grešku
+			return [];
+		}
+		
+		// Handle limit
+		if($limit === NULL) {
+			$limit = PHP_INT_MAX;
+		}
+
+		// Explode string
+		$string = explode($separator, ($string ?? ''), $limit);
+
+		// Trim whitespace from each element
 		$string = array_map('trim', $string);
-		$string = array_filter($string);
+
+		// Optionally filter out empty elements
+		if (!$keep_empty) {
+			$string = array_filter($string, function($value) {
+				return $value !== '';
+			});
+		}
+
 		return $string;
 	}
 	
