@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2024-08-08 22:14+0200\n"
-"PO-Revision-Date: 2024-08-08 22:16+0200\n"
+"POT-Creation-Date: 2024-08-20 16:33+0200\n"
+"PO-Revision-Date: 2024-08-20 16:35+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -23,20 +23,41 @@ msgstr ""
 msgid "undefined"
 msgstr "nedefinisano"
 
-#: classes/menus.php:29 classes/settings.php:27 classes/settings.php:47
-#: classes/settings.php:186 classes/settings.php:242 classes/settings.php:273
-#: classes/settings.php:304 classes/settings.php:335 classes/settings.php:358
+#: classes/filters.php:125
+msgid "Contra Team - A complete hosting solution in one place"
+msgstr "Contra Team - Kompletno rješenje za hosting na jednom mjestu"
+
+#: classes/filters.php:129
+msgid "Support my work by buying me a coffee!"
+msgstr "Podržite moj rad tako što ćete me počastiti kavom!"
+
+#: classes/filters.php:129
+msgid "Thank you for using Transliterator. Could you buy me a coffee?"
+msgstr "Hvala što koristite Transliterator. Možete li me počastiti kavom?"
+
+#: classes/init.php:54 classes/init.php:61 classes/utilities.php:456
+msgid "Attention, Headers have already been sent!"
+msgstr "Pažnja, zaglavlja su već poslana!\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+
+#: classes/menus.php:29 classes/settings.php:41 classes/settings.php:82
+#: classes/settings.php:219 classes/settings.php:290 classes/settings.php:325
+#: classes/settings.php:360 classes/settings.php:395 classes/settings.php:422
 msgid "Transliteration"
 msgstr "Transliteracija"
 
-#: classes/menus.php:43 classes/menus.php:45 classes/settings-fields.php:473
-#: classes/settings-fields.php:555 classes/settings/page-functions.php:158
+#: classes/menus.php:43 classes/menus.php:45 classes/settings-fields.php:487
+#: classes/settings-fields.php:569 classes/settings/page-functions.php:158
 #: functions.php:419
 msgid "Latin"
 msgstr "Latinski"
 
-#: classes/menus.php:44 classes/menus.php:45 classes/settings-fields.php:472
-#: classes/settings-fields.php:556 classes/settings/page-functions.php:153
+#: classes/menus.php:44 classes/menus.php:45 classes/settings-fields.php:486
+#: classes/settings-fields.php:570 classes/settings/page-functions.php:153
 #: functions.php:418
 msgid "Cyrillic"
 msgstr "Ćirilica"
@@ -214,427 +235,439 @@ msgid "Plugin Mode"
 msgstr "Mod plugina"
 
 #: classes/settings-fields.php:127
-msgid "Transliteration Filters"
-msgstr "Filteri za transliteraciju"
-
-#: classes/settings-fields.php:135
-msgid "Exclude Latin words that you do not want to be transliterated to the Cyrillic."
-msgstr "Isključite latinične riječi za koje ne želite da se transliteriraju u ćirilicu."
-
-#: classes/settings-fields.php:143
-msgid "Exclude Cyrillic words that you do not want to be transliterated to the Latin."
-msgstr "Izuzmite ćirilične riječi za koje ne želite da se transliteriraju u latinicu."
-
-#: classes/settings-fields.php:156
-msgid "Special Settings"
-msgstr "Posebne postavke"
-
-#: classes/settings-fields.php:163
-msgid "Enable cache support"
-msgstr "Omogućite podršku za predmemoriju"
-
-#: classes/settings-fields.php:171
-msgid "Force widget transliteration"
-msgstr "Prisilna transliteracija widgeta"
-
-#: classes/settings-fields.php:179
-msgid "Force e-mail transliteration"
-msgstr "Prisilna transliteracija e-pošte"
-
-#: classes/settings-fields.php:187
-msgid "Force transliteration for WordPress REST API"
-msgstr "Prisilite transliteraciju za WordPress REST API pozive"
-
-#: classes/settings-fields.php:195
-msgid "Force transliteration for AJAX calls"
-msgstr "Prisilite transliteraciju za AJAX pozive"
-
-#: classes/settings-fields.php:195
-msgid "EXPERIMENTAL"
-msgstr "EKSPERIMENTALNO"
-
-#: classes/settings-fields.php:208
-msgid "WP Admin"
-msgstr "WP Admin"
-
-#: classes/settings-fields.php:215
-msgid "WP-Admin transliteration"
-msgstr "WP-Admin transliteracija"
-
-#: classes/settings-fields.php:223
-msgid "Allow Cyrillic Usernames"
-msgstr "Dopusti korisnička imena na ćirilici"
-
-#: classes/settings-fields.php:231
 msgid "Force transliteration permalinks to latin"
 msgstr "Prisiliti transliteraciju permalinki na latinicu"
 
-#: classes/settings-fields.php:244
+#: classes/settings-fields.php:138
+msgid "Filters"
+msgstr "Filteri"
+
+#: classes/settings-fields.php:145
+msgid "Transliteration Filters"
+msgstr "Filteri za transliteraciju"
+
+#: classes/settings-fields.php:153
+msgid "Exclude Latin words that you do not want to be transliterated to the Cyrillic."
+msgstr "Isključite latinične riječi za koje ne želite da se transliteriraju u ćirilicu."
+
+#: classes/settings-fields.php:161
+msgid "Exclude Cyrillic words that you do not want to be transliterated to the Latin."
+msgstr "Izuzmite ćirilične riječi za koje ne želite da se transliteriraju u latinicu."
+
+#: classes/settings-fields.php:174
+msgid "Special Settings"
+msgstr "Posebne postavke"
+
+#: classes/settings-fields.php:181
+msgid "Enable cache support"
+msgstr "Omogućite podršku za predmemoriju"
+
+#: classes/settings-fields.php:189
+msgid "Force widget transliteration"
+msgstr "Prisilna transliteracija widgeta"
+
+#: classes/settings-fields.php:197
+msgid "Force e-mail transliteration"
+msgstr "Prisilna transliteracija e-pošte"
+
+#: classes/settings-fields.php:205
+msgid "Force transliteration for WordPress REST API"
+msgstr "Prisilite transliteraciju za WordPress REST API pozive"
+
+#: classes/settings-fields.php:213
+msgid "Force transliteration for AJAX calls"
+msgstr "Prisilite transliteraciju za AJAX pozive"
+
+#: classes/settings-fields.php:213
+msgid "EXPERIMENTAL"
+msgstr "EKSPERIMENTALNO"
+
+#: classes/settings-fields.php:226
+msgid "WP Admin"
+msgstr "WP Admin"
+
+#: classes/settings-fields.php:233
+msgid "WP-Admin transliteration"
+msgstr "WP-Admin transliteracija"
+
+#: classes/settings-fields.php:241
+msgid "Allow Cyrillic Usernames"
+msgstr "Dopusti korisnička imena na ćirilici"
+
+#: classes/settings-fields.php:254
 msgid "Media Settings"
 msgstr "Postavke medija"
 
-#: classes/settings-fields.php:251
+#: classes/settings-fields.php:261
 msgid "Transliterate filenames to latin"
 msgstr "Transliterirajte nazive na latinicu"
 
-#: classes/settings-fields.php:259
+#: classes/settings-fields.php:269
 msgid "Filename delimiter"
 msgstr "Graničnik imena datoteke"
 
-#: classes/settings-fields.php:272
+#: classes/settings-fields.php:282
 msgid "WordPress Search"
 msgstr "WordPress pretraživanje"
 
-#: classes/settings-fields.php:279
+#: classes/settings-fields.php:289
 msgid "Enable search transliteration"
 msgstr "Omogućite transliteraciju pretraživanja"
 
-#: classes/settings-fields.php:288
+#: classes/settings-fields.php:298
 msgid "Fix Diacritics"
 msgstr "Popravite dijakritiku"
 
-#: classes/settings-fields.php:297
+#: classes/settings-fields.php:307
 msgid "Search Mode"
 msgstr "Način pretraživanja"
 
-#: classes/settings-fields.php:310
+#: classes/settings-fields.php:320
 msgid "SEO Settings"
 msgstr "SEO postavke"
 
-#: classes/settings-fields.php:317
+#: classes/settings-fields.php:327
 msgid "Parameter URL selector"
 msgstr "Birač URL-a parametra"
 
-#: classes/settings-fields.php:325
+#: classes/settings-fields.php:335
 msgid "RSS transliteration"
 msgstr "RSS transliteracija"
 
-#: classes/settings-fields.php:338
+#: classes/settings-fields.php:348
 msgid "Exclusion"
 msgstr "Izuzimanje"
 
-#: classes/settings-fields.php:348
+#: classes/settings-fields.php:358
 #, php-format
 msgid "Language: %s"
 msgstr "Jezik: %s"
 
-#: classes/settings-fields.php:371
+#: classes/settings-fields.php:381
 msgid "Misc."
 msgstr "Razno"
 
-#: classes/settings-fields.php:378
+#: classes/settings-fields.php:388
 msgid "Enable body class"
 msgstr "Omogući body klasu"
 
-#: classes/settings-fields.php:386
+#: classes/settings-fields.php:396
 msgid "Theme Support"
 msgstr "Podrška za šablone"
 
-#: classes/settings-fields.php:400
+#: classes/settings-fields.php:410
 msgid "Brighten my day as my plugin brightens yours!"
 msgstr "Razveselite me kao što vas razveseljava moj dodatak!"
 
-#: classes/settings-fields.php:409
+#: classes/settings-fields.php:419
 msgid "Contributors & Developers"
 msgstr "Suradnici i programeri"
 
-#: classes/settings-fields.php:422
+#: classes/settings-fields.php:432
 msgid "This setting determines the mode of operation for the Transliteration plugin."
 msgstr "Ova postavka određuje način rada dodatka za transliteraciju."
 
-#: classes/settings-fields.php:423
+#: classes/settings-fields.php:433
 msgid "Carefully choose the option that is best for your site and the plugin will automatically set everything you need for optimal performance."
 msgstr "Pažljivo odaberite opciju koja je najbolja za vašu stranicu i dodatak će automatski postaviti sve što je potrebno za optimalne performanse."
 
-#: classes/settings-fields.php:428
+#: classes/settings-fields.php:437
+msgid "This section contains filters for exclusions, allowing you to specify content that should be excluded from transliteration, and also includes a filter to disable certain WordPress filters related to transliteration."
+msgstr "Ovaj odjeljak sadrži filtre za izuzeća, koji vam omogućuju da odredite sadržaj koji treba biti izuzet iz transliteracije, a također uključuje filtar za onemogućavanje određenih WordPress filtara povezanih s transliteracijom."
+
+#: classes/settings-fields.php:442
 msgid "These are special settings that can enhance transliteration and are used only if you need them."
 msgstr "To su posebne postavke koje mogu poboljšati transliteraciju i koriste se samo ako su vam potrebne."
 
-#: classes/settings-fields.php:433
+#: classes/settings-fields.php:447
 msgid "These settings apply to the administrative part."
 msgstr "Ove postavke se odnose na administrativni dio."
 
-#: classes/settings-fields.php:438
+#: classes/settings-fields.php:452
 msgid "Upload, view and control media and files."
 msgstr "Prenesite, pregledajte i kontrolirajte medije i datoteke."
 
-#: classes/settings-fields.php:443
+#: classes/settings-fields.php:457
 msgid "Our plugin also has special SEO options that are very important for your project."
 msgstr "Naš dodatak također ima posebne SEO opcije koje su vrlo važne za vaš projekt."
 
-#: classes/settings-fields.php:448
+#: classes/settings-fields.php:462
 msgid "Within this configuration section, you have the opportunity to customize your experience by selecting the particular languages for which you wish to turn off the transliteration function. This feature is designed to give you greater control and adaptability over how the system handles transliteration, allowing you to disable it for specific languages based on your individual needs or preferences."
 msgstr "U ovom dijelu postavki imate mogućnost prilagoditi svoje iskustvo tako da odaberete određene jezike za koje želite isključiti funkciju transliteracije. Ova značajka je dizajnirana kako bi vam pružila veću kontrolu i prilagodljivost u načinu na koji sustav rukuje transliteracijom, omogućujući vam da je isključite za određene jezike sukladno vašim osobnim potrebama ili preferencijama."
 
-#: classes/settings-fields.php:453
+#: classes/settings-fields.php:467
 msgid "Various interesting settings that can be used in the development of your project."
 msgstr "Razne zanimljive postavke koje se mogu koristiti u razvoju vašeg projekta."
 
-#: classes/settings-fields.php:462
+#: classes/settings-fields.php:476
 msgid "This setting determines the search mode within the WordPress core depending on the type of language located in the database."
 msgstr "Ova postavka određuje način pretraživanja unutar jezgre WordPress-a, ovisno o vrsti jezika koji se nalazi u bazi podataka."
 
-#: classes/settings-fields.php:463
+#: classes/settings-fields.php:477
 msgid "The search type setting is mostly experimental and you need to test each variant so you can get the best result you need."
 msgstr "Postavka vrste pretraživanja uglavnom je eksperimentalna i trebate testirati svaku varijantu kako biste postigli najbolji rezultat koji vam je potreban."
 
-#: classes/settings-fields.php:477 classes/utilities.php:30
+#: classes/settings-fields.php:491 classes/utilities.php:30
 msgid "Arabic"
 msgstr "Arapski"
 
-#: classes/settings-fields.php:479 classes/utilities.php:29
+#: classes/settings-fields.php:493 classes/utilities.php:29
 msgid "Armenian"
 msgstr "Jermenski"
 
-#: classes/settings-fields.php:496
+#: classes/settings-fields.php:510
 msgid "Define whether your primary alphabet on the site is Latin or Cyrillic. If the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then choose Latin. This option is crucial for the plugin to work properly."
 msgstr "Odredite je li vaša primarna abeceda na web mjestu latinica ili ćirilica. Ako je primarna abeceda ćirilica, onda odaberite ćirilicu. Ako je latinski, onda odaberite latinski. Ova je opcija presudna za ispravni rad dodatka."
 
-#: classes/settings-fields.php:498
+#: classes/settings-fields.php:512
 msgid "Define whether your primary alphabet on the site."
 msgstr "Odredite je li vaš primarni alfabet na stranici."
 
-#: classes/settings-fields.php:512
+#: classes/settings-fields.php:526
 msgid "Transliteration disabled"
 msgstr "Transliteracija je onemogućena"
 
-#: classes/settings-fields.php:513 classes/settings/page-shortcodes.php:6
+#: classes/settings-fields.php:527 classes/settings/page-shortcodes.php:6
 #: classes/settings/page-tags.php:3
 msgid "Cyrillic to Latin"
 msgstr "Ćirilica na latinicu"
 
-#: classes/settings-fields.php:514 classes/settings/page-shortcodes.php:9
+#: classes/settings-fields.php:528 classes/settings/page-shortcodes.php:9
 #: classes/settings/page-tags.php:6
 msgid "Latin to Cyrillic"
 msgstr "Latinica na ćirilicu"
 
-#: classes/settings-fields.php:520
+#: classes/settings-fields.php:534
 msgid "Arabic to Latin"
 msgstr "S arapskog na latinski"
 
-#: classes/settings-fields.php:521
+#: classes/settings-fields.php:535
 msgid "Latin to Arabic"
 msgstr "Latinski na arapski"
 
-#: classes/settings-fields.php:523
+#: classes/settings-fields.php:537
 msgid "Armenian to Latin"
 msgstr "Armenski na latinski"
 
-#: classes/settings-fields.php:524
+#: classes/settings-fields.php:538
 msgid "Latin to Armenian"
 msgstr "Latinski na armenski"
 
-#: classes/settings-fields.php:545
+#: classes/settings-fields.php:559
 msgid "This option determines the global transliteration of your web site. If you do not want to transliterate the entire website and use this plugin for other purposes, disable this option. This option does not affect to the functionality of short codes and tags."
 msgstr "Ova opcija određuje globalnu transliteraciju vašeg web mjesta. Ako ne želite transliterirati cijelu web stranicu i koristiti ovaj dodatak u druge svrhe, onemogućite ovu opciju. Ova opcija ne utječe na funkcionalnost kratkih kodova i oznaka."
 
-#: classes/settings-fields.php:567
+#: classes/settings-fields.php:581
 msgid "This option determines the type of language script that the visitors sees when they first time come to your site."
 msgstr "Ova opcija određuje vrstu jezične skripte koju posjetitelji vide kada prvi put dođu na vašu stranicu."
 
-#: classes/settings-fields.php:576
+#: classes/settings-fields.php:590
 msgid "Automatical"
 msgstr "Automatski"
 
-#: classes/settings-fields.php:598
+#: classes/settings-fields.php:612
 msgid "This option defines the language script. Automatic script detection is the best way but if you are using a WordPress installation in a language that does not match the scripts supported by this plugin, then choose on which script you want the transliteration to be performed."
 msgstr "Ova opcija definira jezičnu skriptu. Najbolje je automatsko otkrivanje skripti, ali ako koristite WordPress instalaciju na jeziku koji se ne podudara sa skriptama koje podržava ovaj dodatak, odaberite na kojoj skripti želite da se izvrši transliteracija."
 
-#: classes/settings-fields.php:624
+#: classes/settings-fields.php:638
+msgid "This option configures the operating mode of the entire plugin and affects all aspects of the site related to transliteration. Each mode has its own set of filters, which are activated based on your specific needs. It's important to take the time to review and customize these settings according to your preferences."
+msgstr "Ova opcija konfigurira način rada cijelog dodatka i utječe na sve aspekte stranice povezane s transliteracijom. Svaki način rada ima svoj skup filtera, koji se aktiviraju prema vašim specifičnim potrebama. Važno je odvojiti vrijeme za pregled i prilagodbu ovih postavki u skladu s vašim preferencijama."
+
+#: classes/settings-fields.php:639
 msgid "Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally."
 msgstr "Prisilna transliteracija ponekad može stvoriti probleme ako se latinica na stranicama i u postovima prevede na ćirilicu. Ovoj se kombinaciji mora pristupiti eksperimentalno."
 
-#: classes/settings-fields.php:638
+#: classes/settings-fields.php:653
 msgid "Exclude filters you don't need (optional)"
 msgstr "Izuzmite filtre koji vam nisu potrebni (opcionalno)"
 
-#: classes/settings-fields.php:644
+#: classes/settings-fields.php:659
 msgid "Select the transliteration filters you want to exclude."
 msgstr "Odaberite filtre za transliteraciju koje želite izuzeti (isključiti)."
 
-#: classes/settings-fields.php:645
+#: classes/settings-fields.php:660
 msgid "The filters you select here will not be transliterated (these filters do not work on forced transliteration)."
 msgstr "Ovdje odabrani filtri neće biti transliterirani (ti filtri ne rade na prisilnoj transliteraciji)."
 
-#: classes/settings-fields.php:658
+#: classes/settings-fields.php:673
 msgid "TIPS & TRICKS:"
 msgstr "SAVJETI I TRIKOVI:"
 
-#: classes/settings-fields.php:659
+#: classes/settings-fields.php:674
 msgid "You can find details about some of the listed filters in this article:"
 msgstr "Pojedinosti o nekim od navedenih filtara možete pronaći u ovom članku:"
 
-#: classes/settings-fields.php:668
+#: classes/settings-fields.php:683
 #, php-format
 msgid "Since you are already a WooCommerce user, you also can see the following documentation: %s"
 msgstr "Budući da ste već korisnik WooCommerce-a, možete vidjeti i sljedeću dokumentaciju: %s"
 
-#: classes/settings-fields.php:689 classes/settings-fields.php:700
+#: classes/settings-fields.php:704 classes/settings-fields.php:715
 #, php-format
 msgid "Separate words, phrases, names and expressions with the sign %s or put it in a new row. HTML is not allowed."
 msgstr "Odvojite riječi, fraze, imena i izraze znakom %s ili ih stavite u novi red. HTML nije dopušten."
 
-#: classes/settings-fields.php:708 classes/settings-fields.php:729
-#: classes/settings-fields.php:750 classes/settings-fields.php:770
-#: classes/settings-fields.php:790 classes/settings-fields.php:814
-#: classes/settings-fields.php:836 classes/settings-fields.php:860
-#: classes/settings-fields.php:888 classes/settings-fields.php:937
-#: classes/settings-fields.php:958 classes/settings-fields.php:1025
-#: classes/settings-fields.php:1066
+#: classes/settings-fields.php:723 classes/settings-fields.php:744
+#: classes/settings-fields.php:765 classes/settings-fields.php:785
+#: classes/settings-fields.php:805 classes/settings-fields.php:829
+#: classes/settings-fields.php:851 classes/settings-fields.php:875
+#: classes/settings-fields.php:903 classes/settings-fields.php:952
+#: classes/settings-fields.php:973 classes/settings-fields.php:1040
+#: classes/settings-fields.php:1081
 msgid "Yes"
 msgstr "Da"
 
-#: classes/settings-fields.php:709 classes/settings-fields.php:730
-#: classes/settings-fields.php:751 classes/settings-fields.php:771
-#: classes/settings-fields.php:791 classes/settings-fields.php:815
-#: classes/settings-fields.php:837 classes/settings-fields.php:861
-#: classes/settings-fields.php:889 classes/settings-fields.php:938
-#: classes/settings-fields.php:959 classes/settings-fields.php:1026
-#: classes/settings-fields.php:1067
+#: classes/settings-fields.php:724 classes/settings-fields.php:745
+#: classes/settings-fields.php:766 classes/settings-fields.php:786
+#: classes/settings-fields.php:806 classes/settings-fields.php:830
+#: classes/settings-fields.php:852 classes/settings-fields.php:876
+#: classes/settings-fields.php:904 classes/settings-fields.php:953
+#: classes/settings-fields.php:974 classes/settings-fields.php:1041
+#: classes/settings-fields.php:1082
 msgid "No"
 msgstr "Ne"
 
-#: classes/settings-fields.php:721
+#: classes/settings-fields.php:736
 msgid "If you have a problem caching your pages, our plugin solves this problem by clearing the cache when changing the language script."
 msgstr "Ako imate problem s predmemoriranjem stranica, naš dodatak rješava taj problem brisanjem predmemorije prilikom promjene jezične skripte."
 
-#: classes/settings-fields.php:742
+#: classes/settings-fields.php:757
 msgid "This option forces the widget to transliterate. There may be some unusual behaviour in the rare cases."
 msgstr "Ova opcija prisiljava widget na transliteraciju. U rijetkim slučajevima može se dogoditi neko neobično ponašanje."
 
-#: classes/settings-fields.php:762
+#: classes/settings-fields.php:777
 msgid "Enable this feature if you want to force transliteration of email content."
 msgstr "Omogućite ovu značajku ako želite prisiliti transliteraciju sadržaja e-pošte."
 
-#: classes/settings-fields.php:782
+#: classes/settings-fields.php:797
 msgid "Enable this feature if you want to force transliteration of WordPress REST API calls. The WordPress REST API is also used in many AJAX calls, WooCommerce, and page builders. It is recommended to be enabled by default."
 msgstr "Omogućite ovu funkciju ako želite prisilno provesti transliteraciju poziva WordPress REST API-ja. WordPress REST API se također koristi u mnogim AJAX pozivima, WooCommerce-u i graditeljima stranica. Preporučuje se da bude omogućeno prema zadanim postavkama."
 
-#: classes/settings-fields.php:802
+#: classes/settings-fields.php:817
 #, php-format
 msgid "Enable this feature if you want to force transliteration of AJAX calls. If you want to avoid transliteration of specific individual AJAX calls, you must add a new POST or GET parameter to your AJAX call: %s"
 msgstr "Omogućite ovu opciju ako želite prisiliti transliteraciju AJAX poziva. Ako želite izbjeći transliteraciju specifičnih pojedinačnih AJAX poziva, morate dodati novi POST ili GET parametar %s na svoj AJAX poziv."
 
-#: classes/settings-fields.php:827
+#: classes/settings-fields.php:842
 msgid "Enable if you want the WP-Admin area to be transliterated."
 msgstr "Omogućite ako želite da područje WP-Admin bude transliterirano."
 
-#: classes/settings-fields.php:848
+#: classes/settings-fields.php:863
 msgid "Allows to create users with usernames containing Cyrillic characters."
 msgstr "Omogućuje stvaranje korisnika s korisničkim imenima koja sadrže ćirilične znakove."
 
-#: classes/settings-fields.php:873
+#: classes/settings-fields.php:888
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr "Omogući ako želite prisiliti ćirilicu na latinicu za permalinkove."
 
-#: classes/settings-fields.php:875
+#: classes/settings-fields.php:890
 #, php-format
 msgid "You don't need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks."
 msgstr "Ne morate forsirati permalinkove za transliteraciju na latinicu jer je vaš trenutni jezik postavljen na %s što će automatski promijeniti permalinkove."
 
-#: classes/settings-fields.php:900
+#: classes/settings-fields.php:915
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr "Omogući ako želite pretvoriti ćirilične datoteke u latinicu."
 
-#: classes/settings-fields.php:911
+#: classes/settings-fields.php:926
 msgid "hyphen (default)"
 msgstr "crtica (zadano)"
 
-#: classes/settings-fields.php:912
+#: classes/settings-fields.php:927
 msgid "underscore"
 msgstr "podvlaka"
 
-#: classes/settings-fields.php:913
+#: classes/settings-fields.php:928
 msgid "dot"
 msgstr "točka"
 
-#: classes/settings-fields.php:914
+#: classes/settings-fields.php:929
 msgid "tilde"
 msgstr "tilda"
 
-#: classes/settings-fields.php:915
+#: classes/settings-fields.php:930
 msgid "vartical bar"
 msgstr "okomita traka"
 
-#: classes/settings-fields.php:916
+#: classes/settings-fields.php:931
 msgid "asterisk"
 msgstr "zvjezdica"
 
-#: classes/settings-fields.php:928
+#: classes/settings-fields.php:943
 msgid "Filename delimiter, example:"
 msgstr "Graničnik imena datoteke, primjer:"
 
-#: classes/settings-fields.php:928
+#: classes/settings-fields.php:943
 msgid "my-upload-file.jpg"
 msgstr "moj-fajl.jpg"
 
-#: classes/settings-fields.php:949
+#: classes/settings-fields.php:964
 msgid "Approve if you want transliteration for the search field."
 msgstr "Odobrite ako želite transliteraciju za polje za pretraživanje."
 
-#: classes/settings-fields.php:970
+#: classes/settings-fields.php:985
 msgid "Try to fix the diacritics in the search field."
 msgstr "Pokušajte popraviti dijakritike u polju za pretraživanje."
 
-#: classes/settings-fields.php:979
+#: classes/settings-fields.php:994
 msgid "Automatical (recommended)"
 msgstr "Automatski (preporučeno)"
 
-#: classes/settings-fields.php:980
+#: classes/settings-fields.php:995
 msgid "Based on the plugin mode"
 msgstr "Na temelju rada dodatka"
 
-#: classes/settings-fields.php:991
+#: classes/settings-fields.php:1006
 msgid "The search has two working modes. Choose the one that works best with your search."
 msgstr "Pretraživanje ima dva načina rada. Odaberite onu koja najbolje odgovara vašoj pretrazi."
 
-#: classes/settings-fields.php:1000
+#: classes/settings-fields.php:1015
 msgid "(safe)"
 msgstr "(bezbjedno)"
 
-#: classes/settings-fields.php:1001
+#: classes/settings-fields.php:1016
 msgid "(standard)"
 msgstr "(standardan)"
 
-#: classes/settings-fields.php:1002 classes/settings-fields.php:1003
-#: classes/settings-fields.php:1004 classes/settings-fields.php:1005
-#: classes/settings-fields.php:1006
+#: classes/settings-fields.php:1017 classes/settings-fields.php:1018
+#: classes/settings-fields.php:1019 classes/settings-fields.php:1020
+#: classes/settings-fields.php:1021
 msgid "(optional)"
 msgstr "opcionalno"
 
-#: classes/settings-fields.php:1017
+#: classes/settings-fields.php:1032
 msgid "This option dictates which URL parameter will be used to change the language."
 msgstr "Ova opcija određuje koji će se parametar URL-a koristiti za promjenu jezika."
 
-#: classes/settings-fields.php:1038
+#: classes/settings-fields.php:1053
 msgid "This option transliterate the RSS feed."
 msgstr "Ova opcija transliterira RSS feed."
 
-#: classes/settings-fields.php:1044
+#: classes/settings-fields.php:1059
 msgid "Transliterate"
 msgstr "Transliteruj"
 
-#: classes/settings-fields.php:1045
+#: classes/settings-fields.php:1060
 msgid "Omit the transliteration"
 msgstr "Izostavi transliteraciju"
 
-#: classes/settings-fields.php:1078
+#: classes/settings-fields.php:1093
 msgid "This option adds CSS classes to your body HTML tag. These CSS classes vary depending on the language script."
 msgstr "Ova opcija dodaje CSS klase u vašu HTML oznaku tijela. Te se CSS klase razlikuju ovisno o jezičnoj skripti."
 
-#: classes/settings-fields.php:1086
+#: classes/settings-fields.php:1101
 msgid "Enable Theme Support"
 msgstr "Omogući podršku za teme"
 
-#: classes/settings-fields.php:1087
+#: classes/settings-fields.php:1102
 msgid "Disable Theme Support"
 msgstr "Onemogući podršku za teme"
 
-#: classes/settings-fields.php:1098
+#: classes/settings-fields.php:1113
 msgid "If you don't require transliteration support for your theme, you can disable it for your current theme here."
 msgstr "Ako vam nije potrebna podrška za transliteraciju za vašu temu, možete je onemogućiti za svoju trenutnu temu ovdje."
 
-#: classes/settings-fields.php:1148
+#: classes/settings-fields.php:1163
 msgid "This mode has no filters."
 msgstr "Ovaj način rada nema filtera."
 
@@ -671,86 +704,90 @@ msgstr "Ako želite podržati naš rad i trud, ako imate nove ideje ili želite 
 msgid "join our team"
 msgstr "pridružite se našem timu"
 
-#: classes/settings.php:26
-msgid "Transliteration Settings"
-msgstr "Transliteracije - Postavka"
-
-#: classes/settings.php:58
+#: classes/settings.php:52
 msgid "Settings saved."
 msgstr "Postavke spremljene."
 
-#: classes/settings.php:91
-msgid "Please wait! Do not close the window or leave the page until this operation is completed!"
-msgstr "Molimo pričekajte! Nemojte zatvarati prozor ili napuštati stranicu dok se ova operacija ne dovrši!"
+#: classes/settings.php:61
+msgid "Settings"
+msgstr "Postavke"
 
-#: classes/settings.php:92
-msgid "DONE!!!"
-msgstr "GOTOVO !!!"
-
-#: classes/settings.php:93
-msgid "Loading..."
-msgstr "Učitavanje..."
-
-#: classes/settings.php:104
-msgid "PLEASE UPDATE PLUGIN SETTINGS"
-msgstr "MOLIMO AŽURIRATI POSTAVKE PLUGINA"
-
-#: classes/settings.php:105
-msgid "Carefully review the transliteration plugin settings and adjust how it fits your WordPress installation. It is important that every time you change the settings, you test the parts of the site that are affected by this plugin."
-msgstr "Pažljivo pregledajte postavke dodatka za transliteraciju i prilagodite kako odgovara vašoj instalaciji WordPressa. Važno je da svaki put kada promijenite postavke testirate dijelove web mjesta na koje ovaj dodatak utječe."
-
-#: classes/settings.php:120
+#: classes/settings.php:71 classes/settings.php:153
 msgid "Shortcodes"
 msgstr "Rezervirano mjesto"
 
-#: classes/settings.php:121
+#: classes/settings.php:72 classes/settings.php:154
 msgid "PHP Functions"
 msgstr "PHP Funkcije"
 
-#: classes/settings.php:122
+#: classes/settings.php:73
+msgid "5 stars?"
+msgstr "5 zvjezdica?"
+
+#: classes/settings.php:81
+msgid "Transliteration Settings"
+msgstr "Transliteracije - Postavka"
+
+#: classes/settings.php:124
+msgid "Please wait! Do not close the window or leave the page until this operation is completed!"
+msgstr "Molimo pričekajte! Nemojte zatvarati prozor ili napuštati stranicu dok se ova operacija ne dovrši!"
+
+#: classes/settings.php:125
+msgid "DONE!!!"
+msgstr "GOTOVO !!!"
+
+#: classes/settings.php:126
+msgid "Loading..."
+msgstr "Učitavanje..."
+
+#: classes/settings.php:137
+msgid "PLEASE UPDATE PLUGIN SETTINGS"
+msgstr "MOLIMO AŽURIRATI POSTAVKE PLUGINA"
+
+#: classes/settings.php:138
+msgid "Carefully review the transliteration plugin settings and adjust how it fits your WordPress installation. It is important that every time you change the settings, you test the parts of the site that are affected by this plugin."
+msgstr "Pažljivo pregledajte postavke dodatka za transliteraciju i prilagodite kako odgovara vašoj instalaciji WordPressa. Važno je da svaki put kada promijenite postavke testirate dijelove web mjesta na koje ovaj dodatak utječe."
+
+#: classes/settings.php:155
 msgid "Tags"
 msgstr "Oznake"
 
-#: classes/settings.php:142
+#: classes/settings.php:175
 msgid "General Settings"
 msgstr "Opće postavke"
 
-#: classes/settings.php:146
+#: classes/settings.php:179
 msgid "Documentation"
 msgstr "Dokumentacija"
 
-#: classes/settings.php:150
+#: classes/settings.php:183
 msgid "Debug"
 msgstr "Otkloniti neispravnost"
 
-#: classes/settings.php:154 classes/settings.php:358
+#: classes/settings.php:187 classes/settings.php:422
 #: classes/settings/page-credits.php:39
 msgid "Credits"
 msgstr "Zasluge"
 
-#: classes/settings.php:242
+#: classes/settings.php:238 classes/settings.php:246
+msgid "Save Changes"
+msgstr "Spremi promjene"
+
+#: classes/settings.php:290
 msgid "Available shortcodes"
 msgstr "Dostupni kratki kodovi"
 
-#: classes/settings.php:273
+#: classes/settings.php:325
 msgid "Available PHP Functions"
 msgstr "Dostupne PHP funkcije"
 
-#: classes/settings.php:304
+#: classes/settings.php:360
 msgid "Available Tags"
 msgstr "Dostupni tagovi"
 
-#: classes/settings.php:335
+#: classes/settings.php:395
 msgid "Debug information"
 msgstr "Informacije o ispravci pogrešaka"
-
-#: classes/settings.php:364
-msgid "Support my work by buying me a coffee!"
-msgstr "Podržite moj rad tako što ćete me počastiti kavom!"
-
-#: classes/settings.php:364
-msgid "Thank you for using Transliterator. Could you buy me a coffee?"
-msgstr "Hvala što koristite Transliterator. Možete li me počastiti kavom?"
 
 #: classes/settings/page-credits.php:40
 msgid "This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content."
@@ -1203,120 +1240,125 @@ msgstr "Samo WooCommerce (zaobilazi sve ostale transliteracije i fokusira se sam
 msgid "Dev Mode (Only for developers and testers)"
 msgstr "Dev Mode (samo za programere i testere)"
 
-#: classes/utilities.php:1035
+#: classes/utilities.php:846
+#, php-format
+msgid "Failed to delete plugin translation: %s"
+msgstr "Nije uspjelo brisanje prijevoda dodatka: %s"
+
+#: classes/utilities.php:1079
 msgid " degrees "
 msgstr " stupnjeva "
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1081
 msgid " divided by "
 msgstr " podjeljeno sa "
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1081
 msgid " times "
 msgstr " puta "
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1081
 msgid " plus-minus "
 msgstr " plus-minus "
 
-#: classes/utilities.php:1037
+#: classes/utilities.php:1081
 msgid " square root "
 msgstr " korijen "
 
-#: classes/utilities.php:1038
+#: classes/utilities.php:1082
 msgid " infinity "
 msgstr " beskonačno "
 
-#: classes/utilities.php:1038
+#: classes/utilities.php:1082
 msgid " almost equal to "
 msgstr " gotovo jednak "
 
-#: classes/utilities.php:1038
+#: classes/utilities.php:1082
 msgid " not equal to "
 msgstr " nije jednako "
 
-#: classes/utilities.php:1039
+#: classes/utilities.php:1083
 msgid " identical to "
 msgstr " identična "
 
-#: classes/utilities.php:1039
+#: classes/utilities.php:1083
 msgid " less than or equal to "
 msgstr " manje ili jednako "
 
-#: classes/utilities.php:1039
+#: classes/utilities.php:1083
 msgid " greater than or equal to "
 msgstr " veći ili jednak "
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1084
 msgid " left "
 msgstr " lijevo "
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1084
 msgid " right "
 msgstr " desno "
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1084
 msgid " up "
 msgstr " gore "
 
-#: classes/utilities.php:1040
+#: classes/utilities.php:1084
 msgid " down "
 msgstr " dolje "
 
-#: classes/utilities.php:1041
+#: classes/utilities.php:1085
 msgid " left and right "
 msgstr " lijevo i desno "
 
-#: classes/utilities.php:1041
+#: classes/utilities.php:1085
 msgid " up and down "
 msgstr " gore i dolje "
 
-#: classes/utilities.php:1041
+#: classes/utilities.php:1085
 msgid " care of "
 msgstr " brinuti o "
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1086
 msgid " estimated "
 msgstr "  procijenjeno  "
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1086
 msgid " ohm "
 msgstr " om "
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1086
 msgid " female "
 msgstr " žena "
 
-#: classes/utilities.php:1042
+#: classes/utilities.php:1086
 msgid " male "
 msgstr " muški "
 
-#: classes/utilities.php:1043
+#: classes/utilities.php:1087
 msgid " Copyright "
 msgstr " Autorska prava "
 
-#: classes/utilities.php:1043
+#: classes/utilities.php:1087
 msgid " Registered "
 msgstr " Registriran "
 
-#: classes/utilities.php:1043
+#: classes/utilities.php:1087
 msgid " Trademark "
 msgstr " Zaštitni znak "
 
-#: classes/wp_cli.php:55
+#: classes/wp-cli.php:55
 msgid "Please wait! Do not close the terminal or terminate the script until this operation is completed!"
 msgstr "Molimo pričekajte! Ne zatvarajte terminal niti prekidajte skriptu dok se ova operacija ne završi!"
 
-#: classes/wp_cli.php:57
+#: classes/wp-cli.php:57
 msgid "Progress:"
 msgstr "Napredak:"
 
-#: classes/wp_cli.php:102
+#: classes/wp-cli.php:102
 #, php-format
 msgid "Updated page ID %1$d, (%2$s) at URL: %3$s"
 msgstr "Ažurirana stranica (%2$s) na adresi %3$s sa ID brojem: %1$d"
 
-#: classes/wp_cli.php:117
+#: classes/wp-cli.php:117
 #, php-format
 msgid "%d permalink was successfully transliterated."
 msgid_plural "%d permalinks were successfully transliterated."
@@ -1324,7 +1366,7 @@ msgstr[0] "Uspješno sje izvršena %d promjena stalne veze."
 msgstr[1] "Uspješno su izvršene %d promjena stalne veze."
 msgstr[2] "Uspješno su izvršene %d promjena stalne veze."
 
-#: classes/wp_cli.php:119
+#: classes/wp-cli.php:119
 msgid "No changes to the permalink have been made."
 msgstr "Nema promjena na stalnim vezama."
 
@@ -1357,14 +1399,8 @@ msgstr "Ivijan-Stefan Stipić"
 msgid "https://profiles.wordpress.org/ivijanstefan/"
 msgstr "https://profiles.wordpress.org/ivijanstefan/"
 
-#~ msgid "Settings"
-#~ msgstr "Postavke"
-
 #~ msgid "Permalink Tool"
 #~ msgstr "Alat za trajnu vezu (permalink)"
-
-#~ msgid "5 stars?"
-#~ msgstr "5 zvjezdica?"
 
 #~ msgid "Disable transliteration inside wp-admin"
 #~ msgstr "Onemogućite transliteraciju unutar wp-admin"

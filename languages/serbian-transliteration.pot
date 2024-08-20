@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliterator\n"
-"POT-Creation-Date: 2024-08-09 12:05+0200\n"
+"POT-Creation-Date: 2024-08-20 16:33+0200\n"
 "PO-Revision-Date: 2023-08-24 13:48+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
@@ -25,20 +25,36 @@ msgstr ""
 msgid "undefined"
 msgstr ""
 
-#: classes/menus.php:29 classes/settings.php:27 classes/settings.php:47
-#: classes/settings.php:186 classes/settings.php:242 classes/settings.php:273
-#: classes/settings.php:304 classes/settings.php:335 classes/settings.php:358
+#: classes/filters.php:125
+msgid "Contra Team - A complete hosting solution in one place"
+msgstr ""
+
+#: classes/filters.php:129
+msgid "Support my work by buying me a coffee!"
+msgstr ""
+
+#: classes/filters.php:129
+msgid "Thank you for using Transliterator. Could you buy me a coffee?"
+msgstr ""
+
+#: classes/init.php:54 classes/init.php:61 classes/utilities.php:456
+msgid "Attention, Headers have already been sent!"
+msgstr ""
+
+#: classes/menus.php:29 classes/settings.php:41 classes/settings.php:82
+#: classes/settings.php:219 classes/settings.php:290 classes/settings.php:325
+#: classes/settings.php:360 classes/settings.php:395 classes/settings.php:422
 msgid "Transliteration"
 msgstr ""
 
-#: classes/menus.php:43 classes/menus.php:45 classes/settings-fields.php:473
-#: classes/settings-fields.php:555 classes/settings/page-functions.php:158
+#: classes/menus.php:43 classes/menus.php:45 classes/settings-fields.php:487
+#: classes/settings-fields.php:569 classes/settings/page-functions.php:158
 #: functions.php:419
 msgid "Latin"
 msgstr ""
 
-#: classes/menus.php:44 classes/menus.php:45 classes/settings-fields.php:472
-#: classes/settings-fields.php:556 classes/settings/page-functions.php:153
+#: classes/menus.php:44 classes/menus.php:45 classes/settings-fields.php:486
+#: classes/settings-fields.php:570 classes/settings/page-functions.php:153
 #: functions.php:418
 msgid "Cyrillic"
 msgstr ""
@@ -245,166 +261,177 @@ msgid "Plugin Mode"
 msgstr ""
 
 #: classes/settings-fields.php:127
+msgid "Force transliteration permalinks to latin"
+msgstr ""
+
+#: classes/settings-fields.php:138
+msgid "Filters"
+msgstr ""
+
+#: classes/settings-fields.php:145
 msgid "Transliteration Filters"
 msgstr ""
 
-#: classes/settings-fields.php:135
+#: classes/settings-fields.php:153
 msgid ""
 "Exclude Latin words that you do not want to be transliterated to the "
 "Cyrillic."
 msgstr ""
 
-#: classes/settings-fields.php:143
+#: classes/settings-fields.php:161
 msgid ""
 "Exclude Cyrillic words that you do not want to be transliterated to the "
 "Latin."
 msgstr ""
 
-#: classes/settings-fields.php:156
+#: classes/settings-fields.php:174
 msgid "Special Settings"
 msgstr ""
 
-#: classes/settings-fields.php:163
+#: classes/settings-fields.php:181
 msgid "Enable cache support"
 msgstr ""
 
-#: classes/settings-fields.php:171
+#: classes/settings-fields.php:189
 msgid "Force widget transliteration"
 msgstr ""
 
-#: classes/settings-fields.php:179
+#: classes/settings-fields.php:197
 msgid "Force e-mail transliteration"
 msgstr ""
 
-#: classes/settings-fields.php:187
+#: classes/settings-fields.php:205
 msgid "Force transliteration for WordPress REST API"
 msgstr ""
 
-#: classes/settings-fields.php:195
+#: classes/settings-fields.php:213
 msgid "Force transliteration for AJAX calls"
 msgstr ""
 
-#: classes/settings-fields.php:195
+#: classes/settings-fields.php:213
 msgid "EXPERIMENTAL"
 msgstr ""
 
-#: classes/settings-fields.php:208
+#: classes/settings-fields.php:226
 msgid "WP Admin"
 msgstr ""
 
-#: classes/settings-fields.php:215
+#: classes/settings-fields.php:233
 msgid "WP-Admin transliteration"
 msgstr ""
 
-#: classes/settings-fields.php:223
+#: classes/settings-fields.php:241
 msgid "Allow Cyrillic Usernames"
 msgstr ""
 
-#: classes/settings-fields.php:231
-msgid "Force transliteration permalinks to latin"
-msgstr ""
-
-#: classes/settings-fields.php:244
+#: classes/settings-fields.php:254
 msgid "Media Settings"
 msgstr ""
 
-#: classes/settings-fields.php:251
+#: classes/settings-fields.php:261
 msgid "Transliterate filenames to latin"
 msgstr ""
 
-#: classes/settings-fields.php:259
+#: classes/settings-fields.php:269
 msgid "Filename delimiter"
 msgstr ""
 
-#: classes/settings-fields.php:272
+#: classes/settings-fields.php:282
 msgid "WordPress Search"
 msgstr ""
 
-#: classes/settings-fields.php:279
+#: classes/settings-fields.php:289
 msgid "Enable search transliteration"
 msgstr ""
 
-#: classes/settings-fields.php:288
+#: classes/settings-fields.php:298
 msgid "Fix Diacritics"
 msgstr ""
 
-#: classes/settings-fields.php:297
+#: classes/settings-fields.php:307
 msgid "Search Mode"
 msgstr ""
 
-#: classes/settings-fields.php:310
+#: classes/settings-fields.php:320
 msgid "SEO Settings"
 msgstr ""
 
-#: classes/settings-fields.php:317
+#: classes/settings-fields.php:327
 msgid "Parameter URL selector"
 msgstr ""
 
-#: classes/settings-fields.php:325
+#: classes/settings-fields.php:335
 msgid "RSS transliteration"
 msgstr ""
 
-#: classes/settings-fields.php:338
+#: classes/settings-fields.php:348
 msgid "Exclusion"
 msgstr ""
 
-#: classes/settings-fields.php:348
+#: classes/settings-fields.php:358
 #, php-format
 msgid "Language: %s"
 msgstr ""
 
-#: classes/settings-fields.php:371
+#: classes/settings-fields.php:381
 msgid "Misc."
 msgstr ""
 
-#: classes/settings-fields.php:378
+#: classes/settings-fields.php:388
 msgid "Enable body class"
 msgstr ""
 
-#: classes/settings-fields.php:386
+#: classes/settings-fields.php:396
 msgid "Theme Support"
 msgstr ""
 
-#: classes/settings-fields.php:400
+#: classes/settings-fields.php:410
 msgid "Brighten my day as my plugin brightens yours!"
 msgstr ""
 
-#: classes/settings-fields.php:409
+#: classes/settings-fields.php:419
 msgid "Contributors & Developers"
 msgstr ""
 
-#: classes/settings-fields.php:422
+#: classes/settings-fields.php:432
 msgid ""
 "This setting determines the mode of operation for the Transliteration plugin."
 msgstr ""
 
-#: classes/settings-fields.php:423
+#: classes/settings-fields.php:433
 msgid ""
 "Carefully choose the option that is best for your site and the plugin will "
 "automatically set everything you need for optimal performance."
 msgstr ""
 
-#: classes/settings-fields.php:428
+#: classes/settings-fields.php:437
+msgid ""
+"This section contains filters for exclusions, allowing you to specify "
+"content that should be excluded from transliteration, and also includes a "
+"filter to disable certain WordPress filters related to transliteration."
+msgstr ""
+
+#: classes/settings-fields.php:442
 msgid ""
 "These are special settings that can enhance transliteration and are used "
 "only if you need them."
 msgstr ""
 
-#: classes/settings-fields.php:433
+#: classes/settings-fields.php:447
 msgid "These settings apply to the administrative part."
 msgstr ""
 
-#: classes/settings-fields.php:438
+#: classes/settings-fields.php:452
 msgid "Upload, view and control media and files."
 msgstr ""
 
-#: classes/settings-fields.php:443
+#: classes/settings-fields.php:457
 msgid ""
 "Our plugin also has special SEO options that are very important for your "
 "project."
 msgstr ""
 
-#: classes/settings-fields.php:448
+#: classes/settings-fields.php:462
 msgid ""
 "Within this configuration section, you have the opportunity to customize "
 "your experience by selecting the particular languages for which you wish to "
@@ -414,74 +441,74 @@ msgid ""
 "your individual needs or preferences."
 msgstr ""
 
-#: classes/settings-fields.php:453
+#: classes/settings-fields.php:467
 msgid ""
 "Various interesting settings that can be used in the development of your "
 "project."
 msgstr ""
 
-#: classes/settings-fields.php:462
+#: classes/settings-fields.php:476
 msgid ""
 "This setting determines the search mode within the WordPress core depending "
 "on the type of language located in the database."
 msgstr ""
 
-#: classes/settings-fields.php:463
+#: classes/settings-fields.php:477
 msgid ""
 "The search type setting is mostly experimental and you need to test each "
 "variant so you can get the best result you need."
 msgstr ""
 
-#: classes/settings-fields.php:477 classes/utilities.php:30
+#: classes/settings-fields.php:491 classes/utilities.php:30
 msgid "Arabic"
 msgstr ""
 
-#: classes/settings-fields.php:479 classes/utilities.php:29
+#: classes/settings-fields.php:493 classes/utilities.php:29
 msgid "Armenian"
 msgstr ""
 
-#: classes/settings-fields.php:496
+#: classes/settings-fields.php:510
 msgid ""
 "Define whether your primary alphabet on the site is Latin or Cyrillic. If "
 "the primary alphabet is Cyrillic then choose Cyrillic. If it is Latin, then "
 "choose Latin. This option is crucial for the plugin to work properly."
 msgstr ""
 
-#: classes/settings-fields.php:498
+#: classes/settings-fields.php:512
 msgid "Define whether your primary alphabet on the site."
 msgstr ""
 
-#: classes/settings-fields.php:512
+#: classes/settings-fields.php:526
 msgid "Transliteration disabled"
 msgstr ""
 
-#: classes/settings-fields.php:513 classes/settings/page-shortcodes.php:6
+#: classes/settings-fields.php:527 classes/settings/page-shortcodes.php:6
 #: classes/settings/page-tags.php:3
 msgid "Cyrillic to Latin"
 msgstr ""
 
-#: classes/settings-fields.php:514 classes/settings/page-shortcodes.php:9
+#: classes/settings-fields.php:528 classes/settings/page-shortcodes.php:9
 #: classes/settings/page-tags.php:6
 msgid "Latin to Cyrillic"
 msgstr ""
 
-#: classes/settings-fields.php:520
+#: classes/settings-fields.php:534
 msgid "Arabic to Latin"
 msgstr ""
 
-#: classes/settings-fields.php:521
+#: classes/settings-fields.php:535
 msgid "Latin to Arabic"
 msgstr ""
 
-#: classes/settings-fields.php:523
+#: classes/settings-fields.php:537
 msgid "Armenian to Latin"
 msgstr ""
 
-#: classes/settings-fields.php:524
+#: classes/settings-fields.php:538
 msgid "Latin to Armenian"
 msgstr ""
 
-#: classes/settings-fields.php:545
+#: classes/settings-fields.php:559
 msgid ""
 "This option determines the global transliteration of your web site. If you "
 "do not want to transliterate the entire website and use this plugin for "
@@ -489,17 +516,17 @@ msgid ""
 "functionality of short codes and tags."
 msgstr ""
 
-#: classes/settings-fields.php:567
+#: classes/settings-fields.php:581
 msgid ""
 "This option determines the type of language script that the visitors sees "
 "when they first time come to your site."
 msgstr ""
 
-#: classes/settings-fields.php:576
+#: classes/settings-fields.php:590
 msgid "Automatical"
 msgstr ""
 
-#: classes/settings-fields.php:598
+#: classes/settings-fields.php:612
 msgid ""
 "This option defines the language script. Automatic script detection is the "
 "best way but if you are using a WordPress installation in a language that "
@@ -507,94 +534,103 @@ msgid ""
 "script you want the transliteration to be performed."
 msgstr ""
 
-#: classes/settings-fields.php:624
+#: classes/settings-fields.php:638
+msgid ""
+"This option configures the operating mode of the entire plugin and affects "
+"all aspects of the site related to transliteration. Each mode has its own "
+"set of filters, which are activated based on your specific needs. It's "
+"important to take the time to review and customize these settings according "
+"to your preferences."
+msgstr ""
+
+#: classes/settings-fields.php:639
 msgid ""
 "Forced transliteration can sometimes cause problems if Latin is translated "
 "into Cyrillic in pages and posts. To this combination must be approached "
 "experimentally."
 msgstr ""
 
-#: classes/settings-fields.php:638
+#: classes/settings-fields.php:653
 msgid "Exclude filters you don't need (optional)"
 msgstr ""
 
-#: classes/settings-fields.php:644
+#: classes/settings-fields.php:659
 msgid "Select the transliteration filters you want to exclude."
 msgstr ""
 
-#: classes/settings-fields.php:645
+#: classes/settings-fields.php:660
 msgid ""
 "The filters you select here will not be transliterated (these filters do not "
 "work on forced transliteration)."
 msgstr ""
 
-#: classes/settings-fields.php:658
+#: classes/settings-fields.php:673
 msgid "TIPS & TRICKS:"
 msgstr ""
 
-#: classes/settings-fields.php:659
+#: classes/settings-fields.php:674
 msgid "You can find details about some of the listed filters in this article:"
 msgstr ""
 
-#: classes/settings-fields.php:668
+#: classes/settings-fields.php:683
 #, php-format
 msgid ""
 "Since you are already a WooCommerce user, you also can see the following "
 "documentation: %s"
 msgstr ""
 
-#: classes/settings-fields.php:689 classes/settings-fields.php:700
+#: classes/settings-fields.php:704 classes/settings-fields.php:715
 #, php-format
 msgid ""
 "Separate words, phrases, names and expressions with the sign %s or put it in "
 "a new row. HTML is not allowed."
 msgstr ""
 
-#: classes/settings-fields.php:708 classes/settings-fields.php:729
-#: classes/settings-fields.php:750 classes/settings-fields.php:770
-#: classes/settings-fields.php:790 classes/settings-fields.php:814
-#: classes/settings-fields.php:836 classes/settings-fields.php:860
-#: classes/settings-fields.php:888 classes/settings-fields.php:937
-#: classes/settings-fields.php:958 classes/settings-fields.php:1025
-#: classes/settings-fields.php:1066
+#: classes/settings-fields.php:723 classes/settings-fields.php:744
+#: classes/settings-fields.php:765 classes/settings-fields.php:785
+#: classes/settings-fields.php:805 classes/settings-fields.php:829
+#: classes/settings-fields.php:851 classes/settings-fields.php:875
+#: classes/settings-fields.php:903 classes/settings-fields.php:952
+#: classes/settings-fields.php:973 classes/settings-fields.php:1040
+#: classes/settings-fields.php:1081
 msgid "Yes"
 msgstr ""
 
-#: classes/settings-fields.php:709 classes/settings-fields.php:730
-#: classes/settings-fields.php:751 classes/settings-fields.php:771
-#: classes/settings-fields.php:791 classes/settings-fields.php:815
-#: classes/settings-fields.php:837 classes/settings-fields.php:861
-#: classes/settings-fields.php:889 classes/settings-fields.php:938
-#: classes/settings-fields.php:959 classes/settings-fields.php:1026
-#: classes/settings-fields.php:1067
+#: classes/settings-fields.php:724 classes/settings-fields.php:745
+#: classes/settings-fields.php:766 classes/settings-fields.php:786
+#: classes/settings-fields.php:806 classes/settings-fields.php:830
+#: classes/settings-fields.php:852 classes/settings-fields.php:876
+#: classes/settings-fields.php:904 classes/settings-fields.php:953
+#: classes/settings-fields.php:974 classes/settings-fields.php:1041
+#: classes/settings-fields.php:1082
 msgid "No"
 msgstr ""
 
-#: classes/settings-fields.php:721
+#: classes/settings-fields.php:736
 msgid ""
 "If you have a problem caching your pages, our plugin solves this problem by "
 "clearing the cache when changing the language script."
 msgstr ""
 
-#: classes/settings-fields.php:742
+#: classes/settings-fields.php:757
 msgid ""
 "This option forces the widget to transliterate. There may be some unusual "
 "behaviour in the rare cases."
 msgstr ""
 
-#: classes/settings-fields.php:762
+#: classes/settings-fields.php:777
 msgid ""
 "Enable this feature if you want to force transliteration of email content."
 msgstr ""
 
-#: classes/settings-fields.php:782
+#: classes/settings-fields.php:797
 msgid ""
 "Enable this feature if you want to force transliteration of WordPress REST "
 "API calls. The WordPress REST API is also used in many AJAX calls, "
 "WooCommerce, and page builders. It is recommended to be enabled by default."
 msgstr ""
 
-#: classes/settings-fields.php:802
+#: classes/settings-fields.php:817
 #, php-format
 msgid ""
 "Enable this feature if you want to force transliteration of AJAX calls. If "
@@ -602,135 +638,135 @@ msgid ""
 "must add a new POST or GET parameter to your AJAX call: %s"
 msgstr ""
 
-#: classes/settings-fields.php:827
+#: classes/settings-fields.php:842
 msgid "Enable if you want the WP-Admin area to be transliterated."
 msgstr ""
 
-#: classes/settings-fields.php:848
+#: classes/settings-fields.php:863
 msgid "Allows to create users with usernames containing Cyrillic characters."
 msgstr ""
 
-#: classes/settings-fields.php:873
+#: classes/settings-fields.php:888
 msgid "Enable if you want to force cyrillic permalinks to latin."
 msgstr ""
 
-#: classes/settings-fields.php:875
+#: classes/settings-fields.php:890
 #, php-format
 msgid ""
 "You don't need to force transliteration permalinks to latin because your "
 "current locale is set to %s which will automatically change permalnks."
 msgstr ""
 
-#: classes/settings-fields.php:900
+#: classes/settings-fields.php:915
 msgid "Enable if you want to convert cyrillic filenames to latin."
 msgstr ""
 
-#: classes/settings-fields.php:911
+#: classes/settings-fields.php:926
 msgid "hyphen (default)"
 msgstr ""
 
-#: classes/settings-fields.php:912
+#: classes/settings-fields.php:927
 msgid "underscore"
 msgstr ""
 
-#: classes/settings-fields.php:913
+#: classes/settings-fields.php:928
 msgid "dot"
 msgstr ""
 
-#: classes/settings-fields.php:914
+#: classes/settings-fields.php:929
 msgid "tilde"
 msgstr ""
 
-#: classes/settings-fields.php:915
+#: classes/settings-fields.php:930
 msgid "vartical bar"
 msgstr ""
 
-#: classes/settings-fields.php:916
+#: classes/settings-fields.php:931
 msgid "asterisk"
 msgstr ""
 
-#: classes/settings-fields.php:928
+#: classes/settings-fields.php:943
 msgid "Filename delimiter, example:"
 msgstr ""
 
-#: classes/settings-fields.php:928
+#: classes/settings-fields.php:943
 msgid "my-upload-file.jpg"
 msgstr ""
 
-#: classes/settings-fields.php:949
+#: classes/settings-fields.php:964
 msgid "Approve if you want transliteration for the search field."
 msgstr ""
 
-#: classes/settings-fields.php:970
+#: classes/settings-fields.php:985
 msgid "Try to fix the diacritics in the search field."
 msgstr ""
 
-#: classes/settings-fields.php:979
+#: classes/settings-fields.php:994
 msgid "Automatical (recommended)"
 msgstr ""
 
-#: classes/settings-fields.php:980
+#: classes/settings-fields.php:995
 msgid "Based on the plugin mode"
 msgstr ""
 
-#: classes/settings-fields.php:991
+#: classes/settings-fields.php:1006
 msgid ""
 "The search has two working modes. Choose the one that works best with your "
 "search."
 msgstr ""
 
-#: classes/settings-fields.php:1000
+#: classes/settings-fields.php:1015
 msgid "(safe)"
 msgstr ""
 
-#: classes/settings-fields.php:1001
+#: classes/settings-fields.php:1016
 msgid "(standard)"
 msgstr ""
 
-#: classes/settings-fields.php:1002 classes/settings-fields.php:1003
-#: classes/settings-fields.php:1004 classes/settings-fields.php:1005
-#: classes/settings-fields.php:1006
+#: classes/settings-fields.php:1017 classes/settings-fields.php:1018
+#: classes/settings-fields.php:1019 classes/settings-fields.php:1020
+#: classes/settings-fields.php:1021
 msgid "(optional)"
 msgstr ""
 
-#: classes/settings-fields.php:1017
+#: classes/settings-fields.php:1032
 msgid ""
 "This option dictates which URL parameter will be used to change the language."
 msgstr ""
 
-#: classes/settings-fields.php:1038
+#: classes/settings-fields.php:1053
 msgid "This option transliterate the RSS feed."
 msgstr ""
 
-#: classes/settings-fields.php:1044
+#: classes/settings-fields.php:1059
 msgid "Transliterate"
 msgstr ""
 
-#: classes/settings-fields.php:1045
+#: classes/settings-fields.php:1060
 msgid "Omit the transliteration"
 msgstr ""
 
-#: classes/settings-fields.php:1078
+#: classes/settings-fields.php:1093
 msgid ""
 "This option adds CSS classes to your body HTML tag. These CSS classes vary "
 "depending on the language script."
 msgstr ""
 
-#: classes/settings-fields.php:1086
+#: classes/settings-fields.php:1101
 msgid "Enable Theme Support"
 msgstr ""
 
-#: classes/settings-fields.php:1087
+#: classes/settings-fields.php:1102
 msgid "Disable Theme Support"
 msgstr ""
 
-#: classes/settings-fields.php:1098
+#: classes/settings-fields.php:1113
 msgid ""
 "If you don't require transliteration support for your theme, you can disable "
 "it for your current theme here."
 msgstr ""
 
-#: classes/settings-fields.php:1148
+#: classes/settings-fields.php:1163
 msgid "This mode has no filters."
 msgstr ""
 
@@ -778,90 +814,94 @@ msgstr ""
 msgid "join our team"
 msgstr ""
 
-#: classes/settings.php:26
-msgid "Transliteration Settings"
-msgstr ""
-
-#: classes/settings.php:58
+#: classes/settings.php:52
 msgid "Settings saved."
 msgstr ""
 
-#: classes/settings.php:91
+#: classes/settings.php:61
+msgid "Settings"
+msgstr ""
+
+#: classes/settings.php:71 classes/settings.php:153
+msgid "Shortcodes"
+msgstr ""
+
+#: classes/settings.php:72 classes/settings.php:154
+msgid "PHP Functions"
+msgstr ""
+
+#: classes/settings.php:73
+msgid "5 stars?"
+msgstr ""
+
+#: classes/settings.php:81
+msgid "Transliteration Settings"
+msgstr ""
+
+#: classes/settings.php:124
 msgid ""
 "Please wait! Do not close the window or leave the page until this operation "
 "is completed!"
 msgstr ""
 
-#: classes/settings.php:92
+#: classes/settings.php:125
 msgid "DONE!!!"
 msgstr ""
 
-#: classes/settings.php:93
+#: classes/settings.php:126
 msgid "Loading..."
 msgstr ""
 
-#: classes/settings.php:104
+#: classes/settings.php:137
 msgid "PLEASE UPDATE PLUGIN SETTINGS"
 msgstr ""
 
-#: classes/settings.php:105
+#: classes/settings.php:138
 msgid ""
 "Carefully review the transliteration plugin settings and adjust how it fits "
 "your WordPress installation. It is important that every time you change the "
 "settings, you test the parts of the site that are affected by this plugin."
 msgstr ""
 
-#: classes/settings.php:120
-msgid "Shortcodes"
-msgstr ""
-
-#: classes/settings.php:121
-msgid "PHP Functions"
-msgstr ""
-
-#: classes/settings.php:122
+#: classes/settings.php:155
 msgid "Tags"
 msgstr ""
 
-#: classes/settings.php:142
+#: classes/settings.php:175
 msgid "General Settings"
 msgstr ""
 
-#: classes/settings.php:146
+#: classes/settings.php:179
 msgid "Documentation"
 msgstr ""
 
-#: classes/settings.php:150
+#: classes/settings.php:183
 msgid "Debug"
 msgstr ""
 
-#: classes/settings.php:154 classes/settings.php:358
+#: classes/settings.php:187 classes/settings.php:422
 #: classes/settings/page-credits.php:39
 msgid "Credits"
 msgstr ""
 
-#: classes/settings.php:242
+#: classes/settings.php:238 classes/settings.php:246
+msgid "Save Changes"
+msgstr ""
+
+#: classes/settings.php:290
 msgid "Available shortcodes"
 msgstr ""
 
-#: classes/settings.php:273
+#: classes/settings.php:325
 msgid "Available PHP Functions"
 msgstr ""
 
-#: classes/settings.php:304
+#: classes/settings.php:360
 msgid "Available Tags"
 msgstr ""
 
-#: classes/settings.php:335
+#: classes/settings.php:395
 msgid "Debug information"
-msgstr ""
-
-#: classes/settings.php:364
-msgid "Support my work by buying me a coffee!"
-msgstr ""
-
-#: classes/settings.php:364
-msgid "Thank you for using Transliterator. Could you buy me a coffee?"
 msgstr ""
 
 #: classes/settings/page-credits.php:40
@@ -1368,103 +1408,108 @@ msgstr ""
 msgid "Dev Mode (Only for developers and testers)"
 msgstr ""
 
-#: classes/utilities.php:1046
+#: classes/utilities.php:846
+#, php-format
+msgid "Failed to delete plugin translation: %s"
+msgstr ""
+
+#: classes/utilities.php:1079
 msgid " degrees "
 msgstr ""
 
-#: classes/utilities.php:1048
+#: classes/utilities.php:1081
 msgid " divided by "
 msgstr ""
 
-#: classes/utilities.php:1048
+#: classes/utilities.php:1081
 msgid " times "
 msgstr ""
 
-#: classes/utilities.php:1048
+#: classes/utilities.php:1081
 msgid " plus-minus "
 msgstr ""
 
-#: classes/utilities.php:1048
+#: classes/utilities.php:1081
 msgid " square root "
 msgstr ""
 
-#: classes/utilities.php:1049
+#: classes/utilities.php:1082
 msgid " infinity "
 msgstr ""
 
-#: classes/utilities.php:1049
+#: classes/utilities.php:1082
 msgid " almost equal to "
 msgstr ""
 
-#: classes/utilities.php:1049
+#: classes/utilities.php:1082
 msgid " not equal to "
 msgstr ""
 
-#: classes/utilities.php:1050
+#: classes/utilities.php:1083
 msgid " identical to "
 msgstr ""
 
-#: classes/utilities.php:1050
+#: classes/utilities.php:1083
 msgid " less than or equal to "
 msgstr ""
 
-#: classes/utilities.php:1050
+#: classes/utilities.php:1083
 msgid " greater than or equal to "
 msgstr ""
 
-#: classes/utilities.php:1051
+#: classes/utilities.php:1084
 msgid " left "
 msgstr ""
 
-#: classes/utilities.php:1051
+#: classes/utilities.php:1084
 msgid " right "
 msgstr ""
 
-#: classes/utilities.php:1051
+#: classes/utilities.php:1084
 msgid " up "
 msgstr ""
 
-#: classes/utilities.php:1051
+#: classes/utilities.php:1084
 msgid " down "
 msgstr ""
 
-#: classes/utilities.php:1052
+#: classes/utilities.php:1085
 msgid " left and right "
 msgstr ""
 
-#: classes/utilities.php:1052
+#: classes/utilities.php:1085
 msgid " up and down "
 msgstr ""
 
-#: classes/utilities.php:1052
+#: classes/utilities.php:1085
 msgid " care of "
 msgstr ""
 
-#: classes/utilities.php:1053
+#: classes/utilities.php:1086
 msgid " estimated "
 msgstr ""
 
-#: classes/utilities.php:1053
+#: classes/utilities.php:1086
 msgid " ohm "
 msgstr ""
 
-#: classes/utilities.php:1053
+#: classes/utilities.php:1086
 msgid " female "
 msgstr ""
 
-#: classes/utilities.php:1053
+#: classes/utilities.php:1086
 msgid " male "
 msgstr ""
 
-#: classes/utilities.php:1054
+#: classes/utilities.php:1087
 msgid " Copyright "
 msgstr ""
 
-#: classes/utilities.php:1054
+#: classes/utilities.php:1087
 msgid " Registered "
 msgstr ""
 
-#: classes/utilities.php:1054
+#: classes/utilities.php:1087
 msgid " Trademark "
 msgstr ""
 
