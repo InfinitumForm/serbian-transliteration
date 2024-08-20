@@ -717,7 +717,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		}
 
 		// Check for specific editors and set the cache if true
-		if (self::is_elementor_editor() || self::is_oxygen_editor() || self::is_admin()) {
+		if (self::is_elementor_editor() || self::is_oxygen_editor()) {
 			$is_editor = true;
 			return $is_editor;
 		}

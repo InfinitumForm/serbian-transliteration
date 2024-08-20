@@ -68,10 +68,22 @@ class Transliteration_Mode_Admin {
 	}
 	
 	public static function transliterate_admin_menu(){
-		global $menu;
-		foreach ($menu as $key => $menu_item){
-			foreach ($menu_item as $key2 => $menu_item_item){
-				$menu[$key][$key2] = Transliteration_Mode::get()->content__force_lat($menu_item_item);
+		global $menu, $submenu;
+		if($menu) {
+			foreach ($menu as $key => $menu_item){
+				foreach ($menu_item as $key2 => $menu_item_item){
+					$menu[$key][$key2] = Transliteration_Mode::get()->content__force_lat($menu_item_item);
+				}
+			}
+		}
+		
+		if($submenu) {
+			foreach ($submenu as $key => $menu_item){
+				foreach ($menu_item as $key2 => $menu_item_item){
+					if( isset($submenu[$key][$key2][0]) ) {
+						$submenu[$key][$key2][0] = Transliteration_Mode::get()->content__force_lat($submenu[$key][$key2][0]);
+					}
+				}
 			}
 		}
 	}
