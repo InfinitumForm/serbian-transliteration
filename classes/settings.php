@@ -221,7 +221,11 @@ if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_S
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
-				<?php do_meta_boxes('transliteration-settings', 'side', null); ?>
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'general', $this);
+					do_meta_boxes('transliteration-settings', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'general', $this);
+				?>
 			</div>
 		</div>
 		<div id="post-body">
@@ -288,7 +292,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
-				<?php do_meta_boxes('transliteration-settings', 'side', null); ?>
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'shortcodes', $this);
+					do_meta_boxes('transliteration-settings', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'shortcodes', $this);
+				?>
 			</div>
 		</div>
 		<div id="post-body">
@@ -319,7 +327,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
-				<?php do_meta_boxes('transliteration-settings', 'side', null); ?>
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'functions', $this);
+					do_meta_boxes('transliteration-settings', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'functions', $this);
+				?>
 			</div>
 		</div>
 		<div id="post-body">
@@ -350,7 +362,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
-				<?php do_meta_boxes('transliteration-settings', 'side', null); ?>
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'tags', $this);
+					do_meta_boxes('transliteration-settings', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'tags', $this);
+				?>
 			</div>
 		</div>
 		<div id="post-body">
@@ -381,7 +397,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
-				<?php do_meta_boxes('transliteration-settings', 'side', null); ?>
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'debug', $this);
+					do_meta_boxes('transliteration-settings', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'debug', $this);
+				?>
 			</div>
 		</div>
 		<div id="post-body">
@@ -404,8 +424,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
-				<?php do_meta_boxes('transliteration-credits', 'side', null); ?>
-				<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ivijanstefan" data-description="<?php esc_attr_e('Support my work by buying me a coffee!', 'serbian-transliteration'); ?>" data-message="<?php esc_attr_e('Thank you for using Transliterator. Could you buy me a coffee?', 'serbian-transliteration'); ?>" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="50"></script>
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'credits', $this);
+					do_meta_boxes('transliteration-credits', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'credits', $this);
+				?>
 			</div>
 		</div>
 		<div id="post-body">
