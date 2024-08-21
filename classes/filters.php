@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Filters', false) ) : class Transliteration_Filters extends Transliteration {
+class Transliteration_Filters extends Transliteration {
     
     public function __construct() {
 		$this->add_filter('transliteration_mode_filters', 'exclude_filters', PHP_INT_MAX - 100);
@@ -130,4 +130,4 @@ if( !class_exists('Transliteration_Filters', false) ) : class Transliteration_Fi
 		<?php endif;
 	}
 	
-} endif;
+}

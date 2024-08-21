@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode extends Transliteration {
+class Transliteration_Mode extends Transliteration {
 	
 	private $mode = NULL;
 	
@@ -360,4 +360,4 @@ if( !class_exists('Transliteration_Mode', false) ) : class Transliteration_Mode 
 		return $messages;
 	}
 	
-} endif;
+}

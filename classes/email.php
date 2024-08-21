@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Email', false) ) : class Transliteration_Email extends Transliteration {
+class Transliteration_Email extends Transliteration {
     
     public function __construct() {
 		$this->add_action('phpmailer_init', 'transliterate_phpmailer', PHP_INT_MAX - 99, 1);
@@ -11,4 +11,4 @@ if( !class_exists('Transliteration_Email', false) ) : class Transliteration_Emai
 		$phpmailer->Subject = Transliteration_Controller::get()->transliterate($phpmailer->Subject??'');
 	}
 	
-} endif;
+}

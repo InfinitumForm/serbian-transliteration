@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Search', false) ) : class Transliteration_Search extends Transliteration {
+class Transliteration_Search extends Transliteration {
     
     public function __construct() {		
 		$this->add_filter('posts_search', 'posts_search', 10, 2);
@@ -119,4 +119,4 @@ if( !class_exists('Transliteration_Search', false) ) : class Transliteration_Sea
         return $search;
     }
 	
-} endif;
+}

@@ -111,7 +111,6 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 	 * Do translations
 	 */
     public function load_textdomain() {
-		
         if (is_textdomain_loaded('serbian-transliteration')) {
 			return;
 		}
@@ -120,23 +119,34 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 			include_once ABSPATH . '/wp-includes/pluggable.php';
 		}
 
-		$locale = apply_filters('rstr_plugin_locale', get_user_locale(), 'serbian-transliteration');
+		$locale = apply_filters(
+			'rstr_plugin_locale',
+			(is_user_logged_in() ? get_user_locale() : get_locale()),
+			'serbian-transliteration'
+		);
 		$mofile = sprintf('%s-%s.mo', 'serbian-transliteration', $locale);
 
-		// Prvo proveravamo prevode unutar direktorijuma plugina
+		// First we check the translations inside the plugin directory
 		$domain_path = RSTR_ROOT . '/languages';
 		$loaded = load_textdomain('serbian-transliteration', path_join($domain_path, $mofile));
-
-		// Ako prevod nije pronađen, proveravamo globalni direktorijum
+	
+		/*
+		 * DISABLED: - We don't need this part because the translation is intended only for this plugin,
+		 * but I will save it if needed in the future.
+		 *
+		
+		// If no translation is found, we check the global directory
 		if (!$loaded) {
 			$domain_path = path_join(WP_LANG_DIR, 'plugins');
 			$loaded = load_textdomain('serbian-transliteration', path_join($domain_path, $mofile));
 		}
 
-		// Ako ni to ne uspe, proveravamo direktno u WP_LANG_DIR
+		// If that doesn't work either, we check directly in WP_LANG_DIR
 		if (!$loaded) {
 			$loaded = load_textdomain('serbian-transliteration', path_join(WP_LANG_DIR, $mofile));
 		}
+		
+		*/
     }
 
 
@@ -144,7 +154,7 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 	 * Register Plugin Activation
 	 */
 	public static function register_activation () {
-		if (!current_user_can('activate_plugins')) {
+		if (function_exists('current_user_can') && !current_user_can('activate_plugins')) {
 			return;
 		}
 		
@@ -154,7 +164,7 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 		}
 		
 		// Save version and set activation date
-		update_option('serbian-transliteration-version', RSTR_VERSION, false);
+		add_option('serbian-transliteration-version', RSTR_VERSION, '', 'no');
 
 		$activation = get_option('serbian-transliteration-activation', []);
 		$activation[] = date('Y-m-d H:i:s');
@@ -201,12 +211,12 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 	 * Register Plugin Deactivation
 	 */
 	public static function register_deactivation () {
-		if (!current_user_can('activate_plugins')) {
+		if (function_exists('current_user_can') && !current_user_can('activate_plugins')) {
 			return;
 		}
 		
 		// Unload textdomain
-		if (is_textdomain_loaded('serbian-transliteration')) {
+		if (function_exists('is_textdomain_loaded') && is_textdomain_loaded('serbian-transliteration')) {
 			unload_textdomain('serbian-transliteration');
 		}
 		
@@ -217,12 +227,9 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 		Transliteration_Utilities::clear_plugin_translations();
 
 		// Add deactivation date
-		if($deactivation = get_option('serbian-transliteration-deactivation')) {
-			$deactivation[] = date('Y-m-d H:i:s');
-			update_option('serbian-transliteration-deactivation', $deactivation);
-		} else {
-			add_option('serbian-transliteration-deactivation', array(date('Y-m-d H:i:s')));
-		}
+		$deactivation = get_option('serbian-transliteration-deactivation', []);
+		$deactivation[] = date('Y-m-d H:i:s');
+		update_option('serbian-transliteration-deactivation', $deactivation);
 
 		// Clear plugin cache
 		Transliteration_Utilities::clear_plugin_cache();
@@ -238,34 +245,35 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 	 * Register Plugin Updater
 	 */
 	public static function register_updater ($upgrader_object, $options) {
-		if (!current_user_can('activate_plugins')) {
+		if (function_exists('current_user_can') && !current_user_can('activate_plugins')) {
 			return;
 		}
 		
-		if ($options['action'] == 'update' && $options['type'] == 'plugin') {
-			foreach ($options['plugins'] as $plugin) {
-				if ($plugin == plugin_basename(__FILE__)) {
-					// Reset table check
-					delete_option('serbian-transliteration-db-cache-table-exists');
-					
-					// Delete old translations
-					Transliteration_Utilities::clear_plugin_translations();
-					
-					// Install database tables
-					if (RSTR_DATABASE_VERSION !== get_option('serbian-transliteration-db-version')) {
-						Transliteration_Cache_DB::table_install();
-						update_option('serbian-transliteration-db-version', RSTR_DATABASE_VERSION, false);
-					}
-					
-					// Clear plugin cache
-					Transliteration_Utilities::clear_plugin_cache();
-					
-					// Reset permalinks
-					if( function_exists('flush_rewrite_rules') ) {
-						flush_rewrite_rules();
-					}
-					
-					// Save version
+		if (isset($options['action'], $options['type'], $options['plugins']) && $options['action'] == 'update' && $options['type'] == 'plugin') {
+			if (in_array(plugin_basename(RSTR_FILE), $options['plugins'])) {
+				// Reset table check
+				delete_option('serbian-transliteration-db-cache-table-exists');
+				
+				// Delete old translations
+				Transliteration_Utilities::clear_plugin_translations();
+				
+				// Install database tables
+				if (RSTR_DATABASE_VERSION !== get_option('serbian-transliteration-db-version')) {
+					Transliteration_Cache_DB::table_install();
+					update_option('serbian-transliteration-db-version', RSTR_DATABASE_VERSION, false);
+				}
+				
+				// Clear plugin cache
+				Transliteration_Utilities::clear_plugin_cache();
+				
+				// Reset permalinks
+				if( function_exists('flush_rewrite_rules') ) {
+					flush_rewrite_rules();
+				}
+				
+				// Save version
+				$current_version = get_option('serbian-transliteration-version');
+				if ($current_version !== RSTR_VERSION) {
 					update_option('serbian-transliteration-version', RSTR_VERSION, true);
 				}
 			}

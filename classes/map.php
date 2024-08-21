@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Map', false) ) : class Transliteration_Map {
+class Transliteration_Map {
 	
 	/*
 	 * The main constructor
@@ -61,4 +61,4 @@ if( !class_exists('Transliteration_Map', false) ) : class Transliteration_Map {
 	}
 
 	
-} endif;
+}

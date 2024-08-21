@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Controller', false) ) : class Transliteration_Controller extends Transliteration {
+class Transliteration_Controller extends Transliteration {
 	
 	/*
 	 * The main constructor
@@ -560,4 +560,4 @@ if( !class_exists('Transliteration_Controller', false) ) : class Transliteration
 		return $word;
 	}
 	
-} endif;
+}

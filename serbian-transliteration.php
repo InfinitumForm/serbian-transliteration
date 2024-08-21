@@ -183,7 +183,7 @@ unset($transliteration_requirements);
 
 /**
  * Hey you! Yeah, you with the impeccable taste in code and a knack for solving problems.
- * If you're reading this, it means you're about to dive into the magical world of transliteration.
+ * If you're reading this, it means you're about to dive into the magical world of programming.
  * But wait, there's more! How about joining our crusade to make the internet a better place for everyone
  * who needs smooth and efficient script conversion? You know you want to. 😉
  *

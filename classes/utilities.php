@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_Utilities {
+class Transliteration_Utilities {
 	
 	/*
 	 * Registered languages
@@ -35,7 +35,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 		return apply_filters('rstr_plugin_default_options', [
 			'site-script'					=> 'cyr',
 			'transliteration-mode'			=> 'cyr_to_lat',
-			'mode'							=> 'light',
+			'mode'							=> 'advanced',
 			'avoid-admin'					=> 'no',
 			'allow-cyrillic-usernames'		=> 'no',
 			'media-transliteration'			=> 'yes',
@@ -92,13 +92,7 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	 * @return        array/string
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public static function plugin_mode($mode=NULL){
-		static $modes = [];
-		
-		if( !empty($modes) ) {
-			return $modes;
-		}
-		
+	public static function plugin_mode($mode=NULL){		
 		$modes = [
 			'light'		=> __('Light mode (basic parts of the site)', 'serbian-transliteration'),
 			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
@@ -1299,4 +1293,4 @@ if( !class_exists('Transliteration_Utilities', false) ) : class Transliteration_
 	}
 
 
-} endif;
+}

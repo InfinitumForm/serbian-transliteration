@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Ajax', false) ) : class Transliteration_Ajax extends Transliteration {
+class Transliteration_Ajax extends Transliteration {
     
     public function __construct() {
 		$this->add_action('wp_loaded', 'ajax_transliteration_start', PHP_INT_MAX - 99);
@@ -33,4 +33,4 @@ if( !class_exists('Transliteration_Ajax', false) ) : class Transliteration_Ajax 
 		}
 	}
 	
-} endif;
+}

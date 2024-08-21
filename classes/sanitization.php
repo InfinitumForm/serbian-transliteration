@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Sanitization', false) ) : class Transliteration_Sanitization {
+class Transliteration_Sanitization {
 	
 	/*
 	 * The main constructor
@@ -34,4 +34,4 @@ if( !class_exists('Transliteration_Sanitization', false) ) : class Transliterati
 		return $content;
 	}
 	
-} endif;
+}

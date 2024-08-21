@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliteration_Settings_Fields {
+class Transliteration_Settings_Fields {
 	
 	private $options;
 	private $nonce;
@@ -635,7 +635,10 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		printf(
 			'<div%3$s id="rstr-mode-list">%1$s%2$s<p class="description info" id="forced-transliteration" style="display:none; ">%3$s</p></div>',
 			join(' ', $inputs),
-			sprintf('<p class="description">%1$s</p>', __('This option configures the operating mode of the entire plugin and affects all aspects of the site related to transliteration. Each mode has its own set of filters, which are activated based on your specific needs. It\'s important to take the time to review and customize these settings according to your preferences.', 'serbian-transliteration')),
+			sprintf(
+				'<p class="description">%1$s</p>',
+				__('This option configures the operating mode of the entire plugin and affects all aspects of the site related to transliteration. Each mode has its own set of filters, which are activated based on your specific needs. It\'s important to take the time to review and customize these settings according to your preferences.', 'serbian-transliteration')
+			),
 			__('Forced transliteration can sometimes cause problems if Latin is translated into Cyrillic in pages and posts. To this combination must be approached experimentally.', 'serbian-transliteration'),
 			(get_rstr_option('mode') === 'woocommerce' && RSTR_WOOCOMMERCE === false ? ' class="required-box"' : '')
 		);
@@ -1184,4 +1187,4 @@ if( !class_exists('Transliteration_Settings_Fields', false) ) : class Transliter
 		}
 	}
 	
-} endif;
+}

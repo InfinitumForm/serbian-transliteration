@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration', false) ) : class Transliteration {
+class Transliteration {
     // Current instance
     public static $self = NULL;
 
@@ -211,4 +211,4 @@ if( !class_exists('Transliteration', false) ) : class Transliteration {
 	}
 
 
-} endif;
+}

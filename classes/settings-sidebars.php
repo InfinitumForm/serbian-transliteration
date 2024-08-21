@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Settings_Sidebars', false) ) : class Transliteration_Settings_Sidebars {
+class Transliteration_Settings_Sidebars {
 	
 	public function donations() {
 		?>
@@ -34,4 +34,4 @@ if( !class_exists('Transliteration_Settings_Sidebars', false) ) : class Translit
 <?php endif;
 	}
 	
-} endif;
+}

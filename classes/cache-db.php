@@ -8,7 +8,7 @@
  * @author        Ivijan-Stefan Stipic
  * @version       1.0.0
  */
-if(!class_exists('Transliteration_Cache_DB', false)) : class Transliteration_Cache_DB {
+class Transliteration_Cache_DB {
 	/*
 	 * Save all cached objcts to this variable
 	 */
@@ -321,4 +321,4 @@ if(!class_exists('Transliteration_Cache_DB', false)) : class Transliteration_Cac
 		return self::$__instance;
 	}
 	
-} endif;
+}

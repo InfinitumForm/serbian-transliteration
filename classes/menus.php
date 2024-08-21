@@ -7,7 +7,6 @@
  * @package           Serbian_Transliteration
  * @autor             Ivijan-Stefan Stipic
  */
-if(!class_exists('Transliteration_Menus', false)) :
 class Transliteration_Menus extends Transliteration {
 
 	function __construct(){
@@ -214,4 +213,3 @@ class Transliteration_Menus extends Transliteration {
 		return $sorted_menu_items;
 	}
 }
-endif;

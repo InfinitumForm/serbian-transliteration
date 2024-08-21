@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Wordpress', false) ) : class Transliteration_Wordpress extends Transliteration {
+class Transliteration_Wordpress extends Transliteration {
     
     public function __construct() {
 		$this->add_filter('sanitize_user', 'allow_cyrillic_usernames', 10, 3);
@@ -154,4 +154,4 @@ if( !class_exists('Transliteration_Wordpress', false) ) : class Transliteration_
 		return $filename;
 	}
 	
-} endif;
+}

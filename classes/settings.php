@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Settings', false) ) : class Transliteration_Settings extends Transliteration {
+class Transliteration_Settings extends Transliteration {
 	
 	public function __construct() {
 		
@@ -448,4 +448,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		$settings_fields->register_settings();
 	}
 
-} endif;
+}

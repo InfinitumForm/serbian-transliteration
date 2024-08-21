@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Rest', false) ) : class Transliteration_Rest extends Transliteration {
+class Transliteration_Rest extends Transliteration {
     
     public function __construct() {
 		$this->add_action('plugins_loaded', 'register_rest_transliteration');
@@ -14,4 +14,4 @@ if( !class_exists('Transliteration_Rest', false) ) : class Transliteration_Rest 
 		return Transliteration_Mode::get()->transliterate_objects($response);
 	}
 	
-} endif;
+}
