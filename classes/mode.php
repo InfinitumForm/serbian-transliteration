@@ -97,6 +97,8 @@ class Transliteration_Mode extends Transliteration {
 	 * @version        2.0.0
 	 */
 	private function apply_filters() {
+		global $pagenow;
+		
 		$filters = NULL;
 		
 		// Is admin, a do special static filters
@@ -116,6 +118,10 @@ class Transliteration_Mode extends Transliteration {
 		
 		if ( $filters ) {
 			foreach ($filters as $key => $method) {
+				if($pagenow && $pagenow === 'nav-menus.php' && $key === 'the_title'){
+					continue;
+				}
+				
 				$args = $key === 'gettext' ? 3 : 1;
 
 				if( is_array($method) ) {

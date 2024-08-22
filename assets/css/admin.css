@@ -331,6 +331,43 @@
 }
 
 
+#wp-transliteration-settings .rstr-row{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: flex-start;
+	align-content: space-between;
+}
+
+#wp-transliteration-settings form.rstr-row{
+	border:none !important;
+	background:none !important;
+	box-shadow:none !important;
+}
+
+#wp-transliteration-settings .rstr-row > .rstr-col{
+	flex: 1 1 40%;
+}
+
+#wp-transliteration-settings .rstr-row > .rstr-col+.rstr-col{
+	margin-left:15px;
+}
+
+#wp-transliteration-settings .rstr-col textarea.form-control{
+	width:100%;
+	overflow:auto;
+	overflow-x:hidden;
+	resize:vertical;
+}
+
+
+#wp-transliteration-settings #rstr-disclaimer{
+	background: antiquewhite;
+    margin: 0;
+    padding: 5px 15px;
+}
+
+
 /* Media fix */
 @media (min-width: 1400px){
 	#wp-transliteration-settings #post-body-content form table .row{
@@ -355,6 +392,12 @@
 	}
 }
 
+@media (max-width: 1280px){
+	#wp-transliteration-settings .transliteration-settings-tabs > li:not(.current) > a .lbl{
+		display:none;
+	}
+}
+
 @media (max-width: 960px){
 	#wp-transliteration-settings .has-right-sidebar #post-body-content {
 		margin-right: 0;
@@ -372,11 +415,7 @@
 	}
 }
 
-@media (max-width: 768px){
-	#wp-transliteration-settings .transliteration-settings-tabs > li > a .lbl{
-		display:none;
-	}
-	
+@media (max-width: 768px){	
 	#wp-transliteration-settings #trasnliteration_settings_submit_button_float {
 		display:none;
 	}
@@ -384,4 +423,146 @@
 	#wp-transliteration-settings #trasnliteration_settings_submit_button_1 {
 		margin-top: 10px;
 	}
+	
+	#wp-transliteration-settings form.rstr-row{
+		padding: 0 !important;
+	}
+	
+	#wp-transliteration-settings .rstr-row > .rstr-col{
+		flex: 1 1 100%;
+		padding:0;
+	}
+	
+	#wp-transliteration-settings .rstr-row > .rstr-col+.rstr-col{
+		margin-top:32px;
+	}
+	
+	#wp-transliteration-settings .rstr-row > .rstr-col+.rstr-col{
+		margin-left:0;
+	}
+}
+
+
+#wp-transliteration-settings #rstr-progress-bar {
+    margin:1.5rem auto;
+}
+
+#wp-transliteration-settings #rstr-progress-bar progress:not(value) {
+    /* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
+}
+
+#wp-transliteration-settings #rstr-progress-bar progress[value] {
+    /* Get rid of the default appearance */
+    appearance: none;
+    
+    /* This unfortunately leaves a trail of border behind in Firefox and Opera. We can remove that by setting the border to none. */
+    border: none;
+    
+    /* Add dimensions */
+    width: 100%; height: 20px;
+    
+    /* Although firefox doesn't provide any additional pseudo class to style the progress element container, any style applied here works on the container. */
+      background-color: whiteSmoke;
+      border-radius: 3px;
+      box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+    
+    /* Of all IE, only IE10 supports progress element that too partially. It only allows to change the background-color of the progress value using the 'color' attribute. */
+    color: royalblue;
+    
+    position: relative;
+    margin: 0; 
+}
+
+#wp-transliteration-settings #rstr-progress-bar .progress-message{
+	margin: 0;
+    padding: 0;
+    font-weight: 500;
+	color: #990000;
+	text-align:center;
+}
+
+/*
+Webkit browsers provide two pseudo classes that can be use to style HTML5 progress element.
+-webkit-progress-bar -> To style the progress element container
+-webkit-progress-value -> To style the progress element value.
+*/
+
+#wp-transliteration-settings #rstr-progress-bar progress[value]::-webkit-progress-bar {
+    background-color: whiteSmoke;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .5) inset;
+}
+
+#wp-transliteration-settings #rstr-progress-bar progress[value]::-webkit-progress-value {
+    position: relative;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    border-radius: 3px;
+    animation: animate-stripes 5s linear infinite;
+}
+
+@keyframes animate-stripes {
+    100% { background-position: -100px 0; }
+}
+
+#wp-transliteration-settings #rstr-progress-bar progress[value]::-webkit-progress-value:after {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    top: 7px;
+    right: 7px;
+    background-color: white;
+    border-radius: 100%;
+}
+
+#wp-transliteration-settings #rstr-progress-bar progress[value]::-moz-progress-bar {
+    background-image:
+    -moz-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0, 0, .1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+    -moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
+    -moz-linear-gradient(left, #09c, #f44);
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    border-radius: 3px;
+}
+
+#wp-transliteration-settings #rstr-progress-bar .progress-bar {
+    background-color: whiteSmoke;
+    border-radius: 3px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .5) inset;
+    width: 100%;
+    height: 20px;
+}
+
+#wp-transliteration-settings #rstr-progress-bar .progress-bar span {
+    background-color: royalblue;
+    border-radius: 3px;
+    display: block;
+    text-indent: -9999px;
+}
+
+#wp-transliteration-settings #rstr-progress-bar p.progress-value[data-value] { 
+    position: relative;
+    z-index: 1;
+    color: white;
+    text-shadow: 1px 1px 2px #000;
+    font-weight: bold;
+}
+
+#wp-transliteration-settings #rstr-progress-bar p.progress-value[data-value]:after {
+    content: attr(data-value) '%';
+    position: absolute;
+    right: 0;
+}
+
+#wp-transliteration-settings #rstr-progress-bar .php::-webkit-progress-value {
+    background-image:
+    -webkit-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0, 0, .1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+    -webkit-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
+    -webkit-linear-gradient(left, #09c, #ff0);
+}
+
+#wp-transliteration-settings #rstr-progress-bar .php::-moz-progress-bar {
+    background-image:
+    -moz-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0, 0, .1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+    -moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
+    -moz-linear-gradient(left, #09c, #ff0);
 }

@@ -156,6 +156,13 @@ class Transliteration_Settings extends Transliteration {
 				]);
 				break;
 			
+			case 'tools':
+				$this->settings_page__tools([
+					'transliteration' => __('Transliteration Tool', 'serbian-transliteration'),
+					'permalinks' => __('Permalink Tool', 'serbian-transliteration'),
+				]);
+				break;
+			
 			case 'debug':
 				$this->settings_page__debug();
 				break;
@@ -178,6 +185,10 @@ class Transliteration_Settings extends Transliteration {
 				'icon' => 'media-spreadsheet',
 				'label' => __('Documentation', 'serbian-transliteration')
 			],
+			'tools' => [
+				'icon' => 'admin-generic',
+				'label' => __('Tools', 'serbian-transliteration')
+			],
 			'debug' => [
 				'icon' => 'sos',
 				'label' => __('Debug', 'serbian-transliteration')
@@ -190,7 +201,7 @@ class Transliteration_Settings extends Transliteration {
 		?>
 		<ul class="transliteration-settings-tabs">
 			<?php foreach ($tabs as $key => $item): ?>
-			<li<?php echo (($tab == $key) ? ' class="current"' : ''); ?>>
+			<li<?php echo (($tab == $key) ? ' class="current"' : ''); ?> title="<?php echo esc_attr($item['label']??''); ?>">
 				<a href="<?php echo esc_url(add_query_arg('tab', $key, $main_url)); ?>"><?php if($item['icon']??NULL) : ?><i class="dashicons dashicons-<?php echo esc_attr($item['icon']); ?>"></i> <?php endif; ?><span class="lbl"><?php echo esc_html($item['label']??''); ?></span></a>
 			</li>
 			<?php endforeach; ?>
@@ -374,6 +385,77 @@ document.addEventListener('DOMContentLoaded', (event) => {
 				<div class="transliteration-page"><?php
 					$this->settings_page_actions($actions);
 					include_once RSTR_CLASSES . '/settings/page-tags.php';
+				?></div>
+			</div>
+		</div>
+	</div>
+</div>
+		<?php
+	}
+	
+	public function settings_page__tools($actions) {
+		$action = sanitize_text_field($_GET['action'] ?? 'transliteration');
+
+		switch($action) {
+			default:
+			case 'transliteration':
+				$this->settings_action_page__transliteration($actions);
+				break;
+				
+			case 'permalinks':
+				$this->settings_action_page__permalinks($actions);
+				break;
+		}
+	}
+	
+	public function settings_action_page__transliteration($actions) {
+		?>
+<div class="wrap" id="wp-transliteration-settings">
+	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Converter for transliterating Cyrillic into Latin and vice versa', 'serbian-transliteration'); ?></h1>
+	<?php $this->settings_tabs(); ?>
+	<div id="poststuff" class="metabox-holder has-right-sidebar">
+		<div class="inner-sidebar">
+			<div id="side-sortables" class="meta-box-sortables">
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'tags', $this);
+					do_meta_boxes('transliteration-settings', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'tags', $this);
+				?>
+			</div>
+		</div>
+		<div id="post-body">
+			<div id="post-body-content">
+				<div class="transliteration-page"><?php
+					$this->settings_page_actions($actions);
+					include_once RSTR_CLASSES . '/settings/page-transliteration.php';
+				?></div>
+			</div>
+		</div>
+	</div>
+</div>
+		<?php
+	}
+	
+	public function settings_action_page__permalinks($actions) {
+		?>
+<div class="wrap" id="wp-transliteration-settings">
+	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Permalink Transliteration Tool', 'serbian-transliteration'); ?></h1>
+	<?php $this->settings_tabs(); ?>
+	<div id="poststuff" class="metabox-holder has-right-sidebar">
+		<div class="inner-sidebar">
+			<div id="side-sortables" class="meta-box-sortables">
+				<?php
+					do_action('transliteration-settings-before-sidebar', 'tags', $this);
+					do_meta_boxes('transliteration-settings', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'tags', $this);
+				?>
+			</div>
+		</div>
+		<div id="post-body">
+			<div id="post-body-content">
+				<div class="transliteration-page"><?php
+					$this->settings_page_actions($actions);
+					include_once RSTR_CLASSES . '/settings/page-permalinks.php';
 				?></div>
 			</div>
 		</div>

@@ -15,6 +15,7 @@ class Transliteration_Ajax extends Transliteration {
 		if (!isset($_REQUEST['action']) || 
 			(!in_array($_REQUEST['action'], ['find_posts', 'heartbeat', 'query-attachments', 'wp_block']) &&
 			 !preg_match('/^((ct_|oxy_)(.*?))$/i', $_REQUEST['action']) &&
+			 !preg_match('/^(rstr_(.*?))$/i', $_REQUEST['action']) &&
 			 !preg_match('/^(divi_(.*?))$/i', $_REQUEST['action']) &&
 			 !preg_match('/^(elementor_(.*?))$/i', $_REQUEST['action']))) {
 			$json = json_decode($buffer, true);

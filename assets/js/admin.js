@@ -77,6 +77,7 @@
 		string = string.replace(/&amp;/g, '&');
 		return string;
 	}
+
 	
 	/*
 	 * AJAX request
