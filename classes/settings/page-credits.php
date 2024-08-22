@@ -2,18 +2,20 @@
 
 $special_thanks_sponsors = array(
 	'INFINITUM FORM' => 'https://infinitumform.com/',
-	'UG PREOBRAŽENJE' => 'https://preobrazenje.rs/',
-	'ContraTeam' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
+	'FreelancePoslovi.com' => 'https://freelanceposlovi.com/',
+	'Contra Team d.o.o.' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
+	'UG Preobraženje' => 'https://preobrazenje.rs/',
 	'CNZD' => 'https://cnzd.rs/'
 );
 
 $special_thanks = array(
-	'dizajn24' => 'https://profiles.wordpress.org/dizajn24',
 	'tihi' => 'https://profiles.wordpress.org/tihi',
+	'dizajn24' => 'https://profiles.wordpress.org/dizajn24',
 	'Yaroslav Ingulskyi' => 'https://wordpress.org/support/users/ingyaroslav/',
 	'Slobodan Mirić' => 'https://www.facebook.com/websitesworkshop',
 	'Branislav Mitić' => 'https://profiles.wordpress.org/xlr84xs/',
 	'Dušan Filiferović' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
+	'Boris Kuljaj' => 'https://www.linkedin.com/in/boris-kuljaj-2944b4192/',
 	'Slobodan Pantović' => '',
 	'Ivan Stanojević' => '',
 	'Ognjen Odobašić' => '',

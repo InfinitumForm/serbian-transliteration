@@ -405,23 +405,29 @@ class Transliteration_Settings_Fields {
 		 * Settings Sidebars
 		 */
 		$sidebars = new Transliteration_Settings_Sidebars;
-		add_meta_box(
-            'donations',
-            '🌟 ' . __('Brighten my day as my plugin brightens yours!', 'serbian-transliteration') . ' 🌟',
-            [$sidebars, 'donations'],
-            'transliteration-settings',
-            'side',
-            'default'
-        );
+		$tab = sanitize_text_field($_GET['tab'] ?? '');
 		
-		add_meta_box(
-            'contributors',
-            '<span class="dashicons dashicons-superhero-alt"></span> <span>' . __('Contributors & Developers', 'serbian-transliteration') . '</span>',
-            [$sidebars, 'contributors'],
-            ['transliteration-settings', 'transliteration-credits'],
-            'side',
-            'default'
-        );
+		if( !in_array($tab, ['debug']) ) {
+			add_meta_box(
+				'donations',
+				'🌟 ' . __('Brighten my day as my plugin brightens yours!', 'serbian-transliteration') . ' 🌟',
+				[$sidebars, 'donations'],
+				'transliteration-settings',
+				'side',
+				'default'
+			);
+		}
+		
+		if( !in_array($tab, ['documentation']) ) {
+			add_meta_box(
+				'contributors',
+				'<span class="dashicons dashicons-superhero-alt"></span> <span>' . __('Contributors & Developers', 'serbian-transliteration') . '</span>',
+				[$sidebars, 'contributors'],
+				['transliteration-settings', 'transliteration-credits'],
+				'side',
+				'default'
+			);
+		}
 	}
 	
 	/*

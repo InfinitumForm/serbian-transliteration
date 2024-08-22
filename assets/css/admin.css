@@ -566,3 +566,7 @@ Webkit browsers provide two pseudo classes that can be use to style HTML5 progre
     -moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
     -moz-linear-gradient(left, #09c, #ff0);
 }
+
+#wp-transliteration-settings .meta-box-sortables:empty {
+	display:none !important;
+}

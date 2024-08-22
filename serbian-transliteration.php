@@ -167,6 +167,9 @@ if($transliteration_requirements->passes()) :
 
 	// On the plugin update
 	add_action('upgrader_process_complete', ['Transliteration_Init', 'register_updater'], 10, 2);
+	
+	// On the manual plugin update
+	add_action('admin_init', ['Transliteration_Init', 'check_plugin_update']);
 
 	// Redirect after activation
 	add_action('admin_init', ['Transliteration_Init', 'register_redirection'], 10, 2);

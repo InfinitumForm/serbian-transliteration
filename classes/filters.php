@@ -121,11 +121,16 @@ class Transliteration_Filters extends Transliteration {
 	 */
 	public function after_settings_sidebar ($page, $obj) { ?>
 <div class="postbox transliteration-affiliate">
+	<a href="https://freelanceposlovi.com/poslovi" target="_blank">
+		<img src="<?php echo esc_url(RSTR_ASSETS.'/img/'.( Transliteration_Utilities::get_locale('sr_RS') ? 'logo-freelance-poslovi-sr_RS.jpg' : 'logo-freelance-poslovi.jpg' ) ); ?>" alt="<?php esc_attr_e('Freelance Jobs - Find or post freelance jobs', 'serbian-transliteration'); ?>">
+	</a>
+</div>
+<div class="postbox transliteration-affiliate">
 	<a href="https://korisnickicentar.contrateam.com/aff.php?aff=385" target="_blank">
 		<img src="<?php echo esc_url(RSTR_ASSETS.'/img/logo-contra-team.jpg'); ?>" alt="<?php esc_attr_e('Contra Team - A complete hosting solution in one place', 'serbian-transliteration'); ?>">
 	</a>
 </div>
-		<?php if($page === 'credits') : ?>
+		<?php if(in_array($page, ['credits', 'permalinks', 'transliteration'])) : ?>
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ivijanstefan" data-description="<?php esc_attr_e('Support my work by buying me a coffee!', 'serbian-transliteration'); ?>" data-message="<?php esc_attr_e('Thank you for using Transliterator. Could you buy me a coffee?', 'serbian-transliteration'); ?>" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="50"></script>
 		<?php endif;
 	}

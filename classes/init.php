@@ -281,6 +281,39 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 		}
 	}
 	
+	/*
+	 * Cheeck Plugin Update
+	 */
+	public static function check_plugin_update() {
+		$current_version = get_option('serbian-transliteration-version');
+
+		// Proveri ako se verzija promenila
+		if ($current_version !== RSTR_VERSION) {
+			// Reset table check
+			delete_option('serbian-transliteration-db-cache-table-exists');
+			
+			// Delete old translations
+			Transliteration_Utilities::clear_plugin_translations();
+			
+			// Install database tables
+			if (RSTR_DATABASE_VERSION !== get_option('serbian-transliteration-db-version')) {
+				Transliteration_Cache_DB::table_install();
+				update_option('serbian-transliteration-db-version', RSTR_DATABASE_VERSION, false);
+			}
+			
+			// Clear plugin cache
+			Transliteration_Utilities::clear_plugin_cache();
+			
+			// Reset permalinks
+			if (function_exists('flush_rewrite_rules')) {
+				flush_rewrite_rules();
+			}
+			
+			// Save new version
+			update_option('serbian-transliteration-version', RSTR_VERSION, true);
+		}
+	}
+	
 	
 	/*
 	 * Redirect after activation

@@ -417,9 +417,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
 				<?php
-					do_action('transliteration-settings-before-sidebar', 'tags', $this);
-					do_meta_boxes('transliteration-settings', 'side', null);
-					do_action('transliteration-settings-after-sidebar', 'tags', $this);
+					do_action('transliteration-settings-before-sidebar', 'transliteration', $this);
+					do_meta_boxes('transliteration-tools', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'transliteration', $this);
 				?>
 			</div>
 		</div>
@@ -445,9 +445,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
 				<?php
-					do_action('transliteration-settings-before-sidebar', 'tags', $this);
-					do_meta_boxes('transliteration-settings', 'side', null);
-					do_action('transliteration-settings-after-sidebar', 'tags', $this);
+					do_action('transliteration-settings-before-sidebar', 'permalinks', $this);
+					do_meta_boxes('transliteration-tools', 'side', null);
+					do_action('transliteration-settings-after-sidebar', 'permalinks', $this);
 				?>
 			</div>
 		</div>
