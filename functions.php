@@ -384,9 +384,9 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('cyr_to_lat')) :
-	function cyr_to_lat($content, bool $fix_html = true)
+	function cyr_to_lat($content, bool $sanitize_html = true)
 	{
-		return Transliteration_Controller::get()->cyr_to_lat($content, $fix_html);
+		return Transliteration_Controller::get()->cyr_to_lat($content, $sanitize_html);
 	}
 endif;
 
@@ -396,11 +396,24 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if(!function_exists('lat_to_cyr')) :
-	function lat_to_cyr($content, bool $fix_html = true, bool $fix_diacritics = false)
+	function lat_to_cyr($content, bool $sanitize_html = true, bool $fix_diacritics = true)
 	{
-		return Transliteration_Controller::get()->lat_to_cyr($content, $fix_html, $fix_diacritics);
+		return Transliteration_Controller::get()->lat_to_cyr($content, $sanitize_html, $fix_diacritics);
 	}
 endif;
+
+/*
+ * Translate from Latin to Cyrillic in Sanitize way
+ * @return        string
+ * @author        Ivijan-Stefan Stipic
+*/
+if(!function_exists('cyr_to_ascii_lat')) :
+	function cyr_to_ascii_lat($content)
+	{
+		return Transliteration_Controller::get()->cyr_to_lat_sanitize($content);
+	}
+endif;
+if(!function_exists('cyr_to_simplified_lat')) : function cyr_to_simplified_lat($content) {return cyr_to_ascii_lat($content);} endif;
 
 /*
  * Script selector

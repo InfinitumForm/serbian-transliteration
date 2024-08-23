@@ -107,12 +107,16 @@
 <?php printf('<p>%s</p>', __('The <b><i>$type</i></b> parameter has two values: <code>cyr_to_lat</code> (Cyrillic to Latin) and <code>lat_to_cyr</code> (Latin to Cyrillic)', 'serbian-transliteration')); ?>
 <br>
 <h2 style="margin:0;">cyr_to_lat</h2>
-<?php printf('<p>%s</p>', __('Transliteration only from Cyrillic to Latin.', 'serbian-transliteration')); ?>
-<p><code class="lang-php">function cyr_to_lat(string $content) : string</code></p>
+<?php printf('<p>%s</p>', __('Transliteration from Cyrillic to Latin.', 'serbian-transliteration')); ?>
+<p><code class="lang-php">function cyr_to_lat(string $content, bool $sanitize_html = true) : string</code></p>
 <br>
 <h2 style="margin:0;">lat_to_cyr</h2>
-<?php printf('<p>%s</p>', __('Transliteration only from Latin to Cyrillic.', 'serbian-transliteration')); ?>
-<p><code class="lang-php">function lat_to_cyr(string $content, bool $fix_html = true, bool $fix_diacritics = false) : string</code></p>
+<?php printf('<p>%s</p>', __('Transliteration from Latin to Cyrillic.', 'serbian-transliteration')); ?>
+<p><code class="lang-php">function lat_to_cyr(string $content, bool $sanitize_html = true, bool $fix_diacritics = false) : string</code></p>
+<br>
+<h2 style="margin:0;">cyr_to_ascii_lat</h2>
+<?php printf('<p>%s</p>', __('Transliterates Cyrillic characters to Latin, converting them to their basic ASCII equivalents by removing diacritics.', 'serbian-transliteration')); ?>
+<p><code class="lang-php">function cyr_to_ascii_lat(string $content) : string</code></p>
 <br>
 <h2 style="margin:0;"><?php echo (function_exists('get_script') ? 'get_script' : 'rstr_get_script'); ?></h2>
 <?php printf('<p>%s</p>', __('Get active script.', 'serbian-transliteration')); ?>

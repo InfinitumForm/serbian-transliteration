@@ -1,13 +1,16 @@
 <?php if ( !defined('WPINC') ) die(); ?>
 <p class="description"><?php _e('These are available shortcodes that you can use in your content, visual editors, themes and plugins.', 'serbian-transliteration'); ?></p>
 <h2 style="margin:0;"><?php _e('Skip transliteration', 'serbian-transliteration'); ?>:</h2>
-<p><code class="lang-txt">[<span class="hljs-title">rstr_skip</span>]<?php _e('Keep this original', 'serbian-transliteration'); ?>[/<span class="hljs-title">rstr_skip</span>]</code></p>
+<p><code class="lang-txt">[<span class="hljs-title">skip_translit</span>]<?php _e('Keep this original', 'serbian-transliteration'); ?>[/<span class="hljs-title">skip_translit</span>]</code></p>
 <br>
 <h2 style="margin:0;"><?php _e('Cyrillic to Latin', 'serbian-transliteration'); ?>:</h2>
-<p><code class="lang-txt">[<span class="hljs-title">rstr_cyr_to_lat</span>]Ћирилица у латиницу[/<span class="hljs-title">rstr_cyr_to_lat</span>]</code></p>
+<p><code class="lang-txt">[<span class="hljs-title">cyr_to_lat</span>]Ћирилица у латиницу[/<span class="hljs-title">cyr_to_lat</span>]</code></p>
+<ul>
+	<?php printf('<li><code>%1$s</code> - %2$s</li>', 'fix_html', __('(optional) correct HTML code.', 'serbian-transliteration')); ?>
+</ul>
 <br>
 <h2 style="margin:0;"><?php _e('Latin to Cyrillic', 'serbian-transliteration'); ?>:</h2>
-<p><code class="lang-txt">[<span class="hljs-title">rstr_lat_to_cyr</span>]Latinica u ćirilicu[/<span class="hljs-title">rstr_lat_to_cyr</span>]</code></p>
+<p><code class="lang-txt">[<span class="hljs-title">lat_to_cyr</span>]Latinica u ćirilicu[/<span class="hljs-title">lat_to_cyr</span>]</code></p>
 <h3><?php _e('Optional shortcode parameters', 'serbian-transliteration'); ?>:</h3>
 <ul>
 	<?php printf('<li><code>%1$s</code> - %2$s</li>', 'fix_html', __('(optional) correct HTML code.', 'serbian-transliteration')); ?>

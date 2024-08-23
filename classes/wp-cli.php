@@ -28,9 +28,11 @@ if(class_exists('WP_CLI_Command')):
 		 */
 		public function permalinks($args, $assoc_args) {
 			global $wpdb;
+			
+			$batch_size = apply_filters('transliteration_cli_permalink_transliteration_batch_size', 500);
 
 			$updated = 0;
-			$batch_size = absint($assoc_args['batch_size'] ?? 500);
+			$batch_size = absint($assoc_args['batch_size'] ?? $batch_size);
 
 			$type = $assoc_args['script'] ?? 'lat';
 			if ('cyr' === $type) {

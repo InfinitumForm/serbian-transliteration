@@ -19,7 +19,8 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 			'Transliteration_Wordpress',
 			'Transliteration_Menus',
 			'Transliteration_Notifications',
-			'Transliteration_Tools'
+			'Transliteration_Tools',
+			'Transliteration_Shortcodes'
 		]);
 		
 		foreach ($main_classes as $main_class_name) {

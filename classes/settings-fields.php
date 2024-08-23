@@ -410,7 +410,7 @@ class Transliteration_Settings_Fields {
 		if( !in_array($tab, ['debug']) ) {
 			add_meta_box(
 				'donations',
-				'🌟 ' . __('Brighten my day as my plugin brightens yours!', 'serbian-transliteration') . ' 🌟',
+				'🌟 ' . __('Light Up Our Day!', 'serbian-transliteration') . ' 🌟',
 				[$sidebars, 'donations'],
 				'transliteration-settings',
 				'side',

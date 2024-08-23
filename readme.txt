@@ -12,54 +12,43 @@ Donate link: https://www.buymeacoffee.com/ivijanstefan
 Universal transliterator for permalinks, posts, tags, categories, media, files, search and more, rendering them universally readable.
 
 == Description ==
-This plugin provides a seamless solution for converting WordPress content between Cyrillic and Latin scripts. Crafted to be user-friendly and lightweight, it facilitates the conversion process with minimal clicks. It also incorporates support for unique shortcodes, enabling selective transliteration of designated content sections and delivering superior flexibility in how content is presented. Make your site latin now!
+This plugin provides a seamless solution for converting WordPress content between Cyrillic and Latin scripts. Originally starting as "Serbian Transliteration", it has evolved into a general "Transliterator" for WordPress, crafted to be user-friendly and lightweight. [Learn more about its transformation](https://buymeacoffee.com/ivijanstefan/transliterator-wordpress-transforming-language-barriers-bridges) from a simple Serbian tool to a versatile transliteration plugin. The Transliterator plugin facilitates the conversion process with minimal clicks and supports unique shortcodes, enabling selective transliteration of designated content sections, delivering superior flexibility in how content is presented. Whether you want to transliterate entire pages, specific parts of your content, or even permalinks, this plugin gives you full control. Make your site Latin now!
+
+Just go to `Settings->Transliteration` and configure the plugin according to your needs.
+
+**Key Features:**
+- **Script Conversion:** Seamlessly convert content between Cyrillic and Latin scripts.
+- **Selective Transliteration:** Use shortcodes or tags to apply transliteration only to specific parts of your content.
+- **Image Manipulation:** Display different images based on the selected script using simple shortcode.
+- **Permalink Tool:** Convert Cyrillic permalinks to Latin with a single click.
+- **Cyrillic User Profiles:** Create user profiles using Cyrillic script.
+- **Permalink Translation:** Automatically translate all Cyrillic permalinks to Latin for better SEO and compatibility.
+- **Media File Translation:** Convert filenames of uploaded media from Cyrillic to Latin.
+- **Bilingual Search:** Enable WordPress search functionality to work with both Cyrillic and Latin scripts.
+- **Developer Friendly:** Includes PHP functions for deeper integration into themes and plugins.
+
+All settings and additional documentation are available within the plugin interface.
 
 = FEATURES =
 
- &#9989; WordPress Cyrillic to Latin and Latin to Cyrillic
- &#9989; Converts Cyrillic, European and Georgian characters in post, page and term slugs to Latin characters.
- &#9989; Transliterate Cyrillic filenames to Latin
- &#9989; Transliterate Cyrillic permalinks to Latin
- &#9989; Allow Cyrillic Usernames
- &#9989; Search posts, pages, custom post types written in cyrillic using both latin and cyrillic script
- &#9989; WP-CLI Support
+&#9989; Convert between Cyrillic and Latin scripts for posts, pages, terms, filenames, and permalinks
+&#9989; Support for Cyrillic usernames
+&#9989; Search content in both Cyrillic and Latin scripts
+&#9989; WP-CLI support
 
 = BENEFITS =
 
- &#9989; Compatible with Multilanguage Plugins
- &#9989; Compatible with any WordPress template
- &#9989; Compatible with SEO plugins
- &#9989; Possibility of partial transliteration
- &#9989; Scalable and customizable
- &#9989; It does not affect on the HTML, CSS or JS codes
- &#9989; Multilingual support
- &#9989; Transcription mode selection
- &#9989; Diacritical support (currently for the Serbian language)
- &#9989; Support for special characters
- &#9989; Support [PHP version 8.1](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
- &#9989; Page speed impact: [insignificant](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+&#9989; Compatible with multilanguage, SEO plugins, and many WordPress template
+&#9989; Supports partial transliteration and special characters
+&#9989; Scalable, customizable, and lightweight with minimal page speed impact
+&#9989; Multilingual support including diacritics for Serbian
+&#9989; Compatible with [PHP 8.1](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
 
 = LANGUAGE SUPPORT =
 
- &#9989; **Serbian Latinisation** - Serbian language (locale: **sr_RS**). Adheres to the Serbian language rules with the addition of specific characters unique to Serbian.
- &#9989; **Bosnian Latinisation** - Bosnian language. Follows the Serbian language rules with the inclusion of additional special characters unique to Bosnian.
- &#9989; **Montenegrin Latinisation** - Montenegrin language. Incorporates the rules of the Serbian language with additional special characters unique to Montenegrin.
- &#9989; **Russian Latinisation** - Russian language (locale: **ru_RU**). Implements Russian language transliteration rules.
- &#9989; **Belarusian Latinisation** - Belarusian language (locale: **bel**). Adopts Belarusian language transliteration rules.
- &#9989; **Bulgarian Latinisation** - Bulgarian language (locale: **bg_BG**). Follows Bulgarian language transliteration standards.
- &#9989; **Macedonian Latinisation** - Macedonian language (locale: **mk_MK**). Utilizes Macedonian language transliteration guidelines.
- &#9989; **Kazakh Latinisation** - Kazakh language (locale: **kk**). Applies Kazakh language transliteration methods.
- &#9989; **Ukrainian Latinisation** - Ukrainian language (locale: **uk**). Implements Ukrainian language transliteration practices.
- &#9989; **Georgian Latinisation** - Georgian language (locale: **ka_GE**). Follows Georgian language transliteration standards.
- &#9989; **Greek (Elinika) Latinisation** - Greek language (locale: **el**). Utilizes Greek language transliteration methods.
- &#9989; **Arabic Latinisation** - Arabic language (locale: **ar**). Adopts Arabic language transliteration rules.
- &#9989; **Armenian Latinisation** - Armenian language (locale: **hy**). Follows Armenian language transliteration practices.
- &#9989; **Uzbek Latinisation** - Uzbek language (locale: **uz_UZ**). Implements Uzbek language transliteration guidelines, accommodating both Cyrillic and Latin scripts.
- &#9989; **Tajik Latinisation** - Tajik (Tajikistan) language (locale: **tg**). Utilizes Tajik language transliteration methods, focusing on Cyrillic to Latin script.
- &#9989; **Kyrgyz Latinisation** - Kyrgyz (Kyrgyzstan) language (locale: **kir**). Follows Kyrgyz language transliteration standards, primarily from Cyrillic to Latin script.
- &#9989; **Mongolian Latinisation** - Mongolian language (in Cyrillic script) (locale: **mn**). Adopts Mongolian language transliteration rules for Cyrillic script.
- &#9989; **Bashkir Latinisation** - Bashkir language (locale: **ba**). Implements Bashkir language transliteration practices.
- &#128312; More languages are coming soon...
+&#9989; **Serbian, Bosnian, Montenegrin, Russian, Belarusian, Bulgarian, Macedonian, Kazakh, Ukrainian, Georgian, Greek, Arabic, Armenian, Uzbek, Tajik, Kyrgyz, Mongolian, Bashkir**
+
+&#128312; More languages coming soon...
 
 = PLUGINS SUPPORT =
 
@@ -84,67 +73,26 @@ This plugin can also serve as an alternative to [SrbTransLatin](https://wordpres
 
 It is important for you to know that any functionality in our plugin can be turned off if you do not need it, as well as the ability to filter certain hooks and filters. We have tried to provide maximum flexibility and compatibility to everyone.
 
-== Documentation ==
-
-Everything you need to do is to go to `Settings->Transliteration` and setup plugin according to your needs. Just follow descriptions and you will easily manage it.
-
-= Shortcodes =
-This plugin has two shortcodes that work independently of the plugin settings. These two shortcodes aim to transliterate some content. This is great if you have an article and want to display part of the text in Cyrillic, and if your entire portal is displayed in Latin.
-
-**Cyrillic to Latin:**
-
-`[rstr_cyr_to_lat]Ћирилица у латиницу[/rstr_cyr_to_lat]`
-
-**Latin to Cyrillic:**
-
-`[rstr_lat_to_cyr]Latinica u ćirilicu[/rstr_lat_to_cyr]`
-
-**Skip transliteration:**
-
-`[rstr_skip]Keep this in original script[/rstr_skip]`
-
-**Add an image depending on the language script:**
-With this shortcode you can manipulate images and display images in Latin or Cyrillic depending on the setup.
-
-`[rstr_img lat="YOUR_SITE_URL/logo_latin.jpg" cyr="YOUR_SITE_URL/logo_cyrillic.jpg"]`
-
-(The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
-
-**Language script menu**
-This shortcode displays a selector for the transliteration script.
-
-`[rstr_selector]`
-
-(The documentation for these shortcodes is inside the plugin settings or see the screenshot.)
-
-= Available Tags =
-
-These tags have a special purpose and work separately from short codes and can be used in fields where short codes cannot be used. These tags have no additional settings and can be applied in plugins, themes, widgets and within other short codes.
-
-**Cyrillic to Latin:**
-
-`{cyr_to_lat}Ћирилица у латиницу{/cyr_to_lat}`
-
-**Latin to Cyrillic:**
-
-`{lat_to_cyr}Latinica u ćirilicu{/lat_to_cyr}`
-
-**Skip transliteration:**
-
-`{rstr_skip}Keep this in original script{/rstr_skip}`
-
-= Permalink Tool =
-This tool can rename all existing Cyrillic permalinks to Latin inside the database. This tool is in the configuration of this plugin.
-
-= PHP Functions =
-We also thought of PHP developers where we have enabled several useful functions that they can use within WordPress themes and plugins. The documentation for these functions is inside the plugin settings.
-
 == Installation ==
 
-1. Go to `WP-Admin->Plugins->Add new`, search term "WordPress Transliteration" and click on the "install" button
-2. OR, upload **serbian-transliteration.zip** to `/wp-content/plugins` directory via WordPress admin panel or upload unzipped folder to your plugins folder via FTP
-3. Activate the plugin through the "Plugins" menu in WordPress
-4. Go to `Settings->Transliteration` to update options
+1. **Install via WordPress Admin:**
+   - Navigate to `WP-Admin -> Plugins -> Add New`.
+   - In the search bar, type "WordPress Transliteration".
+   - Once you find the plugin, click on the "Install Now" button.
+
+2. **Install via Upload:**
+   - Download the **serbian-transliteration.zip** file.
+   - Go to `WP-Admin -> Plugins -> Add New -> Upload Plugin`.
+   - Click on "Choose File", select the downloaded ZIP file, and then click "Install Now".
+   - Alternatively, you can manually upload the unzipped plugin folder to the `/wp-content/plugins` directory via FTP.
+
+3. **Activate the Plugin:**
+   - Once the plugin is installed, go to `WP-Admin -> Plugins`.
+   - Find "WordPress Transliteration" in the list and click "Activate".
+
+4. **Configure the Plugin:**
+   - After activation, go to `Settings -> Transliteration` in your WordPress admin panel.
+   - Adjust the settings according to your needs and save the changes.
 
 == Screenshots ==
 
@@ -334,13 +282,6 @@ We also thought of PHP developers where we have enabled several useful functions
 * Bug fixes and improved system stability
 * Ready for future extensions and new functionalities
 
-= 1.13.0 =
-* Removed Alternate Links support
-* Fixed problems with First Visit mode
-* Fixed SEO problems with `_rstr_nocache` URL pharams
-* Fixed SEO rewrite problems
-* Preparing transition code for version 2.0.0
-
 == Frequently Asked Questions ==
 
 = What is Romanization or Latinisation? =
@@ -389,22 +330,24 @@ If you are using WP-CLI, this function can also be started with a simple shell c
 
 = How can I define my own substitutions? =
 
-Inside your theme's `functions.php` you can define your own substitutions for each language using filters:
+You can customize the transliteration process by defining your own substitutions directly in your theme's `functions.php` file. This is done by using filters specific to the language you want to modify.
 
-`add_filter( 'rstr/inc/transliteration/{$locale}', 'function_callback', 10, 1 );`
+To create custom substitutions, use the following filter:
 
-Here's an example.
+`add_filter( 'transliteration_map_{$locale}', 'function_callback', 10, 1 );`
+
+Here's an example for Serbian (`sr_RS`) that demonstrates how to modify both single letters and multiple-letter combinations.
 
 `/*
- * Modify conversion table for Serbian language.
- *
- * @param array $map Conversion map.
- *
- * @return array
- */
+  * Modify conversion table for Serbian language.
+  *
+  * @param array $map Conversion map.
+  *
+  * @return array
+  */
 function my_transliteration__sr_RS( $map ) {
 
-	// Example For 2 or more letters
+	// Example for 2 or more letters
 	$new_map = [
 		'Ња' => 'nja',
 		'Ње' => 'nje',
@@ -414,14 +357,35 @@ function my_transliteration__sr_RS( $map ) {
 	
 	// Example for one letter
 	$new_map = [
-		'А'=>'X',
-		'Б'=>'Y',
-		'В'=>'Z'
+		'А' => 'X',
+		'Б' => 'Y',
+		'В' => 'Z'
 	];
 	$map = array_merge($map, $new_map);
 	
 	return $map;
 }
-add_filter( 'rstr/inc/transliteration/sr_RS', 'my_transliteration__sr_RS', 10, 1 );`
+add_filter( 'transliteration_map_sr_RS', 'my_transliteration__sr_RS', 10, 1 );`
+
+In this example:
+- The first `$new_map` array defines substitutions for combinations of two or more letters.
+- The second `$new_map` array defines substitutions for individual letters.
+
+This custom mapping will override the default transliteration rules for the specified language (`sr_RS` in this case).
 
 == Other Notes ==
+
+= Plugin Updates =
+We regularly update the Transliterator plugin to improve its functionality, enhance performance, and ensure compatibility with the latest versions of WordPress and PHP. Keep your plugin up to date to benefit from the latest features and fixes. To stay informed about updates, visit our plugin page on WordPress.org or follow us on social media.
+
+= Support and Feedback =
+If you encounter any issues or have suggestions for improving the plugin, please don't hesitate to reach out. You can contact us through the support forum on WordPress.org, or directly via [GitHub repository](https://github.com/InfinitumForm/serbian-transliteration). We value your feedback and are committed to providing prompt and effective support.
+
+= Compatibility =
+The Transliterator plugin is compatible with a wide range of WordPress versions and works seamlessly with many popular plugins. However, due to the vast number of available plugins, there's a small chance of encountering conflicts. If you experience any issues, please check for plugin conflicts and update your WordPress installation and all plugins.
+
+### Contributing =
+We welcome contributions from the community! If you're a developer or a user with ideas for improvement, visit our [GitHub repository](https://github.com/InfinitumForm/serbian-transliteration) to contribute. You can report issues, suggest new features, or submit pull requests.
+
+= Credits =
+Special thanks to all contributors and beta testers who helped in developing and refining this plugin. Your feedback and support are invaluable.
