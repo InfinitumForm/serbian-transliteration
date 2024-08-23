@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2024-08-23 12:26+0200\n"
-"PO-Revision-Date: 2024-08-23 12:29+0200\n"
+"POT-Creation-Date: 2024-08-23 23:23+0200\n"
+"PO-Revision-Date: 2024-08-23 23:26+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "undefined"
 msgstr "nedefinisano"
 
-#: classes/filters.php:125
+#: classes/filters.php:125 classes/wordpress.php:90
 msgid "Freelance Jobs - Find or post freelance jobs"
 msgstr "Freelance poslovi - Pronađi ili objavi freelance poslove"
 
@@ -545,12 +545,12 @@ msgid "Transliteration disabled"
 msgstr "Transliteracija je onemogućena"
 
 #: classes/settings-fields.php:533 classes/settings/page-shortcodes.php:6
-#: classes/settings/page-tags.php:3
+#: classes/settings/page-tags.php:3 classes/wordpress.php:44
 msgid "Cyrillic to Latin"
 msgstr "Ćirilica na latinicu"
 
 #: classes/settings-fields.php:534 classes/settings/page-shortcodes.php:12
-#: classes/settings/page-tags.php:6
+#: classes/settings/page-tags.php:6 classes/wordpress.php:45
 msgid "Latin to Cyrillic"
 msgstr "Latinica na ćirilicu"
 
@@ -678,7 +678,8 @@ msgstr ""
 #: classes/settings-fields.php:860 classes/settings-fields.php:884
 #: classes/settings-fields.php:912 classes/settings-fields.php:961
 #: classes/settings-fields.php:982 classes/settings-fields.php:1049
-#: classes/settings-fields.php:1090
+#: classes/settings-fields.php:1090 classes/wordpress.php:48
+#: classes/wordpress.php:52 classes/wordpress.php:56 classes/wordpress.php:60
 msgid "Yes"
 msgstr "Da"
 
@@ -688,7 +689,8 @@ msgstr "Da"
 #: classes/settings-fields.php:861 classes/settings-fields.php:885
 #: classes/settings-fields.php:913 classes/settings-fields.php:962
 #: classes/settings-fields.php:983 classes/settings-fields.php:1050
-#: classes/settings-fields.php:1091
+#: classes/settings-fields.php:1091 classes/wordpress.php:49
+#: classes/wordpress.php:53 classes/wordpress.php:57 classes/wordpress.php:61
 msgid "No"
 msgstr "Ne"
 
@@ -943,7 +945,7 @@ msgstr "pridružite se našem timu"
 msgid "Settings saved."
 msgstr "Postavke spremljene."
 
-#: classes/settings.php:61
+#: classes/settings.php:61 classes/wordpress.php:66
 msgid "Settings"
 msgstr "Postavke"
 
@@ -1010,20 +1012,20 @@ msgstr "Alat za trajnu vezu (permalink)"
 msgid "General Settings"
 msgstr "Opće postavke"
 
-#: classes/settings.php:186
+#: classes/settings.php:186 classes/wordpress.php:67
 msgid "Documentation"
 msgstr "Dokumentacija"
 
-#: classes/settings.php:190
+#: classes/settings.php:190 classes/wordpress.php:68
 msgid "Tools"
 msgstr "Alati"
 
-#: classes/settings.php:194
+#: classes/settings.php:194 classes/wordpress.php:69
 msgid "Debug"
 msgstr "Otkloniti neispravnost"
 
 #: classes/settings.php:198 classes/settings.php:504
-#: classes/settings/page-credits.php:41
+#: classes/settings/page-credits.php:41 classes/wordpress.php:70
 msgid "Credits"
 msgstr "Zasluge"
 
@@ -1413,9 +1415,7 @@ msgstr "Važno: Provjerite da ste %s prije nego što pokrenete ovaj skript."
 
 #: classes/settings/page-permalinks.php:10
 msgid "back up your database"
-msgstr ""
-"Važno: Provjerite da ste napravili sigurnosnu kopiju svoje baze podataka "
-"prije nego što pokrenete ovaj skript."
+msgstr "napravite sigurnosnu kopiju svoje baze podataka"
 
 #: classes/settings/page-permalinks.php:24
 #, php-format
@@ -1867,6 +1867,56 @@ msgstr " Registriran "
 #: classes/utilities.php:1081
 msgid " Trademark "
 msgstr " Zaštitni znak "
+
+#: classes/wordpress.php:24
+msgid "WordPress Transliterator"
+msgstr "WordPress Transliteracija"
+
+#: classes/wordpress.php:64
+msgid "Quick Access:"
+msgstr "Brzi pristup:"
+
+#: classes/wordpress.php:71
+msgid "Rate us"
+msgstr "Ocijeni nas"
+
+#: classes/wordpress.php:75
+msgid "Current Settings:"
+msgstr "Trenutne postavke:"
+
+#: classes/wordpress.php:77
+msgid "Transliteration Mode:"
+msgstr "Način transliteracije:"
+
+#: classes/wordpress.php:78
+msgid "Cache Support:"
+msgstr "Podrška za keširanje:"
+
+#: classes/wordpress.php:79
+msgid "Media Transliteration:"
+msgstr "Transliteracija medija:"
+
+#: classes/wordpress.php:80
+msgid "Permalink Transliteration:"
+msgstr "Transliteraciju trajnih veza:"
+
+#: classes/wordpress.php:83
+msgid ""
+"Transliterator plugin options are not yet available. Please update plugin "
+"settings!"
+msgstr ""
+"Opcije Transliterator dodatka još nisu dostupne. Molimo vas da ažurirate "
+"postavke dodatka!"
+
+#: classes/wordpress.php:86
+msgid "Recommendations:"
+msgstr "Preporuke:"
+
+#: classes/wordpress.php:87
+msgid ""
+"Explore these recommended tools and resources that complement our plugin."
+msgstr ""
+"Istražite ove preporučene alate i resurse koji upotpunjuju naš dodatak."
 
 #: classes/wp-cli.php:57
 msgid ""

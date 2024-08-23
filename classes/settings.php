@@ -23,6 +23,8 @@ class Transliteration_Settings extends Transliteration {
 		if(Transliteration_Cache_DB::get(RSTR_BASENAME . '_nonce_save') == 'true') {
 			$this->add_action( 'admin_notices', 'admin_notice__success', 10, 0);
 		}
+		
+		$this->add_action('wp_dashboard_setup', 'transliterator_dashboard_widget', 1);
 	}
 	
 	public function updated_option__redirection(){
@@ -528,6 +530,91 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	public function register_settings() {
 		$settings_fields = new Transliteration_Settings_Fields;
 		$settings_fields->register_settings();
+	}
+	
+	function transliterator_dashboard_widget() {
+		wp_add_dashboard_widget(
+			'transliterator_dashboard_widget',
+			__('WordPress Transliterator', 'serbian-transliteration'),
+			[&$this, 'transliterator_dashboard_widget_display'],
+			NULL,
+			NULL,
+			'side',
+			'core'
+		);
+	}
+
+	function transliterator_dashboard_widget_display() {
+		$settings_url = esc_url(admin_url('options-general.php?page=transliteration-settings'));
+		$documentation_url = esc_url($settings_url . '&tab=documentation');
+		$tools_url = esc_url($settings_url . '&tab=tools');
+		$debug_url = esc_url($settings_url . '&tab=debug');
+		$credits_url = esc_url($settings_url . '&tab=credits');
+		$rate_url = esc_url('https://wordpress.org/support/plugin/serbian-transliteration/reviews/?filter=5#new-post');
+
+		$options = get_rstr_option();
+
+		$transliteration_mode = $options['transliteration-mode'] === 'cyr_to_lat' 
+			? __('Cyrillic to Latin', 'serbian-transliteration') 
+			: __('Latin to Cyrillic', 'serbian-transliteration');
+
+		$cache_support = $options['cache-support'] === 'yes' 
+			? '<span style="color:#007d1b">' . __('Yes', 'serbian-transliteration') . '</span>' 
+			: '<span>' . __('No', 'serbian-transliteration') . '</span>';
+
+		$media_transliteration = $options['media-transliteration'] === 'yes' 
+			? '<span style="color:#007d1b">' . __('Yes', 'serbian-transliteration') . '</span>' 
+			: '<span>' . __('No', 'serbian-transliteration') . '</span>';
+
+		$permalink_transliteration = $options['permalink-transliteration'] === 'yes' 
+			? '<span style="color:#007d1b">' . __('Yes', 'serbian-transliteration') . '</span>' 
+			: '<span>' . __('No', 'serbian-transliteration') . '</span>';
+
+		$is_multisite = defined('RSTR_MULTISITE') && RSTR_MULTISITE
+			? '<span style="color:#007d1b">' . __('Yes', 'serbian-transliteration') . '</span>'
+			: '<span>' . __('No', 'serbian-transliteration') . '</span>';
+
+		?>
+<h3><b><?php echo esc_html__('Quick Access:', 'serbian-transliteration'); ?></b></h3>
+<ul>
+	<li><a href="<?php echo $settings_url; ?>"><?php echo esc_html__('Settings', 'serbian-transliteration'); ?></a></li>
+	<li><a href="<?php echo $documentation_url; ?>"><?php echo esc_html__('Documentation', 'serbian-transliteration'); ?></a></li>
+	<li><a href="<?php echo $tools_url; ?>"><?php echo esc_html__('Tools', 'serbian-transliteration'); ?></a></li>
+	<li><a href="<?php echo $debug_url; ?>"><?php echo esc_html__('Debug', 'serbian-transliteration'); ?></a></li>
+	<li><a href="<?php echo $credits_url; ?>"><?php echo esc_html__('Credits', 'serbian-transliteration'); ?></a></li>
+	<li><a href="<?php echo $rate_url; ?>" target="_blank"><?php echo esc_html__('Rate us', 'serbian-transliteration'); ?></a></li>
+</ul>
+
+<?php if ($options): ?>
+	<h3><b><?php echo esc_html__('Current Settings:', 'serbian-transliteration'); ?></b></h3>
+	<ul>
+		<li><?php echo esc_html__('Transliteration Mode:', 'serbian-transliteration'); ?> <b><?php echo esc_html($transliteration_mode); ?></b></li>
+		<li><?php echo esc_html__('Cache Support:', 'serbian-transliteration'); ?> <b><?php echo wp_kses_post($cache_support); ?></b></li>
+		<li><?php echo esc_html__('Media Transliteration:', 'serbian-transliteration'); ?> <b><?php echo wp_kses_post($media_transliteration); ?></b></li>
+		<li><?php echo esc_html__('Permalink Transliteration:', 'serbian-transliteration'); ?> <b><?php echo wp_kses_post($permalink_transliteration); ?></b></li>
+	</ul>
+<?php else: ?>
+	<p style="color:#cc0000"><?php echo esc_html__('Transliterator plugin options are not yet available. Please update plugin settings!', 'serbian-transliteration'); ?></p>
+<?php endif; ?>
+
+<h3><b><?php echo esc_html__('Recommendations:', 'serbian-transliteration'); ?></b></h3>
+<p><?php echo esc_html__('Explore these recommended tools and resources that complement our plugin.', 'serbian-transliteration'); ?></p>
+<div class="postbox transliteration-affiliate">
+	<a href="https://freelanceposlovi.com/poslovi" target="_blank">
+		<img src="<?php echo esc_url(RSTR_ASSETS . '/img/' . ( Transliteration_Utilities::get_locale('sr_RS') ? 'logo-freelance-poslovi-sr_RS.jpg' : 'logo-freelance-poslovi.jpg' ) ); ?>" alt="<?php esc_attr_e('Freelance Jobs - Find or post freelance jobs', 'serbian-transliteration'); ?>">
+	</a>
+</div>
+		<?php add_action('admin_footer', function() { ?>
+<style>
+	#transliterator_dashboard_widget .transliteration-affiliate img {
+		display: block;
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		margin: 0 auto;
+	}
+</style>
+		<?php });
 	}
 
 }

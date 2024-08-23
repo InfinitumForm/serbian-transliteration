@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2024-08-23 12:03+0200\n"
-"PO-Revision-Date: 2024-08-23 12:05+0200\n"
+"POT-Creation-Date: 2024-08-23 23:19+0200\n"
+"PO-Revision-Date: 2024-08-23 23:22+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "undefined"
 msgstr "недефинисано"
 
-#: classes/filters.php:125
+#: classes/filters.php:125 classes/wordpress.php:90
 msgid "Freelance Jobs - Find or post freelance jobs"
 msgstr "Фриленс послови - Пронађи или објави фриленс послове"
 
@@ -542,12 +542,12 @@ msgid "Transliteration disabled"
 msgstr "Угаси пресловљавање"
 
 #: classes/settings-fields.php:533 classes/settings/page-shortcodes.php:6
-#: classes/settings/page-tags.php:3
+#: classes/settings/page-tags.php:3 classes/wordpress.php:44
 msgid "Cyrillic to Latin"
 msgstr "Ћирилица у латиницу"
 
 #: classes/settings-fields.php:534 classes/settings/page-shortcodes.php:12
-#: classes/settings/page-tags.php:6
+#: classes/settings/page-tags.php:6 classes/wordpress.php:45
 msgid "Latin to Cyrillic"
 msgstr "Латиница у ћирилицу"
 
@@ -675,7 +675,8 @@ msgstr ""
 #: classes/settings-fields.php:860 classes/settings-fields.php:884
 #: classes/settings-fields.php:912 classes/settings-fields.php:961
 #: classes/settings-fields.php:982 classes/settings-fields.php:1049
-#: classes/settings-fields.php:1090
+#: classes/settings-fields.php:1090 classes/wordpress.php:48
+#: classes/wordpress.php:52 classes/wordpress.php:56 classes/wordpress.php:60
 msgid "Yes"
 msgstr "Да"
 
@@ -685,7 +686,8 @@ msgstr "Да"
 #: classes/settings-fields.php:861 classes/settings-fields.php:885
 #: classes/settings-fields.php:913 classes/settings-fields.php:962
 #: classes/settings-fields.php:983 classes/settings-fields.php:1050
-#: classes/settings-fields.php:1091
+#: classes/settings-fields.php:1091 classes/wordpress.php:49
+#: classes/wordpress.php:53 classes/wordpress.php:57 classes/wordpress.php:61
 msgid "No"
 msgstr "Не"
 
@@ -941,7 +943,7 @@ msgstr "придружите се нашем тиму"
 msgid "Settings saved."
 msgstr "Подешавања су сачувана."
 
-#: classes/settings.php:61
+#: classes/settings.php:61 classes/wordpress.php:66
 msgid "Settings"
 msgstr "Подешавања"
 
@@ -1007,20 +1009,20 @@ msgstr "Алат за трајне везе"
 msgid "General Settings"
 msgstr "Глобална подешавања"
 
-#: classes/settings.php:186
+#: classes/settings.php:186 classes/wordpress.php:67
 msgid "Documentation"
 msgstr "Документација"
 
-#: classes/settings.php:190
+#: classes/settings.php:190 classes/wordpress.php:68
 msgid "Tools"
 msgstr "Алати"
 
-#: classes/settings.php:194
+#: classes/settings.php:194 classes/wordpress.php:69
 msgid "Debug"
 msgstr "Дебаговање"
 
 #: classes/settings.php:198 classes/settings.php:504
-#: classes/settings/page-credits.php:41
+#: classes/settings/page-credits.php:41 classes/wordpress.php:70
 msgid "Credits"
 msgstr "Информације"
 
@@ -1864,6 +1866,55 @@ msgstr " Регистровано "
 #: classes/utilities.php:1081
 msgid " Trademark "
 msgstr " Заштитни знак "
+
+#: classes/wordpress.php:24
+msgid "WordPress Transliterator"
+msgstr "WordPress пресловљавање"
+
+#: classes/wordpress.php:64
+msgid "Quick Access:"
+msgstr "Брз приступ:"
+
+#: classes/wordpress.php:71
+msgid "Rate us"
+msgstr "Оцените нас!"
+
+#: classes/wordpress.php:75
+msgid "Current Settings:"
+msgstr "Тренутна подешавања"
+
+#: classes/wordpress.php:77
+msgid "Transliteration Mode:"
+msgstr "Режим пресловљавања:"
+
+#: classes/wordpress.php:78
+msgid "Cache Support:"
+msgstr "Подршка за кеширање:"
+
+#: classes/wordpress.php:79
+msgid "Media Transliteration:"
+msgstr "Пресловљавање медија"
+
+#: classes/wordpress.php:80
+msgid "Permalink Transliteration:"
+msgstr "Пресловљавање трајних веза"
+
+#: classes/wordpress.php:83
+msgid ""
+"Transliterator plugin options are not yet available. Please update plugin "
+"settings!"
+msgstr ""
+"Опције Transliterator додатка још увек нису доступне. Молимо вас да "
+"ажурирате подешавања додатка!"
+
+#: classes/wordpress.php:86
+msgid "Recommendations:"
+msgstr "Препоруке:"
+
+#: classes/wordpress.php:87
+msgid ""
+"Explore these recommended tools and resources that complement our plugin."
+msgstr "Истражите препоручене алате и ресурсе који употпуњују наш додатак."
 
 #: classes/wp-cli.php:57
 msgid ""

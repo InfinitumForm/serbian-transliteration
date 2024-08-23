@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliterator\n"
-"POT-Creation-Date: 2024-08-23 12:30+0200\n"
+"POT-Creation-Date: 2024-08-23 23:19+0200\n"
 "PO-Revision-Date: 2023-08-24 13:48+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "undefined"
 msgstr ""
 
-#: classes/filters.php:125
+#: classes/filters.php:125 classes/wordpress.php:90
 msgid "Freelance Jobs - Find or post freelance jobs"
 msgstr ""
 
@@ -488,12 +488,12 @@ msgid "Transliteration disabled"
 msgstr ""
 
 #: classes/settings-fields.php:533 classes/settings/page-shortcodes.php:6
-#: classes/settings/page-tags.php:3
+#: classes/settings/page-tags.php:3 classes/wordpress.php:44
 msgid "Cyrillic to Latin"
 msgstr ""
 
 #: classes/settings-fields.php:534 classes/settings/page-shortcodes.php:12
-#: classes/settings/page-tags.php:6
+#: classes/settings/page-tags.php:6 classes/wordpress.php:45
 msgid "Latin to Cyrillic"
 msgstr ""
 
@@ -597,7 +597,8 @@ msgstr ""
 #: classes/settings-fields.php:860 classes/settings-fields.php:884
 #: classes/settings-fields.php:912 classes/settings-fields.php:961
 #: classes/settings-fields.php:982 classes/settings-fields.php:1049
-#: classes/settings-fields.php:1090
+#: classes/settings-fields.php:1090 classes/wordpress.php:48
+#: classes/wordpress.php:52 classes/wordpress.php:56 classes/wordpress.php:60
 msgid "Yes"
 msgstr ""
 
@@ -607,7 +608,8 @@ msgstr ""
 #: classes/settings-fields.php:861 classes/settings-fields.php:885
 #: classes/settings-fields.php:913 classes/settings-fields.php:962
 #: classes/settings-fields.php:983 classes/settings-fields.php:1050
-#: classes/settings-fields.php:1091
+#: classes/settings-fields.php:1091 classes/wordpress.php:49
+#: classes/wordpress.php:53 classes/wordpress.php:57 classes/wordpress.php:61
 msgid "No"
 msgstr ""
 
@@ -826,7 +828,7 @@ msgstr ""
 msgid "Settings saved."
 msgstr ""
 
-#: classes/settings.php:61
+#: classes/settings.php:61 classes/wordpress.php:66
 msgid "Settings"
 msgstr ""
 
@@ -887,20 +889,20 @@ msgstr ""
 msgid "General Settings"
 msgstr ""
 
-#: classes/settings.php:186
+#: classes/settings.php:186 classes/wordpress.php:67
 msgid "Documentation"
 msgstr ""
 
-#: classes/settings.php:190
+#: classes/settings.php:190 classes/wordpress.php:68
 msgid "Tools"
 msgstr ""
 
-#: classes/settings.php:194
+#: classes/settings.php:194 classes/wordpress.php:69
 msgid "Debug"
 msgstr ""
 
 #: classes/settings.php:198 classes/settings.php:504
-#: classes/settings/page-credits.php:41
+#: classes/settings/page-credits.php:41 classes/wordpress.php:70
 msgid "Credits"
 msgstr ""
 
@@ -1666,6 +1668,53 @@ msgstr ""
 
 #: classes/utilities.php:1081
 msgid " Trademark "
+msgstr ""
+
+#: classes/wordpress.php:24
+msgid "WordPress Transliterator"
+msgstr ""
+
+#: classes/wordpress.php:64
+msgid "Quick Access:"
+msgstr ""
+
+#: classes/wordpress.php:71
+msgid "Rate us"
+msgstr ""
+
+#: classes/wordpress.php:75
+msgid "Current Settings:"
+msgstr ""
+
+#: classes/wordpress.php:77
+msgid "Transliteration Mode:"
+msgstr ""
+
+#: classes/wordpress.php:78
+msgid "Cache Support:"
+msgstr ""
+
+#: classes/wordpress.php:79
+msgid "Media Transliteration:"
+msgstr ""
+
+#: classes/wordpress.php:80
+msgid "Permalink Transliteration:"
+msgstr ""
+
+#: classes/wordpress.php:83
+msgid ""
+"Transliterator plugin options are not yet available. Please update plugin "
+"settings!"
+msgstr ""
+
+#: classes/wordpress.php:86
+msgid "Recommendations:"
+msgstr ""
+
+#: classes/wordpress.php:87
+msgid ""
+"Explore these recommended tools and resources that complement our plugin."
 msgstr ""
 
 #: classes/wp-cli.php:57
