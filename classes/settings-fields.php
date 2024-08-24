@@ -886,18 +886,14 @@ class Transliteration_Settings_Fields {
 		) as $key=>$label)
 		{
 			$inputs[]=sprintf(
-				'<label for="permalink-transliteration-%1$s"><input type="radio" id="permalink-transliteration-%1$s" name="%3$s[permalink-transliteration]" value="%1$s"%4$s%5$s> <span>%2$s</span></label>',
+				'<label for="permalink-transliteration-%1$s"><input type="radio" id="permalink-transliteration-%1$s" name="%3$s[permalink-transliteration]" value="%1$s"%4$s> <span>%2$s</span></label>',
 				esc_attr($key),
 				esc_html($label),
-				 RSTR_NAME,
-				(isset( $this->options['permalink-transliteration'] ) && $this->options['permalink-transliteration'] == $key ? ' checked' : ((Transliteration_Utilities::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? $key == 'no' : $key == 'yes') ? ' checked' : '')),
-				(Transliteration_Utilities::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug') ? ' disabled' : '')
+				RSTR_NAME,
+				(isset($this->options['permalink-transliteration']) && $this->options['permalink-transliteration'] == $key ? ' checked' : ($key == 'yes' ? ' checked' : ''))
 			);
 		}
 		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Enable if you want to force cyrillic permalinks to latin.', 'serbian-transliteration'));
-		if(Transliteration_Utilities::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug')) {
-			printf('<p class="description"><b>%1$s</b></p>', sprintf(__('You don\'t need to force transliteration permalinks to latin because your current locale is set to %s which will automatically change permalnks.', 'serbian-transliteration'), '<code>'.Transliteration_Utilities::get_locale().'</code>'));
-		}
 	}
 	
 	

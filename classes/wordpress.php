@@ -99,7 +99,7 @@ class Transliteration_Wordpress extends Transliteration {
 		$priority = PHP_INT_MAX - 100;
 		
 		$permalink_transliteration = (get_rstr_option('permalink-transliteration', 'yes') == 'yes');
-		$ser_cyr_to_lat_slug = ($permalink_transliteration && Transliteration_Utilities::get_locale() == 'sr_RS' && get_option('ser_cyr_to_lat_slug'));
+		$ser_cyr_to_lat_slug = ($permalink_transliteration && Transliteration_Utilities::get_locale() == 'sr_RS');
 		if($ser_cyr_to_lat_slug) $permalink_transliteration = false;
 
 		if($permalink_transliteration){

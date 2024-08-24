@@ -89,6 +89,32 @@ class Transliteration_Settings extends Transliteration {
 	}
 	
 	public function enqueue_admin_scripts($hook) {
+		
+		wp_register_style('transliteration-tools', RSTR_ASSETS . '/css/tools.css?m=' . filemtime(RSTR_ROOT.'/assets/css/tools.css'));
+		wp_register_script('transliteration-tools', RSTR_ASSETS . '/js/tools.js?m=' . filemtime(RSTR_ROOT.'/assets/js/tools.js'), array('jquery'), null, true);
+		
+		wp_enqueue_style('transliteration-tools');
+		wp_enqueue_script('transliteration-tools');
+		
+		// Localize script
+		wp_localize_script(
+			'transliteration-tools',
+			'RSTR_TOOL',
+			array(
+				'version' => RSTR_VERSION,
+				'home' => get_bloginfo('wpurl'),
+				'ajax' => admin_url( '/admin-ajax.php' ),
+				'nonce' => wp_create_nonce('rstr-transliteration-letters'),
+				'prefix' => RSTR_PREFIX,
+				'label' => array(
+					'Latin' => __('Latin', 'serbian-transliteration'),
+					'Cyrillic' => __('Cyrillic', 'serbian-transliteration'),
+					'Transliterate' => __('Transliterate:', 'serbian-transliteration'),
+					'loading' => __('Loading...', 'serbian-transliteration')
+				)
+			)
+		);
+		
         // Enqueue scripts only on the transliteration settings page
         if ($hook !== 'settings_page_transliteration-settings') {
             return;
