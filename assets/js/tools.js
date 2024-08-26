@@ -133,7 +133,7 @@
 		// Funkcija za dodavanje transliterate dugmadi
 		function addTransliterateButtons() {
 			// Pronađi sva input i textarea polja sa specifičnim imenima
-			var postTitleInputs = DOC.querySelectorAll('input[name="post_title"], .table-view-list .inline-edit-col input[name="name"], #edittag .term-name-wrap input[name="name"], #edittag .term-description-wrap textarea[name="description"]');
+			var postTitleInputs = DOC.querySelectorAll('input[name="post_title"], .table-view-list .inline-edit-col input[name="name"], #edittag .term-name-wrap input[name="name"], #edittag .term-description-wrap textarea[name="description"], #wpcontent .woocommerce input[name="attribute_label"]');
 
 			postTitleInputs.forEach(function(postTitleInput) {
 				// Proveri da li dugmad već postoji kako bi se izbeglo dupliranje

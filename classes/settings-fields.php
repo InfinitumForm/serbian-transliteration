@@ -244,6 +244,14 @@ class Transliteration_Settings_Fields {
 				'transliteration_wp_admin_settings'
 			);
 			
+			add_settings_field(
+				'allow-admin-tools', // ID
+				__('Allow Admin Tools', 'serbian-transliteration'), // Title
+				[$this, 'allow_admin_tools_callback'], // Callback
+				RSTR_NAME,
+				'transliteration_wp_admin_settings'
+			);
+			
 			
 		
 		/*
@@ -870,6 +878,26 @@ class Transliteration_Settings_Fields {
 			);
 		}
 		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('Allows to create users with usernames containing Cyrillic characters.', 'serbian-transliteration'));
+	}
+	
+	public function allow_admin_tools_callback()
+	{
+		$inputs = array();
+
+		foreach(array(
+			'yes' => __('Yes', 'serbian-transliteration'),
+			'no' => __('No', 'serbian-transliteration')
+		) as $key=>$label)
+		{
+			$inputs[]=sprintf(
+				'<label for="enable-search-%1$s"><input type="radio" id="enable-search-%1$s" name="%3$s[allow-admin-tools]" value="%1$s"%4$s> <span>%2$s</span></label>',
+				esc_attr($key),
+				esc_html($label),
+				 RSTR_NAME,
+				(isset( $this->options['allow-admin-tools'] ) ? ($this->options['allow-admin-tools'] == $key ? ' checked' : '') : ($key == 'yes' ? ' checked' : ''))
+			);
+		}
+		printf('%1$s<p class="description">%2$s</p>', join(' ', $inputs), __('This feature enables you to easily transliterate titles and content directly within the WordPress editor. This functionality is available for various content types, including categories, pages, posts, and custom post types, ensuring a seamless experience when managing multilingual content on your site. With just a few clicks, you can switch between scripts, making your content accessible to a broader audience.', 'serbian-transliteration'));
 	}
 	
 	

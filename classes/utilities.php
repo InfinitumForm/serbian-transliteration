@@ -37,6 +37,7 @@ class Transliteration_Utilities {
 			'transliteration-mode'			=> 'cyr_to_lat',
 			'mode'							=> 'advanced',
 			'avoid-admin'					=> 'no',
+			'allow-admin-tools'				=> 'yes',
 			'allow-cyrillic-usernames'		=> 'no',
 			'media-transliteration'			=> 'yes',
 			'media-delimiter'				=> '-',
