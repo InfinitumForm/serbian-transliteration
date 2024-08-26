@@ -62,7 +62,7 @@ class Transliteration_Shortcodes extends Transliteration {
 			'fix_html' => true
 		), $attr );
 
-		$attr->fix_html = is_array($attr->fix_html, ['yes', 'true', true, 1, '1']);
+		$attr->fix_html = in_array($attr->fix_html, ['yes', 'true', true, 1, '1']);
 
 		if($attr->output == 'php'){
 			return cyr_to_lat(do_shortcode($content), $attr->fix_html);
@@ -94,8 +94,8 @@ class Transliteration_Shortcodes extends Transliteration {
 			'fix_diacritics' => true
 		), $attr );
 
-		$attr->fix_html = is_array($attr->fix_html, ['yes', 'true', true, 1, '1']);
-		$attr->fix_diacritics = is_array($attr->fix_diacritics, ['yes', 'true', true, 1, '1']);
+		$attr->fix_html = in_array($attr->fix_html, ['yes', 'true', true, 1, '1']);
+		$attr->fix_diacritics = in_array($attr->fix_diacritics, ['yes', 'true', true, 1, '1']);
 
 		if($attr->output == 'php'){
 			return lat_to_cyr(do_shortcode($content), $attr->fix_html, $attr->fix_diacritics);
