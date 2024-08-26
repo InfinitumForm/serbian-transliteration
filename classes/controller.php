@@ -24,15 +24,16 @@ class Transliteration_Controller extends Transliteration {
 	/*
 	 * Transliteration mode
 	 */
-	public function mode() {
-		
+	public function mode($no_redirect = false) {
+
 		// Get cached mode
 		static $mode = NULL;
-		if( $mode ) {
+		
+		if (NULL !== $mode) {
 			return $mode;
 		}
 		
-		if( Transliteration_Utilities::is_admin() ) {
+		if (Transliteration_Utilities::is_admin()) {
 			$mode = 'cyr_to_lat';
 			return $mode;
 		}
@@ -41,8 +42,8 @@ class Transliteration_Controller extends Transliteration {
 		$mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
 		
 		// Cookie mode
-		if( !empty( $_COOKIE['rstr_script'] ?? NULL ) ){
-			switch( sanitize_text_field($_COOKIE['rstr_script']) ) {
+		if (!empty($_COOKIE['rstr_script'] ?? NULL)) {
+			switch (sanitize_text_field($_COOKIE['rstr_script'])) {
 				case 'lat':
 					$mode = 'cyr_to_lat';
 					break;
@@ -54,17 +55,31 @@ class Transliteration_Controller extends Transliteration {
 		}
 		
 		// First visit mode
-		else {			
-			switch( get_rstr_option('first-visit-mode', 'lat') ) {
+		else {
+			$url = (Transliteration_Utilities::parse_url())['url'] ?? NULL;
+			$redirect = false;
+
+			$has_redirected = get_transient('transliteration_redirect');
+
+			switch (get_rstr_option('first-visit-mode', 'lat')) {
 				case 'lat':
 					$mode = 'cyr_to_lat';
 					Transliteration_Utilities::setcookie('lat');
+					$redirect = true;
 					break;
 				
 				case 'cyr':
 					$mode = 'lat_to_cyr';
 					Transliteration_Utilities::setcookie('cyr');
+					$redirect = true;
 					break;
+			}
+
+			if (!$has_redirected && !$no_redirect && $redirect && $url && !is_admin()) {
+				set_transient('transliteration_redirect', true, 30);
+				if ($url && wp_safe_redirect($url, 301)) {
+					exit;
+				}
 			}
 		}
 		
