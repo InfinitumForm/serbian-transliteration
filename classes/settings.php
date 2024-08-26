@@ -11,6 +11,7 @@ class Transliteration_Settings extends Transliteration {
 		$this->add_action('admin_init', 'register_settings');
 		$this->add_action('wp_before_admin_bar_render', 'admin_bar_link');
 		$this->add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
+		$this->add_action( 'enqueue_block_editor_assets', 'transliteration_tool_enqueue_assets' );
 		
 		if(isset($_GET['rstr-activation']) && $_GET['rstr-activation'] == 'true'){				
 			$this->add_action( 'admin_notices', 'admin_notice__activation', 10, 0);
@@ -109,6 +110,8 @@ class Transliteration_Settings extends Transliteration {
 				'label' => array(
 					'Latin' => __('Latin', 'serbian-transliteration'),
 					'Cyrillic' => __('Cyrillic', 'serbian-transliteration'),
+					'toLatin' => __('To Latin', 'serbian-transliteration'),
+					'toCyrillic' => __('To Cyrillic', 'serbian-transliteration'),
 					'Transliterate' => __('Transliterate:', 'serbian-transliteration'),
 					'loading' => __('Loading...', 'serbian-transliteration')
 				)
@@ -156,6 +159,36 @@ class Transliteration_Settings extends Transliteration {
 			)
 		);
     }
+	
+	function transliteration_tool_enqueue_assets() {
+		wp_enqueue_script(
+			'transliteration-tools-block',
+			RSTR_ASSETS . '/js/tools-block.js',
+			array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data' ),
+			null,
+			true
+		);
+		
+		wp_localize_script(
+			'transliteration-tools-block',
+			'RSTR_TOOL',
+			array(
+				'version' => RSTR_VERSION,
+				'home' => get_bloginfo('wpurl'),
+				'ajax' => admin_url( '/admin-ajax.php' ),
+				'nonce' => wp_create_nonce('rstr-transliteration-letters'),
+				'prefix' => RSTR_PREFIX,
+				'label' => array(
+					'Latin' => __('Latin', 'serbian-transliteration'),
+					'Cyrillic' => __('Cyrillic', 'serbian-transliteration'),
+					'toLatin' => __('To Latin', 'serbian-transliteration'),
+					'toCyrillic' => __('To Cyrillic', 'serbian-transliteration'),
+					'Transliterate' => __('Transliterate:', 'serbian-transliteration'),
+					'loading' => __('Loading...', 'serbian-transliteration')
+				)
+			)
+		);
+	}
 	
 	public function admin_notice__activation(){
 		global $pagenow;
@@ -556,6 +589,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	public function register_settings() {
 		$settings_fields = new Transliteration_Settings_Fields;
 		$settings_fields->register_settings();
+		
+		$this->add_filter('mce_external_plugins', 'tools_tinymce');
+		$this->add_filter('mce_buttons', 'tools_tinymce_buttons');
+	}
+	
+	function tools_tinymce_buttons($buttons) {
+		array_push($buttons, 'transliterate_to_latin', 'transliterate_to_cyrillic');
+		return $buttons;
+	}
+
+	function tools_tinymce($plugin_array) {
+		$plugin_array['transliteration_plugin'] = RSTR_ASSETS . '/js/tools-tinymce.js';
+		return $plugin_array;
 	}
 	
 	function transliterator_dashboard_widget() {
