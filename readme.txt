@@ -117,6 +117,10 @@ It is important for you to know that any functionality in our plugin can be turn
 * Added support for visual editors
 * Bug fixes and improved system stability
 * Ready for future extensions and new functionalities
+* Added admin tools for easier content transliteration management
+* Improved user interface with better accessibility options
+* Streamlined settings page for more intuitive navigation
+* Added support for multilingual content and automatic language detection
 
 = 1.13.0 =
 * Removed Alternate Links support
@@ -281,6 +285,10 @@ It is important for you to know that any functionality in our plugin can be turn
 * Added support for visual editors
 * Bug fixes and improved system stability
 * Ready for future extensions and new functionalities
+* Added admin tools for easier content transliteration management
+* Improved user interface with better accessibility options
+* Streamlined settings page for more intuitive navigation
+* Added support for multilingual content and automatic language detection
 
 == Frequently Asked Questions ==
 
