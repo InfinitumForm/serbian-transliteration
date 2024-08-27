@@ -77,24 +77,21 @@
 			xhttp_transient = xhttp;
 			
 			xhttp_transient.onreadystatechange = () => {
-				if (xhttp_transient.readyState == 4 && xhttp_transient.status == 200) {
+				if (xhttp_transient.readyState == 4) {
 					xhttp_transient_timeout = setTimeout(()=>{xhttp_transient = null;}, 3e3);
 				}
 			}
 			
 			xhttp.open(method, src, true);
 			
-			if(headers)
-			{
-				for(header in headers)
-				{
+			if(headers) {
+				for(header in headers) {
 					xhttp.setRequestHeader(header, headers[header]);
 				}
 			}
 			
 			if(object) {
-				for(key in object)
-				{
+				for(key in object) {
 					data[o]=key + '=' + object[key];
 					o++;
 				}
@@ -109,7 +106,9 @@
 		},
 		ajax_done = (callback, is_json) => {
 			if(!xhttp_transient) return;
+			let original_onreadystatechange = xhttp_transient.onreadystatechange;
 			xhttp_transient.onreadystatechange = () => {
+				if(original_onreadystatechange) original_onreadystatechange();
 				if (xhttp_transient.readyState == 4 && xhttp_transient.status == 200) {
 					if(is_json) {
 						callback(JSON.parse(xhttp_transient.responseText), xhttp_transient);
@@ -117,15 +116,17 @@
 						callback(xhttp_transient.responseText, xhttp_transient);
 					}
 				}
-			}
+			};
 		},
 		ajax_error = (callback) => {
 			if(!xhttp_transient) return;
+			let original_onreadystatechange = xhttp_transient.onreadystatechange;
 			xhttp_transient.onreadystatechange = () => {
-				if (typeof xhttp_transient.readyState == 'undefined' || xhttp_transient.status != 200) {
+				if(original_onreadystatechange) original_onreadystatechange();
+				if (xhttp_transient.readyState == 4 && xhttp_transient.status != 200) {
 					callback(xhttp_transient.status, xhttp_transient);
 				}
-			}
+			};
 		};
 		
 	DOC.addEventListener('DOMContentLoaded', function() {	
@@ -133,7 +134,7 @@
 		// Funkcija za dodavanje transliterate dugmadi
 		function addTransliterateButtons() {
 			// Pronađi sva input i textarea polja sa specifičnim imenima
-			var postTitleInputs = DOC.querySelectorAll('input[name="post_title"], .table-view-list .inline-edit-col input[name="name"], #edittag .term-name-wrap input[name="name"], #edittag .term-description-wrap textarea[name="description"], #wpcontent .woocommerce input[name="attribute_label"]');
+			var postTitleInputs = DOC.querySelectorAll('input[name="post_title"], .table-view-list .inline-edit-col input[name="name"], #edittag .term-name-wrap input[name="name"], #edittag .term-description-wrap textarea[name="description"], #wpcontent .woocommerce input[name="attribute_label"], #wpcontent .woocommerce input[name^="woocommerce_"][name$="_subject"], #wpcontent .woocommerce input[name^="woocommerce_"][name$="_heading"], #wpcontent .woocommerce textarea[name^="woocommerce_"][name$="_additional_content"]');
 
 			postTitleInputs.forEach(function(postTitleInput) {
 				// Proveri da li dugmad već postoji kako bi se izbeglo dupliranje
@@ -201,6 +202,8 @@
 				// Proveri da li je pronađeni element input ili textarea polje
 				if (inputField && ['input', 'textarea'].indexOf(inputField.tagName.toLowerCase()) > -1) {
 					var inputValue = inputField.value; // Dobavi vrednost iz polja
+					
+					event.target.classList.add('disabled');
 
 					ajax('POST', RSTR_TOOL.ajax, {
 						'action' : 'rstr_transliteration_letters',
@@ -214,6 +217,12 @@
 					
 					ajax_done(function(data){
 						inputField.value = decodeHtmlCharCodes(data);
+						console.log(data, inputField.value);
+						event.target.classList.remove('disabled');
+					});
+					
+					ajax_error(function(data){
+						event.target.classList.remove('disabled');
 					});
 				}
 			}
