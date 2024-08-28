@@ -1,0 +1,37 @@
+.transliterate-admin-fields{
+	margin: 2px 0 15px 0;
+	top:0;
+	padding: 0;
+	text-align:left;
+}
+.transliterate-admin-fields > span {
+	margin-right: 5px;
+	color:#646970;
+}
+.transliterate-admin-fields > a {
+	display: inline-block;
+	padding: 0;
+    line-height: normal;
+	text-decoration: none;
+}
+.transliterate-admin-fields > a.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.transliterate-admin-fields > a+a {
+	border-left: 1px solid #555;
+	padding: 0;
+	line-height: auto;
+	padding-left: 5px;
+	margin-left: 5px;
+}
+
+.term-name-wrap .transliterate-admin-fields,
+.term-description-wrap .transliterate-admin-fields{
+	width: 95%;
+}
+
+#titlewrap .transliterate-admin-fields{
+	text-align:right;
+}

@@ -5,7 +5,7 @@
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           1.13.0
+ * Version:           2.0.0
  * Requires at least: 5.4
  * Tested up to:      6.6
  * Requires PHP:      7.0
@@ -46,6 +46,14 @@ if ( ! defined( 'RSTR_DATABASE_VERSION' ) ){
 	define( 'RSTR_DATABASE_VERSION', '1.0.1');
 }
 
+// Developers need good debug
+if( defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ) {
+	error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
+	add_action('doing_it_wrong_run', '__return_false');
+	ini_set('display_errors', true);
+	ini_set('log_errors', true);
+}
+
 /**
  * Main plugin constants
  * @since     1.1.0
@@ -53,22 +61,16 @@ if ( ! defined( 'RSTR_DATABASE_VERSION' ) ){
  */
 // Main plugin file
 if ( ! defined( 'RSTR_FILE' ) ) define( 'RSTR_FILE', __FILE__ );
-// Set of constants
-include_once __DIR__ . DIRECTORY_SEPARATOR . 'constants.php';
 
-/*
- * Serbian transliteration cache
- * @since     1.0.0
- * @verson    1.0.0
- */
-include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Cache.php';
-if ( defined( 'RSTR_DEBUG_CACHE' ) && RSTR_DEBUG_CACHE === true ) {
-	add_action('wp_footer', function(){
-		if(is_user_logged_in() && current_user_can('administrator')) {
-			Serbian_Transliteration_Cache::debug();
-		}
-	});
-}
+// Set of constants
+include_once __DIR__ . '/constants.php';
+
+// Set database tables
+global $wpdb, $rstr_is_admin;
+$wpdb->rstr_cache = $wpdb->get_blog_prefix() . 'rstr_cache';
+
+// Check is in admin mode
+$rstr_is_admin = ($_COOKIE['rstr_test_' . COOKIEHASH]??'false'==='true');
 
 /*
  * Get plugin options
@@ -78,12 +80,11 @@ if ( defined( 'RSTR_DEBUG_CACHE' ) && RSTR_DEBUG_CACHE === true ) {
 if(!function_exists('get_rstr_option'))
 {
 	function get_rstr_option($name = false, $default = NULL) {
-		static $get_rstr_options = null;
+		static $get_rstr_options = NULL;
 
-		if ($get_rstr_options === null) {
-			$get_rstr_options = Serbian_Transliteration_Cache::get('options');
+		if ($get_rstr_options === NULL) {
 			if (!$get_rstr_options) {
-				$get_rstr_options = Serbian_Transliteration_Cache::set('options', get_option(RSTR_NAME));
+				$get_rstr_options = get_option('serbian-transliteration');
 			}
 		}
 
@@ -95,258 +96,111 @@ if(!function_exists('get_rstr_option'))
 	}
 }
 
-/*
- * Serbian transliteration requirements
- * @since     1.0.0
- * @verson    1.0.0
- */
-include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Requirements.php';
-$Serbian_Transliteration_Activate = new Serbian_Transliteration_Requirements(array('file' => RSTR_FILE));
+// Register the autoload function
+spl_autoload_register(function ($class_name) {
+    // Define the prefix to directory mapping
+    $prefixes = [
+        'Transliteration_Map_'    => RSTR_CLASSES . '/maps/',
+        'Transliteration_Mode_'   => RSTR_CLASSES . '/modes/',
+        'Transliteration_Plugin_' => RSTR_CLASSES . '/plugins/',
+        'Transliteration_Theme_'  => RSTR_CLASSES . '/themes/',
+        'Transliteration_'        => RSTR_CLASSES . '/'
+    ];
+    
+    // Static cache array to store resolved class paths
+    static $class_map_cache = [];
 
-if($Serbian_Transliteration_Activate->passes()) :
-	/*
-	 * Register database tables
-	 * @since     1.8.1
-	 * @verson    1.0.0
-	 */
-	global $wpdb;
-	$wpdb->rstr_cache = $wpdb->get_blog_prefix() . 'rstr_cache';
+    // Check if the class is already cached
+    if (isset($class_map_cache[$class_name])) {
+        if (!class_exists($class_name, false)) {
+            require_once $class_map_cache[$class_name];
+        }
+        return;
+    }
+
+    // Iterate over the prefix mappings
+    foreach ($prefixes as $prefix => $directory) {
+        // Check if the class name starts with the prefix and if the class does not already exist
+        if (strpos($class_name, $prefix) === 0 && !class_exists($class_name, false)) {
+            // Remove the prefix from the class name
+            $class_file = str_replace($prefix, '', $class_name);
+            
+            // Handle different naming conventions
+            if ($prefix == 'Transliteration_Map_') {
+                // For Transliteration_Map_, retain underscores
+                $class_file = str_replace('-', '_', $class_file);
+            } else {
+                // For other prefixes, convert underscores to hyphens and lowercase the file name
+                $class_file = strtolower(str_replace('_', '-', $class_file));
+            }
+            
+            // Define the file path
+            $file = $directory . $class_file . '.php';
+            
+            // Check if the file exists and is not an index file, then cache and require it
+            if (strpos($file, 'index.php') === false && file_exists($file)) {
+                $class_map_cache[$class_name] = $file;
+                require_once $file;
+                return;
+            }
+        }
+    }
+});
+
+
+// Transliteration requirements
+$transliteration_requirements = new Transliteration_Requirements(array('file' => RSTR_FILE));
+
+// Plugin is ready for the run
+if($transliteration_requirements->passes()) :
+	// Ensure the main model class is loaded first
+	require_once RSTR_CLASSES . '/model.php';
 	
-	/*
-	 * Serbian transliteration database cache
-	 * @since     1.5.7
-	 * @verson    1.0.0
-	 */
-	include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Cache_DB.php';
-	Serbian_Transliteration_DB_Cache::instance();
+	// Ensure the WP_CLI class is loaaded second
+	require_once RSTR_CLASSES . '/wp-cli.php';
+
+	// On the plugin activation
+	register_activation_hook(RSTR_FILE, ['Transliteration_Init', 'register_activation']);
+
+	// On the deactivation
+	register_deactivation_hook(RSTR_FILE, ['Transliteration_Init', 'register_deactivation']);
+
+	// On the plugin update
+	add_action('upgrader_process_complete', ['Transliteration_Init', 'register_updater'], 10, 2);
 	
-	$includes = [
-		DIRECTORY_SEPARATOR . 'Cache_DB.php',          // Serbian transliteration database cache
-		DIRECTORY_SEPARATOR . 'Utilities.php',         // Serbian transliteration utilities
-		DIRECTORY_SEPARATOR . 'Transliteration.php',   // Serbian transliteration requirements
-		DIRECTORY_SEPARATOR . 'Global.php',            // Main global classes with active hooks
-		DIRECTORY_SEPARATOR . 'Functions.php',         // Include functions
-		DIRECTORY_SEPARATOR . 'SEO.php',               // Include SEO
-		DIRECTORY_SEPARATOR . 'Tools.php',             // Include Tools
-		DIRECTORY_SEPARATOR . 'Plugins.php',           // Include Plugins Support
-		DIRECTORY_SEPARATOR . 'Themes.php',            // Include Themes Support
-		DIRECTORY_SEPARATOR . 'WP_CLI.php',            // WP-CLI
-		DIRECTORY_SEPARATOR . 'Notice.php',            // Notice
-		DIRECTORY_SEPARATOR . 'Init.php'               // Initialize active plugin
-	];
+	// On the manual plugin update
+	add_action('admin_init', ['Transliteration_Init', 'check_plugin_update']);
 
-	foreach ($includes as $file) {
-		include_once RSTR_INC . $file;
-	} unset($includes);
+	// Redirect after activation
+	add_action('admin_init', ['Transliteration_Init', 'register_redirection'], 10, 2);
 
-	if( class_exists('Serbian_Transliteration_Init') ) :
-		/* Do translations
-		====================================*/
-		add_action('plugins_loaded', function () {
-			if (is_textdomain_loaded(RSTR_NAME)) {
-				return;
-			}
+	// Run the plugin
+	Transliteration::run_the_plugin();
 
-			if (!function_exists('is_user_logged_in')) {
-				include_once ABSPATH . '/wp-includes/pluggable.php';
-			}
-
-			$locale = apply_filters('rstr_plugin_locale', get_user_locale(), 'serbian-transliteration');
-			$mofile = sprintf('%s-%s.mo', 'serbian-transliteration', $locale);
-
-			// Prvo proveravamo prevode unutar direktorijuma plugina
-			$domain_path = __DIR__ . DIRECTORY_SEPARATOR . 'languages';
-			$loaded = load_textdomain(RSTR_NAME, path_join($domain_path, $mofile));
-
-			// Ako prevod nije pronađen, proveravamo globalni direktorijum
-			if (!$loaded) {
-				$domain_path = path_join(WP_LANG_DIR, 'plugins');
-				$loaded = load_textdomain(RSTR_NAME, path_join($domain_path, $mofile));
-			}
-
-			// Ako ni to ne uspe, proveravamo direktno u WP_LANG_DIR
-			if (!$loaded) {
-				$loaded = load_textdomain(RSTR_NAME, path_join(WP_LANG_DIR, $mofile));
-			}
-		});
-
-
-		/* Activate plugin
-		====================================*/
-		Serbian_Transliteration::register_activation_hook(function(){
-			if (!current_user_can('activate_plugins')) {
-				return;
-			}
-			
-			if( !class_exists('Serbian_Transliteration_Utilities', false) ) {
-				include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Utilities.php';
-			}
-			
-			// Delete old translations
-			Serbian_Transliteration_Utilities::clear_plugin_translations();
-			
-			// Unload textdomain
-			unload_textdomain(RSTR_NAME);
-
-			Serbian_Transliteration_Utilities::attachment_taxonomies();
-			
-			// Save version and set activation date
-			update_option(RSTR_NAME . '-version', RSTR_VERSION, false);
-
-			$activation = get_option(RSTR_NAME . '-activation', []);
-			$activation[] = date('Y-m-d H:i:s');
-			update_option(RSTR_NAME . '-activation', $activation);
-
-			// Generate unique ID
-			if (!get_option(RSTR_NAME . '-ID')) {
-				add_option(RSTR_NAME . '-ID', Serbian_Transliteration_Utilities::generate_token(64));
-			}
-
-			// Set default options if not set
-			$options = get_option(RSTR_NAME, Serbian_Transliteration_Utilities::plugin_default_options());
-			$options = array_merge(Serbian_Transliteration_Utilities::plugin_default_options(), $options);
-			add_option(RSTR_NAME, $options);
-
-			// Set important cookie
-			$firstVisitMode = get_rstr_option('first-visit-mode');
-			$transliterationMode = get_rstr_option('transliteration-mode');
-
-			if (!isset($_COOKIE['rstr_script'])) {
-				if (in_array($firstVisitMode, ['lat', 'cyr'])) {
-					Serbian_Transliteration_Utilities::setcookie($firstVisitMode);
-				} else {
-					$mode = $transliterationMode === 'cyr_to_lat' ? 'lat' : 'cyr';
-					Serbian_Transliteration_Utilities::setcookie($mode);
-				}
-			}
-
-			// Add custom script languages
-			foreach (['lat' => 'Latin', 'cyr' => 'Cyrillic'] as $slug => $name) {
-				if (!term_exists($slug, 'rstr-script')) {
-					wp_insert_term($name, 'rstr-script', array('slug' => $slug));
-				}
-			}
-
-			// Assign terms to the settings
-			$termScript = get_option(RSTR_NAME . '-term-script', []);
-			foreach (['lat', 'cyr'] as $slug) {
-				if (!isset($termScript[$slug])) {
-					$termScript[$slug] = get_term_by('slug', $slug, 'rstr-script')->term_id;
-				}
-			}
-			add_option(RSTR_NAME . '-term-script', $termScript);
-
-			// Install database tables
-			if (RSTR_DATABASE_VERSION !== get_option(RSTR_NAME . '-db-version')) {
-				Serbian_Transliteration_DB_Cache::table_install();
-				update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, false);
-			}
-
-			if( function_exists('flush_rewrite_rules') ) {
-				flush_rewrite_rules();
-			}
-
-			return true;
-		});
-
-		
-		/* Redirect after activation
-		====================================*/
-		add_action('init', function () {
-			add_action('activated_plugin', function ($plugin) {
-				if( $plugin == RSTR_BASENAME && !get_option(RSTR_NAME.'-activated')) {
-					update_option(RSTR_NAME.'-activated', true);
-					if( wp_safe_redirect( admin_url( 'options-general.php?page=serbian-transliteration&rstr-activation=true' ) ) ) {
-						exit;
-					}
-				}
-			}, 10, 1);
-		});
-
-
-		/* Run script on the plugin upgrade
-		====================================*/
-		add_action( 'admin_init', function () {
-			if( current_user_can( 'activate_plugins' ) && (RSTR_VERSION != get_option(RSTR_NAME . '-version')) ) {
-				
-				// Reset table check
-				delete_option(RSTR_NAME . '-db-cache-table-exists');
-				
-				// Delete old translations
-				Serbian_Transliteration_Utilities::clear_plugin_translations();
-				
-				// Install database tables
-				if( RSTR_DATABASE_VERSION != get_option(RSTR_NAME . '-db-version') ) {
-					Serbian_Transliteration_DB_Cache::table_install();
-					update_option(RSTR_NAME . '-db-version', RSTR_DATABASE_VERSION, true);
-				}
-				
-				// Clear plugin cache
-				Serbian_Transliteration_Utilities::clear_plugin_cache();
-
-				// Reset permalinks
-				if( function_exists('flush_rewrite_rules') ) {
-					flush_rewrite_rules();
-				}
-				
-				// Save version
-				update_option(RSTR_NAME . '-version', RSTR_VERSION, true);
-			}
-		}, 1 );
-		
-
-		/* Deactivate plugin
-		====================================*/
-		Serbian_Transliteration::register_deactivation_hook(function(){
-			if ( ! current_user_can( 'activate_plugins' ) ) {
-				return;
-			}
-			
-			if( !class_exists('Serbian_Transliteration_Utilities', false) ) {
-				include_once RSTR_INC . DIRECTORY_SEPARATOR . 'Utilities.php';
-			}
-			
-			// Reset table check
-			delete_option(RSTR_NAME . '-db-cache-table-exists');
-			
-			// Delete old translations
-			Serbian_Transliteration_Utilities::clear_plugin_translations();
-
-			// Add deactivation date
-			if($deactivation = get_option(RSTR_NAME . '-deactivation')) {
-				$deactivation[] = date('Y-m-d H:i:s');
-				update_option(RSTR_NAME . '-deactivation', $deactivation);
-			} else {
-				add_option(RSTR_NAME . '-deactivation', array(date('Y-m-d H:i:s')));
-			}
-
-			Serbian_Transliteration_Utilities::clear_plugin_cache();
-			
-			// Unload textdomain
-			unload_textdomain(RSTR_NAME);
-
-			// Reset permalinks
-			if( function_exists('flush_rewrite_rules') ) {
-				flush_rewrite_rules();
-			}
-		});
-		
-		/* Clear cache on the post update
-		====================================*/
-		add_action('transition_post_status', function(){
-			// Clear plugin cache
-			Serbian_Transliteration_Utilities::clear_plugin_cache();
-		//	Serbian_Transliteration_DB_Cache::flush();
-		});
-
-		/* Load tools
-		====================================*/
-		Serbian_Transliteration_Tools::instance();
-		
-		/* Run plugin
-		====================================*/
-		Serbian_Transliteration_Init::run(); // Run in frontend
-		
-		Serbian_Transliteration_Init::run_dependency(); // Run dependency
-	endif;
+	// Plugin Functions
+	include_once __DIR__ . '/functions.php';
 endif;
+
+// Clear memory
+unset($transliteration_requirements);
+
+/**
+ * Hey you! Yeah, you with the impeccable taste in code and a knack for solving problems.
+ * If you're reading this, it means you're about to dive into the magical world of programming.
+ * But wait, there's more! How about joining our crusade to make the internet a better place for everyone
+ * who needs smooth and efficient script conversion? You know you want to. 😉
+ *
+ * Picture this: You, a keyboard warrior, typing away, turning one script into another faster than a caffeinated squirrel
+ * on a sugar high. It’s not just coding, it’s a heroic quest! And let’s face it, who doesn’t want to be a hero?
+ *
+ * We need your superpowers at: https://github.com/InfinitumForm/serbian-transliteration
+ *
+ * Join us, and together we'll vanquish the evil bugs, slay the nasty errors, and laugh in the face of compiler warnings.
+ * Plus, you'll get to work with some of the coolest developers this side of the internet. Seriously, our team is like
+ * the Avengers, but with more coffee and fewer capes.
+ *
+ * So what are you waiting for? Don’t be the developer who just watches from the sidelines. Be the legend who writes
+ * code so glorious, it’ll be sung about in future developer meetups. Also, there might be cookies. Maybe.
+ *
+ * Embrace your inner hero and join our quest. Coding has never been this epic.
+ */

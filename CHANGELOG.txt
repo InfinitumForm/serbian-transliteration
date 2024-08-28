@@ -1,3 +1,17 @@
+= 2.0.0 =
+* Complete redesign and refactoring of the PHP code
+* Full support for WordPress 6.6 and higher
+* Compatibility with PHP 8.x versions
+* Fixed issues with Cyrillic transliteration
+* Enhanced optimization and better content control
+* Added support for visual editors
+* Bug fixes and improved system stability
+* Ready for future extensions and new functionalities
+* Added admin tools for easier content transliteration management
+* Improved user interface with better accessibility options
+* Streamlined settings page for more intuitive navigation
+* Added support for multilingual content and automatic language detection
+
 = 1.13.0 =
 * Removed Alternate Links support
 * Fixed problems with First Visit mode
