@@ -46,14 +46,6 @@ if ( ! defined( 'RSTR_DATABASE_VERSION' ) ){
 	define( 'RSTR_DATABASE_VERSION', '1.0.1');
 }
 
-// Developers need good debug
-if( defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ) {
-	error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
-	add_action('doing_it_wrong_run', '__return_false');
-	ini_set('display_errors', true);
-	ini_set('log_errors', true);
-}
-
 /**
  * Main plugin constants
  * @since     1.1.0
@@ -64,6 +56,14 @@ if ( ! defined( 'RSTR_FILE' ) ) define( 'RSTR_FILE', __FILE__ );
 
 // Set of constants
 include_once __DIR__ . '/constants.php';
+
+// Developers need good debug
+if( (defined('RSTR_DEV_MODE') && RSTR_DEV_MODE) || (defined('RSTR_DEBUG') && RSTR_DEBUG) ) {
+	error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
+	add_action('doing_it_wrong_run', '__return_false');
+	ini_set('display_errors', true);
+	ini_set('log_errors', true);
+}
 
 // Set database tables
 global $wpdb, $rstr_is_admin;

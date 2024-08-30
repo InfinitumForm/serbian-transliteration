@@ -107,7 +107,7 @@ class Transliteration_Utilities {
 			]);
 		}
 		
-		if( defined('RSTR_DEBUG') && RSTR_DEBUG ) {
+		if( defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ) {
 			$modes = array_merge($modes, [
 				'dev'	=> __('Dev Mode (Only for developers and testers)', 'serbian-transliteration')
 			]);
@@ -962,7 +962,7 @@ class Transliteration_Utilities {
 		}
 
 		global $wpdb;
-		$actual_link = rtrim($_SERVER['REQUEST_URI'], '/');
+		$actual_link = rtrim($_SERVER['REQUEST_URI']??'', '/');
 		
 		// Parse the URL to get the path
 		$parsed_url = parse_url($actual_link);
@@ -1082,7 +1082,13 @@ class Transliteration_Utilities {
 			'©'=>__(' Copyright ', 'serbian-transliteration'), '®'=>__(' Registered ', 'serbian-transliteration'), '™' =>__(' Trademark ', 'serbian-transliteration'),
 		), $str);
 
-		return strtr($str, $map);
+		$str = strtr($str, $map);
+		
+		if(function_exists('remove_accents')) {
+			$str = remove_accents($str);
+		}
+		
+		return $str;
 	}
 	
 	/*

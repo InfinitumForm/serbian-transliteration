@@ -93,9 +93,12 @@ class Transliteration_Settings extends Transliteration {
 	}
 	
 	public function enqueue_admin_scripts($hook) {
+		
+		$min = defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ? '' : '.min';
+		
 		if(get_rstr_option('allow-admin-tools', 'yes') == 'yes') {
-			wp_register_style('transliteration-tools', RSTR_ASSETS . '/css/tools.css?m=' . filemtime(RSTR_ROOT.'/assets/css/tools.css'));
-			wp_register_script('transliteration-tools', RSTR_ASSETS . '/js/tools.js?m=' . filemtime(RSTR_ROOT.'/assets/js/tools.js'), array('jquery'), null, true);
+			wp_register_style('transliteration-tools', RSTR_ASSETS . '/css/tools'.$min.'.css');
+			wp_register_script('transliteration-tools', RSTR_ASSETS . '/js/tools'.$min.'.js', array('jquery'), null, true);
 			
 			wp_enqueue_style('transliteration-tools');
 			wp_enqueue_script('transliteration-tools');
@@ -130,8 +133,8 @@ class Transliteration_Settings extends Transliteration {
 		$tab = sanitize_text_field($_GET['tab'] ?? 'general');
 
         // Register the CSS and JS files
-        wp_register_style('transliteration-admin', RSTR_ASSETS . '/css/admin.css?m=' . filemtime(RSTR_ROOT.'/assets/css/admin.css'));
-        wp_register_script('transliteration-admin', RSTR_ASSETS . '/js/admin.js?m=' . filemtime(RSTR_ROOT.'/assets/js/admin.js'), array('jquery'), null, true);
+        wp_register_style('transliteration-admin', RSTR_ASSETS . '/css/admin'.$min.'.css');
+        wp_register_script('transliteration-admin', RSTR_ASSETS . '/js/admin'.$min.'.js', array('jquery'), null, true);
 		
 		wp_register_style('transliteration-highlight', RSTR_ASSETS . '/css/highlight.min.css');
         wp_register_script('transliteration-highlight', RSTR_ASSETS . '/js/highlight.min.js', array('jquery'), null, true);
@@ -165,9 +168,11 @@ class Transliteration_Settings extends Transliteration {
     }
 	
 	function transliteration_tool_enqueue_assets() {
+		$min = defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ? '' : '.min';
+		
 		wp_enqueue_script(
 			'transliteration-tools-block',
-			RSTR_ASSETS . '/js/tools-block.js',
+			RSTR_ASSETS . '/js/tools-block'.$min.'.js',
 			array( 'wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data' ),
 			null,
 			true
@@ -606,7 +611,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	}
 
 	function tools_tinymce($plugin_array) {
-		$plugin_array['transliteration_plugin'] = RSTR_ASSETS . '/js/tools-tinymce.js';
+		$min = defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ? '' : '.min';
+		$plugin_array['transliteration_plugin'] = RSTR_ASSETS . '/js/tools-tinymce'.$min.'.js';
 		return $plugin_array;
 	}
 	
@@ -683,15 +689,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	</a>
 </div>
 		<?php add_action('admin_footer', function() { ?>
-<style>
-	#transliterator_dashboard_widget .transliteration-affiliate img {
-		display: block;
-		width: 100%;
-		max-width: 100%;
-		height: auto;
-		margin: 0 auto;
-	}
-</style>
+<style>/* <![CDATA[ */#transliterator_dashboard_widget .transliteration-affiliate img{display: block;width: 100%;max-width: 100%;height: auto;margin: 0 auto}/* ]]> */</style>
 		<?php });
 	}
 

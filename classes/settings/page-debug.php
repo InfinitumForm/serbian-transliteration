@@ -118,8 +118,34 @@ $options = get_rstr_option();
 <div class="accordion-container">
 	<button class="accordion-link" type="button"><?php _e('Plugin settings', 'serbian-transliteration'); ?></button>
 	<div class="accordion-panel" style="padding:0;">
-		<pre class="lang-php" style="margin: 0;">
-["<?php echo RSTR_NAME; ?>"] => <?php print_r($options); ?>
-		</pre>
+		<table class="rstr-debug-table" style="width:100%; max-width:100%; text-align:left; border-collapse: collapse">
+			<tr>
+				<th style="width:35%;min-width: 165px;border: 1px solid #efefef; padding: 8px;"><?php _e('Option name', 'serbian-transliteration'); ?></th>
+				<th style="border: 1px solid #efefef; padding: 8px;"><?php _e('Value', 'serbian-transliteration'); ?></th>
+			</tr>
+			<?php foreach($options as $key => $val) : ?>
+			<tr>
+				<td style="font-weight: 600; border: 1px solid #efefef; padding: 8px;"><?php echo esc_html($key); ?></td>
+				<td style="border: 1px solid #efefef; padding: <?php echo esc_html(is_array($val) ? 0 : 8); ?>px;">
+				<?php if(is_array($val)) : ?>
+					<table class="rstr-debug-table-iner" style="width:100%; max-width:100%; text-align:left; padding:0; margin:0; border-collapse: collapse;">
+						<tr>
+							<th style="width:50%;border: 1px solid #efefef; padding: 8px;"><?php _e('Key', 'serbian-transliteration'); ?></th>
+							<th style="border: 1px solid #efefef; padding: 8px;"><?php _e('Value', 'serbian-transliteration'); ?></th>
+						</tr>
+						<?php foreach($val as $i => $prop) : ?>
+						<tr>
+							<td style="border: 1px solid #efefef; padding: 8px;"><?php echo esc_html($i); ?></td>
+							<td style="border: 1px solid #efefef; padding: 8px;"><?php echo esc_html($prop); ?></td>
+						</tr>
+						<?php endforeach; ?>
+					</table>
+				<?php else: ?>
+					<?php echo esc_html($val); ?>
+				<?php endif; ?>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+		</table>
 	</div>
 </div>

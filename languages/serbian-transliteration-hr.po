@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2024-08-26 08:00+0200\n"
-"PO-Revision-Date: 2024-08-26 08:00+0200\n"
+"POT-Creation-Date: 2024-08-30 08:51+0200\n"
+"PO-Revision-Date: 2024-08-30 08:52+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "undefined"
 msgstr "nedefinisano"
 
-#: classes/filters.php:125 classes/settings.php:682
+#: classes/filters.php:125 classes/settings.php:688
 msgid "Freelance Jobs - Find or post freelance jobs"
 msgstr "Freelance poslovi - Pronađi ili objavi freelance poslove"
 
@@ -44,22 +44,22 @@ msgid "Attention, Headers have already been sent!"
 msgstr "Pažnja, zaglavlja su već poslana!"
 
 #: classes/menus.php:28 classes/settings.php:47 classes/settings.php:88
-#: classes/settings.php:295 classes/settings.php:366 classes/settings.php:401
-#: classes/settings.php:436 classes/settings.php:479 classes/settings.php:507
-#: classes/settings.php:542 classes/settings.php:569
+#: classes/settings.php:300 classes/settings.php:371 classes/settings.php:406
+#: classes/settings.php:441 classes/settings.php:484 classes/settings.php:512
+#: classes/settings.php:547 classes/settings.php:574
 msgid "Transliteration"
 msgstr "Transliteracija"
 
 #: classes/menus.php:42 classes/menus.php:44 classes/settings-fields.php:501
-#: classes/settings-fields.php:583 classes/settings.php:114
-#: classes/settings.php:186 classes/settings/page-functions.php:162
+#: classes/settings-fields.php:583 classes/settings.php:117
+#: classes/settings.php:191 classes/settings/page-functions.php:162
 #: classes/shortcodes.php:31 functions.php:432
 msgid "Latin"
 msgstr "Latinski"
 
 #: classes/menus.php:43 classes/menus.php:44 classes/settings-fields.php:500
-#: classes/settings-fields.php:584 classes/settings.php:115
-#: classes/settings.php:187 classes/settings/page-functions.php:157
+#: classes/settings-fields.php:584 classes/settings.php:118
+#: classes/settings.php:192 classes/settings/page-functions.php:157
 #: classes/shortcodes.php:30 functions.php:431
 msgid "Cyrillic"
 msgstr "Ćirilica"
@@ -101,45 +101,67 @@ msgstr "Primjer: Latinica | Ћирилица"
 msgid "Note that the white space around them will be cleared."
 msgstr "Imajte na umu da će se razmak oko njih očistiti."
 
-#: classes/notifications.php:113
+#: classes/notifications.php:153
 #, php-format
 msgid "You have been using <b> %1$s </b> plugin for a while. We hope you liked it!"
 msgstr "Već neko vrijeme upotrebljavate plugin <b>%1$s</b>. Nadamo se da vam se svidio!"
 
-#: classes/notifications.php:113
+#: classes/notifications.php:153
 msgid "Please give us a quick rating, it works as a boost for us to keep working on the plugin!"
 msgstr "Molimo dajte nam brzu ocjenu, to nam djeluje kao poticaj za nastavak rada na dodatku!"
 
-#: classes/notifications.php:113
+#: classes/notifications.php:153
 msgid "Rate Now!"
 msgstr "Ocijeni sada!"
 
-#: classes/notifications.php:113
+#: classes/notifications.php:153
 msgid "I've already done that!"
 msgstr "To sam već učinio!"
 
-#: classes/notifications.php:132
+#: classes/notifications.php:172
 #, php-format
 msgid "Hey there! It's been a while since you've been using the <b> %1$s </b> plugin"
 msgstr "Bok! Prošlo je dosta vremena otkako koristie dodatak za <b>%1$s</b>"
 
-#: classes/notifications.php:137
+#: classes/notifications.php:177
 #, php-format
 msgid "I'm glad to hear you're enjoying the plugin. I've put a lot of time and effort into ensuring that your website runs smoothly. If you're feeling generous, how about %s for my hard work? 😊"
 msgstr "Drago mi je čuti da uživaš u dodatku. Uložio sam puno vremena i truda kako bih osigurao neometano funkcioniranje vaše web stranice. Ako se osjećaš velikodušno, što kažeš %s za moj naporan rad i trud? 😊"
 
-#: classes/notifications.php:139
+#: classes/notifications.php:179
 msgid "treating me to a coffee"
 msgstr "da me častiš kavom"
 
-#: classes/notifications.php:142
+#: classes/notifications.php:182
 #, php-format
 msgid "Or simply %s forever."
 msgstr "Ili jednostavno %s zauvijek."
 
-#: classes/notifications.php:143
+#: classes/notifications.php:183
 msgid "hide this message"
 msgstr "sakrij ovu poruku"
+
+#: classes/notifications.php:196
+#, php-format
+msgid "Find Work or %1$s in Serbia, Bosnia, Croatia, and Beyond!"
+msgstr "Pronađi posao ili %1$s u Srbiji, Bosni, Hrvatskoj i šire!"
+
+#: classes/notifications.php:196
+#, php-format
+msgid "Visit %2$s to connect with skilled professionals across the region. Whether you need a project completed or are looking for work, our platform is your gateway to successful collaboration."
+msgstr "Posjetite %2$s kako biste se povezali s vještim profesionalcima diljem regije. Bilo da trebate dovršen projekt ili tražite posao, naša platforma je vaš put do uspješne suradnje."
+
+#: classes/notifications.php:197
+msgid "Hire Top Freelancers"
+msgstr "angažiraj vrhunske freelancere"
+
+#: classes/notifications.php:198
+msgid "Freelance Jobs"
+msgstr "Freelance poslovi"
+
+#: classes/notifications.php:199
+msgid "Join us today!"
+msgstr "Pridruži nam se danas!"
 
 #: classes/requirements.php:42
 msgid "This plugin uses cookies and should be listed in your Privacy Policy page to prevent privacy issues."
@@ -433,12 +455,12 @@ msgstr "Odredite je li vaš primarni alfabet na stranici."
 msgid "Transliteration disabled"
 msgstr "Transliteracija je onemogućena"
 
-#: classes/settings-fields.php:541 classes/settings.php:636
+#: classes/settings-fields.php:541 classes/settings.php:642
 #: classes/settings/page-shortcodes.php:6 classes/settings/page-tags.php:3
 msgid "Cyrillic to Latin"
 msgstr "Ćirilica na latinicu"
 
-#: classes/settings-fields.php:542 classes/settings.php:637
+#: classes/settings-fields.php:542 classes/settings.php:643
 #: classes/settings/page-shortcodes.php:12 classes/settings/page-tags.php:6
 msgid "Latin to Cyrillic"
 msgstr "Latinica na ćirilicu"
@@ -520,8 +542,8 @@ msgstr "Odvojite riječi, fraze, imena i izraze znakom %s ili ih stavite u novi 
 #: classes/settings-fields.php:912 classes/settings-fields.php:936
 #: classes/settings-fields.php:985 classes/settings-fields.php:1006
 #: classes/settings-fields.php:1073 classes/settings-fields.php:1114
-#: classes/settings.php:640 classes/settings.php:644 classes/settings.php:648
-#: classes/settings.php:652
+#: classes/settings.php:646 classes/settings.php:650 classes/settings.php:654
+#: classes/settings.php:658
 msgid "Yes"
 msgstr "Da"
 
@@ -532,8 +554,8 @@ msgstr "Da"
 #: classes/settings-fields.php:913 classes/settings-fields.php:937
 #: classes/settings-fields.php:986 classes/settings-fields.php:1007
 #: classes/settings-fields.php:1074 classes/settings-fields.php:1115
-#: classes/settings.php:641 classes/settings.php:645 classes/settings.php:649
-#: classes/settings.php:653
+#: classes/settings.php:647 classes/settings.php:651 classes/settings.php:655
+#: classes/settings.php:659
 msgid "No"
 msgstr "Ne"
 
@@ -717,15 +739,15 @@ msgstr "pridružite se našem timu"
 msgid "Settings saved."
 msgstr "Postavke spremljene."
 
-#: classes/settings.php:67 classes/settings.php:658
+#: classes/settings.php:67 classes/settings.php:664
 msgid "Settings"
 msgstr "Postavke"
 
-#: classes/settings.php:77 classes/settings.php:218
+#: classes/settings.php:77 classes/settings.php:223
 msgid "Shortcodes"
 msgstr "Rezervirano mjesto"
 
-#: classes/settings.php:78 classes/settings.php:219
+#: classes/settings.php:78 classes/settings.php:224
 msgid "PHP Functions"
 msgstr "PHP Funkcije"
 
@@ -737,140 +759,140 @@ msgstr "5 zvjezdica?"
 msgid "Transliteration Settings"
 msgstr "Transliteracije - Postavka"
 
-#: classes/settings.php:116 classes/settings.php:188
+#: classes/settings.php:119 classes/settings.php:193
 msgid "To Latin"
 msgstr "U latinicu"
 
-#: classes/settings.php:117 classes/settings.php:189
+#: classes/settings.php:120 classes/settings.php:194
 msgid "To Cyrillic"
 msgstr "U ćirilicu"
 
-#: classes/settings.php:118 classes/settings.php:190
+#: classes/settings.php:121 classes/settings.php:195
 msgid "Transliterate:"
 msgstr "Transliteruj:"
 
-#: classes/settings.php:119 classes/settings.php:161 classes/settings.php:191
+#: classes/settings.php:122 classes/settings.php:164 classes/settings.php:196
 msgid "Loading..."
 msgstr "Učitavanje..."
 
-#: classes/settings.php:159 classes/settings/page-permalinks.php:35
+#: classes/settings.php:162 classes/settings/page-permalinks.php:35
 msgid "Please wait! Do not close the window or leave the page until this operation is completed!"
 msgstr "Molimo pričekajte! Nemojte zatvarati prozor ili napuštati stranicu dok se ova operacija ne dovrši!"
 
-#: classes/settings.php:160
+#: classes/settings.php:163
 msgid "DONE!!!"
 msgstr "GOTOVO !!!"
 
-#: classes/settings.php:202
+#: classes/settings.php:207
 msgid "PLEASE UPDATE PLUGIN SETTINGS"
 msgstr "MOLIMO AŽURIRATI POSTAVKE PLUGINA"
 
-#: classes/settings.php:203
+#: classes/settings.php:208
 msgid "Carefully review the transliteration plugin settings and adjust how it fits your WordPress installation. It is important that every time you change the settings, you test the parts of the site that are affected by this plugin."
 msgstr "Pažljivo pregledajte postavke dodatka za transliteraciju i prilagodite kako odgovara vašoj instalaciji WordPressa. Važno je da svaki put kada promijenite postavke testirate dijelove web mjesta na koje ovaj dodatak utječe."
 
-#: classes/settings.php:220
+#: classes/settings.php:225
 msgid "Tags"
 msgstr "Oznake"
 
-#: classes/settings.php:226
+#: classes/settings.php:231
 msgid "Transliteration Tool"
 msgstr "Alat za transliteraciju"
 
-#: classes/settings.php:227
+#: classes/settings.php:232
 msgid "Permalink Tool"
 msgstr "Alat za trajnu vezu (permalink)"
 
-#: classes/settings.php:247
+#: classes/settings.php:252
 msgid "General Settings"
 msgstr "Opće postavke"
 
-#: classes/settings.php:251 classes/settings.php:659
+#: classes/settings.php:256 classes/settings.php:665
 msgid "Documentation"
 msgstr "Dokumentacija"
 
-#: classes/settings.php:255 classes/settings.php:660
+#: classes/settings.php:260 classes/settings.php:666
 msgid "Tools"
 msgstr "Alati"
 
-#: classes/settings.php:259 classes/settings.php:661
+#: classes/settings.php:264 classes/settings.php:667
 msgid "Debug"
 msgstr "Otkloniti neispravnost"
 
-#: classes/settings.php:263 classes/settings.php:569 classes/settings.php:662
+#: classes/settings.php:268 classes/settings.php:574 classes/settings.php:668
 #: classes/settings/page-credits.php:41
 msgid "Credits"
 msgstr "Zasluge"
 
-#: classes/settings.php:314 classes/settings.php:322
+#: classes/settings.php:319 classes/settings.php:327
 msgid "Save Changes"
 msgstr "Spremi promjene"
 
-#: classes/settings.php:366
+#: classes/settings.php:371
 msgid "Available shortcodes"
 msgstr "Dostupni kratki kodovi"
 
-#: classes/settings.php:401
+#: classes/settings.php:406
 msgid "Available PHP Functions"
 msgstr "Dostupne PHP funkcije"
 
-#: classes/settings.php:436
+#: classes/settings.php:441
 msgid "Available Tags"
 msgstr "Dostupni tagovi"
 
-#: classes/settings.php:479
+#: classes/settings.php:484
 msgid "Converter for transliterating Cyrillic into Latin and vice versa"
 msgstr "Pretvarač za transliteraciju ćirilice u latinicu i obrnuto"
 
-#: classes/settings.php:507
+#: classes/settings.php:512
 msgid "Permalink Transliteration Tool"
 msgstr "Alat za transliteraciju trajne veze"
 
-#: classes/settings.php:542
+#: classes/settings.php:547
 msgid "Debug information"
 msgstr "Informacije o ispravci pogrešaka"
 
-#: classes/settings.php:616
+#: classes/settings.php:622
 msgid "WordPress Transliterator"
 msgstr "WordPress Transliteracija"
 
-#: classes/settings.php:656
+#: classes/settings.php:662
 msgid "Quick Access:"
 msgstr "Brzi pristup:"
 
-#: classes/settings.php:663
+#: classes/settings.php:669
 msgid "Rate us"
 msgstr "Ocijeni nas"
 
-#: classes/settings.php:667
+#: classes/settings.php:673
 msgid "Current Settings:"
 msgstr "Trenutne postavke:"
 
-#: classes/settings.php:669
+#: classes/settings.php:675
 msgid "Transliteration Mode:"
 msgstr "Način transliteracije:"
 
-#: classes/settings.php:670
+#: classes/settings.php:676
 msgid "Cache Support:"
 msgstr "Podrška za keširanje:"
 
-#: classes/settings.php:671
+#: classes/settings.php:677
 msgid "Media Transliteration:"
 msgstr "Transliteracija medija:"
 
-#: classes/settings.php:672
+#: classes/settings.php:678
 msgid "Permalink Transliteration:"
 msgstr "Transliteraciju trajnih veza:"
 
-#: classes/settings.php:675
+#: classes/settings.php:681
 msgid "Transliterator plugin options are not yet available. Please update plugin settings!"
 msgstr "Opcije Transliterator dodatka još nisu dostupne. Molimo vas da ažurirate postavke dodatka!"
 
-#: classes/settings.php:678
+#: classes/settings.php:684
 msgid "Recommendations:"
 msgstr "Preporuke:"
 
-#: classes/settings.php:679
+#: classes/settings.php:685
 msgid "Explore these recommended tools and resources that complement our plugin."
 msgstr "Istražite ove preporučene alate i resurse koji upotpunjuju naš dodatak."
 
@@ -1047,6 +1069,18 @@ msgstr "Put direktorija dodatka"
 #: classes/settings/page-debug.php:119
 msgid "Plugin settings"
 msgstr "Postavke dodatka"
+
+#: classes/settings/page-debug.php:123
+msgid "Option name"
+msgstr "Ime opcije"
+
+#: classes/settings/page-debug.php:124 classes/settings/page-debug.php:134
+msgid "Value"
+msgstr "Vrijednost"
+
+#: classes/settings/page-debug.php:133
+msgid "Key"
+msgstr "Ključ"
 
 #: classes/settings/page-functions.php:2
 msgid "These are available PHP functions that you can use in your themes and plugins."
