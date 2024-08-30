@@ -4,12 +4,12 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
 
-Universal transliterator for permalinks, posts, tags, categories, media, files, search and more, rendering them universally readable.
+Universal transliteration for permalinks, posts, tags, categories, media, files, search and more, rendering them universally readable.
 
 == Description ==
 This plugin provides a seamless solution for converting WordPress content between Cyrillic and Latin scripts. Originally starting as "Serbian Transliteration", it has evolved into a general "Transliterator" for WordPress, crafted to be user-friendly and lightweight. [Learn more about its transformation](https://buymeacoffee.com/ivijanstefan/transliterator-wordpress-transforming-language-barriers-bridges) from a simple Serbian tool to a versatile transliteration plugin. The Transliterator plugin facilitates the conversion process with minimal clicks and supports unique shortcodes, enabling selective transliteration of designated content sections, delivering superior flexibility in how content is presented. Whether you want to transliterate entire pages, specific parts of your content, or even permalinks, this plugin gives you full control. Make your site Latin now!
@@ -69,7 +69,7 @@ We also do special compatible functions with:
 
 **It's crucial to understand** that while our plugin is compatible with most others, the sheer diversity of WordPress installations and the thousands of available plugins mean there's a small chance of encountering conflicts. We strive to ensure maximum compatibility, but given the vast number of variables, we can't guarantee flawless operation in all instances. If you experience issues, they may stem from incompatibility with other plugins. We encourage you to reach out to us or the respective plugin authors for resolution. Regularly updating all your plugins and your WordPress installation is the most common solution for most problems.
 
-This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/), [Latin Now!](https://wordpress.org/plugins/latin-now/), [Cyr to Lat enhanced](https://wordpress.org/plugins/cyr3lat/), [Cyrlitera](https://wordpress.org/plugins/cyrlitera/), [Geo to Lat](https://wordpress.org/plugins/geo-to-lat/) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
+This plugin can also serve as an alternative to [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/), [Latin Now!](https://wordpress.org/plugins/latin-now/), [Cyr to Lat enhanced](https://wordpress.org/plugins/cyr3lat/), [Cyrlitera](https://wordpress.org/plugins/cyrlitera/), [Geo to Lat](https://wordpress.org/plugins/geo-to-lat/), [srlatin](https://sr.wordpress.org/files/2018/12/srlatin.zip) and other similar plugins. We have managed to combine all the necessary functionalities into one plugin, but if you want to have all the separate functions, we invite you to use some of these excellent plugins.
 
 It is important for you to know that any functionality in our plugin can be turned off if you do not need it, as well as the ability to filter certain hooks and filters. We have tried to provide maximum flexibility and compatibility to everyone.
 
@@ -107,6 +107,13 @@ It is important for you to know that any functionality in our plugin can be turn
 9. Automated test
 
 == Changelog ==
+
+= 2.0.2 =
+* Fixing bugs for the PHP version 8.3 and above
+* Fixing Cookie problems
+* Fixing problem with double inclusions
+* Fixing problems with WP filters
+* Improved site speed
 
 = 2.0.1 =
 * Bug fix
@@ -280,6 +287,13 @@ It is important for you to know that any functionality in our plugin can be turn
 * Transliteration added for emails through PHP mailer
 
 == Upgrade Notice ==
+
+= 2.0.2 =
+* Fixing bugs for the PHP version 8.3 and above
+* Fixing Cookie problems
+* Fixing problem with double inclusions
+* Fixing problems with WP filters
+* Improved site speed
 
 = 2.0.1 =
 * Bug fix

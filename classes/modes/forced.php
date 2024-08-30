@@ -9,11 +9,15 @@ class Transliteration_Mode_Forced extends Transliteration {
 	 * The main constructor
 	 */
     public function __construct() {
-		if(!is_admin()) {
-			$this->add_action('template_redirect', 'buffer_start', 1);
-			$this->add_action('wp_footer', 'buffer_end', 100);
-		}
     }
+	
+	/*
+	 * Initialize actions (to be called only once)
+	 */
+	public function init_actions() {
+		$this->add_action('template_redirect', 'buffer_start', 1);
+		$this->add_action('wp_footer', 'buffer_end', 100);
+	}
 	
 	/*
 	 * Get current instance
@@ -21,7 +25,8 @@ class Transliteration_Mode_Forced extends Transliteration {
 	private static $instance = NULL;
 	public static function get() {
 		if( NULL === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
+			self::$instance->init_actions();
 		}
 		return self::$instance;
 	}

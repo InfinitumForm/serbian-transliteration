@@ -33,8 +33,10 @@ class Transliteration_Settings extends Transliteration {
 	
 	public function updated_option__redirection(){
 		Transliteration_Utilities::clear_plugin_cache();
-		if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings' ) ) ) {
-			exit;
+		if(!headers_sent()) {
+			if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings' ) ) ) {
+				exit;
+			}
 		}
 	}
 	

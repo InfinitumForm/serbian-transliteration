@@ -90,8 +90,10 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 				nocache_headers();
 			}
 			
-			if(wp_safe_redirect($url, 301)) {
-				exit;
+			if(!headers_sent()) {
+				if(wp_safe_redirect($url, 301)) {
+					exit;
+				}
 			}
 		}
 		
@@ -102,8 +104,10 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 				nocache_headers();
 			}
 			// Remove cache param
-			if(wp_safe_redirect( remove_query_arg('_rstr_nocache'), 301 )) {
-				exit;
+			if(!headers_sent()) {
+				if(wp_safe_redirect( remove_query_arg('_rstr_nocache'), 301 )) {
+					exit;
+				}
 			}
 		}
 	}
@@ -323,8 +327,10 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 		add_action('activated_plugin', function ($plugin) {
 			if( $plugin == RSTR_BASENAME && !get_option('serbian-transliteration-activated')) {
 				update_option('serbian-transliteration-activated', true);
-				if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings&rstr-activation=true' ) ) ) {
-					exit;
+				if(!headers_sent()) {
+					if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings&rstr-activation=true' ) ) ) {
+						exit;
+					}
 				}
 			}
 		}, 10, 1);

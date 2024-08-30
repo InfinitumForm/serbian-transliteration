@@ -5,9 +5,11 @@ class Transliteration_Controller extends Transliteration {
 	/*
 	 * The main constructor
 	 */
-	public function __construct() {
-		$this->add_action('init', 'transliteration_tags_start', 1);
-		$this->add_action('shutdown', 'transliteration_tags_end', 100);
+	public function __construct($actions = true) {
+		if($actions) {
+			$this->add_action('init', 'transliteration_tags_start', 1);
+			$this->add_action('shutdown', 'transliteration_tags_end', 100);
+		}
     }
 	
 	/*
@@ -16,7 +18,7 @@ class Transliteration_Controller extends Transliteration {
 	private static $instance = NULL;
 	public static function get() {
 		if( NULL === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self(false);
 		}
 		return self::$instance;
 	}
@@ -75,7 +77,7 @@ class Transliteration_Controller extends Transliteration {
 					break;
 			}
 
-			if (!$has_redirected && !$no_redirect && $redirect && $url && !is_admin()) {
+			if (!$has_redirected && !$no_redirect && $redirect && $url && !is_admin() && !headers_sent() && function_exists('wp_safe_redirect')) {
 				set_transient('transliteration_redirect', true, 30);
 				if ($url && wp_safe_redirect($url, 301)) {
 					exit;

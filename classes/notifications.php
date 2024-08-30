@@ -29,8 +29,10 @@ class Transliteration_Notifications extends Transliteration
 				add_option( 'serbian-transliteration-reviewed' , time() );
 				
 				$parse_url = Transliteration_Utilities::parse_url();
-				if(wp_safe_redirect(remove_query_arg('rstr_dimiss_review', $parse_url['url']))) {
-					exit;
+				if(!headers_sent()) {
+					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_review', $parse_url['url']))) {
+						exit;
+					}
 				}
 			}
 		}
@@ -44,8 +46,10 @@ class Transliteration_Notifications extends Transliteration
 				add_option( 'serbian-transliteration-donated' , time() );
 				
 				$parse_url = Transliteration_Utilities::parse_url();
-				if(wp_safe_redirect(remove_query_arg('rstr_dimiss_donation', $parse_url['url']))) {
-					exit;
+				if(!headers_sent()) {
+					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_donation', $parse_url['url']))) {
+						exit;
+					}
 				}
 			}
 		}
@@ -59,8 +63,10 @@ class Transliteration_Notifications extends Transliteration
 				set_transient( 'serbian-transliteration-ads', time(), (60*60*24*30));
 				
 				$parse_url = Transliteration_Utilities::parse_url();
-				if(wp_safe_redirect(remove_query_arg('rstr_dimiss_adds', $parse_url['url']))) {
-					exit;
+				if(!headers_sent()) {
+					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_adds', $parse_url['url']))) {
+						exit;
+					}
 				}
 			}
 		}

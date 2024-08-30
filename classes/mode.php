@@ -7,11 +7,14 @@ class Transliteration_Mode extends Transliteration {
 	/*
 	 * The main constructor
 	 */
-	public function __construct() {
+	public function __construct($actions = true) {
 		// Load transliteration
 		$this->load_mode();
-		// Apply transliteration filters
-		$this->apply_filters();
+		
+		if($actions) {
+			// Apply transliteration filters
+			$this->apply_filters();
+		}
     }
 	
 	/*
@@ -20,7 +23,7 @@ class Transliteration_Mode extends Transliteration {
 	private static $instance = NULL;
 	public static function get() {
 		if( NULL === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self(false);
 		}
 		return self::$instance;
 	}	

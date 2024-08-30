@@ -1,3 +1,10 @@
+= 2.0.2 =
+* Fixing bugs for the PHP version 8.3 and above
+* Fixing Cookie problems
+* Fixing problem with double inclusions
+* Fixing problems with WP filters
+* Improved site speed
+
 = 2.0.1 =
 * Bug fix
 * Adding stricter permalink transliteration
