@@ -1,3 +1,8 @@
+= 2.0.1 =
+* Bug fix
+* Adding stricter permalink transliteration
+* Improved debugging
+
 = 2.0.0 =
 * Complete redesign and refactoring of the PHP code
 * Full support for WordPress 6.6 and higher
