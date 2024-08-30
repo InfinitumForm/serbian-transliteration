@@ -402,7 +402,7 @@ If you encounter any issues or have suggestions for improving the plugin, please
 = Compatibility =
 The Transliterator plugin is compatible with a wide range of WordPress versions and works seamlessly with many popular plugins. However, due to the vast number of available plugins, there's a small chance of encountering conflicts. If you experience any issues, please check for plugin conflicts and update your WordPress installation and all plugins.
 
-### Contributing =
+= Contributing =
 We welcome contributions from the community! If you're a developer or a user with ideas for improvement, visit our [GitHub repository](https://github.com/InfinitumForm/serbian-transliteration) to contribute. You can report issues, suggest new features, or submit pull requests.
 
 = Credits =
