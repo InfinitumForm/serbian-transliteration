@@ -448,7 +448,6 @@ class Transliteration_Utilities {
 				$expire = ( time() + YEAR_IN_SECONDS );
 			}
 			if (headers_sent()) {
-				error_log(__('Attention, Headers have already been sent!', 'serbian-transliteration'));
 				return false;
 			}
 			setcookie( 'rstr_script', $val, $expire, COOKIEPATH, COOKIE_DOMAIN );

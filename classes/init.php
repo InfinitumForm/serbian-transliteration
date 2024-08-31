@@ -52,16 +52,12 @@ if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init 
 		}
 		
 		if (strpos($request_uri, '/wp-admin/') !== false || (function_exists('is_admin') && is_admin())) {
-			if (headers_sent()) {
-				error_log(__('Attention, Headers have already been sent!', 'serbian-transliteration'));
-			} else {
+			if (!headers_sent()) {
 				setcookie('rstr_test_' . COOKIEHASH, 'true', 0, COOKIEPATH, COOKIE_DOMAIN);
 			}
 			$rstr_is_admin = true;
 		} else {
-			if (headers_sent()) {
-				error_log(__('Attention, Headers have already been sent!', 'serbian-transliteration'));
-			} else {
+			if (!headers_sent()) {
 				setcookie('rstr_test_' . COOKIEHASH, 'false', 0, COOKIEPATH, COOKIE_DOMAIN);
 			}
 			$rstr_is_admin = false;
