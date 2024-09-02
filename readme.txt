@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -107,6 +107,11 @@ It is important for you to know that any functionality in our plugin can be turn
 9. Automated test
 
 == Changelog ==
+
+= 2.0.4 =
+* Changed transliteration operations
+* Optimized object transliteration
+* Improved code for PHP8.3
 
 = 2.0.3 =
 * Improved cookie control
@@ -290,6 +295,11 @@ It is important for you to know that any functionality in our plugin can be turn
 * Transliteration added for emails through PHP mailer
 
 == Upgrade Notice ==
+
+= 2.0.4 =
+* Changed transliteration operations
+* Optimized object transliteration
+* Improved code for PHP8.3
 
 = 2.0.3 =
 * Improved cookie control

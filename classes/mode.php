@@ -196,7 +196,6 @@ class Transliteration_Mode extends Transliteration {
 	}
 	public function transliterate_objects($data, $mode = 'auto') {
 		if (is_array($data)) {
-			// Ako je data niz, rekurzivno prolazimo kroz sve elemente niza
 			foreach ($data as &$value) {
 				if (is_array($value) || is_object($value)) {
 					$value = $this->transliterate_objects($value, $mode);
@@ -205,7 +204,6 @@ class Transliteration_Mode extends Transliteration {
 				}
 			}
 		} elseif (is_object($data)) {
-			// Ako je data objekat, prolazimo kroz sve njegove javne varijable
 			foreach ($data as $key => $value) {
 				if (is_array($value) || is_object($value)) {
 					$data->$key = $this->transliterate_objects($value, $mode);

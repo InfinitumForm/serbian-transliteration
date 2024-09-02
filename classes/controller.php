@@ -216,6 +216,19 @@ class Transliteration_Controller extends Transliteration {
 			return $content;
 		}*/
 		
+		// Retrieve the list of Cyrillic words to exclude from transliteration
+		$exclude_list = $this->cyr_exclude_list();
+		$exclude_placeholders = [];
+
+		// Check if the exclusion list is not empty
+		if (!empty($exclude_list)) {
+			foreach ($exclude_list as $key => $word) {
+				$placeholder = '@=[0-' . $key . ']=@';
+				$content = str_replace($word, $placeholder, $content);
+				$exclude_placeholders[$placeholder] = $word;
+			}
+		}
+		
 		// Extract <script> contents and replace them with placeholders
 		$script_placeholders = [];
 		$content = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function($matches) use (&$script_placeholders) {
@@ -240,19 +253,6 @@ class Transliteration_Controller extends Transliteration {
 			return $placeholder;
 		}, $content);
 
-		// Retrieve the list of Cyrillic words to exclude from transliteration
-		$exclude_list = $this->cyr_exclude_list();
-		$exclude_placeholders = [];
-
-		// Check if the exclusion list is not empty
-		if (!empty($exclude_list)) {
-			foreach ($exclude_list as $key => $word) {
-				$placeholder = '@#=' . $key . '=#@';
-				$content = str_replace($word, $placeholder, $content);
-				$exclude_placeholders[$placeholder] = $word;
-			}
-		}
-
 		// Perform the transliteration using the class map
 		if (class_exists($class_map)) {
 			$content = $class_map::transliterate($content, 'cyr_to_lat');
@@ -262,6 +262,7 @@ class Transliteration_Controller extends Transliteration {
 		// Restore percentage format specifiers back to their original form
 		if ($formatSpecifiers) {
 			$content = strtr($content, $formatSpecifiers);
+			unset($formatSpecifiers);
 		}
 
 		// Sanitize HTML attributes and transliterate their values
@@ -276,16 +277,19 @@ class Transliteration_Controller extends Transliteration {
 		// Restore excluded words back to their original form
 		if ($exclude_placeholders) {
 			$content = strtr($content, $exclude_placeholders);
+			unset($exclude_placeholders);
 		}
 		
 		// Restore <script> contents back to their original form
 		if ($script_placeholders) {
 			$content = strtr($content, $script_placeholders);
+			unset($script_placeholders);
 		}
 
 		// Restore <style> contents back to their original form
 		if ($style_placeholders) {
 			$content = strtr($content, $style_placeholders);
+			unset($style_placeholders);
 		}
 
 		return $content;
@@ -357,6 +361,17 @@ class Transliteration_Controller extends Transliteration {
 			return $content;
 		}*/
 		
+		// Retrieve the list of Latin words to exclude from transliteration
+		$exclude_list = $this->lat_exclude_list();
+		$exclude_placeholders = [];
+		if (!empty($exclude_list)) {
+			foreach ($exclude_list as $key => $word) {
+				$placeholder = '@=[0-' . $key . ']=@';
+				$content = str_replace($word, $placeholder, $content);
+				$exclude_placeholders[$placeholder] = $word;
+			}
+		}
+		
 		// Extract shortcode contents and replace them with placeholders
 		$shortcode_placeholders = [];
 		$content = preg_replace_callback('/\[([\w+_-]+)\s?([^\]]*)\](.*?)\[\/\1\]/is', function($matches) use (&$shortcode_placeholders) {
@@ -388,6 +403,20 @@ class Transliteration_Controller extends Transliteration {
 			$style_placeholders[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
+		
+		// Extract special shortcode contents and replace them with placeholders
+		$special_shortcodes = [];
+		$content = preg_replace_callback('/\{\{([\w+_-]+)\s?([^\}]*)\}\}(.*?)\{\{\/\1\}\}/is', function($matches) use (&$special_shortcodes) {
+			$placeholder = '@=[5-' . count($special_shortcodes) . ']=@';
+			$special_shortcodes[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
+
+		$content = preg_replace_callback('/\{([\w+_-]+)\s?([^\}]*)\}(.*?)\{\/\1\}/is', function($matches) use (&$special_shortcodes) {
+			$placeholder = '@=[6-' . count($special_shortcodes) . ']=@';
+			$special_shortcodes[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		// Handle various format specifiers and other patterns by replacing them with placeholders
 		$formatSpecifiers = [];
@@ -397,21 +426,10 @@ class Transliteration_Controller extends Transliteration {
 			: '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|rstr_skip|cyr_to_lat|lat_to_cyr)/'
 		);
 		$content = preg_replace_callback($regex, function($matches) use (&$formatSpecifiers) {
-			$placeholder = '@=[5-' . count($formatSpecifiers) . ']=@';
+			$placeholder = '@=[7-' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
-
-		// Retrieve the list of Latin words to exclude from transliteration
-		$exclude_list = $this->lat_exclude_list();
-		$exclude_placeholders = [];
-		if (!empty($exclude_list)) {
-			foreach ($exclude_list as $key => $word) {
-				$placeholder = '@#=' . $key . '=#@';
-				$content = str_replace($word, $placeholder, $content);
-				$exclude_placeholders[$placeholder] = $word;
-			}
-		}
 
 		// Perform the transliteration using the class map
 		$content = $class_map::transliterate($content, 'lat_to_cyr');
@@ -420,8 +438,32 @@ class Transliteration_Controller extends Transliteration {
 		// Restore format specifiers back to their original form
 		if ($formatSpecifiers) {
 			$content = strtr($content, $formatSpecifiers);
+			unset($formatSpecifiers);
 		}
-
+		
+		// Fix the diacritics
+		if($fix_diacritics) {
+			$content = $this->fix_diacritics($content);
+		}
+		
+		// Restore self-closing shortcode contents back to their original form
+		if ($self_closing_shortcode_placeholders) {
+			$content = strtr($content, $self_closing_shortcode_placeholders);
+			unset($self_closing_shortcode_placeholders);
+		}
+		
+		// Restore special shortcode contents back to their original form
+		if ($special_shortcodes) {
+			$content = strtr($content, $special_shortcodes);
+			unset($special_shortcodes);
+		}
+		
+		// Restore shortcode contents back to their original form
+		if ($shortcode_placeholders) {
+			$content = strtr($content, $shortcode_placeholders);
+			unset($shortcode_placeholders);
+		}
+		
 		// Sanitize HTML attributes and transliterate their values
 		if ($sanitize_html) {
 			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html, $fix_diacritics) {
@@ -432,11 +474,6 @@ class Transliteration_Controller extends Transliteration {
 				}
 				return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
 			}, $content);
-		}
-		
-		// Fix the diacritics
-		if($fix_diacritics) {
-			$content = $this->fix_diacritics($content);
 		}
 
 		// Restore excluded words back to their original form
@@ -456,18 +493,6 @@ class Transliteration_Controller extends Transliteration {
 			$content = strtr($content, $style_placeholders);
 			unset($style_placeholders);
 		}
-		
-		// Restore shortcode contents back to their original form
-		if ($shortcode_placeholders) {
-			$content = strtr($content, $shortcode_placeholders);
-			unset($shortcode_placeholders);
-		}
-		
-		// Restore self-closing shortcode contents back to their original form
-		if ($self_closing_shortcode_placeholders) {
-			$content = strtr($content, $self_closing_shortcode_placeholders);
-			unset($self_closing_shortcode_placeholders);
-		}
 
 		return $content;
 	}
@@ -484,7 +509,6 @@ class Transliteration_Controller extends Transliteration {
 	 * Transliteration tags buffer callback
 	 */
 	function transliteration_tags_callback($buffer) {
-		
 		$tags = [
 			'cyr_to_lat',
 			'lat_to_cyr',
@@ -540,6 +564,10 @@ class Transliteration_Controller extends Transliteration {
 
 		$arr = Transliteration_Utilities::explode(' ', $new_string);
 		$arr_origin = Transliteration_Utilities::explode(' ', $content);
+		
+		if (count($arr) !== count($arr_origin)) {
+			return $content;
+		}
 
 		$result = '';
 		foreach ($arr as $i => $word) {
@@ -558,8 +586,10 @@ class Transliteration_Controller extends Transliteration {
 				$result .= $word;
 			}
 
-			$result .= ($i < count($arr) - 1) ? ' ' : '';
+			$result .= ' ';
 		}
+		
+		$result = trim($result);
 
 		return $result ?: $content;
 	}

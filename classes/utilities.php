@@ -314,19 +314,22 @@ class Transliteration_Utilities {
 		];
 
 		foreach ($cache_checks as $check) {
-			if (count($check) === 1 && $check[0]) {
+			
+			$count = count($check);
+			
+			if ($count === 1 && $check[0]) {
 				$has_cache_plugin = true;
 				break;
-			} elseif (count($check) === 2 && in_array($check[0], ['function_exists', 'has_action']) && $check[0]($check[1])) {
+			} elseif ($count === 2 && in_array($check[0], ['function_exists', 'has_action']) && $check[0]($check[1])) {
 				$has_cache_plugin = true;
 				break;
-			} elseif (count($check) === 2 && 'class_exists' === $check[0] && $check[0]($check[1], false)) {
+			} elseif ($count === 2 && 'class_exists' === $check[0] && $check[0]($check[1], false)) {
 				$has_cache_plugin = true;
 				break;
-			} elseif (count($check) === 3 && $check[0]($check[1]) && $check[0]($check[2])) {
+			} elseif ($count === 3 && $check[0]($check[1]) && $check[0]($check[2])) {
 				$has_cache_plugin = true;
 				break;
-			} elseif (count($check) === 4 && $check[0]($check[1], false) && $check[2]($check[3])) {
+			} elseif ($count === 4 && $check[0]($check[1], false) && $check[2]($check[3])) {
 				$has_cache_plugin = true;
 				break;
 			}

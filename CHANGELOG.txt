@@ -1,3 +1,8 @@
+= 2.0.4 =
+* Changed transliteration operations
+* Optimized object transliteration
+* Improved code for PHP8.3
+
 = 2.0.3 =
 * Improved cookie control
 
