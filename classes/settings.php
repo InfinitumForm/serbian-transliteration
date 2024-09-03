@@ -640,19 +640,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 		$options = get_rstr_option();
 
-		$transliteration_mode = $options['transliteration-mode'] === 'cyr_to_lat' 
+		$transliteration_mode = get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'cyr_to_lat' 
 			? __('Cyrillic to Latin', 'serbian-transliteration') 
 			: __('Latin to Cyrillic', 'serbian-transliteration');
 
-		$cache_support = $options['cache-support'] === 'yes' 
+		$cache_support = get_rstr_option('cache-support', 'no') === 'yes' 
 			? '<span style="color:#007d1b">' . __('Yes', 'serbian-transliteration') . '</span>' 
 			: '<span>' . __('No', 'serbian-transliteration') . '</span>';
 
-		$media_transliteration = $options['media-transliteration'] === 'yes' 
+		$media_transliteration = get_rstr_option('media-transliteration', 'yes') === 'yes' 
 			? '<span style="color:#007d1b">' . __('Yes', 'serbian-transliteration') . '</span>' 
 			: '<span>' . __('No', 'serbian-transliteration') . '</span>';
 
-		$permalink_transliteration = $options['permalink-transliteration'] === 'yes' 
+		$permalink_transliteration = get_rstr_option('permalink-transliteration', 'yes') === 'yes' 
 			? '<span style="color:#007d1b">' . __('Yes', 'serbian-transliteration') . '</span>' 
 			: '<span>' . __('No', 'serbian-transliteration') . '</span>';
 

@@ -102,6 +102,10 @@ class Transliteration_Mode extends Transliteration {
 	private function apply_filters() {
 		global $pagenow;
 		
+		if( get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none' ) {
+			return;
+		}
+		
 		$filters = NULL;
 		
 		// Is admin, a do special static filters

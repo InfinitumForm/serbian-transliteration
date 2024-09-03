@@ -712,6 +712,8 @@ class Transliteration_Utilities {
 		if ($is_editor !== null) {
 			return $is_editor;
 		}
+		
+		$is_editor = false;
 
 		// Check for specific editors and set the cache if true
 		if (self::is_elementor_editor() || self::is_oxygen_editor()) {
@@ -728,8 +730,10 @@ class Transliteration_Utilities {
 			if (is_callable([$current_screen, 'is_block_editor']) && method_exists($current_screen, 'is_block_editor')) {
 				$is_editor = $current_screen->is_block_editor();
 			}
-		} else {
-			$is_editor = (isset($_GET['action']) && isset($_GET['post']) && $_GET['action'] == 'edit' && is_numeric($_GET['post']));
+		}
+		
+		if( !$is_editor ) {
+			$is_editor = ( isset($_GET['action'], $_GET['post']) && $_GET['action'] === 'edit' && is_numeric($_GET['post']) );
 		}
 
 		// Return the cached result

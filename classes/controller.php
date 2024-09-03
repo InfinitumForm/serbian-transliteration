@@ -509,6 +509,18 @@ class Transliteration_Controller extends Transliteration {
 	 * Transliteration tags buffer callback
 	 */
 	function transliteration_tags_callback($buffer) {
+		if( Transliteration_Utilities::can_transliterate($buffer) || Transliteration_Utilities::is_editor() ) {
+			return $buffer;
+		}
+		
+		if( get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none' ) {
+			return str_replace(
+				['{cyr_to_lat}', '{lat_to_cyr}', '{rstr_skip}', '{/cyr_to_lat}', '{/lat_to_cyr}', '{/rstr_skip}'],
+				'',
+				$buffer
+			);
+		}
+		
 		$tags = [
 			'cyr_to_lat',
 			'lat_to_cyr',
