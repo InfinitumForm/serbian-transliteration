@@ -1,5 +1,5 @@
 <?php if ( !defined('WPINC') ) die(); ?>
-<p class="description"><?php _e('These are available PHP functions that you can use in your themes and plugins.', 'serbian-transliteration'); ?></p>
+<p class="description"><?php esc_html_e('These are available PHP functions that you can use in your themes and plugins.', 'serbian-transliteration'); ?></p>
 <h2 style="margin:0;">get_latin_url</h2>
 <p><code class="lang-php">function get_latin_url(string $url = NULL) : string</code></p>
 <br>
@@ -125,7 +125,7 @@
 <h2 style="margin:0;">script_selector</h2>
 <?php printf('<p>%s</p>', __('This function displays a selector for the transliteration script.', 'serbian-transliteration')); ?>
 <p><code class="lang-php">function script_selector(array $args) : string|echo|array|object</code></p>
-<h3><?php _e('Parameters', 'serbian-transliteration'); ?></h3>
+<h3><?php esc_html_e('Parameters', 'serbian-transliteration'); ?></h3>
 <?php printf('<p><b><code>$args</code></b> (array) - %1$s</p>', __('This attribute contains an associative set of parameters for this function:', 'serbian-transliteration')); ?>
 <ul>
 	<?php printf(

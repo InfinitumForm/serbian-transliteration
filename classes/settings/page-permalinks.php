@@ -32,17 +32,17 @@
 			<span style="width: 33%">33%</span>
 		</div>
 	</progress>
-	<p class="progress-message"><?php _e('Please wait! Do not close the window or leave the page until this operation is completed!', 'serbian-transliteration'); ?></p>
+	<p class="progress-message"><?php esc_html_e('Please wait! Do not close the window or leave the page until this operation is completed!', 'serbian-transliteration'); ?></p>
 </div>
 <p>
 	<input type="button" id="<?php echo 'serbian-transliteration' ?>-tools-transliterate-permalinks" class="button button-primary" data-nonce="<?php echo esc_attr(wp_create_nonce('rstr-run-permalink-transliteration')); ?>" value="<?php esc_attr_e('Let\'s do magic', 'serbian-transliteration'); ?>" disabled>
 	&nbsp;&nbsp;&nbsp;
 	<label for="<?php echo 'serbian-transliteration' ?>-tools-check">
-		<input type="checkbox" id="<?php echo 'serbian-transliteration' ?>-tools-check" value="1"> <?php _e('Are you sure you want this?', 'serbian-transliteration'); ?>
+		<input type="checkbox" id="<?php echo 'serbian-transliteration' ?>-tools-check" value="1"> <?php esc_html_e('Are you sure you want this?', 'serbian-transliteration'); ?>
 	</label>
 </p>
 <blockquote id="rstr-disclaimer" style="display:none;">
-	<h3><?php _e('Disclaimer', 'serbian-transliteration'); ?></h3>
+	<h3><?php esc_html_e('Disclaimer', 'serbian-transliteration'); ?></h3>
 	<?php printf('<p>%s</p>', __('While this tool is designed to operate safely, there is always a small risk of unpredictable issues.', 'serbian-transliteration')); ?>
 	<?php printf('<p><b style="text-transform: uppercase;">%s</b></p>', __('Note: We do not guarantee that this tool will function correctly on your server. By using it, you assume all risks and responsibilities for any potential issues.', 'serbian-transliteration')); ?>
 	<?php printf('<p><b style="text-transform: uppercase;">%s</b></p>', __('Backup your database before using this tool.', 'serbian-transliteration')); ?>

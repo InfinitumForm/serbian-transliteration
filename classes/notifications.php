@@ -60,7 +60,7 @@ class Transliteration_Notifications extends Transliteration
 		if( isset( $_GET['rstr_dimiss_adds'] ) && !empty( $_GET['rstr_dimiss_adds'] ) ){
 			$rstr_dimiss_donation = $_GET['rstr_dimiss_adds'];
 			if( $rstr_dimiss_donation == 1 ){
-				set_transient( 'serbian-transliteration-ads', time(), (60*60*24*30));
+				set_transient( 'serbian-transliteration-ads', time(), MONTH_IN_SECONDS);
 				
 				$parse_url = Transliteration_Utilities::parse_url();
 				if(!headers_sent()) {

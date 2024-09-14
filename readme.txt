@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -107,6 +107,11 @@ It is important for you to know that any functionality in our plugin can be turn
 9. Automated test
 
 == Changelog ==
+
+= 2.0.5 =
+* Fixed problem with disabled transliteration
+* Fixed problem with tag transliteration
+* Fixed redirections
 
 = 2.0.4 =
 * Changed transliteration operations
@@ -296,39 +301,10 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Upgrade Notice ==
 
-= 2.0.4 =
-* Changed transliteration operations
-* Optimized object transliteration
-* Improved code for PHP8.3
-
-= 2.0.3 =
-* Improved cookie control
-
-= 2.0.2 =
-* Fixing bugs for the PHP version 8.3 and above
-* Fixing Cookie problems
-* Fixing problem with double inclusions
-* Fixing problems with WP filters
-* Improved site speed
-
-= 2.0.1 =
-* Bug fix
-* Adding stricter permalink transliteration
-* Improved debugging
-
-= 2.0.0 =
-* Complete redesign and refactoring of the PHP code
-* Full support for WordPress 6.6 and higher
-* Compatibility with PHP 8.x versions
-* Fixed issues with Cyrillic transliteration
-* Enhanced optimization and better content control
-* Added support for visual editors
-* Bug fixes and improved system stability
-* Ready for future extensions and new functionalities
-* Added admin tools for easier content transliteration management
-* Improved user interface with better accessibility options
-* Streamlined settings page for more intuitive navigation
-* Added support for multilingual content and automatic language detection
+= 2.0.5 =
+* Fixed problem with disabled transliteration
+* Fixed problem with tag transliteration
+* Fixed redirections
 
 == Frequently Asked Questions ==
 

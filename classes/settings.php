@@ -299,7 +299,7 @@ class Transliteration_Settings extends Transliteration {
 	public function settings_page__general() {
 		?>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Available shortcodes', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?> - <?php esc_html_e('Available shortcodes', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Available PHP Functions', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?> - <?php esc_html_e('Available PHP Functions', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Available Tags', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?> - <?php esc_html_e('Available Tags', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	public function settings_action_page__transliteration($actions) {
 		?>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Converter for transliterating Cyrillic into Latin and vice versa', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?> - <?php esc_html_e('Converter for transliterating Cyrillic into Latin and vice versa', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
@@ -511,7 +511,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	public function settings_action_page__permalinks($actions) {
 		?>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Permalink Transliteration Tool', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?> - <?php esc_html_e('Permalink Transliteration Tool', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Debug information', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?> - <?php esc_html_e('Debug information', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
@@ -573,7 +573,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	public function settings_page__credits() {
 		?>
 <div class="wrap" id="wp-transliteration-settings">
-	<h1><?php _e('Transliteration', 'serbian-transliteration'); ?> - <?php _e('Credits', 'serbian-transliteration'); ?></h1>
+	<h1><?php esc_html_e('Transliteration', 'serbian-transliteration'); ?> - <?php esc_html_e('Credits', 'serbian-transliteration'); ?></h1>
 	<?php $this->settings_tabs(); ?>
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">

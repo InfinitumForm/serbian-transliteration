@@ -667,7 +667,7 @@ class Transliteration_Settings_Fields {
     {
 ?>
 <div class="accordion-container">
-	<button class="accordion-link" type="button"><?php _e('Exclude filters you don\'t need (optional)', 'serbian-transliteration'); ?></button>
+	<button class="accordion-link" type="button"><?php esc_html_e('Exclude filters you don\'t need (optional)', 'serbian-transliteration'); ?></button>
 	<div class="accordion-panel">
 		<?php
 

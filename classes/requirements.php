@@ -96,7 +96,7 @@ font-weight:600;
 	); ?>
 </div>
 <div class="serbian-transliteration-upgrade-notice-info">
-	<?php _e('NOTE: Before doing the update, it would be a good idea to backup your WordPress installations and settings.', 'serbian-transliteration'); ?>
+	<?php esc_html_e('NOTE: Before doing the update, it would be a good idea to backup your WordPress installations and settings.', 'serbian-transliteration'); ?>
 </div>
 </div> 
 		<?php endif;

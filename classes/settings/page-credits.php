@@ -38,8 +38,8 @@ $special_thanks = array(
 		newWindow.focus();
 	}
 };</script>
-<h3><span class="dashicons dashicons-info"></span> <?php _e('Credits', 'serbian-transliteration'); ?></h3>
-<?php printf('<p>%s</p>', __('This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.', 'serbian-transliteration')); ?>
+<h3><span class="dashicons dashicons-info"></span> <?php esc_html_e('Credits', 'serbian-transliteration'); ?></h3>
+<?php printf('<p>%s</p>', esc_html__('This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.', 'serbian-transliteration')); ?>
 <p><?php
 
 	$special_thanks_sponsors_render = array();
@@ -62,7 +62,7 @@ $special_thanks = array(
 		__('Sponsors of this plugin:', 'serbian-transliteration'),
 		join(', ', $special_thanks_sponsors_render),
 		sprintf(
-			'( %s )',
+			'(%s)',
 			sprintf(__('If you want to help develop this plugin and be one of the sponsors, please contact us at: %s', 'serbian-transliteration'), '<a href="mailto:infinitumform@gmail.com">infinitumform@gmail.com</a>')
 		)
 	);
@@ -87,13 +87,13 @@ $special_thanks = array(
 		}
 	}
 	
-	printf('<strong>%s</strong> %s', __('Special thanks to the contributors in the development of this plugin:', 'serbian-transliteration'), join(', ', $special_thanks_render));
+	printf('<strong>%s</strong> %s', esc_html__('Special thanks to the contributors in the development of this plugin:', 'serbian-transliteration'), join(', ', $special_thanks_render));
 	
 ?></p>
 
 <?php endif; ?>
 
-<h3>&copy; <?php _e('Copyright', 'serbian-transliteration'); ?></h3>
+<h3>&copy; <?php esc_html_e('Copyright', 'serbian-transliteration'); ?></h3>
 <?php printf(
 	'<p>%s</p>',
 	sprintf( 
@@ -104,14 +104,14 @@ $special_thanks = array(
 	)
 ); ?>
 
-<?php printf('<p>%s</p>', __('This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.', 'serbian-transliteration')); ?>
-<?php printf('<p>%s</p>', __('This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.', 'serbian-transliteration')); ?>
-<p><a href="javascript:void(0);" onClick="rstr_popup('<?php echo RSTR_URL; ?>/LICENSE.txt','GNU GENERAL PUBLIC LICENSE','550','450');"><?php _e('See the GNU General Public License for more details.', 'serbian-transliteration'); ?></a></p>
-<?php printf('<p>%s</p>', __('You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.', 'serbian-transliteration')); ?>
+<?php printf('<p>%s</p>', esc_html__('This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.', 'serbian-transliteration')); ?>
+<?php printf('<p>%s</p>', esc_html__('This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.', 'serbian-transliteration')); ?>
+<p><a href="javascript:void(0);" onClick="rstr_popup('<?php echo RSTR_URL; ?>/LICENSE.txt','GNU GENERAL PUBLIC LICENSE','550','450');"><?php esc_html_e('See the GNU General Public License for more details.', 'serbian-transliteration'); ?></a></p>
+<?php printf('<p>%s</p>', esc_html__('You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.', 'serbian-transliteration')); ?>
 
-<h3><span class="dashicons dashicons-heart"></span> <?php _e('Donations', 'serbian-transliteration'); ?></h3>
-<?php printf('<p>%s</p>', __('This plugin is 100% free. If you want to buy us one coffee, beer or in general help the development of this plugin through a monetary donation, you can do it in the following ways:', 'serbian-transliteration')); ?>
+<h3><span class="dashicons dashicons-heart"></span> <?php esc_html_e('Donations', 'serbian-transliteration'); ?></h3>
+<?php printf('<p>%s</p>', esc_html__('This plugin is 100% free. If you want to buy us one coffee, beer or in general help the development of this plugin through a monetary donation, you can do it in the following ways:', 'serbian-transliteration')); ?>
 <ul>
-	<?php printf('<li><b>%s</b>: %s</li>', __('PayPal', 'serbian-transliteration'), 'creativform@gmail.com'); ?>
-	<?php printf('<li><b>%s</b>: %s (%s)</li>', __('From Serbia', 'serbian-transliteration'), '115-0000000138835-77', __('Mobi Bank', 'serbian-transliteration')); ?>
+	<?php printf('<li><b>%s</b>: %s</li>', esc_html__('PayPal', 'serbian-transliteration'), 'creativform@gmail.com'); ?>
+	<?php printf('<li><b>%s</b>: %s (%s)</li>', esc_html__('From Serbia', 'serbian-transliteration'), '115-0000000138835-77', esc_html__('Mobi Bank', 'serbian-transliteration')); ?>
 </ul>

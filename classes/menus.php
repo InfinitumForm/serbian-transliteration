@@ -77,7 +77,7 @@ class Transliteration_Menus extends Transliteration {
 
             <p class="button-controls">
               <span class="list-controls hide-if-no-js">
-                <a href="javascript:void(0);" class="help" onclick="jQuery( '#transliteration-menu-help' ).toggle();"><?php _e( 'Help', 'serbian-transliteration' ); ?></a>
+                <a href="javascript:void(0);" class="help" onclick="jQuery( '#transliteration-menu-help' ).toggle();"><?php esc_html_e( 'Help', 'serbian-transliteration' ); ?></a>
                 <span class="hide-if-js" id="transliteration-menu-help"><br /><a name="transliteration-menu-help"></a>
                   <?php
                   echo '•' . esc_html__( 'To insert language script selector just add a relative link after the link\'s keyword, example :', 'serbian-transliteration' ) . ' <br /><code>#transliteration-latcyr#</code>.';

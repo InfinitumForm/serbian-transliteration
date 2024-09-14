@@ -1,3 +1,8 @@
+= 2.0.5 =
+* Fixed problem with disabled transliteration
+* Fixed problem with tag transliteration
+* Fixed redirections
+
 = 2.0.4 =
 * Changed transliteration operations
 * Optimized object transliteration
