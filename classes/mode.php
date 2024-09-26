@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-class Transliteration_Mode extends Transliteration {
+final class Transliteration_Mode extends Transliteration {
 	
 	private $mode = NULL;
 	
@@ -101,6 +101,11 @@ class Transliteration_Mode extends Transliteration {
 	 */
 	private function apply_filters() {
 		global $pagenow;
+		static $filters_loaded = false;
+		
+		if($filters_loaded) {
+			return;
+		}
 		
 		if( get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none' ) {
 			return;
@@ -124,19 +129,23 @@ class Transliteration_Mode extends Transliteration {
 		}
 		
 		if ( $filters ) {
-			foreach ($filters as $key => $method) {
-				if($pagenow && $pagenow === 'nav-menus.php' && $key === 'the_title'){
-					continue;
-				}
-				
-				$args = $key === 'gettext' ? 3 : 1;
+			add_action( 'init', function() use ($filters, $pagenow) {
+				foreach ($filters as $key => $method) {
+					if($pagenow && $pagenow === 'nav-menus.php' && $key === 'the_title'){
+						continue;
+					}
+					
+					$args = $key === 'gettext' ? 3 : 1;
 
-				if( is_array($method) ) {
-					add_filter($key, $method, (PHP_INT_MAX - 100), $args);
-				} else if( method_exists($this, $method) ) {
-					$this->add_filter($key, $method, (PHP_INT_MAX - 100), $args);
+					if( is_array($method) ) {
+						add_filter($key, $method, (PHP_INT_MAX - 100), $args);
+					} else if( method_exists($this, $method) ) {
+						$this->add_filter($key, $method, (PHP_INT_MAX - 100), $args);
+					}
 				}
-			}
+			}, (PHP_INT_MAX - 100));
+			
+			$filters_loaded = true;
 		}
 	}
 	

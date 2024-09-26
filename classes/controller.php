@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-class Transliteration_Controller extends Transliteration {
+final class Transliteration_Controller extends Transliteration {
 	
 	/*
 	 * The main constructor

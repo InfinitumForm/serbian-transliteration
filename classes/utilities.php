@@ -1209,7 +1209,7 @@ class Transliteration_Utilities {
 
 		if ($cachedUrl === null) {
 			$http = 'http' . (self::is_ssl() ? 's' : '');
-			$domain = rtrim(preg_replace('%:/{3,}%i', '://', $http . '://' . $_SERVER['HTTP_HOST']), '/');
+			$domain = rtrim(preg_replace('%:/{3,}%i', '://', $http . '://' . ($_SERVER['HTTP_HOST']??'localhost')), '/');
 			$url = preg_replace('%:/{3,}%i', '://', $domain . '/' . (isset($_SERVER['REQUEST_URI']) ? ltrim($_SERVER['REQUEST_URI'], '/') : ''));
 
 			$cachedUrl = [

@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-if( !class_exists('Transliteration_Init', false) ) : class Transliteration_Init extends Transliteration {
+if( !class_exists('Transliteration_Init', false) ) : final class Transliteration_Init extends Transliteration {
     
     public function __construct() {
         // Register the textdomain for the plugin
