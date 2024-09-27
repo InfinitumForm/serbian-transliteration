@@ -1,3 +1,8 @@
+= 2.0.6 =
+* Added new filterings for the posts
+* Removed expencive functions
+* Added new filters and sanitizations
+
 = 2.0.5 =
 * Fixed problem with disabled transliteration
 * Fixed problem with tag transliteration

@@ -30,7 +30,7 @@ class Transliteration_Mode_Standard {
 		$filters = array(
 			'comment_text'			=> 'content',
 			'comments_template' 	=> 'content',
-			'the_content' 			=> 'content',
+		//	'the_content' 			=> 'content',
 			'the_title' 			=> 'no_html_content',
 			'the_date' 				=> 'no_html_content',
 			'get_post_time' 		=> 'no_html_content',
@@ -60,7 +60,10 @@ class Transliteration_Mode_Standard {
 			'wp_mail'				=> 'wp_mail',
 			'render_block'			=> 'content',
 			'wp_get_attachment_image_attributes' => 'image_attributes',
-			'oceanwp_excerpt'		=> 'content',//Oceanwp
+			'the_post'				=> 'the_post_filter',
+			//Oceanwp
+			'oceanwp_excerpt'		=> 'content',
+			'the_posts'				=> 'the_posts_filter'
 		);
 
 		if (!current_theme_supports( 'title-tag' )){

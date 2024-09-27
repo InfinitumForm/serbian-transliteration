@@ -267,11 +267,14 @@ final class Transliteration_Controller extends Transliteration {
 
 		// Sanitize HTML attributes and transliterate their values
 		if ($sanitize_html) {
-			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
-				$transliteratedValue = $class_map::transliterate($matches[3], 'cyr_to_lat');
-				$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
-				return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
-			}, $content);
+			$html_attributes_match = $this->private__html_atributes('cyr_to_lat');
+			if($html_attributes_match) {
+				$content = preg_replace_callback('/\b('.$html_attributes_match.')=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html) {
+					$transliteratedValue = $class_map::transliterate($matches[3], 'cyr_to_lat');
+					$transliteratedValue = Transliteration_Sanitization::get()->lat($transliteratedValue, $sanitize_html);
+					return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
+				}, $content);
+			}
 		}
 
 		// Restore excluded words back to their original form
@@ -466,14 +469,17 @@ final class Transliteration_Controller extends Transliteration {
 		
 		// Sanitize HTML attributes and transliterate their values
 		if ($sanitize_html) {
-			$content = preg_replace_callback('/\b(title|data-title|alt|placeholder|data-placeholder|aria-label|data-label)=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html, $fix_diacritics) {
-				$transliteratedValue = $class_map::transliterate($matches[3], 'lat_to_cyr');
-				$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
-				if($fix_diacritics) {
-					$transliteratedValue = $this->fix_diacritics($transliteratedValue);
-				}
-				return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
-			}, $content);
+			$html_attributes_match = $this->private__html_atributes('lat_to_cyr');
+			if($html_attributes_match) {
+				$content = preg_replace_callback('/\b('.$html_attributes_match.')=("|\')(.*?)\2/i', function($matches) use ($class_map, $sanitize_html, $fix_diacritics) {
+					$transliteratedValue = $class_map::transliterate($matches[3], 'lat_to_cyr');
+					$transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
+					if($fix_diacritics) {
+						$transliteratedValue = $this->fix_diacritics($transliteratedValue);
+					}
+					return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
+				}, $content);
+			}
 		}
 
 		// Restore excluded words back to their original form
@@ -496,19 +502,18 @@ final class Transliteration_Controller extends Transliteration {
 
 		return $content;
 	}
-
 	
 	/*
 	 * Transliteration tags buffer start
 	 */
-	function transliteration_tags_start() {
+	public function transliteration_tags_start() {
 		$this->ob_start('transliteration_tags_callback');
 	}
 	
 	/*
 	 * Transliteration tags buffer callback
 	 */
-	function transliteration_tags_callback($buffer) {
+	public function transliteration_tags_callback($buffer) {
 		if( Transliteration_Utilities::can_transliterate($buffer) || Transliteration_Utilities::is_editor() ) {
 			return $buffer;
 		}
@@ -546,12 +551,15 @@ final class Transliteration_Controller extends Transliteration {
 	/*
 	 * Transliteration tags buffer end
 	 */
-	function transliteration_tags_end() {
+	public function transliteration_tags_end() {
 		if (ob_get_level() > 0) {
 			ob_end_flush();
 		}
 	}
 	
+	/*
+	 * Fix the diactritics
+	 */
 	public static function fix_diacritics($content) {
 		if ( Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor() || 
 			!in_array(Transliteration_Utilities::get_locale(), ['sr_RS', 'bs_BA', 'cnr'])) {
@@ -604,6 +612,30 @@ final class Transliteration_Controller extends Transliteration {
 		$result = trim($result);
 
 		return $result ?: $content;
+	}
+	
+	/*
+	 * PRIVATE: Allowed HTML attributes for transliteration
+	 */
+	private function private__html_atributes($type = 'inherit') {
+		static $html_attributes_match = [];
+		
+		if(!array_key_exists($type, $html_attributes_match)) {
+			$html_attributes_match[$type]= apply_filters('transliteration_html_attributes', [
+				'title',
+				'data-title',
+				'alt',
+				'placeholder',
+				'data-placeholder',
+				'aria-label',
+				'data-label'
+			], $type);
+			
+			$html_attributes_match[$type] =  is_array($html_attributes_match[$type]) ? array_map('trim', $html_attributes_match[$type]) : [];
+			$html_attributes_match[$type] = join('|', $html_attributes_match[$type]);
+		}
+		
+		return $html_attributes_match[$type];
 	}
 
 	/*

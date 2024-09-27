@@ -35,7 +35,7 @@ class Transliteration_Mode_Advanced {
 			'get_archives_link'				=> 'content', //Widget achives
 			'get_the_terms'					=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 			'get_the_excerpt' 				=> 'content',
-			'the_excerpt'					=> 'content',
+		//	'the_excerpt'					=> 'content',
 			'oceanwp_excerpt'				=> 'content',//Oceanwp
 			'get_calendar' 					=> 'content',
 		//	'pre_kses' 						=> 'content',
@@ -44,7 +44,7 @@ class Transliteration_Mode_Advanced {
 			'wp_get_object_terms' 			=> 'transliteration_wp_terms', //Phlox
 			'comment_text'					=> 'content',
 			'comments_template' 			=> 'content',
-			'the_content' 					=> 'content',
+		//	'the_content' 					=> 'content',
 			'the_title' 					=> 'no_html_content',
 			'wp_nav_menu_items' 			=> 'content',
 			'get_post_time' 				=> 'content',
@@ -78,7 +78,9 @@ class Transliteration_Mode_Advanced {
 			'wp_mail'						=> 'wp_mail',
 			'register_post_type_args'		=> 'objects',
 			'render_block'					=> 'content',
-			'wp_get_attachment_image_attributes' => 'image_attributes'
+			'wp_get_attachment_image_attributes' => 'image_attributes',
+			'the_post'						=> 'the_post_filter',
+			'the_posts'						=> 'the_posts_filter'
 		);
 
 		if (!current_theme_supports( 'title-tag' )){

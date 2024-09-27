@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -108,6 +108,11 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Changelog ==
 
+= 2.0.6 =
+* Added new filterings for the posts
+* Removed expencive functions
+* Added new filters and sanitizations
+
 = 2.0.5 =
 * Fixed problem with disabled transliteration
 * Fixed problem with tag transliteration
@@ -147,164 +152,12 @@ It is important for you to know that any functionality in our plugin can be turn
 * Streamlined settings page for more intuitive navigation
 * Added support for multilingual content and automatic language detection
 
-= 1.13.0 =
-* Removed Alternate Links support
-* Fixed problems with First Visit mode
-* Fixed SEO problems with `_rstr_nocache` URL pharams
-* Fixed SEO rewrite problems
-* Preparing transition code for version 2.0.0
-
-= 1.12.20 =
-* Fixed caching support
-* Fixed transliteration modes
-* Fixed method errors
-* Added "Light mode" as default
-
-= 1.12.19 =
-* Fix Fatal error on page builders
-
-= 1.12.18 =
-* Fix flush cache bug
-* Fixed PHP errors
-* Additional optimizations
-
-= 1.12.17 =
-* Fixing problems with cache plugins
-* Fixing a memory leak bug
-* Removing support for some PHP5.6 versions
-
-= 1.12.16 =
-* Fixed activation error
-
-= 1.12.15 =
-* Fixed issue with WooCommerce memory buffer
-* Fixed activation issue
-
-= 1.12.14 =
-* Fix memory leak on WooComerce
-* Improved cache support
-
-= 1.12.13 =
-* Fixed problems with editors that using the REST-API
-* Fixed MySQL bugs
-* Fixed translation bugs
-* Optimized PHP code
-* Getting ready for version 1.13.0
-
-= 1.12.12 =
-* Added WordPress REST API support
-* Fixed WooCommerce REST API transliteration
-* Fixed filter loading priorities
-
-= 1.12.11 =
-* Removed first visit auto mode, forced to latin
-* Fixed PHP bugs in admin notices
-* Improved translations
-
-= 1.12.10 =
-* Added support for the LSCache, Hyper Cache,Simple Cache, Autoptimize and WP-Optimize
-* Improved "Light mode"
-
-= 1.12.9 =
-* Added support for PHP versions below 7.4.
-* Fixed a PHP error related to the T_DOUBLE_ARROW syntax.
-
-= 1.12.8 =
-* Added new experimental "Light mode"
-* Additional optimization of output buffers
-
-= 1.12.7 =
-* PHP bugfix in Standard mode
-
-= 1.12.6 =
-* Fixing WooCommerce minicart
-* Fixing problem with percentages in textdomains
-* Optimized PHP code
-
-= 1.12.5 =
-* Fixed script_selector() function
-* Refactored code
-* Improved plugin optimization for better performance
-
-= 1.12.4 =
-* Enhanced plugin optimization for better performance
-* Code refactoring for improved readability and maintenance
-* Corrected search functionality for more accurate results
-* Advanced database caching for faster data access
-* Upgraded Memcache implementation for more efficient cache management
-
-= 1.12.3 =
-* Plugin optimization
-* Improved translations
-* Fixed bugs in plugin detection
-
-= 1.12.2 =
-* Fixed transliteration of AJAX calls
-* Fixed Woocommerce mini cart transliterations
-* Fixed Template Switcher
-* Improved translations
-
-= 1.12.1 =
-* Fixed problems with specifiers
-* Optimized transliterations
-* Added new languages
-* Fixed HTML transliterations
-
-= 1.12.0 =
-* Fixed problems with Avada theme
-* Fixed problems in WooCommerce plugin
-* Fixed bugs in cyrillic encodings
-* Added Georgian language
-* Improvement of the Arabic language
-* Improvement of the Armenian language
-
-= 1.11.8 =
-* Fixed problems with translations
-
-= 1.11.7 =
-* Fixed percentage problems
-* Fixed Elementor bugs
-
-= 1.11.6 =
-* Fixed UX bugs
-* Fixed translations
-
-= 1.11.5 =
-* Fixed warnings in PHP
-
-= 1.11.4 =
-* Added language exclusion
-* Fixed bugs from previous version
-
-= 1.11.3 =
-* Fixed plugin and theme transliteration
-* Fixed problem with duplicated percentages
-
-= 1.11.2 =
-* Fixed Avada theme support
-* Fixed "print formatted" text support
-* Fixed lat to cyr transliteration
-
-= 1.11.1 =
-* Fixed transliteration bug on certain themes
-* Fixed WooCommerce integration
-
-= 1.11.0 =
-* ATTENTION: IMPORTANT UPDATE, PLEASE BE CAUTIOUS.
-* Transliteration mode modified
-* DOM component added
-* HTML content check added
-* Read and write buffer mode changed
-* PHP code optimized
-* Deprecated codes removed
-* Transliteration added for emails through PHP mailer
-
 == Upgrade Notice ==
 
-= 2.0.5 =
-* Fixed problem with disabled transliteration
-* Fixed problem with tag transliteration
-* Fixed redirections
+= 2.0.6 =
+* Added new filterings for the posts
+* Removed expencive functions
+* Added new filters and sanitizations
 
 == Frequently Asked Questions ==
 

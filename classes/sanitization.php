@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-class Transliteration_Sanitization {
+final class Transliteration_Sanitization {
 	
 	/*
 	 * The main constructor
@@ -24,14 +24,14 @@ class Transliteration_Sanitization {
 	 * Fix the Latin content
 	 */
 	public function lat($content, $sanitize_html = false) {
-		return $content;
+		return apply_filters('transliteration_sanitization_lat', $content, $content, $sanitize_html);
 	}
 	
 	/*
 	 * Fix the Cyrillic content
 	 */
 	public function cyr($content, $sanitize_html = false) {
-		return $content;
+		return apply_filters('transliteration_sanitization_cyr', $content, $content, $sanitize_html);
 	}
 	
 }

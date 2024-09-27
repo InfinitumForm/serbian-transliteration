@@ -359,6 +359,25 @@ final class Transliteration_Mode extends Transliteration {
 
 		return wp_json_encode($content);
 	}
+	
+	
+	public function the_post_filter ($post) {
+		$post->post_title = $this->no_html_content( $post->post_title );
+		$post->post_content = $this->content( $post->post_content );
+		$post->post_excerpt = $this->content( $post->post_excerpt );
+		return $post;
+	}
+	
+	
+	public function the_posts_filter ( $posts ) {
+		foreach ( $posts as &$post ) {
+			$post->post_title = $this->no_html_content( $post->post_title );
+			$post->post_content = $this->content( $post->post_content );
+			$post->post_excerpt = $this->content( $post->post_excerpt );
+		}
+		return $posts;
+	}
+	
 
 	private function processMessages($content) {
 		if (isset($content['locale_data']['messages']) && is_array($content['locale_data']['messages'])) {
