@@ -192,8 +192,9 @@ final class Transliteration_Controller extends Transliteration {
 	public function transliterate_attributes(array $attr, array $keys, $mode = 'auto') {
 		
 		foreach ($keys as $key) {
+			$key = sanitize_key($key);
 			if (isset($attr[$key])) {
-				$attr[$key] = esc_attr($this->transliterate_no_html($attr[$key]), $mode);
+				$attr[$key] = esc_attr($this->transliterate($attr[$key], $mode));
 			}
 		}
 		

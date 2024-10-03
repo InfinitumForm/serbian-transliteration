@@ -67,7 +67,7 @@ class Transliteration_Mode_Advanced {
 			'widget_title' 					=> 'no_html_content',
 			'widget_text_content' 			=> 'content',
 			'widget_custom_html_content' 	=> 'content',
-			'sanitize_title' 				=> 'no_html_content',
+		//	'sanitize_title' 				=> 'no_html_content',
 			'wp_unique_post_slug' 			=> 'no_html_content',
 			'option_blogdescription'		=> 'no_html_content',
 			'option_blogname' 				=> 'no_html_content',

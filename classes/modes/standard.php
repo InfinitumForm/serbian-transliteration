@@ -54,7 +54,7 @@ class Transliteration_Mode_Standard {
 			'document_title_parts' 	=> 'transliterate_objects',
 			'get_the_terms'			=> 'transliteration_wp_terms',//Sydney, Blocksy, Colormag
 			'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
-			'sanitize_title'		=> 'force_permalink_to_latin',
+		//	'sanitize_title'		=> 'force_permalink_to_latin',
 			'the_permalink'			=> 'force_permalink_to_latin',
 			'wp_unique_post_slug'	=> 'force_permalink_to_latin',
 			'wp_mail'				=> 'wp_mail',

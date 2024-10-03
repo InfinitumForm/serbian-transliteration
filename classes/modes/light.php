@@ -49,7 +49,7 @@ class Transliteration_Mode_Light extends Transliteration {
 			'get_the_terms'			=> 'transliteration_wp_terms', //Sydney, Blocksy, Colormag
 			'wp_get_object_terms' 	=> 'transliteration_wp_terms', //Phlox
 			'oceanwp_excerpt'		=> 'content', //Oceanwp
-			'sanitize_title'		=> 'force_permalink_to_latin',
+		//	'sanitize_title'		=> 'force_permalink_to_latin',
 			'the_permalink'			=> 'force_permalink_to_latin',
 			'wp_unique_post_slug'	=> 'force_permalink_to_latin',
 			'document_title_parts' 	=> 'transliterate_objects',
