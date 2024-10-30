@@ -108,6 +108,9 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Changelog ==
 
+= 2.0.8 =
+* Support for the WordPress version 6.7
+
 = 2.0.7 =
 * Fixed infinity redirection loop
 * Fixed transliteration bugs into permalinks
@@ -158,6 +161,9 @@ It is important for you to know that any functionality in our plugin can be turn
 * Added support for multilingual content and automatic language detection
 
 == Upgrade Notice ==
+
+= 2.0.8 =
+* Support for the WordPress version 6.7
 
 = 2.0.7 =
 * Fixed infinity redirection loop
