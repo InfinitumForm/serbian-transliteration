@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 class Transliteration_Mode_Advanced {
+	use Transliteration__Cache;
     
 	// Mode ID
 	const MODE = 'advanced';
@@ -15,12 +16,10 @@ class Transliteration_Mode_Advanced {
 	/*
 	 * Get current instance
 	 */
-	private static $instance = NULL;
 	public static function get() {
-		if( NULL === self::$instance ) {
-			self::$instance = new self;
-		}
-		return self::$instance;
+		return self::cached_static('instance', function(){
+			return new self();
+		});
 	}
 	
 	/*

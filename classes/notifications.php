@@ -47,7 +47,7 @@ class Transliteration_Notifications extends Transliteration
 				
 				$parse_url = Transliteration_Utilities::parse_url();
 				if(!headers_sent()) {
-					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_donation', $parse_url['url']))) {
+					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_donation', $parse_url['url']), 302)) {
 						exit;
 					}
 				}
@@ -60,11 +60,11 @@ class Transliteration_Notifications extends Transliteration
 		if( isset( $_GET['rstr_dimiss_adds'] ) && !empty( $_GET['rstr_dimiss_adds'] ) ){
 			$rstr_dimiss_donation = $_GET['rstr_dimiss_adds'];
 			if( $rstr_dimiss_donation == 1 ){
-				set_transient( 'serbian-transliteration-ads', time(), MONTH_IN_SECONDS);
+				set_transient( 'serbian-transliteration-ads', time(), MONTH_IN_SECONDS );
 				
 				$parse_url = Transliteration_Utilities::parse_url();
 				if(!headers_sent()) {
-					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_adds', $parse_url['url']))) {
+					if(wp_safe_redirect(remove_query_arg('rstr_dimiss_adds', $parse_url['url']), 302)) {
 						exit;
 					}
 				}

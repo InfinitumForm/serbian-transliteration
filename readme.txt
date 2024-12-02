@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.0.8
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -108,6 +108,18 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Changelog ==
 
+= 2.1.0 =
+* Added new autoloader for better performances
+* Added new caching functionality
+* Added prevention of redirection on AJAX calls
+* Improved PHP code
+* Fixed bugs from the previous version
+* Improved block editor script
+
+= 2.0.9 =
+* Fixed bugs for the WordPress version 6.7
+* Fixed translations
+
 = 2.0.8 =
 * Support for the WordPress version 6.7
 
@@ -162,18 +174,13 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Upgrade Notice ==
 
-= 2.0.8 =
-* Support for the WordPress version 6.7
-
-= 2.0.7 =
-* Fixed infinity redirection loop
-* Fixed transliteration bugs into permalinks
-* Fixed 404 error on certain cyrillic pages
-
-= 2.0.6 =
-* Added new filterings for the posts
-* Removed expencive functions
-* Added new filters and sanitizations
+= 2.1.0 =
+* Added new autoloader for better performances
+* Added new caching functionality
+* Added prevention of redirection on AJAX calls
+* Improved PHP code
+* Fixed bugs from the previous version
+* Improved block editor script
 
 == Frequently Asked Questions ==
 

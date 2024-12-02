@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 final class Transliteration_Controller extends Transliteration {
+	use Transliteration__Cache;
 	
 	/*
 	 * The main constructor
@@ -15,77 +16,71 @@ final class Transliteration_Controller extends Transliteration {
 	/*
 	 * Get current instance
 	 */
-	private static $instance = NULL;
 	public static function get() {
-		if( NULL === self::$instance ) {
-			self::$instance = new self(false);
-		}
-		return self::$instance;
+		return self::cached_static('instance', function(){
+			return new self(false);
+		});
 	}
 	
 	/*
 	 * Transliteration mode
 	 */
 	public function mode($no_redirect = false) {
-
-		// Get cached mode
-		static $mode = NULL;
-		
-		if (NULL !== $mode) {
-			return $mode;
-		}
-		
-		if (Transliteration_Utilities::is_admin()) {
-			$mode = 'cyr_to_lat';
-			return $mode;
-		}
-		
-		// Settings mode
-		$mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
-		
-		// Cookie mode
-		if (!empty($_COOKIE['rstr_script'] ?? NULL)) {
-			switch (sanitize_text_field($_COOKIE['rstr_script'])) {
-				case 'lat':
-					$mode = 'cyr_to_lat';
-					break;
-				
-				case 'cyr':
-					$mode = 'lat_to_cyr';
-					break;
+		return self::cached_static('mode', function(){
+			$mode = NULL;
+			
+			if (Transliteration_Utilities::is_admin()) {
+				$mode = 'cyr_to_lat';
+				return $mode;
 			}
-		}
-		
-		// First visit mode
-		else {
-			$url = (Transliteration_Utilities::parse_url())['url'] ?? NULL;
-			$redirect = false;
-
-			$has_redirected = get_transient('transliteration_redirect');
-
-			switch (get_rstr_option('first-visit-mode', 'lat')) {
-				case 'lat':
-					$mode = 'cyr_to_lat';
-					Transliteration_Utilities::setcookie('lat');
-					$redirect = true;
-					break;
-				
-				case 'cyr':
-					$mode = 'lat_to_cyr';
-					Transliteration_Utilities::setcookie('cyr');
-					$redirect = true;
-					break;
-			}
-
-			if (!$has_redirected && !$no_redirect && $redirect && $url && !is_admin() && !headers_sent() && function_exists('wp_safe_redirect')) {
-				set_transient('transliteration_redirect', true, 30);
-				if ($url && wp_safe_redirect($url, 301)) {
-					exit;
+			
+			// Settings mode
+			$mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
+			
+			// Cookie mode
+			if (!empty($_COOKIE['rstr_script'] ?? NULL)) {
+				switch (sanitize_text_field($_COOKIE['rstr_script'])) {
+					case 'lat':
+						$mode = 'cyr_to_lat';
+						break;
+					
+					case 'cyr':
+						$mode = 'lat_to_cyr';
+						break;
 				}
 			}
-		}
-		
-		return $mode;
+			
+			// First visit mode
+			else {
+				$url = (Transliteration_Utilities::parse_url())['url'] ?? NULL;
+				$redirect = false;
+
+				$has_redirected = get_transient('transliteration_redirect');
+
+				switch (get_rstr_option('first-visit-mode', 'lat')) {
+					case 'lat':
+						$mode = 'cyr_to_lat';
+						Transliteration_Utilities::setcookie('lat');
+						$redirect = true;
+						break;
+					
+					case 'cyr':
+						$mode = 'lat_to_cyr';
+						Transliteration_Utilities::setcookie('cyr');
+						$redirect = true;
+						break;
+				}
+
+				if (!$has_redirected && !$no_redirect && $redirect && $url && !is_admin() && !headers_sent() && function_exists('wp_safe_redirect')) {
+					set_transient('transliteration_redirect', true, 30);
+					if ($url && wp_safe_redirect($url, 302)) {
+						exit;
+					}
+				}
+			}
+			
+			return $mode;
+		}, $no_redirect);
 	}
 	
 	/**
@@ -94,17 +89,13 @@ final class Transliteration_Controller extends Transliteration {
 	 * @autor        Ivijan-Stefan Stipic
 	 */
 	public function lat_exclude_list() {		
-		static $lat_exclude_list = null;
-		
-		if ($lat_exclude_list === null) {
+		return self::cached_static('lat_exclude_list', function(){
 			if( Transliteration_Utilities::is_admin() ) {
-				$lat_exclude_list = [];
-			} else {
-				$lat_exclude_list = apply_filters('rstr/init/exclude/lat', []);
+				return [];
 			}
-		}
-		
-		return $lat_exclude_list;
+			
+			return apply_filters('rstr/init/exclude/lat', []);
+		});
 	}
 
 	/**
@@ -113,41 +104,31 @@ final class Transliteration_Controller extends Transliteration {
 	 * @autor        Ivijan-Stefan Stipic
 	 */
 	public function cyr_exclude_list() {
-		static $cyr_exclude_list = null;
-		
-		if ($cyr_exclude_list === null) {
+		return self::cached_static('cyr_exclude_list', function(){
 			if( Transliteration_Utilities::is_admin() ) {
-				$cyr_exclude_list = [];
-			} else {
-				$cyr_exclude_list = apply_filters('rstr/init/exclude/cyr', []);
+				return [];
 			}
-		}
-		
-		return $cyr_exclude_list;
+			
+			return apply_filters('rstr/init/exclude/cyr', []);
+		});
 	}
 	
 	/*
 	 * Disable Transliteration for the same script
 	 */
 	public function disable_transliteration() {
-		static $disable_transliteration = NULL;
-		
-		if (NULL !== $disable_transliteration) {
-			return $disable_transliteration;
-		}
-		
-		$current_script = get_rstr_option('site-script', 'cyr');
-		$transliteration_mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
-		$current_mode = sanitize_text_field($_COOKIE['rstr_script'] ?? '');
+		return self::cached_static('disable_transliteration', function(){
+			$current_script = get_rstr_option('site-script', 'cyr');
+			$transliteration_mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
+			$current_mode = sanitize_text_field($_COOKIE['rstr_script'] ?? '');
 
-		$disable_transliteration = false;
-		
-		if (($current_script == 'cyr' && $transliteration_mode == 'cyr_to_lat' && $current_mode == 'cyr') ||
-			($current_script == 'lat' && $transliteration_mode == 'lat_to_cyr' && $current_mode == 'lat')) {
-			$disable_transliteration = true;
-		}
-		
-		return $disable_transliteration;
+			if (($current_script == 'cyr' && $transliteration_mode == 'cyr_to_lat' && $current_mode == 'cyr') ||
+				($current_script == 'lat' && $transliteration_mode == 'lat_to_cyr' && $current_mode == 'lat')) {
+				return true;
+			}
+			
+			return false;
+		});
 	}
 
 	
@@ -619,10 +600,8 @@ final class Transliteration_Controller extends Transliteration {
 	 * PRIVATE: Allowed HTML attributes for transliteration
 	 */
 	private function private__html_atributes($type = 'inherit') {
-		static $html_attributes_match = [];
-		
-		if(!array_key_exists($type, $html_attributes_match)) {
-			$html_attributes_match[$type]= apply_filters('transliteration_html_attributes', [
+		return self::cached_static('private__html_atributes', function() use ($type) {
+			$html_attributes_match = apply_filters('transliteration_html_attributes', [
 				'title',
 				'data-title',
 				'alt',
@@ -632,11 +611,10 @@ final class Transliteration_Controller extends Transliteration {
 				'data-label'
 			], $type);
 			
-			$html_attributes_match[$type] =  is_array($html_attributes_match[$type]) ? array_map('trim', $html_attributes_match[$type]) : [];
-			$html_attributes_match[$type] = join('|', $html_attributes_match[$type]);
-		}
-		
-		return $html_attributes_match[$type];
+			$html_attributes_match =  is_array($html_attributes_match) ? array_map('trim', $html_attributes_match) : [];
+			
+			return join('|', $html_attributes_match);
+		}, $type);
 	}
 
 	/*

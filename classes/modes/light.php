@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 class Transliteration_Mode_Light extends Transliteration {
+	use Transliteration__Cache;
     
 	// Mode ID
 	const MODE = 'light';
@@ -15,12 +16,10 @@ class Transliteration_Mode_Light extends Transliteration {
 	/*
 	 * Get current instance
 	 */
-	private static $instance = NULL;
 	public static function get() {
-		if( NULL === self::$instance ) {
-			self::$instance = new self;
-		}
-		return self::$instance;
+		return self::cached_static('instance', function(){
+			return new self();
+		});
 	}
 	
 	/*

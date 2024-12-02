@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 final class Transliteration_Sanitization {
+	use Transliteration__Cache;
 	
 	/*
 	 * The main constructor
@@ -12,13 +13,11 @@ final class Transliteration_Sanitization {
 	/*
 	 * Get current instance
 	 */
-	private static $instance = null;
 	public static function get() {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+		return self::cached_static('instance', function(){
+			return new self(false);
+		});
+	}
 	
 	/*
 	 * Fix the Latin content

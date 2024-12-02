@@ -34,7 +34,7 @@ class Transliteration_Settings extends Transliteration {
 	public function updated_option__redirection(){
 		Transliteration_Utilities::clear_plugin_cache();
 		if(!headers_sent()) {
-			if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings' ) ) ) {
+			if( wp_safe_redirect( admin_url( 'options-general.php?page=transliteration-settings' ), 302 ) ) {
 				exit;
 			}
 		}

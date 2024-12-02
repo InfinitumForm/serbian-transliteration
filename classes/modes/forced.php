@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 class Transliteration_Mode_Forced extends Transliteration {
+	use Transliteration__Cache;
     
 	// Mode ID
 	const MODE = 'forced';
@@ -22,13 +23,10 @@ class Transliteration_Mode_Forced extends Transliteration {
 	/*
 	 * Get current instance
 	 */
-	private static $instance = NULL;
 	public static function get() {
-		if( NULL === self::$instance ) {
-			self::$instance = new self();
-			self::$instance->init_actions();
-		}
-		return self::$instance;
+		return self::cached_static('instance', function(){
+			return new self();
+		});
 	}
 	
 	/*

@@ -1,3 +1,15 @@
+= 2.1.0 =
+* Added new autoloader for better performances
+* Added new caching functionality
+* Added prevention of redirection on AJAX calls
+* Improved PHP code
+* Fixed bugs from the previous version
+* Improved block editor script
+
+= 2.0.9 =
+* Fixed bugs for the WordPress version 6.7
+* Fixed translations
+
 = 2.0.8 =
 * Support for the WordPress version 6.7
 

@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 class Transliteration_Utilities {
+	use Transliteration__Cache;
 	
 	/*
 	 * Registered languages
@@ -74,56 +75,81 @@ class Transliteration_Utilities {
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public static function skip_transliteration() {
-		// Static variable for caching the result
-		static $result = null;
-
-		// Return cached result if already computed
-		if ($result !== null) {
-			return $result;
-		}
-
-		// Compute the result for the first time
-		$result = (isset($_REQUEST['rstr_skip']) && in_array(is_string($_REQUEST['rstr_skip']) ? strtolower($_REQUEST['rstr_skip']) : $_REQUEST['rstr_skip'], ['true', true, 1, '1', 'yes'], true) !== false);
-
-		return $result;
+		return self::cached_static('skip_transliteration', function(){
+			return (isset($_REQUEST['rstr_skip']) && in_array(is_string($_REQUEST['rstr_skip']) ? strtolower($_REQUEST['rstr_skip']) : $_REQUEST['rstr_skip'], ['true', true, 1, '1', 'yes'], true) !== false);
+		});
 	}
 	
 	/*
-	 * Plugin mode
-	 * @return        array/string
-	 * @author        Ivijan-Stefan Stipic
+	 * Retrieve available plugin modes.
+	 * Returns an array of mode keys with support for WooCommerce and developer-specific settings.
+	 *
+	 * @param  string|null $mode Optional specific mode key to check.
+	 * @return array|string      Array of mode keys or specific mode key if exists.
 	 */
-	public static function plugin_mode($mode=NULL){		
+	public static function available_modes($mode = NULL) {
+		// Define available mode keys
 		$modes = [
-			'light'		=> __('Light mode (basic parts of the site)', 'serbian-transliteration'),
-			'standard'	=> __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
-			'advanced'	=> __('Advanced mode (content, widgets, themes, plugins, translations, menu‚ permalinks, media)', 'serbian-transliteration'),
-			'forced'	=> __('Forced transliteration (everything)', 'serbian-transliteration')
+			'light',
+			'standard',
+			'advanced',
+			'forced',
 		];
 
-		if(RSTR_WOOCOMMERCE) {
-			$modes = array_merge($modes, [
-				'woocommerce'	=> __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', 'serbian-transliteration')
-			]);
-		}
-		
-		if( defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ) {
-			$modes = array_merge($modes, [
-				'dev'	=> __('Dev Mode (Only for developers and testers)', 'serbian-transliteration')
-			]);
+		// Add WooCommerce-specific mode key if WooCommerce is enabled
+		if (RSTR_WOOCOMMERCE) {
+			$modes[] = 'woocommerce';
 		}
 
-		$modes = apply_filters('rstr_plugin_mode', $modes);
+		// Add developer mode key if in development environment
+		if (defined('RSTR_DEV_MODE') && RSTR_DEV_MODE) {
+			$modes[] = 'dev';
+		}
 
-		if($mode){
-			if(isset($modes[$mode])) {
-				return $modes[$mode];
-			}
+		// Allow filtering of mode keys
+		$modes = apply_filters('rstr_plugin_mode_key', $modes);
 
-			return [];
+		// Return specific mode key if $mode is provided
+		if ($mode) {
+			return in_array($mode, $modes, true) ? $mode : [];
 		}
 
 		return $modes;
+	}
+
+	/*
+	 * Retrieve plugin modes with descriptions.
+	 * Modes include predefined options with support for WooCommerce and developer-specific settings.
+	 *
+	 * @param  string|null $mode Optional specific mode key to retrieve.
+	 * @return array|string      Modes array with labels or specific mode description.
+	 */
+	public static function plugin_mode($mode = NULL) {
+		// Get available modes
+		$available_modes = self::available_modes();
+
+		// Map available modes to their descriptions
+		$modes = [
+			'light'     => __('Light mode (basic parts of the site)', 'serbian-transliteration'),
+			'standard'  => __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
+			'advanced'  => __('Advanced mode (content, widgets, themes, plugins, translations, menu, permalinks, media)', 'serbian-transliteration'),
+			'forced'    => __('Forced transliteration (everything)', 'serbian-transliteration'),
+			'woocommerce' => __('Only WooCommerce (It bypasses all other transliterations and focuses only on WooCommerce)', 'serbian-transliteration'),
+			'dev'       => __('Dev Mode (Only for developers and testers)', 'serbian-transliteration'),
+		];
+
+		// Filter the modes to include only available modes
+		$filtered_modes = array_intersect_key($modes, array_flip($available_modes));
+
+		// Allow filtering of the labeled modes
+		$filtered_modes = apply_filters('rstr_plugin_mode', $filtered_modes);
+
+		// Return specific mode description if $mode is provided
+		if ($mode) {
+			return $filtered_modes[$mode] ?? [];
+		}
+
+		return $filtered_modes;
 	}
 	
 	/*
@@ -132,26 +158,26 @@ class Transliteration_Utilities {
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public static function get_locale($locale = NULL) {
-		static $get_locale = NULL;
-		
-		if( !function_exists('is_user_logged_in') ) {
-			include_once ABSPATH . WPINC . '/pluggable.php';
-		}
-		
-		$language_scheme = get_rstr_option('language-scheme', 'auto');
-		if ($language_scheme !== 'auto') {
-			return $language_scheme;
-		}
-
-		if (empty($get_locale)) {
-			$get_locale = function_exists('pll_current_language') ? pll_current_language('locale') : get_locale();
-			
-			if (is_user_logged_in() && empty($get_locale)) {
-				$get_locale = get_user_locale( wp_get_current_user() );
+		return self::cached_static('get_locale', function(){
+			if( !function_exists('is_user_logged_in') ) {
+				include_once ABSPATH . WPINC . '/pluggable.php';
 			}
-		}
+			
+			$language_scheme = get_rstr_option('language-scheme', 'auto');
+			if ($language_scheme !== 'auto') {
+				return $language_scheme;
+			}
 
-		return empty($locale) ? $get_locale : ($get_locale === $locale);
+			if (empty($get_locale)) {
+				$get_locale = function_exists('pll_current_language') ? pll_current_language('locale') : get_locale();
+				
+				if (is_user_logged_in() && empty($get_locale)) {
+					$get_locale = get_user_locale( wp_get_current_user() );
+				}
+			}
+
+			return empty($locale) ? $get_locale : ($get_locale === $locale);
+		});
 	}
 	
 	/*
@@ -201,18 +227,12 @@ class Transliteration_Utilities {
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public static function exclude_transliteration() : bool {
-		static $exclude_transliteration;
+		return self::cached_static('exclude_transliteration', function(){
+			$locale = self::get_locale();
+			$exclude = get_rstr_option('disable-by-language', []);
 
-		if ($exclude_transliteration !== NULL) {
-			return $exclude_transliteration;
-		}
-
-		$locale = self::get_locale();
-		$exclude = get_rstr_option('disable-by-language', []);
-
-		$exclude_transliteration = isset($exclude[$locale]) && $exclude[$locale] === 'yes';
-
-		return $exclude_transliteration;
+			return isset($exclude[$locale]) && $exclude[$locale] === 'yes';
+		});		
 	}
 	
 	/*
@@ -287,59 +307,51 @@ class Transliteration_Utilities {
 	 * @version    1.0.0
 	 */
 	public static function has_cache_plugin() {
-		static $has_cache_plugin = null;
+		return self::cached_static('has_cache_plugin', function(){
+			global $w3_plugin_totalcache;
 
-		if ($has_cache_plugin !== null) {
-			return $has_cache_plugin;
-		}
+			$cache_checks = [
+				['class_exists', '\LiteSpeed\Purge'],
+				['has_action', 'litespeed_purge_all'],
+				['function_exists', 'liteSpeed_purge_all'],
+				['function_exists', 'w3tc_flush_all'],
+				[$w3_plugin_totalcache],
+				['function_exists', 'wpfc_clear_all_cache'],
+				['function_exists', 'rocket_clean_domain'],
+				['function_exists', 'prune_super_cache', 'get_supercache_dir'],
+				['function_exists', 'clear_site_cache'],
+				['class_exists', 'comet_cache', 'method_exists', 'comet_cache', 'clear'],
+				['class_exists', 'PagelyCachePurge'],
+				['function_exists', 'hyper_cache_clear'],
+				['function_exists', 'simple_cache_flush'],
+				['class_exists', 'autoptimizeCache', 'method_exists', 'autoptimizeCache', 'clearall'],
+				['class_exists', 'WP_Optimize_Cache_Commands']
+			];
 
-		global $w3_plugin_totalcache;
-
-		$cache_checks = [
-			['class_exists', '\LiteSpeed\Purge'],
-			['has_action', 'litespeed_purge_all'],
-			['function_exists', 'liteSpeed_purge_all'],
-			['function_exists', 'w3tc_flush_all'],
-			[$w3_plugin_totalcache],
-			['function_exists', 'wpfc_clear_all_cache'],
-			['function_exists', 'rocket_clean_domain'],
-			['function_exists', 'prune_super_cache', 'get_supercache_dir'],
-			['function_exists', 'clear_site_cache'],
-			['class_exists', 'comet_cache', 'method_exists', 'comet_cache', 'clear'],
-			['class_exists', 'PagelyCachePurge'],
-			['function_exists', 'hyper_cache_clear'],
-			['function_exists', 'simple_cache_flush'],
-			['class_exists', 'autoptimizeCache', 'method_exists', 'autoptimizeCache', 'clearall'],
-			['class_exists', 'WP_Optimize_Cache_Commands']
-		];
-
-		foreach ($cache_checks as $check) {
-			
-			$count = count($check);
-			
-			if ($count === 1 && $check[0]) {
-				$has_cache_plugin = true;
-				break;
-			} elseif ($count === 2 && in_array($check[0], ['function_exists', 'has_action']) && $check[0]($check[1])) {
-				$has_cache_plugin = true;
-				break;
-			} elseif ($count === 2 && 'class_exists' === $check[0] && $check[0]($check[1], false)) {
-				$has_cache_plugin = true;
-				break;
-			} elseif ($count === 3 && $check[0]($check[1]) && $check[0]($check[2])) {
-				$has_cache_plugin = true;
-				break;
-			} elseif ($count === 4 && $check[0]($check[1], false) && $check[2]($check[3])) {
-				$has_cache_plugin = true;
-				break;
+			foreach ($cache_checks as $check) {
+				
+				$count = count($check);
+				
+				if ($count === 1 && $check[0]) {
+					return true;
+					break;
+				} elseif ($count === 2 && in_array($check[0], ['function_exists', 'has_action']) && $check[0]($check[1])) {
+					return true;
+					break;
+				} elseif ($count === 2 && 'class_exists' === $check[0] && $check[0]($check[1], false)) {
+					return true;
+					break;
+				} elseif ($count === 3 && $check[0]($check[1]) && $check[0]($check[2])) {
+					return true;
+					break;
+				} elseif ($count === 4 && $check[0]($check[1], false) && $check[2]($check[3])) {
+					return true;
+					break;
+				}
 			}
-		}
 
-		if ($has_cache_plugin === null) {
-			$has_cache_plugin = false;
-		}
-
-		return $has_cache_plugin;
+			return false;
+		});
 	}
 	
 	/*
@@ -348,64 +360,58 @@ class Transliteration_Utilities {
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public static function plugin_info($fields = array()) {
-		static $plugin_data = [];
-		
-        if ( is_admin() ) {
-			
-			$hash = 'rstr_plugin_info_'.hash('sha256', serialize($fields));
-			
-			if(array_key_exists($hash, $plugin_data)){
-				return $plugin_data[$hash];
+		return self::cached_static('plugin_info', function() use ($fields) {
+			if ( is_admin() ) {
+				
+				if ( ! function_exists( 'plugins_api' ) ) {
+					include_once WP_ADMIN_DIR . '/includes/plugin-install.php';
+				}
+				/** Prepare our query */
+				//donate_link
+				//versions
+				return plugins_api( 'plugin_information', array(
+					'slug' => RSTR_NAME,
+					'fields' => array_merge(array(
+						'active_installs' => false,           // rounded int
+						'added' => false,                     // date
+						'author' => false,                    // a href html
+						'author_block_count' => false,        // int
+						'author_block_rating' => false,       // int
+						'author_profile' => false,            // url
+						'banners' => false,                   // array( [low], [high] )
+						'compatibility' => false,             // empty array?
+						'contributors' => false,              // array( array( [profile], [avatar], [display_name] )
+						'description' => false,               // string
+						'donate_link' => false,               // url
+						'download_link' => false,             // url
+						'downloaded' => false,                // int
+						// 'group' => false,                  // n/a
+						'homepage' => false,                  // url
+						'icons' => false,                     // array( [1x] url, [2x] url )
+						'last_updated' => false,              // datetime
+						'name' => false,                      // string
+						'num_ratings' => false,               // int
+						'rating' => false,                    // int
+						'ratings' => false,                   // array( [5..0] )
+						'requires' => false,                  // version string
+						'requires_php' => false,              // version string
+						// 'reviews' => false,                // n/a, part of 'sections'
+						'screenshots' => false,               // array( array( [src],  ) )
+						'sections' => false,                  // array( [description], [installation], [changelog], [reviews], ...)
+						'short_description' => false,         // string
+						'slug' => false,                      // string
+						'support_threads' => false,           // int
+						'support_threads_resolved' => false,  // int
+						'tags' => false,                      // array( )
+						'tested' => false,                    // version string
+						'version' => false,                   // version string
+						'versions' => false,                  // array( [version] url )
+					), $fields)
+				));
 			}
 			
-			if ( ! function_exists( 'plugins_api' ) ) {
-				include_once WP_ADMIN_DIR . '/includes/plugin-install.php';
-			}
-			/** Prepare our query */
-			//donate_link
-			//versions
-			$plugin_data[$hash] = plugins_api( 'plugin_information', array(
-				'slug' => RSTR_NAME,
-				'fields' => array_merge(array(
-					'active_installs' => false,           // rounded int
-					'added' => false,                     // date
-					'author' => false,                    // a href html
-					'author_block_count' => false,        // int
-					'author_block_rating' => false,       // int
-					'author_profile' => false,            // url
-					'banners' => false,                   // array( [low], [high] )
-					'compatibility' => false,             // empty array?
-					'contributors' => false,              // array( array( [profile], [avatar], [display_name] )
-					'description' => false,               // string
-					'donate_link' => false,               // url
-					'download_link' => false,             // url
-					'downloaded' => false,                // int
-					// 'group' => false,                  // n/a
-					'homepage' => false,                  // url
-					'icons' => false,                     // array( [1x] url, [2x] url )
-					'last_updated' => false,              // datetime
-					'name' => false,                      // string
-					'num_ratings' => false,               // int
-					'rating' => false,                    // int
-					'ratings' => false,                   // array( [5..0] )
-					'requires' => false,                  // version string
-					'requires_php' => false,              // version string
-					// 'reviews' => false,                // n/a, part of 'sections'
-					'screenshots' => false,               // array( array( [src],  ) )
-					'sections' => false,                  // array( [description], [installation], [changelog], [reviews], ...)
-					'short_description' => false,         // string
-					'slug' => false,                      // string
-					'support_threads' => false,           // int
-					'support_threads_resolved' => false,  // int
-					'tags' => false,                      // array( )
-					'tested' => false,                    // version string
-					'version' => false,                   // version string
-					'versions' => false,                  // array( [version] url )
-				), $fields)
-			));
-
-			return $plugin_data[$hash];
-		}
+			return false;
+		}, $fields);
     }
 	
 	/*
@@ -467,30 +473,23 @@ class Transliteration_Utilities {
 	 * @verson    1.0.0
 	 */
 	public static function get_current_script() {
-		
-		// Get cached script
-		static $script = NULL;
-		if( $script ) {
-			return $script;
-		}
-		
-		// Cookie mode
-		if( !empty( $_COOKIE['rstr_script'] ?? NULL ) ){
-			switch( sanitize_text_field($_COOKIE['rstr_script']) ) {
-				case 'lat':
-					$script = 'lat';
-					break;
-				
-				case 'cyr':
-					$script = 'cyr';
-					break;
+		return self::cached_static('get_current_script', function() {
+			// Cookie mode
+			if( !empty( $_COOKIE['rstr_script'] ?? NULL ) ){
+				switch( sanitize_text_field($_COOKIE['rstr_script']) ) {
+					case 'lat':
+						return 'lat';
+						break;
+					
+					case 'cyr':
+						return 'cyr';
+						break;
+				}
 			}
-		}
-		
-		// Set new script
-		$script = get_rstr_option('first-visit-mode', 'lat');
-		
-		return $script;
+			
+			// Set new script
+			return get_rstr_option('first-visit-mode', 'lat');
+		});
 	}
 
 	/*
@@ -649,7 +648,9 @@ class Transliteration_Utilities {
 	 * @author        Ivijan-Stefan Stipic
 	*/
 	public static function already_cyrillic(){
-        return in_array(self::get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el', 'ar', 'hy'))) !== false;
+		return self::cached_static('already_cyrillic', function() {
+			return in_array(self::get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el', 'ar', 'hy'))) !== false;
+		});
 	}
 	
 	/*
@@ -705,39 +706,33 @@ class Transliteration_Utilities {
 	 * @version   1.0.0
 	 */
 	public static function is_editor() {
-		// Static variable for caching the result
-		static $is_editor = null;
+		return self::cached_static('is_editor', function() {
+			$is_editor = false;
 
-		// If the result is already cached, return it
-		if ($is_editor !== null) {
-			return $is_editor;
-		}
-		
-		$is_editor = false;
-
-		// Check for specific editors and set the cache if true
-		if (self::is_elementor_editor() || self::is_oxygen_editor()) {
-			$is_editor = true;
-			return $is_editor;
-		}
-
-		// Determine if the current screen is the block editor
-		if (version_compare(get_bloginfo('version'), '5.0', '>=')) {
-			if (!function_exists('get_current_screen')) {
-				include_once WP_ADMIN_DIR . '/includes/screen.php';
+			// Check for specific editors and set the cache if true
+			if (self::is_elementor_editor() || self::is_oxygen_editor()) {
+				$is_editor = true;
+				return $is_editor;
 			}
-			$current_screen = get_current_screen();
-			if (is_callable([$current_screen, 'is_block_editor']) && method_exists($current_screen, 'is_block_editor')) {
-				$is_editor = $current_screen->is_block_editor();
-			}
-		}
-		
-		if( !$is_editor ) {
-			$is_editor = ( isset($_GET['action'], $_GET['post']) && $_GET['action'] === 'edit' && is_numeric($_GET['post']) );
-		}
 
-		// Return the cached result
-		return $is_editor;
+			// Determine if the current screen is the block editor
+			if (version_compare(get_bloginfo('version'), '5.0', '>=')) {
+				if (!function_exists('get_current_screen')) {
+					include_once WP_ADMIN_DIR . '/includes/screen.php';
+				}
+				$current_screen = get_current_screen();
+				if (is_callable([$current_screen, 'is_block_editor']) && method_exists($current_screen, 'is_block_editor')) {
+					$is_editor = $current_screen->is_block_editor();
+				}
+			}
+			
+			if( !$is_editor ) {
+				$is_editor = ( isset($_GET['action'], $_GET['post']) && $_GET['action'] === 'edit' && is_numeric($_GET['post']) );
+			}
+
+			// Return the cached result
+			return $is_editor;
+		});
 	}
 	
 	/* 
@@ -745,21 +740,23 @@ class Transliteration_Utilities {
 	 * @verson    1.0.0
 	 */
 	public static function is_elementor_editor(){
-		if(
-			(
-				self::is_plugin_active('elementor/elementor.php') 
-				&& ($_REQUEST['action'] ?? NULL) === 'elementor'
-				&& is_numeric($_REQUEST['post'] ?? NULL)
-			)
-			|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
-		) {
-			return true;
+		return self::cached_static('is_elementor_editor', function() {
+			if(
+				(
+					self::is_plugin_active('elementor/elementor.php') 
+					&& ($_REQUEST['action'] ?? NULL) === 'elementor'
+					&& is_numeric($_REQUEST['post'] ?? NULL)
+				)
+				|| preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
+			) {
+				return true;
+				
+				// Deprecated
+				//	return \Elementor\Plugin::$instance->editor->is_edit_mode();
+			}
 			
-			// Deprecated
-			//	return \Elementor\Plugin::$instance->editor->is_edit_mode();
-		}
-		
-		return false;
+			return false;
+		});
 	}
 	
 	/* 
@@ -767,23 +764,25 @@ class Transliteration_Utilities {
 	 * @verson    1.0.0
 	 */
 	public static function is_elementor_preview(){
-		if(
-			!is_admin()
-			&& (
-				self::is_plugin_active('elementor/elementor.php') 
-				&& ($_REQUEST['preview'] ?? NULL) == 'true'
-				&& is_numeric($_REQUEST['page_id'] ?? NULL)
-				&& is_numeric($_REQUEST['preview_id'] ?? NULL)
-				&& !empty($_REQUEST['preview_nonce'] ?? NULL)
-			) || preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
-		) {
-			return true;
+		return self::cached_static('is_elementor_preview', function() {
+			if(
+				!is_admin()
+				&& (
+					self::is_plugin_active('elementor/elementor.php') 
+					&& ($_REQUEST['preview'] ?? NULL) == 'true'
+					&& is_numeric($_REQUEST['page_id'] ?? NULL)
+					&& is_numeric($_REQUEST['preview_id'] ?? NULL)
+					&& !empty($_REQUEST['preview_nonce'] ?? NULL)
+				) || preg_match('/^(elementor_(.*?))$/i', ($_REQUEST['action'] ?? ''))
+			) {
+				return true;
+				
+				// Deprecated
+				//	return \Elementor\Plugin::$instance->preview->is_preview_mode();
+			}
 			
-			// Deprecated
-			//	return \Elementor\Plugin::$instance->preview->is_preview_mode();
-		}
-		
-		return false;
+			return false;
+		});
 	}
 	
 	/* 
@@ -791,18 +790,20 @@ class Transliteration_Utilities {
 	 * @verson    1.0.0
 	 */
 	public static function is_oxygen_editor(){
-		if(
-			self::is_plugin_active('oxygen/functions.php') 
-			&& (
-				($_REQUEST['ct_builder'] ?? NULL) == 'true'
-				|| ($_REQUEST['ct_inner'] ?? NULL) == 'true'
-				|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))
-			)
-		) {
-			return true;
-		}
-		
-		return false;
+		return self::cached_static('is_oxygen_editor', function() {
+			if(
+				self::is_plugin_active('oxygen/functions.php') 
+				&& (
+					($_REQUEST['ct_builder'] ?? NULL) == 'true'
+					|| ($_REQUEST['ct_inner'] ?? NULL) == 'true'
+					|| preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))
+				)
+			) {
+				return true;
+			}
+			
+			return false;
+		});
 	}
 
 	/*
@@ -892,38 +893,29 @@ class Transliteration_Utilities {
 	 * @version  2.0.1
 	 ******************************************************************/
 	public static function get_page_ID() {
-		global $post;
-
-		// Static variable for caching the result
-		static $current_page_id = null;
-
-		// If the result is already cached, return it
-		if ($current_page_id !== null) {
-			return $current_page_id;
-		}
-
-		// Check different methods to get the page ID and cache the result
-		if ($id = self::get_page_ID__private__wp_query()) {
-			$current_page_id = $id;
-		} else if ($id = self::get_page_ID__private__get_the_id()) {
-			$current_page_id = $id;
-		} else if (!is_null($post) && isset($post->ID) && !empty($post->ID)) {
-			$current_page_id = $post->ID;
-		} else if ($post = self::get_page_ID__private__GET_post()) {
-			$current_page_id = $post;
-		} else if ($p = self::get_page_ID__private__GET_p()) {
-			$current_page_id = $p;
-		} else if ($page_id = self::get_page_ID__private__GET_page_id()) {
-			$current_page_id = $page_id;
-		} else if ($id = self::get_page_ID__private__query()) {
-			$current_page_id = $id;
-		} else if ($id = self::get_page_ID__private__page_for_posts()) {
-			$current_page_id = get_option('page_for_posts');
-		} else {
-			$current_page_id = false;
-		}
-
-		return $current_page_id;
+		return self::cached_static('get_page_ID', function() {
+			global $post;
+			// Check different methods to get the page ID and cache the result
+			if ($id = self::get_page_ID__private__wp_query()) {
+				return $id;
+			} else if ($id = self::get_page_ID__private__get_the_id()) {
+				return $id;
+			} else if (!is_null($post) && isset($post->ID) && !empty($post->ID)) {
+				return $post->ID;
+			} else if ($post = self::get_page_ID__private__GET_post()) {
+				return $post;
+			} else if ($p = self::get_page_ID__private__GET_p()) {
+				return $p;
+			} else if ($page_id = self::get_page_ID__private__GET_page_id()) {
+				return $page_id;
+			} else if ($id = self::get_page_ID__private__query()) {
+				return $id;
+			} else if ($id = self::get_page_ID__private__page_for_posts()) {
+				return get_option('page_for_posts');
+			}
+			
+			return false;
+		});
 	}
 
 	// Get page ID by using get_the_id() function
@@ -1229,13 +1221,11 @@ class Transliteration_Utilities {
 	 */
 	public static function is_ssl($url = false)
 	{
-		if ($url !== false && preg_match('/^(https|ftps):/i', $url) === 1) {
-			return true;
-		}
-		
-		static $ssl = null;
-
-		if ($ssl === null) {
+		return self::cached_static('is_ssl', function() use ($url) {
+			if ($url !== false && preg_match('/^(https|ftps):/i', $url) === 1) {
+				return true;
+			}
+			
 			$conditions = [
 				is_admin() && defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN,
 				($_SERVER['HTTPS'] ?? '') === 'on',
@@ -1246,10 +1236,8 @@ class Transliteration_Utilities {
 				($_SERVER['REQUEST_SCHEME'] ?? '') === 'https'
 			];
 
-			$ssl = in_array(true, $conditions, true);
-		}
-
-		return $ssl;
+			return in_array(true, $conditions, true);
+		}, $url);
 	}
 	
 	public static function array_filter($array, $remove, $reindex = false) {
@@ -1297,12 +1285,10 @@ class Transliteration_Utilities {
 	 * @return  true/false
 	 */
 	public static function is_admin() {
-		static $is_admin;
-		if( NULL === $is_admin ) {
+		return self::cached_static('is_admin', function() {
 			global $rstr_is_admin;
-			$is_admin = $rstr_is_admin || (is_admin() && !wp_doing_ajax());
-		}
-		return $is_admin;
+			return $rstr_is_admin || (is_admin() && !wp_doing_ajax());
+		});
 	}
 
 

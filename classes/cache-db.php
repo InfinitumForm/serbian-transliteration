@@ -8,7 +8,7 @@
  * @author        Ivijan-Stefan Stipic
  * @version       1.0.0
  */
-class Transliteration_Cache_DB {
+class Transliteration_Cache_DB {	
 	/*
 	 * Save all cached objcts to this variable
 	 */

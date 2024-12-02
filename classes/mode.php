@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 final class Transliteration_Mode extends Transliteration {
+	use Transliteration__Cache;
 	
 	private $mode = NULL;
 	
@@ -20,41 +21,34 @@ final class Transliteration_Mode extends Transliteration {
 	/*
 	 * Get current instance
 	 */
-	private static $instance = NULL;
 	public static function get() {
-		if( NULL === self::$instance ) {
-			self::$instance = new self(false);
-		}
-		return self::$instance;
-	}	
+		return self::cached_static('instance', function(){
+			return new self(false);
+		});
+	}
 	
 	/*
 	 * The current mode
 	 */
 	public function mode( $mode = NULL ) {
-		static $mode_class = [];
+		return self::cached_static('mode', function() use ($mode){
 		
-		$cache_key = $mode ?? 0;
-		
-		if( array_key_exists($cache_key, $mode_class) ) {
-			return $mode_class[$cache_key];
-		}
-		
-		$available_modes = array_keys( Transliteration_Utilities::plugin_mode() );
-		
-		if( $mode && in_array($mode, $available_modes) ) {
-			$current_mode = $mode;
-		} else {
-			$current_mode = get_rstr_option('mode', 'light');
-		}
-		
-		if( $current_mode ) {
-			if( class_exists( $mode = 'Transliteration_Mode_' . ucfirst($current_mode) ) ) {
-				$mode_class[$cache_key] = $mode;
+			$available_modes = Transliteration_Utilities::available_modes();
+
+			if( $mode && in_array($mode, $available_modes) ) {
+				$current_mode = $mode;
+			} else {
+				$current_mode = get_rstr_option('mode', 'light');
 			}
-		}
-		
-		return $mode_class[$cache_key] ?? [];
+			
+			if( $current_mode ) {
+				if( class_exists( $mode = 'Transliteration_Mode_' . ucfirst($current_mode) ) ) {
+					return $mode;
+				}
+			}
+			
+			return [];
+		}, ($mode ?? 0));
 	}
 	
 	/*
@@ -63,9 +57,8 @@ final class Transliteration_Mode extends Transliteration {
 	 * @version        2.0.0
 	 */
 	public function filters() {
-		static $filters = NULL;
-		
-		if( NULL === $filters ) {
+		return self::cached_static('filters', function() {
+
 			if( get_rstr_option('transliteration-mode', 'light') == 'none' ) {
 				$filters = [];
 				$filters = apply_filters('transliteration_mode_filters', $filters);
@@ -78,9 +71,9 @@ final class Transliteration_Mode extends Transliteration {
 				$filters = apply_filters_deprecated('rstr/transliteration/exclude/filters', [$filters], '2.0.0', 'transliteration_mode_filters');
 				$filters = apply_filters_deprecated('rstr/transliteration/exclude/filters/' . $this->mode::MODE, [$filters], '2.0.0', 'transliteration_mode_filters_' . $this->mode::MODE);
 			}
-		}
-		
-		return $filters;
+			
+			return $filters;
+		});
 	}
 	
 	/*
@@ -99,7 +92,7 @@ final class Transliteration_Mode extends Transliteration {
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        2.0.0
 	 */
-	private function apply_filters() {
+	public function apply_filters() {
 		global $pagenow;
 		static $filters_loaded = false;
 		

@@ -1,6 +1,7 @@
 <?php if ( !defined('WPINC') ) die();
 
 class Transliteration_Map {
+	use Transliteration__Cache;
 	
 	/*
 	 * The main constructor
@@ -12,21 +13,17 @@ class Transliteration_Map {
 	/*
 	 * Get current instance
 	 */
-	private static $instance = NULL;
 	public static function get() {
-		if( NULL === self::$instance ) {
-			self::$instance = new self;
-		}
-		return self::$instance;
+		return self::cached_static('instance', function(){
+			return new self(false);
+		});
 	}
 	
 	/*
 	 * Get the current language map
 	 */
 	public function map() {
-		static $current_map = NULL;
-
-		if (NULL === $current_map) {
+		return self::cached_static('map', function(){
 			// Fetch language scheme and disabled languages
 			$language_scheme = get_rstr_option('language-scheme', 'auto');
 			$disable_languages = get_rstr_option('disable-by-language', []);
@@ -53,12 +50,8 @@ class Transliteration_Map {
 			// Dynamically load the class for the language scheme
 			$class = 'Transliteration_Map_' . $language_scheme;
 			if (class_exists($class)) {
-				$current_map = $class;
+				return $class;
 			}
-		}
-
-		return $current_map;
+		});
 	}
-
-	
 }
