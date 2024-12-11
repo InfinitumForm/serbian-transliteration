@@ -7,7 +7,7 @@
  * @package           Serbian_Transliteration
  * @autor             Ivijan-Stefan Stipic
  */
-class Transliteration_Menus extends Transliteration {
+final class Transliteration_Menus extends Transliteration {
 
 	function __construct(){
 		$this->add_action( 'admin_head-nav-menus.php', 'admin_nav_menu' );
@@ -169,7 +169,7 @@ class Transliteration_Menus extends Transliteration {
 			$item_redirect = str_replace( $item_url, '', $item->url );
 
 			if ( $item_redirect == '%current-page%' ) {
-				$item_redirect = $_SERVER['REQUEST_URI'];
+				$item_redirect = ($_SERVER['REQUEST_URI']??'');
 			}
 
 			if($item_url == '#transliteration-latcyr#'){

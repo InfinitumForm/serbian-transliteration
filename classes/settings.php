@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-class Transliteration_Settings extends Transliteration {
+final class Transliteration_Settings extends Transliteration {
 	
 	public function __construct() {
 		

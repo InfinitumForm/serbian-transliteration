@@ -1,17 +1,18 @@
 <?php if ( !defined('WPINC') ) die();
 
-// Global class
-global $RSTR_USERS, $RSTR_USERS_ARRAY, $WP_ADMIN_URL, $WP_ADMIN_DIR;
-
 // Find wp-admin file path
-$WP_ADMIN_URL = admin_url('/');
 if (!defined('WP_ADMIN_DIR')) {
-	if( strpos($WP_ADMIN_URL, 'wp-admin') !== false ) {
-		$WP_ADMIN_DIR = rtrim(str_replace(home_url('/') , ABSPATH, $WP_ADMIN_URL) , '/\\');
-	} else {
-		$WP_ADMIN_DIR = dirname(WP_CONTENT_DIR) . '/wp-admin';
-	}
-	define('WP_ADMIN_DIR', $WP_ADMIN_DIR);
+    // Default wp-admin directory
+    $wp_admin_dir = ABSPATH . 'wp-admin';
+
+    // Verify if wp-admin exists
+    if (!is_dir($wp_admin_dir)) {
+        // Fallback if wp-admin is not found in the default location
+        $wp_admin_dir = dirname(WP_CONTENT_DIR) . '/wp-admin';
+    }
+
+    // Define the constant WP_ADMIN_DIR
+    define('WP_ADMIN_DIR', rtrim($wp_admin_dir, '/\\'));
 }
 
 // Include Dependency

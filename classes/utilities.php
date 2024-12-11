@@ -499,10 +499,15 @@ class Transliteration_Utilities {
 	protected static $cache_flush = false;
 	public static function cache_flush () {
 		
+		if (headers_sent()) {
+			return false;
+		}
+		
 		// Flush must be fired only once
 		if( self::$cache_flush ) {
 			return true;
 		}
+		
 		self::$cache_flush = true;
 		
 		// Let's enable all caches
@@ -811,19 +816,22 @@ class Transliteration_Utilities {
 	 * @author    Ivijan-Stefan Stipic
 	 */
 	public static function generate_token($length = 16) {
-		if (function_exists('random_bytes')) {
-			// Koristimo random_bytes za generisanje kriptografski sigurnog tokena
-			$bytes = random_bytes(ceil($length * 2));
-		} elseif (function_exists('openssl_random_pseudo_bytes')) {
-			// Fallback na openssl_random_pseudo_bytes ako random_bytes nije dostupan
-			$bytes = openssl_random_pseudo_bytes(ceil($length * 2));
-		} else {
-			// Fallback na uniqid ako nijedna od gore navedenih funkcija nije dostupna
-			$bytes = str_replace(array('.', ' ', '_'), random_int(1000, 9999), uniqid('t'.microtime()));
+		// Use random_bytes for cryptographically secure token generation
+		try {
+			$bytes = random_bytes($length);
+		} catch (Exception $e) {
+			// Fallback to openssl_random_pseudo_bytes if random_bytes is unavailable
+			if (function_exists('openssl_random_pseudo_bytes')) {
+				$bytes = openssl_random_pseudo_bytes($length);
+			}
+			// Fallback to uniqid with additional entropy as a last resort
+			else {
+				$bytes = bin2hex(uniqid('t' . microtime(), true));
+			}
 		}
 
-		// Vraćanje tokena koji je rotiran i skraćen na željenu dužinu
-		return substr(str_rot13(bin2hex($bytes)), 0, $length);
+		// Return the token, ensuring it matches the desired length
+		return substr(bin2hex($bytes), 0, $length);
 	}
 
 	/*
@@ -834,8 +842,8 @@ class Transliteration_Utilities {
 	public static function clear_plugin_translations() {
 		$domain_paths = [
 			path_join(WP_LANG_DIR, 'plugins') . '/serbian-transliteration-*.{po,mo,l10n.php}',
-			dirname(RSTR_ROOT) . '/serbian-transliteration-*.{po,mo,l10n.php}',
-			WP_LANG_DIR . '/serbian-transliteration-*.{po,mo,l10n.php}'
+			path_join(dirname(RSTR_ROOT), '') . '/serbian-transliteration-*.{po,mo,l10n.php}',
+			path_join(WP_LANG_DIR, '') . '/serbian-transliteration-*.{po,mo,l10n.php}'
 		];
 		
 		$deleted_files = 0;
