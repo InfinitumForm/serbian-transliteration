@@ -65,12 +65,6 @@ if (!defined('RSTR_NAME')) {
 if (!defined('RSTR_TABLE')) {
     define('RSTR_TABLE', 'serbian_transliteration');
 }
-// Plugin metabox prefix
-if (!defined('RSTR_METABOX')) {
-    define('RSTR_METABOX', RSTR_TABLE . '_metabox_');
-}
-// Alternate links
-if (!defined('RSTR_ALTERNATE_LINKS')) define('RSTR_ALTERNATE_LINKS', true);
 
 // Current plugin version ( if change, clear also session cache )
 if (function_exists('get_file_data') && $plugin_data = get_file_data(RSTR_FILE, array(
@@ -101,21 +95,4 @@ if (!defined('RSTR_MULTISITE')) {
 // Is Woocommerce exists
 if (!defined('RSTR_WOOCOMMERCE')) {
     define('RSTR_WOOCOMMERCE', (function_exists('is_plugin_active') ? is_plugin_active('woocommerce/woocommerce.php') : false));
-}
-/* Cache setup
- * ( Contact developers for more explanations )
- =================================================*/
-// Set maximum cache garbage collection divisor (default: 100)
-if (!defined('RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR')) {
-    define('RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR', 100);
-}
-
-// Set cache garbage collection probability (default: 1)
-if (!defined('RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY')) {
-    define('RSTR_CACHE_GARBAGE_COLLECTION_PROBABILITY', 1);
-}
-
-// Set maximum cache capability (default: 100)
-if (!defined('RSTR_CACHE_CAPABILITY')) {
-    define('RSTR_CACHE_CAPABILITY', RSTR_CACHE_GARBAGE_COLLECTION_DIVISOR);
 }

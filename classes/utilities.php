@@ -451,20 +451,26 @@ class Transliteration_Utilities {
 	 * @since     1.0.10
 	 * @verson    1.0.0
 	*/
-	public static function setcookie (string $val, int $expire = NULL) {
-		if( !headers_sent() ) {
-			if( !$expire ) {
-				$expire = ( time() + YEAR_IN_SECONDS );
-			}
-			if (headers_sent()) {
-				return false;
-			}
-			setcookie( 'rstr_script', $val, $expire, COOKIEPATH, COOKIE_DOMAIN );
-			if(function_exists('nocache_headers')) nocache_headers();
-			return true;
+	public static function setcookie($val, $expire = null) {
+		// Check if headers are already sent
+		if (headers_sent()) {
+			return false;
 		}
 
-		return false;
+		// Set default expiration if not provided
+		if ($expire === null) {
+			$expire = time() + YEAR_IN_SECONDS;
+		}
+
+		// Set the cookie
+		setcookie('rstr_script', $val, $expire, COOKIEPATH, COOKIE_DOMAIN);
+
+		// Send no-cache headers if available
+		if (function_exists('nocache_headers')) {
+			nocache_headers();
+		}
+
+		return true;
 	}
 	
 	/*
@@ -1299,5 +1305,22 @@ class Transliteration_Utilities {
 		});
 	}
 
+	/*
+	 * Check if it's sitemap
+	 * @return  true/false
+	 */
+	public static function is_sitemap() {
+		return self::cached_static('is_sitemap', function() {
+			// Define the regex pattern for sitemap URLs
+			$pattern = '/((wp-sitemap|sitemap(-[a-z0-9-]+)?)\.(xml|html))/i';
+
+			// Check the current request URI against the pattern
+			if (isset($_SERVER['REQUEST_URI']) && preg_match($pattern, $_SERVER['REQUEST_URI'])) {
+				return true;
+			}
+
+			return false;
+		});
+	}
 
 }

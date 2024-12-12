@@ -25,9 +25,14 @@ final class Transliteration_Controller extends Transliteration {
 	/*
 	 * Transliteration mode
 	 */
-	public function mode($no_redirect = false) {
-		return self::cached_static('mode', function() use ($no_redirect){
+	public function mode($no_redirect = false) {		
+		return self::cached_static('mode', function() use ($no_redirect) {
+			
 			$mode = NULL;
+			
+			if ( Transliteration_Utilities::is_sitemap() ) {
+				return $mode;
+			}
 			
 			if (Transliteration_Utilities::is_admin()) {
 				$mode = 'cyr_to_lat';
@@ -80,6 +85,7 @@ final class Transliteration_Controller extends Transliteration {
 			}
 			
 			return $mode;
+			
 		}, $no_redirect);
 	}
 	
@@ -147,6 +153,10 @@ final class Transliteration_Controller extends Transliteration {
 		
 		if( $mode == 'auto' ) {
 			$mode = $this->mode();
+		}
+		
+		if(!$mode) {
+			return $content;
 		}
 		
 		if( method_exists($this, $mode) ) {
@@ -601,15 +611,18 @@ final class Transliteration_Controller extends Transliteration {
 	 */
 	private function private__html_atributes($type = 'inherit') {
 		return self::cached_static('private__html_atributes', function() use ($type) {
-			$html_attributes_match = apply_filters('transliteration_html_attributes', [
+			$html_attributes_match = [
 				'title',
 				'data-title',
 				'alt',
 				'placeholder',
 				'data-placeholder',
 				'aria-label',
-				'data-label'
-			], $type);
+				'data-label',
+				'data-description'
+			];
+			
+			$html_attributes_match = apply_filters('transliteration_html_attributes', $html_attributes_match, $type);
 			
 			$html_attributes_match =  is_array($html_attributes_match) ? array_map('trim', $html_attributes_match) : [];
 			
