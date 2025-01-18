@@ -25,7 +25,7 @@ final class Transliteration_Controller extends Transliteration {
 	/*
 	 * Transliteration mode
 	 */
-	public function mode($no_redirect = false) {		
+	public function mode($no_redirect = true) {		
 		return self::cached_static('mode', function() use ($no_redirect) {
 			
 			$mode = NULL;
@@ -195,12 +195,14 @@ final class Transliteration_Controller extends Transliteration {
 	/*
 	 * Cyrillic to Latin
 	 */
-	public function cyr_to_lat($content, bool $sanitize_html = true) {
+	public function cyr_to_lat($content, bool $sanitize_html = true, bool $force = false) {
 		$class_map = Transliteration_Map::get()->map();
 		
 		// If the content should not be transliterated or the user is an editor, return the original content
-		if (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
-			return $content;
+		if($force === false) {
+			if (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
+				return $content;
+			}
 		}
 		
 		/*// Don't transliterate if we already have transliteration
@@ -297,16 +299,19 @@ final class Transliteration_Controller extends Transliteration {
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	 */
-	public function cyr_to_lat_sanitize($content) {
-		if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
-			return $content;
+	public function cyr_to_lat_sanitize($content, $force = false) {
+
+		if($force === false) {
+			if (Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
+				return $content;
+			}
 		}
 
 		// Decode content if necessary
 		$content = Transliteration_Utilities::decode($content);
 
 		// Transliterate from Cyrillic to Latin
-		$content = $this->cyr_to_lat($content, false);
+		$content = $this->cyr_to_lat($content, false, $force);
 		
 		// Normalize the string
 		$content = Transliteration_Utilities::normalize_latin_string($content);

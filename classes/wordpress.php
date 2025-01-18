@@ -97,39 +97,49 @@ class Transliteration_Wordpress extends Transliteration {
 	
 	public function transliterate_permalinks() {
 		$priority = PHP_INT_MAX - 100;
-		
-		$permalink_transliteration = (get_rstr_option('permalink-transliteration', 'yes') == 'yes');
-		$ser_cyr_to_lat_slug = ($permalink_transliteration && Transliteration_Utilities::get_locale() == 'sr_RS');
-		if($ser_cyr_to_lat_slug) $permalink_transliteration = false;
 
-		if($permalink_transliteration){
+		if( get_rstr_option('permalink-transliteration', 'yes') == 'yes' ){
 			$this->add_filter('sanitize_title', 'force_permalink_to_latin', $priority, 1);
 			$this->add_filter('the_permalink', 'force_permalink_to_latin', $priority, 1);
 			$this->add_filter('wp_unique_post_slug', 'force_permalink_to_latin', $priority, 1);
 			$this->add_filter('permalink_manager_filter_default_post_uri', 'force_permalink_to_latin', $priority, 1);
 			$this->add_filter('permalink_manager_filter_default_term_uri', 'force_permalink_to_latin', $priority, 1);
 			$this->add_filter('wp_insert_post_data', 'force_permalink_to_latin_on_save', $priority, 2);
+		//	$this->add_action('wp_after_insert_post', 'after_insert_post_force_permalink_to_latin_on_save', $priority, 4);
 		}
 	}
 	
-	public function force_permalink_to_latin ($permalink) {
-		return Transliteration_Mode::get()->force_permalink_to_latin($permalink);
+	public function force_permalink_to_latin($permalink) {
+		return Transliteration_Mode::get()->force_permalink_to_latin($permalink, true);
 	}
-	
-	
-	public function force_permalink_to_latin_on_save ($data, $postarr) {
-		if( isset($data['post_name']) ) {
-			$data['post_name'] = $this->force_permalink_to_latin( $data['post_name'] );
+
+	public function force_permalink_to_latin_on_save($data, $postarr) {
+		if (isset($data['post_name'])) {
+			$data['post_name'] = $this->force_permalink_to_latin($data['post_name']);
+		} elseif (isset($data['post_title'])) {
+			$data['post_name'] = sanitize_title($this->force_permalink_to_latin($data['post_title']));
 		}
-		
+
 		return $data;
+	}
+
+	public function after_insert_post_force_permalink_to_latin_on_save($post_id, $post, $update, $post_before) {
+		$new_slug = sanitize_title($this->force_permalink_to_latin($post->post_title));
+		if ($new_slug !== $post->post_name) {
+			wp_update_post([
+				'ID' => $post_id,
+				'post_name' => $new_slug
+			]);
+		}
 	}
 	
 	/*
 	 * Prefiler for the upload
 	*/
 	public function upload_prefilter ($file) {
-		$file['name']= $this->sanitize_file_name($file['name']);
+		if( isset($file['name']) ) {
+			$file['name']= $this->sanitize_file_name($file['name']);
+		}
 		return $file;
 	}
 

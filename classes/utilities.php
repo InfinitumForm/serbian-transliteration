@@ -716,7 +716,7 @@ class Transliteration_Utilities {
 	 * @since     1.0.9
 	 * @version   1.0.0
 	 */
-	public static function is_editor() {
+	public static function is_editor() {	
 		return self::cached_static('is_editor', function() {
 			$is_editor = false;
 

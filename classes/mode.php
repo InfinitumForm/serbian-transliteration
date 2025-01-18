@@ -251,9 +251,9 @@ final class Transliteration_Mode extends Transliteration {
 	 * @contributor    Ivijan-Stefan Stipić
 	 * @version        1.0.0
 	 */
-	public function force_permalink_to_latin ($permalink) {
+	public function force_permalink_to_latin ($permalink, $force = false) {
 		$permalink = rawurldecode($permalink);
-		$permalink= Transliteration_Controller::get()->cyr_to_lat_sanitize($permalink);
+		$permalink= Transliteration_Controller::get()->cyr_to_lat_sanitize($permalink, $force);
 		return $permalink;
 	}
 	
