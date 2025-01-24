@@ -1,3 +1,7 @@
+= 2.1.6 =
+* Fixed autoloader to keep algorithms inside the plugin
+* Optimized transliterator for pages and posts
+
 = 2.1.5 =
 * Fixed permalink problems for the new posts
 * Fixed performances for the post updates

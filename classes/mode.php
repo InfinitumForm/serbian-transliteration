@@ -254,6 +254,7 @@ final class Transliteration_Mode extends Transliteration {
 	public function force_permalink_to_latin ($permalink, $force = false) {
 		$permalink = rawurldecode($permalink);
 		$permalink= Transliteration_Controller::get()->cyr_to_lat_sanitize($permalink, $force);
+		
 		return $permalink;
 	}
 	
@@ -314,23 +315,8 @@ final class Transliteration_Mode extends Transliteration {
 				$titles[ $key ] = $this->no_html_content( $titles[ $key ] );
 			}
 		}
+		
 		return $titles;
-	}
-	
-	/*
-	 * Transliterate Posts results
-	 * @contributor    Ivijan-Stefan Stipić
-	 * @version        1.0.0
-	 **/
-	public function get_posts ($posts) {
-		
-		foreach($posts as &$post) {
-			$post->post_title = $this->content($post->post_title??'');
-			$post->post_content = $this->content($post->post_content??'');
-			$post->post_excerpt = $this->content($post->post_excerpt??'');
-		}
-		
-		return $posts;
 	}
 	
 	/*
@@ -355,19 +341,24 @@ final class Transliteration_Mode extends Transliteration {
 	
 	
 	public function the_post_filter ($post) {
-		$post->post_title = $this->no_html_content( $post->post_title );
-		$post->post_content = $this->content( $post->post_content );
-		$post->post_excerpt = $this->content( $post->post_excerpt );
+		$post->post_title = $this->no_html_content( $post->post_title ?? '' );
+		$post->post_content = $this->content( $post->post_content ?? '' );
+		$post->post_excerpt = $this->content( $post->post_excerpt ?? '' );
+		
 		return $post;
 	}
 	
-	
+	/*
+	 * Transliterate Posts results
+	 * @contributor    Ivijan-Stefan Stipić
+	 * @version        1.0.0
+	 **/
 	public function the_posts_filter ( $posts ) {
+		
 		foreach ( $posts as &$post ) {
-			$post->post_title = $this->no_html_content( $post->post_title );
-			$post->post_content = $this->content( $post->post_content );
-			$post->post_excerpt = $this->content( $post->post_excerpt );
+			$post = $this->the_post_filter($post);
 		}
+		
 		return $posts;
 	}
 	
@@ -389,6 +380,7 @@ final class Transliteration_Mode extends Transliteration {
 		foreach ($messages as $key => $message) {
 			$messages[$key] = $this->no_html_content($message, (Transliteration_Utilities::is_admin() ? 'cyr_to_lat' : 'auto'));
 		}
+		
 		return $messages;
 	}
 	

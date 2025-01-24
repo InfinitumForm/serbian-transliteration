@@ -25,7 +25,7 @@ class Transliteration_Plugin_Advanced_Custom_Fields_Pro extends Transliteration
 			'acf/fields/post_object/result' => 'content',
 			'acf_the_content' => 'content',
 			'acf/prepare_field' => [__CLASS__, 'label_attr'],
-			'acf/acf_get_posts/results' => 'get_posts'
+			'acf/acf_get_posts/results' => 'the_posts_filter'
 		));
 		
 		return $filters;

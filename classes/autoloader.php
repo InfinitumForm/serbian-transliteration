@@ -56,8 +56,16 @@ if(!class_exists('Transliterator_Autoloader', false)) : final class Transliterat
         // Check if the class is already cached
         if (isset(self::$class_map_cache[$class_name])) {
             if (!class_exists($class_name, false)) {
+				// Keep the code under the plugin to avoid conflicts
+				if( strpos(self::$class_map_cache[$class_name], RSTR_ROOT) === false ) {
+					return;
+				}
+				
+				// Load the file
                 require_once self::$class_map_cache[$class_name];
             }
+			
+			// Stop on the loaded class
             return;
         }
 
@@ -67,7 +75,12 @@ if(!class_exists('Transliterator_Autoloader', false)) : final class Transliterat
             if (strncmp($class_name, $prefix, strlen($prefix)) === 0 && !class_exists($class_name, false)) {
                 // Resolve the class file path
                 $file = self::resolveClassFile($prefix, $class_name, $directory);
-
+				
+				// Keep the code under the plugin to avoid conflicts
+				if( strpos($file, RSTR_ROOT) === false ) {
+					continue;
+				}
+				
                 // Check if the file exists and load it
                 if (file_exists($file)) {
                     self::$class_map_cache[$class_name] = $file;
@@ -76,6 +89,7 @@ if(!class_exists('Transliterator_Autoloader', false)) : final class Transliterat
                         apcu_store('rstr_class_map_cache', self::$class_map_cache);
                     }
 
+					// Load the file
                     require_once $file;
                     return;
                 }
