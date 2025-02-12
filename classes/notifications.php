@@ -76,7 +76,7 @@ class Transliteration_Notifications extends Transliteration
 	public function check_installation_time() {
 		$this->display_vote();
 		$this->display_donation();
-		$this->display_ads();
+	//	$this->display_ads();
 	}
 	
 	// dimiss vote notices

@@ -8,6 +8,7 @@
  * @autor             Ivijan-Stefan Stipic
  */
 final class Transliteration_Menus extends Transliteration {
+	use Transliteration__Cache;
 
 	function __construct(){
 		$this->add_action( 'admin_head-nav-menus.php', 'admin_nav_menu' );
@@ -123,22 +124,23 @@ final class Transliteration_Menus extends Transliteration {
 	* @param object $options The menu options.
 	*/
 	public function transliteration_setup_title( $title, $options ) {
-		
-		if( !current_theme_supports('menus') ) {
-			return $title;
-		}
+		return self::cached_static('transliteration_setup_title', function() use ($title, $options){
+			if( !current_theme_supports('menus') ) {
+				return $title;
+			}
 
-		$titles = explode( '|', ($title??'') );
+			$titles = explode( '|', ($title??'') );
 
-		if(is_array($titles)) {
-			$titles = array_map('trim', $titles);
-		}
+			if(is_array($titles)) {
+				$titles = array_map('trim', $titles);
+			}
 
-		if ( $options->active == 'cyr' ) {
-			return '{cyr_to_lat}'.esc_html( isset( $titles[0] ) ? $titles[0] : $title ).'{/cyr_to_lat}';
-		} else {
-			return '{lat_to_cyr}'.esc_html( isset( $titles[1] ) ? $titles[1] : $title ).'{/lat_to_cyr}';
-		}
+			if ( $options->active == 'cyr' ) {
+				return '{cyr_to_lat}'.esc_html( isset( $titles[0] ) ? $titles[0] : $title ).'{/cyr_to_lat}';
+			} else {
+				return '{lat_to_cyr}'.esc_html( isset( $titles[1] ) ? $titles[1] : $title ).'{/lat_to_cyr}';
+			}
+		}, [$title, $options->active]);
 	}
 
 	/**

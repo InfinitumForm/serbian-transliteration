@@ -21,8 +21,11 @@ class Transliteration_Themes {
 		// Sanitize and construct the class name
 		$class_name = 'Transliteration_Theme_' . $this->sanitize_class_name($theme_name);
 		
+		// Filter active theme class
+		$class_name = apply_filters('rstr_active_theme_class', $class_name, $theme_name, $theme);
+		
 		// Check if the class exists and instantiate it if it does
-		if (class_exists($class_name)) {
+		if ($class_name && class_exists($class_name)) {
 			return $class_name;
 		}
 		

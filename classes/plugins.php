@@ -10,6 +10,9 @@ class Transliteration_Plugins {
 		// Get the list of active plugins
 		$active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 		
+		// Filter active plugins
+		$active_plugins = apply_filters('rstr_active_plugins', $active_plugins);
+		
 		$found_classes = [];
 		foreach ($active_plugins as $plugin) {
 			// Extract the plugin folder name from the plugin path
@@ -18,11 +21,17 @@ class Transliteration_Plugins {
 			// Sanitize and construct the class name
 			$class_name = 'Transliteration_Plugin_' . $this->sanitize_class_name($plugin_folder);
 			
+			// Filter current class
+			$class_name = apply_filters('rstr_active_plugin_class', $class_name, $plugin_folder, $plugin);
+			
 			// Check if the class exists and add it to the array if it does
-			if (class_exists($class_name)) {
+			if ($class_name && class_exists($class_name)) {
 				$found_classes[] = $class_name;
 			}
 		}
+		
+		// FIlter all classes
+		$found_classes = apply_filters('rstr_active_plugin_classes', $found_classes, $active_plugins);
 		
 		return $found_classes;
 	}

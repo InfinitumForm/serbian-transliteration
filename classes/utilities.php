@@ -174,6 +174,20 @@ class Transliteration_Utilities {
 				if (is_user_logged_in() && empty($get_locale)) {
 					$get_locale = get_user_locale( wp_get_current_user() );
 				}
+				
+				if($get_locale == 'sr') {
+					$get_locale = 'sr_RS';
+				} else if($get_locale == 'mk') {
+					$get_locale = 'mk_MK';
+				} else if($get_locale == 'bs') {
+					$get_locale = 'bs_BA';
+				} else if($get_locale == 'bg') {
+					$get_locale = 'bg_BG';
+				} else if($get_locale == 'uz') {
+					$get_locale = 'uz_UZ';
+				} else if($get_locale == 'ru') {
+					$get_locale = 'ru_RU';
+				}
 			}
 
 			return empty($locale) ? $get_locale : ($get_locale === $locale);
@@ -315,8 +329,8 @@ class Transliteration_Utilities {
 				['has_action', 'litespeed_purge_all'],
 				['function_exists', 'liteSpeed_purge_all'],
 				['function_exists', 'w3tc_flush_all'],
-				[$w3_plugin_totalcache],
 				['function_exists', 'wpfc_clear_all_cache'],
+				[$w3_plugin_totalcache],
 				['function_exists', 'rocket_clean_domain'],
 				['function_exists', 'prune_super_cache', 'get_supercache_dir'],
 				['function_exists', 'clear_site_cache'],
@@ -658,9 +672,9 @@ class Transliteration_Utilities {
 	 * @return        string
 	 * @author        Ivijan-Stefan Stipic
 	*/
-	public static function already_cyrillic(){
+	public static function already_cyrillic() {
 		return self::cached_static('already_cyrillic', function() {
-			return in_array(self::get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bel', 'bg_BG', 'ru_RU', 'sah', 'uk', 'kk', 'el', 'ar', 'hy'))) !== false;
+			return in_array(self::get_locale(), apply_filters('rstr_already_cyrillic', array('sr_RS','mk_MK', 'bg_BG', 'ru_RU', 'uk', 'kk', 'el', 'ar', 'hy', 'sr', 'mk', 'bg', 'ru', 'bel', 'sah', 'bs', 'kir', 'mn', 'ba', 'uz', 'ka', 'tg', 'cnr', 'bs_BA'))) !== ( 1 === 2 );
 		});
 	}
 	
@@ -1011,88 +1025,8 @@ class Transliteration_Utilities {
 	* @since     1.6.7
 	*/
 	public static function normalize_latin_string($str){
-		$map = apply_filters('rstr/utilities/normalize_latin_string', array(
-			'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Ă'=>'A', 'Ā'=>'A', 'Ą'=>'A', 'Æ'=>'A', 'Ǽ'=>'A',
-			'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'ă'=>'a', 'ā'=>'a', 'ą'=>'a', 'æ'=>'a', 'ǽ'=>'a',
-
-			'Þ'=>'B', 'þ'=>'b', 'ß'=>'Ss',
-
-			'Ç'=>'C', 'Č'=>'C', 'Ć'=>'C', 'Ĉ'=>'C', 'Ċ'=>'C',
-			'ç'=>'c', 'č'=>'c', 'ć'=>'c', 'ĉ'=>'c', 'ċ'=>'c',
-
-			'Đ'=>'Dj', 'Ď'=>'D',
-			'đ'=>'dj', 'ď'=>'d',
-
-			'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ĕ'=>'E', 'Ē'=>'E', 'Ę'=>'E', 'Ė'=>'E',
-			'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ĕ'=>'e', 'ē'=>'e', 'ę'=>'e', 'ė'=>'e',
-
-			'Ĝ'=>'G', 'Ğ'=>'G', 'Ġ'=>'G', 'Ģ'=>'G',
-			'ĝ'=>'g', 'ğ'=>'g', 'ġ'=>'g', 'ģ'=>'g',
-
-			'Ĥ'=>'H', 'Ħ'=>'H',
-			'ĥ'=>'h', 'ħ'=>'h',
-
-			'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'İ'=>'I', 'Ĩ'=>'I', 'Ī'=>'I', 'Ĭ'=>'I', 'Į'=>'I',
-			'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'į'=>'i', 'ĩ'=>'i', 'ī'=>'i', 'ĭ'=>'i', 'ı'=>'i',
-
-			'Ĵ'=>'J',
-			'ĵ'=>'j',
-
-			'Ķ'=>'K', 'Ƙ'=>'K',
-			'ķ'=>'k', 'ĸ'=>'k',
-
-			'Ĺ'=>'L', 'Ļ'=>'L', 'Ľ'=>'L', 'Ŀ'=>'L', 'Ł'=>'L',
-			'ĺ'=>'l', 'ļ'=>'l', 'ľ'=>'l', 'ŀ'=>'l', 'ł'=>'l',
-
-			'Ñ'=>'N', 'Ń'=>'N', 'Ň'=>'N', 'Ņ'=>'N', 'Ŋ'=>'N',
-			'ñ'=>'n', 'ń'=>'n', 'ň'=>'n', 'ņ'=>'n', 'ŋ'=>'n', 'ŉ'=>'n',
-
-			'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ō'=>'O', 'Ŏ'=>'O', 'Ő'=>'O', 'Œ'=>'O',
-			'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ō'=>'o', 'ŏ'=>'o', 'ő'=>'o', 'œ'=>'o', 'ð'=>'o',
-
-			'Ŕ'=>'R', 'Ř'=>'R',
-			'ŕ'=>'r', 'ř'=>'r', 'ŗ'=>'r',
-
-			'Š'=>'S', 'Ŝ'=>'S', 'Ś'=>'S', 'Ş'=>'S',
-			'š'=>'s', 'ŝ'=>'s', 'ś'=>'s', 'ş'=>'s',
-
-			'Ŧ'=>'T', 'Ţ'=>'T', 'Ť'=>'T',
-			'ŧ'=>'t', 'ţ'=>'t', 'ť'=>'t',
-
-			'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ũ'=>'U', 'Ū'=>'U', 'Ŭ'=>'U', 'Ů'=>'U', 'Ű'=>'U', 'Ų'=>'U',
-			'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ũ'=>'u', 'ū'=>'u', 'ŭ'=>'u', 'ů'=>'u', 'ű'=>'u', 'ų'=>'u',
-
-			'Ŵ'=>'W', 'Ẁ'=>'W', 'Ẃ'=>'W', 'Ẅ'=>'W',
-			'ŵ'=>'w', 'ẁ'=>'w', 'ẃ'=>'w', 'ẅ'=>'w',
-
-			'Ý'=>'Y', 'Ÿ'=>'Y', 'Ŷ'=>'Y',
-			'ý'=>'y', 'ÿ'=>'y', 'ŷ'=>'y',
-
-			'Ž'=>'Z', 'Ź'=>'Z', 'Ż'=>'Z',
-			'ž'=>'z', 'ź'=>'z', 'ż'=>'z',
-			
-			'ა' => 'a', 'Ა' => 'A', 'ბ' => 'b', 'Ბ' => 'B', 'გ' => 'g', 'Გ' => 'G',
-			'დ' => 'd', 'Დ' => 'D', 'ე' => 'e', 'Ე' => 'E', 'ვ' => 'v', 'Ვ' => 'V',
-			'ზ' => 'z', 'Ზ' => 'Z', 'თ' => 'th', 'Თ' => 'Th', 'ი' => 'i', 'Ი' => 'I',
-			'კ' => 'k', 'Კ' => 'K', 'ლ' => 'l', 'Ლ' => 'L', 'მ' => 'm', 'Მ' => 'M',
-			'ნ' => 'n', 'Ნ' => 'N', 'ო' => 'o', 'Ო' => 'O', 'პ' => 'p', 'Პ' => 'P',
-			'ჟ' => 'zh', 'Ჟ' => 'Zh', 'რ' => 'r', 'Რ' => 'R', 'ს' => 's', 'Ს' => 'S',
-			'ტ' => 't', 'Ტ' => 'T', 'უ' => 'u', 'Უ' => 'U', 'ფ' => 'ph', 'Ფ' => 'Ph',
-			'ქ' => 'q', 'Ქ' => 'Q', 'ღ' => 'gh', 'Ღ' => 'Gh', 'ყ' => 'qh', 'Ყ' => 'Qh',
-			'შ' => 'sh', 'Შ' => 'Sh', 'ჩ' => 'ch', 'Ჩ' => 'Ch', 'ც' => 'ts', 'Ც' => 'Ts',
-			'ძ' => 'dz', 'Ძ' => 'Dz', 'წ' => 'ts', 'Წ' => 'Ts', 'ჭ' => 'tch', 'Ჭ' => 'Tch',
-			'ხ' => 'kh', 'Ხ' => 'Kh', 'ჯ' => 'j', 'Ჯ' => 'J', 'ჰ' => 'h', 'Ჰ' => 'H',
-
-			'“'=>'"', '”'=>'"', '‘'=>"'", '’'=>"'", '•'=>'-', '…'=>'...', '—'=>'-', '–'=>'-', '¿'=>'?', '¡'=>'!', '°'=>__(' degrees ', 'serbian-transliteration'),
-			'¼'=>' 1/4 ', '½'=>' 1/2 ', '¾'=>' 3/4 ', '⅓'=>' 1/3 ', '⅔'=>' 2/3 ', '⅛'=>' 1/8 ', '⅜'=>' 3/8 ', '⅝'=>' 5/8 ', '⅞'=>' 7/8 ',
-			'÷'=>__(' divided by ', 'serbian-transliteration'), '×'=>__(' times ', 'serbian-transliteration'), '±'=>__(' plus-minus ', 'serbian-transliteration'), '√'=>__(' square root ', 'serbian-transliteration'),
-			'∞'=>__(' infinity ', 'serbian-transliteration'), '≈'=>__(' almost equal to ', 'serbian-transliteration'), '≠'=>__(' not equal to ', 'serbian-transliteration'), 
-			'≡'=>__(' identical to ', 'serbian-transliteration'), '≤'=>__(' less than or equal to ', 'serbian-transliteration'), '≥'=>__(' greater than or equal to ', 'serbian-transliteration'),
-			'←'=>__(' left ', 'serbian-transliteration'), '→'=>__(' right ', 'serbian-transliteration'), '↑'=>__(' up ', 'serbian-transliteration'), '↓'=>__(' down ', 'serbian-transliteration'),
-			'↔'=>__(' left and right ', 'serbian-transliteration'), '↕'=>__(' up and down ', 'serbian-transliteration'), '℅'=>__(' care of ', 'serbian-transliteration'), 
-			'℮' => __(' estimated ', 'serbian-transliteration'), 'Ω'=>__(' ohm ', 'serbian-transliteration'), '♀'=>__(' female ', 'serbian-transliteration'), '♂'=>__(' male ', 'serbian-transliteration'),
-			'©'=>__(' Copyright ', 'serbian-transliteration'), '®'=>__(' Registered ', 'serbian-transliteration'), '™' =>__(' Trademark ', 'serbian-transliteration'),
-		), $str);
+		
+		$map = apply_filters('rstr/utilities/normalize_latin_string', RSTR_NORMALIZE_LATIN_STRING_MAP, $str);
 
 		$str = strtr($str, $map);
 		
@@ -1320,6 +1254,43 @@ class Transliteration_Utilities {
 			}
 
 			return false;
+		});
+	}
+	
+	/*
+	 * Check if it's Light Speed cache active
+	 * @return  true/false
+	 */
+	public static function is_lscache_active() {
+		return self::cached_static('is_lscache_active', function() {
+			// Check if LiteSpeed Cache plugin is enabled
+			if (defined('LSCACHE_ENABLED') && LSCACHE_ENABLED) {
+				return true;
+			}
+			
+			// Check if the server software is LiteSpeed
+			$software = $_SERVER['SERVER_SOFTWARE'] ?? NULL;
+			if ($software && stripos($software, 'LiteSpeed') !== false) {
+				return true;
+			}
+			
+			// Check for LiteSpeed Cache specific HTTP header
+			if (!empty($_SERVER['HTTP_X_LITESPEED_CACHE'] ?? NULL)) {
+				return true;
+			}
+			
+			// Default: LiteSpeed Cache is not active
+			return false;
+		});
+	}
+	
+	/*
+	 * Check if it's Light Speed is cachable
+	 * @return  true/false
+	 */
+	public static function litespeed_is_cachable() {
+		return self::cached_static('litespeed_is_cachable', function() {
+			return (defined('LSCACHE_ENABLED') && LSCACHE_ENABLED && function_exists('litespeed_is_cachable') && litespeed_is_cachable());
 		});
 	}
 

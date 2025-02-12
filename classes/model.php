@@ -110,70 +110,51 @@ class Transliteration {
 	 * @author        Ivijan-Stefan Stipic
 	 */
 	public function ob_start($callback = null, int $chunk_size = 0, int $flags = PHP_OUTPUT_HANDLER_REMOVABLE){
-		if(!is_array($callback) && !is_callable($callback)){
-			$callback = array(&$this, $callback);
-		}
-		ob_start($callback, $chunk_size, $flags);
+		ob_start($this->ensure_callable($callback), $chunk_size, $flags);
 	}
 	
-	/*
-	 * Helper for add_action()
-	 * @author        Ivijan-Stefan Stipic
-	 */
-	public function add_action(string $tag, $function_to_add, int $priority = 10, int $accepted_args = 1){
-		if(!is_array($function_to_add)){
-			$function_to_add = array(&$this, $function_to_add);
-		}
-		return add_action( (string)$tag, $function_to_add, (int)$priority, (int)$accepted_args );
-	}
+	/**
+     * Helper for add_action()
+     * @author        Ivijan-Stefan Stipic
+     */
+    public function add_action(string $tag, $function_to_add, int $priority = 10, int $accepted_args = 1){
+        return add_action($tag, $this->ensure_callable($function_to_add), $priority, $accepted_args);
+    }
 
-	/*
-	 * Helper for remove_action()
-	 * @author        Ivijan-Stefan Stipic
-	 */
-	public function remove_action(string $tag, $function_to_remove, int $priority = 10){
-		if(!is_array($function_to_remove)){
-			$function_to_remove = array(&$this, $function_to_remove);
-		}
-		return remove_action( $tag, $function_to_remove, $priority );
-	}
+    /**
+     * Helper for remove_action()
+     * @author        Ivijan-Stefan Stipic
+     */
+    public function remove_action(string $tag, $function_to_remove, int $priority = 10){
+        return remove_action($tag, $this->ensure_callable($function_to_remove), $priority);
+    }
 
-	/*
-	 * Helper for add_filter()
-	 * @author        Ivijan-Stefan Stipic
-	 */
-	public function add_filter(string $tag, $function_to_add, int $priority = 10, int $accepted_args = 1){
-		if(!is_array($function_to_add)){
-			$function_to_add = array(&$this, $function_to_add);
-		}
-		return add_filter( (string)$tag, $function_to_add, (int)$priority, (int)$accepted_args );
-	}
+    /**
+     * Helper for add_filter()
+     * @author        Ivijan-Stefan Stipic
+     */
+    public function add_filter(string $tag, $function_to_add, int $priority = 10, int $accepted_args = 1){
+        return add_filter($tag, $this->ensure_callable($function_to_add), $priority, $accepted_args);
+    }
 
-	/*
-	 * Helper for remove_filter()
-	 * @author        Ivijan-Stefan Stipic
-	 */
-	public function remove_filter(string $tag, $function_to_remove, int $priority = 10){
-		if(!is_array($function_to_remove)){
-			$function_to_remove = array(&$this, $function_to_remove);
-		}
-		return remove_filter( (string)$tag, $function_to_remove, (int)$priority );
-	}
+    /**
+     * Helper for remove_filter()
+     * @author        Ivijan-Stefan Stipic
+     */
+    public function remove_filter(string $tag, $function_to_remove, int $priority = 10){
+        return remove_filter($tag, $this->ensure_callable($function_to_remove), $priority);
+    }
 
-	/*
-	 * Helper for add_shortcode()
-	 * @author        Ivijan-Stefan Stipic
-	 */
-	public function add_shortcode(string $tag, $function_to_add){
-		if(!is_array($function_to_add)){
-			$function_to_add = array(&$this, $function_to_add);
-		}
-		if(!shortcode_exists($tag)) {
-			return add_shortcode( $tag, $function_to_add );
-		}
-
-		return false;
-	}
+    /**
+     * Helper for add_shortcode()
+     * @author        Ivijan-Stefan Stipic
+     */
+    public function add_shortcode(string $tag, $function_to_add, bool $overwrite = false){
+        if(shortcode_exists($tag) && !$overwrite) {
+            return false;
+        }
+        return add_shortcode($tag, $this->ensure_callable($function_to_add));
+    }
 	
 	/**
      * Sanitize values
@@ -209,6 +190,15 @@ class Transliteration {
 
 		return apply_filters('transliterator_sanitize', $object, $this);
 	}
+	
+	/**
+     * Ensure callable is in array format for class methods
+     * @param $function
+     * @return callable
+     */
+    private function ensure_callable($function) {
+        return !is_array($function) ? [&$this, $function] : $function;
+    }
 
 
 }

@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.6
+Stable tag: 2.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -108,6 +108,17 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Changelog ==
 
+= 2.1.8 =
+* Added support and integration for Polylang plugin
+* Improved and optimized permalink algorithm
+* Optimized plugin loading
+* Added new filters for developers
+
+= 2.1.7 =
+* Optimized main plugin control model
+* Added navigation caching
+* Fixed a bug with the repeating notification
+
 = 2.1.6 =
 * Fixed autoloader to keep algorithms inside the plugin
 * Optimized transliterator for pages and posts
@@ -200,39 +211,16 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Upgrade Notice ==
 
-= 2.1.6 =
-* Fixed autoloader to keep algorithms inside the plugin
-* Optimized transliterator for pages and posts
+= 2.1.8 =
+* Added support and integration for Polylang plugin
+* Improved and optimized permalink algorithm
+* Optimized plugin loading
+* Added new filters for developers
 
-= 2.1.5 =
-* Fixed permalink problems for the new posts
-* Fixed performances for the post updates
-
-= 2.1.4 =
-* Fixed SEO module for the Google index
-
-= 2.1.3 =
-* Fixed sitemap redirection issues
-* Added new attributes for transliteration
-* Removed unnecessary and obsolete code
-* Optimization of PHP algorithms
-
-= 2.1.2 =
-* Fixed PHP fatal errors
-* Improved transliteration of cached content
-* Added security protocols
-* Improved PHP code
-
-= 2.1.1 =
-* Fixing filters for the Contact Form 7
-
-= 2.1.0 =
-* Added new autoloader for better performances
-* Added new caching functionality
-* Added prevention of redirection on AJAX calls
-* Improved PHP code
-* Fixed bugs from the previous version
-* Improved block editor script
+= 2.1.7 =
+* Optimized main plugin control model
+* Added navigation caching
+* Fixed a bug with the repeating notification
 
 == Frequently Asked Questions ==
 

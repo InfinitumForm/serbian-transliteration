@@ -1,3 +1,14 @@
+= 2.1.8 =
+* Added support and integration for Polylang plugin
+* Improved and optimized permalink algorithm
+* Optimized plugin loading
+* Added new filters for developers
+
+= 2.1.7 =
+* Optimized main plugin control model
+* Added navigation caching
+* Fixed a bug with the repeating notification
+
 = 2.1.6 =
 * Fixed autoloader to keep algorithms inside the plugin
 * Optimized transliterator for pages and posts
