@@ -256,7 +256,7 @@ final class Transliteration_Controller extends Transliteration {
 		}, $content);
 
 		// Perform the transliteration using the class map
-		if (class_exists($class_map)) {
+		if ($class_map && class_exists($class_map)) {
 			$content = $class_map::transliterate($content, 'cyr_to_lat');
 			$content = Transliteration_Sanitization::get()->lat($content, $sanitize_html);
 		}
