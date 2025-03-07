@@ -4,7 +4,8 @@ class Transliteration_Wordpress extends Transliteration {
     
     public function __construct() {
 		$this->add_filter('sanitize_user', 'allow_cyrillic_usernames', 10, 3);
-		$this->add_filter('body_class', 'add_body_class', 10, 1);
+		$this->add_filter('body_class', 'add_body_class', 10, 2);
+		
 		$this->transliterate_rss_atom();
 		$this->transliterate_widgets();
 		$this->transliterate_permalinks();
@@ -42,15 +43,18 @@ class Transliteration_Wordpress extends Transliteration {
 		return $username;
 	}
 	
-	public function add_body_class($classes){
+	public function add_body_class($classes, $css_class){
 		if(get_rstr_option('enable-body-class', 'no') == 'no') {
-			return;
+			return $classes;
 		}
+		
 		$script = Transliteration_Utilities::get_current_script();
+		
 		//body class based on the current script - cyr, lat
 		$classes[] = 'rstr-' . $script;
 		$classes[] = 'transliteration-' . $script;
 		$classes[] = $script;
+		
 		return $classes;
 	}
 	
@@ -60,15 +64,17 @@ class Transliteration_Wordpress extends Transliteration {
 		}
 		
 		$priority = PHP_INT_MAX - 100;
+		
 		$actions = [
 			'rss_head', 'rss_footer',
 			'rss2_head', 'rss2_footer',
 			'rdf_head', 'rdf_footer',
 			'atom_head', 'atom_footer',
 		];
+		
 		foreach ($actions as $action) {
 			$this->add_action($action, 'rss_output_buffer_' . (strpos($action??'', '_head') ? 'start' : 'end'), $priority);
-		}		
+		}
 	}
 	
 	private function transliterate_widgets() {

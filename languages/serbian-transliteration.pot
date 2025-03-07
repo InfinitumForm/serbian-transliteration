@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliterator\n"
-"POT-Creation-Date: 2024-08-30 08:50+0200\n"
+"POT-Creation-Date: 2025-02-20 19:25+0100\n"
 "PO-Revision-Date: 2023-08-24 13:48+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: serbian-transliteration.php\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "undefined"
 msgstr ""
 
-#: classes/filters.php:125 classes/settings.php:688
+#: classes/filters.php:125 classes/settings.php:690
 msgid "Freelance Jobs - Find or post freelance jobs"
 msgstr ""
 
@@ -41,99 +41,95 @@ msgstr ""
 msgid "Thank you for using Transliterator. Could you buy me a coffee?"
 msgstr ""
 
-#: classes/init.php:56 classes/init.php:63 classes/utilities.php:451
-msgid "Attention, Headers have already been sent!"
-msgstr ""
-
-#: classes/menus.php:28 classes/settings.php:47 classes/settings.php:88
-#: classes/settings.php:300 classes/settings.php:371 classes/settings.php:406
-#: classes/settings.php:441 classes/settings.php:484 classes/settings.php:512
-#: classes/settings.php:547 classes/settings.php:574
+#: classes/menus.php:29 classes/settings.php:49 classes/settings.php:90
+#: classes/settings.php:302 classes/settings.php:373 classes/settings.php:408
+#: classes/settings.php:443 classes/settings.php:486 classes/settings.php:514
+#: classes/settings.php:549 classes/settings.php:576
 msgid "Transliteration"
 msgstr ""
 
-#: classes/menus.php:42 classes/menus.php:44 classes/settings-fields.php:501
-#: classes/settings-fields.php:583 classes/settings.php:117
-#: classes/settings.php:191 classes/settings/page-functions.php:162
+#: classes/menus.php:43 classes/menus.php:45 classes/settings-fields.php:501
+#: classes/settings-fields.php:583 classes/settings.php:119
+#: classes/settings.php:193 classes/settings/page-functions.php:162
 #: classes/shortcodes.php:31 functions.php:432
 msgid "Latin"
 msgstr ""
 
-#: classes/menus.php:43 classes/menus.php:44 classes/settings-fields.php:500
-#: classes/settings-fields.php:584 classes/settings.php:118
-#: classes/settings.php:192 classes/settings/page-functions.php:157
+#: classes/menus.php:44 classes/menus.php:45 classes/settings-fields.php:500
+#: classes/settings-fields.php:584 classes/settings.php:120
+#: classes/settings.php:194 classes/settings/page-functions.php:157
 #: classes/shortcodes.php:30 functions.php:431
 msgid "Cyrillic"
 msgstr ""
 
-#: classes/menus.php:80
+#: classes/menus.php:81
 msgid "Help"
 msgstr ""
 
-#: classes/menus.php:83
+#: classes/menus.php:84
 msgid ""
 "To insert language script selector just add a relative link after the link's "
 "keyword, example :"
 msgstr ""
 
-#: classes/menus.php:84
+#: classes/menus.php:85
 msgid "You can also use"
 msgstr ""
 
-#: classes/menus.php:84
+#: classes/menus.php:85
 msgid "for change to Latin or use"
 msgstr ""
 
-#: classes/menus.php:84
+#: classes/menus.php:85
 msgid "for change to Cyrillic"
 msgstr ""
 
-#: classes/menus.php:90
+#: classes/menus.php:91
 msgid "Add to Menu"
 msgstr ""
 
-#: classes/menus.php:110
+#: classes/menus.php:111
 #, php-format
 msgid ""
 "The name of this navigation is written by always putting the Latin name "
 "first, then the Cyrillic one second, separated by the sign %s"
 msgstr ""
 
-#: classes/menus.php:111
+#: classes/menus.php:112
 msgid "Example: Latinica | Ћирилица"
 msgstr ""
 
-#: classes/menus.php:112
+#: classes/menus.php:113
 msgid "Note that the white space around them will be cleared."
 msgstr ""
 
-#: classes/notifications.php:153
+#: classes/notifications.php:164
 #, php-format
 msgid ""
 "You have been using <b> %1$s </b> plugin for a while. We hope you liked it!"
 msgstr ""
 
-#: classes/notifications.php:153
+#: classes/notifications.php:164
 msgid ""
 "Please give us a quick rating, it works as a boost for us to keep working on "
 "the plugin!"
 msgstr ""
 
-#: classes/notifications.php:153
+#: classes/notifications.php:164
 msgid "Rate Now!"
 msgstr ""
 
-#: classes/notifications.php:153
+#: classes/notifications.php:164
 msgid "I've already done that!"
 msgstr ""
 
-#: classes/notifications.php:172
+#: classes/notifications.php:183
 #, php-format
 msgid ""
 "Hey there! It's been a while since you've been using the <b> %1$s </b> plugin"
 msgstr ""
 
-#: classes/notifications.php:177
+#: classes/notifications.php:188
 #, php-format
 msgid ""
 "I'm glad to hear you're enjoying the plugin. I've put a lot of time and "
@@ -141,25 +137,25 @@ msgid ""
 "generous, how about %s for my hard work? 😊"
 msgstr ""
 
-#: classes/notifications.php:179
+#: classes/notifications.php:190
 msgid "treating me to a coffee"
 msgstr ""
 
-#: classes/notifications.php:182
+#: classes/notifications.php:193
 #, php-format
 msgid "Or simply %s forever."
 msgstr ""
 
-#: classes/notifications.php:183
+#: classes/notifications.php:194
 msgid "hide this message"
 msgstr ""
 
-#: classes/notifications.php:196
+#: classes/notifications.php:207
 #, php-format
 msgid "Find Work or %1$s in Serbia, Bosnia, Croatia, and Beyond!"
 msgstr ""
 
-#: classes/notifications.php:196
+#: classes/notifications.php:207
 #, php-format
 msgid ""
 "Visit %2$s to connect with skilled professionals across the region. Whether "
@@ -167,15 +163,15 @@ msgid ""
 "gateway to successful collaboration."
 msgstr ""
 
-#: classes/notifications.php:197
+#: classes/notifications.php:208
 msgid "Hire Top Freelancers"
 msgstr ""
 
-#: classes/notifications.php:198
+#: classes/notifications.php:209
 msgid "Freelance Jobs"
 msgstr ""
 
-#: classes/notifications.php:199
+#: classes/notifications.php:210
 msgid "Join us today!"
 msgstr ""
 
@@ -495,11 +491,11 @@ msgid ""
 "variant so you can get the best result you need."
 msgstr ""
 
-#: classes/settings-fields.php:505 classes/utilities.php:30
+#: classes/settings-fields.php:505 classes/utilities.php:31
 msgid "Arabic"
 msgstr ""
 
-#: classes/settings-fields.php:507 classes/utilities.php:29
+#: classes/settings-fields.php:507 classes/utilities.php:30
 msgid "Armenian"
 msgstr ""
 
@@ -518,12 +514,12 @@ msgstr ""
 msgid "Transliteration disabled"
 msgstr ""
 
-#: classes/settings-fields.php:541 classes/settings.php:642
+#: classes/settings-fields.php:541 classes/settings.php:644
 #: classes/settings/page-shortcodes.php:6 classes/settings/page-tags.php:3
 msgid "Cyrillic to Latin"
 msgstr ""
 
-#: classes/settings-fields.php:542 classes/settings.php:643
+#: classes/settings-fields.php:542 classes/settings.php:645
 #: classes/settings/page-shortcodes.php:12 classes/settings/page-tags.php:6
 msgid "Latin to Cyrillic"
 msgstr ""
@@ -629,8 +625,8 @@ msgstr ""
 #: classes/settings-fields.php:912 classes/settings-fields.php:936
 #: classes/settings-fields.php:985 classes/settings-fields.php:1006
 #: classes/settings-fields.php:1073 classes/settings-fields.php:1114
-#: classes/settings.php:646 classes/settings.php:650 classes/settings.php:654
-#: classes/settings.php:658
+#: classes/settings.php:648 classes/settings.php:652 classes/settings.php:656
+#: classes/settings.php:660
 msgid "Yes"
 msgstr ""
 
@@ -641,8 +637,8 @@ msgstr ""
 #: classes/settings-fields.php:913 classes/settings-fields.php:937
 #: classes/settings-fields.php:986 classes/settings-fields.php:1007
 #: classes/settings-fields.php:1074 classes/settings-fields.php:1115
-#: classes/settings.php:647 classes/settings.php:651 classes/settings.php:655
-#: classes/settings.php:659
+#: classes/settings.php:649 classes/settings.php:653 classes/settings.php:657
+#: classes/settings.php:661
 msgid "No"
 msgstr ""
 
@@ -860,171 +856,171 @@ msgstr ""
 msgid "join our team"
 msgstr ""
 
-#: classes/settings.php:58
+#: classes/settings.php:60
 msgid "Settings saved."
 msgstr ""
 
-#: classes/settings.php:67 classes/settings.php:664
+#: classes/settings.php:69 classes/settings.php:666
 msgid "Settings"
 msgstr ""
 
-#: classes/settings.php:77 classes/settings.php:223
+#: classes/settings.php:79 classes/settings.php:225
 msgid "Shortcodes"
 msgstr ""
 
-#: classes/settings.php:78 classes/settings.php:224
+#: classes/settings.php:80 classes/settings.php:226
 msgid "PHP Functions"
 msgstr ""
 
-#: classes/settings.php:79
+#: classes/settings.php:81
 msgid "5 stars?"
 msgstr ""
 
-#: classes/settings.php:87
+#: classes/settings.php:89
 msgid "Transliteration Settings"
 msgstr ""
 
-#: classes/settings.php:119 classes/settings.php:193
+#: classes/settings.php:121 classes/settings.php:195
 msgid "To Latin"
 msgstr ""
 
-#: classes/settings.php:120 classes/settings.php:194
+#: classes/settings.php:122 classes/settings.php:196
 msgid "To Cyrillic"
 msgstr ""
 
-#: classes/settings.php:121 classes/settings.php:195
+#: classes/settings.php:123 classes/settings.php:197
 msgid "Transliterate:"
 msgstr ""
 
-#: classes/settings.php:122 classes/settings.php:164 classes/settings.php:196
+#: classes/settings.php:124 classes/settings.php:166 classes/settings.php:198
 msgid "Loading..."
 msgstr ""
 
-#: classes/settings.php:162 classes/settings/page-permalinks.php:35
+#: classes/settings.php:164 classes/settings/page-permalinks.php:35
 msgid ""
 "Please wait! Do not close the window or leave the page until this operation "
 "is completed!"
 msgstr ""
 
-#: classes/settings.php:163
+#: classes/settings.php:165
 msgid "DONE!!!"
 msgstr ""
 
-#: classes/settings.php:207
+#: classes/settings.php:209
 msgid "PLEASE UPDATE PLUGIN SETTINGS"
 msgstr ""
 
-#: classes/settings.php:208
+#: classes/settings.php:210
 msgid ""
 "Carefully review the transliteration plugin settings and adjust how it fits "
 "your WordPress installation. It is important that every time you change the "
 "settings, you test the parts of the site that are affected by this plugin."
 msgstr ""
 
-#: classes/settings.php:225
+#: classes/settings.php:227
 msgid "Tags"
 msgstr ""
 
-#: classes/settings.php:231
+#: classes/settings.php:233
 msgid "Transliteration Tool"
 msgstr ""
 
-#: classes/settings.php:232
+#: classes/settings.php:234
 msgid "Permalink Tool"
 msgstr ""
 
-#: classes/settings.php:252
+#: classes/settings.php:254
 msgid "General Settings"
 msgstr ""
 
-#: classes/settings.php:256 classes/settings.php:665
+#: classes/settings.php:258 classes/settings.php:667
 msgid "Documentation"
 msgstr ""
 
-#: classes/settings.php:260 classes/settings.php:666
+#: classes/settings.php:262 classes/settings.php:668
 msgid "Tools"
 msgstr ""
 
-#: classes/settings.php:264 classes/settings.php:667
+#: classes/settings.php:266 classes/settings.php:669
 msgid "Debug"
 msgstr ""
 
-#: classes/settings.php:268 classes/settings.php:574 classes/settings.php:668
+#: classes/settings.php:270 classes/settings.php:576 classes/settings.php:670
 #: classes/settings/page-credits.php:41
 msgid "Credits"
 msgstr ""
 
-#: classes/settings.php:319 classes/settings.php:327
+#: classes/settings.php:321 classes/settings.php:329
 msgid "Save Changes"
 msgstr ""
 
-#: classes/settings.php:371
+#: classes/settings.php:373
 msgid "Available shortcodes"
 msgstr ""
 
-#: classes/settings.php:406
+#: classes/settings.php:408
 msgid "Available PHP Functions"
 msgstr ""
 
-#: classes/settings.php:441
+#: classes/settings.php:443
 msgid "Available Tags"
 msgstr ""
 
-#: classes/settings.php:484
+#: classes/settings.php:486
 msgid "Converter for transliterating Cyrillic into Latin and vice versa"
 msgstr ""
 
-#: classes/settings.php:512
+#: classes/settings.php:514
 msgid "Permalink Transliteration Tool"
 msgstr ""
 
-#: classes/settings.php:547
+#: classes/settings.php:549
 msgid "Debug information"
 msgstr ""
 
-#: classes/settings.php:622
+#: classes/settings.php:624
 msgid "WordPress Transliterator"
 msgstr ""
 
-#: classes/settings.php:662
+#: classes/settings.php:664
 msgid "Quick Access:"
 msgstr ""
 
-#: classes/settings.php:669
+#: classes/settings.php:671
 msgid "Rate us"
 msgstr ""
 
-#: classes/settings.php:673
+#: classes/settings.php:675
 msgid "Current Settings:"
 msgstr ""
 
-#: classes/settings.php:675
+#: classes/settings.php:677
 msgid "Transliteration Mode:"
 msgstr ""
 
-#: classes/settings.php:676
+#: classes/settings.php:678
 msgid "Cache Support:"
 msgstr ""
 
-#: classes/settings.php:677
+#: classes/settings.php:679
 msgid "Media Transliteration:"
 msgstr ""
 
-#: classes/settings.php:678
+#: classes/settings.php:680
 msgid "Permalink Transliteration:"
 msgstr ""
 
-#: classes/settings.php:681
+#: classes/settings.php:683
 msgid ""
 "Transliterator plugin options are not yet available. Please update plugin "
 "settings!"
 msgstr ""
 
-#: classes/settings.php:684
+#: classes/settings.php:686
 msgid "Recommendations:"
 msgstr ""
 
-#: classes/settings.php:685
+#: classes/settings.php:687
 msgid ""
 "Explore these recommended tools and resources that complement our plugin."
 msgstr ""
@@ -1580,201 +1576,105 @@ msgid ""
 "this does not solve the problem, contact the author of the plugin."
 msgstr ""
 
-#: classes/utilities.php:13
+#: classes/utilities.php:14
 msgid "Serbian"
 msgstr ""
 
-#: classes/utilities.php:14
+#: classes/utilities.php:15
 msgid "Bosnian"
 msgstr ""
 
-#: classes/utilities.php:15
+#: classes/utilities.php:16
 msgid "Montenegrin"
 msgstr ""
 
-#: classes/utilities.php:16
+#: classes/utilities.php:17
 msgid "Russian"
 msgstr ""
 
-#: classes/utilities.php:17
+#: classes/utilities.php:18
 msgid "Belarusian"
 msgstr ""
 
-#: classes/utilities.php:18
+#: classes/utilities.php:19
 msgid "Bulgarian"
 msgstr ""
 
-#: classes/utilities.php:19
+#: classes/utilities.php:20
 msgid "Macedoanian"
 msgstr ""
 
-#: classes/utilities.php:20
+#: classes/utilities.php:21
 msgid "Ukrainian"
 msgstr ""
 
-#: classes/utilities.php:21
+#: classes/utilities.php:22
 msgid "Kazakh"
 msgstr ""
 
-#: classes/utilities.php:22
+#: classes/utilities.php:23
 msgid "Tajik"
 msgstr ""
 
-#: classes/utilities.php:23
+#: classes/utilities.php:24
 msgid "Kyrgyz"
 msgstr ""
 
-#: classes/utilities.php:24
+#: classes/utilities.php:25
 msgid "Mongolian"
 msgstr ""
 
-#: classes/utilities.php:25
+#: classes/utilities.php:26
 msgid "Bashkir"
 msgstr ""
 
-#: classes/utilities.php:26
+#: classes/utilities.php:27
 msgid "Uzbek"
 msgstr ""
 
-#: classes/utilities.php:27
+#: classes/utilities.php:28
 msgid "Georgian"
 msgstr ""
 
-#: classes/utilities.php:28
+#: classes/utilities.php:29
 msgid "Greek"
 msgstr ""
 
-#: classes/utilities.php:98
+#: classes/utilities.php:141
+msgid "Phantom Mode (ultra fast DOM-based transliteration, experimental)"
+msgstr ""
+
+#: classes/utilities.php:142
 msgid "Light mode (basic parts of the site)"
 msgstr ""
 
-#: classes/utilities.php:99
+#: classes/utilities.php:143
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr ""
 
-#: classes/utilities.php:100
+#: classes/utilities.php:144
 msgid ""
-"Advanced mode (content, widgets, themes, plugins, translations, "
-"menu‚ permalinks, media)"
+"Advanced mode (content, widgets, themes, plugins, translations, menu, "
+"permalinks, media)"
 msgstr ""
 
-#: classes/utilities.php:101
+#: classes/utilities.php:145
 msgid "Forced transliteration (everything)"
 msgstr ""
 
-#: classes/utilities.php:106
+#: classes/utilities.php:146
 msgid ""
 "Only WooCommerce (It bypasses all other transliterations and focuses only on "
 "WooCommerce)"
 msgstr ""
 
-#: classes/utilities.php:112
+#: classes/utilities.php:147
 msgid "Dev Mode (Only for developers and testers)"
 msgstr ""
 
-#: classes/utilities.php:841
+#: classes/utilities.php:885
 #, php-format
 msgid "Failed to delete plugin translation: %s"
-msgstr ""
-
-#: classes/utilities.php:1074
-msgid " degrees "
-msgstr ""
-
-#: classes/utilities.php:1076
-msgid " divided by "
-msgstr ""
-
-#: classes/utilities.php:1076
-msgid " times "
-msgstr ""
-
-#: classes/utilities.php:1076
-msgid " plus-minus "
-msgstr ""
-
-#: classes/utilities.php:1076
-msgid " square root "
-msgstr ""
-
-#: classes/utilities.php:1077
-msgid " infinity "
-msgstr ""
-
-#: classes/utilities.php:1077
-msgid " almost equal to "
-msgstr ""
-
-#: classes/utilities.php:1077
-msgid " not equal to "
-msgstr ""
-
-#: classes/utilities.php:1078
-msgid " identical to "
-msgstr ""
-
-#: classes/utilities.php:1078
-msgid " less than or equal to "
-msgstr ""
-
-#: classes/utilities.php:1078
-msgid " greater than or equal to "
-msgstr ""
-
-#: classes/utilities.php:1079
-msgid " left "
-msgstr ""
-
-#: classes/utilities.php:1079
-msgid " right "
-msgstr ""
-
-#: classes/utilities.php:1079
-msgid " up "
-msgstr ""
-
-#: classes/utilities.php:1079
-msgid " down "
-msgstr ""
-
-#: classes/utilities.php:1080
-msgid " left and right "
-msgstr ""
-
-#: classes/utilities.php:1080
-msgid " up and down "
-msgstr ""
-
-#: classes/utilities.php:1080
-msgid " care of "
-msgstr ""
-
-#: classes/utilities.php:1081
-msgid " estimated "
-msgstr ""
-
-#: classes/utilities.php:1081
-msgid " ohm "
-msgstr ""
-
-#: classes/utilities.php:1081
-msgid " female "
-msgstr ""
-
-#: classes/utilities.php:1081
-msgid " male "
-msgstr ""
-
-#: classes/utilities.php:1082
-msgid " Copyright "
-msgstr ""
-
-#: classes/utilities.php:1082
-msgid " Registered "
-msgstr ""
-
-#: classes/utilities.php:1082
-msgid " Trademark "
 msgstr ""
 
 #: classes/wp-cli.php:57
@@ -1801,6 +1701,106 @@ msgstr[1] ""
 
 #: classes/wp-cli.php:121
 msgid "No changes to the permalink have been made."
+msgstr ""
+
+#: constants.php:174
+msgid " degrees "
+msgstr ""
+
+#: constants.php:176
+msgid " divided by "
+msgstr ""
+
+#: constants.php:176
+msgid " times "
+msgstr ""
+
+#: constants.php:176
+msgid " plus-minus "
+msgstr ""
+
+#: constants.php:176
+msgid " square root "
+msgstr ""
+
+#: constants.php:177
+msgid " infinity "
+msgstr ""
+
+#: constants.php:177
+msgid " almost equal to "
+msgstr ""
+
+#: constants.php:177
+msgid " not equal to "
+msgstr ""
+
+#: constants.php:178
+msgid " identical to "
+msgstr ""
+
+#: constants.php:178
+msgid " less than or equal to "
+msgstr ""
+
+#: constants.php:178
+msgid " greater than or equal to "
+msgstr ""
+
+#: constants.php:179
+msgid " left "
+msgstr ""
+
+#: constants.php:179
+msgid " right "
+msgstr ""
+
+#: constants.php:179
+msgid " up "
+msgstr ""
+
+#: constants.php:179
+msgid " down "
+msgstr ""
+
+#: constants.php:180
+msgid " left and right "
+msgstr ""
+
+#: constants.php:180
+msgid " up and down "
+msgstr ""
+
+#: constants.php:180
+msgid " care of "
+msgstr ""
+
+#: constants.php:181
+msgid " estimated "
+msgstr ""
+
+#: constants.php:181
+msgid " ohm "
+msgstr ""
+
+#: constants.php:181
+msgid " female "
+msgstr ""
+
+#: constants.php:181
+msgid " male "
+msgstr ""
+
+#: constants.php:182
+msgid " Copyright "
+msgstr ""
+
+#: constants.php:182
+msgid " Registered "
+msgstr ""
+
+#: constants.php:182
+msgid " Trademark "
 msgstr ""
 
 #: functions.php:89

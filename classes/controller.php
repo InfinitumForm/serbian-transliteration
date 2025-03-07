@@ -9,7 +9,7 @@ final class Transliteration_Controller extends Transliteration {
 	public function __construct($actions = true) {
 		if($actions) {
 			$this->add_action('init', 'transliteration_tags_start', 1);
-			$this->add_action('shutdown', 'transliteration_tags_end', 100);
+			$this->add_action('shutdown', 'transliteration_tags_end', PHP_INT_MAX-100);
 		}
     }
 	
@@ -238,11 +238,19 @@ final class Transliteration_Controller extends Transliteration {
 			$style_placeholders[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
+		
+		// Extract <head> contents and replace them with placeholders
+		$head_placeholders = [];
+		$content = preg_replace_callback('/<head\b[^>]*>(.*?)<\/head>/is', function($matches) use (&$head_placeholders) {
+			$placeholder = '@=[3-' . count($head_placeholders) . ']=@';
+			$head_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
 
 		// Handle percentage format specifiers by replacing them with placeholders
 		$formatSpecifiers = [];
 		$content = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function($matches) use (&$formatSpecifiers) {
-			$placeholder = '@=[3-' . count($formatSpecifiers) . ']=@';
+			$placeholder = '@=[4-' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -287,6 +295,12 @@ final class Transliteration_Controller extends Transliteration {
 		if ($style_placeholders) {
 			$content = strtr($content, $style_placeholders);
 			unset($style_placeholders);
+		}
+		
+		// Restore <head> contents back to their original form
+		if ($head_placeholders) {
+			$content = strtr($content, $head_placeholders);
+			unset($head_placeholders);
 		}
 
 		return $content;
@@ -404,16 +418,24 @@ final class Transliteration_Controller extends Transliteration {
 			return $placeholder;
 		}, $content);
 		
+		// Extract <head> contents and replace them with placeholders
+		$head_placeholders = [];
+		$content = preg_replace_callback('/<head\b[^>]*>(.*?)<\/head>/is', function($matches) use (&$head_placeholders) {
+			$placeholder = '@=[5-' . count($head_placeholders) . ']=@';
+			$head_placeholders[$placeholder] = $matches[0];
+			return $placeholder;
+		}, $content);
+		
 		// Extract special shortcode contents and replace them with placeholders
 		$special_shortcodes = [];
 		$content = preg_replace_callback('/\{\{([\w+_-]+)\s?([^\}]*)\}\}(.*?)\{\{\/\1\}\}/is', function($matches) use (&$special_shortcodes) {
-			$placeholder = '@=[5-' . count($special_shortcodes) . ']=@';
+			$placeholder = '@=[6-' . count($special_shortcodes) . ']=@';
 			$special_shortcodes[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
 
 		$content = preg_replace_callback('/\{([\w+_-]+)\s?([^\}]*)\}(.*?)\{\/\1\}/is', function($matches) use (&$special_shortcodes) {
-			$placeholder = '@=[6-' . count($special_shortcodes) . ']=@';
+			$placeholder = '@=[7-' . count($special_shortcodes) . ']=@';
 			$special_shortcodes[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -426,7 +448,7 @@ final class Transliteration_Controller extends Transliteration {
 			: '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|rstr_skip|cyr_to_lat|lat_to_cyr)/'
 		);
 		$content = preg_replace_callback($regex, function($matches) use (&$formatSpecifiers) {
-			$placeholder = '@=[7-' . count($formatSpecifiers) . ']=@';
+			$placeholder = '@=[8-' . count($formatSpecifiers) . ']=@';
 			$formatSpecifiers[$placeholder] = $matches[0];
 			return $placeholder;
 		}, $content);
@@ -495,6 +517,12 @@ final class Transliteration_Controller extends Transliteration {
 		if ($style_placeholders) {
 			$content = strtr($content, $style_placeholders);
 			unset($style_placeholders);
+		}
+		
+		// Restore <head> contents back to their original form
+		if ($head_placeholders) {
+			$content = strtr($content, $head_placeholders);
+			unset($head_placeholders);
 		}
 
 		return $content;
@@ -612,10 +640,68 @@ final class Transliteration_Controller extends Transliteration {
 	}
 	
 	/*
+	 * Transliterate HTML
+	 */
+	function transliterate_html($html) {
+		if (!class_exists('DOMDocument', false) || empty($html) || !is_string($html) || is_numeric($html)) {
+			return $html;
+		}
+
+		$dom = new DOMDocument('1.0', 'UTF-8');
+
+		libxml_use_internal_errors(true);
+		$html = '<?xml encoding="UTF-8">' . $html; // UTF-8 deklaracija OBAVEZNA!
+		$dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+		libxml_clear_errors();
+
+		$xpath = new DOMXPath($dom);
+
+		// Izbegavamo tagove gde ne želimo transliteraciju
+		$skipTags = apply_filters('transliteration_html_avoid_tags', [
+			'script',
+			'style',
+			'textarea',
+			'input',
+			'select',
+			'code',
+			'pre',
+			'img',
+			'svg',
+			'image',
+			'head',
+			'meta'
+		], 'dom');
+
+		// Atributi na koje se primenjuje transliteracija
+		$attributesToTransliterate = $this->private__html_atributes('dom', true);
+
+		// Transliteracija teksta unutar tagova, osim onih koji su na listi za izbegavanje
+		foreach ($xpath->query('//text()') as $textNode) {
+			if (!in_array($textNode->parentNode->nodeName, $skipTags)) {
+				$textNode->nodeValue = $this->transliterate_no_html($textNode->nodeValue);
+			}
+		}
+
+		// Transliteracija određenih atributa
+		foreach ($xpath->query('//*[@' . implode(' or @', $attributesToTransliterate) . ']') as $node) {
+			foreach ($attributesToTransliterate as $attr) {
+				if ($node->hasAttribute($attr)) {
+					$node->setAttribute($attr, $this->transliterate($node->getAttribute($attr)));
+				}
+			}
+		}
+
+		// Vraćamo HTML sa pravilnim enkodingom
+		return $dom->saveHTML();
+	}
+
+
+	
+	/*
 	 * PRIVATE: Allowed HTML attributes for transliteration
 	 */
-	private function private__html_atributes($type = 'inherit') {
-		return self::cached_static('private__html_atributes', function() use ($type) {
+	private function private__html_atributes($type = 'inherit', $return_array = false) {
+		return self::cached_static('private__html_atributes', function() use ($type, $return_array) {
 			$html_attributes_match = [
 				'title',
 				'data-title',
@@ -624,15 +710,25 @@ final class Transliteration_Controller extends Transliteration {
 				'data-placeholder',
 				'aria-label',
 				'data-label',
-				'data-description'
+				'data-description',
+				'data-text',
+				'data-content',
+				'data-tooltip',
+				'data-success_message',
+				'data-qm-component',
+				'data-qm-subject'
 			];
 			
 			$html_attributes_match = apply_filters('transliteration_html_attributes', $html_attributes_match, $type);
 			
 			$html_attributes_match =  is_array($html_attributes_match) ? array_map('trim', $html_attributes_match) : [];
 			
+			if($return_array) {
+				return $html_attributes_match;
+			}
+			
 			return join('|', $html_attributes_match);
-		}, $type);
+		}, [$type, $return_array]);
 	}
 
 	/*

@@ -1,6 +1,6 @@
 <?php if ( !defined('WPINC') ) die();
 
-class Transliteration_Mode_Dev {
+class Transliteration_Mode_Dev extends Transliteration {
 	use Transliteration__Cache;
     
 	// Mode ID
@@ -10,8 +10,16 @@ class Transliteration_Mode_Dev {
 	 * The main constructor
 	 */
     public function __construct() {
-		
+		$this->init_actions();
     }
+	
+	/*
+	 * Initialize actions (to be called only once)
+	 */
+	public function init_actions() {
+		$this->add_action('template_redirect', 'buffer_start', 1);
+		$this->add_action('wp_footer', 'buffer_end', ceil(PHP_INT_MAX/2));
+	}
 	
 	/*
 	 * Get current instance
@@ -26,19 +34,72 @@ class Transliteration_Mode_Dev {
 	 * Get available filters for this mode
 	 */
 	public function filters() {
-		$filters = [
-			'gettext' 				=> 'gettext_content',
-			'ngettext' 				=> 'content',
-		];
-
-		if (!current_theme_supports( 'title-tag' )){
-			unset($filters['document_title_parts']);
-			unset($filters['pre_get_document_title']);
-		} else {
-			unset($filters['wp_title']);
-		}
-
+		$filters = [];
 		return $filters;
+	}
+	
+	public function buffer_start() {
+		$this->ob_start('buffer_callback');
+	}
+	
+	public function buffer_callback( $buffer ) {
+		return $this->transliterateHTML($buffer);
+	}
+
+	public function buffer_end() {
+		if (ob_get_level() > 0) {
+			ob_end_flush();
+		}
+	}
+	
+	function transliterateHTML($html) {
+		$dom = new DOMDocument();
+
+		libxml_use_internal_errors(true);
+		$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+		libxml_clear_errors();
+
+		$xpath = new DOMXPath($dom);
+		
+		$skipTags = apply_filters('transliteration_html_avoid_tags', [
+			'script',
+			'style',
+			'textarea',
+			'input',
+			'select',
+			'code',
+			'pre',
+			'img',
+			'svg',
+			'image'
+		] );
+		
+		$attributesToTransliterate = apply_filters('transliteration_html_attributes', [
+			'title',
+			'data-title',
+			'alt',
+			'placeholder',
+			'data-placeholder',
+			'aria-label',
+			'data-label',
+			'data-description'
+		], 'inherit');
+		
+		foreach ($xpath->query('//text()') as $textNode) {
+			if (!in_array($textNode->parentNode->nodeName, $skipTags)) {
+				$textNode->nodeValue = Transliteration_Controller::get()->transliterate_no_html($textNode->nodeValue);
+			}
+		}
+		
+		foreach ($xpath->query('//*[@' . implode(' or @', $attributesToTransliterate) . ']') as $node) {
+			foreach ($attributesToTransliterate as $attr) {
+				if ($node->hasAttribute($attr)) {
+					$node->setAttribute($attr, Transliteration_Controller::get()->transliterate_no_html($node->getAttribute($attr)));
+				}
+			}
+		}
+		
+		return $dom->saveHTML();
 	}
     
 }

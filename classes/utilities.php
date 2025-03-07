@@ -89,12 +89,20 @@ class Transliteration_Utilities {
 	 */
 	public static function available_modes($mode = NULL) {
 		// Define available mode keys
-		$modes = [
+		$modes = [];
+		
+		// Add special mode
+		if( class_exists('DOMDocument', false) ) {
+			$modes = array_merge($modes, ['phantom']);
+		}
+		
+		// Builtin modes
+		$modes = array_merge($modes, [
 			'light',
 			'standard',
 			'advanced',
 			'forced',
-		];
+		]);
 
 		// Add WooCommerce-specific mode key if WooCommerce is enabled
 		if (RSTR_WOOCOMMERCE) {
@@ -130,6 +138,7 @@ class Transliteration_Utilities {
 
 		// Map available modes to their descriptions
 		$modes = [
+			'phantom' 	=> __('Phantom Mode (ultra fast DOM-based transliteration, experimental)', 'serbian-transliteration'),
 			'light'     => __('Light mode (basic parts of the site)', 'serbian-transliteration'),
 			'standard'  => __('Standard mode (content, themes, plugins, translations, menu)', 'serbian-transliteration'),
 			'advanced'  => __('Advanced mode (content, widgets, themes, plugins, translations, menu, permalinks, media)', 'serbian-transliteration'),

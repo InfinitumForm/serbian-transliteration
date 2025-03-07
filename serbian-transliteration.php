@@ -5,7 +5,7 @@
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
  * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
  * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           2.1.8
+ * Version:           2.2.1
  * Requires at least: 5.4
  * Tested up to:      6.7
  * Requires PHP:      7.0
@@ -98,14 +98,6 @@ if( !defined('COOKIEHASH') || !defined('COOKIEPATH') || !defined('COOKIE_DOMAIN'
 
 // Set of constants
 include_once __DIR__ . '/constants.php';
-
-// Developers need good debug
-if( (defined('RSTR_DEV_MODE') && RSTR_DEV_MODE) || (defined('RSTR_DEBUG') && RSTR_DEBUG) ) {
-	error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
-	add_action('doing_it_wrong_run', '__return_false');
-	ini_set('display_errors', true);
-	ini_set('log_errors', true);
-}
 
 // Set database tables
 global $wpdb, $rstr_is_admin;

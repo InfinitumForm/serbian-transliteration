@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.8
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
@@ -107,6 +107,17 @@ It is important for you to know that any functionality in our plugin can be turn
 9. Automated test
 
 == Changelog ==
+
+= 2.2.1 =
+* Fixed PHP errors from the previous version
+* Improved UTF-8 encoding
+* Optimized transliteration scripts
+* Added support for the special HTML attributes
+
+= 2.2.0 =
+* NEW: Phantom Mode - ultra fast DOM-based transliteration (experimental)
+* Fixed forced transliteration
+* Improved site optimization
 
 = 2.1.8 =
 * Added support and integration for Polylang plugin
@@ -211,16 +222,22 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Upgrade Notice ==
 
+= 2.2.1 =
+* Fixed PHP errors from the previous version
+* Improved UTF-8 encoding
+* Optimized transliteration scripts
+* Added support for the special HTML attributes
+
+= 2.2.0 =
+* NEW: Phantom Mode - ultra fast DOM-based transliteration (experimental)
+* Fixed forced transliteration
+* Improved site optimization
+
 = 2.1.8 =
 * Added support and integration for Polylang plugin
 * Improved and optimized permalink algorithm
 * Optimized plugin loading
 * Added new filters for developers
-
-= 2.1.7 =
-* Optimized main plugin control model
-* Added navigation caching
-* Fixed a bug with the repeating notification
 
 == Frequently Asked Questions ==
 

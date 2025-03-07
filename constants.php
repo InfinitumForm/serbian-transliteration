@@ -30,13 +30,6 @@ if (!function_exists('is_plugin_active_for_network') || !function_exists('is_plu
  * @verson    1.0.0
 */
 
-// This is need for plugin debugging.
-if (defined('WP_DEBUG')) {
-    if (WP_DEBUG === true || WP_DEBUG === 1) {
-        if (!defined('RSTR_DEBUG')) define('RSTR_DEBUG', true);
-    }
-}
-
 // Plugin basename
 if (!defined('RSTR_BASENAME')) {
     define('RSTR_BASENAME', plugin_basename(RSTR_FILE));

@@ -104,6 +104,10 @@ final class Transliteration_Mode extends Transliteration {
 			return;
 		}
 		
+		if(in_array($this->mode::MODE, ['forced', 'phantom'])) {
+			return;
+		}
+		
 		$filters = NULL;
 		
 		// Is admin, a do special static filters
