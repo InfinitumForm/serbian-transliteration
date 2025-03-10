@@ -6,6 +6,7 @@ if( !class_exists('Transliteration_Init', false) ) : final class Transliteration
         // Register the textdomain for the plugin
 		$this->set_admin_cookie_based_on_url();
         $this->add_action('plugins_loaded', 'load_textdomain');
+		$this->add_action('load_textdomain_mofile', 'load_textdomain_mofile', 10, 2);
 		$this->add_action('template_redirect', 'set_transliteration');
 		
 		// Register main classes
@@ -117,7 +118,7 @@ if( !class_exists('Transliteration_Init', false) ) : final class Transliteration
 	 * Do translations
 	 */
     public function load_textdomain() {
-        if (is_textdomain_loaded('serbian-transliteration')) {
+		if (is_textdomain_loaded('serbian-transliteration')) {
 			return;
 		}
 
@@ -132,28 +133,22 @@ if( !class_exists('Transliteration_Init', false) ) : final class Transliteration
 		);
 		$mofile = sprintf('%s-%s.mo', 'serbian-transliteration', $locale);
 
-		// First we check the translations inside the plugin directory
+		// Only check the plugin's own languages directory
 		$domain_path = RSTR_ROOT . '/languages';
-		$loaded = load_textdomain('serbian-transliteration', path_join($domain_path, $mofile));
+		if (file_exists(path_join($domain_path, $mofile))) {
+			load_textdomain('serbian-transliteration', path_join($domain_path, $mofile));
+		}
+	}
 	
-		/*
-		 * DISABLED: - We don't need this part because the translation is intended only for this plugin,
-		 * but I will save it if needed in the future.
-		 *
-		
-		// If no translation is found, we check the global directory
-		if (!$loaded) {
-			$domain_path = path_join(WP_LANG_DIR, 'plugins');
-			$loaded = load_textdomain('serbian-transliteration', path_join($domain_path, $mofile));
+	/*
+	 * Do translations only inside plugin
+	 */
+	public function load_textdomain_mofile ($mofile, $domain) {
+		if ($domain === 'serbian-transliteration') {
+			return RSTR_ROOT . '/languages/' . basename($mofile);
 		}
-
-		// If that doesn't work either, we check directly in WP_LANG_DIR
-		if (!$loaded) {
-			$loaded = load_textdomain('serbian-transliteration', path_join(WP_LANG_DIR, $mofile));
-		}
-		
-		*/
-    }
+		return $mofile;
+	}
 
 
 	/*

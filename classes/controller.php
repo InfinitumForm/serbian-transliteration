@@ -678,7 +678,7 @@ final class Transliteration_Controller extends Transliteration {
 		// Transliteracija teksta unutar tagova, osim onih koji su na listi za izbegavanje
 		foreach ($xpath->query('//text()') as $textNode) {
 			if (!in_array($textNode->parentNode->nodeName, $skipTags)) {
-				$textNode->nodeValue = $this->transliterate_no_html($textNode->nodeValue);
+				$textNode->nodeValue = $this->transliterate($textNode->nodeValue);
 			}
 		}
 

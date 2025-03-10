@@ -16,10 +16,11 @@ $special_thanks = array(
 	'Branislav Mitić' => 'https://profiles.wordpress.org/xlr84xs/',
 	'Dušan Filiferović' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
 	'Boris Kuljaj' => 'https://www.linkedin.com/in/boris-kuljaj-2944b4192/',
+	'Branko Mrki Vidović' => 'https://www.facebook.com/branko.m.vidovic',
 	'Slobodan Pantović' => '',
 	'Ivan Stanojević' => '',
 	'Ognjen Odobašić' => '',
-	'Miloš Maksimović' => '',
+	'Miloš Maksimović' => ''
 ); ?>
 <script>function rstr_popup(url, title, w, h) {
 	// Fixes dual-screen position Most browsers Firefox
