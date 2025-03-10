@@ -260,6 +260,12 @@ final class Transliteration_Controller extends Transliteration {
 			$content = $class_map::transliterate($content, 'cyr_to_lat');
 			$content = Transliteration_Sanitization::get()->lat($content, $sanitize_html);
 		}
+		
+		// Restore <head> contents back to their original form
+		if ($head_placeholders) {
+			$content = strtr($content, $head_placeholders);
+			unset($head_placeholders);
+		}
 
 		// Restore percentage format specifiers back to their original form
 		if ($formatSpecifiers) {
@@ -295,12 +301,6 @@ final class Transliteration_Controller extends Transliteration {
 		if ($style_placeholders) {
 			$content = strtr($content, $style_placeholders);
 			unset($style_placeholders);
-		}
-		
-		// Restore <head> contents back to their original form
-		if ($head_placeholders) {
-			$content = strtr($content, $head_placeholders);
-			unset($head_placeholders);
 		}
 
 		return $content;
