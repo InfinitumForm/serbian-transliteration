@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Trait that provides caching functionality for an object in controlled way.
  *
@@ -7,22 +8,22 @@
  * @package           RSTR
  * @autor             Ivijan-Stefan Stipic
  */
-trait Transliteration__Cache_Controlled {
+trait Transliteration__Cache_Controlled
+{
     // Static cache for use in static functions
     protected static array $static_data = [];
-    
+
     // Instance cache for use in non-static functions
     protected array $data = [];
 
     /**
      * Get data from cached data within this Object or Class
      *
-     * @param string $key
-     * @param callable $function
-     * @param string|null $index
+     * @param  string|null $index
      * @return mixed
      */
-    protected static function cached_static(string $key, callable $function, $index = null) {
+    protected static function cached_static(string $key, callable $function, $index = null)
+    {
         // Add prefix to key
         $key = self::cache_key($key, $index);
 
@@ -40,11 +41,10 @@ trait Transliteration__Cache_Controlled {
     /**
      * Get data from cached data within this Object
      *
-     * @param string $key
-     * @param callable $function
      * @param string|null $index
      */
-    protected function cached(string $key, callable $function, $index = null) {
+    protected function cached(string $key, callable $function, $index = null)
+    {
 
         // Add prefix to key
         $key = self::cache_key($key, $index);
@@ -63,11 +63,10 @@ trait Transliteration__Cache_Controlled {
     /**
      * Clear cached value for a specific key
      *
-     * @param string $key
      * @param string|null $prefix
-     * @return void
      */
-    protected static function clear_static_cache(string $key, $index = null): void {
+    protected static function clear_static_cache(string $key, $index = null): void
+    {
         // Add prefix to key
         $key = self::cache_key($key, $index);
 
@@ -79,11 +78,10 @@ trait Transliteration__Cache_Controlled {
     /**
      * Clear cached value for a specific key
      *
-     * @param string $key
      * @param string|null $prefix
-     * @return void
      */
-    protected function clear_cache(string $key, $index = null): void {
+    protected function clear_cache(string $key, $index = null): void
+    {
         // Add prefix to key
         $key = self::cache_key($key, $index);
 
@@ -96,18 +94,16 @@ trait Transliteration__Cache_Controlled {
      * Clear all static cached values
      *
      * @param bool $is_static
-     * @return void
      */
-    protected static function clear_static_cache_all(): void {
+    protected static function clear_static_cache_all(): void
+    {
         self::$static_data = [];
     }
 
     /**
      * Clear all cached values
-     *
-     * @return void
      */
-    public function clear_cache_all() : void
+    public function clear_cache_all(): void
     {
         $this->data = [];
     }
@@ -117,7 +113,8 @@ trait Transliteration__Cache_Controlled {
      *
      * @return array The cached data.
      */
-    protected static function get_all_static_cached(): array {
+    protected static function get_all_static_cached(): array
+    {
         return self::$static_data;
     }
 
@@ -126,80 +123,80 @@ trait Transliteration__Cache_Controlled {
      *
      * @return array The cached data.
      */
-    protected function get_all_cached() : array {
+    protected function get_all_cached(): array
+    {
         return $this->data;
     }
 
     /**
-	 * Generates a cache key based on the class name and the provided key.
-	 *
-	 * @param string $key The key to use for the cache.
-	 * @param string|int|array|null $index An optional index to include in the cache key.
-	 * @return string The generated cache key.
-	 */
-	private static array $key_cache = [];
-	private static function cache_key(string $key, $index = null): string
-	{
-		// Generate a unique identifier for the cache
-		$cacheKey = $key . '|' . (is_array($index) ? implode('.', self::cache_array_key($index)) : (string)($index ?? ''));
+     * Generates a cache key based on the class name and the provided key.
+     *
+     * @param  string                $key   The key to use for the cache.
+     * @param  string|int|array|null $index An optional index to include in the cache key.
+     * @return string                The generated cache key.
+     */
+    private static array $key_cache = [];
 
-		// Return cached result if it exists
-		if (isset(self::$key_cache[$cacheKey])) {
-			return self::$key_cache[$cacheKey];
-		}
+    private static function cache_key(string $key, $index = null): string
+    {
+        // Generate a unique identifier for the cache
+        $cacheKey = $key . '|' . (is_array($index) ? implode('.', self::cache_array_key($index)) : (string) ($index ?? ''));
 
-		// Determine the root context (class or calling function)
-		$root = class_exists(static::class) 
-			? static::class 
-			: (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3)[2]['function'] ?? 'global');
+        // Return cached result if it exists
+        if (isset(self::$key_cache[$cacheKey])) {
+            return self::$key_cache[$cacheKey];
+        }
 
-		// Generate the base key with sanitized key value
-		$generatedKey = $root . '::' . preg_replace('/[^a-zA-Z0-9_\-:]/', '_', $key);
+        // Determine the root context (class or calling function)
+        $root = class_exists(static::class)
+            ? static::class
+            : (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3)[2]['function'] ?? 'global');
 
-		// Process the index if provided
-		if ($index !== null) {
-			if (is_array($index)) {
-				// Properly flatten and sanitize array values
-				$index = implode('.', array_map(
-					fn($v) => preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string)$v),
-					self::cache_array_key($index)
-				));
-			} else {
-				// Sanitize single value
-				$index = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string)$index);
-			}
-			$generatedKey .= '->' . $index;
-		}
+        // Generate the base key with sanitized key value
+        $generatedKey = $root . '::' . preg_replace('/[^a-zA-Z0-9_\-:]/', '_', $key);
 
-		// Cache the result for future use
-		self::$key_cache[$cacheKey] = $generatedKey;
+        // Process the index if provided
+        if ($index !== null) {
+            if (is_array($index)) {
+                // Properly flatten and sanitize array values
+                $index = implode('.', array_map(
+                    fn ($v): ?string => preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $v),
+                    self::cache_array_key($index)
+                ));
+            } else {
+                // Sanitize single value
+                $index = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $index);
+            }
 
-		return $generatedKey;
-	}
+            $generatedKey .= '->' . $index;
+        }
+
+        // Cache the result for future use
+        self::$key_cache[$cacheKey] = $generatedKey;
+
+        return $generatedKey;
+    }
 
     /**
-	 * Recursively extract all values from a nested array.
-	 *
-	 * @param array $array
-	 * @return array
-	 */
-	private static function cache_array_key(array $array): array
-	{
-		$flatValues = [];
-		foreach ($array as $key => $value) {
-			if (is_array($value)) {
-				// If value is an array, recursively extract its values
-				$flatValues = array_merge($flatValues, self::cache_array_key($value));
-			} else {
-				if (empty($value)) {
-					$value = is_numeric($key) ? 'null' : $key;
-				}
+     * Recursively extract all values from a nested array.
+     */
+    private static function cache_array_key(array $array): array
+    {
+        $flatValues = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                // If value is an array, recursively extract its values
+                $flatValues = array_merge($flatValues, self::cache_array_key($value));
+            } else {
+                if (empty($value)) {
+                    $value = is_numeric($key) ? 'null' : $key;
+                }
 
-				// Append sanitized value
-				$flatValues[] = (string)$value;
-			}
-		}
-		return $flatValues;
-	}
+                // Append sanitized value
+                $flatValues[] = (string) $value;
+            }
+        }
 
+        return $flatValues;
+    }
 }

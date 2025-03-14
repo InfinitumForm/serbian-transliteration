@@ -1,4 +1,9 @@
-<?php if ( !defined('WPINC') ) die();
+<?php
+
+if (!defined('WPINC')) {
+    die();
+}
+
 /**
  * Mongolian
  *
@@ -8,9 +13,9 @@
  *
  */
 
-class Transliteration_Map_mn {
-
-	public static $map = array(
+class Transliteration_Map_mn
+{
+    public static $map = [
         'А' => 'A', 'а' => 'a',
         'Б' => 'B', 'б' => 'b',
         'В' => 'V', 'в' => 'v',
@@ -45,32 +50,29 @@ class Transliteration_Map_mn {
         'Ь' => 'ʼ', 'ь' => 'ʼ', // meki znak
         'Э' => 'E', 'э' => 'e',
         'Ю' => 'Yu', 'ю' => 'yu',
-        'Я' => 'Ya', 'я' => 'ya'
-    );
+        'Я' => 'Ya', 'я' => 'ya',
+    ];
 
-	public static function transliterate ($content, $translation = 'cyr_to_lat')
-	{
-		if(is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) return $content;
+    public static function transliterate($content, $translation = 'cyr_to_lat')
+    {
+        if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {
+            return $content;
+        }
 
-		$transliteration = apply_filters('transliteration_map_mn', self::$map);
-		$transliteration = apply_filters_deprecated('rstr/inc/transliteration/mn', [$transliteration], '2.0.0', 'transliteration_map_mn');
+        $transliteration = apply_filters('transliteration_map_mn', self::$map);
+        $transliteration = apply_filters_deprecated('rstr/inc/transliteration/mn', [$transliteration], '2.0.0', 'transliteration_map_mn');
 
-		switch($translation)
-		{
-			case 'cyr_to_lat' :
-				return strtr($content, $transliteration);
-				break;
+        switch ($translation) {
+            case 'cyr_to_lat':
+                return strtr($content, $transliteration);
 
-			case 'lat_to_cyr' :
-				$transliteration = array_flip($transliteration);
-				$transliteration = array_filter($transliteration, function($t){
-					return $t != '';
-				});
-				$transliteration = apply_filters('rstr/inc/transliteration/mn/lat_to_cyr', $transliteration);
-				return strtr($content, $transliteration);
-				break;
-		}
+            case 'lat_to_cyr':
+                $transliteration = array_flip($transliteration);
+                $transliteration = array_filter($transliteration, fn ($t): bool => $t != '');
+                $transliteration = apply_filters('rstr/inc/transliteration/mn/lat_to_cyr', $transliteration);
+                return strtr($content, $transliteration);
+        }
 
-		return $content;
-	}
+        return $content;
+    }
 }

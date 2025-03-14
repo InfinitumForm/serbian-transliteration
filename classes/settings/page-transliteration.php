@@ -1,4 +1,6 @@
-<?php if ( !defined('WPINC') ) die(); $nonce = esc_attr(wp_create_nonce('rstr-transliteration-letters')); ?>
+<?php if (!defined('WPINC')) {
+    die();
+} $nonce = esc_attr(wp_create_nonce('rstr-transliteration-letters')); ?>
 <?php printf('<p>%s</p>', __('Copy the desired text into one field and press the desired key to convert the text.', 'serbian-transliteration')); ?>
 <form class="rstr-row">
 	<div class="rstr-col">

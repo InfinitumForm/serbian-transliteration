@@ -1,4 +1,6 @@
-<?php if ( !defined('WPINC') ) die(); ?>
+<?php if (!defined('WPINC')) {
+    die();
+} ?>
 <p class="description"><?php esc_html_e('These tags have a special purpose and work separately from short codes and can be used in fields where short codes cannot be used.', 'serbian-transliteration'); ?><br><?php esc_html_e('These tags have no additional settings and can be applied in plugins, themes, widgets and within other short codes.', 'serbian-transliteration'); ?></p>
 <h2 style="margin:0;"><?php esc_html_e('Cyrillic to Latin', 'serbian-transliteration'); ?>:</h2>
 <p><code class="lang-txt">{<span class="hljs-title">cyr_to_lat</span>}Ћирилица у латиницу{/<span class="hljs-title">cyr_to_lat</span>}</code></p>

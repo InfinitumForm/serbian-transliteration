@@ -1,27 +1,29 @@
-<?php if ( !defined('WPINC') ) die();
+<?php if (!defined('WPINC')) {
+    die();
+}
 
-$special_thanks_sponsors = array(
-	'INFINITUM FORM' => 'https://infinitumform.com/',
-	'FreelancePoslovi.com' => 'https://freelanceposlovi.com/',
-	'Contra Team d.o.o.' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
-	'UG Preobraženje' => 'https://preobrazenje.rs/',
-	'CNZD' => 'https://cnzd.rs/'
-);
+$special_thanks_sponsors = [
+    'INFINITUM FORM'       => 'https://infinitumform.com/',
+    'FreelancePoslovi.com' => 'https://freelanceposlovi.com/',
+    'Contra Team d.o.o.'   => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
+    'UG Preobraženje'      => 'https://preobrazenje.rs/',
+    'CNZD'                 => 'https://cnzd.rs/',
+];
 
-$special_thanks = array(
-	'tihi' => 'https://profiles.wordpress.org/tihi',
-	'dizajn24' => 'https://profiles.wordpress.org/dizajn24',
-	'Yaroslav Ingulskyi' => 'https://wordpress.org/support/users/ingyaroslav/',
-	'Slobodan Mirić' => 'https://www.facebook.com/websitesworkshop',
-	'Branislav Mitić' => 'https://profiles.wordpress.org/xlr84xs/',
-	'Dušan Filiferović' => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
-	'Boris Kuljaj' => 'https://www.linkedin.com/in/boris-kuljaj-2944b4192/',
-	'Branko Mrki Vidović' => 'https://www.facebook.com/branko.m.vidovic',
-	'Slobodan Pantović' => '',
-	'Ivan Stanojević' => '',
-	'Ognjen Odobašić' => '',
-	'Miloš Maksimović' => ''
-); ?>
+$special_thanks = [
+    'tihi'                => 'https://profiles.wordpress.org/tihi',
+    'dizajn24'            => 'https://profiles.wordpress.org/dizajn24',
+    'Yaroslav Ingulskyi'  => 'https://wordpress.org/support/users/ingyaroslav/',
+    'Slobodan Mirić'      => 'https://www.facebook.com/websitesworkshop',
+    'Branislav Mitić'     => 'https://profiles.wordpress.org/xlr84xs/',
+    'Dušan Filiferović'   => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
+    'Boris Kuljaj'        => 'https://www.linkedin.com/in/boris-kuljaj-2944b4192/',
+    'Branko Mrki Vidović' => 'https://www.facebook.com/branko.m.vidovic',
+    'Slobodan Pantović'   => '',
+    'Ivan Stanojević'     => '',
+    'Ognjen Odobašić'     => '',
+    'Miloš Maksimović'    => '',
+]; ?>
 <script>function rstr_popup(url, title, w, h) {
 	// Fixes dual-screen position Most browsers Firefox
 	var dualScreenLeft = (window.screenLeft != undefined ? window.screenLeft : screen.left),
@@ -43,66 +45,68 @@ $special_thanks = array(
 <?php printf('<p>%s</p>', esc_html__('This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.', 'serbian-transliteration')); ?>
 <p><?php
 
-	$special_thanks_sponsors_render = array();
+    $special_thanks_sponsors_render = [];
 
-	foreach($special_thanks_sponsors as $name => $thanks_url){
-		
-		if( in_array($name, ['INFINITUM FORM', 'ContraTeam']) ) {
-			$name = '<b>'.$name.'</b>';
-		}
-		
-		if(!empty($thanks_url)) {
-			$special_thanks_sponsors_render[sanitize_title($name)]= '<a href="' . esc_url($thanks_url) . '" target="_blank">' . $name . '</a>';
-		} else {
-			$special_thanks_sponsors_render[sanitize_title($name)]= $name;
-		}
-	}
-	
-	printf(
-		'<strong>%s</strong> %s %s',
-		__('Sponsors of this plugin:', 'serbian-transliteration'),
-		join(', ', $special_thanks_sponsors_render),
-		sprintf(
-			'(%s)',
-			sprintf(__('If you want to help develop this plugin and be one of the sponsors, please contact us at: %s', 'serbian-transliteration'), '<a href="mailto:infinitumform@gmail.com">infinitumform@gmail.com</a>')
-		)
-	);
-	
+foreach ($special_thanks_sponsors as $name => $thanks_url) {
+
+    if (in_array($name, ['INFINITUM FORM', 'ContraTeam'])) {
+        $name = '<b>' . $name . '</b>';
+    }
+
+    if ($thanks_url !== '0') {
+        $special_thanks_sponsors_render[sanitize_title($name)] = '<a href="' . esc_url($thanks_url) . '" target="_blank">' . $name . '</a>';
+    } else {
+        $special_thanks_sponsors_render[sanitize_title($name)] = $name;
+    }
+}
+
+printf(
+    '<strong>%s</strong> %s %s',
+    __('Sponsors of this plugin:', 'serbian-transliteration'),
+    implode(', ', $special_thanks_sponsors_render),
+    sprintf(
+        '(%s)',
+        sprintf(__('If you want to help develop this plugin and be one of the sponsors, please contact us at: %s', 'serbian-transliteration'), '<a href="mailto:infinitumform@gmail.com">infinitumform@gmail.com</a>')
+    )
+);
+
 ?></p>
-<?php if(!empty($special_thanks) && $plugin_info = Transliteration_Utilities::plugin_info(array('contributors' => true, 'donate_link' => false))) : ?>
+<?php if ($plugin_info = Transliteration_Utilities::plugin_info(['contributors' => true, 'donate_link' => false])) : ?>
 <p><?php
 
-	$special_thanks_render = array();
-	
-	foreach($plugin_info->contributors as $username => $info) {
-		if(in_array($username, array('ivijanstefan', 'creativform', 'infinitumform'))) continue;
-		$info = (object)$info;
-		$special_thanks_render[sanitize_title($info->display_name)]= '<a href="' . esc_url($info->profile) . '" target="_blank">' . $info->display_name . '</a>';
-	}
-	
-	foreach($special_thanks as $name => $thanks_url){
-		if(!empty($thanks_url)) {
-			$special_thanks_render[sanitize_title($name)]= '<a href="' . esc_url($thanks_url) . '" target="_blank">' . $name . '</a>';
-		} else {
-			$special_thanks_render[sanitize_title($name)]= $name;
-		}
-	}
-	
-	printf('<strong>%s</strong> %s', esc_html__('Special thanks to the contributors in the development of this plugin:', 'serbian-transliteration'), join(', ', $special_thanks_render));
-	
+    $special_thanks_render = [];
+
+    foreach ($plugin_info->contributors as $username => $info) {
+        if (in_array($username, ['ivijanstefan', 'creativform', 'infinitumform'])) {
+            continue;
+        }
+        $info                                                       = (object) $info;
+        $special_thanks_render[sanitize_title($info->display_name)] = '<a href="' . esc_url($info->profile) . '" target="_blank">' . $info->display_name . '</a>';
+    }
+
+    foreach ($special_thanks as $name => $thanks_url) {
+        if ($thanks_url !== '' && $thanks_url !== '0') {
+            $special_thanks_render[sanitize_title($name)] = '<a href="' . esc_url($thanks_url) . '" target="_blank">' . $name . '</a>';
+        } else {
+            $special_thanks_render[sanitize_title($name)] = $name;
+        }
+    }
+
+printf('<strong>%s</strong> %s', esc_html__('Special thanks to the contributors in the development of this plugin:', 'serbian-transliteration'), implode(', ', $special_thanks_render));
+
 ?></p>
 
 <?php endif; ?>
 
 <h3>&copy; <?php esc_html_e('Copyright', 'serbian-transliteration'); ?></h3>
 <?php printf(
-	'<p>%s</p>',
-	sprintf( 
-		__('Copyright &copy; 2020 - %1$d %2$s by %3$s. All Right Reserved.', 'serbian-transliteration'),
-		date("Y"),
-		'<a href="https://wordpress.org/plugins/serbian-transliteration/" target="_blank"><em><strong>' . __('Transliterator – WordPress Transliteration', 'serbian-transliteration') . '</strong></em></a>',
-		'<a href="https://www.linkedin.com/in/ivijanstefanstipic/" target="_blank"><em><strong>Ivijan-Stefan Stipić</strong></em></a>'
-	)
+    '<p>%s</p>',
+    sprintf(
+        __('Copyright &copy; 2020 - %1$d %2$s by %3$s. All Right Reserved.', 'serbian-transliteration'),
+        date('Y'),
+        '<a href="https://wordpress.org/plugins/serbian-transliteration/" target="_blank"><em><strong>' . __('Transliterator – WordPress Transliteration', 'serbian-transliteration') . '</strong></em></a>',
+        '<a href="https://www.linkedin.com/in/ivijanstefanstipic/" target="_blank"><em><strong>Ivijan-Stefan Stipić</strong></em></a>'
+    )
 ); ?>
 
 <?php printf('<p>%s</p>', esc_html__('This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.', 'serbian-transliteration')); ?>

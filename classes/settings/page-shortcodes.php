@@ -1,4 +1,6 @@
-<?php if ( !defined('WPINC') ) die(); ?>
+<?php if (!defined('WPINC')) {
+    die();
+} ?>
 <p class="description"><?php esc_html_e('These are available shortcodes that you can use in your content, visual editors, themes and plugins.', 'serbian-transliteration'); ?></p>
 <h2 style="margin:0;"><?php esc_html_e('Skip transliteration', 'serbian-transliteration'); ?>:</h2>
 <p><code class="lang-txt">[<span class="hljs-title">skip_translit</span>]<?php esc_html_e('Keep this original', 'serbian-transliteration'); ?>[/<span class="hljs-title">skip_translit</span>]</code></p>

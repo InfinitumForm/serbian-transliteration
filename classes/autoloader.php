@@ -1,17 +1,21 @@
-<?php if ( !defined('WPINC') ) die();
+<?php
 
-if(!class_exists('Transliterator_Autoloader', false)) : final class Transliterator_Autoloader
+if (!defined('WPINC')) {
+    die();
+}
+
+if (!class_exists('Transliterator_Autoloader', false)) : final class Transliterator_Autoloader
 {
     /**
      * Prefix to directory mapping.
      */
     private static array $prefixes = [
-        'Transliteration__'        => RSTR_CLASSES . '/traits/',
-        'Transliteration_Map_'     => RSTR_CLASSES . '/maps/',
-        'Transliteration_Mode_'    => RSTR_CLASSES . '/modes/',
-        'Transliteration_Plugin_'  => RSTR_CLASSES . '/plugins/',
-        'Transliteration_Theme_'   => RSTR_CLASSES . '/themes/',
-        'Transliteration_'         => RSTR_CLASSES . '/'
+        'Transliteration__'       => RSTR_CLASSES . '/traits/',
+        'Transliteration_Map_'    => RSTR_CLASSES . '/maps/',
+        'Transliteration_Mode_'   => RSTR_CLASSES . '/modes/',
+        'Transliteration_Plugin_' => RSTR_CLASSES . '/plugins/',
+        'Transliteration_Theme_'  => RSTR_CLASSES . '/themes/',
+        'Transliteration_'        => RSTR_CLASSES . '/',
     ];
 
     /**
@@ -48,39 +52,39 @@ if(!class_exists('Transliterator_Autoloader', false)) : final class Transliterat
      */
     private static function autoload(string $class_name): void
     {
-		// Prevent autoloading this class
+        // Prevent autoloading this class
         if ($class_name === self::class) {
             return;
         }
-		
+
         // Check if the class is already cached
         if (isset(self::$class_map_cache[$class_name])) {
             if (!class_exists($class_name, false)) {
-				// Keep the code under the plugin to avoid conflicts
-				if( strpos(self::$class_map_cache[$class_name], RSTR_ROOT) === false ) {
-					return;
-				}
-				
-				// Load the file
+                // Keep the code under the plugin to avoid conflicts
+                if (!str_contains(self::$class_map_cache[$class_name], RSTR_ROOT)) {
+                    return;
+                }
+
+                // Load the file
                 require_once self::$class_map_cache[$class_name];
             }
-			
-			// Stop on the loaded class
+
+            // Stop on the loaded class
             return;
         }
 
         // Iterate over the prefix mappings
         foreach (self::$prefixes as $prefix => $directory) {
             // Check if the class name starts with the prefix
-            if (strncmp($class_name, $prefix, strlen($prefix)) === 0 && !class_exists($class_name, false)) {
+            if (str_starts_with($class_name, $prefix) && !class_exists($class_name, false)) {
                 // Resolve the class file path
                 $file = self::resolveClassFile($prefix, $class_name, $directory);
-				
-				// Keep the code under the plugin to avoid conflicts
-				if( strpos($file, RSTR_ROOT) === false ) {
-					continue;
-				}
-				
+
+                // Keep the code under the plugin to avoid conflicts
+                if (!str_contains($file, RSTR_ROOT)) {
+                    continue;
+                }
+
                 // Check if the file exists and load it
                 if (file_exists($file)) {
                     self::$class_map_cache[$class_name] = $file;
@@ -89,7 +93,7 @@ if(!class_exists('Transliterator_Autoloader', false)) : final class Transliterat
                         apcu_store('rstr_class_map_cache', self::$class_map_cache);
                     }
 
-					// Load the file
+                    // Load the file
                     require_once $file;
                     return;
                 }
@@ -100,9 +104,9 @@ if(!class_exists('Transliterator_Autoloader', false)) : final class Transliterat
     /**
      * Resolve the class file path based on prefix, class name, and directory.
      *
-     * @param string $prefix The prefix for the class.
-     * @param string $class_name The full class name.
-     * @param string $directory The directory associated with the prefix.
+     * @param  string $prefix     The prefix for the class.
+     * @param  string $class_name The full class name.
+     * @param  string $directory  The directory associated with the prefix.
      * @return string The resolved file path.
      */
     private static function resolveClassFile(string $prefix, string $class_name, string $directory): string

@@ -1,4 +1,6 @@
-<?php if ( !defined('WPINC') ) die(); ?>
+<?php if (!defined('WPINC')) {
+    die();
+} ?>
 <p class="description"><?php esc_html_e('These are available PHP functions that you can use in your themes and plugins.', 'serbian-transliteration'); ?></p>
 <h2 style="margin:0;">get_latin_url</h2>
 <p><code class="lang-php">function get_latin_url(string $url = NULL) : string</code></p>
@@ -118,9 +120,9 @@
 <?php printf('<p>%s</p>', __('Transliterates Cyrillic characters to Latin, converting them to their basic ASCII equivalents by removing diacritics.', 'serbian-transliteration')); ?>
 <p><code class="lang-php">function cyr_to_ascii_lat(string $content) : string</code></p>
 <br>
-<h2 style="margin:0;"><?php echo (function_exists('get_script') ? 'get_script' : 'rstr_get_script'); ?></h2>
+<h2 style="margin:0;"><?php echo(function_exists('get_script') ? 'get_script' : 'rstr_get_script'); ?></h2>
 <?php printf('<p>%s</p>', __('Get active script.', 'serbian-transliteration')); ?>
-<p><code class="lang-php">function <?php echo (function_exists('get_script') ? 'get_script' : 'rstr_get_script'); ?>() : string</code></p>
+<p><code class="lang-php">function <?php echo(function_exists('get_script') ? 'get_script' : 'rstr_get_script'); ?>() : string</code></p>
 <br>
 <h2 style="margin:0;">script_selector</h2>
 <?php printf('<p>%s</p>', __('This function displays a selector for the transliteration script.', 'serbian-transliteration')); ?>
@@ -129,36 +131,36 @@
 <?php printf('<p><b><code>$args</code></b> (array) - %1$s</p>', __('This attribute contains an associative set of parameters for this function:', 'serbian-transliteration')); ?>
 <ul>
 	<?php printf(
-		'<li><code>%1$s</code> - %2$s</li>',
-		'display_type',
-		sprintf(
-			__('(string) The type of selector that will be displayed on the site. It can be: %1$s, %2$s, %3$s, %4$s, %5$s or %6$s. Default: %1$s', 'serbian-transliteration'),
-			'<code>inline</code>',
-			'<code>select</code>',
-			'<code>list</code>',
-			'<code>list_items</code>',
-			'<code>array</code>',
-			'<code>object</code>'
-		)
+	    '<li><code>%1$s</code> - %2$s</li>',
+	    'display_type',
+	    sprintf(
+	        __('(string) The type of selector that will be displayed on the site. It can be: %1$s, %2$s, %3$s, %4$s, %5$s or %6$s. Default: %1$s', 'serbian-transliteration'),
+	        '<code>inline</code>',
+	        '<code>select</code>',
+	        '<code>list</code>',
+	        '<code>list_items</code>',
+	        '<code>array</code>',
+	        '<code>object</code>'
+	    )
 	); ?>
 	<?php printf(
-		'<li><code>%1$s</code> - %2$s</li>',
-		'echo',
-		sprintf(__('(bool) determines whether it will be displayed through an echo or as a string. Default: %s', 'serbian-transliteration'), '<code>false</code>')
+	    '<li><code>%1$s</code> - %2$s</li>',
+	    'echo',
+	    sprintf(__('(bool) determines whether it will be displayed through an echo or as a string. Default: %s', 'serbian-transliteration'), '<code>false</code>')
 	); ?>
 	<?php printf(
-		'<li><code>%1$s</code> - %2$s</li>',
-		'separator',
-		sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', 'serbian-transliteration'), '<code>inline</code>', '<code> | </code>')
+	    '<li><code>%1$s</code> - %2$s</li>',
+	    'separator',
+	    sprintf(__('(string) Separator to be used when the selector type is %s. Default: %s', 'serbian-transliteration'), '<code>inline</code>', '<code> | </code>')
 	); ?>
 	<?php printf(
-		'<li><code>%1$s</code> - %2$s</li>',
-		'cyr_caption',
-		sprintf(__('(string) Text for Cyrillic link. Default: %s', 'serbian-transliteration'), '<code>' . __('Cyrillic', 'serbian-transliteration') . '</code>')
+	    '<li><code>%1$s</code> - %2$s</li>',
+	    'cyr_caption',
+	    sprintf(__('(string) Text for Cyrillic link. Default: %s', 'serbian-transliteration'), '<code>' . __('Cyrillic', 'serbian-transliteration') . '</code>')
 	); ?>
 	<?php printf(
-		'<li><code>%1$s</code> - %2$s</li>',
-		'lat_caption',
-		sprintf(__('(string) Text for Latin link. Default: %s', 'serbian-transliteration'), '<code>' . __('Latin', 'serbian-transliteration') . '</code>')
+	    '<li><code>%1$s</code> - %2$s</li>',
+	    'lat_caption',
+	    sprintf(__('(string) Text for Latin link. Default: %s', 'serbian-transliteration'), '<code>' . __('Latin', 'serbian-transliteration') . '</code>')
 	); ?>
 </ul>
