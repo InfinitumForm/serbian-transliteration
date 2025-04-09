@@ -37,7 +37,7 @@ final class Transliteration_Mode extends Transliteration
      */
     public function mode($mode = null)
     {
-        return self::cached_static('mode', function () use ($mode): string|array {
+        return self::cached_static('mode', function () use ($mode) {
 
             $available_modes = Transliteration_Utilities::available_modes();
 
@@ -65,7 +65,6 @@ final class Transliteration_Mode extends Transliteration
                 $filters = apply_filters('transliteration_mode_filters', $filters);
                 return apply_filters_deprecated('rstr/transliteration/exclude/filters', [$filters], '2.0.0', 'transliteration_mode_filters');
             }
-
             $filters = $this->mode->filters();
             $filters = apply_filters('transliteration_mode_filters', $filters);
             $filters = apply_filters('transliteration_mode_filters_' . $this->mode::MODE, $filters);
@@ -166,7 +165,6 @@ final class Transliteration_Mode extends Transliteration
         if (empty($content)) {
             return $content;
         }
-
         if (is_array($content)) {
             return $this->objects($content);
         }
@@ -312,7 +310,6 @@ final class Transliteration_Mode extends Transliteration
         if (empty($content)) {
             return $content;
         }
-
         if (is_array($content)) {
             return $this->transliterate_objects($content);
         }

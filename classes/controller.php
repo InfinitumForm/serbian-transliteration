@@ -228,7 +228,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract <script> contents and replace them with placeholders
         $script_placeholders = [];
-        $content             = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function (array $matches) use (&$script_placeholders): string {
+        $content             = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function ($matches) use (&$script_placeholders): string {
             $placeholder                       = '@=[1-' . count($script_placeholders) . ']=@';
             $script_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -236,7 +236,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract <style> contents and replace them with placeholders
         $style_placeholders = [];
-        $content            = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function (array $matches) use (&$style_placeholders): string {
+        $content            = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function ($matches) use (&$style_placeholders): string {
             $placeholder                      = '@=[2-' . count($style_placeholders) . ']=@';
             $style_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -244,7 +244,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract <head> contents and replace them with placeholders
         $head_placeholders = [];
-        $content           = preg_replace_callback('/<head\b[^>]*>(.*?)<\/head>/is', function (array $matches) use (&$head_placeholders): string {
+        $content           = preg_replace_callback('/<head\b[^>]*>(.*?)<\/head>/is', function ($matches) use (&$head_placeholders): string {
             $placeholder                     = '@=[3-' . count($head_placeholders) . ']=@';
             $head_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -252,7 +252,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Handle percentage format specifiers by replacing them with placeholders
         $formatSpecifiers = [];
-        $content          = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function (array $matches) use (&$formatSpecifiers): string {
+        $content          = preg_replace_callback('/(\b\d+(?:\.\d+)?&#37;)/', function ($matches) use (&$formatSpecifiers): string {
             $placeholder                    = '@=[4-' . count($formatSpecifiers) . ']=@';
             $formatSpecifiers[$placeholder] = $matches[0];
             return $placeholder;
@@ -280,7 +280,7 @@ final class Transliteration_Controller extends Transliteration
         if ($sanitize_html) {
             $html_attributes_match = $this->private__html_atributes('cyr_to_lat');
             if ($html_attributes_match) {
-                $content = preg_replace_callback('/\b(' . $html_attributes_match . ')=("|\')(.*?)\2/i', function (array $matches) use ($class_map, $sanitize_html): string {
+                $content = preg_replace_callback('/\b(' . $html_attributes_match . ')=("|\')(.*?)\2/i', function ($matches) use ($class_map, $sanitize_html): string {
                     $transliteratedValue = $class_map::transliterate($matches[3], 'cyr_to_lat');
                     $transliteratedValue = Transliteration_Sanitization::get()->lat($transliteratedValue, $sanitize_html);
                     return $matches[1] . '=' . $matches[2] . esc_attr($transliteratedValue) . $matches[2];
@@ -389,7 +389,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract shortcode contents and replace them with placeholders
         $shortcode_placeholders = [];
-        $content                = preg_replace_callback('/\[([\w+_-]+)\s?([^\]]*)\](.*?)\[\/\1\]/is', function (array $matches) use (&$shortcode_placeholders): string {
+        $content                = preg_replace_callback('/\[([\w+_-]+)\s?([^\]]*)\](.*?)\[\/\1\]/is', function ($matches) use (&$shortcode_placeholders): string {
             $placeholder                          = '@=[1-' . count($shortcode_placeholders) . ']=@';
             $shortcode_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -397,7 +397,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract self-closing shortcode contents and replace them with placeholders
         $self_closing_shortcode_placeholders = [];
-        $content                             = preg_replace_callback('/\[(\w+)([^\]]*)\]/is', function (array $matches) use (&$self_closing_shortcode_placeholders): string {
+        $content                             = preg_replace_callback('/\[(\w+)([^\]]*)\]/is', function ($matches) use (&$self_closing_shortcode_placeholders): string {
             $placeholder                                       = '@=[2-' . count($self_closing_shortcode_placeholders) . ']=@';
             $self_closing_shortcode_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -405,7 +405,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract <script> contents and replace them with placeholders
         $script_placeholders = [];
-        $content             = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function (array $matches) use (&$script_placeholders): string {
+        $content             = preg_replace_callback('/<script\b[^>]*>(.*?)<\/script>/is', function ($matches) use (&$script_placeholders): string {
             $placeholder                       = '@=[3-' . count($script_placeholders) . ']=@';
             $script_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -413,7 +413,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract <style> contents and replace them with placeholders
         $style_placeholders = [];
-        $content            = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function (array $matches) use (&$style_placeholders): string {
+        $content            = preg_replace_callback('/<style\b[^>]*>(.*?)<\/style>/is', function ($matches) use (&$style_placeholders): string {
             $placeholder                      = '@=[4-' . count($style_placeholders) . ']=@';
             $style_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -421,7 +421,7 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract <head> contents and replace them with placeholders
         $head_placeholders = [];
-        $content           = preg_replace_callback('/<head\b[^>]*>(.*?)<\/head>/is', function (array $matches) use (&$head_placeholders): string {
+        $content           = preg_replace_callback('/<head\b[^>]*>(.*?)<\/head>/is', function ($matches) use (&$head_placeholders): string {
             $placeholder                     = '@=[5-' . count($head_placeholders) . ']=@';
             $head_placeholders[$placeholder] = $matches[0];
             return $placeholder;
@@ -429,13 +429,13 @@ final class Transliteration_Controller extends Transliteration
 
         // Extract special shortcode contents and replace them with placeholders
         $special_shortcodes = [];
-        $content            = preg_replace_callback('/\{\{([\w+_-]+)\s?([^\}]*)\}\}(.*?)\{\{\/\1\}\}/is', function (array $matches) use (&$special_shortcodes): string {
+        $content            = preg_replace_callback('/\{\{([\w+_-]+)\s?([^\}]*)\}\}(.*?)\{\{\/\1\}\}/is', function ($matches) use (&$special_shortcodes): string {
             $placeholder                      = '@=[6-' . count($special_shortcodes) . ']=@';
             $special_shortcodes[$placeholder] = $matches[0];
             return $placeholder;
         }, $content);
 
-        $content = preg_replace_callback('/\{([\w+_-]+)\s?([^\}]*)\}(.*?)\{\/\1\}/is', function (array $matches) use (&$special_shortcodes): string {
+        $content = preg_replace_callback('/\{([\w+_-]+)\s?([^\}]*)\}(.*?)\{\/\1\}/is', function ($matches) use (&$special_shortcodes): string {
             $placeholder                      = '@=[7-' . count($special_shortcodes) . ']=@';
             $special_shortcodes[$placeholder] = $matches[0];
             return $placeholder;
@@ -448,7 +448,7 @@ final class Transliteration_Controller extends Transliteration
             ? '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|<[^>]+>|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|rstr_skip|cyr_to_lat|lat_to_cyr)/'
             : '/(\b\d+(?:\.\d+)?&#37;|%\d*\$?[ds]|&[^;]+;|https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|rstr_skip|cyr_to_lat|lat_to_cyr)/'
         );
-        $content = preg_replace_callback($regex, function (array $matches) use (&$formatSpecifiers): string {
+        $content = preg_replace_callback($regex, function ($matches) use (&$formatSpecifiers): string {
             $placeholder                    = '@=[8-' . count($formatSpecifiers) . ']=@';
             $formatSpecifiers[$placeholder] = $matches[0];
             return $placeholder;
@@ -491,7 +491,7 @@ final class Transliteration_Controller extends Transliteration
         if ($sanitize_html) {
             $html_attributes_match = $this->private__html_atributes('lat_to_cyr');
             if ($html_attributes_match) {
-                $content = preg_replace_callback('/\b(' . $html_attributes_match . ')=("|\')(.*?)\2/i', function (array $matches) use ($class_map, $sanitize_html, $fix_diacritics): string {
+                $content = preg_replace_callback('/\b(' . $html_attributes_match . ')=("|\')(.*?)\2/i', function ($matches) use ($class_map, $sanitize_html, $fix_diacritics): string {
                     $transliteratedValue = $class_map::transliterate($matches[3], 'lat_to_cyr');
                     $transliteratedValue = Transliteration_Sanitization::get()->cyr($transliteratedValue, $sanitize_html);
                     if ($fix_diacritics) {
@@ -707,7 +707,7 @@ final class Transliteration_Controller extends Transliteration
      */
     private function private__html_atributes(string $type = 'inherit', bool $return_array = false)
     {
-        return self::cached_static('private__html_atributes', function () use ($type, $return_array): array|string {
+        return self::cached_static('private__html_atributes', function () use ($type, $return_array) {
             $html_attributes_match = [
                 'title',
                 'data-title',
@@ -745,7 +745,6 @@ final class Transliteration_Controller extends Transliteration
         if (ctype_upper($word) || preg_match('~^[A-ZŠĐČĆŽ]+$~u', $word)) {
             return strtoupper($search[array_search($word_search, $search, true)]);
         }
-
         if (preg_match('~^\p{Lu}~u', $word)) {
             $ucfirst = $search[array_search($word_search, $search, true)];
             return strtoupper(substr($ucfirst ?? '', 0, 1)) . substr($ucfirst ?? '', 1);

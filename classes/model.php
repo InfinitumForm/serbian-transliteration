@@ -72,7 +72,7 @@ class Transliteration
         }
 
         // Handle dynamic setters
-        if (str_starts_with($function ?? '', 'set')) {
+        if (substr($function ?? '', 0, 3) === 'set') {
             $property = lcfirst(substr($function ?? '', 3));
             if (property_exists($this, $property)) {
                 $this->$property = $this->sanitize($arguments[0]);
@@ -80,7 +80,7 @@ class Transliteration
             }
         }
 
-        throw new Exception('No such method: ' . static::class . '->' . $function . '()');
+        throw new Exception('No such method: ' . get_class($this) . '->' . $function . '()');
     }
 
     /**
@@ -97,7 +97,7 @@ class Transliteration
             return $this->$property;
         }
 
-        throw new Exception('No such property: ' . static::class . '->' . $property);
+        throw new Exception('No such property: ' . get_class($this) . '->' . $property);
     }
 
     /**
@@ -109,14 +109,14 @@ class Transliteration
      * @return $this
      * @throws Exception if the property does not exist.
      */
-    public function set_property(string $property, $value): static
+    public function set_property(string $property, $value): self
     {
         if (property_exists($this, $property)) {
             $this->$property = $this->sanitize($value);
             return $this;
         }
 
-        throw new Exception('No such property: ' . static::class . '->' . $property);
+        throw new Exception('No such property: ' . get_class($this) . '->' . $property);
     }
 
     /*
@@ -196,7 +196,6 @@ class Transliteration
             if ($object == ($intval = intval($object))) {
                 return $intval;
             }
-
             if ($object == ($floatval = floatval($object))) {
                 return $floatval;
             }
@@ -204,15 +203,14 @@ class Transliteration
             if (filter_var($object, FILTER_VALIDATE_EMAIL)) {
                 return sanitize_email($object);
             }
-
             if (filter_var($object, FILTER_VALIDATE_URL)) {
                 return esc_url($object);
             }
-
             if ($object !== strip_tags($object)) {
                 return wp_kses_post(sanitize_textarea_field($object));
+            } else {
+                return sanitize_text_field($object);
             }
-            return sanitize_text_field($object);
         }
 
         return apply_filters('transliterator_sanitize', $object, $this);

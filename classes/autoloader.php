@@ -61,7 +61,7 @@ if (!class_exists('Transliterator_Autoloader', false)) : final class Translitera
         if (isset(self::$class_map_cache[$class_name])) {
             if (!class_exists($class_name, false)) {
                 // Keep the code under the plugin to avoid conflicts
-                if (!str_contains(self::$class_map_cache[$class_name], RSTR_ROOT)) {
+                if (strpos(self::$class_map_cache[$class_name], (string) RSTR_ROOT) === false) {
                     return;
                 }
 
@@ -76,12 +76,12 @@ if (!class_exists('Transliterator_Autoloader', false)) : final class Translitera
         // Iterate over the prefix mappings
         foreach (self::$prefixes as $prefix => $directory) {
             // Check if the class name starts with the prefix
-            if (str_starts_with($class_name, $prefix) && !class_exists($class_name, false)) {
+            if (strncmp($class_name, $prefix, strlen($prefix)) === 0 && !class_exists($class_name, false)) {
                 // Resolve the class file path
                 $file = self::resolveClassFile($prefix, $class_name, $directory);
 
                 // Keep the code under the plugin to avoid conflicts
-                if (!str_contains($file, RSTR_ROOT)) {
+                if (strpos($file, (string) RSTR_ROOT) === false) {
                     continue;
                 }
 

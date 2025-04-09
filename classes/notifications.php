@@ -124,7 +124,7 @@ class Transliteration_Notifications extends Transliteration
     public function display_ads(): void
     {
 
-        if (str_contains(home_url('/'), 'freelanceposlovi.com')) {
+        if (strpos(home_url('/'), 'freelanceposlovi.com') !== false) {
             return;
         }
 

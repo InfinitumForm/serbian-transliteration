@@ -50,7 +50,6 @@ class Transliteration_Debug
         if (defined('PHP_SHLIB_SUFFIX') && strtolower(PHP_SHLIB_SUFFIX) === 'dll') {
             return true;
         }
-
         // Laravel approach
         return defined('DIRECTORY_SEPARATOR') && '\\' === DIRECTORY_SEPARATOR;
     }
@@ -63,7 +62,7 @@ class Transliteration_Debug
     public static function is_php64()
     {
         // Check is PHP 64bit (PHP 64bit only running on 64bit OS version)
-        if (defined('PHP_INT_SIZE') && PHP_INT_SIZE === 8) {
+        if (version_compare(PHP_VERSION, '5.0.5', '>=') && (defined('PHP_INT_SIZE') && PHP_INT_SIZE === 8)) {
             return true;
         }
 
@@ -91,13 +90,13 @@ class Transliteration_Debug
             if (self::is_win()) {
                 // Is Windows OS
                 $shell = shell_exec('wmic os get osarchitecture');
-                if (!($shell === '' || $shell === '0' || $shell === false || $shell === null) && str_contains($shell ?? '', '64')) {
+                if (!($shell === '' || $shell === '0' || $shell === false || $shell === null) && strpos($shell ?? '', '64') !== false) {
                     return true;
                 }
             } else {
                 // Let's check some UNIX approach if is possible
                 $shell = shell_exec('uname -m');
-                if (!($shell === '' || $shell === '0' || $shell === false || $shell === null) && str_contains($shell ?? '', '64')) {
+                if (!($shell === '' || $shell === '0' || $shell === false || $shell === null) && strpos($shell ?? '', '64') !== false) {
                     return true;
                 }
             }
@@ -108,7 +107,6 @@ class Transliteration_Debug
         if ($is_php64) {
             return true;
         }
-
         // bit-shifting can help also
         return (bool) (1 << 32) - 1;
     }

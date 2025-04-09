@@ -12,7 +12,7 @@ class Transliteration_Themes
         $this->load_theme_class();
     }
 
-    public function theme_class(): string|false
+    public function theme_class()
     {
         // Get the name of the active theme
         $theme = wp_get_theme();

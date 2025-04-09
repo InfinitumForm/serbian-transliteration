@@ -54,11 +54,11 @@ if (!class_exists('Transliteration_Init', false)) : final class Transliteration_
 
         $request_uri = $_SERVER['REQUEST_URI'] ?? '';
 
-        if (str_contains($request_uri, '/admin-ajax.php') || (function_exists('wp_doing_ajax') && wp_doing_ajax())) {
+        if (strpos($request_uri, '/admin-ajax.php') !== false || (function_exists('wp_doing_ajax') && wp_doing_ajax())) {
             return;
         }
 
-        if (str_contains($request_uri, '/wp-admin/') || (function_exists('is_admin') && is_admin())) {
+        if (strpos($request_uri, '/wp-admin/') !== false || (function_exists('is_admin') && is_admin())) {
             if (!headers_sent()) {
                 setcookie('rstr_test_' . COOKIEHASH, 'true', ['expires' => 0, 'path' => COOKIEPATH, 'domain' => COOKIE_DOMAIN]);
             }
@@ -268,14 +268,12 @@ if (!class_exists('Transliteration_Init', false)) : final class Transliteration_
                 Transliteration_Cache_DB::table_install();
                 update_option('serbian-transliteration-db-version', RSTR_DATABASE_VERSION, false);
             }
-
             // Clear plugin cache
             Transliteration_Utilities::clear_plugin_cache();
             // Reset permalinks
             if (function_exists('flush_rewrite_rules')) {
                 flush_rewrite_rules();
             }
-
             // Save version
             $current_version = get_option('serbian-transliteration-version');
             if ($current_version !== RSTR_VERSION) {

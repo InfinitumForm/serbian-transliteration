@@ -61,7 +61,7 @@ class Transliteration_Mode_Dev extends Transliteration
         }
     }
 
-    public function transliterateHTML($html): string|false
+    public function transliterateHTML($html)
     {
         $dom = new DOMDocument();
 

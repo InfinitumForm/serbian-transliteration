@@ -1152,7 +1152,7 @@ class Transliteration_Settings_Fields
         }
 
         foreach ($list as $hook) {
-            if ($only_woo && !str_contains($hook ?? '', 'woo')) {
+            if ($only_woo && strpos($hook ?? '', 'woo') === false) {
                 continue;
             }
 
