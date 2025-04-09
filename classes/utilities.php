@@ -351,12 +351,15 @@ class Transliteration_Utilities
                 if ($count === 1 && $check[0]) {
                     return true;
                 }
+
                 if ($count === 2 && in_array($check[0], ['function_exists', 'has_action']) && $check[0]($check[1])) {
                     return true;
                 }
+
                 if ($count === 2 && 'class_exists' === $check[0] && $check[0]($check[1], false)) {
                     return true;
                 }
+
                 if ($count === 3 && $check[0]($check[1]) && $check[0]($check[2])) {
                     return true;
                 }
@@ -561,6 +564,7 @@ class Transliteration_Utilities
         if (function_exists('wp_cache_flush')) {
             wp_cache_flush();
         }
+
         /*
         // Clean user cache
         if($user && function_exists('clean_user_cache')) {
@@ -573,11 +577,19 @@ class Transliteration_Utilities
             clean_post_cache( $post );
         }
         */
+
+        // Flush Seraphinite Accelerator Cache
+        if (class_exists('\Seraphinite\Accelerator\Accelerator') && method_exists('\Seraphinite\Accelerator\Accelerator', 'clear')) {
+            \Seraphinite\Accelerator\Accelerator::clear();
+            return true;
+        }
+
         // Flush LS Cache
         if (class_exists('\LiteSpeed\Purge', false)) {
             \LiteSpeed\Purge::purge_all();
             return true;
         }
+
         if (has_action('litespeed_purge_all')) {
             do_action('litespeed_purge_all');
             return true;
@@ -587,6 +599,7 @@ class Transliteration_Utilities
             litespeed_purge_all();
             return true;
         }
+
         // W3 Total Cache
         if (function_exists('w3tc_flush_all')) {
             w3tc_flush_all();
@@ -940,24 +953,31 @@ class Transliteration_Utilities
             if ($id = self::get_page_ID__private__wp_query()) {
                 return $id;
             }
+
             if ($id = self::get_page_ID__private__get_the_id()) {
                 return $id;
             }
+
             if (!is_null($post) && isset($post->ID) && !empty($post->ID)) {
                 return $post->ID;
             }
+
             if ($post = self::get_page_ID__private__GET_post()) {
                 return $post;
             }
+
             if ($p = self::get_page_ID__private__GET_p()) {
                 return $p;
             }
+
             if ($page_id = self::get_page_ID__private__GET_page_id()) {
                 return $page_id;
             }
+
             if ($id = self::get_page_ID__private__query()) {
                 return $id;
             }
+
             // Check different methods to get the page ID and cache the result
             if ($id = self::get_page_ID__private__page_for_posts()) {
                 return get_option('page_for_posts');
@@ -1166,6 +1186,7 @@ class Transliteration_Utilities
         if ($needle) {
             return (in_array($needle, $words, true) ? $needle : false);
         }
+
         return $words;
     }
 
@@ -1303,6 +1324,7 @@ class Transliteration_Utilities
             if ($software && stripos($software, 'LiteSpeed') !== false) {
                 return true;
             }
+
             // Check for LiteSpeed Cache specific HTTP header
             // Default: LiteSpeed Cache is not active
             return !empty($_SERVER['HTTP_X_LITESPEED_CACHE'] ?? null);

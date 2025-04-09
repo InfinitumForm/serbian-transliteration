@@ -182,6 +182,7 @@ class Transliteration_Wordpress extends Transliteration
             if ($name !== []) {
                 return implode($delimiter, $name);
             }
+
             return $filename;
         }
 

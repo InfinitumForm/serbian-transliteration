@@ -47,14 +47,18 @@ class Transliteration_Search extends Transliteration
             if (Transliteration_Utilities::is_cyr($term)) {
                 return Transliteration_Controller::get()->cyr_to_lat($term, false);
             }
+
             return Transliteration_Controller::get()->lat_to_cyr($term, false, (get_rstr_option('fix-diacritics', 'no') != 'no'));
         }
+
         if ($search_mode == 'plugin-mode') {
             if (get_rstr_option('site-script', 'lat') == 'cyr') {
                 return Transliteration_Controller::get()->lat_to_cyr($term, false, get_rstr_option('fix-diacritics', 'no') == 'yes');
             }
+
             return Transliteration_Controller::get()->cyr_to_lat($term);
         }
+
         return;
     }
 
@@ -89,6 +93,7 @@ class Transliteration_Search extends Transliteration
 				{$wpdb->posts}.post_content {$like_op} %s
 			)", $like, $like, $like);
         }
+
         // Ako su term i term_transliterated različiti, generišemo uslov za oba
         return $wpdb->prepare("{$searchand}(
 				(

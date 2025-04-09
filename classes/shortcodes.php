@@ -72,6 +72,7 @@ class Transliteration_Shortcodes extends Transliteration
         if ($attr->output == 'php') {
             return cyr_to_lat(do_shortcode($content), $attr->fix_html);
         }
+
         return '{cyr_to_lat}' . do_shortcode($content) . '{/cyr_to_lat}';
     }
 
@@ -104,6 +105,7 @@ class Transliteration_Shortcodes extends Transliteration
         if ($attr->output == 'php') {
             return lat_to_cyr(do_shortcode($content), $attr->fix_html, $attr->fix_diacritics);
         }
+
         return '{lat_to_cyr}' . do_shortcode($content) . '{/lat_to_cyr}';
     }
 
@@ -123,6 +125,7 @@ class Transliteration_Shortcodes extends Transliteration
                 )
             ) . $content;
         }
+
         shortcode_atts([], $attr);
         return match (get_rstr_option('transliteration-mode', '')) {
             'cyr_to_lat' => $this->lat_to_cyr([], do_shortcode($content)),
@@ -180,25 +183,22 @@ class Transliteration_Shortcodes extends Transliteration
                 if ($attr->lat_caption) {
                     return sprintf('<figure><img src="%1$s" alt="%2$s" %4$s/><figcaption>%3$s</figcaption></figure>', esc_attr($attr->lat), esc_attr($attr->lat_title), wp_kses_post($attr->lat_caption), wp_kses_post($attr->img_attributes));
                 }
-                return sprintf('<img src="%1$s" alt="%2$s" %3$s/>', esc_attr($attr->lat), esc_attr($attr->lat_title), wp_kses_post($attr->img_attributes));
 
-                break;
+                return sprintf('<img src="%1$s" alt="%2$s" %3$s/>', esc_attr($attr->lat), esc_attr($attr->lat_title), wp_kses_post($attr->img_attributes));
 
             case 'cyr':
                 if ($attr->cyr_caption) {
                     return sprintf('<figure><img src="%1$s" alt="%2$s" %4$s/><figcaption>%3$s</figcaption></figure>', esc_attr($attr->cyr), esc_attr($attr->cyr_title), wp_kses_post($attr->cyr_caption), wp_kses_post($attr->img_attributes));
                 }
-                return sprintf('<img src="%1$s" alt="%2$s" %3$s/>', esc_attr($attr->cyr), esc_attr($attr->cyr_title), wp_kses_post($attr->img_attributes));
 
-                break;
+                return sprintf('<img src="%1$s" alt="%2$s" %3$s/>', esc_attr($attr->cyr), esc_attr($attr->cyr_title), wp_kses_post($attr->img_attributes));
 
             default:
                 if ($attr->default_caption) {
                     return sprintf('<figure><img src="%1$s" alt="%2$s" %4$s/><figcaption>%3$s</figcaption></figure>', esc_attr($attr->default), esc_attr($attr->default_title), wp_kses_post($attr->default_caption), wp_kses_post($attr->img_attributes));
                 }
-                return sprintf('<img src="%1$s" alt="%2$s" %3$s/>', esc_attr($attr->default), esc_attr($attr->default_title), wp_kses_post($attr->img_attributes));
 
-                break;
+                return sprintf('<img src="%1$s" alt="%2$s" %3$s/>', esc_attr($attr->default), esc_attr($attr->default_title), wp_kses_post($attr->img_attributes));
         }
     }
 }

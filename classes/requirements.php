@@ -99,13 +99,13 @@ font-weight:600;
 <div class="serbian-transliteration-upgrade-notice-list">
 	<?php echo str_replace(
 	    [
-         '<ul>',
-         '</ul>',
-        ],
+	     '<ul>',
+	     '</ul>',
+	    ],
 	    [
-         '<ol>',
-         '</ol>',
-        ],
+	     '<ol>',
+	     '</ol>',
+	    ],
 	    $response->upgrade_notice
 	); ?>
 </div>

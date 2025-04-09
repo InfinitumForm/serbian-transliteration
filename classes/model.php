@@ -196,6 +196,7 @@ class Transliteration
             if ($object == ($intval = intval($object))) {
                 return $intval;
             }
+
             if ($object == ($floatval = floatval($object))) {
                 return $floatval;
             }
@@ -203,14 +204,15 @@ class Transliteration
             if (filter_var($object, FILTER_VALIDATE_EMAIL)) {
                 return sanitize_email($object);
             }
+
             if (filter_var($object, FILTER_VALIDATE_URL)) {
                 return esc_url($object);
             }
+
             if ($object !== strip_tags($object)) {
                 return wp_kses_post(sanitize_textarea_field($object));
-            } else {
-                return sanitize_text_field($object);
             }
+            return sanitize_text_field($object);
         }
 
         return apply_filters('transliterator_sanitize', $object, $this);

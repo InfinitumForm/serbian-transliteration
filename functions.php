@@ -117,7 +117,7 @@ endif;
  * @author        Ivijan-Stefan Stipic
 */
 if (!function_exists('is_latin_text')) :
-    function is_latin_text($content)
+    function is_latin_text($content): bool
     {
         return Transliteration_Utilities::is_lat($content);
     }
@@ -463,6 +463,7 @@ if (!function_exists('script_selector')) :
         } else {
             return $return;
         }
+
         return;
     }
 

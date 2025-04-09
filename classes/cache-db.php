@@ -58,7 +58,7 @@ class Transliteration_Cache_DB
 
         global $wpdb;
 
-        if (!empty($key) && ($result = $wpdb->get_var($wpdb->prepare("
+        if ($key !== '' && $key !== '0' && ($result = $wpdb->get_var($wpdb->prepare("
 			SELECT `{$wpdb->rstr_cache}`.`value` 
 			FROM `{$wpdb->rstr_cache}` 
 			WHERE `{$wpdb->rstr_cache}`.`key` = %s
@@ -126,9 +126,11 @@ class Transliteration_Cache_DB
         if (empty($value)) {
             return;
         }
+
         if ($value == ($existing_value = self::get($key, null))) {
             return $existing_value;
         }
+
         if ($return = self::add($key, $value, $expire)) {
             return $return;
         }
