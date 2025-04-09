@@ -4,16 +4,16 @@
  * @wordpress-plugin
  * Plugin Name:       Transliterator
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
- * Description:       All in one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Donate link:       https://www.buymeacoffee.com/ivijanstefan
- * Version:           2.2.3
+ * Description:       All-in-one Cyrillic to Latin transliteration plugin for WordPress that actually works.
+ * Donate Link:       https://www.buymeacoffee.com/ivijanstefan
+ * Version:           2.3.0
  * Requires at least: 5.4
- * Tested up to:      6.7
- * Requires PHP:      7.0
+ * Tested up to:      6.8
+ * Requires PHP:      7.4
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
  * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       serbian-transliteration
  * Domain Path:       /languages
  * Network:           true
@@ -25,13 +25,13 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
 
 // If someone try to called this file directly via URL, abort.
 if (! defined('WPINC')) {

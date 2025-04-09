@@ -2,11 +2,11 @@
 Contributors: ivijanstefan, creativform, tihi
 Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
-Tested up to: 6.7
-Requires PHP: 7.0
-Stable tag: 2.2.3
+Tested up to: 6.8
+Requires PHP: 7.4
+Stable tag: 2.3.0
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://www.buymeacoffee.com/ivijanstefan
 
 Universal transliteration for permalinks, posts, tags, categories, media, files, search and more, rendering them universally readable.
@@ -107,6 +107,15 @@ It is important for you to know that any functionality in our plugin can be turn
 9. Automated test
 
 == Changelog ==
+
+= 2.3.0 =
+* Brought codebase to PSR-12 coding standard
+* Refactored features and functionalities for faster execution and better maintainability
+* Prepared and tested plugin compatibility for WordPress version 6.8
+* Removed all PHP 5.6 specific syntax to support minimum PHP 7.4
+* Modularized core logic for better structure and scalability
+* Optimized loading time by reducing unnecessary function calls
+* Improved type declarations and error handling for critical functions
 
 = 2.2.3 =
 * Fixing bugs regarding Tag transitions
@@ -229,29 +238,14 @@ It is important for you to know that any functionality in our plugin can be turn
 
 == Upgrade Notice ==
 
-= 2.2.3 =
-* Fixing bugs regarding Tag transitions
-
-= 2.2.2 =
-* Fixed problem with l10n.php algo
-* Removed PHP errors
-
-= 2.2.1 =
-* Fixed PHP errors from the previous version
-* Improved UTF-8 encoding
-* Optimized transliteration scripts
-* Added support for the special HTML attributes
-
-= 2.2.0 =
-* NEW: Phantom Mode - ultra fast DOM-based transliteration (experimental)
-* Fixed forced transliteration
-* Improved site optimization
-
-= 2.1.8 =
-* Added support and integration for Polylang plugin
-* Improved and optimized permalink algorithm
-* Optimized plugin loading
-* Added new filters for developers
+= 2.3.0 =
+* Brought codebase to PSR-12 coding standard
+* Refactored features and functionalities for faster execution and better maintainability
+* Prepared and tested plugin compatibility for WordPress version 6.8
+* Removed all PHP 5.6 specific syntax to support minimum PHP 7.4
+* Modularized core logic for better structure and scalability
+* Optimized loading time by reducing unnecessary function calls
+* Improved type declarations and error handling for critical functions
 
 == Frequently Asked Questions ==
 
