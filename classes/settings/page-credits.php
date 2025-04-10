@@ -13,7 +13,13 @@ $special_thanks_sponsors = [
 $special_thanks = [
     'tihi'                => 'https://profiles.wordpress.org/tihi',
     'dizajn24'            => 'https://profiles.wordpress.org/dizajn24',
-    'Yaroslav Ingulskyi'  => 'https://wordpress.org/support/users/ingyaroslav/',
+    'Yaroslav Ingulskyi'  => 'https://profiles.wordpress.org/ingyaroslav',
+	'BlackWiCKED'         => 'https://profiles.wordpress.org/blackwicked',
+	'Nemanja Novaković'   => 'https://profiles.wordpress.org/lupus1204',
+	'ivantre'             => 'https://profiles.wordpress.org/ivantre',
+	'daliborm74'          => 'https://profiles.wordpress.org/daliborm74',
+	'Željko Galetić'      => 'https://profiles.wordpress.org/zeljkogaletic',
+	'Toni'                => 'https://profiles.wordpress.org/tonistankovic',
     'Slobodan Mirić'      => 'https://www.facebook.com/websitesworkshop',
     'Branislav Mitić'     => 'https://profiles.wordpress.org/xlr84xs/',
     'Dušan Filiferović'   => 'https://korisnickicentar.contrateam.com/aff.php?aff=385',
@@ -22,7 +28,7 @@ $special_thanks = [
     'Slobodan Pantović'   => '',
     'Ivan Stanojević'     => '',
     'Ognjen Odobašić'     => '',
-    'Miloš Maksimović'    => '',
+    'Miloš Maksimović'    => ''
 ]; ?>
 <script>function rstr_popup(url, title, w, h) {
 	// Fixes dual-screen position Most browsers Firefox
@@ -41,6 +47,14 @@ $special_thanks = [
 		newWindow.focus();
 	}
 };</script>
+<h3><span class="dashicons dashicons-heart"></span> <?php esc_html_e('Donations', 'serbian-transliteration'); ?></h3>
+<?php printf('<p>%s</p>', esc_html__('This plugin is 100% free. If you want to buy us one coffee, beer or in general help the development of this plugin through a monetary donation, you can do it in the following ways:', 'serbian-transliteration')); ?>
+<ul>
+	<?php /*printf('<li><b>%s</b>: %s</li>', esc_html__('PayPal', 'serbian-transliteration'), 'creativform@gmail.com');*/ ?>
+	<?php printf('<li><b>%s</b>: %s (%s)</li>', esc_html__('From Serbia', 'serbian-transliteration'), '160-6000002167503-32', esc_html__('Banca Intesa a.d. Beograd', 'serbian-transliteration')); ?>
+</ul>
+
+
 <h3><span class="dashicons dashicons-info"></span> <?php esc_html_e('Credits', 'serbian-transliteration'); ?></h3>
 <?php printf('<p>%s</p>', esc_html__('This is a light weight, simple and easy plugin with which you can transliterate your WordPress installation from Cyrillic to Latin and vice versa in a few clicks. This transliteration plugin also supports special shortcodes that you can use to partially transliterate parts of the content.', 'serbian-transliteration')); ?>
 <p><?php
@@ -113,10 +127,3 @@ printf('<strong>%s</strong> %s', esc_html__('Special thanks to the contributors 
 <?php printf('<p>%s</p>', esc_html__('This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.', 'serbian-transliteration')); ?>
 <p><a href="javascript:void(0);" onClick="rstr_popup('<?php echo RSTR_URL; ?>/LICENSE.txt','GNU GENERAL PUBLIC LICENSE','550','450');"><?php esc_html_e('See the GNU General Public License for more details.', 'serbian-transliteration'); ?></a></p>
 <?php printf('<p>%s</p>', esc_html__('You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.', 'serbian-transliteration')); ?>
-
-<h3><span class="dashicons dashicons-heart"></span> <?php esc_html_e('Donations', 'serbian-transliteration'); ?></h3>
-<?php printf('<p>%s</p>', esc_html__('This plugin is 100% free. If you want to buy us one coffee, beer or in general help the development of this plugin through a monetary donation, you can do it in the following ways:', 'serbian-transliteration')); ?>
-<ul>
-	<?php printf('<li><b>%s</b>: %s</li>', esc_html__('PayPal', 'serbian-transliteration'), 'creativform@gmail.com'); ?>
-	<?php printf('<li><b>%s</b>: %s (%s)</li>', esc_html__('From Serbia', 'serbian-transliteration'), '115-0000000138835-77', esc_html__('Mobi Bank', 'serbian-transliteration')); ?>
-</ul>

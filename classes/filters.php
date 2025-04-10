@@ -132,8 +132,8 @@ class Transliteration_Filters extends Transliteration
 		<img src="<?php echo esc_url(RSTR_ASSETS . '/img/logo-contra-team.jpg'); ?>" alt="<?php esc_attr_e('Contra Team - A complete hosting solution in one place', 'serbian-transliteration'); ?>">
 	</a>
 </div>
-		<?php if (in_array($page, ['credits', 'permalinks', 'transliteration'])) : ?>
+		<?php /* if (in_array($page, ['credits', 'permalinks', 'transliteration'])) : ?>
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ivijanstefan" data-description="<?php esc_attr_e('Support my work by buying me a coffee!', 'serbian-transliteration'); ?>" data-message="<?php esc_attr_e('Thank you for using Transliterator. Could you buy me a coffee?', 'serbian-transliteration'); ?>" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="50"></script>
-		<?php endif;
+		<?php endif; */
     }
 }

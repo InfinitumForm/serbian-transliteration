@@ -8,11 +8,15 @@ class Transliteration_Settings_Sidebars
     {
         ?>
 		<?php printf('<p>%s</p>', __('When you find a tool that fits your needs perfectly, and it\'s free, it’s something special. That’s exactly what my plugin is – free, but crafted with love and dedication. To ensure the continued development and improvement of the Transliterator plugin, I have established a foundation to support its future growth.', 'serbian-transliteration')); ?>
-		<?php printf('<p>%s</p>', __('Your support for this project is not just an investment in the tool you use, but also a contribution to the community that relies on it. If you’d like to support the development and enable new features, you can do so through donations:', 'serbian-transliteration'));?>
+		<?php printf('<p>%s</p>', __('Your support for this project is not just an investment in the tool you use, but also a contribution to the community that relies on it. If you’d like to support the development and enable new features, you can do so through donations:', 'serbian-transliteration')); /*?>
 		<p><a href="https://www.buymeacoffee.com/ivijanstefan" target="_blank"><img src="https://img.buymeacoffee.com/button-api/?text=<?php esc_attr_e('Buy me a coffee', 'serbian-transliteration'); ?>&emoji=&slug=ivijanstefan&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" /></a></p>
+		*/ ?>
+		<hr>
 		<ul>
-			<?php printf('<li><hr>%s: <br><b>%s</b><br>Swift: <b>%s</b><hr></li>', __('Banca Intesa a.d. Beograd', 'serbian-transliteration'), '160-6000002167503-32', 'DBDBRSBG'); ?>
+			<?php printf('<li>%s: <br><b>%s</b><br>Swift: <b>%s</b></li>', __('Banca Intesa a.d. Beograd', 'serbian-transliteration'), '160-6000002167503-32', 'DBDBRSBG'); ?>
+			<?php /* printf('<li><b>%s</b>: %s</li>', esc_html__('PayPal', 'serbian-transliteration'), 'creativform@gmail.com');*/ ?>
 		</ul>
+		<hr>
 		<?php printf('<p>%s</p>', __('Every donation, no matter the amount, directly supports the ongoing work on the plugin and allows me to continue innovating. Thank you for supporting this project and being part of a community that believes in its importance.', 'serbian-transliteration')); ?>
 		<?php printf('<p>%s<br><a href="https://www.linkedin.com/in/ivijanstefanstipic/" target="_blank">Ivijan-Stefan Stipić</a></p>', __('With love,', 'serbian-transliteration'));
     }

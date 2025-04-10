@@ -116,7 +116,8 @@ class Transliteration_Notifications extends Transliteration
         $past_date = strtotime('-3 weeks');
 
         if ($past_date >= $install_date) {
-            $this->add_action('admin_notices', 'notice__buy_me_a_coffee', 1);
+           // $this->add_action('admin_notices', 'notice__buy_me_a_coffee', 1);
+		   $this->add_action('admin_notices', 'notice__donation_bank_account', 1);
         }
     }
 
@@ -187,6 +188,33 @@ class Transliteration_Notifications extends Transliteration
         ) . '</p>
 		</div>';
     }
+	
+	public function notice__donation_bank_account(): void
+	{
+		$parse_url    = Transliteration_Utilities::parse_url();
+		$dont_disturb = esc_url(add_query_arg('rstr_dimiss_donation', '1', $parse_url['url']));
+		$plugin_info  = get_plugin_data(RSTR_FILE, true, true);
+
+		echo '<div class="notice notice-info">
+			<h3>' . sprintf(
+			__('Hey there! It\'s been a while since you\'ve been using the <b>%1$s</b> plugin', 'serbian-transliteration'),
+			$plugin_info['Name']
+		) . '</h3>
+
+			<p>' . __('I\'m really happy to see this plugin being useful for your website. If you ever feel like giving back, here\'s one way to do it.', 'serbian-transliteration') . '</p>
+
+			<p><strong>' . __('Bank account (Banca Intesa a.d. Beograd):', 'serbian-transliteration') . '</strong><br>
+			160-6000002167503-32<br>
+			SWIFT: DBDBRSBG</p>
+
+			<p>' . __('Every little bit helps, and I truly appreciate it! ❤️', 'serbian-transliteration') . '</p>
+
+			<p>' . sprintf(
+			__('Or simply %s forever.', 'serbian-transliteration'),
+			'<a href="' . esc_url($dont_disturb) . '">' . __('hide this message', 'serbian-transliteration') . '</a>'
+		) . '</p>
+		</div>';
+	}
 
     /**
      * Display Admin Notice, asking for a review
