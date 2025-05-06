@@ -103,7 +103,7 @@ final class Transliteration_Mode extends Transliteration
             return;
         }
 
-        if (in_array($this->mode::MODE, ['forced', 'phantom'])) {
+        if (in_array($this->mode::MODE, ['forced'])) {
             return;
         }
 

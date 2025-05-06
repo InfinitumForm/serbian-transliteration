@@ -48,6 +48,8 @@ class Transliteration_Mode_Admin
             'wp_get_object_terms'          => 'transliteration_wp_terms',
             'load_script_translations'     => 'transliteration_json_content',
             'pre_load_script_translations' => 'transliteration_json_content',
+			'plugin_action_links' => [self::class, 'admin_plugin_action_links'],
+			'network_admin_plugin_action_links' => [self::class, 'admin_plugin_action_links'],
             'admin_menu'                   => [self::class, 'transliterate_admin_menu'],
             'manage_pages_columns'         => [self::class, 'transliterate_pages_columns'],
             'display_post_states'          => [self::class, 'transliterate_pages_columns'],
@@ -66,6 +68,15 @@ class Transliteration_Mode_Admin
 
         return $filters;
     }
+	
+	public static function admin_plugin_action_links($actions) {
+	
+		foreach($actions as &$action) {
+			$action = Transliteration_Mode::get()->content__force_lat($action);
+		}
+		
+		return $actions;
+	}
 
     public static function transliterate_admin_menu(): void
     {

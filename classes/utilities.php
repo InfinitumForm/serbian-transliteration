@@ -390,40 +390,40 @@ class Transliteration_Utilities
                 return plugins_api('plugin_information', [
                     'slug'   => RSTR_NAME,
                     'fields' => array_merge([
-                        'active_installs'     => false,           // rounded int
-                        'added'               => false,                     // date
-                        'author'              => false,                    // a href html
-                        'author_block_count'  => false,        // int
+                        'active_installs'     => false,       // rounded int
+                        'added'               => false,       // date
+                        'author'              => false,       // a href html
+                        'author_block_count'  => false,       // int
                         'author_block_rating' => false,       // int
-                        'author_profile'      => false,            // url
-                        'banners'             => false,                   // array( [low], [high] )
-                        'compatibility'       => false,             // empty array?
-                        'contributors'        => false,              // array( array( [profile], [avatar], [display_name] )
-                        'description'         => false,               // string
-                        'donate_link'         => false,               // url
-                        'download_link'       => false,             // url
-                        'downloaded'          => false,                // int
+                        'author_profile'      => false,       // url
+                        'banners'             => false,       // array( [low], [high] )
+                        'compatibility'       => false,       // empty array?
+                        'contributors'        => false,       // array( array( [profile], [avatar], [display_name] )
+                        'description'         => false,       // string
+                        'donate_link'         => false,       // url
+                        'download_link'       => false,       // url
+                        'downloaded'          => false,       // int
                         // 'group' => false,                  // n/a
-                        'homepage'     => false,                  // url
-                        'icons'        => false,                     // array( [1x] url, [2x] url )
+                        'homepage'     => false,              // url
+                        'icons'        => false,              // array( [1x] url, [2x] url )
                         'last_updated' => false,              // datetime
-                        'name'         => false,                      // string
-                        'num_ratings'  => false,               // int
-                        'rating'       => false,                    // int
-                        'ratings'      => false,                   // array( [5..0] )
-                        'requires'     => false,                  // version string
+                        'name'         => false,              // string
+                        'num_ratings'  => false,              // int
+                        'rating'       => false,              // int
+                        'ratings'      => false,              // array( [5..0] )
+                        'requires'     => false,              // version string
                         'requires_php' => false,              // version string
                         // 'reviews' => false,                // n/a, part of 'sections'
-                        'screenshots'              => false,               // array( array( [src],  ) )
-                        'sections'                 => false,                  // array( [description], [installation], [changelog], [reviews], ...)
-                        'short_description'        => false,         // string
-                        'slug'                     => false,                      // string
-                        'support_threads'          => false,           // int
+                        'screenshots'              => false,  // array( array( [src],  ) )
+                        'sections'                 => false,  // array( [description], [installation], [changelog], [reviews], ...)
+                        'short_description'        => false,  // string
+                        'slug'                     => false,  // string
+                        'support_threads'          => false,  // int
                         'support_threads_resolved' => false,  // int
-                        'tags'                     => false,                      // array( )
-                        'tested'                   => false,                    // version string
-                        'version'                  => false,                   // version string
-                        'versions'                 => false,                  // array( [version] url )
+                        'tags'                     => false,  // array( )
+                        'tested'                   => false,  // version string
+                        'version'                  => false,  // version string
+                        'versions'                 => false,  // array( [version] url )
                     ], $fields),
                 ]);
             }
@@ -1219,6 +1219,10 @@ class Transliteration_Utilities
         }, $url);
     }
 
+	/*
+     * Advanced array filter
+     * @return  array
+     */
     public static function array_filter($array, $remove, $reindex = false)
     {
 

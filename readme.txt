@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,11 @@ It is important for you to know that any functionality in our plugin can be turn
 9. Automated test
 
 == Changelog ==
+
+= 2.3.2 =
+* Fixed Wp Admin transliteration
+* Improved WooCommerce transliteration
+* Code Optimizations
 
 = 2.3.1 =
 * Fixed UI
@@ -240,6 +245,11 @@ It is important for you to know that any functionality in our plugin can be turn
 * Added support for multilingual content and automatic language detection
 
 == Upgrade Notice ==
+
+= 2.3.2 =
+* Fixed Wp Admin transliteration
+* Improved WooCommerce transliteration
+* Code Optimizations
 
 = 2.3.1 =
 * Fixed UI
