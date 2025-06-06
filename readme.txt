@@ -58,6 +58,7 @@ We also do special compatible functions with:
  &#9989; [WooCommerce](https://wordpress.org/plugins/woocommerce/)
  &#9989; [Polylang](https://wordpress.org/plugins/polylang/)
  &#9989; [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
+ &#9989; [WPBakery Page Builder](https://wpbakery.com/)
  &#9989; [CF Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
  &#9989; [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
  &#9989; [Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/)

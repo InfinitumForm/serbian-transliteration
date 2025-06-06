@@ -753,7 +753,11 @@ class Transliteration_Utilities
             $is_editor = false;
 
             // Check for specific editors and set the cache if true
-            if (self::is_elementor_editor() || self::is_oxygen_editor()) {
+            if (
+                self::is_elementor_editor() ||
+                self::is_oxygen_editor() ||
+                self::is_wpbakery_editor()
+            ) {
                 return true;
             }
 
@@ -837,6 +841,27 @@ class Transliteration_Utilities
     public static function is_oxygen_editor()
     {
         return self::cached_static('is_oxygen_editor', fn (): bool => self::is_plugin_active('oxygen/functions.php') && (($_REQUEST['ct_builder'] ?? null) == 'true' || ($_REQUEST['ct_inner'] ?? null) == 'true' || preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))));
+    }
+
+    /*
+     * Check is in the WPBakery editor mode
+     * @version   1.0.0
+     */
+    public static function is_wpbakery_editor()
+    {
+        return self::cached_static('is_wpbakery_editor', function (): bool {
+            if (
+                self::is_plugin_active('js_composer/js_composer.php') && (
+                    (!empty($_GET['vc_editable']) && $_GET['vc_editable'] === 'true') ||
+                    (!empty($_GET['vc_action']) && $_GET['vc_action'] === 'vc_inline') ||
+                    (function_exists('vc_is_inline') && vc_is_inline())
+                )
+            ) {
+                return true;
+            }
+
+            return false;
+        });
     }
 
     /*
