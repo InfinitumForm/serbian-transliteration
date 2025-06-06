@@ -10,8 +10,9 @@ if (!class_exists('Transliteration_Init', false)) : final class Transliteration_
     {
         // Register the textdomain for the plugin
         $this->set_admin_cookie_based_on_url();
-        $this->add_action('plugins_loaded', 'load_textdomain');
-        $this->add_action('load_textdomain_mofile', 'load_textdomain_mofile', 10, 2);
+        // Load translations after plugins are fully loaded
+        $this->add_action('init', 'load_textdomain');
+        $this->add_filter('load_textdomain_mofile', 'load_textdomain_mofile', 10, 2);
         $this->add_action('template_redirect', 'set_transliteration');
 
         // Register main classes
