@@ -1082,18 +1082,54 @@ class Transliteration_Utilities
     * @since     1.6.7
     */
     public static function normalize_latin_string($str)
-    {
+	{
+		// Step 1: Transliterate using WP native
+		if (function_exists('remove_accents')) {
+			$str = remove_accents($str);
+		}
 
-        $map = apply_filters('rstr/utilities/normalize_latin_string', RSTR_NORMALIZE_LATIN_STRING_MAP, $str);
+		// Step 2: Apply custom Unicode symbol map
+		$map = apply_filters('rstr/utilities/normalize_latin_string', RSTR_NORMALIZE_LATIN_STRING_MAP, $str);
 
-        $str = strtr($str, $map);
+		// Step 3: Lazy translations
+		$placeholders = [
+			'%%degrees%%'         => __(' degrees ', 'serbian-transliteration'),
+			'%%divided_by%%'      => __(' divided by ', 'serbian-transliteration'),
+			'%%times%%'           => __(' times ', 'serbian-transliteration'),
+			'%%plus_minus%%'      => __(' plus-minus ', 'serbian-transliteration'),
+			'%%square_root%%'     => __(' square root ', 'serbian-transliteration'),
+			'%%infinity%%'        => __(' infinity ', 'serbian-transliteration'),
+			'%%almost_equal%%'    => __(' almost equal to ', 'serbian-transliteration'),
+			'%%not_equal%%'       => __(' not equal to ', 'serbian-transliteration'),
+			'%%identical%%'       => __(' identical to ', 'serbian-transliteration'),
+			'%%less_equal%%'      => __(' less than or equal to ', 'serbian-transliteration'),
+			'%%greater_equal%%'   => __(' greater than or equal to ', 'serbian-transliteration'),
+			'%%left%%'            => __(' left ', 'serbian-transliteration'),
+			'%%right%%'           => __(' right ', 'serbian-transliteration'),
+			'%%up%%'              => __(' up ', 'serbian-transliteration'),
+			'%%down%%'            => __(' down ', 'serbian-transliteration'),
+			'%%left_right%%'      => __(' left and right ', 'serbian-transliteration'),
+			'%%up_down%%'         => __(' up and down ', 'serbian-transliteration'),
+			'%%care_of%%'         => __(' care of ', 'serbian-transliteration'),
+			'%%estimated%%'       => __(' estimated ', 'serbian-transliteration'),
+			'%%ohm%%'             => __(' ohm ', 'serbian-transliteration'),
+			'%%female%%'          => __(' female ', 'serbian-transliteration'),
+			'%%male%%'            => __(' male ', 'serbian-transliteration'),
+			'%%copyright%%'       => __(' Copyright ', 'serbian-transliteration'),
+			'%%registered%%'      => __(' Registered ', 'serbian-transliteration'),
+			'%%trademark%%'       => __(' Trademark ', 'serbian-transliteration'),
+			'%%latin%%'           => __('Latin', 'serbian-transliteration'),
+			'%%cyrillic%%'        => __('Cyrillic', 'serbian-transliteration'),
+		];
 
-        if (function_exists('remove_accents')) {
-            return remove_accents($str);
-        }
+		// Replace placeholders with translated strings
+		$map = array_map(function ($value) use ($placeholders) {
+			return $placeholders[$value] ?? $value;
+		}, $map);
 
-        return $str;
-    }
+		// Final string replacement
+		return strtr($str, $map);
+	}
 
     /*
      * Get skip words
