@@ -467,6 +467,10 @@ class Transliteration_Utilities
             $RSTR_NAME = RSTR_NAME;
             $wpdb->query(sprintf("DELETE FROM `%s` WHERE `%s`.`option_name` REGEXP '^_transient_(.*)?%s(.*|\$)'", $wpdb->options, $wpdb->options, $RSTR_NAME));
         }
+
+        if (class_exists('Transliteration_Plugins')) {
+            Transliteration_Plugins::clear_cache();
+        }
     }
 
     /*
