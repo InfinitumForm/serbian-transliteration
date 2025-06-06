@@ -1,6 +1,8 @@
 <?php if ( !defined('WPINC') ) die();
 
-// Find wp-admin file path
+/**
+ * Absolute path to the wp-admin directory.
+ */
 if (!defined('WP_ADMIN_DIR')) {
     // Default wp-admin directory
     $wp_admin_dir = ABSPATH . 'wp-admin';
@@ -15,7 +17,9 @@ if (!defined('WP_ADMIN_DIR')) {
     define('WP_ADMIN_DIR', rtrim($wp_admin_dir, '/\\'));
 }
 
-// Include Dependency
+/**
+ * Include plugin dependencies when plugin.php is accessible.
+ */
 $include_dependency = false;
 if (!function_exists('is_plugin_active_for_network') || !function_exists('is_plugin_active')) {
     if (file_exists(WP_ADMIN_DIR . '/includes/plugin.php')) {
@@ -30,36 +34,36 @@ if (!function_exists('is_plugin_active_for_network') || !function_exists('is_plu
  * @version   1.0.0
 */
 
-// Plugin basename
+/** Plugin basename used for activation checks. */
 if (!defined('RSTR_BASENAME')) {
     define('RSTR_BASENAME', plugin_basename(RSTR_FILE));
 }
-// Plugin root
+/** Absolute path to the plugin root directory. */
 if (!defined('RSTR_ROOT')) {
     define('RSTR_ROOT', rtrim(plugin_dir_path(RSTR_FILE) , '/'));
 }
-// Plugin URL root
+/** Base URL to the plugin directory. */
 if (!defined('RSTR_URL')) {
     define('RSTR_URL', rtrim(plugin_dir_url(RSTR_FILE) , '/'));
 }
-// Assets URL
+/** URL to plugin assets directory. */
 if (!defined('RSTR_ASSETS')) {
     define('RSTR_ASSETS', RSTR_URL . '/assets');
 }
-// Classes
+/** Directory containing plugin classes. */
 if (!defined('RSTR_CLASSES')) {
     define('RSTR_CLASSES', RSTR_ROOT . '/classes');
 }
-// Plugin name
+/** Option name used for storing plugin settings. */
 if (!defined('RSTR_NAME')) {
     define('RSTR_NAME', 'serbian-transliteration');
 }
-// Plugin table
+/** Database table slug for plugin tables. */
 if (!defined('RSTR_TABLE')) {
     define('RSTR_TABLE', 'serbian_transliteration');
 }
 
-// Current plugin version ( if change, clear also session cache )
+/** Plugin version derived from the header comment. */
 if (function_exists('get_file_data') && $plugin_data = get_file_data(RSTR_FILE, array(
     'Version' => 'Version'
 ) , false)) {
@@ -73,21 +77,21 @@ if (!$rstr_version && preg_match('/\*[\s\t]+?version:[\s\t]+?([0-9.]+)/i', file_
 if (!defined('RSTR_VERSION')) {
     define('RSTR_VERSION', $rstr_version);
 }
-// Plugin session prefix (controlled by version)
+/** Prefix used for transients and cache entries. */
 if (!defined('RSTR_PREFIX')) {
     define('RSTR_PREFIX', RSTR_TABLE . '_' . preg_replace("~[^0-9]~Ui", '', RSTR_VERSION) . '_');
 }
-// Is multisite
+/** True when plugin is network activated. */
 if (!defined('RSTR_MULTISITE')) {
     define('RSTR_MULTISITE', function_exists('is_plugin_active_for_network') ? is_plugin_active_for_network(RSTR_BASENAME) : false);
 }
 
-// Is Woocommerce exists
+/** Indicates whether WooCommerce is active. */
 if (!defined('RSTR_WOOCOMMERCE')) {
     define('RSTR_WOOCOMMERCE', (function_exists('is_plugin_active') ? is_plugin_active('woocommerce/woocommerce.php') : false));
 }
 
-// Normalize Latin String map
+/** Mapping of Unicode characters to ASCII equivalents. */
 if (!defined('RSTR_NORMALIZE_LATIN_STRING_MAP')) {
 	define('RSTR_NORMALIZE_LATIN_STRING_MAP', array(
 		'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Ă'=>'A', 'Ā'=>'A', 'Ą'=>'A', 'Æ'=>'A', 'Ǽ'=>'A',
