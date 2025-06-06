@@ -259,7 +259,7 @@ class Transliteration_Cache_DB
 
     /*
      * Check is database table exists
-     * @verson    1.0.0
+     * @version   1.0.0
      */
     public static function table_exists($dry = false)
     {
@@ -295,7 +295,7 @@ class Transliteration_Cache_DB
 
     /*
      * Install missing tables
-     * @verson    1.0.0
+     * @version   1.0.0
      */
     public static function table_install(): void
     {
@@ -325,7 +325,7 @@ class Transliteration_Cache_DB
 
     /*
      * Instance
-     * @verson    1.0.0
+     * @version   1.0.0
      */
     public static function instance()
     {

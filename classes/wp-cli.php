@@ -7,7 +7,7 @@ if (!defined('WPINC')) {
 /*
  * WP-CLI Helpers
  * @since     1.4.3
- * @verson    1.0.1
+ * @version   1.0.1
  * @author    Ivijan-Stefan Stipic
  */
 

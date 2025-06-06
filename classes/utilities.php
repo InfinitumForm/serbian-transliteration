@@ -11,7 +11,7 @@ class Transliteration_Utilities
     /*
      * Registered languages
      * @since     1.4.3
-     * @verson    1.0.0
+     * @version   1.0.0
      * @author    Ivijan-Stefan Stipic
      */
     public static function registered_languages()
@@ -472,7 +472,7 @@ class Transliteration_Utilities
     /*
      * Set cookie
      * @since     1.0.10
-     * @verson    1.0.0
+     * @version   1.0.0
     */
     public static function setcookie($val, $expire = null): bool
     {
@@ -500,7 +500,7 @@ class Transliteration_Utilities
     /*
      * Get current script
      * @since     1.0.10
-     * @verson    1.0.0
+     * @version   1.0.0
      */
     public static function get_current_script()
     {
@@ -523,7 +523,7 @@ class Transliteration_Utilities
 
     /*
      * Flush Cache
-     * @verson    1.0.1
+     * @version   1.0.1
      */
     protected static $cache_flush = false;
 
@@ -780,7 +780,7 @@ class Transliteration_Utilities
 
     /*
      * Check is in the Elementor editor mode
-     * @verson    1.0.0
+     * @version   1.0.0
      */
     public static function is_elementor_editor()
     {
@@ -805,7 +805,7 @@ class Transliteration_Utilities
 
     /*
      * Check is in the Elementor preview mode
-     * @verson    1.0.0
+     * @version   1.0.0
      */
     public static function is_elementor_preview()
     {
@@ -832,7 +832,7 @@ class Transliteration_Utilities
 
     /*
      * Check is in the Oxygen editor mode
-     * @verson    1.0.0
+     * @version   1.0.0
      */
     public static function is_oxygen_editor()
     {
@@ -894,7 +894,7 @@ class Transliteration_Utilities
     /*
      * PHP Wrapper for explode — Split a string by a string
      * @since     1.0.9
-     * @verson    1.0.0
+     * @version   1.0.0
      * @url       https://www.php.net/manual/en/function.explode.php
      */
     /**

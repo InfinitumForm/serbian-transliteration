@@ -27,7 +27,7 @@ if (!function_exists('is_plugin_active_for_network') || !function_exists('is_plu
 /*
  * Main plugin constants
  * @since     1.0.0
- * @verson    1.0.0
+ * @version   1.0.0
 */
 
 // Plugin basename
@@ -80,9 +80,6 @@ if (!defined('RSTR_PREFIX')) {
 // Is multisite
 if (!defined('RSTR_MULTISITE')) {
     define('RSTR_MULTISITE', function_exists('is_plugin_active_for_network') ? is_plugin_active_for_network(RSTR_BASENAME) : false);
-}
-if (!defined('RSTR_MULTISITE')) {
-    define('RSTR_MULTISITE', false);
 }
 
 // Is Woocommerce exists
