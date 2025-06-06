@@ -55,7 +55,7 @@ class Transliteration_Debug
     }
 
     /*
-     * Check if PHP is 64 bit vesion
+     * Check if PHP is 64 bit version
      *
      * @return boolean true or false
     */
@@ -79,36 +79,22 @@ class Transliteration_Debug
     }
 
     /*
-     * Check if any OS is 64 bit vesion
+     * Check if any OS is 64 bit version
      *
      * @return boolean true or false
     */
     public static function is_os64()
     {
-        // Let's ask system directly
-        if (function_exists('shell_exec')) {
-            if (self::is_win()) {
-                // Is Windows OS
-                $shell = shell_exec('wmic os get osarchitecture');
-                if (!($shell === '' || $shell === '0' || $shell === false || $shell === null) && strpos($shell ?? '', '64') !== false) {
-                    return true;
-                }
-            } else {
-                // Let's check some UNIX approach if is possible
-                $shell = shell_exec('uname -m');
-                if (!($shell === '' || $shell === '0' || $shell === false || $shell === null) && strpos($shell ?? '', '64') !== false) {
-                    return true;
-                }
+        // Check machine architecture using PHP
+        if (function_exists('php_uname')) {
+            $machine = php_uname('m');
+            if ($machine && strpos($machine, '64') !== false) {
+                return true;
             }
         }
 
-        // Check if PHP is 64 bit vesion (PHP 64bit only running on 64bit OS version)
-        $is_php64 = self::is_php64();
-        if ($is_php64) {
-            return true;
-        }
-        // bit-shifting can help also
-        return (bool) (1 << 32) - 1;
+        // Fallback to PHP architecture detection
+        return self::is_php64();
     }
 
     /**

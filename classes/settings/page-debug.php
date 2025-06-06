@@ -5,7 +5,9 @@ $activations = get_option(RSTR_NAME . '-activation');
 $options     = get_rstr_option();
 ?><br>
 <table class="table table-sm table-striped w-100">
+<?php // Hook to extend debug table header ?>
 	<thead><?php do_action('rstr/settings/debug/table/thead'); ?></thead>
+<?php // Hook before first debug table row ?>
 	<tbody>
 		<?php do_action('rstr/settings/debug/table/tbody/start'); ?>
 		<tr>
@@ -110,7 +112,9 @@ $options     = get_rstr_option();
 		</tr>
 		<tr>
 			<td><strong><?php esc_html_e('Plugin directory path', 'serbian-transliteration'); ?></strong></td>
+<?php // Hook after last debug table row ?>
 			<td><?php echo RSTR_ROOT; ?></td>
+<?php // Hook to extend debug table footer ?>
 		</tr>
 		<?php do_action('rstr/settings/debug/table/tbody/end'); ?>
 	</tbody>

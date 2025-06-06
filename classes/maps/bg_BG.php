@@ -34,6 +34,13 @@ class Transliteration_Map_bg_BG
         'ь' => '',
     ];
 
+    /**
+     * Transliterate text between Cyrillic and Latin.
+     *
+     * @param mixed $content String to transliterate.
+     * @param string $translation Conversion direction.
+     * @return mixed
+     */
     public static function transliterate($content, $translation = 'cyr_to_lat')
     {
         if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {

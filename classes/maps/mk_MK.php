@@ -26,7 +26,7 @@ class Transliteration_Map_mk_MK
         'А' => 'A',		'а' => 'a',		'Б' => 'B',		'б' => 'b',		'В' => 'V',
         'в' => 'v',		'Г' => 'G',		'г' => 'g',		'Д' => 'D',		'д' => 'd',
         'Е' => 'E',		'е' => 'e',		'З' => 'Z',		'з' => 'z',		'И' => 'I',
-        'и' => 'i',		'J' => 'J',		'j' => 'j',		'К' => 'K',		'к' => 'k',
+        'и' => 'i',		'Ј' => 'J',             'ј' => 'j',		'К' => 'K',		'к' => 'k',
         'Л' => 'L',		'л' => 'l',		'М' => 'M',		'м' => 'm',		'Н' => 'N',
         'н' => 'n',		'О' => 'O',		'о' => 'o',		'П' => 'P',		'п' => 'p',
         'Р' => 'R',		'р' => 'r',		'С' => 'S',		'с' => 's',		'Т' => 'T',
@@ -34,6 +34,13 @@ class Transliteration_Map_mk_MK
         'Х' => 'H',		'х' => 'h',		'Ъ' => 'Ǎ',		'ъ' => 'ǎ',
     ];
 
+    /**
+     * Transliterate text between Cyrillic and Latin.
+     *
+     * @param mixed $content String to transliterate.
+     * @param string $translation Conversion direction.
+     * @return mixed
+     */
     public static function transliterate($content, $translation = 'cyr_to_lat')
     {
         if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {

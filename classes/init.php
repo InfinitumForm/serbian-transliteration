@@ -48,6 +48,12 @@ if (!class_exists('Transliteration_Init', false)) : final class Transliteration_
         }
     }
 
+    /**
+     * Set an admin detection cookie based on the requested URL.
+     *
+     * This allows other plugin components to know whether the current
+     * request is in the admin area without relying solely on is_admin().
+     */
     public function set_admin_cookie_based_on_url(): void
     {
         global $rstr_is_admin;
