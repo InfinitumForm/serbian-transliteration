@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,7 +58,6 @@ We also do special compatible functions with:
  &#9989; [WooCommerce](https://wordpress.org/plugins/woocommerce/)
  &#9989; [Polylang](https://wordpress.org/plugins/polylang/)
  &#9989; [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
- &#9989; [WPBakery Page Builder](https://wpbakery.com/)
  &#9989; [CF Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
  &#9989; [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
  &#9989; [Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/)
@@ -109,6 +108,15 @@ Every feature in this plugin can be selectively enabled or disabled based on you
 9. Automated test
 
 == Changelog ==
+
+= 2.3.3 =
+* Fixed domain was triggered too early
+* Fixed admin transliteration
+* Improved debugging
+* Added transliteration for js-composer
+* Improved plugin speed
+* Improved PHP code
+* Improved transliterations
 
 = 2.3.2 =
 * Fixed Wp Admin transliteration
@@ -248,6 +256,15 @@ Every feature in this plugin can be selectively enabled or disabled based on you
 * Added support for multilingual content and automatic language detection
 
 == Upgrade Notice ==
+
+= 2.3.3 =
+* Fixed domain was triggered too early
+* Fixed admin transliteration
+* Improved debugging
+* Added transliteration for js-composer
+* Improved plugin speed
+* Improved PHP code
+* Improved transliterations
 
 = 2.3.2 =
 * Fixed Wp Admin transliteration

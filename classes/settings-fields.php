@@ -328,7 +328,7 @@ class Transliteration_Settings_Fields
         );
 
         add_settings_field(
-            'parameter-url-selector', // ID
+            'url-selector', // ID
             __('Parameter URL selector', 'serbian-transliteration'), // Title
             [$this, 'parameter_url_selector_callback'], // Callback
             RSTR_NAME,
@@ -365,7 +365,7 @@ class Transliteration_Settings_Fields
             );
 
             add_settings_field(
-                'enable-body-class-' . $locale, // ID
+                'disable-by-language-' . $locale, // ID
                 $language_name, // Title
                 [$this, 'exclude_language_callback'], // Callback
                 RSTR_NAME,
@@ -1043,7 +1043,7 @@ class Transliteration_Settings_Fields
         printf('%1$s<p class="description">%2$s</p>', implode(' ', $inputs), __('This option transliterate the RSS feed.', 'serbian-transliteration'));
     }
 
-    public function exclude_language_callback(array $attr): void
+    public function exclude_language_callback(array $attr=[]): void
     {
         foreach ([
             'no'  => __('Transliterate', 'serbian-transliteration'),

@@ -1386,4 +1386,98 @@ class Transliteration_Utilities
     {
         return self::cached_static('litespeed_is_cachable', fn (): bool => defined('LSCACHE_ENABLED') && LSCACHE_ENABLED && function_exists('litespeed_is_cachable') && litespeed_is_cachable());
     }
+	
+	/*
+	 * Return plugin settings in debug format
+	 */
+	public static function debug_render_all_settings_fields($format = 'html')
+	{
+		$page = 'serbian-transliteration';
+
+		global $wp_settings_fields;
+
+		if (!isset($wp_settings_fields[$page])) {
+			if ($format === 'html') {
+				echo '<p>No settings fields registered on this page.</p>';
+			} else {
+				return ($format === 'json') ? json_encode([]) : serialize([]);
+			}
+			return;
+		}
+
+		$disable_by_language = [];
+		foreach ($wp_settings_fields[$page] as $section => $fields) {
+			foreach ($fields as $id => $field) {
+				if (strpos($id, 'disable-by-language-') !== false) {
+					$disable_by_language = get_rstr_option('disable-by-language');
+					break;
+				}
+			}
+		}
+
+		$data = [];
+		$e = 0;
+
+		foreach ($wp_settings_fields[$page] as $section => $fields) {
+			foreach ($fields as $id => $field) {
+				if (strpos($id, 'disable-by-language-') !== false) {
+					if ($e === 1) {
+						continue;
+					}
+					$label = __('Exclusion', 'serbian-transliteration');
+					$val = $disable_by_language;
+					++$e;
+				} else {
+					$label = $field['title'] ?? $id;
+					$val = get_rstr_option($id);
+				}
+				$data[] = ['label' => $label, 'value' => $val];
+			}
+		}
+
+		if ($format === 'json') {
+			return json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+		}
+
+		if ($format === 'serialize') {
+			return serialize($data);
+		}
+
+		// Default: HTML table output
+		echo '<table class="rstr-debug-table" style="width:100%; max-width:100%; text-align:left; border-collapse: collapse">';
+		echo '<tr>
+			<th style="width:35%;min-width:165px;border:1px solid #efefef;padding:8px;">' . esc_html__('Option name', 'serbian-transliteration') . '</th>
+			<th style="border:1px solid #efefef;padding:8px;">' . esc_html__('Value', 'serbian-transliteration') . '</th>
+		</tr>';
+
+		foreach ($data as $row) {
+			$label = $row['label'];
+			$val = $row['value'];
+
+			echo '<tr>';
+			echo '<td style="font-weight:600;border:1px solid #efefef;padding:8px;">' . esc_html($label) . '</td>';
+			echo '<td style="border:1px solid #efefef;padding:' . esc_html(is_array($val) ? 0 : 8) . 'px;">';
+
+			if (is_array($val)) {
+				echo '<table class="rstr-debug-table-iner" style="width:100%;text-align:left;border-collapse:collapse;">';
+				echo '<tr><th style="width:50%;border:1px solid #efefef;padding:8px;">' . esc_html__('Key', 'serbian-transliteration') . '</th>';
+				echo '<th style="border:1px solid #efefef;padding:8px;">' . esc_html__('Value', 'serbian-transliteration') . '</th></tr>';
+				foreach ($val as $i => $prop) {
+					echo '<tr>';
+					echo '<td style="border:1px solid #efefef;padding:8px;">' . esc_html($i) . '</td>';
+					echo '<td style="border:1px solid #efefef;padding:8px;">' . esc_html($prop) . '</td>';
+					echo '</tr>';
+				}
+				echo '</table>';
+			} else {
+				echo esc_html($val);
+			}
+
+			echo '</td>';
+			echo '</tr>';
+		}
+
+		echo '</table>';
+	}
+
 }
