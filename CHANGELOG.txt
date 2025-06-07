@@ -1,3 +1,12 @@
+= 2.3.3 =
+* Fixed domain was triggered too early
+* Fixed admin transliteration
+* Improved debugging
+* Added transliteration for js-composer
+* Improved plugin speed
+* Improved PHP code
+* Improved transliterations
+
 = 2.3.2 =
 * Fixed Wp Admin transliteration
 * Improved WooCommerce transliteration

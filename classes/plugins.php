@@ -6,13 +6,28 @@ if (!defined('WPINC')) {
 
 class Transliteration_Plugins
 {
+    /**
+     * Cached list of active plugin integration classes.
+     *
+     * @var array|null
+     */
+    private static ?array $cached_classes = null;
+
     public function __construct()
     {
         $this->load_plugin_classes();
     }
 
+    /**
+     * Discover active plugin integration classes.
+     * Results are cached for subsequent calls within the request.
+     */
     public function plugin_classes()
     {
+        if (self::$cached_classes !== null) {
+            return self::$cached_classes;
+        }
+
         // Get the list of active plugins
         $active_plugins = apply_filters('active_plugins', get_option('active_plugins'));
 
@@ -36,10 +51,10 @@ class Transliteration_Plugins
             }
         }
 
-        // FIlter all classes
+        // Filter all classes
         $found_classes = apply_filters('rstr_active_plugin_classes', $found_classes, $active_plugins);
 
-        return $found_classes;
+        return self::$cached_classes = $found_classes;
     }
 
     private function sanitize_class_name(string $name): string
@@ -57,5 +72,13 @@ class Transliteration_Plugins
         foreach ($classes as $class_name) {
             new $class_name();
         }
+    }
+
+    /**
+     * Reset cached plugin classes.
+     */
+    public static function clear_cache(): void
+    {
+        self::$cached_classes = null;
     }
 }

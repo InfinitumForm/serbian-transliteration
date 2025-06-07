@@ -467,6 +467,10 @@ class Transliteration_Utilities
             $RSTR_NAME = RSTR_NAME;
             $wpdb->query(sprintf("DELETE FROM `%s` WHERE `%s`.`option_name` REGEXP '^_transient_(.*)?%s(.*|\$)'", $wpdb->options, $wpdb->options, $RSTR_NAME));
         }
+
+        if (class_exists('Transliteration_Plugins')) {
+            Transliteration_Plugins::clear_cache();
+        }
     }
 
     /*
@@ -753,7 +757,11 @@ class Transliteration_Utilities
             $is_editor = false;
 
             // Check for specific editors and set the cache if true
-            if (self::is_elementor_editor() || self::is_oxygen_editor()) {
+            if (
+                self::is_elementor_editor() ||
+                self::is_oxygen_editor() ||
+                self::is_wpbakery_editor()
+            ) {
                 return true;
             }
 
@@ -837,6 +845,27 @@ class Transliteration_Utilities
     public static function is_oxygen_editor()
     {
         return self::cached_static('is_oxygen_editor', fn (): bool => self::is_plugin_active('oxygen/functions.php') && (($_REQUEST['ct_builder'] ?? null) == 'true' || ($_REQUEST['ct_inner'] ?? null) == 'true' || preg_match('/^((ct_|oxy_)(.*?))$/i', ($_REQUEST['action'] ?? ''))));
+    }
+
+    /*
+     * Check is in the WPBakery editor mode
+     * @version   1.0.0
+     */
+    public static function is_wpbakery_editor()
+    {
+        return self::cached_static('is_wpbakery_editor', function (): bool {
+            if (
+                self::is_plugin_active('js_composer/js_composer.php') && (
+                    (!empty($_GET['vc_editable']) && $_GET['vc_editable'] === 'true') ||
+                    (!empty($_GET['vc_action']) && $_GET['vc_action'] === 'vc_inline') ||
+                    (function_exists('vc_is_inline') && vc_is_inline())
+                )
+            ) {
+                return true;
+            }
+
+            return false;
+        });
     }
 
     /*
@@ -1053,18 +1082,54 @@ class Transliteration_Utilities
     * @since     1.6.7
     */
     public static function normalize_latin_string($str)
-    {
+	{
+		// Step 1: Transliterate using WP native
+		if (function_exists('remove_accents')) {
+			$str = remove_accents($str);
+		}
 
-        $map = apply_filters('rstr/utilities/normalize_latin_string', RSTR_NORMALIZE_LATIN_STRING_MAP, $str);
+		// Step 2: Apply custom Unicode symbol map
+		$map = apply_filters('rstr/utilities/normalize_latin_string', RSTR_NORMALIZE_LATIN_STRING_MAP, $str);
 
-        $str = strtr($str, $map);
+		// Step 3: Lazy translations
+		$placeholders = [
+			'%%degrees%%'         => __(' degrees ', 'serbian-transliteration'),
+			'%%divided_by%%'      => __(' divided by ', 'serbian-transliteration'),
+			'%%times%%'           => __(' times ', 'serbian-transliteration'),
+			'%%plus_minus%%'      => __(' plus-minus ', 'serbian-transliteration'),
+			'%%square_root%%'     => __(' square root ', 'serbian-transliteration'),
+			'%%infinity%%'        => __(' infinity ', 'serbian-transliteration'),
+			'%%almost_equal%%'    => __(' almost equal to ', 'serbian-transliteration'),
+			'%%not_equal%%'       => __(' not equal to ', 'serbian-transliteration'),
+			'%%identical%%'       => __(' identical to ', 'serbian-transliteration'),
+			'%%less_equal%%'      => __(' less than or equal to ', 'serbian-transliteration'),
+			'%%greater_equal%%'   => __(' greater than or equal to ', 'serbian-transliteration'),
+			'%%left%%'            => __(' left ', 'serbian-transliteration'),
+			'%%right%%'           => __(' right ', 'serbian-transliteration'),
+			'%%up%%'              => __(' up ', 'serbian-transliteration'),
+			'%%down%%'            => __(' down ', 'serbian-transliteration'),
+			'%%left_right%%'      => __(' left and right ', 'serbian-transliteration'),
+			'%%up_down%%'         => __(' up and down ', 'serbian-transliteration'),
+			'%%care_of%%'         => __(' care of ', 'serbian-transliteration'),
+			'%%estimated%%'       => __(' estimated ', 'serbian-transliteration'),
+			'%%ohm%%'             => __(' ohm ', 'serbian-transliteration'),
+			'%%female%%'          => __(' female ', 'serbian-transliteration'),
+			'%%male%%'            => __(' male ', 'serbian-transliteration'),
+			'%%copyright%%'       => __(' Copyright ', 'serbian-transliteration'),
+			'%%registered%%'      => __(' Registered ', 'serbian-transliteration'),
+			'%%trademark%%'       => __(' Trademark ', 'serbian-transliteration'),
+			'%%latin%%'           => __('Latin', 'serbian-transliteration'),
+			'%%cyrillic%%'        => __('Cyrillic', 'serbian-transliteration'),
+		];
 
-        if (function_exists('remove_accents')) {
-            return remove_accents($str);
-        }
+		// Replace placeholders with translated strings
+		$map = array_map(function ($value) use ($placeholders) {
+			return $placeholders[$value] ?? $value;
+		}, $map);
 
-        return $str;
-    }
+		// Final string replacement
+		return strtr($str, $map);
+	}
 
     /*
      * Get skip words
@@ -1321,4 +1386,98 @@ class Transliteration_Utilities
     {
         return self::cached_static('litespeed_is_cachable', fn (): bool => defined('LSCACHE_ENABLED') && LSCACHE_ENABLED && function_exists('litespeed_is_cachable') && litespeed_is_cachable());
     }
+	
+	/*
+	 * Return plugin settings in debug format
+	 */
+	public static function debug_render_all_settings_fields($format = 'html')
+	{
+		$page = 'serbian-transliteration';
+
+		global $wp_settings_fields;
+
+		if (!isset($wp_settings_fields[$page])) {
+			if ($format === 'html') {
+				echo '<p>No settings fields registered on this page.</p>';
+			} else {
+				return ($format === 'json') ? json_encode([]) : serialize([]);
+			}
+			return;
+		}
+
+		$disable_by_language = [];
+		foreach ($wp_settings_fields[$page] as $section => $fields) {
+			foreach ($fields as $id => $field) {
+				if (strpos($id, 'disable-by-language-') !== false) {
+					$disable_by_language = get_rstr_option('disable-by-language');
+					break;
+				}
+			}
+		}
+
+		$data = [];
+		$e = 0;
+
+		foreach ($wp_settings_fields[$page] as $section => $fields) {
+			foreach ($fields as $id => $field) {
+				if (strpos($id, 'disable-by-language-') !== false) {
+					if ($e === 1) {
+						continue;
+					}
+					$label = __('Exclusion', 'serbian-transliteration');
+					$val = $disable_by_language;
+					++$e;
+				} else {
+					$label = $field['title'] ?? $id;
+					$val = get_rstr_option($id);
+				}
+				$data[] = ['label' => $label, 'value' => $val];
+			}
+		}
+
+		if ($format === 'json') {
+			return json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+		}
+
+		if ($format === 'serialize') {
+			return serialize($data);
+		}
+
+		// Default: HTML table output
+		echo '<table class="rstr-debug-table" style="width:100%; max-width:100%; text-align:left; border-collapse: collapse">';
+		echo '<tr>
+			<th style="width:35%;min-width:165px;border:1px solid #efefef;padding:8px;">' . esc_html__('Option name', 'serbian-transliteration') . '</th>
+			<th style="border:1px solid #efefef;padding:8px;">' . esc_html__('Value', 'serbian-transliteration') . '</th>
+		</tr>';
+
+		foreach ($data as $row) {
+			$label = $row['label'];
+			$val = $row['value'];
+
+			echo '<tr>';
+			echo '<td style="font-weight:600;border:1px solid #efefef;padding:8px;">' . esc_html($label) . '</td>';
+			echo '<td style="border:1px solid #efefef;padding:' . esc_html(is_array($val) ? 0 : 8) . 'px;">';
+
+			if (is_array($val)) {
+				echo '<table class="rstr-debug-table-iner" style="width:100%;text-align:left;border-collapse:collapse;">';
+				echo '<tr><th style="width:50%;border:1px solid #efefef;padding:8px;">' . esc_html__('Key', 'serbian-transliteration') . '</th>';
+				echo '<th style="border:1px solid #efefef;padding:8px;">' . esc_html__('Value', 'serbian-transliteration') . '</th></tr>';
+				foreach ($val as $i => $prop) {
+					echo '<tr>';
+					echo '<td style="border:1px solid #efefef;padding:8px;">' . esc_html($i) . '</td>';
+					echo '<td style="border:1px solid #efefef;padding:8px;">' . esc_html($prop) . '</td>';
+					echo '</tr>';
+				}
+				echo '</table>';
+			} else {
+				echo esc_html($val);
+			}
+
+			echo '</td>';
+			echo '</tr>';
+		}
+
+		echo '</table>';
+	}
+
 }

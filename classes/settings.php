@@ -320,28 +320,29 @@ final class Transliteration_Settings extends Transliteration
 	<div id="poststuff" class="metabox-holder has-right-sidebar">
 		<div class="inner-sidebar">
 			<div id="side-sortables" class="meta-box-sortables">
-				<?php
-// Hook triggered before settings sidebar
-                    do_action('transliteration-settings-before-sidebar', 'general', $this);
-        do_meta_boxes('transliteration-settings', 'side', null);
-// Hook triggered after settings sidebar
-        do_action('transliteration-settings-after-sidebar', 'general', $this);
-        ?>
+			<?php
+				// Hook triggered before settings sidebar
+				do_action('transliteration-settings-before-sidebar', 'general', $this);
+				do_meta_boxes('transliteration-settings', 'side', null);
+				// Hook triggered after settings sidebar
+				do_action('transliteration-settings-after-sidebar', 'general', $this);
+			?>
 			</div>
 		</div>
 		<div id="post-body">
 			<div id="post-body-content">
 				<form method="post" action="options.php">
 					<?php
-            settings_fields('transliteration-group');
-        do_settings_sections('serbian-transliteration');
-        submit_button(
-            __('Save Changes'),
-            'primary',
-            'trasnliteration_settings_save_changes_1',
-            false,
-            ['id' => 'trasnliteration_settings_submit_button_1']
-        ); ?>
+						settings_fields('transliteration-group');
+						do_settings_sections('serbian-transliteration');
+						submit_button(
+							__('Save Changes'),
+							'primary',
+							'trasnliteration_settings_save_changes_1',
+							false,
+							['id' => 'trasnliteration_settings_submit_button_1']
+						);
+					?>
 					<div id="trasnliteration_settings_submit_button_float">
 						<?php submit_button(
 						    __('Save Changes'),
