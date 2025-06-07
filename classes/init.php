@@ -28,6 +28,7 @@ if (!class_exists('Transliteration_Init', false)) : final class Transliteration_
             'Transliteration_Notifications',
             'Transliteration_Tools',
             'Transliteration_Shortcodes',
+            'Transliteration_Blocks',
         ]);
 
         foreach ($main_classes as $main_class_name) {
