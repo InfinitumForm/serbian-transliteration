@@ -5,68 +5,101 @@ if (!defined('WPINC')) {
 }
 
 /**
- * Macedonian transliteration
+ * Macedonian transliteration map
  *
  * @link              http://infinitumform.com/
  * @since             1.0.0
  * @package           Serbian_Transliteration
- *
  */
-
 class Transliteration_Map_mk_MK
 {
+    /**
+     * Cyrillic to Latin map for Macedonian
+     */
     public static $map = [
-        // Variations and special characters
-        'Ѓ' => 'Gj',	'ѓ' => 'gj',	'Ѕ' => 'Dz',	'ѕ' => 'dz',	'Њ' => 'Nj',
-        'њ' => 'nj',	'Љ' => 'Lj',	'љ' => 'lj',	'Ќ' => 'Kj',	'ќ' => 'kj',
-        'Ч' => 'Ch',	'ч' => 'ch',	'Џ' => 'Dj',	'џ' => 'dj',	'Ж' => 'zh',
-        'ж' => 'zh',	'Ш' => 'Sh',	'ш' => 'sh',
+        // Digraphs and special letters
+        'Ѓ' => 'Ǵ',  'ѓ' => 'ǵ',
+		'Ќ' => 'Ḱ',  'ќ' => 'ḱ',
+        'Љ' => 'Lj', 'љ' => 'lj',
+        'Њ' => 'Nj', 'њ' => 'nj',
+        'Ѕ' => 'Dz', 'ѕ' => 'dz',
+        'Ж' => 'Zh', 'ж' => 'zh',
+        'Ч' => 'Ch', 'ч' => 'ch',
+        'Ш' => 'Sh', 'ш' => 'sh',
+        'Џ' => 'Dž', 'џ' => 'dž',
 
-        // All other letters
-        'А' => 'A',		'а' => 'a',		'Б' => 'B',		'б' => 'b',		'В' => 'V',
-        'в' => 'v',		'Г' => 'G',		'г' => 'g',		'Д' => 'D',		'д' => 'd',
-        'Е' => 'E',		'е' => 'e',		'З' => 'Z',		'з' => 'z',		'И' => 'I',
-        'и' => 'i',		'Ј' => 'J',             'ј' => 'j',		'К' => 'K',		'к' => 'k',
-        'Л' => 'L',		'л' => 'l',		'М' => 'M',		'м' => 'm',		'Н' => 'N',
-        'н' => 'n',		'О' => 'O',		'о' => 'o',		'П' => 'P',		'п' => 'p',
-        'Р' => 'R',		'р' => 'r',		'С' => 'S',		'с' => 's',		'Т' => 'T',
-        'т' => 't',		'У' => 'U',		'у' => 'u',		'Ф' => 'F',		'ф' => 'f',
-        'Х' => 'H',		'х' => 'h',		'Ъ' => 'Ǎ',		'ъ' => 'ǎ',
+        // Standard letters
+        'А' => 'A',  'а' => 'a',
+        'Б' => 'B',  'б' => 'b',
+        'В' => 'V',  'в' => 'v',
+        'Г' => 'G',  'г' => 'g',
+        'Д' => 'D',  'д' => 'd',
+        'Е' => 'E',  'е' => 'e',
+        'З' => 'Z',  'з' => 'z',
+        'И' => 'I',  'и' => 'i',
+        'Ј' => 'J',  'ј' => 'j',
+        'К' => 'K',  'к' => 'k',
+        'Л' => 'L',  'л' => 'l',
+        'М' => 'M',  'м' => 'm',
+        'Н' => 'N',  'н' => 'n',
+        'О' => 'O',  'о' => 'o',
+        'П' => 'P',  'п' => 'p',
+        'Р' => 'R',  'р' => 'r',
+        'С' => 'S',  'с' => 's',
+        'Т' => 'T',  'т' => 't',
+        'У' => 'U',  'у' => 'u',
+        'Ф' => 'F',  'ф' => 'f',
+        'Х' => 'H',  'х' => 'h',
+        'Ъ' => 'Ǎ',  'ъ' => 'ǎ', // Optional legacy transliteration
     ];
 
     /**
      * Transliterate text between Cyrillic and Latin.
      *
      * @param mixed $content String to transliterate.
-     * @param string $translation Conversion direction.
+     * @param string $translation Direction: 'cyr_to_lat' or 'lat_to_cyr'
      * @return mixed
      */
     public static function transliterate($content, $translation = 'cyr_to_lat')
     {
-        if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {
+        if (!is_string($content)) {
             return $content;
         }
 
-        $transliteration = apply_filters('transliteration_map_mk_MK', self::$map);
-        $transliteration = apply_filters_deprecated('rstr/inc/transliteration/mk_MK', [$transliteration], '2.0.0', 'transliteration_map_mk_MK');
+        $map = apply_filters('transliteration_map_mk_MK', self::$map);
+        $map = apply_filters_deprecated('rstr/inc/transliteration/mk_MK', [$map], '2.0.0', 'transliteration_map_mk_MK');
 
         switch ($translation) {
             case 'cyr_to_lat':
-                $sRe = '/(?<=^|\s|\'|’|[IЭЫAУО])';
-                //				return str_replace(array_keys($transliteration), array_values($transliteration), $content);
-                return strtr($content, $transliteration);
+                return strtr($content, $map);
 
             case 'lat_to_cyr':
-                $transliteration = array_filter($transliteration, fn ($t): bool => $t != '');
-                $transliteration = array_flip($transliteration);
-                $transliteration = array_merge([
-                    'ZH' => 'Ж', 'GJ' => 'Ѓ', 'CH' => 'Ч', 'SH' => 'Ш', 'Dz' => 'Ѕ', 'Nj' => 'Њ', 'Lj' => 'Љ', 'KJ' => 'Ќ', 'DJ' => 'Џ',
-                ], $transliteration);
-                $transliteration = apply_filters('rstr/inc/transliteration/mk_MK/lat_to_cyr', $transliteration);
-                //	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
-                return strtr($content, $transliteration);
-        }
+                $reverse = array_flip(array_filter($map, fn($v) => $v !== ''));
 
-        return $content;
+                // Manual overrides for priority digraphs
+                $custom = [
+                    'Dž' => 'Џ', 'dž' => 'џ',
+                    'Dz' => 'Ѕ', 'dz' => 'ѕ',
+                    'Gj' => 'Ѓ', 'gj' => 'ѓ',
+                    'Kj' => 'Ќ', 'kj' => 'ќ',
+                    'Lj' => 'Љ', 'lj' => 'љ',
+                    'Nj' => 'Њ', 'nj' => 'њ',
+                    'Zh' => 'Ж', 'zh' => 'ж',
+                    'Sh' => 'Ш', 'sh' => 'ш',
+                    'Ch' => 'Ч', 'ch' => 'ч',
+                ];
+
+                $reverse = array_merge($custom, $reverse);
+
+                // Sort digraphs first
+                uksort($reverse, static fn($a, $b) => strlen($b) <=> strlen($a));
+
+                $content = str_replace(array_keys($reverse), array_values($reverse), $content);
+
+                return apply_filters('rstr/inc/transliteration/mk_MK/lat_to_cyr', $content);
+
+            default:
+                return $content;
+        }
     }
 }

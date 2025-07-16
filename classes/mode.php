@@ -82,6 +82,9 @@ final class Transliteration_Mode extends Transliteration
     {
         if (empty($this->mode) && ($mode_class = $this->mode())) {
             $this->mode = $mode_class::get();
+			
+			// Include buffer
+			Transliteration_Controller::get()->init_output_buffer();
         }
     }
 

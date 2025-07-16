@@ -1,34 +1,35 @@
 <?php
 
 /**
- * @wordpress-plugin
- * Plugin Name:       Transliterator
+ * Plugin Name:       Transliterator – Multilingual Cyr-Lat Script Converter
  * Plugin URI:        https://wordpress.org/plugins/serbian-transliteration/
- * Description:       All-in-one Cyrillic to Latin transliteration plugin for WordPress that actually works.
- * Version:           2.3.3
+ * Description:       All-in-one Cyrillic to Latin transliteration plugin for WordPress. Supports Slavic, Arabic, Greek, and Central Asian scripts.
+ * Version:           2.3.4
  * Requires at least: 5.4
  * Tested up to:      6.8
  * Requires PHP:      7.4
  * Author:            Ivijan-Stefan Stipić
  * Author URI:        https://profiles.wordpress.org/ivijanstefan/
- * License:           GPL-2.0+
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       serbian-transliteration
  * Domain Path:       /languages
  * Network:           true
  *
- * This program is free software; you can redistribute it and/or modify
+ * @wordpress-plugin
+ *
+ * This plugin is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This plugin is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ * along with this plugin. If not, see <https://www.gnu.org/licenses/>.
  */
 
 
@@ -50,30 +51,28 @@ if (! defined('RSTR_DATABASE_VERSION')) {
 /*************************************************************************************************************************
  * Hey, champ!
  *
- * Yeah, you with the mouse hovering over this comment like it owes you money.
- * If you're reading this, you’re either a coding prodigy or lost on your way to cat memes.
- * Either way, welcome to the magical wonderland of programming where we turn chaos into... slightly more organized chaos.
-
- * But wait, hold onto your ergonomic chair—there’s a plot twist! We’re on a mission. A noble quest.
- * A crusade to make the internet smoother, faster, and so efficient it’ll make Elon’s rockets jealous.
- * And guess what? We need YOU. Yes, you with the keyboard that clacks like a tap-dancing velociraptor.
-
- * Picture this: you, the hero of syntax, wielding your IDE like a lightsaber, slicing through bugs faster than
- * my grandma through a cheesecake. This isn’t just coding—it’s destiny. And destiny is calling.
- * Spoiler alert: destiny sounds a lot like your notifications.
-
- * So, ready to flex those brain muscles and make scripts so smooth, they could double as pickup lines?
- * Join the fun (and occasional existential crisis) at: https://github.com/InfinitumForm/serbian-transliteration
-
- * Together, we’ll crush bugs, annihilate errors, and make compiler warnings weep tears of shame.
- * Plus, you get to work with the coolest devs around. We’re like the Justice League,
- * but with more Git commits and fewer brooding billionaires in batsuits.
-
- * So, what’s it gonna be? Are you gonna sit there with your coffee and questionable life choices,
- * or are you gonna step up, write some code, and be the legend developers whisper about in Slack channels?
- * Your call, superstar. Also, there might be snacks. Probably.
-
- * Join us. Code epically. Save the internet. Maybe eat cookies.
+ * Yeah, you - hovering over this comment like it owes you money.
+ * If you're reading this, you're either a coding genius or took a wrong turn on your way to cat memes.
+ * Either way, welcome to the magical world of programming - where we turn chaos into... slightly more structured chaos.
+ *
+ * But wait—plot twist! We’re on a noble mission. A glorious crusade to make the web smoother, faster, and so clean
+ * it could make Elon’s rockets blush. And guess what? We need YOU. Yes, you with the keyboard that sounds like
+ * a tap-dancing velociraptor at 3AM.
+ *
+ * Imagine this: you, code sorcerer, wielding your IDE like a lightsaber,
+ * slicing bugs faster than grandma demolishes cheesecake.
+ * This isn’t just coding. It’s destiny. And it’s buzzing in your notifications.
+ *
+ * Ready to write scripts so elegant they could double as pickup lines?
+ * Help us build the future (and survive the occasional existential crisis) here:
+ * 👉 https://github.com/InfinitumForm/serbian-transliteration
+ *
+ * Together, we’ll squash bugs, silence warnings, and shame runtime errors into submission.
+ * Think of us as the Justice League - but with more Git commits and less brooding in caves.
+ *
+ * So, what’s it gonna be? Keep sipping that coffee while questioning life,
+ * or rise up and become the dev legends people whisper about on Slack?
+ * Your move, superstar. Snacks not included. Probably.
  *************************************************************************************************************************/
 
 
@@ -136,28 +135,29 @@ Transliterator_Autoloader::init();
 
 
 /*************************************************************************************************************************
- * Oh, you’re still here? I see you’ve made it this far, brave coder. Impressive.
- * Most devs would’ve bailed by now, either distracted by TikTok or curled up in a ball after seeing `Undefined index`.
+ * Oh, you’re still here? Respect.
+ * That means you’ve made it this far, brave coder. Impressive.
+ * Most devs would’ve bailed by now—either lost in a TikTok spiral or curled up in a ball after seeing `Undefined index`.
  * But not you. You’re different. You’re... *committed*.
-
+ *
  * And since you’ve stuck around, let’s talk about what’s next.
- * By now, you’ve probably crushed a few bugs, high-fived yourself, and possibly invented some new curse words.
- * But the real challenge lies ahead: writing code so clean, it would make Marie Kondo sob tears of joy.
-
- * This is where champions are made. Where functions harmonize, variables moonwalk, and loops actually loop... responsibly.
- * So keep going, keep coding, and remember: every semicolon is a tiny victory. Unless you’re in Python. Then... yikes.
-
- * Feeling stuck? Don’t sweat it. Even Tony Stark needed a few tries before the Iron Man suit actually flew.
- * Take a deep breath, Google it like the rest of us mortals, and keep moving forward.
-
- * Oh, and when you finally deploy this masterpiece and users marvel at its perfection,
- * just know: you did that. YOU. Okay, maybe Stack Overflow helped a bit. We won’t tell.
-
- * And if you’re ready for the next level of coding awesomeness,
- * join us at: https://github.com/InfinitumForm/serbian-transliteration
-
- * Because together, we’ll turn code into poetry, bugs into dust, and errors into faint memories.
- * The internet deserves your genius, and hey—there might even be snacks. Probably. 😉
+ * By now, you’ve probably crushed a few bugs, high-fived yourself, and maybe even invented a new programming dialect made of curse words.
+ * But the real challenge lies ahead: writing code so clean, Marie Kondo would weep with joy.
+ *
+ * This is where champions are forged. Where functions sing, variables moonwalk, and loops actually loop… responsibly.
+ * So keep going. Keep coding. Every semicolon is a tiny victory. Unless you’re in Python. Then… condolences.
+ *
+ * Stuck? No worries. Even Tony Stark needed a few failed prototypes before nailing the flight test.
+ * Breathe. Google like the rest of us mere mortals. And keep pushing forward.
+ *
+ * And when you finally ship this masterpiece and users marvel at how everything “just works,”
+ * remember: that was YOU. Okay, maybe Stack Overflow helped a little. We won’t tell.
+ *
+ * If you're ready to level up and write code that makes keyboards weep with joy,
+ * join us here: 👉 https://github.com/InfinitumForm/serbian-transliteration
+ *
+ * Together, we’ll turn bugs into dust, errors into folklore, and code into quiet art.
+ * The internet deserves your genius. And yes—there might be snacks. Probably. 😉
  *************************************************************************************************************************/
 
 
@@ -201,17 +201,30 @@ unset($transliteration_requirements);
 /*************************************************************************************************************************
  * So here we are. The end of the code. The final frontier. The last semicolon standing.
  * If you’ve made it all the way here, you’re officially a legend. A champion of syntax.
- * The kind of coder they write songs about (or at least memes).
-
- * But let’s not stop here. No, no, no. The world still needs you.
- * Somewhere out there, a script is crying for help. A bug is wreaking havoc.
- * And a poor user is wondering why their form just submitted 47 times.
-
- * So, one last time: join us. Become part of something bigger.
- * Be the coder who makes the internet faster, smoother, and slightly less irritating.
-
- * Here’s the link, one last time: https://github.com/InfinitumForm/serbian-transliteration
-
- * Click it. Fork it. Star it. And remember, the only thing standing between chaos and order... is YOU.
- * Now go. Code boldly, deploy confidently, and maybe—just maybe—treat yourself to those cookies I promised. 🍪
+ * The kind of coder they write songs about—or at least a few highly specific memes.
+ *
+ * But let’s not stop here. Oh no. The world still needs you.
+ * Somewhere, a lonely script is sobbing. A bug is chewing through logic.
+ * And a confused user just submitted a form 47 times and called it "lag."
+ *
+ * So, one last time: join us. Become part of something slightly bigger than your coffee mug.
+ * Be the dev who makes the internet faster, cleaner, and just a bit less cursed.
+ *
+ * https://github.com/InfinitumForm/serbian-transliteration
+ *
+ * Fork it.  
+ * Star it.  
+ * Clone it.  
+ * Pull it.  
+ * Push it.  
+ * Merge it.  
+ * Fix it.  
+ * Ship it.  
+ *
+ * (Harder. Better. Safer. Smoother.)
+ *
+ * And remember: the only thing standing between chaos and order... is YOU.
+ * Now go. Code boldly, deploy confidently—and maybe, just maybe,
+ * reward yourself with those cookies I promised. 🍪 You’ve earned them.
  *************************************************************************************************************************/
+ 

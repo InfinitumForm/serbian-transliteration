@@ -50,4 +50,40 @@ class Transliteration_Map
             }
         });
     }
+	
+	
+	public static function transliterate(string $text, string $direction): string
+	{
+		$map = self::get_map($direction);
+		if (!$map) {
+			return $text;
+		}
+
+		// Sort longer keys first (e.g. 'dž' before 'd') to avoid partial matches
+		uksort($map, fn($a, $b) => mb_strlen($b) <=> mb_strlen($a));
+
+		// Escape keys for regex
+		$escapedKeys = array_map('preg_quote', array_keys($map));
+		$pattern = '/' . implode('|', $escapedKeys) . '/iu';
+
+		return preg_replace_callback($pattern, function ($matches) use ($map) {
+			$match = $matches[0];
+
+			// Match both uppercase and lowercase entries
+			foreach ($map as $latin => $cyrillic) {
+				if (strcasecmp($match, $latin) === 0) {
+					// Preserve case
+					if (ctype_upper($match)) {
+						return mb_strtoupper($cyrillic);
+					} elseif (preg_match('/^\p{Lu}\p{Ll}+$/u', $match)) {
+						return mb_strtoupper(mb_substr($cyrillic, 0, 1)) . mb_substr($cyrillic, 1);
+					}
+
+					return $cyrillic;
+				}
+			}
+
+			return $match;
+		}, $text);
+	}
 }

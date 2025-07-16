@@ -5,14 +5,12 @@ if (!defined('WPINC')) {
 }
 
 /**
- * Tajik (Tajikistan)
+ * Tajik (Tajikistan) transliteration map
  *
  * @link              http://infinitumform.com/
  * @since             1.12.1
  * @package           Serbian_Transliteration
- *
  */
-
 class Transliteration_Map_tg
 {
     public static $map = [
@@ -42,12 +40,12 @@ class Transliteration_Map_tg
         'Ҷ' => 'J', 'ҷ' => 'j',
         'Ч' => 'Ch', 'ч' => 'ch',
         'Ш' => 'Sh', 'ш' => 'sh',
-        'Ъ' => 'ʼ', 'ъ' => 'ʼ', // tvrdi znak
+        'Ъ' => 'ʼ', 'ъ' => 'ʼ',
         'Э' => 'E', 'э' => 'e',
         'Ю' => 'Yu', 'ю' => 'yu',
         'Я' => 'Ya', 'я' => 'ya',
         'Ҳ' => 'H', 'ҳ' => 'h',
-        'Ғ' => 'G‘', 'ғ' => 'g‘',
+        'Ғ' => "G'", 'ғ' => "g'",   // apostrophized G
         'Ӯ' => 'U', 'ӯ' => 'u',
     ];
 
@@ -60,24 +58,40 @@ class Transliteration_Map_tg
      */
     public static function transliterate($content, $translation = 'cyr_to_lat')
     {
-        if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {
+        if (!is_string($content)) {
             return $content;
         }
 
-        $transliteration = apply_filters('transliteration_map_tg', self::$map);
-        $transliteration = apply_filters_deprecated('rstr/inc/transliteration/tg', [$transliteration], '2.0.0', 'transliteration_map_tg');
+        $map = apply_filters('transliteration_map_tg', self::$map);
+        $map = apply_filters_deprecated('rstr/inc/transliteration/tg', [$map], '2.0.0', 'transliteration_map_tg');
 
         switch ($translation) {
             case 'cyr_to_lat':
-                return strtr($content, $transliteration);
+                return strtr($content, $map);
 
             case 'lat_to_cyr':
-                $transliteration = array_flip($transliteration);
-                $transliteration = array_filter($transliteration, fn ($t): bool => $t != '');
-                $transliteration = apply_filters('rstr/inc/transliteration/tg/lat_to_cyr', $transliteration);
-                return strtr($content, $transliteration);
-        }
+                $reverse = array_flip(array_filter($map, fn($v) => $v !== ''));
 
-        return $content;
+                // Digraph priority for Tajik
+                $custom = [
+                    'Yo' => 'Ё', 'yo' => 'ё',
+                    'Yu' => 'Ю', 'yu' => 'ю',
+                    'Ya' => 'Я', 'ya' => 'я',
+                    'Zh' => 'Ж', 'zh' => 'ж',
+                    'Ch' => 'Ч', 'ch' => 'ч',
+                    'Sh' => 'Ш', 'sh' => 'ш',
+                    "G'" => 'Ғ', "g'" => 'ғ',
+                    'Kh' => 'Х', 'kh' => 'х',
+                ];
+
+                $reverse = array_merge($custom, $reverse);
+
+                uksort($reverse, static fn($a, $b) => strlen($b) <=> strlen($a));
+
+                return str_replace(array_keys($reverse), array_values($reverse), $content);
+
+            default:
+                return $content;
+        }
     }
 }

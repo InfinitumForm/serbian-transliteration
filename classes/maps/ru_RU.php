@@ -5,40 +5,61 @@ if (!defined('WPINC')) {
 }
 
 /**
- * Russian transliteration
+ * Russian transliteration (Cyrillic ↔ Latin)
  *
- * @link              http://infinitumform.com/
- * @since             1.0.0
- * @package           Serbian_Transliteration
+ * @link    https://infinitumform.com/
+ * @since   2.0.0
+ * @package Serbian_Transliteration
  */
 
 class Transliteration_Map_ru_RU
 {
     public static $map = [
-        // Variations and special characters
-        'Ё' => 'Yo', 'Ж' => 'Zh', 'Х' => 'Kh', 'Ц' => 'Ts', 'Ч' => 'Ch',
-        'Ш' => 'Sh', 'Щ' => 'Shch', 'Ю' => 'Ju', 'Я' => 'Ja',
-        'ё' => 'yo', 'ж' => 'zh', 'х' => 'kh', 'ц' => 'ts', 'ч' => 'ch',
-        'ш' => 'sh', 'щ' => 'shch', 'ю' => 'ju', 'я' => 'ja',
+        // Digraphs
+        'Ё' => 'Yo', 'ё' => 'yo',
+        'Ж' => 'Zh', 'ж' => 'zh',
+        'Х' => 'Kh', 'х' => 'kh',
+        'Ц' => 'Ts', 'ц' => 'ts',
+        'Ч' => 'Ch', 'ч' => 'ch',
+        'Ш' => 'Sh', 'ш' => 'sh',
+        'Щ' => 'Shch', 'щ' => 'shch',
+        'Ю' => 'Yu', 'ю' => 'yu',
+        'Я' => 'Ya', 'я' => 'ya',
 
-        // All other letters
-        'А' => 'A', 'Б' => 'B', 'В' => 'V', 'Г' => 'G', 'Д' => 'D',
-        'Е' => 'E', 'З' => 'Z', 'И' => 'I', 'Й' => 'J', 'К' => 'K',
-        'Л' => 'L', 'М' => 'M', 'Н' => 'N', 'О' => 'O', 'П' => 'P',
-        'Р' => 'R', 'С' => 'S', 'Т' => 'T', 'У' => 'U', 'Ф' => 'F',
-        'Ъ' => '',  'Ы' => 'Y', 'Ь' => '',  'Э' => 'E',
-        'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd',
-        'е' => 'e', 'з' => 'z', 'и' => 'i', 'й' => 'j', 'к' => 'k',
-        'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p',
-        'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f',
-        'ъ' => '',  'ы' => 'y', 'ь' => '',  'э' => 'e',
+        // Base letters
+        'А' => 'A',  'а' => 'a',
+        'Б' => 'B',  'б' => 'b',
+        'В' => 'V',  'в' => 'v',
+        'Г' => 'G',  'г' => 'g',
+        'Д' => 'D',  'д' => 'd',
+        'Е' => 'E',  'е' => 'e',
+        'З' => 'Z',  'з' => 'z',
+        'И' => 'I',  'и' => 'i',
+        'Й' => 'Y',  'й' => 'y',
+        'К' => 'K',  'к' => 'k',
+        'Л' => 'L',  'л' => 'l',
+        'М' => 'M',  'м' => 'm',
+        'Н' => 'N',  'н' => 'n',
+        'О' => 'O',  'о' => 'o',
+        'П' => 'P',  'п' => 'p',
+        'Р' => 'R',  'р' => 'r',
+        'С' => 'S',  'с' => 's',
+        'Т' => 'T',  'т' => 't',
+        'У' => 'U',  'у' => 'u',
+        'Ф' => 'F',  'ф' => 'f',
+        'Ы' => 'Y',  'ы' => 'y',
+        'Э' => 'E',  'э' => 'e',
+
+        // Removed signs
+        'Ъ' => '',   'ъ' => '',
+        'Ь' => '',   'ь' => '',
     ];
 
     /**
-     * Transliterate text between Cyrillic and Latin.
+     * Transliterate Russian text between Cyrillic and Latin.
      *
-     * @param mixed $content String to transliterate.
-     * @param string $translation Conversion direction.
+     * @param mixed  $content String to transliterate.
+     * @param string $translation Direction of conversion.
      * @return mixed
      */
     public static function transliterate($content, $translation = 'cyr_to_lat')
@@ -52,54 +73,34 @@ class Transliteration_Map_ru_RU
 
         switch ($translation) {
             case 'cyr_to_lat':
-                // Special rules for word-initial letters
-                $content = preg_replace('/\bЁ/u', 'Yo', $content);
-                $content = preg_replace('/\bё/u', 'yo', $content);
-                $content = preg_replace('/\bЮ/u', 'Yu', $content);
-                $content = preg_replace('/\bю/u', 'yu', $content);
-                $content = preg_replace('/\bЯ/u', 'Ya', $content);
-                $content = preg_replace('/\bя/u', 'ya', $content);
-                $content = preg_replace('/\bЙ/u', 'Y', $content);
-                $content = preg_replace('/\bй/u', 'y', $content);
-
+                // Transliterate using map
                 return strtr($content, $map);
 
             case 'lat_to_cyr':
-                // Reverse map with extended replacements
                 $reverse = array_filter($map, static fn($v) => $v !== '');
-                $reverse = array_merge([
-                    'SHCH' => 'Щ', 'Shch' => 'Щ', 'shch' => 'щ',
-                    'ZH'   => 'Ж', 'Zh'   => 'Ж', 'zh'   => 'ж',
-                    'KH'   => 'Х', 'Kh'   => 'Х', 'kh'   => 'х',
-                    'TS'   => 'Ц', 'Ts'   => 'Ц', 'ts'   => 'ц',
-                    'CH'   => 'Ч', 'Ch'   => 'Ч', 'ch'   => 'ч',
-                    'SH'   => 'Ш', 'Sh'   => 'Ш', 'sh'   => 'ш',
-                    'YO'   => 'Ё', 'Yo'   => 'Ё', 'yo'   => 'ё',
-                    'JU'   => 'Ю', 'Ju'   => 'Ю', 'ju'   => 'ю',
-                    'JA'   => 'Я', 'Ja'   => 'Я', 'ja'   => 'я',
-                    'Y'    => 'Й', 'y'    => 'й',
-                ], array_flip($reverse));
+                $reverse = array_flip($reverse);
 
-                // Prioritize longer sequences
+                // Prioritized digraphs
+                $priority = [
+                    'Shch' => 'Щ', 'shch' => 'щ',
+                    'Zh'   => 'Ж', 'zh'   => 'ж',
+                    'Kh'   => 'Х', 'kh'   => 'х',
+                    'Ts'   => 'Ц', 'ts'   => 'ц',
+                    'Ch'   => 'Ч', 'ch'   => 'ч',
+                    'Sh'   => 'Ш', 'sh'   => 'ш',
+                    'Yo'   => 'Ё', 'yo'   => 'ё',
+                    'Yu'   => 'Ю', 'yu'   => 'ю',
+                    'Ya'   => 'Я', 'ya'   => 'я',
+                    'Y'    => 'Й', 'y'    => 'й',
+                ];
+
+                // Combine and sort for replacement priority
+                $reverse = array_merge($priority, $reverse);
                 uksort($reverse, static fn($a, $b) => strlen($b) <=> strlen($a));
 
-                $output = $content;
+                $content = strtr($content, $reverse);
 
-                // Handle initial letter logic (reversed)
-                $output = preg_replace('/\bYo/u', 'Ё', $output);
-                $output = preg_replace('/\byo/u', 'ё', $output);
-                $output = preg_replace('/\bYu/u', 'Ю', $output);
-                $output = preg_replace('/\byu/u', 'ю', $output);
-                $output = preg_replace('/\bYa/u', 'Я', $output);
-                $output = preg_replace('/\bya/u', 'я', $output);
-                $output = preg_replace('/\bY/u', 'Й', $output);
-                $output = preg_replace('/\by/u', 'й', $output);
-
-                foreach ($reverse as $latin => $cyrillic) {
-                    $output = str_replace($latin, $cyrillic, $output);
-                }
-
-                return apply_filters('rstr/inc/transliteration/ru_RU/lat_to_cyr', $output);
+                return apply_filters('rstr/inc/transliteration/ru_RU/lat_to_cyr', $content);
 
             default:
                 return $content;

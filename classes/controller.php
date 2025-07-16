@@ -14,10 +14,46 @@ final class Transliteration_Controller extends Transliteration
     public function __construct($actions = true)
     {
         if ($actions) {
-            $this->add_action('init', 'transliteration_tags_start', 1);
-            $this->add_action('shutdown', 'transliteration_tags_end', PHP_INT_MAX - 100);
+        //    $this->add_action('init', 'transliteration_tags_start', 1);
+        //    $this->add_action('shutdown', 'transliteration_tags_end', PHP_INT_MAX - 100);
         }
     }
+	
+	/**
+	 * Initialize a late-stage output buffer to apply inline tag-based transliteration
+	 * after the main content has been rendered.
+	 *
+	 * This allows local tags like {cyr_to_lat} or {lat_to_cyr} to override global settings.
+	 */
+	public function init_output_buffer(): void
+	{
+		// Register a shutdown action to flush the buffer at the end of the request
+		add_action('shutdown', [$this, 'end_output_buffer'], PHP_INT_MAX);
+
+		// Start output buffering with a custom callback that handles tag-based transliteration
+		$this->ob_start([$this, 'controller_output_buffer']);
+	}
+
+	/**
+	 * Output buffer callback that processes {cyr_to_lat}, {lat_to_cyr}, and {rstr_skip} tags.
+	 *
+	 * @param string $buffer The full HTML content of the page
+	 * @return string Transliterated content with tag logic applied
+	 */
+	public function controller_output_buffer($buffer)
+	{
+		return $this->transliteration_tags_callback($buffer);
+	}
+
+	/**
+	 * Ensures that output buffer is flushed and sent to the browser at the very end.
+	 */
+	public function end_output_buffer(): void
+	{
+		if (ob_get_level() > 0) {
+			@ob_end_flush();
+		}
+	}
 
     /*
      * Get current instance
@@ -204,9 +240,11 @@ final class Transliteration_Controller extends Transliteration
         $class_map = Transliteration_Map::get()->map();
 
         // If the content should not be transliterated or the user is an editor, return the original content
-        if ($force === false && (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor())) {
-            return $content;
-        }
+        if (!$force) {
+			if (!$class_map || Transliteration_Utilities::can_transliterate($content) || Transliteration_Utilities::is_editor()) {
+				return $content;
+			}
+		}
 
         /*// Don't transliterate if we already have transliteration
         if (!Transliteration_Utilities::is_lat($content)) {
@@ -542,41 +580,62 @@ final class Transliteration_Controller extends Transliteration
      * Transliteration tags buffer callback
      */
     public function transliteration_tags_callback($buffer)
-    {
-        if (Transliteration_Utilities::can_transliterate($buffer) || Transliteration_Utilities::is_editor()) {
-            return $buffer;
-        }
+	{
+		if (Transliteration_Utilities::can_transliterate($buffer) || Transliteration_Utilities::is_editor()) {
+			return $buffer;
+		}
 
-        if (get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none') {
-            return str_replace(
-                ['{cyr_to_lat}', '{lat_to_cyr}', '{rstr_skip}', '{/cyr_to_lat}', '{/lat_to_cyr}', '{/rstr_skip}'],
-                '',
-                $buffer
-            );
-        }
+		if (get_rstr_option('transliteration-mode', 'cyr_to_lat') === 'none') {
+			return str_replace(
+				['{cyr_to_lat}', '{lat_to_cyr}', '{rstr_skip}', '{/cyr_to_lat}', '{/lat_to_cyr}', '{/rstr_skip}'],
+				'',
+				$buffer
+			);
+		}
 
-        $tags = [
-            'cyr_to_lat',
-            'lat_to_cyr',
-            'rstr_skip',
-        ];
-        foreach ($tags as $tag) {
-            preg_match_all('/\{' . $tag . '\}((?:[^\{\}]|(?R))*)\{\/' . $tag . '\}/s', $buffer, $match, PREG_SET_ORDER);
-            foreach ($match as $match) {
-                $original_text = $match[1];
-                if ($tag === 'rstr_skip') {
-                    $mode                = ($this->mode() == 'cyr_to_lat' ? 'lat_to_cyr' : 'cyr_to_lat');
-                    $transliterated_text = $this->$mode($original_text);
-                } else {
-                    $transliterated_text = $this->$tag($original_text, true);
-                }
+		$tags = ['cyr_to_lat', 'lat_to_cyr', 'rstr_skip'];
+		foreach ($tags as $tag) {
+			// Match only simple tag pairs, no recursion
+			preg_match_all('/\{' . $tag . '\}(.*?)\{\/' . $tag . '\}/s', $buffer, $matches, PREG_SET_ORDER);
 
-                $buffer = str_replace($match[0], $transliterated_text, $buffer);
-            }
-        }
+			if (!empty($matches)) {
+				foreach ($matches as $entry) {
+					$original_text = $entry[1];
 
-        return $buffer;
-    }
+					if ($tag === 'rstr_skip') {
+						$mode = ($this->mode() === 'cyr_to_lat') ? 'lat_to_cyr' : 'cyr_to_lat';
+						switch ($tag) {
+							case 'cyr_to_lat':
+								$transliterated_text = $this->cyr_to_lat($original_text, true, true);
+								break;
+
+							case 'lat_to_cyr':
+								$transliterated_text = $this->lat_to_cyr($original_text, true);
+								break;
+						}
+					} else {
+						switch ($tag) {
+							case 'cyr_to_lat':
+								$transliterated_text = $this->cyr_to_lat($original_text, true, true);
+								break;
+
+							case 'lat_to_cyr':
+								$transliterated_text = $this->lat_to_cyr($original_text, true);
+								break;
+
+							default:
+								$transliterated_text = $original_text;
+								break;
+						}
+					}
+
+					$buffer = str_replace($entry[0], $transliterated_text, $buffer);
+				}
+			}
+		}
+
+		return $buffer;
+	}
 
     /*
      * Transliteration tags buffer end
@@ -658,6 +717,7 @@ final class Transliteration_Controller extends Transliteration
 
         libxml_use_internal_errors(true);
         $html = '<?xml encoding="UTF-8">' . $html; // UTF-8 deklaracija OBAVEZNA!
+		$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
         $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
 
@@ -685,7 +745,12 @@ final class Transliteration_Controller extends Transliteration
         // Transliteracija teksta unutar tagova, osim onih koji su na listi za izbegavanje
         foreach ($xpath->query('//text()') as $textNode) {
             if (!in_array($textNode->parentNode->nodeName, $skipTags)) {
-                $textNode->nodeValue = $this->transliterate($textNode->nodeValue);
+
+				// Normalize hidden characters
+				$text = preg_replace('/^[\x{FEFF}\x{200B}\x{00A0}\s]+/u', '', $textNode->nodeValue);
+
+				// Apply transliteration
+				$textNode->nodeValue = $this->transliterate($text);
             }
         }
 

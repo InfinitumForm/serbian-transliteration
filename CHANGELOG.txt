@@ -1,3 +1,9 @@
+= 2.3.4 =
+* Added new transliteration maps
+* Improved and optimized transliterations
+* Optimized code
+* Fixed GUI bugs
+
 = 2.3.3 =
 * Fixed domain was triggered too early
 * Fixed admin transliteration

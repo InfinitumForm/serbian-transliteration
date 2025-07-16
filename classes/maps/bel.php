@@ -8,35 +8,52 @@ if (!defined('WPINC')) {
  * Belarusian transliteration
  *
  * @link              http://infinitumform.com/
- * @since             1.0.0
+ * @since             2.0.0
  * @package           Serbian_Transliteration
- *
  */
 
 class Transliteration_Map_bel
 {
     public static $map = [
-        // Variations and special characters
-        'ДЖ' => 'Dž',	'ДЗ' => 'Dz',	'Ё' => 'Io',	'Е' => 'Ie',
-        'Х'  => 'Ch',	'Ю' => 'Iu',	'Я' => 'Ia',	'дж' => 'dž',
-        'дз' => 'dz',	'е' => 'ie',	'ё' => 'io',	'х' => 'ch',
-        'ю'  => 'iu',	'я' => 'ia',
+        // Complex digraphs – uppercase first for priority in strtr
+        'Дж' => 'Dž', 'Дз' => 'Dz', 'Сь' => 'Ś',
+        'дж' => 'dž', 'дз' => 'dz', 'сь' => 'ś',
 
-        // All other letters
-        'А'  => 'A',	'Б' => 'B',	'В' => 'V',	'Г' => 'H',
-        'Д'  => 'D',	'Ж' => 'Ž',	'З' => 'Z',	'І' => 'I',
-        'Й'  => 'J',	'К' => 'K',	'Л' => 'L',	'М' => 'M',
-        'Н'  => 'N',	'О' => 'O',	'П' => 'P',	'Р' => 'R',
-        'СЬ' => 'Ś',	'С' => 'S',	'Т' => 'T',	'У' => 'U',
-        'Ў'  => 'Ǔ',	'Ф' => 'F',	'Ц' => 'C',	'э' => 'e',
-        'Ч'  => 'Č',	'Ш' => 'Š',	'Ы' => 'Y',	'Ь' => "'",
-        'а'  => 'a',	'б' => 'b',	'в' => 'v',	'г' => 'h',
-        'ж'  => 'ž',	'з' => 'z',	'і' => 'i',	'Э' => 'E',
-        'й'  => 'j',	'к' => 'k',	'л' => 'l',	'м' => 'm',
-        'н'  => 'n',	'о' => 'o',	'п' => 'p',	'р' => 'r',
-        'сь' => 'ś',	'с' => 's',	'т' => 't',	'у' => 'u',
-        'ў'  => 'ǔ',	'ф' => 'f',	'ц' => 'c',	'д' => 'd',
-        'ч'  => 'č',	'ш' => 'š',	'ы' => 'y',	'ь' => "'",
+        // Vowel mutations at word/boundary level handled in regex
+        'Ё' => 'Jo', 'ё' => 'jo',
+        'Ю' => 'Ju', 'ю' => 'ju',
+        'Я' => 'Ja', 'я' => 'ja',
+        'Е' => 'Je', 'е' => 'je',
+
+        // Main alphabet
+        'А' => 'A',  'а' => 'a',
+        'Б' => 'B',  'б' => 'b',
+        'В' => 'V',  'в' => 'v',
+        'Г' => 'H',  'г' => 'h',
+        'Д' => 'D',  'д' => 'd',
+        'Ж' => 'Ž',  'ж' => 'ž',
+        'З' => 'Z',  'з' => 'z',
+        'І' => 'I',  'і' => 'i',
+        'Й' => 'J',  'й' => 'j',
+        'К' => 'K',  'к' => 'k',
+        'Л' => 'L',  'л' => 'l',
+        'М' => 'M',  'м' => 'm',
+        'Н' => 'N',  'н' => 'n',
+        'О' => 'O',  'о' => 'o',
+        'П' => 'P',  'п' => 'p',
+        'Р' => 'R',  'р' => 'r',
+        'С' => 'S',  'с' => 's',
+        'Т' => 'T',  'т' => 't',
+        'У' => 'U',  'у' => 'u',
+        'Ў' => 'Ŭ',  'ў' => 'ŭ',
+        'Ф' => 'F',  'ф' => 'f',
+        'Х' => 'Ch', 'х' => 'ch',
+        'Ц' => 'C',  'ц' => 'c',
+        'Ч' => 'Č',  'ч' => 'č',
+        'Ш' => 'Š',  'ш' => 'š',
+        'Ы' => 'Y',  'ы' => 'y',
+        'Э' => 'E',  'э' => 'e',
+        'Ь' => '',   'ь' => "'",
     ];
 
     /**
@@ -57,32 +74,39 @@ class Transliteration_Map_bel
 
         switch ($translation) {
             case 'cyr_to_lat':
-                $sRe     = '/(?<=^|\s|\'|’|[IЭЫAУО])';
-                $content = preg_replace(
-                    // For е, ё, ю, я, the digraphs je, jo, ju, ja are used
-                    // word-initially, and after a vowel, apostrophe (’),
-                    // separating ь, or ў.
-                    [
-                       $sRe . 'Е/i', $sRe . 'Ё/i', $sRe . 'Ю/i', $sRe . 'Я/i',
-                       $sRe . 'е/i', $sRe . 'ё/i', $sRe . 'ю/i', $sRe . 'я/i',
-                    ],
-                    [
-                        'Je',	'Jo',	'Ju',	'Ja',	'je',	'jo',	'ju',	'ja',
-                    ],
-                    $content
-                );
-                //	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
+                // Word-initial softening for Je/Jo/Ju/Ja (handled as je/jo/ju/ja)
+                $content = preg_replace_callback('/(?<=^|\s|[АаЕеІіОоУуЫыЭэЪъЬь])([ЕеЁёЮюЯя])/', function ($m) {
+                    $map = ['Е' => 'Je', 'е' => 'je', 'Ё' => 'Jo', 'ё' => 'jo', 'Ю' => 'Ju', 'ю' => 'ju', 'Я' => 'Ja', 'я' => 'ja'];
+                    return $map[$m[1]] ?? $m[1];
+                }, $content);
                 return strtr($content, $transliteration);
 
             case 'lat_to_cyr':
-                $transliteration = array_filter($transliteration, fn ($t): bool => $t != '');
-                $transliteration = array_flip($transliteration);
-                $transliteration = array_merge([
-                    'CH' => 'Х',	'DŽ' => 'ДЖ',	'DZ' => 'ДЗ',	'IE' => 'Е',	'IO' => 'Ё',	'IU' => 'Ю',	'IA' => 'Я',
-                ], $transliteration);
-                $transliteration = apply_filters('rstr/inc/transliteration/bel/lat_to_cyr', $transliteration);
-                //	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
-                return strtr($content, $transliteration);
+                // Flip and filter
+                $reverse = array_filter($transliteration, fn($v) => $v !== '');
+                $reverse = array_flip($reverse);
+
+                // Override long digraphs (case sensitive)
+                $manual = [
+                    'Dž' => 'Дж', 'dž' => 'дж',
+                    'Dz' => 'Дз', 'dz' => 'дз',
+                    'Je' => 'Е',  'je' => 'е',
+                    'Jo' => 'Ё',  'jo' => 'ё',
+                    'Ju' => 'Ю',  'ju' => 'ю',
+                    'Ja' => 'Я',  'ja' => 'я',
+                    'Ś'  => 'Сь', 'ś' => 'сь',
+                    'Ŭ'  => 'Ў',  'ŭ' => 'ў',
+                    'Ch' => 'Х',  'ch' => 'х',
+                    'Č'  => 'Ч',  'č' => 'ч',
+                    'Š'  => 'Ш',  'š' => 'ш',
+                    'Ž'  => 'Ж',  'ž' => 'ж',
+                    'Č'  => 'Ч',  'č' => 'ч',
+                ];
+
+                $reverse = array_merge($manual, $reverse);
+                $reverse = apply_filters('rstr/inc/transliteration/bel/lat_to_cyr', $reverse);
+
+                return strtr($content, $reverse);
         }
 
         return $content;

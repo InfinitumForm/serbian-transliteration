@@ -15,67 +15,119 @@ if (!defined('WPINC')) {
 class Transliteration_Map_sr_RS
 {
     public static $map = [
-        // Variations and special characters
-        'ња' => 'nja', 	'ње' => 'nje', 	'њи' => 'nji',	'њо' => 'njo',
-        'њу' => 'nju',	'ља' => 'lja',	'ље' => 'lje',	'љи' => 'lji',	'љо' => 'ljo',
-        'љу' => 'lju',	'џа' => 'dža',	'џе' => 'dže',	'џи' => 'dži',	'џо' => 'džo',
-        'џу' => 'džu',
+		// Composite digraphs with vowels
+		'Ља' => 'Lja', 'ЉА' => 'LJA',
+		'Ље' => 'Lje', 'ЉЕ' => 'LJE',
+		'Љи' => 'Lji', 'ЉИ' => 'LJI',
+		'Љо' => 'Ljo', 'ЉО' => 'LJO',
+		'Љу' => 'Lju', 'ЉУ' => 'LJU',
 
-        'Ња' => 'Nja', 	'Ње' => 'Nje', 	'Њи' => 'Nji',	'Њо' => 'Njo',
-        'Њу' => 'Nju',	'Ља' => 'Lja',	'Ље' => 'Lje',	'Љи' => 'Lji',	'Љо' => 'Ljo',
-        'Љу' => 'Lju',	'Џа' => 'Dža',	'Џе' => 'Dže',	'Џи' => 'Dži',	'Џо' => 'Džo',
-        'Џу' => 'Džu',
+		'Ња' => 'Nja', 'ЊА' => 'NJA',
+		'Ње' => 'Nje', 'ЊЕ' => 'NJE',
+		'Њи' => 'Nji', 'ЊИ' => 'NJI',
+		'Њо' => 'Njo', 'ЊО' => 'NJO',
+		'Њу' => 'Nju', 'ЊУ' => 'NJU',
 
-        'џ' => 'dž',		'Џ' => 'DŽ',		'љ' => 'lj',		'Љ' => 'LJ', 		'њ' => 'nj',
-        'Њ' => 'NJ',
+		'Џа' => 'Dža', 'ЏА' => 'DŽA',
+		'Џе' => 'Dže', 'ЏЕ' => 'DŽE',
+		'Џи' => 'Dži', 'ЏИ' => 'DŽI',
+		'Џо' => 'Džo', 'ЏО' => 'DŽO',
+		'Џу' => 'Džu', 'ЏУ' => 'DŽU',
 
-        // All other letters
-        'А' => 'A',	'Б' => 'B',	'В' => 'V',	'Г' => 'G',	'Д' => 'D',
-        'Ђ' => 'Đ',	'Е' => 'E',	'Ж' => 'Ž',	'З' => 'Z',	'И' => 'I',
-        'Ј' => 'J',	'К' => 'K',	'Л' => 'L',	'М' => 'M',	'Н' => 'N',
-        'О' => 'O',	'П' => 'P',	'Р' => 'R',	'С' => 'S',	'Ш' => 'Š',
-        'Т' => 'T',	'Ћ' => 'Ć',	'У' => 'U',	'Ф' => 'F',	'Х' => 'H',
-        'Ц' => 'C',	'Ч' => 'Č',	'а' => 'a',	'б' => 'b',	'в' => 'v',
-        'г' => 'g',	'д' => 'd',	'ђ' => 'đ',	'е' => 'e',	'ж' => 'ž',
-        'з' => 'z',	'и' => 'i',	'ј' => 'j',	'к' => 'k',	'л' => 'l',
-        'м' => 'm',	'н' => 'n',	'о' => 'o',	'п' => 'p',	'р' => 'r',
-        'с' => 's',	'ш' => 'š',	'т' => 't',	'ћ' => 'ć',	'у' => 'u',
-        'ф' => 'f',	'х' => 'h',	'ц' => 'c',	'ч' => 'č',
-    ];
+		'ља' => 'lja', 'ље' => 'lje', 'љи' => 'lji', 'љо' => 'ljo', 'љу' => 'lju',
+		'ња' => 'nja', 'ње' => 'nje', 'њи' => 'nji', 'њо' => 'njo', 'њу' => 'nju',
+		'џа' => 'dža', 'џе' => 'dže', 'џи' => 'dži', 'џо' => 'džo', 'џу' => 'džu',
+		
+		// Macedonian
+		'Ѓ' => 'Ǵ', 'ѓ' => 'ǵ',
+		'Ќ' => 'Ḱ', 'ќ' => 'ḱ',
+
+		// Single digraphs
+		'Љ' => 'Lj', 'љ' => 'lj',
+		'Њ' => 'Nj', 'њ' => 'nj',
+		'Џ' => 'Dž', 'џ' => 'dž',
+
+		// Standard Cyrillic to Latin mapping
+		'А' => 'A', 'а' => 'a',
+		'Б' => 'B', 'б' => 'b',
+		'В' => 'V', 'в' => 'v',
+		'Г' => 'G', 'г' => 'g',
+		'Д' => 'D', 'д' => 'd',
+		'Ђ' => 'Đ', 'ђ' => 'đ',
+		'Е' => 'E', 'е' => 'e',
+		'Ж' => 'Ž', 'ж' => 'ž',
+		'З' => 'Z', 'з' => 'z',
+		'И' => 'I', 'и' => 'i',
+		'Ј' => 'J', 'ј' => 'j',
+		'К' => 'K', 'к' => 'k',
+		'Л' => 'L', 'л' => 'l',
+		'М' => 'M', 'м' => 'm',
+		'Н' => 'N', 'н' => 'n',
+		'О' => 'O', 'о' => 'o',
+		'П' => 'P', 'п' => 'p',
+		'Р' => 'R', 'р' => 'r',
+		'С' => 'S', 'с' => 's',
+		'Т' => 'T', 'т' => 't',
+		'Ћ' => 'Ć', 'ћ' => 'ć',
+		'У' => 'U', 'у' => 'u',
+		'Ф' => 'F', 'ф' => 'f',
+		'Х' => 'H', 'х' => 'h',
+		'Ц' => 'C', 'ц' => 'c',
+		'Ч' => 'Č', 'ч' => 'č',
+		'Ш' => 'Š', 'ш' => 'š',
+	];
 
     /**
      * Transliterate text between Cyrillic and Latin.
      *
      * @param mixed $content String to transliterate.
-     * @param string $translation Conversion direction.
+     * @param string $translation Conversion direction: 'cyr_to_lat' or 'lat_to_cyr'
      * @return mixed
      */
     public static function transliterate($content, $translation = 'cyr_to_lat')
     {
-        if (is_array($content) || is_object($content) || is_numeric($content) || is_bool($content)) {
+        if (!is_string($content)) {
             return $content;
         }
 
-        $transliteration = apply_filters('transliteration_map_sr_RS', self::$map);
-        $transliteration = apply_filters_deprecated('rstr/inc/transliteration/sr_RS', [$transliteration], '2.0.0', 'transliteration_map_sr_RS');
+        $map = apply_filters('transliteration_map_sr_RS', self::$map);
+        $map = apply_filters_deprecated('rstr/inc/transliteration/sr_RS', [$map], '2.0.0', 'transliteration_map_sr_RS');
 
         switch ($translation) {
             case 'cyr_to_lat':
-                //	return str_replace(array_keys($transliteration), array_values($transliteration), $content);
-                return strtr($content, $transliteration);
+                return strtr($content, $map);
 
             case 'lat_to_cyr':
-                $lat_to_cyr = [];
-                $lat_to_cyr = array_merge($lat_to_cyr, array_flip($transliteration));
-                $lat_to_cyr = array_merge([
-                    'NJ' => 'Њ',	'LJ' => 'Љ',	'DŽ' => 'Џ',	'DJ' => 'Ђ',	'DZ' => 'Ѕ',	'dz' => 'ѕ',
-                ], $lat_to_cyr);
-                $lat_to_cyr = apply_filters('rstr/inc/transliteration/sr_RS/lat_to_cyr', $lat_to_cyr);
+				$content = ltrim($content, "\xEF\xBB\xBF\x20\t\n\r\0\x0B"); // UTF-8 BOM + whitespace
+			
+                // Build reverse map
+                $reverse = array_flip($map);
 
-                //	return str_replace(array_keys($lat_to_cyr), array_values($lat_to_cyr), $content);
-                $content = strtr($content, $lat_to_cyr);
+                // Add digraph priority
+                $custom = [
+                    'DŽ' => 'Џ', 'Dž' => 'Џ', 'dž' => 'џ',
+                    'LJ' => 'Љ', 'Lj' => 'Љ', 'lj' => 'љ',
+                    'NJ' => 'Њ', 'Nj' => 'Њ', 'nj' => 'њ',
+                    'Đ'  => 'Ђ', 'đ'  => 'ђ',
+                    'Č'  => 'Ч', 'č'  => 'ч',
+                    'Ć'  => 'Ћ', 'ć'  => 'ћ',
+                    'Š'  => 'Ш', 'š'  => 'ш',
+                    'Ž'  => 'Ж', 'ž'  => 'ж',
+                ];
 
-                // Fix some special words
+                $reverse = array_merge($custom, $reverse);
+
+                // Sort descending by key length
+                uksort($reverse, static fn($a, $b) => strlen($b) <=> strlen($a));
+
+                $escaped = array_map('preg_quote', array_keys($reverse));
+				$pattern = '/' . implode('|', $escaped) . '/u';
+
+				$content = preg_replace_callback($pattern, function ($match) use ($reverse) {
+					return $reverse[$match[0]] ?? $match[0];
+				}, $content);
+
+                // Handle specific known word issues
                 $content = str_replace([
                     'оџљебња',
                     'ОЏЉЕБЊА',
@@ -84,9 +136,10 @@ class Transliteration_Map_sr_RS
                     'ОДЖЉЕБЊА',
                 ], $content);
 
+                return apply_filters('rstr/inc/transliteration/sr_RS/lat_to_cyr', $content);
+
+            default:
                 return $content;
         }
-
-        return $content;
     }
 }

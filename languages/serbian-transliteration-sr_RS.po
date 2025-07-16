@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2025-04-10 18:25+0200\n"
-"PO-Revision-Date: 2025-04-10 18:37+0200\n"
+"POT-Creation-Date: 2025-06-09 14:51+0200\n"
+"PO-Revision-Date: 2025-06-09 14:51+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -21,11 +21,11 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: classes/debug.php:355
+#: classes/debug.php:341
 msgid "undefined"
 msgstr "недефинисано"
 
-#: classes/filters.php:127 classes/settings.php:721
+#: classes/filters.php:127 classes/settings.php:738
 msgid "Freelance Jobs - Find or post freelance jobs"
 msgstr "Фриленс послови - Пронађи или објави фриленс послове"
 
@@ -34,23 +34,23 @@ msgid "Contra Team - A complete hosting solution in one place"
 msgstr "Contra Team - Комплетно решење за хостинг на једном месту"
 
 #: classes/menus.php:34 classes/settings.php:52 classes/settings.php:98
-#: classes/settings.php:318 classes/settings.php:391 classes/settings.php:427
-#: classes/settings.php:463 classes/settings.php:508 classes/settings.php:537
-#: classes/settings.php:573 classes/settings.php:601
+#: classes/settings.php:318 classes/settings.php:394 classes/settings.php:432
+#: classes/settings.php:470 classes/settings.php:517 classes/settings.php:548
+#: classes/settings.php:586 classes/settings.php:616
 msgid "Transliteration"
 msgstr "Пресловљавање"
 
 #: classes/menus.php:49 classes/menus.php:51 classes/settings-fields.php:498
 #: classes/settings-fields.php:574 classes/settings.php:128
 #: classes/settings.php:203 classes/settings/page-functions.php:164
-#: classes/shortcodes.php:36 functions.php:438
+#: classes/shortcodes.php:36 classes/utilities.php:1121 functions.php:438
 msgid "Latin"
 msgstr "Латиница"
 
 #: classes/menus.php:50 classes/menus.php:51 classes/settings-fields.php:497
 #: classes/settings-fields.php:575 classes/settings.php:129
 #: classes/settings.php:204 classes/settings/page-functions.php:159
-#: classes/shortcodes.php:35 functions.php:437
+#: classes/shortcodes.php:35 classes/utilities.php:1122 functions.php:437
 msgid "Cyrillic"
 msgstr "Ћирилица"
 
@@ -442,7 +442,7 @@ msgstr "Бирач УРЛ-а параметра"
 msgid "RSS transliteration"
 msgstr "Пресловљавање \"RSS\" документа"
 
-#: classes/settings-fields.php:353
+#: classes/settings-fields.php:353 classes/utilities.php:1427
 msgid "Exclusion"
 msgstr "Искључење"
 
@@ -584,12 +584,12 @@ msgstr "Одредите да ли је ваш примарни алфабет �
 msgid "Transliteration disabled"
 msgstr "Угаси пресловљавање"
 
-#: classes/settings-fields.php:536 classes/settings.php:675
+#: classes/settings-fields.php:536 classes/settings.php:692
 #: classes/settings/page-shortcodes.php:8 classes/settings/page-tags.php:5
 msgid "Cyrillic to Latin"
 msgstr "Ћирилица у латиницу"
 
-#: classes/settings-fields.php:537 classes/settings.php:676
+#: classes/settings-fields.php:537 classes/settings.php:693
 #: classes/settings/page-shortcodes.php:14 classes/settings/page-tags.php:8
 msgid "Latin to Cyrillic"
 msgstr "Латиница у ћирилицу"
@@ -719,8 +719,8 @@ msgstr ""
 #: classes/settings-fields.php:882 classes/settings-fields.php:904
 #: classes/settings-fields.php:950 classes/settings-fields.php:969
 #: classes/settings-fields.php:1031 classes/settings-fields.php:1070
-#: classes/settings.php:679 classes/settings.php:683 classes/settings.php:687
-#: classes/settings.php:691
+#: classes/settings.php:696 classes/settings.php:700 classes/settings.php:704
+#: classes/settings.php:708
 msgid "Yes"
 msgstr "Да"
 
@@ -731,8 +731,8 @@ msgstr "Да"
 #: classes/settings-fields.php:883 classes/settings-fields.php:905
 #: classes/settings-fields.php:951 classes/settings-fields.php:970
 #: classes/settings-fields.php:1032 classes/settings-fields.php:1071
-#: classes/settings.php:680 classes/settings.php:684 classes/settings.php:688
-#: classes/settings.php:692
+#: classes/settings.php:697 classes/settings.php:701 classes/settings.php:705
+#: classes/settings.php:709
 msgid "No"
 msgstr "Не"
 
@@ -991,7 +991,7 @@ msgstr "придружите се нашем тиму"
 msgid "Settings saved."
 msgstr "Подешавања су сачувана."
 
-#: classes/settings.php:77 classes/settings.php:697
+#: classes/settings.php:77 classes/settings.php:714
 msgid "Settings"
 msgstr "Подешавања"
 
@@ -1069,84 +1069,84 @@ msgstr "Алат за трајне везе"
 msgid "General Settings"
 msgstr "Глобална подешавања"
 
-#: classes/settings.php:271 classes/settings.php:698
+#: classes/settings.php:271 classes/settings.php:715
 msgid "Documentation"
 msgstr "Документација"
 
-#: classes/settings.php:275 classes/settings.php:699
+#: classes/settings.php:275 classes/settings.php:716
 msgid "Tools"
 msgstr "Алати"
 
-#: classes/settings.php:279 classes/settings.php:700
+#: classes/settings.php:279 classes/settings.php:717
 msgid "Debug"
 msgstr "Дебаговање"
 
-#: classes/settings.php:283 classes/settings.php:601 classes/settings.php:701
+#: classes/settings.php:283 classes/settings.php:616 classes/settings.php:718
 #: classes/settings/page-credits.php:58
 msgid "Credits"
 msgstr "Информације"
 
-#: classes/settings.php:337 classes/settings.php:345
+#: classes/settings.php:339 classes/settings.php:348
 msgid "Save Changes"
 msgstr "Сачувај промене"
 
-#: classes/settings.php:391
+#: classes/settings.php:394
 msgid "Available shortcodes"
 msgstr "Доступни кратки кодови"
 
-#: classes/settings.php:427
+#: classes/settings.php:432
 msgid "Available PHP Functions"
 msgstr "Доступне PHP функције"
 
-#: classes/settings.php:463
+#: classes/settings.php:470
 msgid "Available Tags"
 msgstr "Доступни тагови"
 
-#: classes/settings.php:508
+#: classes/settings.php:517
 msgid "Converter for transliterating Cyrillic into Latin and vice versa"
 msgstr "Конвертор за пресловљавање ћирилице у латиницу и обрнуто"
 
-#: classes/settings.php:537
+#: classes/settings.php:548
 msgid "Permalink Transliteration Tool"
 msgstr "Алат за пресловљавање трајних веза"
 
-#: classes/settings.php:573
+#: classes/settings.php:586
 msgid "Debug information"
 msgstr "Информације о отклањању грешака"
 
-#: classes/settings.php:654
+#: classes/settings.php:671
 msgid "WordPress Transliterator"
 msgstr "WordPress пресловљавање"
 
-#: classes/settings.php:695
+#: classes/settings.php:712
 msgid "Quick Access:"
 msgstr "Брз приступ:"
 
-#: classes/settings.php:702
+#: classes/settings.php:719
 msgid "Rate us"
 msgstr "Оцените нас"
 
-#: classes/settings.php:706
+#: classes/settings.php:723
 msgid "Current Settings:"
 msgstr "Тренутна подешавања:"
 
-#: classes/settings.php:708
+#: classes/settings.php:725
 msgid "Transliteration Mode:"
 msgstr "Режим пресловљавања:"
 
-#: classes/settings.php:709
+#: classes/settings.php:726
 msgid "Cache Support:"
 msgstr "Подршка за кеширање:"
 
-#: classes/settings.php:710
+#: classes/settings.php:727
 msgid "Media Transliteration:"
 msgstr "Пресловљавање медија:"
 
-#: classes/settings.php:711
+#: classes/settings.php:728
 msgid "Permalink Transliteration:"
 msgstr "Пресловљавање трајних веза:"
 
-#: classes/settings.php:714
+#: classes/settings.php:731
 msgid ""
 "Transliterator plugin options are not yet available. Please update plugin "
 "settings!"
@@ -1154,11 +1154,11 @@ msgstr ""
 "Опције Transliterator додатка још увек нису доступне. Молимо вас да "
 "ажурирате подешавања додатка!"
 
-#: classes/settings.php:717
+#: classes/settings.php:734
 msgid "Recommendations:"
 msgstr "Препоруке:"
 
-#: classes/settings.php:718
+#: classes/settings.php:735
 msgid ""
 "Explore these recommended tools and resources that complement our plugin."
 msgstr "Истражите препоручене алате и ресурсе који употпуњују наш додатак."
@@ -1260,128 +1260,116 @@ msgstr ""
 "плугином; ако нисте, обратите се Free Software Foundation, Inc., 51 Franklin "
 "Street, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: classes/settings/page-debug.php:12
+#: classes/settings/page-debug.php:13
 msgid "Plugin ID"
 msgstr "Индентификација додатка"
 
-#: classes/settings/page-debug.php:16
+#: classes/settings/page-debug.php:17
 msgid "Plugin version"
 msgstr "Верзија додатка"
 
-#: classes/settings/page-debug.php:20
+#: classes/settings/page-debug.php:21
 msgid "WordPress version"
 msgstr "WordPress верзија"
 
-#: classes/settings/page-debug.php:24
+#: classes/settings/page-debug.php:25
 msgid "Last plugin update"
 msgstr "Последње ажурирање додатка"
 
-#: classes/settings/page-debug.php:28
+#: classes/settings/page-debug.php:29
 msgid "PHP version"
 msgstr "PHP верзија"
 
-#: classes/settings/page-debug.php:32
+#: classes/settings/page-debug.php:33
 msgid "PHP version ID"
 msgstr "Индентификатор PHP верзије"
 
-#: classes/settings/page-debug.php:36
+#: classes/settings/page-debug.php:37
 msgid "PHP architecture"
 msgstr "PHP архитектура"
 
-#: classes/settings/page-debug.php:37 classes/settings/page-debug.php:105
+#: classes/settings/page-debug.php:38 classes/settings/page-debug.php:106
 #, php-format
 msgid "%d bit"
 msgstr "%d бита"
 
-#: classes/settings/page-debug.php:40
+#: classes/settings/page-debug.php:41
 msgid "WordPress debug"
 msgstr "WordPress отклањање грешака"
 
-#: classes/settings/page-debug.php:41 classes/settings/page-debug.php:45
-#: classes/settings/page-debug.php:50
+#: classes/settings/page-debug.php:42 classes/settings/page-debug.php:46
+#: classes/settings/page-debug.php:51
 msgid "On"
 msgstr "Укључено"
 
-#: classes/settings/page-debug.php:41 classes/settings/page-debug.php:45
-#: classes/settings/page-debug.php:50
+#: classes/settings/page-debug.php:42 classes/settings/page-debug.php:46
+#: classes/settings/page-debug.php:51
 msgid "Off"
 msgstr "Угашено"
 
-#: classes/settings/page-debug.php:44
+#: classes/settings/page-debug.php:45
 msgid "WordPress multisite"
 msgstr "WordPress мулти сајт"
 
-#: classes/settings/page-debug.php:49
+#: classes/settings/page-debug.php:50
 msgid "WooCommerce active"
 msgstr "WooCommerce је активан"
 
-#: classes/settings/page-debug.php:54
+#: classes/settings/page-debug.php:55
 msgid "WooCommerce version"
 msgstr "WooCommerce верзија"
 
-#: classes/settings/page-debug.php:60
+#: classes/settings/page-debug.php:61
 msgid "Site title"
 msgstr "Наслов сајта"
 
-#: classes/settings/page-debug.php:68
+#: classes/settings/page-debug.php:69
 msgid "Tagline"
 msgstr "Слоган"
 
-#: classes/settings/page-debug.php:76
+#: classes/settings/page-debug.php:77
 msgid "WordPress address (URL)"
 msgstr "WordPress адреса (URL)"
 
-#: classes/settings/page-debug.php:80
+#: classes/settings/page-debug.php:81
 msgid "Admin email"
 msgstr "Е-маил администратора"
 
-#: classes/settings/page-debug.php:84
+#: classes/settings/page-debug.php:85
 msgid "Encoding for pages and feeds"
 msgstr "Енкодирање за странице и храниоце (feeds)"
 
-#: classes/settings/page-debug.php:88
+#: classes/settings/page-debug.php:89
 msgid "Content-Type"
 msgstr "Тип садржаја"
 
-#: classes/settings/page-debug.php:92
+#: classes/settings/page-debug.php:93
 msgid "Site Language"
 msgstr "Језик сајта"
 
-#: classes/settings/page-debug.php:96
+#: classes/settings/page-debug.php:97
 msgid "Server time"
 msgstr "Време сервера"
 
-#: classes/settings/page-debug.php:100
+#: classes/settings/page-debug.php:101
 msgid "WordPress directory path"
 msgstr "Путања WordPress директоријума"
 
-#: classes/settings/page-debug.php:104
+#: classes/settings/page-debug.php:105
 msgid "Operting system"
 msgstr "Оперативни систем"
 
-#: classes/settings/page-debug.php:108
+#: classes/settings/page-debug.php:109
 msgid "User agent"
 msgstr "Кориснички агент"
 
-#: classes/settings/page-debug.php:112
+#: classes/settings/page-debug.php:113
 msgid "Plugin directory path"
 msgstr "Путања директоријума додатака"
 
-#: classes/settings/page-debug.php:121
+#: classes/settings/page-debug.php:124
 msgid "Plugin settings"
 msgstr "Начин рада додатка"
-
-#: classes/settings/page-debug.php:125
-msgid "Option name"
-msgstr "Назив опције"
-
-#: classes/settings/page-debug.php:126 classes/settings/page-debug.php:136
-msgid "Value"
-msgstr "Вредност"
-
-#: classes/settings/page-debug.php:135
-msgid "Key"
-msgstr "Кључ"
 
 #: classes/settings/page-functions.php:4
 msgid ""
@@ -1885,10 +1873,122 @@ msgstr ""
 msgid "Dev Mode (Only for developers and testers)"
 msgstr "Програмерски мод (само за програмере)"
 
-#: classes/utilities.php:886
+#: classes/utilities.php:915
 #, php-format
 msgid "Failed to delete plugin translation: %s"
 msgstr "Брисање превода додатка није успело: %s"
+
+#: classes/utilities.php:1096
+msgid " degrees "
+msgstr " степени "
+
+#: classes/utilities.php:1097
+msgid " divided by "
+msgstr " подељено са "
+
+#: classes/utilities.php:1098
+msgid " times "
+msgstr " пута "
+
+#: classes/utilities.php:1099
+msgid " plus-minus "
+msgstr " плус-минус "
+
+#: classes/utilities.php:1100
+msgid " square root "
+msgstr " квадратни корен "
+
+#: classes/utilities.php:1101
+msgid " infinity "
+msgstr " бесконачност "
+
+#: classes/utilities.php:1102
+msgid " almost equal to "
+msgstr " скоро једнако са "
+
+#: classes/utilities.php:1103
+msgid " not equal to "
+msgstr " није једнако са "
+
+#: classes/utilities.php:1104
+msgid " identical to "
+msgstr " индентично са "
+
+#: classes/utilities.php:1105
+msgid " less than or equal to "
+msgstr " мање или једнако "
+
+#: classes/utilities.php:1106
+msgid " greater than or equal to "
+msgstr " веће или једнако са "
+
+#: classes/utilities.php:1107
+msgid " left "
+msgstr " лево "
+
+#: classes/utilities.php:1108
+msgid " right "
+msgstr " десно "
+
+#: classes/utilities.php:1109
+msgid " up "
+msgstr " горе "
+
+#: classes/utilities.php:1110
+msgid " down "
+msgstr " доле "
+
+#: classes/utilities.php:1111
+msgid " left and right "
+msgstr " лево и десно "
+
+#: classes/utilities.php:1112
+msgid " up and down "
+msgstr " горе и доле "
+
+#: classes/utilities.php:1113
+msgid " care of "
+msgstr " брига о "
+
+#: classes/utilities.php:1114
+msgid " estimated "
+msgstr " процењено "
+
+#: classes/utilities.php:1115
+msgid " ohm "
+msgstr " ом "
+
+#: classes/utilities.php:1116
+msgid " female "
+msgstr " женско "
+
+#: classes/utilities.php:1117
+msgid " male "
+msgstr " мушко "
+
+#: classes/utilities.php:1118
+msgid " Copyright "
+msgstr " Ауторско право "
+
+#: classes/utilities.php:1119
+msgid " Registered "
+msgstr " Регистровано "
+
+#: classes/utilities.php:1120
+msgid " Trademark "
+msgstr " Заштитни знак "
+
+#: classes/utilities.php:1449
+msgid "Option name"
+msgstr "Назив опције"
+
+#: classes/utilities.php:1450 classes/utilities.php:1464
+msgid "Value"
+msgstr "Вредност"
+
+#: classes/utilities.php:1463
+msgid "Key"
+msgstr "Кључ"
 
 #: classes/wp-cli.php:60
 msgid ""
@@ -1919,106 +2019,6 @@ msgstr[2] "Успешно је ажурирано %d страница."
 #: classes/wp-cli.php:128
 msgid "No changes to the permalink have been made."
 msgstr "Није промењена ниједна трајна веза."
-
-#: constants.php:167
-msgid " degrees "
-msgstr " степени "
-
-#: constants.php:169
-msgid " divided by "
-msgstr " подељено са "
-
-#: constants.php:169
-msgid " times "
-msgstr " пута "
-
-#: constants.php:169
-msgid " plus-minus "
-msgstr " плус-минус "
-
-#: constants.php:169
-msgid " square root "
-msgstr " квадратни корен "
-
-#: constants.php:170
-msgid " infinity "
-msgstr " бесконачност "
-
-#: constants.php:170
-msgid " almost equal to "
-msgstr " скоро једнако са "
-
-#: constants.php:170
-msgid " not equal to "
-msgstr " није једнако са "
-
-#: constants.php:171
-msgid " identical to "
-msgstr " индентично са "
-
-#: constants.php:171
-msgid " less than or equal to "
-msgstr " мање или једнако "
-
-#: constants.php:171
-msgid " greater than or equal to "
-msgstr " веће или једнако са "
-
-#: constants.php:172
-msgid " left "
-msgstr " лево "
-
-#: constants.php:172
-msgid " right "
-msgstr " десно "
-
-#: constants.php:172
-msgid " up "
-msgstr " горе "
-
-#: constants.php:172
-msgid " down "
-msgstr " доле "
-
-#: constants.php:173
-msgid " left and right "
-msgstr " лево и десно "
-
-#: constants.php:173
-msgid " up and down "
-msgstr " горе и доле "
-
-#: constants.php:173
-msgid " care of "
-msgstr " брига о "
-
-#: constants.php:174
-msgid " estimated "
-msgstr " процењено "
-
-#: constants.php:174
-msgid " ohm "
-msgstr " ом "
-
-#: constants.php:174
-msgid " female "
-msgstr " женско "
-
-#: constants.php:174
-msgid " male "
-msgstr " мушко "
-
-#: constants.php:175
-msgid " Copyright "
-msgstr " Ауторско право "
-
-#: constants.php:175
-msgid " Registered "
-msgstr " Регистровано "
-
-#: constants.php:175
-msgid " Trademark "
-msgstr " Заштитни знак "
 
 #: functions.php:95
 msgid ""

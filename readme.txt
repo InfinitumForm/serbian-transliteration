@@ -1,78 +1,70 @@
-﻿=== Transliterator ===
+﻿=== Transliterator — Multilingual Cyr-Lat Script Converter ===
 Contributors: ivijanstefan, creativform, tihi
 Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Universal transliteration for permalinks, posts, tags, categories, media, files, search and more, rendering them universally readable.
 
 == Description ==
-This plugin provides a seamless solution for converting WordPress content between Cyrillic and Latin scripts. Originally starting as "Serbian Transliteration", it has evolved into a general "Transliterator" for WordPress, crafted to be user-friendly and lightweight. [Learn more about its transformation](https://buymeacoffee.com/ivijanstefan/transliterator-wordpress-transforming-language-barriers-bridges) from a simple Serbian tool to a versatile transliteration plugin. The Transliterator plugin facilitates the conversion process with minimal clicks and supports unique shortcodes, enabling selective transliteration of designated content sections, delivering superior flexibility in how content is presented. Whether you want to transliterate entire pages, specific parts of your content, or even permalinks, this plugin gives you full control. Make your site Latin now!
 
-Just go to `Settings->Transliteration` and configure the plugin according to your needs.
+✅ **MULTILINGUAL SCRIPT SUPPORT**:  
+_Serbian, Bosnian, Montenegrin, Russian, Belarusian, Bulgarian, Macedonian, Kazakh, Ukrainian, Georgian, Greek, Arabic, Armenian, Uzbek, Tajik, Kyrgyz, Mongolian, Bashkir_
 
-**Key Features:**
-- **Script Conversion:** Seamlessly convert content between Cyrillic and Latin scripts.
-- **Selective Transliteration:** Use shortcodes or tags to apply transliteration only to specific parts of your content.
-- **Image Manipulation:** Display different images based on the selected script using simple shortcode.
-- **Permalink Tool:** Convert Cyrillic permalinks to Latin with a single click.
-- **Cyrillic User Profiles:** Create user profiles using Cyrillic script.
-- **Permalink Translation:** Automatically translate all Cyrillic permalinks to Latin for better SEO and compatibility.
-- **Media File Translation:** Convert filenames of uploaded media from Cyrillic to Latin.
-- **Bilingual Search:** Enable WordPress search functionality to work with both Cyrillic and Latin scripts.
-- **Developer Friendly:** Includes PHP functions for deeper integration into themes and plugins.
+This plugin provides a modern, modular, and extensible solution for **transliterating WordPress content** between **Cyrillic and Latin scripts**—with additional support for Arabic-based and other regional alphabets. Originally launched as “Serbian Transliteration,” it has evolved into a **general-purpose transliteration tool** built to serve a wider multilingual audience.
 
-All settings and additional documentation are available within the plugin interface.
+📝 [Discover the evolution of this plugin](https://buymeacoffee.com/ivijanstefan/transliterator-wordpress-transforming-language-barriers-bridges)
 
-= FEATURES =
+You can transliterate entire posts, pages, permalinks, media filenames, usernames, and even selectively control output using built-in shortcodes. Whether you're managing a bilingual site or just want cleaner slugs, **you remain in control**.
 
-&#9989; Convert between Cyrillic and Latin scripts for posts, pages, terms, filenames, and permalinks
-&#9989; Support for Cyrillic usernames
-&#9989; Search content in both Cyrillic and Latin scripts
-&#9989; WP-CLI support
+🔁 Features include:
+- Real-time conversion between **Cyrillic and Latin scripts**
+- Transliteration of **titles, content, permalinks, filenames, usernames**
+- Shortcodes for **partial or conditional transliteration**
+- Bilingual search across both script types
+- Developer API with hooks and filters
+- No database changes – safe to enable or disable anytime
+- Supports Arabic, Greek, Cyrillic, and regional language variants
 
-= BENEFITS =
+All settings are available under `Settings → Transliteration`.
 
-&#9989; Compatible with multilanguage, SEO plugins, and many WordPress template
-&#9989; Supports partial transliteration and special characters
-&#9989; Scalable, customizable, and lightweight with minimal page speed impact
-&#9989; Multilingual support including diacritics for Serbian
-&#9989; Compatible with [PHP 8.1](https://plugintests.com/plugins/wporg/serbian-transliteration/latest)
+📦 In terms of functionality, this plugin covers and extends what several popular tools offer individually, such as:  
+[SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/),  
+[Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/),  
+[Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/),  
+[Filenames to Latin](https://wordpress.org/plugins/filenames-to-latin/),  
+[Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/),  
+[Latin Now!](https://wordpress.org/plugins/latin-now/),  
+[Cyrillic 2 Latin](https://wordpress.org/plugins/cyrillic2latin/),  
+[Ukr-To-Lat](https://wordpress.org/plugins/ukr-to-lat/),  
+[Cyr to Lat Enhanced](https://wordpress.org/plugins/cyr3lat/),  
+[HyToLat](https://wordpress.org/plugins/hytolat/),  
+[Cyrlitera](https://wordpress.org/plugins/cyrlitera/),  
+[Arabic to Latin](https://wordpress.org/plugins/arabic-to-lat/),  
+[Geo to Lat](https://wordpress.org/plugins/geo-to-lat/),  
+[RusToLat](https://wordpress.org/plugins/sp-rtl-rus-to-lat/), and  
+[srlatin](https://sr.wordpress.org/files/2018/12/srlatin.zip).
 
-= LANGUAGE SUPPORT =
+This plugin streamlines what others separate—bringing transliteration tools together into one stable, extensible, and WordPress-friendly package.
 
-&#9989; **Serbian, Bosnian, Montenegrin, Russian, Belarusian, Bulgarian, Macedonian, Kazakh, Ukrainian, Georgian, Greek, Arabic, Armenian, Uzbek, Tajik, Kyrgyz, Mongolian, Bashkir**
+🧩 Fully compatible with popular plugins and page builders, including:  
+[WooCommerce](https://wordpress.org/plugins/woocommerce/),  
+[Polylang](https://wordpress.org/plugins/polylang/),  
+[Elementor](https://wordpress.org/plugins/elementor/),  
+[CF Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/),  
+[Yoast SEO](https://wordpress.org/plugins/wordpress-seo/),  
+[Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/),  
+[Slider Revolution](https://www.sliderrevolution.com/),  
+[Avada theme](https://avada.theme-fusion.com/),  
+[Themify](https://themify.me/),  
+[Divi](https://www.elegantthemes.com/gallery/divi/)
 
-&#128312; More languages coming soon...
-
-= PLUGINS SUPPORT =
-
-This plugin is made to support all known plugins and visual editors.
-
-We also do special compatible functions with:
-
- &#9989; [WooCommerce](https://wordpress.org/plugins/woocommerce/)
- &#9989; [Polylang](https://wordpress.org/plugins/polylang/)
- &#9989; [Elementor Website Builder](https://wordpress.org/plugins/elementor/)
- &#9989; [CF Geo Plugin](https://wordpress.org/plugins/cf-geoplugin/)
- &#9989; [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/)
- &#9989; [Data Tables Generator by Supsystic](https://wordpress.org/plugins/data-tables-generator-by-supsystic/)
- &#9989; [Slider Revolution](https://www.sliderrevolution.com/)
- &#9989; [Avada theme](https://avada.theme-fusion.com/)
- &#9989; [Themify](https://themify.me/)
- &#9989; [Divi](https://www.elegantthemes.com/gallery/divi/) (Theme & Builder)
-
-**It's important to understand** that while our plugin is compatible with most others, the sheer diversity of WordPress installations and thousands of available plugins means there is always a small chance of encountering conflicts. We strive to ensure maximum compatibility, but given the vast number of variables, flawless operation in all environments cannot be guaranteed. If you experience any issues, they may be caused by incompatibility with another plugin. In such cases, we encourage you to reach out to us or the respective plugin authors for assistance. Keeping all your plugins and WordPress installation up to date is often the simplest and most effective way to resolve unexpected behavior.
-
-This plugin provides a unified and modern solution that covers the functionality typically offered by multiple separate plugins, such as [SrbTransLatin](https://wordpress.org/plugins/srbtranslatin/), [Cyr-To-Lat](https://wordpress.org/plugins/cyr2lat/), [Allow Cyrillic Usernames](https://wordpress.org/plugins/allow-cyrillic-usernames/), [Filenames to Latin](https://wordpress.org/plugins/filenames-to-latin/), [Cyrillic Permalinks](https://wordpress.org/plugins/cyrillic-slugs/), [Latin Now!](https://wordpress.org/plugins/latin-now/), [Cyrillic 2 Latin](https://wordpress.org/plugins/cyrillic2latin/), [Cyr to Lat Enhanced](https://wordpress.org/plugins/cyr3lat/), [HyToLat](https://wordpress.org/plugins/hytolat/), [Cyrlitera](https://wordpress.org/plugins/cyrlitera/), [Arabic to Latin](https://wordpress.org/plugins/arabic-to-lat/), [Geo to Lat](https://wordpress.org/plugins/geo-to-lat/), [RusToLat](https://wordpress.org/plugins/sp-rtl-rus-to-lat/) and [srlatin](https://sr.wordpress.org/files/2018/12/srlatin.zip).
-
-Instead of relying on multiple separate tools, this all-in-one plugin brings together everything you need in a single, lightweight package - without compromising performance or flexibility.
-
-Every feature in this plugin can be selectively enabled or disabled based on your needs. Additionally, developers can make use of available filters and hooks to further customize behavior. We've designed this plugin with flexibility and compatibility in mind.
+Make your multilingual content readable, searchable, and SEO-friendly—  
+**Transliterate once. Control forever. Latin now.**
 
 == Installation ==
 
@@ -108,6 +100,12 @@ Every feature in this plugin can be selectively enabled or disabled based on you
 9. Automated test
 
 == Changelog ==
+
+= 2.3.4 =
+* Added new transliteration maps
+* Improved and optimized transliterations
+* Optimized code
+* Fixed GUI bugs
 
 = 2.3.3 =
 * Fixed domain was triggered too early
@@ -256,6 +254,12 @@ Every feature in this plugin can be selectively enabled or disabled based on you
 * Added support for multilingual content and automatic language detection
 
 == Upgrade Notice ==
+
+= 2.3.4 =
+* Added new transliteration maps
+* Improved and optimized transliterations
+* Optimized code
+* Fixed GUI bugs
 
 = 2.3.3 =
 * Fixed domain was triggered too early
