@@ -371,6 +371,9 @@ final class Transliteration_Controller extends Transliteration
             return $content;
         }
 
+        // Decode entities to ensure characters are transliterated correctly
+        $content = Transliteration_Utilities::decode($content);
+
         /*// Don't transliterate if we already have transliteration
         if (!Transliteration_Utilities::is_cyr($content)) {
             return $content;
