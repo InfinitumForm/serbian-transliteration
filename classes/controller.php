@@ -166,14 +166,18 @@ final class Transliteration_Controller extends Transliteration
      * Disable Transliteration for the same script
      */
     public function disable_transliteration()
-    {
-        return self::cached_static('disable_transliteration', function (): bool {
-            $current_script       = get_rstr_option('site-script', 'cyr');
-            $transliteration_mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
-            $current_mode         = sanitize_text_field($_COOKIE['rstr_script'] ?? '');
-            return $current_script == 'cyr' && $transliteration_mode == 'cyr_to_lat' && $current_mode == 'cyr' || $current_script == 'lat' && $transliteration_mode == 'lat_to_cyr' && $current_mode == 'lat';
-        });
-    }
+	{
+		return self::cached_static('disable_transliteration', function () {
+			$current_script       = get_rstr_option('site-script', 'cyr');
+			$transliteration_mode = get_rstr_option('transliteration-mode', 'cyr_to_lat');
+			$current_mode         = sanitize_text_field($_COOKIE['rstr_script'] ?? '');
+
+			return (
+				($current_script === 'cyr' && $transliteration_mode === 'cyr_to_lat' && $current_mode === 'cyr') ||
+				($current_script === 'lat' && $transliteration_mode === 'lat_to_cyr' && $current_mode === 'lat')
+			);
+		});
+	}
 
     /*
      * Transliteration
@@ -708,7 +712,7 @@ final class Transliteration_Controller extends Transliteration
      * Transliterate HTML
      */
     public function transliterate_html($html)
-    {
+    {		
         if (!class_exists('DOMDocument', false) || empty($html) || !is_string($html) || is_numeric($html)) {
             return $html;
         }
@@ -745,12 +749,11 @@ final class Transliteration_Controller extends Transliteration
         // Transliteracija teksta unutar tagova, osim onih koji su na listi za izbegavanje
         foreach ($xpath->query('//text()') as $textNode) {
             if (!in_array($textNode->parentNode->nodeName, $skipTags)) {
-
 				// Normalize hidden characters
-				$text = preg_replace('/^[\x{FEFF}\x{200B}\x{00A0}\s]+/u', '', $textNode->nodeValue);
+				$textNode->nodeValue = preg_replace('/^[\x{FEFF}\x{200B}\x{00A0}]+/u', '', $textNode->nodeValue);
 
 				// Apply transliteration
-				$textNode->nodeValue = $this->transliterate($text);
+				$textNode->nodeValue = $this->transliterate($textNode->nodeValue);
             }
         }
 

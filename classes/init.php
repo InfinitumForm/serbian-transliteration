@@ -4,7 +4,7 @@ if (!defined('WPINC')) {
     die();
 }
 
-if (!class_exists('Transliteration_Init', false)) : final class Transliteration_Init extends Transliteration
+final class Transliteration_Init extends Transliteration
 {
     public function __construct()
     {
@@ -28,7 +28,7 @@ if (!class_exists('Transliteration_Init', false)) : final class Transliteration_
             'Transliteration_Notifications',
             'Transliteration_Tools',
             'Transliteration_Shortcodes',
-            'Transliteration_Blocks',
+			'Transliteration_Blocks',
         ]);
 
         foreach ($main_classes as $main_class_name) {
@@ -344,4 +344,4 @@ if (!class_exists('Transliteration_Init', false)) : final class Transliteration_
             }
         }, 10, 1);
     }
-} endif;
+}
