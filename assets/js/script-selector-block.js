@@ -1,5 +1,9 @@
 ( function( blocks, element ) {
     const el = element.createElement;
+	const c = {
+		label: 'rstr-block-editor-label',
+		fieldgroup: 'rstr-block-editor-fieldgroup'
+	};
 
     blocks.registerBlockType( 'serbian-transliteration/script-selector', {
         title: rstr_block_settings.labels.script_selector.title,
@@ -19,11 +23,11 @@
 				},
                 [
 					// Script selector
-					el( 'div', {className: 'rstr-block-editor-fieldgroup'},
+					el( 'div', {className: c.fieldgroup},
 						el(
 							'label',
 							{
-								className: 'rstr-block-editor-label select',
+								className: c.label + ' select',
 								for: 'rstr-block-editor-select-script'
 							},
 							rstr_block_settings.labels.display_type
@@ -44,38 +48,50 @@
 						)
 					),
                     // Conditional separator field (for 'inline')
-                    props.attributes.displayType === 'inline' && el( 'div', {className: 'rstr-block-editor-fieldgroup'},
-                        el( 'label', {}, rstr_block_settings.labels.separator ),
+                    props.attributes.displayType === 'inline' && el( 'div', {className: c.fieldgroup},
+                        el( 'label', {
+								className: c.label + ' input',
+								for: 'rstr-block-editor-input-separator'
+							}, rstr_block_settings.labels.separator ),
                         el( 'input', {
                             type: 'text',
                             value: props.attributes.separator,
                             onChange: function( e ) {
                                 props.setAttributes( { separator: e.target.value } );
                             },
+							id: 'rstr-block-editor-input-separator'
                         } )
                     ),
 
                     // Cyrillic caption input
-                    el( 'div', {className: 'rstr-block-editor-fieldgroup'},
-                        el( 'label', {}, rstr_block_settings.labels.cyrillic_caption ),
+                    el( 'div', {className: c.fieldgroup},
+                        el( 'label', {
+								className: c.label + ' input',
+								for: 'rstr-block-editor-input-cyr-caption'
+							}, rstr_block_settings.labels.cyrillic_caption ),
                         el( 'input', {
                             type: 'text',
                             value: props.attributes.cyr_caption,
                             onChange: function( e ) {
                                 props.setAttributes( { cyr_caption: e.target.value } );
                             },
+							id: 'rstr-block-editor-input-cyr-caption'
                         } )
                     ),
 
                     // Latin caption input
-                    el( 'div', {className: 'rstr-block-editor-fieldgroup'},
-                        el( 'label', {}, rstr_block_settings.labels.latin_caption ),
+                    el( 'div', {className: c.fieldgroup},
+                        el( 'label', {
+								className: c.label + ' input',
+								for: 'rstr-block-editor-input-lat-caption'
+							}, rstr_block_settings.labels.latin_caption ),
                         el( 'input', {
                             type: 'text',
                             value: props.attributes.lat_caption,
                             onChange: function( e ) {
                                 props.setAttributes( { lat_caption: e.target.value } );
                             },
+							id: 'rstr-block-editor-input-lat-caption'
                         } )
                     )
                 ]

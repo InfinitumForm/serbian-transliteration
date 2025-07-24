@@ -1,3 +1,8 @@
+= 2.3.6 =
+* Bugfix on _load_textdomain_just_in_time
+* Improved Script Selector in the Blocks
+* BUgfix on the UTF-8 encoding
+
 = 2.3.5 =
 * Fixed bugs on requests
 * Critical errors fixed

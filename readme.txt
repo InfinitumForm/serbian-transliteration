@@ -4,7 +4,7 @@ Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,11 @@ Make your multilingual content readable, searchable, and SEO-friendly - **Transl
 9. Automated test
 
 == Changelog ==
+
+= 2.3.6 =
+* Bugfix on _load_textdomain_just_in_time
+* Improved Script Selector in the Blocks
+* BUgfix on the UTF-8 encoding
 
 = 2.3.5 =
 * Fixed bugs on requests
@@ -247,6 +252,11 @@ Make your multilingual content readable, searchable, and SEO-friendly - **Transl
 * Added support for multilingual content and automatic language detection
 
 == Upgrade Notice ==
+
+= 2.3.6 =
+* Bugfix on _load_textdomain_just_in_time
+* Improved Script Selector in the Blocks
+* BUgfix on the UTF-8 encoding
 
 = 2.3.5 =
 * Fixed bugs on requests

@@ -721,8 +721,11 @@ final class Transliteration_Controller extends Transliteration
 
         libxml_use_internal_errors(true);
         $html = '<?xml encoding="UTF-8">' . $html; // UTF-8 deklaracija OBAVEZNA!
-		$html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+		
+		// $html = htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+		
         $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+		$dom->encoding = 'UTF-8';
         libxml_clear_errors();
 
         $xpath = new DOMXPath($dom);

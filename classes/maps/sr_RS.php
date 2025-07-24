@@ -75,6 +75,7 @@ class Transliteration_Map_sr_RS
 		'Ц' => 'C', 'ц' => 'c',
 		'Ч' => 'Č', 'ч' => 'č',
 		'Ш' => 'Š', 'ш' => 'š',
+		'Ѕ' => 'Dz', 'ѕ' => 'dz',
 	];
 
     /**
@@ -105,6 +106,7 @@ class Transliteration_Map_sr_RS
 
                 // Add digraph priority
                 $custom = [
+					'DZ' => 'Ѕ',
                     'DŽ' => 'Џ', 'Dž' => 'Џ', 'dž' => 'џ',
                     'LJ' => 'Љ', 'Lj' => 'Љ', 'lj' => 'љ',
                     'NJ' => 'Њ', 'Nj' => 'Њ', 'nj' => 'њ',

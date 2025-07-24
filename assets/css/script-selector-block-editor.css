@@ -1,16 +1,19 @@
+.rstr-block-editor-container {
+	padding: 15px;
+}
 .rstr-block-editor-container,
 .rstr-block-editor-container > .rstr-block-editor-fieldgroup,
 .rstr-block-editor-container > .rstr-block-editor-fieldgroup input,
-.rstr-block-editor-container > .rstr-block-editor-fieldgroup select{
+.rstr-block-editor-container > .rstr-block-editor-fieldgroup select {
 	display: block;
 }
 
-.rstr-block-editor-container > .rstr-block-editor-fieldgroup{
-	
+.rstr-block-editor-container > .rstr-block-editor-fieldgroup + .rstr-block-editor-fieldgroup {
+	margin-top:15px;
 }
 
 .rstr-block-editor-container > .rstr-block-editor-fieldgroup input,
-.rstr-block-editor-container > .rstr-block-editor-fieldgroup select{
+.rstr-block-editor-container > .rstr-block-editor-fieldgroup select {
 	width: 100%;
 	max-width: 100%;
 	padding: 5px 10px;

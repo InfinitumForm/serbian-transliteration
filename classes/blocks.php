@@ -6,15 +6,27 @@ if (!defined('WPINC')) {
 
 class Transliteration_Blocks extends Transliteration
 {
+	private $lat;
+	private $cyr;
+	
     public function __construct()
     {
         $this->add_action('init', 'register_script_selector_block');
-		$this->lat = '{cyr_to_lat}' . _x('Latin', 'Block Editor: Script selector', 'serbian-transliteration') . '{/cyr_to_lat}';
-		$this->cyr = '{lat_to_cyr}' . _x('Cyrillic', 'Block Editor: Script selector', 'serbian-transliteration') . '{/lat_to_cyr}';
     }
+	
+	private function load_titles() {
+		if(!$this->lat) {
+			$this->lat = '{cyr_to_lat}' . _x('Latin', 'Block Editor: Script selector', 'serbian-transliteration') . '{/cyr_to_lat}';
+		}
+		if(!$this->cyr) {
+			$this->cyr = '{lat_to_cyr}' . _x('Cyrillic', 'Block Editor: Script selector', 'serbian-transliteration') . '{/lat_to_cyr}';
+		}
+	}
 
     public function register_script_selector_block(): void
 	{
+		$this->load_titles();
+		
 		$min = defined('RSTR_DEV_MODE') && RSTR_DEV_MODE ? '' : '.min';
 
 		wp_register_script(
@@ -81,6 +93,8 @@ class Transliteration_Blocks extends Transliteration
 
     public function render_script_selector_block($attributes): string
     {
+		$this->load_titles();
+	
         $display_type = isset($attributes['displayType']) ? $attributes['displayType'] : 'inline';
 
         return script_selector([
