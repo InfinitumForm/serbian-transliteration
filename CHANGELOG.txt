@@ -1,3 +1,7 @@
+= 2.3.7 =
+* Added Croatian Cyrillic alphabet support
+* Improved translations and documentations
+
 = 2.3.6 =
 * Bugfix on _load_textdomain_just_in_time
 * Improved Script Selector in the Blocks

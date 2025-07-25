@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Serbian Transliteration\n"
-"POT-Creation-Date: 2025-06-09 14:51+0200\n"
-"PO-Revision-Date: 2025-06-09 14:51+0200\n"
+"POT-Creation-Date: 2025-07-25 08:07+0200\n"
+"PO-Revision-Date: 2025-07-25 08:07+0200\n"
 "Last-Translator: Ivijan-Stefan Stipić <infinitumform@gmail.com>\n"
 "Language-Team: \n"
 "Language: sr_RS\n"
@@ -20,6 +20,61 @@ msgstr ""
 "__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: classes/blocks.php:19
+msgctxt "Block Editor: Script selector"
+msgid "Latin"
+msgstr "Латиница"
+
+#: classes/blocks.php:22
+msgctxt "Block Editor: Script selector"
+msgid "Cyrillic"
+msgstr "Ћирилица"
+
+#: classes/blocks.php:43
+msgctxt "Block Editor: Script selector"
+msgid "Choose your display type:"
+msgstr "Изаберите врсту приказа:"
+
+#: classes/blocks.php:45
+msgctxt "Block Editor: Script selector"
+msgid "Script Selector"
+msgstr "Избор писма"
+
+#: classes/blocks.php:47
+msgctxt "Block Editor: Script selector"
+msgid "Inline"
+msgstr "У реду"
+
+#: classes/blocks.php:48
+msgctxt "Block Editor: Script selector"
+msgid "Select"
+msgstr "Изабери"
+
+#: classes/blocks.php:49
+msgctxt "Block Editor: Script selector"
+msgid "List"
+msgstr "Листа"
+
+#: classes/blocks.php:50
+msgctxt "Block Editor: Script selector"
+msgid "List items"
+msgstr "Ставке листе"
+
+#: classes/blocks.php:53
+msgctxt "Block Editor: Script selector"
+msgid "Separator:"
+msgstr "Раздвајач:"
+
+#: classes/blocks.php:54
+msgctxt "Block Editor: Script selector"
+msgid "Cyrillic caption:"
+msgstr "Ћирилични наслов:"
+
+#: classes/blocks.php:55
+msgctxt "Block Editor: Script selector"
+msgid "Latin Caption:"
+msgstr "Латинични наслов:"
 
 #: classes/debug.php:341
 msgid "undefined"
@@ -43,14 +98,14 @@ msgstr "Пресловљавање"
 #: classes/menus.php:49 classes/menus.php:51 classes/settings-fields.php:498
 #: classes/settings-fields.php:574 classes/settings.php:128
 #: classes/settings.php:203 classes/settings/page-functions.php:164
-#: classes/shortcodes.php:36 classes/utilities.php:1121 functions.php:438
+#: classes/shortcodes.php:36 classes/utilities.php:1122 functions.php:438
 msgid "Latin"
 msgstr "Латиница"
 
 #: classes/menus.php:50 classes/menus.php:51 classes/settings-fields.php:497
 #: classes/settings-fields.php:575 classes/settings.php:129
 #: classes/settings.php:204 classes/settings/page-functions.php:159
-#: classes/shortcodes.php:35 classes/utilities.php:1122 functions.php:437
+#: classes/shortcodes.php:35 classes/utilities.php:1123 functions.php:437
 msgid "Cyrillic"
 msgstr "Ћирилица"
 
@@ -203,7 +258,7 @@ msgstr "Фриленс послови"
 msgid "Join us today!"
 msgstr "Придружи нам се данас!"
 
-#: classes/requirements.php:48
+#: classes/requirements.php:47
 msgid ""
 "This plugin uses cookies and should be listed in your Privacy Policy page to "
 "prevent privacy issues."
@@ -211,16 +266,16 @@ msgstr ""
 "Овај додатак користи колачиће и требао би бити наведен на вашој страници "
 "политике приватности како би се спречили проблеми са приватношћу."
 
-#: classes/requirements.php:52
+#: classes/requirements.php:51
 msgid "Suggested text:"
 msgstr "Предложени текст:"
 
-#: classes/requirements.php:55
+#: classes/requirements.php:54
 #, php-format
 msgid "This website uses the %1$s plugin to transliterate content."
 msgstr "Ова веб локација користи додатак %1$s за пресловљавање садржаја."
 
-#: classes/requirements.php:60
+#: classes/requirements.php:59
 msgid ""
 "This is a simple and easy add-on with which this website translates content "
 "from Cyrillic to Latin and vice versa. This transliteration plugin also "
@@ -232,7 +287,7 @@ msgstr ""
 "(транслитерацију) такође подржава посебне кратке кодове и функције које "
 "користе колачиће за одређивање језичке скрипте."
 
-#: classes/requirements.php:63
+#: classes/requirements.php:62
 #, php-format
 msgid ""
 "These cookies do not affect your privacy because they are not intended for "
@@ -242,12 +297,12 @@ msgstr ""
 "Ови колачићи не утичу на вашу приватност јер нису намењени за праћење и "
 "аналитику. Ови колачићи могу имати само две вредности: \"%1$s\" или \"%2$s\"."
 
-#: classes/requirements.php:98
+#: classes/requirements.php:97
 #, php-format
 msgid "Important upgrade notice for the version %s:"
 msgstr "Важно обавештење о надоградњи за верзију %s:"
 
-#: classes/requirements.php:113
+#: classes/requirements.php:112
 msgid ""
 "NOTE: Before doing the update, it would be a good idea to backup your "
 "WordPress installations and settings."
@@ -255,7 +310,7 @@ msgstr ""
 "НАПОМЕНА: Пре него што извршите ажурирање, било би добро да направите "
 "резервне копије ваших WordPress инсталација и подешавања."
 
-#: classes/requirements.php:152
+#: classes/requirements.php:151
 #, php-format
 msgid ""
 "The %1$s cannot run on PHP versions older than PHP %2$s. Please contact your "
@@ -264,11 +319,11 @@ msgstr ""
 "%1$s не може да се покреће на PHP верзијама старијим од PHP%2$s. Молимо "
 "контактирајте свог сервер администратора и замолите га да изврши надоградњу."
 
-#: classes/requirements.php:161
+#: classes/requirements.php:160
 msgid "Transliteration plugin requires attention:"
 msgstr "Додатак за пресловљавање захтева пажњу:"
 
-#: classes/requirements.php:163
+#: classes/requirements.php:162
 #, php-format
 msgid ""
 "Your plugin works under Only WooCoomerce mode and you need to %s because "
@@ -277,31 +332,31 @@ msgstr ""
 "Ваш додатак ради у WooCoomerce режиму и требате %s јер WooCoomerce више није "
 "активан."
 
-#: classes/requirements.php:164
+#: classes/requirements.php:163
 msgid "update your settings"
 msgstr "ажурирати своја подешавања"
 
-#: classes/requirements.php:175
+#: classes/requirements.php:174
 msgid ""
 "Transliteration plugin requires a Multibyte String PHP extension (mbstring)."
 msgstr ""
 "Додатак за пресловљавање захтева \"Multibyte String PHP \" екстензију "
 "(mbstring)."
 
-#: classes/requirements.php:177
+#: classes/requirements.php:176
 #, php-format
 msgid "Without %s you will not be able to use this plugin."
 msgstr "Без %s нећете моћи да користите овај додатак."
 
-#: classes/requirements.php:178
+#: classes/requirements.php:177
 msgid "Multibyte String Installation"
 msgstr "Multibyte String инсталација"
 
-#: classes/requirements.php:178
+#: classes/requirements.php:177
 msgid "this PHP extension"
 msgstr "ове PHP екстензије"
 
-#: classes/requirements.php:201
+#: classes/requirements.php:200
 #, php-format
 msgid ""
 "The %1$s cannot run on WordPress versions older than %2$s. Please update "
@@ -442,7 +497,7 @@ msgstr "Бирач УРЛ-а параметра"
 msgid "RSS transliteration"
 msgstr "Пресловљавање \"RSS\" документа"
 
-#: classes/settings-fields.php:353 classes/utilities.php:1427
+#: classes/settings-fields.php:353 classes/utilities.php:1428
 msgid "Exclusion"
 msgstr "Искључење"
 
@@ -558,11 +613,11 @@ msgstr ""
 "Подешавање типа претраге је углавном експериментално и треба да тестирате "
 "сваку варијанту како бисте постигли најбољи резултат који вам је потребан."
 
-#: classes/settings-fields.php:502 classes/utilities.php:37
+#: classes/settings-fields.php:502 classes/utilities.php:38
 msgid "Arabic"
 msgstr "Арапски"
 
-#: classes/settings-fields.php:504 classes/utilities.php:36
+#: classes/settings-fields.php:504 classes/utilities.php:37
 msgid "Armenian"
 msgstr "Арменијски"
 
@@ -1784,72 +1839,76 @@ msgid "Montenegrin"
 msgstr "Црногорски"
 
 #: classes/utilities.php:23
+msgid "Croatian"
+msgstr "Хрватски"
+
+#: classes/utilities.php:24
 msgid "Russian"
 msgstr "Руски"
 
-#: classes/utilities.php:24
+#: classes/utilities.php:25
 msgid "Belarusian"
 msgstr "Белоруски"
 
-#: classes/utilities.php:25
+#: classes/utilities.php:26
 msgid "Bulgarian"
 msgstr "Бугарски"
 
-#: classes/utilities.php:26
+#: classes/utilities.php:27
 msgid "Macedoanian"
 msgstr "Македноски"
 
-#: classes/utilities.php:27
+#: classes/utilities.php:28
 msgid "Ukrainian"
 msgstr "Украјински"
 
-#: classes/utilities.php:28
+#: classes/utilities.php:29
 msgid "Kazakh"
 msgstr "Казахстански"
 
-#: classes/utilities.php:29
+#: classes/utilities.php:30
 msgid "Tajik"
 msgstr "Таџик"
 
-#: classes/utilities.php:30
+#: classes/utilities.php:31
 msgid "Kyrgyz"
 msgstr "Киргиски"
 
-#: classes/utilities.php:31
+#: classes/utilities.php:32
 msgid "Mongolian"
 msgstr "Монголски"
 
-#: classes/utilities.php:32
+#: classes/utilities.php:33
 msgid "Bashkir"
 msgstr "Башкир"
 
-#: classes/utilities.php:33
+#: classes/utilities.php:34
 msgid "Uzbek"
 msgstr "Узбек"
 
-#: classes/utilities.php:34
+#: classes/utilities.php:35
 msgid "Georgian"
 msgstr "Грузијски"
 
-#: classes/utilities.php:35
+#: classes/utilities.php:36
 msgid "Greek"
 msgstr "Грчки"
 
-#: classes/utilities.php:149
+#: classes/utilities.php:150
 msgid "Phantom Mode (ultra fast DOM-based transliteration, experimental)"
 msgstr ""
 "Фантомски режим (ултра брза транслитерација заснована на ДОМ-у, "
 "експериментално)"
 
-#: classes/utilities.php:150
+#: classes/utilities.php:151
 msgid "Light mode (basic parts of the site)"
 msgstr "Лаган режим (основни делови сајта)"
 
-#: classes/utilities.php:151
+#: classes/utilities.php:152
 msgid "Standard mode (content, themes, plugins, translations, menu)"
 msgstr "Стандардни режим (садржај, теме, додаци, преводи, мени)"
 
-#: classes/utilities.php:152
+#: classes/utilities.php:153
 msgid ""
 "Advanced mode (content, widgets, themes, plugins, translations, menu, "
 "permalinks, media)"
@@ -1857,11 +1916,11 @@ msgstr ""
 "Напредни режим (садржај, виџети, теме, додаци, преводи, мени, трајне везе, "
 "медији)"
 
-#: classes/utilities.php:153
+#: classes/utilities.php:154
 msgid "Forced transliteration (everything)"
 msgstr "Присилно пресловљавање (све)"
 
-#: classes/utilities.php:154
+#: classes/utilities.php:155
 msgid ""
 "Only WooCommerce (It bypasses all other transliterations and focuses only on "
 "WooCommerce)"
@@ -1869,124 +1928,124 @@ msgstr ""
 "Само WooCommerce (заобилази све остале транслитерације и фокусира се само на "
 "WooCommerce)"
 
-#: classes/utilities.php:155
+#: classes/utilities.php:156
 msgid "Dev Mode (Only for developers and testers)"
 msgstr "Програмерски мод (само за програмере)"
 
-#: classes/utilities.php:915
+#: classes/utilities.php:916
 #, php-format
 msgid "Failed to delete plugin translation: %s"
 msgstr "Брисање превода додатка није успело: %s"
 
-#: classes/utilities.php:1096
+#: classes/utilities.php:1097
 msgid " degrees "
 msgstr " степени "
 
-#: classes/utilities.php:1097
+#: classes/utilities.php:1098
 msgid " divided by "
 msgstr " подељено са "
 
-#: classes/utilities.php:1098
+#: classes/utilities.php:1099
 msgid " times "
 msgstr " пута "
 
-#: classes/utilities.php:1099
+#: classes/utilities.php:1100
 msgid " plus-minus "
 msgstr " плус-минус "
 
-#: classes/utilities.php:1100
+#: classes/utilities.php:1101
 msgid " square root "
 msgstr " квадратни корен "
 
-#: classes/utilities.php:1101
+#: classes/utilities.php:1102
 msgid " infinity "
 msgstr " бесконачност "
 
-#: classes/utilities.php:1102
+#: classes/utilities.php:1103
 msgid " almost equal to "
 msgstr " скоро једнако са "
 
-#: classes/utilities.php:1103
+#: classes/utilities.php:1104
 msgid " not equal to "
 msgstr " није једнако са "
 
-#: classes/utilities.php:1104
+#: classes/utilities.php:1105
 msgid " identical to "
 msgstr " индентично са "
 
-#: classes/utilities.php:1105
+#: classes/utilities.php:1106
 msgid " less than or equal to "
 msgstr " мање или једнако "
 
-#: classes/utilities.php:1106
+#: classes/utilities.php:1107
 msgid " greater than or equal to "
 msgstr " веће или једнако са "
 
-#: classes/utilities.php:1107
+#: classes/utilities.php:1108
 msgid " left "
 msgstr " лево "
 
-#: classes/utilities.php:1108
+#: classes/utilities.php:1109
 msgid " right "
 msgstr " десно "
 
-#: classes/utilities.php:1109
+#: classes/utilities.php:1110
 msgid " up "
 msgstr " горе "
 
-#: classes/utilities.php:1110
+#: classes/utilities.php:1111
 msgid " down "
 msgstr " доле "
 
-#: classes/utilities.php:1111
+#: classes/utilities.php:1112
 msgid " left and right "
 msgstr " лево и десно "
 
-#: classes/utilities.php:1112
+#: classes/utilities.php:1113
 msgid " up and down "
 msgstr " горе и доле "
 
-#: classes/utilities.php:1113
+#: classes/utilities.php:1114
 msgid " care of "
 msgstr " брига о "
 
-#: classes/utilities.php:1114
+#: classes/utilities.php:1115
 msgid " estimated "
 msgstr " процењено "
 
-#: classes/utilities.php:1115
+#: classes/utilities.php:1116
 msgid " ohm "
 msgstr " ом "
 
-#: classes/utilities.php:1116
+#: classes/utilities.php:1117
 msgid " female "
 msgstr " женско "
 
-#: classes/utilities.php:1117
+#: classes/utilities.php:1118
 msgid " male "
 msgstr " мушко "
 
-#: classes/utilities.php:1118
+#: classes/utilities.php:1119
 msgid " Copyright "
 msgstr " Ауторско право "
 
-#: classes/utilities.php:1119
+#: classes/utilities.php:1120
 msgid " Registered "
 msgstr " Регистровано "
 
-#: classes/utilities.php:1120
+#: classes/utilities.php:1121
 msgid " Trademark "
 msgstr " Заштитни знак "
 
-#: classes/utilities.php:1449
+#: classes/utilities.php:1450
 msgid "Option name"
 msgstr "Назив опције"
 
-#: classes/utilities.php:1450 classes/utilities.php:1464
+#: classes/utilities.php:1451 classes/utilities.php:1465
 msgid "Value"
 msgstr "Вредност"
 
-#: classes/utilities.php:1463
+#: classes/utilities.php:1464
 msgid "Key"
 msgstr "Кључ"
 
@@ -2038,8 +2097,8 @@ msgstr ""
 "или \"%6$s\""
 
 #. Plugin Name of the plugin/theme
-msgid "Transliterator"
-msgstr "Пресловљавање"
+msgid "Transliterator – Multilingual and Multi-script Text Conversion"
+msgstr "Транслитератор – Вишејезичка и вишеписмена конверзија текста"
 
 #. Plugin URI of the plugin/theme
 msgid "https://wordpress.org/plugins/serbian-transliteration/"
@@ -2047,11 +2106,11 @@ msgstr "https://wordpress.org/plugins/serbian-transliteration/"
 
 #. Description of the plugin/theme
 msgid ""
-"All-in-one Cyrillic to Latin transliteration plugin for WordPress that "
-"actually works."
+"All-in-one Cyrillic to Latin transliteration plugin for WordPress. Supports "
+"Slavic, Arabic, Greek, and Central Asian scripts."
 msgstr ""
-"Све у једном додатак за пресловљавање са ћирилице на латиницу за WordPress "
-"који заиста функционише."
+"Свеобухватан додатак за трансформацију текста са ћирилице на латиницу за "
+"ВордПрес. Подржава словенска, арапска, грчка и средњоазијска писма."
 
 #. Author of the plugin/theme
 msgid "Ivijan-Stefan Stipić"
@@ -2060,6 +2119,9 @@ msgstr "Ивијан-Стефан Стипић"
 #. Author URI of the plugin/theme
 msgid "https://profiles.wordpress.org/ivijanstefan/"
 msgstr "https://profiles.wordpress.org/ivijanstefan/"
+
+#~ msgid "Transliterator"
+#~ msgstr "Пресловљавање"
 
 #~ msgid "Support my work by buying me a coffee!"
 #~ msgstr "Подржите мој рад шољицом кафе!"

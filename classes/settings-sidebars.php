@@ -13,7 +13,13 @@ class Transliteration_Settings_Sidebars
 		*/ ?>
 		<hr>
 		<ul>
-			<?php printf('<li>%s: <br><b>%s</b><br>Swift: <b>%s</b></li>', __('Banca Intesa a.d. Beograd', 'serbian-transliteration'), '160-6000002167503-32', 'DBDBRSBG'); ?>
+			<?php printf(
+				'<li>%s: <br><b>%s</b><br>IBAN: <b>%s</b><br>Swift: <b>%s</b></li>',
+				__('Banca Intesa a.d. Beograd', 'serbian-transliteration'),
+				'160-6000002167503-32',
+				'RS35160600000216750332',
+				'DBDBRSBG'
+			); ?>
 			<?php /* printf('<li><b>%s</b>: %s</li>', esc_html__('PayPal', 'serbian-transliteration'), 'creativform@gmail.com');*/ ?>
 		</ul>
 		<hr>

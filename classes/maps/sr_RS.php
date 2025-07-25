@@ -138,7 +138,7 @@ class Transliteration_Map_sr_RS
                     'ОДЖЉЕБЊА',
                 ], $content);
 
-                return apply_filters('rstr/inc/transliteration/sr_RS/lat_to_cyr', $content);
+                return $content;
 
             default:
                 return $content;

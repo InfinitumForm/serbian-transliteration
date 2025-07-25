@@ -1,10 +1,10 @@
-﻿=== Transliterator - Multilingual Cyr-Lat Script Converter ===
+﻿=== Transliterator – Multilingual and Multi-script Text Conversion ===
 Contributors: ivijanstefan, creativform, tihi
 Tags: cyrillic, latin, transliteration, latinisation, cyr2lat
 Requires at least: 5.4
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.6
+Stable tag: 2.3.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -88,6 +88,10 @@ Make your multilingual content readable, searchable, and SEO-friendly - **Transl
 9. Automated test
 
 == Changelog ==
+
+= 2.3.7 =
+* Added Croatian Cyrillic alphabet support
+* Improved translations and documentations
 
 = 2.3.6 =
 * Bugfix on _load_textdomain_just_in_time
@@ -253,48 +257,14 @@ Make your multilingual content readable, searchable, and SEO-friendly - **Transl
 
 == Upgrade Notice ==
 
+= 2.3.7 =
+* Added Croatian Cyrillic alphabet support
+* Improved translations and documentations
+
 = 2.3.6 =
 * Bugfix on _load_textdomain_just_in_time
 * Improved Script Selector in the Blocks
 * BUgfix on the UTF-8 encoding
-
-= 2.3.5 =
-* Fixed bugs on requests
-* Critical errors fixed
-* Fixed encoding for BOM and UTF-8
-
-= 2.3.4 =
-* Added new transliteration maps
-* Improved and optimized transliterations
-* Optimized code
-* Fixed GUI bugs
-
-= 2.3.3 =
-* Fixed domain was triggered too early
-* Fixed admin transliteration
-* Improved debugging
-* Added transliteration for js-composer
-* Improved plugin speed
-* Improved PHP code
-* Improved transliterations
-
-= 2.3.2 =
-* Fixed Wp Admin transliteration
-* Improved WooCommerce transliteration
-* Code Optimizations
-
-= 2.3.1 =
-* Fixed UI
-* Fixed translations
-
-= 2.3.0 =
-* Brought codebase to PSR-12 coding standard
-* Refactored features and functionalities for faster execution and better maintainability
-* Prepared and tested plugin compatibility for WordPress version 6.8
-* Removed all PHP 5.6 specific syntax to support minimum PHP 7.4
-* Modularized core logic for better structure and scalability
-* Optimized loading time by reducing unnecessary function calls
-* Improved type declarations and error handling for critical functions
 
 == Frequently Asked Questions ==
 
